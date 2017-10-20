@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    command: mysqld --skip-name-resolve --max_allowed_packet=64M
+    env_file:
+      - ./env/mysql.env
+    expose:
+     - "3306"
+
+  newspapers.lib.unb.ca:
+    build:
+      context: .
+      args:
+        - COMPOSER_DEPLOY_DEV=dev
+    restart: always
+    container_name: newspapers.lib.unb.ca
+    expose:
+      - "80"
+    ports:
+      - "3095:80"
+    env_file:
+      - ./env/drupal.env
+    volumes:
+      - ./config-yml:/app/configuration
+      - ./custom/modules:/app/modules/custom
+      - ./custom/themes:/app/themes/custom
+      - ./tests:/app/tests

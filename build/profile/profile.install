@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall for the default docker installation profile.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function newspapers_lib_unb_ca_install() {
+  include_once DRUPAL_ROOT . '/core/profiles/standard/standard.install';
+  standard_install();
+
+  // Remove shortcut set as per https://www.drupal.org/node/2583113
+  if (
+    !empty(\Drupal::entityManager()->getStorage("shortcut_set")->load("default")) &&
+    file_exists('/app/configuration/shortcut.set.default.yml')
+  ) {
+    \Drupal::entityManager()->getStorage("shortcut_set")->load("default")->delete();
+  }
+
+  // Set our default theme
+  \Drupal::configFactory()
+  ->getEditable('system.theme')
+  ->set('default', 'newspapers_lib_unb_ca')
+  ->save();
+
+  // Can add code in here to make nodes, terms, etc.
+}

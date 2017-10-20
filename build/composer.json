@@ -1,0 +1,107 @@
+{
+    "authors": [
+        {
+            "name": "UNB Libraries libsupport@unb.ca",
+            "role": "Creator"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "scripts/composer/ScriptHandler.php"
+        ]
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        }
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "description": "Project definition for newspapers.lib.unb.ca",
+    "extra": {
+        "enable-patching": true,
+        "installer-paths": {
+            "core": [
+                "type:drupal-core"
+            ],
+            "drush/contrib/{$name}": [
+                "type:drupal-drush"
+            ],
+            "libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ]
+        },
+        "patches": {
+            "drupal/core": {
+                "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch",
+                "To display exposed filter block titles": "https://www.drupal.org/files/issues/2720101-30.patch"
+            }
+        }
+    },
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "name": "unblibraries/newspapers.lib.unb.ca",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/unb-libraries/unb_lib_theme.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/unb-libraries/drupal-development-libraries.git"
+        }
+    ],
+    "require": {
+        "composer/installers": "^1.2.0",
+        "cweagans/composer-patches": "~1.6.1",
+        "drupal-composer/drupal-scaffold": "~2.2.0",
+        "drupal/bootstrap": "3.6",
+        "drupal/config_update": "1.1",
+        "drupal/console": "~1.0",
+        "drupal/core": "8.4.0",
+        "drupal/externalauth": "1.0",
+        "drupal/features": "3.0-beta8",
+        "drupal/google_analytics": "2.1",
+        "drupal/ldap": "3.0-beta3",
+        "drupal/pathauto": "1.0-rc1",
+        "drupal/search_api": "1.0",
+        "drupal/token_filter": "1.0-beta1",
+        "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x",
+        "webflo/drupal-finder": "^0.3.0",
+        "webmozart/path-util": "^2.3"
+    },
+    "require-dev": {
+      "unb-libraries/drupal-development-libraries": "dev-8.x-1.x"
+    },
+    "scripts": {
+        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "post-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "pre-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ]
+    },
+    "type": "project"
+}

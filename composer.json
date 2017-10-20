@@ -1,0 +1,32 @@
+{
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "name": "unblibraries/newspapers.lib.unb.ca",
+  "description": "Provision/scaffolding for developing drupal instance.",
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    }
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/unb-libraries/dockworker.git"
+    },
+    {
+        "type": "git",
+        "url": "https://github.com/unb-libraries/unb_lib_theme.git"
+    }
+  ],
+  "require": {
+    "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x"
+  },
+  "require-dev": {
+    "unblibraries/dockworker": "dev-drupal8"
+  },
+  "scripts": {
+    "post-update-cmd": [
+      "vendor/bin/dockworker git:setup-hooks"
+    ]
+  }
+}

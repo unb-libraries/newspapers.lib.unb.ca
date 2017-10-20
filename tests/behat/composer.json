@@ -1,0 +1,25 @@
+{
+  "license": "MIT",
+  "name": "unblibraries/newspapers.lib.unb.ca-tests",
+  "description": "Libraries for behat testing for newspapers.lib.unb.ca.",
+  "authors": [
+    {
+      "name": "UNB Libraries",
+      "email": "libsupport@unb.ca"
+    }
+  ],
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    }
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/unb-libraries/drupal-behat-testing-libraries.git"
+    }
+  ],
+  "require": {
+    "unb-libraries/drupal-behat-testing-libraries": "dev-8.x-1.x"
+  }
+}

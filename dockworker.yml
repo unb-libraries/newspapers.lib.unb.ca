@@ -1,0 +1,6 @@
+dockworker:
+  instance:
+    project_prefix: NBNP
+    name: newspapers.lib.unb.ca
+    upstream_image: unblibraries/drupal:alpine-nginx-php7-8.x-composer
+  options:

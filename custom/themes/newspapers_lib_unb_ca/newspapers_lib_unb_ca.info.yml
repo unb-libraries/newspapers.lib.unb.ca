@@ -1,0 +1,23 @@
+core: 8.x
+type: theme
+base theme: unb_lib_theme
+
+name: 'newspapers_lib_unb_ca'
+description: 'For newspapers_lib_unb_ca'
+package: 'newspapers_lib_unb_ca'
+
+libraries:
+  - newspapers_lib_unb_ca/global-styling
+
+regions:
+  navigation: 'Navigation'
+  navigation_collapsible: 'Navigation (Collapsible)'
+  header: 'Top Bar'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  content: 'Content'
+  sidebar_first: 'Primary'
+  sidebar_second: 'Secondary'
+  footer: 'Footer'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
