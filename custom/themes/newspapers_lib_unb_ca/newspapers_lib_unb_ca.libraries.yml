@@ -1,4 +1,4 @@
 global-styling:
   css:
     base:
-      css/custom.css: {}
+      dist/css/style.css: {}
