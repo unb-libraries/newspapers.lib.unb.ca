@@ -99,6 +99,7 @@
         "drupal/pathauto": "1.0",
         "drupal/search_api": "1.5",
         "drupal/token_filter": "1.0-beta1",
+        "harvesthq/chosen": "~1.8",
         "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x",
         "webflo/drupal-finder": "^0.3.0",
         "webmozart/path-util": "^2.3"
