@@ -64,6 +64,21 @@
         {
             "type": "git",
             "url": "https://github.com/unb-libraries/drupal-development-libraries.git"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "harvesthq/chosen",
+                "type": "drupal-library",
+                "version": "1.8.2",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.2/chosen_v1.8.2.zip"
+                },
+                "require": {
+                    "composer/installers": "^1.2.0"
+                }
+            }
         }
     ],
     "require": {
@@ -71,6 +86,8 @@
         "cweagans/composer-patches": "~1.6.1",
         "drupal-composer/drupal-scaffold": "~2.2.0",
         "drupal/bootstrap": "3.6",
+        "drupal/chosen": "2.4",
+        "drupal/conditional_fields": "1.0-alpha2",
         "drupal/config_update": "1.1",
         "drupal/console": "~1.0",
         "drupal/core": "8.4.0",
