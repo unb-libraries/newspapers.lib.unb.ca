@@ -96,6 +96,7 @@
         "drupal/features": "3.0-beta8",
         "drupal/field_group": "1.0-rc6",
         "drupal/google_analytics": "2.1",
+        "drupal/isbn": "1.x-dev",
         "drupal/ldap": "3.0-beta3",
         "drupal/pathauto": "1.0",
         "drupal/search_api": "1.5",

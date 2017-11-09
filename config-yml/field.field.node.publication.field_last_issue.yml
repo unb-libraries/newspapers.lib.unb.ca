@@ -1,0 +1,21 @@
+uuid: 87c26efc-9e70-48a4-a795-991cd77cf15a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_last_issue
+    - node.type.publication
+  module:
+    - datetime
+id: node.publication.field_last_issue
+field_name: field_last_issue
+entity_type: node
+bundle: publication
+label: 'Last Issue'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

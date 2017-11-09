@@ -1,0 +1,22 @@
+uuid: 9beaefcf-7396-4a84-bb41-fe7857870a17
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.publication
+  module:
+    - text
+id: node.publication.body
+field_name: body
+entity_type: node
+bundle: publication
+label: Credit
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary
