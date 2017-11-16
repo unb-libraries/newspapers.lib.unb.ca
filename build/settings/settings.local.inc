@@ -5,7 +5,7 @@ Include local dev-only settings here.
 
 include_once DRUPAL_ROOT . '/sites/example.settings.local.php';
 
-$conf['chq_redis_cache_enabled'] = TRUE;
+$conf['chq_redis_cache_enabled'] = FALSE;
 if (isset($conf['chq_redis_cache_enabled']) && $conf['chq_redis_cache_enabled']) {
   $settings['cache']['default'] = 'cache.backend.redis';
   $settings['redis.connection']['interface'] = 'PhpRedis';
