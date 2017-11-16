@@ -25,4 +25,7 @@ content:
   links:
     weight: 100
     region: content
-hidden: {  }
+hidden:
+  field_first_issue: true
+  field_last_issue: true
+  field_place_of_publication: true
