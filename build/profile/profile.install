@@ -13,16 +13,8 @@
  * @see system_install()
  */
 function newspapers_lib_unb_ca_install() {
-  include_once DRUPAL_ROOT . '/core/profiles/standard/standard.install';
-  standard_install();
-
-  // Remove shortcut set as per https://www.drupal.org/node/2583113
-  if (
-    !empty(\Drupal::entityManager()->getStorage("shortcut_set")->load("default")) &&
-    file_exists('/app/configuration/shortcut.set.default.yml')
-  ) {
-    \Drupal::entityManager()->getStorage("shortcut_set")->load("default")->delete();
-  }
+  include_once DRUPAL_ROOT . '/core/profiles/minimal/minimal.install';
+  minimal_install();
 
   // Set our default theme
   \Drupal::configFactory()

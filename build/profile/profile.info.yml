@@ -12,7 +12,7 @@ dependencies:
   - page_cache
   - dynamic_page_cache
 
-  # Standard Install.
+  # Standard Install Items.
   - history
   - breakpoint
   - ckeditor
@@ -32,18 +32,17 @@ dependencies:
   - options
   - path
   - taxonomy
+  - dblog
   - search
-  - shortcut
   - toolbar
   - field_ui
   - file
   - rdf
   - views
   - views_ui
-  - tour
-  - automated_cron
 
 themes:
   - seven
   - bartik
+  - stark
   - newspapers_lib_unb_ca
