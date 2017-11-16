@@ -1,0 +1,18 @@
+uuid: 1494f11c-8ab2-416d-875f-97fbb9ea4430
+langcode: en
+status: true
+dependencies:
+  theme:
+    - newspapers_lib_unb_ca
+id: pagetitle
+theme: newspapers_lib_unb_ca
+region: content
+weight: 0
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

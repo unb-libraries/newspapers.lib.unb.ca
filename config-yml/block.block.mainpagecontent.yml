@@ -1,0 +1,20 @@
+uuid: 1dbf8a22-1d2c-48fe-b5b1-80d3f8b7830d
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: mainpagecontent
+theme: newspapers_lib_unb_ca
+region: content
+weight: 1
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: visible
+visibility: {  }
