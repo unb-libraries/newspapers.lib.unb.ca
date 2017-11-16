@@ -1,4 +1,5 @@
 dockworker:
+  version: 1.0
   instance:
     project_prefix: NBNP
     name: newspapers.lib.unb.ca
