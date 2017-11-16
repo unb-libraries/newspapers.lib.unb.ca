@@ -27,10 +27,11 @@ third_party_settings:
       weight: 3
       format_type: details
       format_settings:
-        id: ''
-        classes: panel-heading
-        open: false
+        label: 'Date of Publication'
         required_fields: true
+        id: ''
+        classes: ''
+        open: false
       label: 'Date of Publication'
     group_geographic_location:
       children:

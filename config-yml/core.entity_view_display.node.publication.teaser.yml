@@ -26,6 +26,9 @@ content:
     weight: 100
     region: content
 hidden:
+  field_city_town: true
   field_first_issue: true
+  field_issn: true
   field_last_issue: true
   field_place_of_publication: true
+  field_province_state: true
