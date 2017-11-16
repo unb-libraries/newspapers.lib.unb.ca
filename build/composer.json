@@ -44,7 +44,7 @@
         "patches": {
             "drupal/core": {
                 "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch",
-                "To display exposed filter block titles": "https://www.drupal.org/files/issues/2720101-30.patch"
+                "To display exposed filter block titles": "https://www.drupal.org/files/issues/2720101-38.patch"
             }
         }
     },
