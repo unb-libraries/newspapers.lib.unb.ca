@@ -44,6 +44,8 @@ COPY build/ ${TMP_DRUPAL_BUILD_DIR}
 ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 RUN /scripts/deployGeneralizedProfile.sh && \
   /scripts/buildDrupalTree.sh ${COMPOSER_DEPLOY_DEV} && \
+  /scripts/installDevTools.sh ${COMPOSER_DEPLOY_DEV} && \
+  /scripts/clearComposerCache.sh && \
   /scripts/installNewRelic.sh
 
 # Copy configuration.
