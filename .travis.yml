@@ -1,0 +1,54 @@
+language: php
+sudo: required
+
+services:
+  - docker
+
+php:
+  - '7.1'
+
+cache:
+  directories:
+        - $HOME/.composer/cache
+
+git:
+  depth: 1
+
+env:
+  global:
+    - SERVICE_NAME=newspapers.lib.unb.ca
+    - AMAZON_ECR_REGION=us-east-1
+    - DEPLOY_BRANCHES=dev,prod
+    - DEPLOYMENT_FINISHED_MARKER=99_report_as_complete
+    - DOCKER_UPSTREAM_IMAGE=unblibraries/drupal:alpine-nginx-php7-8.x-composer
+    - OLD_IMAGES_TO_KEEP=2
+    - SERVICE_DEPLOY_PORT=80
+    - SERVICE_TEST_UP_PATH=/user
+
+before_install:
+  - git clone git://github.com/unb-libraries/CargoDock.git CargoDock
+  - CargoDock/travis/installDockerCompose.sh
+  - CargoDock/aws/installAuthAws.sh
+  - cp docker-compose.yml.travis docker-compose.yml
+  - CargoDock/travis/setDockerComposeEnv.sh
+
+before_script:
+  - CargoDock/travis/buildInstanceTheme.sh
+  - CargoDock/travis/buildInstanceForTesting.sh
+  - CargoDock/travis/waitForDeploy.sh
+  - CargoDock/travis/checkStartupForErrors.sh
+
+script:
+  - CargoDock/travis/testInstance.sh
+
+after_success:
+  - CargoDock/travis/buildImagePushToRepo.sh
+  - CargoDock/travis/cleanupOldImages.sh
+  - CargoDock/travis/triggerKubeDeploy.sh
+
+notifications:
+  slack:
+    rooms:
+      secure: hUDGoi1h+tulB1rQ+V8jrrYfkxev8odaSlIo8jY5rJABgUOS09Tdfp6trZum9TTQWJ9YQY4OgcP8+vyhQ8bSVd272P2khbxkKIK7mzivVQyreAbZ9+50XrYPLLIuSXM5FDmqI+T90q1jXAiP6hbpuqw0S8BWCVDLHOvdOYonJtLy+vyPRyMad0R45Sg2yX8gZcjkFvyWanZEDqY2+y7oZ5XEbsP1QXAKBCwjk5WyvES2g0timHSxlK8Ly1aglj2NvmegnTAdOByBHq1aXiyCfRaOOZ4TONEq6bkHK7JA91oMrS1grYgMJ0eh0HD1XrESFhppqin5XT2g+NzPSDBrEqFRXLmi4ItLFxM6ZgEOCI4dKcZkqzRI712sk45top6i9eP8b+ARI4Hl6K0CekWa96bDFQkanHv+tmerWbEQ5xs3YmxmVCMC07vbov8ty3zs1T7myljtwUy2NZsF3hHiU5am9mqB2Cg/wkpEgL1+MM1UcdeQUhX4MuIRrC9I/uacoCTIzEEF3HCVWvmuqTHM8Yrn4y0xUAsA1x/C9iVYLcUvuIRbKX11+dy4fQCTu6xFOkjXyDo9dEgv2D+gtiBom6hDbUOjq2Q60CNh9+CcumkpXI+/yO0Ph/KYuQn/bk0rr1C9AxcsrSFABJ5UUkB3z6O8dpAMwiHXo4G79i4seq0=
+    on_start: always
+    on_success: always
