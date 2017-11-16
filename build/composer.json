@@ -51,7 +51,6 @@
     "license": "MIT",
     "minimum-stability": "dev",
     "name": "unblibraries/newspapers.lib.unb.ca",
-    "prefer-stable": true,
     "repositories": [
         {
             "type": "composer",
@@ -109,7 +108,7 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-      "unb-libraries/drupal-development-libraries": "dev-8.x-1.x"
+      "unb-libraries/drupal-development-libraries": "^8.0.0"
     },
     "scripts": {
         "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",

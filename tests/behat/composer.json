@@ -8,6 +8,7 @@
       "email": "libsupport@unb.ca"
     }
   ],
+  "minimum-stability": "dev",
   "config": {
     "preferred-install": {
       "*": "dist"
@@ -20,6 +21,6 @@
     }
   ],
   "require": {
-    "unb-libraries/drupal-behat-testing-libraries": "dev-8.x-1.x"
+    "unb-libraries/drupal-behat-testing-libraries": "^8.0.0"
   }
 }
