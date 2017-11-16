@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.publication.body
     - field.field.node.publication.field_first_issue
+    - field.field.node.publication.field_issn
     - field.field.node.publication.field_last_issue
     - field.field.node.publication.field_place_of_publication
     - node.type.publication
@@ -33,6 +34,14 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_issn:
+    weight: 106
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
     region: content
   field_last_issue:
     weight: 105

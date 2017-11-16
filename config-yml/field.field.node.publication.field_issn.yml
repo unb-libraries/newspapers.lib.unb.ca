@@ -1,0 +1,19 @@
+uuid: ff636680-f12b-4df1-a9a8-7b6efd7cc133
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_issn
+    - node.type.publication
+id: node.publication.field_issn
+field_name: field_issn
+entity_type: node
+bundle: publication
+label: ISSN
+description: 'Format: NNNN-NNNC'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
