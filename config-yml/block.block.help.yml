@@ -1,0 +1,20 @@
+uuid: 27f8191e-32d9-4d33-a9a9-65cd292d7b0e
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - newspapers_lib_unb_ca
+id: help
+theme: newspapers_lib_unb_ca
+region: help
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: visible
+visibility: {  }
