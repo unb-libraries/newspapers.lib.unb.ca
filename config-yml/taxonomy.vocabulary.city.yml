@@ -1,0 +1,9 @@
+uuid: e96a8e5d-ac2d-4a8a-82c3-9149852327d5
+langcode: en
+status: true
+dependencies: {  }
+name: City
+vid: city
+description: 'City or town terms'
+hierarchy: 0
+weight: 0
