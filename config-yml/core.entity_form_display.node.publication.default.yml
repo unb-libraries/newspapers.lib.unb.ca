@@ -4,10 +4,12 @@ status: true
 dependencies:
   config:
     - field.field.node.publication.body
+    - field.field.node.publication.field_city_town
     - field.field.node.publication.field_first_issue
     - field.field.node.publication.field_issn
     - field.field.node.publication.field_last_issue
     - field.field.node.publication.field_place_of_publication
+    - field.field.node.publication.field_province_state
     - node.type.publication
   module:
     - address
@@ -31,7 +33,9 @@ third_party_settings:
         required_fields: true
       label: 'Date of Publication'
     group_geographic_location:
-      children: {  }
+      children:
+        - field_province_state
+        - field_city_town
       parent_name: ''
       weight: 2
       format_type: details
@@ -61,6 +65,15 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_city_town:
+    weight: 27
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_first_issue:
     weight: 11
     settings: {  }
@@ -87,6 +100,15 @@ content:
       default_country: null
     third_party_settings: {  }
     type: address_default
+    region: content
+  field_province_state:
+    weight: 26
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   path:
     type: path
