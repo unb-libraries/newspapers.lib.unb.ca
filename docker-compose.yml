@@ -10,6 +10,12 @@ services:
     expose:
      - "3306"
 
+  drupal-redis:
+    image: redis:3-alpine
+    restart: always
+    env_file:
+      - ./env/redis.env
+
   newspapers.lib.unb.ca:
     build:
       context: .

@@ -99,6 +99,7 @@
         "drupal/isbn": "1.x-dev",
         "drupal/ldap": "3.0-beta3",
         "drupal/pathauto": "1.0",
+        "drupal/redis": "1.0-rc2",
         "drupal/search_api": "1.5",
         "drupal/token": "1.0",
         "harvesthq/chosen": "~1.8",
