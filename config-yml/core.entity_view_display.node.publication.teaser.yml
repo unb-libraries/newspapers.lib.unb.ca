@@ -26,9 +26,13 @@ content:
     weight: 100
     region: content
 hidden:
+  field_abbreviated_title: true
   field_city_town: true
+  field_credit: true
   field_first_issue: true
+  field_frequency: true
   field_issn: true
   field_last_issue: true
   field_place_of_publication: true
   field_province_state: true
+  field_publisher: true
