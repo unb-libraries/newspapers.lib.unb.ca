@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.publication.body
     - field.field.node.publication.field_abbreviated_title
     - field.field.node.publication.field_city_town
+    - field.field.node.publication.field_credit
     - field.field.node.publication.field_first_issue
     - field.field.node.publication.field_frequency
     - field.field.node.publication.field_issn
@@ -65,7 +66,7 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 10
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -104,6 +105,14 @@ content:
           bundle: publication
     type: entity_reference_autocomplete
     region: content
+  field_credit:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_first_issue:
     weight: 11
     settings: {  }
@@ -115,7 +124,7 @@ content:
     settings:
       match_operator: CONTAINS
       size: 60
-      placeholder: ''
+      placeholder: 'Autocomplete suggestions appear as you type'
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
@@ -154,13 +163,13 @@ content:
     settings:
       match_operator: CONTAINS
       size: 60
-      placeholder: ''
+      placeholder: 'Autocomplete suggestions may appear as you type'
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
   path:
     type: path
-    weight: 13
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -168,21 +177,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 11
+    weight: 12
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 15
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 12
+    weight: 13
     region: content
     third_party_settings: {  }
   title:
@@ -195,7 +204,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 9
+    weight: 10
     settings:
       match_operator: CONTAINS
       size: 60
