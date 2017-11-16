@@ -28,10 +28,10 @@ third_party_settings:
       format_type: details
       format_settings:
         label: 'Date of Publication'
+        open: true
         required_fields: true
         id: ''
         classes: ''
-        open: false
       label: 'Date of Publication'
     group_geographic_location:
       children:
@@ -72,7 +72,25 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
-    third_party_settings: {  }
+    third_party_settings:
+      conditional_fields:
+        5cdeb8a3-1190-4073-a2c8-ddf000ca64e1:
+          dependee: field_province_state
+          settings:
+            state: '!visible'
+            condition: empty
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                target_id: null
+            effect: show
+            effect_options: {  }
+            selector: ''
+          entity_type: node
+          bundle: publication
     type: entity_reference_autocomplete
     region: content
   field_first_issue:
