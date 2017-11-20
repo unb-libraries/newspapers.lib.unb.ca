@@ -49,7 +49,7 @@
         }
     },
     "license": "MIT",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "name": "unblibraries/newspapers.lib.unb.ca",
     "repositories": [
         {
