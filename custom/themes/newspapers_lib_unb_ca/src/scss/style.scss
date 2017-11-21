@@ -11,11 +11,18 @@
   content: 'Suggested matches';
   display: block;
   font-weight: bold;
+  letter-spacing: 1px;
   margin-bottom: .5em;
   padding: .5em 0;
+}
+.ui-autocomplete {
+  background: #f5faff;
 }
 .ui-autocomplete li,
 .ui-autocomplete li a {
   display: block;
 }
 
+.main-container {
+  margin-top: 1em;
+}
