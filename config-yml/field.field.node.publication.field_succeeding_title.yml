@@ -1,0 +1,28 @@
+uuid: 6e8dadda-06f8-4ded-93b9-b33da824c0a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_succeeding_title
+    - node.type.publication
+id: node.publication.field_succeeding_title
+field_name: field_succeeding_title
+entity_type: node
+bundle: publication
+label: 'Continued by'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      publication: publication
+    sort:
+      field: title
+      direction: ASC
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

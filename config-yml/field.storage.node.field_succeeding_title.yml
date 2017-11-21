@@ -1,0 +1,19 @@
+uuid: 4292c70c-d988-47cd-82fd-f87905a4e689
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_succeeding_title
+field_name: field_succeeding_title
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
