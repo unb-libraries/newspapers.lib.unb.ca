@@ -1,6 +1,6 @@
 {
   "license": "MIT",
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "name": "unblibraries/newspapers.lib.unb.ca",
   "description": "Provision/scaffolding for developing drupal instance.",
   "config": {

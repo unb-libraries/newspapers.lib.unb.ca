@@ -10,7 +10,7 @@ id: node.publication.field_frequency
 field_name: field_frequency
 entity_type: node
 bundle: publication
-label: Frequency
+label: 'Frequency of publication'
 description: ''
 required: false
 translatable: false

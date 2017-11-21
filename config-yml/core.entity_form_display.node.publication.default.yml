@@ -12,8 +12,10 @@ dependencies:
     - field.field.node.publication.field_issn
     - field.field.node.publication.field_last_issue
     - field.field.node.publication.field_place_of_publication
+    - field.field.node.publication.field_previous_title
     - field.field.node.publication.field_province_state
     - field.field.node.publication.field_publisher
+    - field.field.node.publication.field_succeeding_title
     - node.type.publication
   module:
     - address
@@ -28,7 +30,7 @@ third_party_settings:
         - field_first_issue
         - field_last_issue
       parent_name: ''
-      weight: 5
+      weight: 6
       format_type: details
       format_settings:
         label: 'Date of Publication'
@@ -37,19 +39,32 @@ third_party_settings:
         id: ''
         classes: ''
       label: 'Date of Publication'
-    group_geographic_location:
+    group_alternative_titles:
+      children:
+        - field_previous_title
+        - field_succeeding_title
+      parent_name: ''
+      weight: 2
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: false
+        required_fields: true
+      label: 'Alternative titles'
+    group_g:
       children:
         - field_province_state
         - field_city_town
       parent_name: ''
-      weight: 3
+      weight: 4
       format_type: details
       format_settings:
         id: ''
         classes: ''
         open: true
         required_fields: true
-      label: 'Geographic Location'
+      label: 'Geographic Coverage'
 id: node.publication.default
 targetEntityType: node
 bundle: publication
@@ -57,7 +72,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 7
+    weight: 8
     settings:
       rows: 9
       summary_rows: 3
@@ -66,7 +81,7 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -79,7 +94,7 @@ content:
     type: string_textfield
     region: content
   field_city_town:
-    weight: 27
+    weight: 28
     settings:
       match_operator: CONTAINS
       size: 60
@@ -106,7 +121,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_credit:
-    weight: 9
+    weight: 10
     settings:
       size: 60
       placeholder: ''
@@ -114,22 +129,22 @@ content:
     type: string_textfield
     region: content
   field_first_issue:
-    weight: 11
+    weight: 8
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_frequency:
-    weight: 6
+    weight: 7
     settings:
       match_operator: CONTAINS
       size: 60
-      placeholder: 'Autocomplete suggestions appear as you type'
+      placeholder: 'Autocomplete suggestions may appear as you type'
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
   field_issn:
-    weight: 8
+    weight: 9
     settings:
       size: 60
       placeholder: ''
@@ -137,20 +152,29 @@ content:
     type: string_textfield
     region: content
   field_last_issue:
-    weight: 12
+    weight: 9
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
   field_place_of_publication:
-    weight: 2
+    weight: 3
     settings:
       default_country: null
     third_party_settings: {  }
     type: address_default
     region: content
+  field_previous_title:
+    weight: 6
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_province_state:
-    weight: 26
+    weight: 27
     settings:
       match_operator: CONTAINS
       size: 60
@@ -159,7 +183,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_publisher:
-    weight: 4
+    weight: 5
     settings:
       match_operator: CONTAINS
       size: 60
@@ -167,9 +191,18 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
+  field_succeeding_title:
+    weight: 7
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   path:
     type: path
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -177,21 +210,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 12
+    weight: 13
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 15
+    weight: 16
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 13
+    weight: 14
     region: content
     third_party_settings: {  }
   title:
@@ -204,7 +237,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 10
+    weight: 11
     settings:
       match_operator: CONTAINS
       size: 60
