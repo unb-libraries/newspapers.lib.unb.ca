@@ -10,7 +10,7 @@ field_name: field_issn
 entity_type: node
 bundle: publication
 label: ISSN
-description: 'Format: NNNN-NNNC'
+description: 'Examples: <kbd>0382-7291</kbd>, <kbd>0839-380X</kbd>'
 required: false
 translatable: false
 default_value: {  }

@@ -34,5 +34,7 @@ hidden:
   field_issn: true
   field_last_issue: true
   field_place_of_publication: true
+  field_previous_title: true
   field_province_state: true
   field_publisher: true
+  field_succeeding_title: true

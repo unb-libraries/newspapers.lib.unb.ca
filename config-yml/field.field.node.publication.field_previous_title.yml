@@ -10,7 +10,7 @@ field_name: field_previous_title
 entity_type: node
 bundle: publication
 label: 'Continued from'
-description: ''
+description: 'i.e. preceding title'
 required: false
 translatable: false
 default_value: {  }

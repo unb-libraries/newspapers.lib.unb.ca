@@ -39,6 +39,7 @@ third_party_settings:
         id: ''
         classes: ''
       label: 'Date of Publication'
+      region: content
     group_alternative_titles:
       children:
         - field_previous_title
@@ -47,11 +48,13 @@ third_party_settings:
       weight: 2
       format_type: details
       format_settings:
+        label: 'Alternative titles'
+        open: true
+        required_fields: true
         id: ''
         classes: ''
-        open: false
-        required_fields: true
       label: 'Alternative titles'
+      region: content
     group_g:
       children:
         - field_province_state
@@ -65,6 +68,7 @@ third_party_settings:
         open: true
         required_fields: true
       label: 'Geographic Coverage'
+      region: content
 id: node.publication.default
 targetEntityType: node
 bundle: publication
@@ -94,7 +98,7 @@ content:
     type: string_textfield
     region: content
   field_city_town:
-    weight: 28
+    weight: 12
     settings:
       match_operator: CONTAINS
       size: 60
@@ -129,7 +133,7 @@ content:
     type: string_textfield
     region: content
   field_first_issue:
-    weight: 8
+    weight: 6
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -139,7 +143,7 @@ content:
     settings:
       match_operator: CONTAINS
       size: 60
-      placeholder: 'Autocomplete suggestions may appear as you type'
+      placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
@@ -152,7 +156,7 @@ content:
     type: string_textfield
     region: content
   field_last_issue:
-    weight: 9
+    weight: 7
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -165,7 +169,7 @@ content:
     type: address_default
     region: content
   field_previous_title:
-    weight: 6
+    weight: 8
     settings:
       match_operator: CONTAINS
       size: 60
@@ -174,11 +178,11 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_province_state:
-    weight: 27
+    weight: 11
     settings:
       match_operator: CONTAINS
       size: 60
-      placeholder: 'Autocomplete suggestions may appear as you type'
+      placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
@@ -187,12 +191,12 @@ content:
     settings:
       match_operator: CONTAINS
       size: 60
-      placeholder: 'Autocomplete suggestions may appear as you type'
+      placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
   field_succeeding_title:
-    weight: 7
+    weight: 9
     settings:
       match_operator: CONTAINS
       size: 60
