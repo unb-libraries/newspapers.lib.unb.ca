@@ -4,6 +4,10 @@
 // Subtheme local variables.
 @import 'local-variables';
 
+.description {
+  color: $text-muted;
+}
+
 // Improve autocomplete.
 .ui-autocomplete li:first-child:before {
   border-bottom: 1px solid $text-muted;
@@ -25,4 +29,12 @@
 
 .main-container {
   margin-top: 1em;
+}
+
+/* Fix overrides.min.css / unb-lib.css conflict */
+.panel-title,
+.panel-title:focus,
+.panel-title:hover,
+.panel-title:hover:focus {
+  color: $unb-lib-panel-heading;
 }
