@@ -95,7 +95,7 @@
         "drupal/externalauth": "1.0",
         "drupal/features": "3.0-beta8",
         "drupal/field_group": "3.0-beta1",
-        "drupal/google_analytics": "2.1",
+        "drupal/google_analytics": "2.2",
         "drupal/ldap": "3.0-beta3",
         "drupal/pathauto": "1.0",
         "drupal/redis": "1.0-rc2",
