@@ -4,6 +4,6 @@ status: true
 dependencies: {  }
 name: Frequency
 vid: frequency
-description: ''
+description: 'How often the newspaper was published'
 hierarchy: 0
 weight: 0
