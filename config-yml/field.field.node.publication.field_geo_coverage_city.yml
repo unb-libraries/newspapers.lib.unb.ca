@@ -1,17 +1,17 @@
-uuid: a3f933d7-f7db-47dc-a51a-f486badde4d2
+uuid: edde65e4-cc7b-442f-92cc-69be2c640edc
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_frequency
+    - field.storage.node.field_geo_coverage_city
     - node.type.publication
-    - taxonomy.vocabulary.frequency
-id: node.publication.field_frequency
-field_name: field_frequency
+    - taxonomy.vocabulary.city
+id: node.publication.field_geo_coverage_city
+field_name: field_geo_coverage_city
 entity_type: node
 bundle: publication
-label: 'Frequency of publication'
-description: ''
+label: City/Town
+description: '<i>Suggested values may pop up as you type</i>'
 required: false
 translatable: false
 default_value: {  }
@@ -20,10 +20,10 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      frequency: frequency
+      city: city
     sort:
       field: name
       direction: asc
-    auto_create: false
+    auto_create: true
     auto_create_bundle: ''
 field_type: entity_reference

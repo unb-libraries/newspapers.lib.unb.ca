@@ -4,21 +4,20 @@ status: true
 dependencies:
   config:
     - field.field.node.publication.body
-    - field.field.node.publication.field_abbreviated_title
-    - field.field.node.publication.field_city_town
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_first_issue
     - field.field.node.publication.field_frequency
+    - field.field.node.publication.field_geo_coverage_city
+    - field.field.node.publication.field_geo_coverage_province
     - field.field.node.publication.field_issn
     - field.field.node.publication.field_last_issue
-    - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_previous_title
-    - field.field.node.publication.field_province_state
+    - field.field.node.publication.field_publication_place_city
+    - field.field.node.publication.field_publication_place_province
     - field.field.node.publication.field_publisher
     - field.field.node.publication.field_succeeding_title
     - node.type.publication
   module:
-    - address
     - datetime
     - text
     - user
@@ -33,22 +32,6 @@ content:
     weight: 101
     settings: {  }
     third_party_settings: {  }
-    region: content
-  field_abbreviated_title:
-    weight: 115
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_city_town:
-    weight: 108
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
     region: content
   field_credit:
     weight: 112
@@ -75,6 +58,22 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
+  field_geo_coverage_city:
+    weight: 118
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_geo_coverage_province:
+    weight: 116
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
   field_issn:
     weight: 106
     label: above
@@ -92,13 +91,6 @@ content:
     third_party_settings: {  }
     type: datetime_default
     region: content
-  field_place_of_publication:
-    weight: 102
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: address_default
-    region: content
   field_previous_title:
     weight: 113
     label: above
@@ -107,8 +99,16 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_province_state:
-    weight: 107
+  field_publication_place_city:
+    weight: 117
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_publication_place_province:
+    weight: 115
     label: above
     settings:
       link: true

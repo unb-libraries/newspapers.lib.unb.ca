@@ -4,21 +4,20 @@ status: true
 dependencies:
   config:
     - field.field.node.publication.body
-    - field.field.node.publication.field_abbreviated_title
-    - field.field.node.publication.field_city_town
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_first_issue
     - field.field.node.publication.field_frequency
+    - field.field.node.publication.field_geo_coverage_city
+    - field.field.node.publication.field_geo_coverage_province
     - field.field.node.publication.field_issn
     - field.field.node.publication.field_last_issue
-    - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_previous_title
-    - field.field.node.publication.field_province_state
+    - field.field.node.publication.field_publication_place_city
+    - field.field.node.publication.field_publication_place_province
     - field.field.node.publication.field_publisher
     - field.field.node.publication.field_succeeding_title
     - node.type.publication
   module:
-    - address
     - datetime
     - field_group
     - path
@@ -30,7 +29,7 @@ third_party_settings:
         - field_first_issue
         - field_last_issue
       parent_name: ''
-      weight: 6
+      weight: 7
       format_type: details
       format_settings:
         label: 'Date of Publication'
@@ -45,7 +44,7 @@ third_party_settings:
         - field_previous_title
         - field_succeeding_title
       parent_name: ''
-      weight: 2
+      weight: 1
       format_type: details
       format_settings:
         label: 'Alternative titles'
@@ -57,10 +56,10 @@ third_party_settings:
       region: content
     group_g:
       children:
-        - field_province_state
-        - field_city_town
+        - field_geo_coverage_province
+        - field_geo_coverage_city
       parent_name: ''
-      weight: 4
+      weight: 3
       format_type: details
       format_settings:
         id: ''
@@ -69,6 +68,21 @@ third_party_settings:
         required_fields: true
       label: 'Geographic Coverage'
       region: content
+    group_place_of_publication:
+      children:
+        - field_publication_place_province
+        - field_publication_place_city
+      parent_name: ''
+      weight: 2
+      format_type: details
+      format_settings:
+        label: 'Place of Publication'
+        open: true
+        required_fields: true
+        id: ''
+        classes: ''
+      label: 'Place of Publication'
+      region: content
 id: node.publication.default
 targetEntityType: node
 bundle: publication
@@ -76,7 +90,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 8
+    weight: 9
     settings:
       rows: 9
       summary_rows: 3
@@ -85,28 +99,40 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 12
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_abbreviated_title:
-    weight: 1
+  field_credit:
+    weight: 11
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_city_town:
-    weight: 12
+  field_first_issue:
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_frequency:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_geo_coverage_city:
+    weight: 5
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
     third_party_settings:
       conditional_fields:
-        5cdeb8a3-1190-4073-a2c8-ddf000ca64e1:
-          dependee: field_province_state
+        466b1f2b-fa75-4835-a8b8-e3a2ce30631d:
+          dependee: field_geo_coverage_province
           settings:
             state: '!visible'
             condition: empty
@@ -117,6 +143,7 @@ content:
             value_form:
               -
                 target_id: null
+                _weight: '0'
             effect: show
             effect_options: {  }
             selector: ''
@@ -124,22 +151,8 @@ content:
           bundle: publication
     type: entity_reference_autocomplete
     region: content
-  field_credit:
-    weight: 10
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_first_issue:
-    weight: 6
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_frequency:
-    weight: 7
+  field_geo_coverage_province:
+    weight: 4
     settings:
       match_operator: CONTAINS
       size: 60
@@ -148,7 +161,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_issn:
-    weight: 9
+    weight: 10
     settings:
       size: 60
       placeholder: ''
@@ -156,17 +169,10 @@ content:
     type: string_textfield
     region: content
   field_last_issue:
-    weight: 7
+    weight: 21
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
-    region: content
-  field_place_of_publication:
-    weight: 3
-    settings:
-      default_country: null
-    third_party_settings: {  }
-    type: address_default
     region: content
   field_previous_title:
     weight: 8
@@ -177,8 +183,36 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
-  field_province_state:
-    weight: 11
+  field_publication_place_city:
+    weight: 7
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        1609d240-04e7-4106-93da-e0e816d46426:
+          dependee: field_publication_place_province
+          settings:
+            state: '!visible'
+            condition: empty
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                target_id: null
+                _weight: '0'
+            effect: show
+            effect_options: {  }
+            selector: ''
+          entity_type: node
+          bundle: publication
+    type: entity_reference_autocomplete
+    region: content
+  field_publication_place_province:
+    weight: 6
     settings:
       match_operator: CONTAINS
       size: 60
@@ -187,7 +221,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_publisher:
-    weight: 5
+    weight: 6
     settings:
       match_operator: CONTAINS
       size: 60
@@ -206,7 +240,7 @@ content:
     region: content
   path:
     type: path
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -214,21 +248,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 13
+    weight: 14
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 16
+    weight: 17
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 15
     region: content
     third_party_settings: {  }
   title:
@@ -241,7 +275,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 11
+    weight: 12
     settings:
       match_operator: CONTAINS
       size: 60

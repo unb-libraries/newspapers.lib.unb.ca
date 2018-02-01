@@ -4,6 +4,6 @@ status: true
 dependencies: {  }
 name: Publisher
 vid: publisher
-description: ''
+description: 'Publishing organization'
 hierarchy: 0
 weight: 0

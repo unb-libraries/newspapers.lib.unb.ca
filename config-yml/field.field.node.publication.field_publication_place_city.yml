@@ -1,17 +1,17 @@
-uuid: 1ea2c4eb-bad9-4578-8f3c-db7b1213c8e6
+uuid: 09e26320-a37d-4cc4-abbd-5fc349a1df52
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_province_state
+    - field.storage.node.field_publication_place_city
     - node.type.publication
-    - taxonomy.vocabulary.province
-id: node.publication.field_province_state
-field_name: field_province_state
+    - taxonomy.vocabulary.city
+id: node.publication.field_publication_place_city
+field_name: field_publication_place_city
 entity_type: node
 bundle: publication
-label: Province/State
-description: "Examples: New Brunswick, Maine<br>\r\n<i>Suggested values may pop up as you type</i>"
+label: City/Town
+description: '<i>Suggested values may pop up as you type</i>'
 required: false
 translatable: false
 default_value: {  }
@@ -20,7 +20,7 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      province: province
+      city: city
     sort:
       field: name
       direction: asc

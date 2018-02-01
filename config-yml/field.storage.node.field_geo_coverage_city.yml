@@ -1,19 +1,19 @@
-uuid: c686482f-107f-4b37-9a38-7a0b80f87cbf
+uuid: 5035783c-da3b-477e-9def-2b063e3bf49e
 langcode: en
 status: true
 dependencies:
   module:
     - node
     - taxonomy
-id: node.field_province_state
-field_name: field_province_state
+id: node.field_geo_coverage_city
+field_name: field_geo_coverage_city
 entity_type: node
 type: entity_reference
 settings:
   target_type: taxonomy_term
 module: core
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

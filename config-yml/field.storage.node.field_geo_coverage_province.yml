@@ -1,12 +1,12 @@
-uuid: b8e43885-2c4d-4177-a65c-02cebc0e4459
+uuid: e2e9fb55-d593-40f7-afe2-217c33bca301
 langcode: en
 status: true
 dependencies:
   module:
     - node
     - taxonomy
-id: node.field_city_town
-field_name: field_city_town
+id: node.field_geo_coverage_province
+field_name: field_geo_coverage_province
 entity_type: node
 type: entity_reference
 settings:
