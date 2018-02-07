@@ -1,0 +1,8 @@
+name: newspapers_core
+type: module
+description: Newspaper Core Functions
+core: 8.x
+package: Newspapers
+dependencies:
+  - datetime
+  - conditional_fields

@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Contains newspapers_core.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function newspapers_core_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the newspapers_core module.
+    case 'help.page.newspapers_core':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Newspaper Core Functions') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function newspapers_core_theme() {
+  return [
+    'newspapers_core' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  switch ($form_id) {
+    case 'node_publication_form':
+      // Add a checkbox for toggling first issue partial publication date.
+      $form['impartial_first_issue_date'] = [
+        '#type' => 'checkbox',
+        '#title' => t("The publication date for the first issue is incomplete."),
+        '#required' => FALSE,
+      ];
+
+      // Add a checkbox for toggling last issue partial publication date.
+      $form['impartial_last_issue_date'] = [
+        '#type' => 'checkbox',
+        '#title' => t("The publication date for the last issue is incomplete."),
+        '#required' => FALSE,
+      ];
+
+      break;
+  }
+}

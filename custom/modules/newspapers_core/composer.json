@@ -1,0 +1,14 @@
+{
+  "name": "drupal/newspapers_core",
+  "type": "drupal-module",
+  "description": "Newspaper Core Functions",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/newspapers_core",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/newspapers_core",
+    "source": "http://cgit.drupalcode.org/newspapers_core"
+  },
+  "require": { }
+}
