@@ -91,7 +91,7 @@
         "drupal/conditional_fields": "1.0-alpha4",
         "drupal/config_update": "1.1",
         "drupal/console": "~1.0",
-        "drupal/core": "8.4.4",
+        "drupal/core": "8.4.5",
         "drupal/externalauth": "1.0",
         "drupal/features": "3.0-beta8",
         "drupal/field_group": "3.0-beta1",
