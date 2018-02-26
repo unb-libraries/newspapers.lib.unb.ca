@@ -7,7 +7,7 @@ description: 'For newspapers_lib_unb_ca'
 package: 'newspapers_lib_unb_ca'
 
 libraries:
-  - newspapers_lib_unb_ca/global-styling
+  - newspapers_lib_unb_ca/newspapers_styles
 
 regions:
   navigation: 'Navigation'
