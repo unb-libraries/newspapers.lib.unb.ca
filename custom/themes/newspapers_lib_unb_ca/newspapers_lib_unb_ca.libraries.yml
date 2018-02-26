@@ -1,0 +1,4 @@
+newspapers_styles:
+  css:
+    theme:
+      dist/css/style.css: {}
