@@ -1,5 +1,8 @@
-customjs:
+pubform:
+  css:
+    theme:
+      css/pub-form.css: {}
   js:
-    js/newspapers_core.js: {}
+    js/pub-form.js: {}
   dependencies:
      - core/jquery
