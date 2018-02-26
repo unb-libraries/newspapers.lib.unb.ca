@@ -32,9 +32,33 @@
 }
 
 /* Fix overrides.min.css / unb-lib.css conflict */
-.panel-title,
-.panel-title:focus,
-.panel-title:hover,
-.panel-title:hover:focus {
+.panel-default > .panel-heading {
   color: $unb-lib-panel-heading;
+}
+
+.panel-heading a,
+.panel-heading a:focus,
+.panel-heading a:hover {
+  background: none;
+  color: $unb-lib-panel-heading;
+  outline: none;
+  padding-right: 0;
+}
+.panel-heading a:after {
+  font-family: 'Glyphicons Halflings';
+  content: "\e080";
+  float: right;
+}
+.panel-heading a[aria-expanded="true"]:after {
+  content: "\e114";
+}
+
+.form-item {
+  transition: all linear 0.4s;
+}
+
+.messages--info {
+  color: #325e1c;
+  border-color: #c9e1bd #c9e1bd #c9e1bd transparent;
+  box-shadow: -8px 0 0 #333;
 }
