@@ -111,3 +111,28 @@ function _newspapers_core_boolean_is_true(Node $node, $field) {
 
   return $field_value ? TRUE : FALSE;
 }
+
+/**
+ * Nullify all fields of a given array.
+ *
+ * @param \Drupal\node\Entity\Node $node
+ *   The node of the newspaper publication.
+ * @param array $fields
+ *   The array of field machine names to set to NULL.
+ */
+function _newspapers_core_blank_fields(Node $node, array $fields) {
+  foreach ($fields as $field) {
+    if (!$node->hasField($field)) {
+      $msg = "The <em class=\"placeholder\">$field</em> field does not exist - not clearing!";
+      drupal_set_message($msg, 'error');
+    }
+    else {
+      // $field_label = $node->$field->getFieldDefinition()->getLabel();
+      $node
+        ->get($field)
+        ->setValue(NULL);
+      $msg = "Field <em class=\"placeholder\">$field</em> has been cleared!";
+      drupal_set_message($msg, 'status');
+    }
+  }
+}
