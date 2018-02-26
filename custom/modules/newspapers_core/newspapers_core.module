@@ -54,6 +54,17 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
 function newspapers_core_node_presave($node) {
   $blank_the_fields = [];
 
+  switch ($node->getType()) {
+    case 'publication':
+      // Remove verbatim dates entered prior clearing approx date checkboxes.
+      if (!_newspapers_core_boolean_is_true($node, 'field_first_issue_date_is_approx')) {
+        $blank_the_fields[] = "field_first_issue_approx_date";
+        $blank_the_fields[] = "field_first_issue_sort_date";
+      };
+      if (!_newspapers_core_boolean_is_true($node, 'field_last_issue_date_is_approx')) {
+        $blank_the_fields[] = "field_last_issue_approx_date";
+        $blank_the_fields[] = "field_last_issue_sort_date";
+      };
       break;
   }
 }
