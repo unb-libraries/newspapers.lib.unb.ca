@@ -4,5 +4,5 @@ description: Newspaper Core Functions
 core: 8.x
 package: Newspapers
 dependencies:
-  - datetime
+  - datetime_range
   - conditional_fields
