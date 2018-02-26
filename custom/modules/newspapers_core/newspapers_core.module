@@ -67,4 +67,47 @@ function newspapers_core_node_presave($node) {
       };
       break;
   }
+
+  if (!empty($blank_the_fields)) {
+    _newspapers_core_blank_fields($node, $blank_the_fields);
+  }
+
+}
+
+/**
+ * Determine if a boolean checkbox field is checked.
+ *
+ * @param \Drupal\node\Entity\Node $node
+ *   The node of the newspaper publication.
+ * @param string $field
+ *   The machine name of the boolean field to check.
+ *
+ * @return bool
+ *   TRUE if the given node field is checked, FALSE otherwise.
+ */
+function _newspapers_core_boolean_is_true(Node $node, $field) {
+  // Check if field exists.
+  if (!$node->hasField($field)) {
+    $msg = "The <em class=\"placeholder\">$field</em> field does not exist!";
+    drupal_set_message($msg, 'error');
+    return FALSE;
+  }
+
+  // Check if field type is boolean.
+  $field_type = $node
+    ->get($field)
+    ->getFieldDefinition()
+    ->getType();
+  if ($field_type != 'boolean') {
+    $msg = "The <em class=\"placeholder\">$field</em> field is not a boolean field!";
+    drupal_set_message($msg, 'error');
+    return FALSE;
+  }
+
+  // Check if the boolean field is true, i.e. checked.
+  $field_value = $node
+    ->get($field)
+    ->getString();
+
+  return $field_value ? TRUE : FALSE;
 }
