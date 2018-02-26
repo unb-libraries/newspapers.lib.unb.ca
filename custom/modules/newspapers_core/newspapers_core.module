@@ -136,3 +136,29 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
     }
   }
 }
+
+/**
+ * Custom Publication Form Daterange validation.
+ *
+ * @param \Drupal\Core\Form $form
+ *   The publication form object.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The array of field machine names to set to NULL.
+ */
+function _newspapers_core_validate_handler(Form &$form, FormStateInterface $form_state) {
+  if (!$form_state->getValue('field_first_issue_date_is_approx')['value']) {
+    $first_issue_daterange = $form_state->getValue('field_first_issue_date');
+    if (is_null($first_issue_daterange[0]['end_value'])) {
+      $first_issue_daterange[0]['end_value'] = $first_issue_daterange[0]['value'];
+      $form_state->setValue('field_first_issue_date', $first_issue_daterange);
+    }
+  }
+
+  if (!$form_state->getValue('field_last_issue_date_is_approx')['value']) {
+    $last_issue_daterange = $form_state->getValue('field_last_issue_date');
+    if (is_null($last_issue_daterange[0]['end_value'])) {
+      $last_issue_daterange[0]['end_value'] = $last_issue_daterange[0]['value'];
+      $form_state->setValue('field_last_issue_date', $last_issue_daterange);
+    }
+  }
+}
