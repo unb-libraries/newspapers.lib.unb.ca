@@ -5,12 +5,18 @@ dependencies:
   config:
     - field.field.node.publication.body
     - field.field.node.publication.field_credit
-    - field.field.node.publication.field_first_issue
+    - field.field.node.publication.field_first_issue_approx_date
+    - field.field.node.publication.field_first_issue_date
+    - field.field.node.publication.field_first_issue_date_is_approx
+    - field.field.node.publication.field_first_issue_sort_date
     - field.field.node.publication.field_frequency
     - field.field.node.publication.field_geo_coverage_city
     - field.field.node.publication.field_geo_coverage_province
     - field.field.node.publication.field_issn
-    - field.field.node.publication.field_last_issue
+    - field.field.node.publication.field_last_issue_approx_date
+    - field.field.node.publication.field_last_issue_date
+    - field.field.node.publication.field_last_issue_date_is_approx
+    - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_previous_title
     - field.field.node.publication.field_publication_place_city
     - field.field.node.publication.field_publication_place_province
@@ -19,6 +25,7 @@ dependencies:
     - node.type.publication
   module:
     - datetime
+    - datetime_range
     - field_group
     - path
     - text
@@ -26,8 +33,12 @@ third_party_settings:
   field_group:
     group_date_of_publication:
       children:
-        - field_first_issue
-        - field_last_issue
+        - field_first_issue_date_is_approx
+        - field_first_issue_date
+        - field_first_issue_approx_date
+        - field_last_issue_date_is_approx
+        - field_last_issue_date
+        - field_last_issue_approx_date
       parent_name: ''
       weight: 5
       format_type: details
@@ -103,11 +114,47 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_first_issue:
-    weight: 20
+  field_first_issue_approx_date:
+    weight: 38
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        7ab621d4-98bd-4e9a-9390-5b495bb0c9c0:
+          dependee: field_first_issue_date_is_approx
+          settings:
+            state: visible
+            condition: checked
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              value: false
+            effect: slide
+            effect_options:
+              fade:
+                speed: '400'
+              slide:
+                speed: '300'
+            selector: ''
+          entity_type: node
+          bundle: publication
+    type: string_textfield
+    region: content
+  field_first_issue_date:
+    weight: 37
     settings: {  }
     third_party_settings: {  }
-    type: datetime_default
+    type: daterange_default
+    region: content
+  field_first_issue_date_is_approx:
+    weight: 36
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
     region: content
   field_frequency:
     weight: 6
@@ -160,8 +207,50 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_last_issue:
-    weight: 21
+  field_last_issue_approx_date:
+    weight: 41
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        a8f13c3e-a3b7-4a44-a558-b60e53e2a088:
+          dependee: field_last_issue_date_is_approx
+          settings:
+            state: visible
+            condition: checked
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              value: false
+            effect: slide
+            effect_options:
+              fade:
+                speed: '400'
+              slide:
+                speed: '300'
+            selector: ''
+          entity_type: node
+          bundle: publication
+    type: string_textfield
+    region: content
+  field_last_issue_date:
+    weight: 40
+    settings: {  }
+    third_party_settings: {  }
+    type: daterange_default
+    region: content
+  field_last_issue_date_is_approx:
+    weight: 39
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_last_issue_sort_date:
+    weight: 42
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -222,7 +311,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_succeeding_title:
-    weight: 9
+    weight: 10
     settings:
       match_operator: CONTAINS
       size: 60
@@ -276,3 +365,4 @@ content:
     third_party_settings: {  }
 hidden:
   field_credit: true
+  field_first_issue_sort_date: true
