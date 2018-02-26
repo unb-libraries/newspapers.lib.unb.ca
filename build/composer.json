@@ -45,6 +45,9 @@
             "drupal/core": {
                 "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch",
                 "To display exposed filter block titles": "https://www.drupal.org/files/issues/2720101-38.patch"
+            },
+            "drupal/conditional_fields": {
+                "Conditional fields Uninitialized string offset": "https://www.drupal.org/files/issues/conditional_fields-uninitialized_string_offset_in_conditional_fields_evaluate_dependency-2834358-11.patch"
             }
         }
     },
