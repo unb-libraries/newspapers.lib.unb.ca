@@ -1,0 +1,21 @@
+uuid: d609b69c-50ab-408f-b61b-53f79d516e0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_last_issue_date
+    - node.type.publication
+  module:
+    - datetime_range
+id: node.publication.field_last_issue_date
+field_name: field_last_issue_date
+entity_type: node
+bundle: publication
+label: 'Last Issue Date Range'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: daterange

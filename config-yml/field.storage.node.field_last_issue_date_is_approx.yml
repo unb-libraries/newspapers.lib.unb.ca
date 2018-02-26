@@ -1,0 +1,18 @@
+uuid: 2ea45a80-4ebd-4577-aa06-9582bda69cf2
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_last_issue_date_is_approx
+field_name: field_last_issue_date_is_approx
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

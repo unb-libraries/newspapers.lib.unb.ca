@@ -1,0 +1,5 @@
+customjs:
+  js:
+    js/newspapers_core.js: {}
+  dependencies:
+     - core/jquery

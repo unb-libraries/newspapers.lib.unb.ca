@@ -1,0 +1,21 @@
+uuid: ad952b32-1b2c-48a3-8245-09ea412a08cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_last_issue_sort_date
+    - node.type.publication
+  module:
+    - datetime
+id: node.publication.field_last_issue_sort_date
+field_name: field_last_issue_sort_date
+entity_type: node
+bundle: publication
+label: 'Last Issue Sort Date'
+description: 'A date used for administrative last issue sorting purposes.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

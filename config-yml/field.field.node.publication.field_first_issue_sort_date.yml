@@ -1,0 +1,21 @@
+uuid: 16f8aa5c-282d-43d5-84da-e2e422c73984
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_first_issue_sort_date
+    - node.type.publication
+  module:
+    - datetime
+id: node.publication.field_first_issue_sort_date
+field_name: field_first_issue_sort_date
+entity_type: node
+bundle: publication
+label: 'First Issue Sort Date'
+description: 'A date used for administrative first issue sorting purposes.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

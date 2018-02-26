@@ -1,0 +1,23 @@
+uuid: d8fce360-720d-4743-9694-3b17e3dc7c81
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_first_issue_date_is_approx
+    - node.type.publication
+id: node.publication.field_first_issue_date_is_approx
+field_name: field_first_issue_date_is_approx
+entity_type: node
+bundle: publication
+label: 'First Issue Date is Approximate'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
