@@ -31,16 +31,20 @@ hidden:
   field_credit: true
   field_first_issue: true
   field_first_issue_approx_date: true
+  field_first_issue_date: true
   field_first_issue_date_is_approx: true
   field_first_issue_precise_date: true
+  field_first_issue_sort_date: true
   field_frequency: true
   field_geo_coverage_city: true
   field_geo_coverage_province: true
   field_issn: true
   field_last_issue: true
   field_last_issue_approx_date: true
+  field_last_issue_date: true
   field_last_issue_date_is_approx: true
   field_last_issue_precise_date: true
+  field_last_issue_sort_date: true
   field_place_of_publication: true
   field_previous_title: true
   field_province_state: true
