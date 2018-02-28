@@ -89,7 +89,7 @@ function _newspapers_core_boolean_is_true(Node $node, $field) {
   // Check if field exists.
   if (!$node->hasField($field)) {
     $msg = "The <em class=\"placeholder\">$field</em> field does not exist!";
-    drupal_set_message($msg, 'error');
+    drupal_set_message(t($msg), 'error');
     return FALSE;
   }
 
@@ -100,7 +100,7 @@ function _newspapers_core_boolean_is_true(Node $node, $field) {
     ->getType();
   if ($field_type != 'boolean') {
     $msg = "The <em class=\"placeholder\">$field</em> field is not a boolean field!";
-    drupal_set_message($msg, 'error');
+    drupal_set_message(t($msg), 'error');
     return FALSE;
   }
 
@@ -124,7 +124,7 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
   foreach ($fields as $field) {
     if (!$node->hasField($field)) {
       $msg = "The <em class=\"placeholder\">$field</em> field does not exist - not clearing!";
-      drupal_set_message($msg, 'error');
+      drupal_set_message(t($msg), 'error');
     }
     else {
       // $field_label = $node->$field->getFieldDefinition()->getLabel();
@@ -132,7 +132,7 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
         ->get($field)
         ->setValue(NULL);
       $msg = "Field <em class=\"placeholder\">$field</em> has been cleared!";
-      drupal_set_message($msg, 'status');
+      drupal_set_message(t($msg), 'status');
     }
   }
 }
@@ -146,19 +146,24 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
  *   The array of field machine names to set to NULL.
  */
 function _newspapers_core_validate_handler(array &$form, FormStateInterface $form_state) {
-  if (!$form_state->getValue('field_first_issue_date_is_approx')['value']) {
-    $first_issue_daterange = $form_state->getValue('field_first_issue_date');
-    if (is_null($first_issue_daterange[0]['end_value'])) {
-      $first_issue_daterange[0]['end_value'] = $first_issue_daterange[0]['value'];
-      $form_state->setValue('field_first_issue_date', $first_issue_daterange);
+  $message = t("Approximate <em>start</em> and <em>end</em> dates cannot be empty");
+
+  if ($form_state->getValue(['field_first_issue_date_is_approx', 'value'])) {
+    $element = 'field_first_issue_date';
+    $first_issue_date = $form_state->getValue($element);
+    if (is_null($first_issue_date['0']['value']) ||
+      is_null($first_issue_date['0']['end_value'])) {
+      $form_state->setErrorByName($date_element, $message);
     }
   }
 
-  if (!$form_state->getValue('field_last_issue_date_is_approx')['value']) {
-    $last_issue_daterange = $form_state->getValue('field_last_issue_date');
-    if (is_null($last_issue_daterange[0]['end_value'])) {
-      $last_issue_daterange[0]['end_value'] = $last_issue_daterange[0]['value'];
-      $form_state->setValue('field_last_issue_date', $last_issue_daterange);
+  if ($form_state->getValue(['field_last_issue_date_is_approx', 'value'])) {
+    $element = 'field_last_issue_date';
+    $last_issue_date = $form_state->getValue($element);
+    if (is_null($last_issue_date['0']['value']) ||
+      is_null($last_issue_date['0']['end_value'])) {
+      $form_state->setErrorByName($element, $message);
     }
   }
+
 }
