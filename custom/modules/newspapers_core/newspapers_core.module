@@ -153,7 +153,7 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
     $first_issue_date = $form_state->getValue($element);
     if (is_null($first_issue_date['0']['value']) ||
       is_null($first_issue_date['0']['end_value'])) {
-      $form_state->setErrorByName($date_element, $message);
+      $form_state->setErrorByName($element, $message);
     }
   }
 
