@@ -15,12 +15,7 @@ label: 'First Issue Date Range'
 description: 'Date Range help text'
 required: false
 translatable: false
-default_value:
-  -
-    default_date_type: relative
-    default_date: '-200 years'
-    default_end_date_type: ''
-    default_end_date: ''
+default_value: {  }
 default_value_callback: ''
 settings: {  }
 field_type: daterange
