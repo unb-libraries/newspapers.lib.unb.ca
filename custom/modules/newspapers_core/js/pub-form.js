@@ -54,7 +54,7 @@ function lastIssueDateRange() {
 
 jQuery(document).ready(function () {
     /**
-     * Adjust Date of Publication fieldset daterange widgets on form load + UI click re: approximate dates.
+     * Adjust Date of Publication fieldset daterange widgets on form load + UI click (approximate dates).
      */
     firstIssueDateRange();
     lastIssueDateRange();
