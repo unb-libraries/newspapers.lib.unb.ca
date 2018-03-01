@@ -141,9 +141,9 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
  * Custom Publication Form Daterange validation.
  *
  * @param array $form
- *   The publication form object.
+ *   The publication form array.
  * @param \Drupal\Core\Form\FormStateInterface $form_state
- *   The array of field machine names to set to NULL.
+ *   The object containing the current state of the Publication form.
  */
 function _newspapers_core_validate_handler(array &$form, FormStateInterface $form_state) {
   $message = t("Approximate <em>start</em> and <em>end</em> dates cannot be empty");
@@ -165,5 +165,4 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
       $form_state->setErrorByName($element, $message);
     }
   }
-
 }
