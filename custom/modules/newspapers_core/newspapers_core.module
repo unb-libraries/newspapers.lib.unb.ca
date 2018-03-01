@@ -5,9 +5,11 @@
  * Contains newspapers_core.module.
  */
 
-use Drupal\node\Entity\Node;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\Entity\Node;
 
 /**
  * Implements hook_help().
@@ -51,7 +53,7 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
 /**
  * Implements hook_ENTITY_TYPE_presave().
  */
-function newspapers_core_node_presave($node) {
+function newspapers_core_node_presave(EntityInterface $node) {
   $blank_the_fields = [];
 
   switch ($node->getType()) {
@@ -60,11 +62,40 @@ function newspapers_core_node_presave($node) {
       if (!_newspapers_core_boolean_is_true($node, 'field_first_issue_date_is_approx')) {
         $blank_the_fields[] = "field_first_issue_approx_date";
         $blank_the_fields[] = "field_first_issue_sort_date";
-      };
+      }
+      else {
+        $date_range = $node
+          ->get('field_first_issue_date')
+          ->getString();
+        list($start_date, $end_date) =
+          explode(', ', $date_range, 2);
+        $sort_timestamp = (strtotime($start_date) + strtotime($end_date)) / 2;
+        $sort_date = DrupalDateTime::createFromTimestamp($sort_timestamp)
+          ->format('Y-m-d');
+
+        $node
+          ->get('field_first_issue_sort_date')
+          ->setValue($sort_date);
+      }
+
       if (!_newspapers_core_boolean_is_true($node, 'field_last_issue_date_is_approx')) {
         $blank_the_fields[] = "field_last_issue_approx_date";
         $blank_the_fields[] = "field_last_issue_sort_date";
-      };
+      }
+      else {
+        $date_range = $node
+          ->get('field_last_issue_date')
+          ->getString();
+        list($start_date, $end_date) =
+          explode(', ', $date_range, 2);
+        $sort_timestamp = (strtotime($start_date) + strtotime($end_date)) / 2;
+        $sort_date = DrupalDateTime::createFromTimestamp($sort_timestamp)
+          ->format('Y-m-d');
+
+        $node
+          ->get('field_last_issue_sort_date')
+          ->setValue($sort_date);
+      }
       break;
   }
 
