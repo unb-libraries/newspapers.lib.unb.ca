@@ -1,17 +1,16 @@
-uuid: ae194267-0433-4043-ba71-269ec517bdb6
+uuid: c1063812-3a26-4bab-ab89-e4b6703b35ea
 langcode: en
 status: true
 dependencies:
   module:
     - node
+    - taxonomy
 id: node.field_credit
 field_name: field_credit
 entity_type: node
-type: string
+type: entity_reference
 settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
+  target_type: taxonomy_term
 module: core
 locked: false
 cardinality: 1

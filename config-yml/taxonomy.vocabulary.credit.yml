@@ -1,0 +1,9 @@
+uuid: f08917c2-1b47-449e-bf11-8e20d0ec6b82
+langcode: en
+status: true
+dependencies: {  }
+name: Credit
+vid: credit
+description: ''
+hierarchy: 0
+weight: 0
