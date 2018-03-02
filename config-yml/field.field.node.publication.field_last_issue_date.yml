@@ -12,7 +12,7 @@ field_name: field_last_issue_date
 entity_type: node
 bundle: publication
 label: 'Last Issue Date Range'
-description: 'Last Issue date range help text'
+description: 'Last Issue date help text'
 required: false
 translatable: false
 default_value: {  }
