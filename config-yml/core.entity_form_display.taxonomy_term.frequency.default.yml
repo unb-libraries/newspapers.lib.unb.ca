@@ -1,0 +1,29 @@
+uuid: 7c460d35-020f-4ad8-9a58-e898b59da84d
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.frequency
+  module:
+    - path
+id: taxonomy_term.frequency.default
+targetEntityType: taxonomy_term
+bundle: frequency
+mode: default
+content:
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  description: true
