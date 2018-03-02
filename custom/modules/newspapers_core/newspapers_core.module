@@ -184,23 +184,69 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
  *   The object containing the current state of the Publication form.
  */
 function _newspapers_core_validate_handler(array &$form, FormStateInterface $form_state) {
-  $message = t("Approximate <em>start</em> and <em>end</em> dates cannot be empty");
+  $empty_message = t("Approximate <em>start</em> and <em>end</em> dates cannot be empty");
+  $range_message = t("Approximate <em>start</em> and <em>end</em> dates should not be the same");
+
+  $first_issue_element = 'field_first_issue_date';
+  $last_issue_element = 'field_last_issue_date';
+  $first_issue_date = $form_state->getValue($first_issue_element);
+  $last_issue_date = $form_state->getValue($last_issue_element);
+  $first_date_label = t("date");
+  $last_date_label = t("date");
 
   if ($form_state->getValue(['field_first_issue_date_is_approx', 'value'])) {
-    $element = 'field_first_issue_date';
-    $first_issue_date = $form_state->getValue($element);
+    $first_date_label = t("approximate start date");
+
     if (is_null($first_issue_date['0']['value']) ||
       is_null($first_issue_date['0']['end_value'])) {
-      $form_state->setErrorByName($element, $message);
+      $form_state->setErrorByName(
+        $first_issue_element,
+        $empty_message);
+    }
+
+    if ($first_issue_date['0']['value']->format('U') ==
+      $first_issue_date['0']['end_value']->format('U')) {
+      $form_state->setErrorByName(
+        $first_issue_element,
+        $range_message);
     }
   }
 
   if ($form_state->getValue(['field_last_issue_date_is_approx', 'value'])) {
-    $element = 'field_last_issue_date';
-    $last_issue_date = $form_state->getValue($element);
+    $last_date_label = t("approximate start date");
+
     if (is_null($last_issue_date['0']['value']) ||
       is_null($last_issue_date['0']['end_value'])) {
-      $form_state->setErrorByName($element, $message);
+      $form_state->setErrorByName(
+        $last_issue_element,
+        $empty_message);
+    }
+
+    if ($last_issue_date['0']['value']->format('U') ==
+      $last_issue_date['0']['end_value']->format('U')) {
+      $form_state->setErrorByName(
+        $last_issue_element,
+        $range_message);
     }
   }
+
+  dump($first_issue_date['0']['value']->format('U'));
+  dump($last_issue_date['0']['value']->format('U'));
+  dump($first_issue_date['0']['value']->format('U') > $last_issue_date['0']['value']->format('U'));
+
+  if ($first_issue_date['0']['value'] && $last_issue_date['0']['value']) {
+    if ($first_issue_date['0']['value']->format('U') >
+      $last_issue_date['0']['value']->format('U')) {
+      $form_state->setErrorByName(
+        $first_issue_element,
+        t("First issue $first_date_label should be less than or equal to last issue $last_date_label.")
+      );
+      $form_state->setErrorByName(
+        $last_issue_element,
+        t("Last issue $last_date_label should be greater than or equal to first issue $first_date_label.")
+      );
+    }
+
+  }
+
 }
