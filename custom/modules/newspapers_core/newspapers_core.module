@@ -230,10 +230,6 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
     }
   }
 
-  dump($first_issue_date['0']['value']->format('U'));
-  dump($last_issue_date['0']['value']->format('U'));
-  dump($first_issue_date['0']['value']->format('U') > $last_issue_date['0']['value']->format('U'));
-
   if ($first_issue_date['0']['value'] && $last_issue_date['0']['value']) {
     if ($first_issue_date['0']['value']->format('U') >
       $last_issue_date['0']['value']->format('U')) {
@@ -246,7 +242,6 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
         t("Last issue $last_date_label should be greater than or equal to first issue $first_date_label.")
       );
     }
-
   }
 
 }
