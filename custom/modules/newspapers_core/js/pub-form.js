@@ -20,10 +20,7 @@ function firstIssueDateRange() {
         jQuery("#edit-field-first-issue-date-0-end-value-date").datepicker("setDate", null).val('');
         jQuery("#edit-field-first-issue-date-0-value + label").slideUp(200);
         jQuery("#edit-field-first-issue-date-0-end-value-date").slideUp(200);
-        /**
-         * Remove 'value should not be null' validation alert if 'First Issue is Approximate' is unchecked.
-         */
-        jQuery("#edit-field-first-issue-date-wrapper .alert-danger").slideUp();
+        // jQuery("#edit-field-first-issue-date-wrapper .alert-danger").slideUp();
     }
 }
 
@@ -45,10 +42,7 @@ function lastIssueDateRange() {
         jQuery('#edit-field-last-issue-date-0-end-value-date').val('');
         jQuery("#edit-field-last-issue-date-0-value + label").slideUp(200);
         jQuery("#edit-field-last-issue-date-0-end-value-date").slideUp(200);
-        /**
-         * Remove 'value should not be null' validation alert if 'First Issue is Approximate' is unchecked.
-         */
-        jQuery("#edit-field-last-issue-date-wrapper .alert-danger").slideUp();
+        // jQuery("#edit-field-last-issue-date-wrapper .alert-danger").slideUp();
     }
 }
 
