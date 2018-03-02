@@ -169,8 +169,6 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
       $node
         ->get($field)
         ->setValue(NULL);
-      $msg = "Field <em class=\"placeholder\">$field</em> has been cleared!";
-      drupal_set_message(t($msg), 'status');
     }
   }
 }
