@@ -101,7 +101,7 @@
         "drupal/field_group": "3.0-beta1",
         "drupal/google_analytics": "2.2",
         "drupal/ldap": "3.0-beta3",
-        "drupal/pathauto": "1.0",
+        "drupal/pathauto": "1.1",
         "drupal/redis": "1.0-rc2",
         "drupal/search_api": "1.7",
         "drupal/token": "1.1",
