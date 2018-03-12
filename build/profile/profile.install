@@ -13,9 +13,6 @@
  * @see system_install()
  */
 function newspapers_lib_unb_ca_install() {
-  include_once DRUPAL_ROOT . '/core/profiles/minimal/minimal.install';
-  minimal_install();
-
   // Set our default theme
   \Drupal::configFactory()
   ->getEditable('system.theme')
