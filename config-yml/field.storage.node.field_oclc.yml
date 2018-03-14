@@ -1,0 +1,21 @@
+uuid: b855cf0a-f02c-4c17-bd77-003908616a84
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_oclc
+field_name: field_oclc
+entity_type: node
+type: string
+settings:
+  max_length: 13
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
