@@ -25,8 +25,41 @@ dependencies:
     - node.type.publication
   module:
     - datetime_range
+    - field_group
     - text
     - user
+third_party_settings:
+  field_group:
+    group_place_of_publication:
+      children:
+        - field_publication_place_province
+        - field_publication_place_city
+      parent_name: ''
+      weight: 0
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: true
+        required_fields: false
+      label: 'Place of Publication'
+      region: content
+    group_publication_dates:
+      children:
+        - field_first_issue_date
+        - field_first_issue_approx_date
+        - field_last_issue_date
+        - field_last_issue_approx_date
+      parent_name: ''
+      weight: 4
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: true
+        required_fields: false
+      label: 'Publication Dates'
+      region: content
 id: node.publication.default
 targetEntityType: node
 bundle: publication
@@ -35,12 +68,12 @@ content:
   body:
     label: hidden
     type: text_default
-    weight: 1
+    weight: 10
     settings: {  }
     third_party_settings: {  }
     region: content
   field_credit:
-    weight: 16
+    weight: 12
     label: above
     settings:
       link: true
@@ -48,7 +81,7 @@ content:
     type: entity_reference_label
     region: content
   field_first_issue_approx_date:
-    weight: 12
+    weight: 7
     label: above
     settings:
       link_to_entity: false
@@ -56,7 +89,7 @@ content:
     type: string
     region: content
   field_first_issue_date:
-    weight: 15
+    weight: 6
     label: above
     settings:
       separator: '-'
@@ -66,22 +99,6 @@ content:
     type: daterange_default
     region: content
   field_frequency:
-    weight: 4
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_geo_coverage_city:
-    weight: 11
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_geo_coverage_province:
     weight: 9
     label: above
     settings:
@@ -89,8 +106,24 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_issn:
+  field_geo_coverage_city:
     weight: 2
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_geo_coverage_province:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_issn:
+    weight: 11
     label: above
     settings:
       link_to_entity: false
@@ -98,7 +131,7 @@ content:
     type: string
     region: content
   field_last_issue_approx_date:
-    weight: 13
+    weight: 9
     label: above
     settings:
       link_to_entity: false
@@ -106,7 +139,7 @@ content:
     type: string
     region: content
   field_last_issue_date:
-    weight: 14
+    weight: 8
     label: above
     settings:
       separator: '-'
@@ -115,16 +148,8 @@ content:
     third_party_settings: {  }
     type: daterange_default
     region: content
-  field_previous_title:
-    weight: 6
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
   field_publication_place_city:
-    weight: 10
+    weight: 2
     label: above
     settings:
       link: true
@@ -132,7 +157,7 @@ content:
     type: entity_reference_label
     region: content
   field_publication_place_province:
-    weight: 8
+    weight: 1
     label: above
     settings:
       link: true
@@ -147,16 +172,8 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_succeeding_title:
-    weight: 7
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
   links:
-    weight: 0
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -165,3 +182,5 @@ hidden:
   field_first_issue_sort_date: true
   field_last_issue_date_is_approx: true
   field_last_issue_sort_date: true
+  field_previous_title: true
+  field_succeeding_title: true
