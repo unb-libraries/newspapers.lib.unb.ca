@@ -1,0 +1,21 @@
+uuid: 2718d104-dd84-498b-8fba-a95c65f9275a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_abstract
+    - node.type.publication
+  module:
+    - text
+id: node.publication.field_abstract
+field_name: field_abstract
+entity_type: node
+bundle: publication
+label: Abstract
+description: 'Longer description of the paper and its history.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
