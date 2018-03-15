@@ -1,0 +1,21 @@
+uuid: e55b9b71-ec97-471c-85ff-3aa07cc23463
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_frequency_notes
+field_name: field_frequency_notes
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
