@@ -1,4 +1,4 @@
-name: newspapers_core
+name: Newspapers Core
 type: module
 description: Newspaper Core Functions
 core: 8.x
