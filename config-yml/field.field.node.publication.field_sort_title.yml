@@ -1,0 +1,19 @@
+uuid: 50f94695-3fae-4b7e-8c4c-ffe01b18cd37
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sort_title
+    - node.type.publication
+id: node.publication.field_sort_title
+field_name: field_sort_title
+entity_type: node
+bundle: publication
+label: 'Sort title'
+description: 'Title used for alphabetical sorting, typically used to alter the sort order of titles beginning with an article like <i>The</i>.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
