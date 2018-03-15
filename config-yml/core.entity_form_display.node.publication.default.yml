@@ -195,6 +195,27 @@ content:
             selector: ''
           entity_type: node
           bundle: publication
+        48d4ed94-e9ab-40d4-a2da-2d6be0940668:
+          dependee: field_frequency
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                target_id: '1'
+            effect: slide
+            effect_options:
+              fade:
+                speed: '400'
+              slide:
+                speed: '300'
+            selector: ''
+          entity_type: node
+          bundle: publication
     type: string_textfield
     region: content
   field_geographic_coverage:
