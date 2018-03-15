@@ -1,11 +1,10 @@
-uuid: d95966f7-ccb8-48e2-93ba-1cd7fdc65a74
+uuid: 4ce7a7fd-d327-4a10-bd40-603d76851060
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_credit
     - node.type.publication
-    - taxonomy.vocabulary.credit
 id: node.publication.field_credit
 field_name: field_credit
 entity_type: node
@@ -16,14 +15,5 @@ required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings:
-  handler: 'default:taxonomy_term'
-  handler_settings:
-    target_bundles:
-      credit: credit
-    sort:
-      field: name
-      direction: asc
-    auto_create: true
-    auto_create_bundle: ''
-field_type: entity_reference
+settings: {  }
+field_type: string_long
