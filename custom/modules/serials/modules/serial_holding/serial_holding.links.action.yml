@@ -1,0 +1,5 @@
+entity.serial_holding.add_form:
+  route_name: entity.serial_holding.add_form
+  title: 'Add Serial holding'
+  appears_on:
+    - entity.serial_holding.collection

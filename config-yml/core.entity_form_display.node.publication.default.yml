@@ -23,6 +23,7 @@ dependencies:
     - field.field.node.publication.field_publication_place_city
     - field.field.node.publication.field_publication_place_province
     - field.field.node.publication.field_publisher
+    - field.field.node.publication.field_serial_holdings
     - field.field.node.publication.field_sort_title
     - field.field.node.publication.field_subject_blurb
     - field.field.node.publication.field_succeeding_title
@@ -411,3 +412,4 @@ content:
 hidden:
   field_first_issue_sort_date: true
   field_last_issue_sort_date: true
+  field_serial_holdings: true

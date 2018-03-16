@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains serials.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function serials_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the serials module.
+    case 'help.page.serials':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Serials Module') . '</p>';
+      return $output;
+
+    default:
+  }
+}

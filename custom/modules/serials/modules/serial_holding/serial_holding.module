@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Contains serial_holding.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+define('SERIAL_HOLDING_ENTITY_REF_FIELD', 'field_serial_holdings');
+define('SERIAL_HOLDING_ENTITY_REF_TYPE', 'publication');
+
+
+/**
+ * Implements hook_help().
+ */
+function serial_holding_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the serial_holding module.
+    case 'help.page.serial_holding':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides a serial holding entity for serial titles') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function serial_holding_theme() {
+  return [
+    'serial_holding' => [
+      'render element' => 'children',
+    ],
+  ];
+}

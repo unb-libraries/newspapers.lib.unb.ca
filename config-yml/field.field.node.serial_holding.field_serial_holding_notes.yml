@@ -1,0 +1,19 @@
+uuid: 7ceda8be-c863-47c6-ad04-6ba0c136998a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_serial_holding_notes
+    - node.type.serial_holding
+id: node.serial_holding.field_serial_holding_notes
+field_name: field_serial_holding_notes
+entity_type: node
+bundle: serial_holding
+label: Notes
+description: 'Notes related to this holding.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

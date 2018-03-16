@@ -1,0 +1,25 @@
+uuid: 1bc2fc40-4bef-44fd-ab70-cac52fe4f9ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_serial_holdings
+    - node.type.publication
+id: node.publication.field_serial_holdings
+field_name: field_serial_holdings
+entity_type: node
+bundle: publication
+label: Holdings
+description: Holdings
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:serial_holding'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

@@ -36,6 +36,8 @@ module:
   quickedit: 0
   rdf: 0
   search: 0
+  serial_holding: 0
+  serials: 0
   system: 0
   taxonomy: 0
   text: 0

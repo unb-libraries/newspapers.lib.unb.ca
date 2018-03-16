@@ -1,0 +1,5 @@
+name: Serials
+type: module
+description: Serials Module
+core: 8.x
+package: Serials

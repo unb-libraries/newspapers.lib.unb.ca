@@ -1,0 +1,21 @@
+uuid: 6bd175ba-6c9c-4c35-840e-4e89ad1e18c4
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_serial_holding_call_number
+field_name: field_serial_holding_call_number
+entity_type: node
+type: string
+settings:
+  max_length: 512
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

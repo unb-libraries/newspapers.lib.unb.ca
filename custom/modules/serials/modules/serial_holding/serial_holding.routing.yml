@@ -1,0 +1,16 @@
+serial_holding.manage_serial_holdings:
+  path: '/node/{node}/holdings'
+  defaults:
+    _entity_list: 'serial_holding'
+    _title_callback: '\Drupal\serial_holding\Entity\Controller\SerialHoldingListTitleBuilder::getTitle'
+  requirements:
+    _permission: 'view content'
+    _custom_access: '\Drupal\serial_holding\Entity\Controller\CheckSerialTypeController::checkType'
+
+serial_holding.add_holding:
+  path: '/node/{node}/holding/add'
+  defaults:
+    _entity_form: serial_holding.add
+    _title: 'Add Serial Holding'
+  requirements:
+    _permission: 'view content'

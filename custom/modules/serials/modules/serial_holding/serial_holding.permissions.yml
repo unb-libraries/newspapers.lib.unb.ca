@@ -1,0 +1,22 @@
+add serial holding entities:
+  title: 'Create new Serial holding entities'
+
+administer serial holding entities:
+  title: 'Administer Serial holding entities'
+  description: 'Allow to access the administration form to configure Serial holding entities.'
+  restrict access: true
+
+delete serial holding entities:
+  title: 'Delete Serial holding entities'
+
+edit serial holding entities:
+  title: 'Edit Serial holding entities'
+
+access serial holding overview:
+  title: 'Access the Serial holding overview page'
+
+view published serial holding entities:
+  title: 'View published Serial holding entities'
+
+view unpublished serial holding entities:
+  title: 'View unpublished Serial holding entities'

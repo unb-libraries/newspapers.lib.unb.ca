@@ -1,0 +1,53 @@
+uuid: 00ab2257-b50a-4d09-b278-052bc61297a9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.serial_holding.field_serial_holding_call_number
+    - field.field.node.serial_holding.field_serial_holding_notes
+    - field.field.node.serial_holding.field_serial_holding_type
+    - field.field.node.serial_holding.field_serial_holding_uri
+    - node.type.serial_holding
+  module:
+    - options
+    - user
+id: node.serial_holding.default
+targetEntityType: node
+bundle: serial_holding
+mode: default
+content:
+  field_serial_holding_call_number:
+    weight: 103
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_serial_holding_notes:
+    weight: 104
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_serial_holding_type:
+    weight: 101
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_serial_holding_uri:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden: {  }
