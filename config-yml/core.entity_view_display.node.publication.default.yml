@@ -24,6 +24,7 @@ dependencies:
     - field.field.node.publication.field_publication_place_city
     - field.field.node.publication.field_publication_place_province
     - field.field.node.publication.field_publisher
+    - field.field.node.publication.field_related_title
     - field.field.node.publication.field_serial_holdings
     - field.field.node.publication.field_sort_title
     - field.field.node.publication.field_subject_notes
@@ -191,6 +192,14 @@ content:
     region: content
   field_publisher:
     weight: 2
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_related_title:
+    weight: 14
     label: above
     settings:
       link: true
