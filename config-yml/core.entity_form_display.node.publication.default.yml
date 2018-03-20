@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.publication.field_abstract
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_date_description
     - field.field.node.publication.field_first_issue_approx_date
@@ -36,7 +35,6 @@ dependencies:
     - field_group
     - languagefield
     - path
-    - text
 third_party_settings:
   field_group:
     group_date_of_publication:
@@ -100,16 +98,8 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_abstract:
-    weight: 14
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: text_textarea
-    region: content
   field_credit:
-    weight: 15
+    weight: 14
     settings:
       rows: 5
       placeholder: ''

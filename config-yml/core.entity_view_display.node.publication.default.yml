@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.publication.field_abstract
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_date_description
     - field.field.node.publication.field_first_issue_approx_date
@@ -34,7 +33,6 @@ dependencies:
   module:
     - datetime_range
     - field_group
-    - text
     - user
 third_party_settings:
   field_group:
@@ -75,20 +73,6 @@ targetEntityType: node
 bundle: publication
 mode: default
 content:
-  field_abstract:
-    weight: 11
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: text_default
-    region: content
-  field_credit:
-    weight: 10
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
   field_date_description:
     weight: 11
     label: above
@@ -220,11 +204,12 @@ content:
     type: basic_string
     region: content
   links:
-    weight: 12
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_credit: true
   field_first_issue_date_is_approx: true
   field_first_issue_sort_date: true
   field_language: true
