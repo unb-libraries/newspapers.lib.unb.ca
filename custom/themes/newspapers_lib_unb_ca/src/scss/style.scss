@@ -71,7 +71,8 @@
   float: none;
 }
 
-/* unb-lib.css override */
+/* unb-lib.css + overrides.min.css override */
+.select-wrapper select,
 input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
   line-height: normal;
 }
