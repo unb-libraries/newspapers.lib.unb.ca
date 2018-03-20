@@ -1,16 +1,16 @@
-uuid: 00f737b6-04c9-42f4-a3cd-3bd143543e83
+uuid: 6939bd53-c013-4d74-a021-745d85e2747f
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_previous_title
+    - field.storage.node.field_continued_by
     - node.type.publication
-id: node.publication.field_previous_title
-field_name: field_previous_title
+id: node.publication.field_continued_by
+field_name: field_continued_by
 entity_type: node
 bundle: publication
-label: 'Continued from'
-description: 'i.e. preceding title'
+label: 'Continued by'
+description: '<i>Later title</i>'
 required: false
 translatable: false
 default_value: {  }
@@ -21,8 +21,7 @@ settings:
     target_bundles:
       publication: publication
     sort:
-      field: title
-      direction: ASC
-    auto_create: true
+      field: _none
+    auto_create: false
     auto_create_bundle: ''
 field_type: entity_reference

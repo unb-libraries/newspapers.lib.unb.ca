@@ -3,6 +3,8 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.publication.field_continued_by
+    - field.field.node.publication.field_continues
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_date_description
     - field.field.node.publication.field_first_issue_approx_date
@@ -19,7 +21,6 @@ dependencies:
     - field.field.node.publication.field_last_issue_date_is_approx
     - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_oclc
-    - field.field.node.publication.field_previous_title
     - field.field.node.publication.field_publication_place_city
     - field.field.node.publication.field_publication_place_province
     - field.field.node.publication.field_publisher
@@ -27,7 +28,6 @@ dependencies:
     - field.field.node.publication.field_sort_title
     - field.field.node.publication.field_subject_notes
     - field.field.node.publication.field_subjects
-    - field.field.node.publication.field_succeeding_title
     - field.field.node.publication.field_title_notes
     - node.type.publication
   module:
@@ -57,21 +57,6 @@ third_party_settings:
         classes: ''
       label: 'Date of Publication'
       region: content
-    group_alternative_titles:
-      children:
-        - field_previous_title
-        - field_succeeding_title
-      parent_name: ''
-      weight: 3
-      format_type: details
-      format_settings:
-        label: 'Alternative titles'
-        required_fields: true
-        id: ''
-        classes: ''
-        open: false
-      label: 'Alternative titles'
-      region: content
     group_place_of_publication:
       children:
         - field_publication_place_province
@@ -98,6 +83,24 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_continued_by:
+    weight: 45
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_continues:
+    weight: 44
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_credit:
     weight: 14
     settings:
@@ -230,7 +233,7 @@ content:
     type: string_textfield
     region: content
   field_language:
-    weight: 16
+    weight: 15
     settings:
       format:
         name: name
@@ -287,15 +290,6 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_previous_title:
-    weight: 8
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_publication_place_city:
     weight: 7
     settings:
@@ -342,6 +336,15 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
+  field_serial_holdings:
+    type: entity_reference_autocomplete
+    weight: 16
+    region: content
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_sort_title:
     weight: 1
     settings:
@@ -387,15 +390,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-    region: content
-  field_succeeding_title:
-    weight: 10
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
     region: content
   field_title_notes:
     weight: 2
@@ -474,5 +468,4 @@ content:
 hidden:
   field_first_issue_sort_date: true
   field_last_issue_sort_date: true
-  field_serial_holdings: true
   langcode: true

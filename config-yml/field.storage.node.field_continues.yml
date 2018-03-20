@@ -1,11 +1,11 @@
-uuid: b4faa116-d485-4df9-8c0b-58f0d1a47893
+uuid: ad403a54-6540-45f9-98d8-03e23eac51e2
 langcode: en
 status: true
 dependencies:
   module:
     - node
-id: node.field_previous_title
-field_name: field_previous_title
+id: node.field_continues
+field_name: field_continues
 entity_type: node
 type: entity_reference
 settings:

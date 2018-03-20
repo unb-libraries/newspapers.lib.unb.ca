@@ -1,11 +1,11 @@
-uuid: 4292c70c-d988-47cd-82fd-f87905a4e689
+uuid: c103369d-6447-49ad-b359-4069e4cd75e6
 langcode: en
 status: true
 dependencies:
   module:
     - node
-id: node.field_succeeding_title
-field_name: field_succeeding_title
+id: node.field_continued_by
+field_name: field_continued_by
 entity_type: node
 type: entity_reference
 settings:

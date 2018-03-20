@@ -20,7 +20,6 @@ dependencies:
     - field.field.node.publication.field_last_issue_date_is_approx
     - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_oclc
-    - field.field.node.publication.field_previous_title
     - field.field.node.publication.field_publication_place_city
     - field.field.node.publication.field_publication_place_province
     - field.field.node.publication.field_publisher
@@ -28,7 +27,6 @@ dependencies:
     - field.field.node.publication.field_sort_title
     - field.field.node.publication.field_subject_notes
     - field.field.node.publication.field_subjects
-    - field.field.node.publication.field_succeeding_title
     - field.field.node.publication.field_title_notes
     - node.type.publication
   module:
@@ -65,7 +63,6 @@ hidden:
   field_last_issue_sort_date: true
   field_oclc: true
   field_place_of_publication: true
-  field_previous_title: true
   field_province_state: true
   field_publication_place_city: true
   field_publication_place_province: true
@@ -74,6 +71,5 @@ hidden:
   field_sort_title: true
   field_subject_notes: true
   field_subjects: true
-  field_succeeding_title: true
   field_title_notes: true
   langcode: true
