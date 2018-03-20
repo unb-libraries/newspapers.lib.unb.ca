@@ -26,6 +26,7 @@ dependencies:
     - field.field.node.publication.field_publisher
     - field.field.node.publication.field_serial_holdings
     - field.field.node.publication.field_sort_title
+    - field.field.node.publication.field_subject_notes
     - field.field.node.publication.field_subjects
     - field.field.node.publication.field_succeeding_title
     - field.field.node.publication.field_title_notes
@@ -95,12 +96,12 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   field_abstract:
-    weight: 13
+    weight: 14
     settings:
       rows: 5
       placeholder: ''
@@ -108,7 +109,7 @@ content:
     type: text_textarea
     region: content
   field_credit:
-    weight: 14
+    weight: 15
     settings:
       rows: 5
       placeholder: ''
@@ -231,7 +232,7 @@ content:
     type: string_textfield
     region: content
   field_issn:
-    weight: 11
+    weight: 12
     settings:
       size: 60
       placeholder: ''
@@ -239,7 +240,7 @@ content:
     type: string_textfield
     region: content
   field_language:
-    weight: 15
+    weight: 16
     settings:
       format:
         name: name
@@ -289,7 +290,7 @@ content:
     type: boolean_checkbox
     region: content
   field_oclc:
-    weight: 12
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -381,6 +382,14 @@ content:
           bundle: publication
     type: string_textfield
     region: content
+  field_subject_notes:
+    weight: 11
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
   field_subjects:
     weight: 10
     settings:
@@ -430,7 +439,7 @@ content:
     region: content
   path:
     type: path
-    weight: 20
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -438,21 +447,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 18
+    weight: 19
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 21
+    weight: 22
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 19
+    weight: 20
     region: content
     third_party_settings: {  }
   title:
@@ -465,7 +474,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 16
+    weight: 17
     settings:
       match_operator: CONTAINS
       size: 60
