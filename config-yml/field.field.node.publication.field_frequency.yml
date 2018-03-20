@@ -1,29 +1,21 @@
-uuid: a3f933d7-f7db-47dc-a51a-f486badde4d2
+uuid: a4bce75c-9c4f-4a32-9113-78f83503a8ce
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_frequency
     - node.type.publication
-    - taxonomy.vocabulary.frequency
+  module:
+    - options
 id: node.publication.field_frequency
 field_name: field_frequency
 entity_type: node
 bundle: publication
-label: 'Frequency of publication'
-description: ''
+label: Frequency
+description: 'How often the newspaper was published'
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings:
-  handler: 'default:taxonomy_term'
-  handler_settings:
-    target_bundles:
-      frequency: frequency
-    sort:
-      field: name
-      direction: asc
-    auto_create: false
-    auto_create_bundle: ''
-field_type: entity_reference
+settings: {  }
+field_type: list_string

@@ -36,6 +36,7 @@ dependencies:
     - datetime_range
     - field_group
     - file
+    - options
     - user
 third_party_settings:
   field_group:
@@ -119,10 +120,9 @@ content:
   field_frequency:
     weight: 4
     label: above
-    settings:
-      link: true
+    settings: {  }
     third_party_settings: {  }
-    type: entity_reference_label
+    type: list_default
     region: content
   field_frequency_notes:
     weight: 5

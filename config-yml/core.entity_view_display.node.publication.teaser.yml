@@ -7,11 +7,11 @@ dependencies:
     - field.field.node.publication.field_continued_by
     - field.field.node.publication.field_continues
     - field.field.node.publication.field_credit
+    - field.field.node.publication.field_description
     - field.field.node.publication.field_first_issue_approx_date
     - field.field.node.publication.field_first_issue_date
     - field.field.node.publication.field_first_issue_date_is_approx
     - field.field.node.publication.field_first_issue_sort_date
-    - field.field.node.publication.field_frequency
     - field.field.node.publication.field_frequency_notes
     - field.field.node.publication.field_geographic_coverage
     - field.field.node.publication.field_issn
@@ -48,13 +48,13 @@ hidden:
   field_continued_by: true
   field_continues: true
   field_credit: true
+  field_description: true
   field_first_issue: true
   field_first_issue_approx_date: true
   field_first_issue_date: true
   field_first_issue_date_is_approx: true
   field_first_issue_precise_date: true
   field_first_issue_sort_date: true
-  field_frequency: true
   field_frequency_notes: true
   field_geographic_coverage: true
   field_issn: true

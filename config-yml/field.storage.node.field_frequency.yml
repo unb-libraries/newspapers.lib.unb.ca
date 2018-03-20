@@ -1,17 +1,30 @@
-uuid: 987ec71e-f705-41b9-81fe-1e4b7415f18c
+uuid: 7c079058-ee2b-4189-88ea-ea2bd9e2d768
 langcode: en
 status: true
 dependencies:
   module:
     - node
-    - taxonomy
+    - options
 id: node.field_frequency
 field_name: field_frequency
 entity_type: node
-type: entity_reference
+type: list_string
 settings:
-  target_type: taxonomy_term
-module: core
+  allowed_values:
+    -
+      value: daily
+      label: Daily
+    -
+      value: weekly
+      label: Weekly
+    -
+      value: monthly
+      label: Monthly
+    -
+      value: varies
+      label: Varies
+  allowed_values_function: ''
+module: options
 locked: false
 cardinality: 1
 translatable: true
