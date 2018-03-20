@@ -26,7 +26,7 @@ dependencies:
     - field.field.node.publication.field_publisher
     - field.field.node.publication.field_serial_holdings
     - field.field.node.publication.field_sort_title
-    - field.field.node.publication.field_subject_blurb
+    - field.field.node.publication.field_subjects
     - field.field.node.publication.field_succeeding_title
     - field.field.node.publication.field_title_notes
     - node.type.publication
@@ -381,7 +381,7 @@ content:
           bundle: publication
     type: string_textfield
     region: content
-  field_subject_blurb:
+  field_subjects:
     weight: 10
     settings:
       size: 60

@@ -1,11 +1,11 @@
-uuid: 27b77776-bdc6-4dbd-b4a5-8376d024c1f4
+uuid: 568467ca-15b8-4b6c-87d0-3fb0497e9aeb
 langcode: en
 status: true
 dependencies:
   module:
     - node
-id: node.field_subject_blurb
-field_name: field_subject_blurb
+id: node.field_subjects
+field_name: field_subjects
 entity_type: node
 type: string
 settings:

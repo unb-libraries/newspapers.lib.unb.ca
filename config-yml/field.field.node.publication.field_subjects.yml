@@ -1,15 +1,15 @@
-uuid: f56fe7f4-d26b-4722-99fb-c95cf24dbb42
+uuid: 16738719-01fe-456d-ae1e-7bc19fc38748
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_subject_blurb
+    - field.storage.node.field_subjects
     - node.type.publication
-id: node.publication.field_subject_blurb
-field_name: field_subject_blurb
+id: node.publication.field_subjects
+field_name: field_subjects
 entity_type: node
 bundle: publication
-label: Subject/Blurb
+label: Subjects
 description: ''
 required: false
 translatable: false
