@@ -1,0 +1,23 @@
+uuid: 86d06b68-c784-4e05-85e3-f661a6480319
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_language
+    - node.type.publication
+  module:
+    - languagefield
+id: node.publication.field_language
+field_name: field_language
+entity_type: node
+bundle: publication
+label: Language
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: en
+default_value_callback: ''
+settings: {  }
+field_type: language_field

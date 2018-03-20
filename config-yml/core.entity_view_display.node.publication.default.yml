@@ -14,6 +14,7 @@ dependencies:
     - field.field.node.publication.field_frequency_notes
     - field.field.node.publication.field_geographic_coverage
     - field.field.node.publication.field_issn
+    - field.field.node.publication.field_language
     - field.field.node.publication.field_last_issue_approx_date
     - field.field.node.publication.field_last_issue_date
     - field.field.node.publication.field_last_issue_date_is_approx
@@ -209,9 +210,11 @@ content:
 hidden:
   field_first_issue_date_is_approx: true
   field_first_issue_sort_date: true
+  field_language: true
   field_last_issue_date_is_approx: true
   field_last_issue_sort_date: true
   field_previous_title: true
   field_serial_holdings: true
   field_sort_title: true
   field_succeeding_title: true
+  langcode: true
