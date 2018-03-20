@@ -1,0 +1,27 @@
+uuid: dddb7be6-a4d7-4ead-a4e4-6c831d24d8b7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_supplemental_information
+    - node.type.publication
+  module:
+    - file
+id: node.publication.field_supplemental_information
+field_name: field_supplemental_information
+entity_type: node
+bundle: publication
+label: 'Supplemental Information'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: pdf
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file
