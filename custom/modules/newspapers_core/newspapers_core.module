@@ -95,6 +95,7 @@ function newspapers_core_node_presave(EntityInterface $node) {
       else {
         $last_sort_timestamp = (strtotime($last_issue_start_date) + strtotime($last_issue_end_date)) / 2;
       }
+
       // $last_sort_timestamp == false if strtotime invalid format, i.e. null.
       $last_sort_date =
         $last_sort_timestamp ? DrupalDateTime::createFromTimestamp($last_sort_timestamp)
@@ -102,6 +103,15 @@ function newspapers_core_node_presave(EntityInterface $node) {
       $node
         ->get('field_last_issue_sort_date')
         ->setValue($last_sort_date);
+
+      // Clear Frequency Notes if Frequency 'varies' list item isn't selected.
+      $frequency = $node
+        ->get('field_frequency')
+        ->getString();
+      if ($frequency != "varies") {
+        $blank_the_fields[] = "field_frequency_notes";
+
+      }
 
       break;
   }
