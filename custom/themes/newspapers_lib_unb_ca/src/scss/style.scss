@@ -62,3 +62,11 @@
   border-color: #c9e1bd #c9e1bd #c9e1bd transparent;
   box-shadow: -8px 0 0 #333;
 }
+
+.table > tbody > tr > td.field-multiple-drag {
+  vertical-align: middle;
+  width: 40px;
+}
+.tabledrag-handle {
+  float: none;
+}
