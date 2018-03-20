@@ -1,0 +1,19 @@
+uuid: 3becd629-fa03-48fa-960f-48230a2fed49
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_title_notes
+    - node.type.publication
+id: node.publication.field_title_notes
+field_name: field_title_notes
+entity_type: node
+bundle: publication
+label: 'Title Notes'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long
