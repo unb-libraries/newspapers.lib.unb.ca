@@ -76,3 +76,6 @@
 input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
   line-height: normal;
 }
+.tabledrag-handle:hover {
+  border: none;
+}
