@@ -10,7 +10,7 @@ field_name: field_credit
 entity_type: node
 bundle: publication
 label: Credit
-description: ''
+description: 'Not publically displayed. Used administratively to record <i>source</i>'
 required: false
 translatable: false
 default_value: {  }

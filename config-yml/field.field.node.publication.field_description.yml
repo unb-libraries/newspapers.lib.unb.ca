@@ -1,0 +1,19 @@
+uuid: 9fafa752-86b7-4b87-bc23-a0365243a02a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_description
+    - node.type.publication
+id: node.publication.field_description
+field_name: field_description
+entity_type: node
+bundle: publication
+label: Description
+description: "More detailed vol/iss information for the included range<br>\r\n<b>Example:</b>Vol. 62, no. 151 (June 25,1894)-v. 75, no. 319 (Dec. 14, 1907)"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

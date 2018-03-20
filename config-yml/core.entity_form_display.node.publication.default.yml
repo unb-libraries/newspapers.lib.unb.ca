@@ -6,7 +6,7 @@ dependencies:
     - field.field.node.publication.field_continued_by
     - field.field.node.publication.field_continues
     - field.field.node.publication.field_credit
-    - field.field.node.publication.field_date_description
+    - field.field.node.publication.field_description
     - field.field.node.publication.field_first_issue_approx_date
     - field.field.node.publication.field_first_issue_date
     - field.field.node.publication.field_first_issue_date_is_approx
@@ -48,7 +48,6 @@ third_party_settings:
         - field_last_issue_date_is_approx
         - field_last_issue_date
         - field_last_issue_approx_date
-        - field_date_description
       parent_name: ''
       weight: 6
       format_type: details
@@ -82,12 +81,12 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 21
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
   field_continued_by:
-    weight: 19
+    weight: 20
     settings:
       match_operator: CONTAINS
       size: 60
@@ -96,7 +95,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_continues:
-    weight: 18
+    weight: 19
     settings:
       match_operator: CONTAINS
       size: 60
@@ -107,18 +106,18 @@ content:
   field_credit:
     weight: 13
     settings:
-      rows: 5
+      rows: 2
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
     region: content
-  field_date_description:
-    weight: 43
+  field_description:
+    weight: 16
     settings:
-      size: 60
+      rows: 3
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
+    type: string_textarea
     region: content
   field_first_issue_approx_date:
     weight: 38
@@ -340,7 +339,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_related_title:
-    weight: 16
+    weight: 17
     settings:
       match_operator: CONTAINS
       size: 60
@@ -404,7 +403,7 @@ content:
     type: string_textfield
     region: content
   field_supplemental_information:
-    weight: 17
+    weight: 18
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
@@ -413,7 +412,7 @@ content:
   field_title_notes:
     weight: 2
     settings:
-      rows: 5
+      rows: 3
       placeholder: ''
     third_party_settings:
       conditional_fields:
@@ -442,7 +441,7 @@ content:
     region: content
   path:
     type: path
-    weight: 24
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -450,21 +449,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 22
+    weight: 23
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 25
+    weight: 26
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 23
+    weight: 24
     region: content
     third_party_settings: {  }
   title:
@@ -477,7 +476,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 20
+    weight: 21
     settings:
       match_operator: CONTAINS
       size: 60

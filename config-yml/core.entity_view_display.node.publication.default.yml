@@ -6,7 +6,7 @@ dependencies:
     - field.field.node.publication.field_continued_by
     - field.field.node.publication.field_continues
     - field.field.node.publication.field_credit
-    - field.field.node.publication.field_date_description
+    - field.field.node.publication.field_description
     - field.field.node.publication.field_first_issue_approx_date
     - field.field.node.publication.field_first_issue_date
     - field.field.node.publication.field_first_issue_date_is_approx
@@ -60,7 +60,6 @@ third_party_settings:
         - field_first_issue_approx_date
         - field_last_issue_date
         - field_last_issue_approx_date
-        - field_date_description
       parent_name: ''
       weight: 3
       format_type: details
@@ -77,7 +76,7 @@ bundle: publication
 mode: default
 content:
   field_continued_by:
-    weight: 12
+    weight: 14
     label: above
     settings:
       link: true
@@ -85,20 +84,19 @@ content:
     type: entity_reference_label
     region: content
   field_continues:
-    weight: 11
+    weight: 13
     label: above
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_date_description:
+  field_description:
     weight: 11
     label: above
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
-    type: string
+    type: basic_string
     region: content
   field_first_issue_approx_date:
     weight: 7
@@ -201,13 +199,21 @@ content:
     type: entity_reference_label
     region: content
   field_related_title:
-    weight: 13
+    weight: 15
     label: above
     settings:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
     region: content
+  field_serial_holdings:
+    type: entity_reference_label
+    weight: 10
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
   field_subject_notes:
     weight: 7
     label: above
@@ -224,7 +230,7 @@ content:
     type: string
     region: content
   field_supplemental_information:
-    weight: 10
+    weight: 12
     label: above
     settings:
       use_description_as_link_text: true
@@ -239,7 +245,7 @@ content:
     type: basic_string
     region: content
   links:
-    weight: 14
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -250,6 +256,5 @@ hidden:
   field_language: true
   field_last_issue_date_is_approx: true
   field_last_issue_sort_date: true
-  field_serial_holdings: true
   field_sort_title: true
   langcode: true

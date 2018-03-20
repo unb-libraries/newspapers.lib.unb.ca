@@ -1,16 +1,14 @@
-uuid: d46d93f8-fa00-4b59-bb16-abff1a957793
+uuid: 84fee88c-5dbe-4791-a2af-26f94aafedc3
 langcode: en
 status: true
 dependencies:
   module:
     - node
-id: node.field_date_description
-field_name: field_date_description
+id: node.field_description
+field_name: field_description
 entity_type: node
-type: string
+type: string_long
 settings:
-  max_length: 255
-  is_ascii: false
   case_sensitive: false
 module: core
 locked: false
