@@ -79,3 +79,6 @@ input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit
 .tabledrag-handle:hover {
   border: none;
 }
+.table {
+  margin-bottom: initial;
+}
