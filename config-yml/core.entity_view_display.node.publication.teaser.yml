@@ -55,6 +55,7 @@ hidden:
   field_first_issue_date_is_approx: true
   field_first_issue_precise_date: true
   field_first_issue_sort_date: true
+  field_frequency: true
   field_frequency_notes: true
   field_geographic_coverage: true
   field_issn: true

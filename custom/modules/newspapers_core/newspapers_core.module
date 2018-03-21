@@ -104,11 +104,11 @@ function newspapers_core_node_presave(EntityInterface $node) {
         ->get('field_last_issue_sort_date')
         ->setValue($last_sort_date);
 
-      // Clear Frequency Notes if Frequency 'varies' list item isn't selected.
-      $frequency = $node
+      // Clear Frequency Notes if Frequency = '- None -'.
+      $frequency_none = $node
         ->get('field_frequency')
-        ->getString();
-      if ($frequency != "varies") {
+        ->isEmpty();
+      if ($frequency_none) {
         $blank_the_fields[] = "field_frequency_notes";
 
       }
