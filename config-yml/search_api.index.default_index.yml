@@ -15,6 +15,7 @@ dependencies:
     - field.storage.node.field_subject_notes
     - field.storage.node.field_subjects
     - field.storage.node.field_title_notes
+    - field.storage.node.field_place_of_publication
     - search_api.server.default_server
     - core.entity_view_mode.node.search_index
 _core:
@@ -150,6 +151,22 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_title_notes
+  administrative_area:
+    label: 'Place of Publication » The top-level administrative subdivision of the country.'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:administrative_area'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
+  locality:
+    label: 'Place of Publication » The locality (i.e. city).'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:locality'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
 datasource_settings:
   'entity:node':
     bundles:

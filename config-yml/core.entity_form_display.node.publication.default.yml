@@ -21,8 +21,7 @@ dependencies:
     - field.field.node.publication.field_last_issue_date_is_approx
     - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_oclc
-    - field.field.node.publication.field_publication_place_city
-    - field.field.node.publication.field_publication_place_province
+    - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_publisher
     - field.field.node.publication.field_related_title
     - field.field.node.publication.field_serial_holdings
@@ -33,6 +32,7 @@ dependencies:
     - field.field.node.publication.field_title_notes
     - node.type.publication
   module:
+    - address
     - datetime_range
     - field_group
     - file
@@ -58,21 +58,6 @@ third_party_settings:
         classes: ''
         open: false
       label: 'Date of Publication'
-      region: content
-    group_place_of_publication:
-      children:
-        - field_publication_place_province
-        - field_publication_place_city
-      parent_name: ''
-      weight: 3
-      format_type: details
-      format_settings:
-        label: 'Place of Publication'
-        open: true
-        required_fields: true
-        id: ''
-        classes: ''
-      label: 'Place of Publication'
       region: content
 id: node.publication.default
 targetEntityType: node
@@ -120,7 +105,7 @@ content:
     type: string_textarea
     region: content
   field_first_issue_approx_date:
-    weight: 38
+    weight: 39
     settings:
       size: 60
       placeholder: ''
@@ -149,7 +134,7 @@ content:
     type: string_textfield
     region: content
   field_first_issue_date:
-    weight: 37
+    weight: 38
     settings: {  }
     third_party_settings: {  }
     type: daterange_default
@@ -255,7 +240,7 @@ content:
     type: daterange_default
     region: content
   field_last_issue_date_is_approx:
-    weight: 39
+    weight: 40
     settings:
       display_label: true
     third_party_settings: {  }
@@ -269,42 +254,12 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_publication_place_city:
-    weight: 7
+  field_place_of_publication:
+    weight: 3
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings:
-      conditional_fields:
-        1609d240-04e7-4106-93da-e0e816d46426:
-          dependee: field_publication_place_province
-          settings:
-            state: '!visible'
-            condition: empty
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              -
-                target_id: null
-                _weight: '0'
-            effect: show
-            effect_options: {  }
-            selector: ''
-          entity_type: node
-          bundle: publication
-    type: entity_reference_autocomplete
-    region: content
-  field_publication_place_province:
-    weight: 6
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      default_country: null
     third_party_settings: {  }
-    type: entity_reference_autocomplete
+    type: address_default
     region: content
   field_publisher:
     weight: 5

@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.publication.field_first_issue_date
     - field.field.node.publication.field_first_issue_date_is_approx
     - field.field.node.publication.field_first_issue_sort_date
+    - field.field.node.publication.field_frequency
     - field.field.node.publication.field_frequency_notes
     - field.field.node.publication.field_geographic_coverage
     - field.field.node.publication.field_issn
@@ -21,8 +22,6 @@ dependencies:
     - field.field.node.publication.field_last_issue_date_is_approx
     - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_oclc
-    - field.field.node.publication.field_publication_place_city
-    - field.field.node.publication.field_publication_place_province
     - field.field.node.publication.field_publisher
     - field.field.node.publication.field_related_title
     - field.field.node.publication.field_serial_holdings
@@ -69,8 +68,6 @@ hidden:
   field_oclc: true
   field_place_of_publication: true
   field_province_state: true
-  field_publication_place_city: true
-  field_publication_place_province: true
   field_publisher: true
   field_related_title: true
   field_serial_holdings: true

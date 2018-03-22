@@ -1,9 +1,0 @@
-uuid: a80f27b0-7a94-4523-9dbe-aeb6075ac470
-langcode: en
-status: true
-dependencies: {  }
-name: Province
-vid: province
-description: 'Province or state terms'
-hierarchy: 0
-weight: 0

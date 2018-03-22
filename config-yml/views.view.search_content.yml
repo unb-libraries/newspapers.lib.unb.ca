@@ -85,11 +85,11 @@ display:
           exposed: true
           expose:
             operator_id: search_op
-            label: Search
+            label: Keyword(s)
             description: ''
             use_operator: false
             operator: search_op
-            identifier: keys
+            identifier: query
             required: true
             remember: false
             multiple: false
