@@ -37,7 +37,8 @@ module:
   path: 0
   quickedit: 0
   rdf: 0
-  search: 0
+  search_api: 0
+  search_api_db: 0
   serial_holding: 0
   serials: 0
   system: 0

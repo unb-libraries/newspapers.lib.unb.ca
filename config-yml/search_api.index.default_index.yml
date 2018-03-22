@@ -1,0 +1,282 @@
+uuid: 88081c44-4fb6-4421-9c84-8e81464d7efc
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+    - taxonomy
+    - search_api
+    - node
+  config:
+    - field.storage.node.field_publisher
+    - field.storage.node.field_geographic_coverage
+    - field.storage.node.field_issn
+    - field.storage.node.field_oclc
+    - field.storage.node.field_subject_notes
+    - field.storage.node.field_subjects
+    - field.storage.node.field_title_notes
+    - search_api.server.default_server
+    - core.entity_view_mode.node.search_index
+_core:
+  default_config_hash: CeQvQFFCLtBV14W1topZP19nFUlS3bSckwuryffgkgk
+id: default_index
+name: 'Historical papers index'
+description: 'Default content index created by the Database Search Defaults module'
+read_only: false
+field_settings:
+  rendered_item:
+    label: 'Rendered item'
+    property_path: rendered_item
+    type: text
+    configuration:
+      roles:
+        anonymous: anonymous
+      view_mode:
+        'entity:node':
+          article: search_index
+          page: search_index
+          publication: default
+          serial_holding: ''
+  node_grants:
+    label: 'Node access information'
+    property_path: search_api_node_grants
+    type: string
+    indexed_locked: true
+    type_locked: true
+    hidden: true
+  title:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: text
+    boost: !!float 8
+  created:
+    label: 'Authored on'
+    datasource_id: 'entity:node'
+    property_path: created
+    type: date
+  changed:
+    label: Changed
+    datasource_id: 'entity:node'
+    property_path: changed
+    type: date
+  status:
+    label: 'Publishing status'
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+    indexed_locked: true
+    type_locked: true
+  sticky:
+    label: 'Sticky at top of lists'
+    datasource_id: 'entity:node'
+    property_path: sticky
+    type: boolean
+  author:
+    label: 'Author name'
+    datasource_id: 'entity:node'
+    property_path: 'uid:entity:name'
+    type: string
+    dependencies:
+      module:
+        - user
+  uid:
+    label: 'Author ID'
+    datasource_id: 'entity:node'
+    property_path: uid
+    type: integer
+    indexed_locked: true
+    type_locked: true
+  type:
+    label: 'Content type'
+    datasource_id: 'entity:node'
+    property_path: type
+    type: string
+  name:
+    label: 'Publisher » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_publisher:entity:name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_publisher
+      module:
+        - taxonomy
+  field_geographic_coverage:
+    label: 'Geographic Coverage'
+    datasource_id: 'entity:node'
+    property_path: field_geographic_coverage
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_geographic_coverage
+  field_issn:
+    label: ISSN
+    datasource_id: 'entity:node'
+    property_path: field_issn
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_issn
+  field_oclc:
+    label: OCLC
+    datasource_id: 'entity:node'
+    property_path: field_oclc
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_oclc
+  field_subject_notes:
+    label: 'Subject Notes'
+    datasource_id: 'entity:node'
+    property_path: field_subject_notes
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_subject_notes
+  field_subjects:
+    label: Subjects
+    datasource_id: 'entity:node'
+    property_path: field_subjects
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_subjects
+  field_title_notes:
+    label: 'Title Notes'
+    datasource_id: 'entity:node'
+    property_path: field_title_notes
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_title_notes
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - publication
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  tokenizer:
+    all_fields: false
+    fields:
+      - title
+      - rendered_item
+    spaces: ''
+    overlap_cjk: 1
+    minimum_word_size: '3'
+    weights:
+      preprocess_index: -2
+      preprocess_query: -5
+  html_filter:
+    all_fields: false
+    fields:
+      - rendered_item
+    title: true
+    alt: true
+    tags:
+      h1: 5
+      h2: 3
+      h3: 2
+      string: 2
+      b: 2
+    weights:
+      preprocess_index: -3
+      preprocess_query: -6
+  ignorecase:
+    all_fields: false
+    fields:
+      - title
+      - rendered_item
+    weights:
+      preprocess_index: -5
+      preprocess_query: -8
+  transliteration:
+    all_fields: false
+    fields:
+      - title
+      - rendered_item
+    weights:
+      preprocess_index: -4
+      preprocess_query: -7
+  stopwords:
+    all_fields: false
+    fields:
+      - title
+      - rendered_item
+    stopwords:
+      - a
+      - an
+      - and
+      - are
+      - as
+      - at
+      - be
+      - but
+      - by
+      - for
+      - if
+      - in
+      - into
+      - is
+      - it
+      - 'no'
+      - not
+      - of
+      - 'on'
+      - or
+      - s
+      - such
+      - t
+      - that
+      - the
+      - their
+      - then
+      - there
+      - these
+      - they
+      - this
+      - to
+      - was
+      - will
+      - with
+    weights:
+      preprocess_index: -5
+      preprocess_query: -10
+  rendered_item:
+    weights:
+      add_properties: 0
+      pre_index_save: -10
+  content_access:
+    weights:
+      preprocess_index: -6
+      preprocess_query: -4
+  highlight:
+    highlight: always
+    highlight_partial: true
+    excerpt: true
+    excerpt_length: 256
+    exclude_fields: {  }
+    prefix: '<strong>'
+    suffix: '</strong>'
+    weights:
+      postprocess_query: 0
+  aggregated_field:
+    weights:
+      add_properties: 20
+  entity_status:
+    weights:
+      preprocess_index: -10
+  add_url:
+    weights:
+      preprocess_index: -30
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+server: default_server
