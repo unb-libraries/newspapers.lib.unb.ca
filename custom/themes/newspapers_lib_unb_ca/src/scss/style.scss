@@ -44,12 +44,13 @@
   outline: none;
   padding-right: 0;
 }
-.panel-heading a:after {
+.panel-heading a:before {
   font-family: 'Glyphicons Halflings';
   content: "\e080";
-  float: right;
+  margin-right: .25em;
+  vertical-align: text-top;
 }
-.panel-heading a[aria-expanded="true"]:after {
+.panel-heading a[aria-expanded="true"]:before {
   content: "\e114";
 }
 
