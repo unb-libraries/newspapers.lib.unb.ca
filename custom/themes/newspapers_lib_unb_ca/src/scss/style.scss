@@ -82,3 +82,7 @@ input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit
 .table {
   margin-bottom: initial;
 }
+.panel-body {
+  border-top: none;
+  padding: 15px;
+}
