@@ -46,12 +46,12 @@
 }
 .panel-heading a:before {
   font-family: 'Glyphicons Halflings';
-  content: "\e080";
+  content: "\e159";
   margin-right: .25em;
   vertical-align: text-top;
 }
 .panel-heading a[aria-expanded="true"]:before {
-  content: "\e114";
+  content: "\e160";
 }
 
 .form-item {
