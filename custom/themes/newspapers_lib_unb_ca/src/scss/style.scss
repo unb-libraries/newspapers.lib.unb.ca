@@ -97,6 +97,9 @@
 .chosen-container-single .chosen-single span {
   margin-right: 5em;
 }
+.panel-default > .panel-heading a:hover:before {
+  color: $widget-hover-color;
+}
 
 /* unb-lib.css + overrides.min.css override */
 .select-wrapper select,
@@ -112,4 +115,11 @@ input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit
 .panel-body {
   border-top: none;
   padding: 15px;
+}
+.panel-default > .panel-heading {
+  background: #dedede;
+  color: #333;
+}
+.panel-default > .panel-heading a {
+  color: #333;
 }
