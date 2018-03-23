@@ -1,0 +1,23 @@
+uuid: 4710e079-0400-4f68-905f-ebc5c3432dbf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_is_supplementary_title
+    - node.type.publication
+id: node.publication.field_is_supplementary_title
+field_name: field_is_supplementary_title
+entity_type: node
+bundle: publication
+label: 'This is a supplementary title'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

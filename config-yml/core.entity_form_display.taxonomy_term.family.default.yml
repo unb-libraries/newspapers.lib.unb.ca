@@ -1,0 +1,23 @@
+uuid: 4ca10ad4-d85c-43e5-a036-ae039700529f
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.family
+id: taxonomy_term.family.default
+targetEntityType: taxonomy_term
+bundle: family
+mode: default
+content:
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  description: true
+  langcode: true
+  path: true

@@ -1,18 +1,17 @@
-uuid: 2e116bfa-72e3-401d-b732-512df72e914d
+uuid: 2fe81105-6748-49b6-b479-84e09a4f0a1e
 langcode: en
 status: true
 dependencies:
   module:
     - node
-id: node.field_related_title
-field_name: field_related_title
+id: node.field_is_supplementary_title
+field_name: field_is_supplementary_title
 entity_type: node
-type: entity_reference
-settings:
-  target_type: node
+type: boolean
+settings: {  }
 module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

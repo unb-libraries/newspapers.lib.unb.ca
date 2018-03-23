@@ -10,7 +10,7 @@ field_name: field_sort_title
 entity_type: node
 bundle: publication
 label: 'Sort title'
-description: 'Title used for alphabetical sorting, typically used to alter the sort order of titles beginning with an article like <i>The</i>.'
+description: "<b>Not displayed</b><br>\r\nTitle used for alphabetical sorting, typically used to alter the sort order of titles beginning with an article like <i>The</i>"
 required: false
 translatable: false
 default_value: {  }

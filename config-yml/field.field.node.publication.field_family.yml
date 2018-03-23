@@ -1,0 +1,29 @@
+uuid: 719edd3b-f821-46ad-bc3e-d185d42a8751
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_family
+    - node.type.publication
+    - taxonomy.vocabulary.family
+id: node.publication.field_family
+field_name: field_family
+entity_type: node
+bundle: publication
+label: 'Family Name'
+description: '<b>Example:</b> The Telegraph Journal'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      family: family
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference
