@@ -28,6 +28,7 @@ dependencies:
     - field.field.node.publication.field_sort_title
     - field.field.node.publication.field_subject_notes
     - field.field.node.publication.field_subjects
+    - field.field.node.publication.field_subtitle
     - field.field.node.publication.field_supplemental_information
     - field.field.node.publication.field_title_notes
     - node.type.publication
@@ -49,7 +50,7 @@ third_party_settings:
         - field_last_issue_date
         - field_last_issue_approx_date
       parent_name: ''
-      weight: 6
+      weight: 7
       format_type: details
       format_settings:
         label: 'Date of Publication'
@@ -66,12 +67,12 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 21
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
   field_continued_by:
-    weight: 18
+    weight: 19
     settings:
       match_operator: CONTAINS
       size: 60
@@ -80,7 +81,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_continues:
-    weight: 17
+    weight: 18
     settings:
       match_operator: CONTAINS
       size: 60
@@ -89,7 +90,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_credit:
-    weight: 13
+    weight: 14
     settings:
       rows: 2
       placeholder: ''
@@ -97,7 +98,7 @@ content:
     type: string_textarea
     region: content
   field_description:
-    weight: 14
+    weight: 15
     settings:
       rows: 3
       placeholder: ''
@@ -147,13 +148,13 @@ content:
     type: boolean_checkbox
     region: content
   field_frequency:
-    weight: 7
+    weight: 8
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_frequency_notes:
-    weight: 8
+    weight: 9
     settings:
       size: 60
       placeholder: ''
@@ -181,7 +182,7 @@ content:
     type: string_textfield
     region: content
   field_geographic_coverage:
-    weight: 4
+    weight: 5
     settings:
       size: 60
       placeholder: ''
@@ -189,7 +190,7 @@ content:
     type: string_textfield
     region: content
   field_issn:
-    weight: 11
+    weight: 12
     settings:
       size: 60
       placeholder: ''
@@ -197,7 +198,7 @@ content:
     type: string_textfield
     region: content
   field_language:
-    weight: 19
+    weight: 20
     settings:
       format:
         name: name
@@ -247,7 +248,7 @@ content:
     type: boolean_checkbox
     region: content
   field_oclc:
-    weight: 12
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -255,14 +256,14 @@ content:
     type: string_textfield
     region: content
   field_place_of_publication:
-    weight: 3
+    weight: 4
     settings:
       default_country: null
     third_party_settings: {  }
     type: address_default
     region: content
   field_publisher:
-    weight: 5
+    weight: 6
     settings:
       match_operator: CONTAINS
       size: 60
@@ -271,7 +272,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_related_title:
-    weight: 15
+    weight: 16
     settings:
       match_operator: CONTAINS
       size: 60
@@ -280,7 +281,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_sort_title:
-    weight: 1
+    weight: 2
     settings:
       size: 60
       placeholder: ''
@@ -310,7 +311,7 @@ content:
     type: string_textfield
     region: content
   field_subject_notes:
-    weight: 10
+    weight: 11
     settings:
       rows: 4
       placeholder: ''
@@ -318,22 +319,52 @@ content:
     type: string_textarea
     region: content
   field_subjects:
-    weight: 9
+    weight: 10
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
+  field_subtitle:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings:
+      conditional_fields:
+        5250a369-51f8-41b4-8b79-7d5ffcb78566:
+          dependee: title
+          settings:
+            state: '!visible'
+            condition: empty
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: ''
+            effect: slide
+            effect_options:
+              fade:
+                speed: '400'
+              slide:
+                speed: '300'
+            selector: ''
+          entity_type: node
+          bundle: publication
+    type: string_textfield
+    region: content
   field_supplemental_information:
-    weight: 16
+    weight: 17
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
     region: content
   field_title_notes:
-    weight: 2
+    weight: 3
     settings:
       rows: 3
       placeholder: ''
@@ -364,7 +395,7 @@ content:
     region: content
   path:
     type: path
-    weight: 24
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -372,21 +403,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 22
+    weight: 23
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 25
+    weight: 26
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 23
+    weight: 24
     region: content
     third_party_settings: {  }
   title:
@@ -399,7 +430,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 20
+    weight: 21
     settings:
       match_operator: CONTAINS
       size: 60
