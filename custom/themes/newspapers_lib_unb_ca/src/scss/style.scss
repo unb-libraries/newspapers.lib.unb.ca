@@ -72,6 +72,32 @@
   float: none;
 }
 
+/* Chosen + Bootstrap */
+.select-wrapper .chosen-container {
+  padding: 4px 2em 4px 12px;
+  width: 100% !important;
+}
+.chosen-container .chosen-drop {
+  border-color: #ccc;
+  left: 0;
+}
+.chosen-container-active.chosen-with-drop .chosen-single {
+  background: #fff;
+  border: none;
+}
+.chosen-container-single .chosen-single {
+  background: #fff;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+.chosen-container-single .chosen-single div b {
+  display: none;
+}
+.chosen-container-single .chosen-single span {
+  margin-right: 5em;
+}
+
 /* unb-lib.css + overrides.min.css override */
 .select-wrapper select,
 input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
