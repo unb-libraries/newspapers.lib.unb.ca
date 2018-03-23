@@ -107,8 +107,8 @@ function newspapers_core_node_presave(EntityInterface $node) {
       // Clear Frequency Notes if Frequency = '- None -'.
       $frequency_none = $node
         ->get('field_frequency')
-        ->isEmpty();
-      if ($frequency_none) {
+        ->getString();
+      if ($frequency_none != 'varies') {
         $blank_the_fields[] = "field_frequency_notes";
 
       }
