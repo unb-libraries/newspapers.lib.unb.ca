@@ -128,7 +128,7 @@ content:
               fade:
                 speed: '400'
               slide:
-                speed: '300'
+                speed: '200'
             selector: ''
           entity_type: node
           bundle: publication
@@ -175,7 +175,7 @@ content:
               fade:
                 speed: '400'
               slide:
-                speed: '400'
+                speed: '200'
             selector: ''
           entity_type: node
           bundle: publication
@@ -228,7 +228,7 @@ content:
               fade:
                 speed: '400'
               slide:
-                speed: '300'
+                speed: '200'
             selector: ''
           entity_type: node
           bundle: publication
@@ -304,7 +304,7 @@ content:
               fade:
                 speed: '400'
               slide:
-                speed: '300'
+                speed: '200'
             selector: ''
           entity_type: node
           bundle: publication
@@ -350,7 +350,7 @@ content:
               fade:
                 speed: '400'
               slide:
-                speed: '300'
+                speed: '200'
             selector: ''
           entity_type: node
           bundle: publication
@@ -387,7 +387,7 @@ content:
               fade:
                 speed: '400'
               slide:
-                speed: '300'
+                speed: '200'
             selector: ''
           entity_type: node
           bundle: publication
