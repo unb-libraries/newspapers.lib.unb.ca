@@ -1,0 +1,21 @@
+uuid: 7270f088-8a93-43b0-8fd5-3091e88409ad
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_first_issue_date_type
+    - node.type.publication
+  module:
+    - options
+id: node.publication.field_first_issue_date_type
+field_name: field_first_issue_date_type
+entity_type: node
+bundle: publication
+label: 'First Issue Date is'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

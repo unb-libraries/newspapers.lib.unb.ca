@@ -6,7 +6,7 @@ function firstIssueDateRange() {
     /**
      * Set First Issue Date interface within Date of Publication fieldset.
      */
-    if (jQuery("#edit-field-first-issue-date-is-approx-value").is(":checked")) {
+    if (jQuery("#edit-field-first-issue-date-type").val() == 'approximate') {
         jQuery("#edit-field-first-issue-date-0 .panel-title").text("First Issue Date Range");
         jQuery("#edit-field-first-issue-date-0 label:first-child").text("Approximate start date");
         jQuery("#edit-field-first-issue-date-0-value + label").text("Approximate end date").slideDown(300);
@@ -28,7 +28,7 @@ function lastIssueDateRange() {
     /**
      * Set Last Issue Date interface within Date of Publication fieldset.
      */
-    if (jQuery("#edit-field-last-issue-date-is-approx-value").is(":checked")) {
+    if (jQuery("#edit-field-last-issue-date-type").val() == 'approximate') {
         jQuery("#edit-field-last-issue-date-0 .panel-title").text("Last Issue Date Range");
         jQuery("#edit-field-last-issue-date-0 label:first-child").text("Approximate start date");
         jQuery("#edit-field-last-issue-date-0-value + label").text("Approximate end date").slideDown(300);
@@ -53,7 +53,7 @@ jQuery(document).ready(function () {
     firstIssueDateRange();
     lastIssueDateRange();
 
-    jQuery("#edit-field-first-issue-date-is-approx-value").click(firstIssueDateRange);
-    jQuery("#edit-field-last-issue-date-is-approx-value").click(lastIssueDateRange);
+    jQuery("#edit-field-first-issue-date-type").change(firstIssueDateRange);
+    jQuery("#edit-field-last-issue-date-type").change(lastIssueDateRange);
 });
 

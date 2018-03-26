@@ -1,0 +1,21 @@
+uuid: ae94949d-bc15-4224-b108-5dd37140c59b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_last_issue_date_type
+    - node.type.publication
+  module:
+    - options
+id: node.publication.field_last_issue_date_type
+field_name: field_last_issue_date_type
+entity_type: node
+bundle: publication
+label: 'Last Issue Date is'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

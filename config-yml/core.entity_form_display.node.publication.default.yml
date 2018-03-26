@@ -10,7 +10,7 @@ dependencies:
     - field.field.node.publication.field_family
     - field.field.node.publication.field_first_issue_approx_date
     - field.field.node.publication.field_first_issue_date
-    - field.field.node.publication.field_first_issue_date_is_approx
+    - field.field.node.publication.field_first_issue_date_type
     - field.field.node.publication.field_first_issue_sort_date
     - field.field.node.publication.field_frequency
     - field.field.node.publication.field_frequency_notes
@@ -20,7 +20,7 @@ dependencies:
     - field.field.node.publication.field_language
     - field.field.node.publication.field_last_issue_approx_date
     - field.field.node.publication.field_last_issue_date
-    - field.field.node.publication.field_last_issue_date_is_approx
+    - field.field.node.publication.field_last_issue_date_type
     - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
@@ -36,6 +36,7 @@ dependencies:
     - node.type.publication
   module:
     - address
+    - conditional_fields
     - datetime_range
     - field_group
     - file
@@ -45,10 +46,10 @@ third_party_settings:
   field_group:
     group_date_of_publication:
       children:
-        - field_first_issue_date_is_approx
+        - field_first_issue_date_type
         - field_first_issue_date
         - field_first_issue_approx_date
-        - field_last_issue_date_is_approx
+        - field_last_issue_date_type
         - field_last_issue_date
         - field_last_issue_approx_date
       parent_name: ''
@@ -87,20 +88,11 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 20
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   field_continued_by:
-    weight: 17
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
-  field_continues:
     weight: 16
     settings:
       match_operator: CONTAINS
@@ -109,8 +101,17 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
+  field_continues:
+    weight: 15
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   field_credit:
-    weight: 14
+    weight: 13
     settings:
       rows: 2
       placeholder: ''
@@ -156,23 +157,24 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_first_issue_approx_date:
-    weight: 38
+    weight: 39
     settings:
       size: 60
       placeholder: ''
     third_party_settings:
       conditional_fields:
-        7ab621d4-98bd-4e9a-9390-5b495bb0c9c0:
-          dependee: field_first_issue_date_is_approx
+        2a4ce227-384c-4ff3-8ed4-d04a5d95cfcb:
+          dependee: field_first_issue_date_type
           settings:
             state: visible
-            condition: checked
+            condition: value
             grouping: AND
             values_set: 1
             value: ''
             values: {  }
             value_form:
-              value: false
+              -
+                value: approximate
             effect: slide
             effect_options:
               fade:
@@ -185,17 +187,36 @@ content:
     type: string_textfield
     region: content
   field_first_issue_date:
+    weight: 38
+    settings: {  }
+    third_party_settings:
+      conditional_fields:
+        6dbe9fb9-10d5-44f7-b223-7b524fd2355b:
+          dependee: field_first_issue_date_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 3
+            value: ''
+            values: "exact\r\napproximate"
+            value_form: {  }
+            effect: slide
+            effect_options:
+              fade:
+                speed: '400'
+              slide:
+                speed: '200'
+            selector: ''
+          entity_type: node
+          bundle: publication
+    type: daterange_default
+    region: content
+  field_first_issue_date_type:
     weight: 37
     settings: {  }
     third_party_settings: {  }
-    type: daterange_default
-    region: content
-  field_first_issue_date_is_approx:
-    weight: 36
-    settings:
-      display_label: true
-    third_party_settings: {  }
-    type: boolean_checkbox
+    type: options_select
     region: content
   field_frequency:
     weight: 7
@@ -204,7 +225,7 @@ content:
     type: options_select
     region: content
   field_frequency_notes:
-    weight: 9
+    weight: 8
     settings:
       size: 60
       placeholder: ''
@@ -268,7 +289,7 @@ content:
     type: boolean_checkbox
     region: content
   field_issn:
-    weight: 12
+    weight: 11
     settings:
       size: 60
       placeholder: ''
@@ -276,7 +297,7 @@ content:
     type: string_textfield
     region: content
   field_language:
-    weight: 18
+    weight: 17
     settings:
       format:
         name: name
@@ -290,17 +311,18 @@ content:
       placeholder: ''
     third_party_settings:
       conditional_fields:
-        a8f13c3e-a3b7-4a44-a558-b60e53e2a088:
-          dependee: field_last_issue_date_is_approx
+        17cc18e7-3640-426f-9dcf-19dbada86d4d:
+          dependee: field_last_issue_date_type
           settings:
             state: visible
-            condition: checked
+            condition: value
             grouping: AND
             values_set: 1
             value: ''
             values: {  }
             value_form:
-              value: false
+              -
+                value: approximate
             effect: slide
             effect_options:
               fade:
@@ -315,18 +337,42 @@ content:
   field_last_issue_date:
     weight: 41
     settings: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      conditional_fields:
+        cb492bfc-d100-4ab0-99a4-6f888e8d1a7d:
+          dependee: field_last_issue_date_type
+          settings:
+            state: visible
+            condition: value
+            grouping: AND
+            values_set: 3
+            value: ''
+            values: "exact\r\napproximate"
+            value_form:
+              -
+                value: exact
+            effect: slide
+            effect_options:
+              fade:
+                speed: '400'
+              slide:
+                speed: '200'
+            selector: ''
+            field_last_issue_date_type:
+              -
+                value: exact
+          entity_type: node
+          bundle: publication
     type: daterange_default
     region: content
-  field_last_issue_date_is_approx:
+  field_last_issue_date_type:
     weight: 40
-    settings:
-      display_label: true
+    settings: {  }
     third_party_settings: {  }
-    type: boolean_checkbox
+    type: options_select
     region: content
   field_oclc:
-    weight: 13
+    weight: 12
     settings:
       size: 60
       placeholder: ''
@@ -359,7 +405,7 @@ content:
     type: string_textfield
     region: content
   field_subject_notes:
-    weight: 11
+    weight: 10
     settings:
       rows: 4
       placeholder: ''
@@ -367,7 +413,7 @@ content:
     type: string_textarea
     region: content
   field_subjects:
-    weight: 10
+    weight: 9
     settings:
       size: 60
       placeholder: ''
@@ -384,7 +430,7 @@ content:
     type: string_textfield
     region: content
   field_supplemental_information:
-    weight: 15
+    weight: 14
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
@@ -408,7 +454,7 @@ content:
     region: content
   path:
     type: path
-    weight: 23
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -416,21 +462,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 21
+    weight: 20
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 24
+    weight: 23
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 22
+    weight: 21
     region: content
     third_party_settings: {  }
   title:
@@ -443,7 +489,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 19
+    weight: 18
     settings:
       match_operator: CONTAINS
       size: 60

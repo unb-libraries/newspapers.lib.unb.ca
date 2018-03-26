@@ -208,51 +208,68 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
  *   The object containing the current state of the Publication form.
  */
 function _newspapers_core_validate_handler(array &$form, FormStateInterface $form_state) {
-  $date_empty_message = t("Approximate <em>start</em> and <em>end</em> dates cannot be empty");
-  $range_message = t("Approximate <em>start</em> and <em>end</em> dates should not be the same");
-  $family_empty_message = t("<em>Family Name</em> is required when <em>This is part of a family</em> is checked");
-
   $first_issue_element = 'field_first_issue_date';
   $last_issue_element = 'field_last_issue_date';
   $family_element = 'field_family';
+  //$first_issue_date_type = $form_state->getValue(['field_first_issue_date_type','0']);
   $first_issue_date = $form_state->getValue($first_issue_element);
   $last_issue_date = $form_state->getValue($last_issue_element);
   $first_date_label = t("date");
   $last_date_label = t("date");
 
-  if ($form_state->getValue(['field_first_issue_date_is_approx', 'value'])) {
+  if ($form_state->getValue(['field_first_issue_date_type','0'])['value'] == 'exact') {
+    if (is_null($first_issue_date['0']['value'])) {
+      $form_state->setErrorByName(
+        $first_issue_element,
+        t("The <em>exact</em> date cannot be empty")
+      );
+    }
+  }
+
+  if ($form_state->getValue(['field_first_issue_date_type','0'])['value'] == 'approximate') {
     $first_date_label = t("approximate start date");
 
     if (is_null($first_issue_date['0']['value']) ||
       is_null($first_issue_date['0']['end_value'])) {
       $form_state->setErrorByName(
         $first_issue_element,
-        $date_empty_message);
-    }
-
-    if ($first_issue_date['0']['value']->format('U') ==
+        t("The <em>approximate</em> date range may not contain an empty date")
+      );
+    } elseif ($first_issue_date['0']['value']->format('U') ==
       $first_issue_date['0']['end_value']->format('U')) {
       $form_state->setErrorByName(
         $first_issue_element,
-        $range_message);
+        t("Approximate <em>start</em> and <em>end</em> dates may not be the same")
+      );
     }
   }
 
-  if ($form_state->getValue(['field_last_issue_date_is_approx', 'value'])) {
+  if ($form_state->getValue(['field_last_issue_date_type','0'])['value'] == 'exact') {
+    $last_date_label = t("start date");
+
+    if (is_null($last_issue_date['0']['value'])) {
+      $form_state->setErrorByName(
+        $last_issue_element,
+        t("The <em>exact</em> date cannot be empty")
+      );
+    }
+  }
+
+  if ($form_state->getValue(['field_last_issue_date_type','0'])['value'] == 'approximate') {
     $last_date_label = t("approximate start date");
 
     if (is_null($last_issue_date['0']['value']) ||
       is_null($last_issue_date['0']['end_value'])) {
       $form_state->setErrorByName(
         $last_issue_element,
-        $date_empty_message);
-    }
-
-    if ($last_issue_date['0']['value']->format('U') ==
+        t("The <em>approximate</em> date range may not contain an empty date")
+      );
+    } elseif ($last_issue_date['0']['value']->format('U') ==
       $last_issue_date['0']['end_value']->format('U')) {
       $form_state->setErrorByName(
         $last_issue_element,
-        $range_message);
+        t("Approximate <em>start</em> and <em>end</em> dates may not be the same")
+      );
     }
   }
 
@@ -274,7 +291,8 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
     if (!$form_state->getValue(['field_family', 'value'])) {
       $form_state->setErrorByName(
         $family_element,
-        $family_empty_message);
+        t("<em>Family Name</em> is required when <em>This is part of a family</em> is checked")
+      );
     }
   }
 }
