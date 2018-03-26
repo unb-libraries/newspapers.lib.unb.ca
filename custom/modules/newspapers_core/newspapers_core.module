@@ -66,13 +66,17 @@ function newspapers_core_node_presave(EntityInterface $node) {
       $first_issue_end_date = count($first_issue_date_arr) < 2 ? NULL : $first_issue_date_arr[1];
 
       // Remove verbatim dates entered prior clearing approx date checkboxes.
-      if (!_newspapers_core_boolean_is_true($node, 'field_first_issue_date_is_approx')) {
-        $blank_the_fields[] = "field_first_issue_approx_date";
+      $first_issue_date_type = $node
+        ->get('field_first_issue_date_type')
+        ->getString();
+      if (empty($first_issue_date_type)) {
+        $blank_the_fields[] = "field_first_issue_date";
         $first_sort_timestamp = strtotime($first_issue_start_date);
       }
       else {
         $first_sort_timestamp = (strtotime($first_issue_start_date) + strtotime($first_issue_end_date)) / 2;
       }
+
       // $first_sort_timestamp == false if strtotime invalid format, i.e. null.
       $first_sort_date =
         $first_sort_timestamp ? DrupalDateTime::createFromTimestamp($first_sort_timestamp)
@@ -88,7 +92,10 @@ function newspapers_core_node_presave(EntityInterface $node) {
       $last_issue_start_date = $last_issue_date_arr[0];
       $last_issue_end_date = count($last_issue_date_arr) < 2 ? NULL : $last_issue_date_arr[1];
 
-      if (!_newspapers_core_boolean_is_true($node, 'field_last_issue_date_is_approx')) {
+      $last_issue_date_type = $node
+        ->get('field_last_issue_date_type')
+        ->getString();
+      if (empty($last_issue_date_type)) {
         $blank_the_fields[] = "field_last_issue_approx_date";
         $last_sort_timestamp = strtotime($last_issue_start_date);
       }
