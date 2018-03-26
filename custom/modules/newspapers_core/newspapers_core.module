@@ -65,7 +65,7 @@ function newspapers_core_node_presave(EntityInterface $node) {
       $first_issue_start_date = $first_issue_date_arr[0];
       $first_issue_end_date = count($first_issue_date_arr) < 2 ? NULL : $first_issue_date_arr[1];
 
-      // Remove verbatim dates entered prior clearing approx date checkboxes.
+      // Remove dates entered prior setting 'First Issue Date is' to 'None'.
       $first_issue_date_type = $node
         ->get('field_first_issue_date_type')
         ->getString();
