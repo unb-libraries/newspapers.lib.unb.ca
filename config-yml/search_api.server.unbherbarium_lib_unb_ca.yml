@@ -1,0 +1,24 @@
+uuid: 3ba4c1cc-ed52-4498-9523-59c4cf7efeb6
+langcode: en
+status: true
+dependencies:
+  module:
+    - elasticsearch_connector
+id: unbherbarium_lib_unb_ca
+name: unbherbarium.lib.unb.ca
+description: unbherbarium.lib.unb.ca
+backend: elasticsearch
+backend_config:
+  cluster_settings:
+    cluster: drupal_elasticsearch_lib_unb_ca
+  fuzziness: auto
+  scheme: http
+  host: localhost
+  port: '9200'
+  path: ''
+  excerpt: false
+  retrieve_data: false
+  highlight_data: false
+  http_method: AUTO
+  autocorrect_spell: true
+  autocorrect_suggest_words: true

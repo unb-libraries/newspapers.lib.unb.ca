@@ -49,6 +49,9 @@
                 "Extend Daterange functionality": "https://www.drupal.org/files/issues/2794481-50.patch",
                 "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch",
                 "To display exposed filter block titles": "https://www.drupal.org/files/issues/2720101-38.patch"
+            },
+            "drupal/elasticsearch_connector": {
+                "Cannot combine elasticsearch with other backends": "https://www.drupal.org/files/issues/elasticsearch_connector-fix-serialize-closure-error-2904033-9.patch"
             }
         }
     },
@@ -96,6 +99,7 @@
         "drupal/config_update": "1.5",
         "drupal/console": "~1.0",
         "drupal/core": "8.5.0",
+        "drupal/elasticsearch_connector": "5.0-alpha2",
         "drupal/externalauth": "1.1",
         "drupal/features": "3.7",
         "drupal/field_group": "3.0-beta1",
@@ -108,6 +112,7 @@
         "drupal/token": "1.1",
         "drush/drush": "^8.1.15",
         "harvesthq/chosen": "~1.8",
+        "nodespark/des-connector": "5.x-dev",
         "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x",
         "webflo/drupal-finder": "^0.3.0",
         "webmozart/path-util": "^2.3"

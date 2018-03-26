@@ -1,0 +1,34 @@
+uuid: d074c5f5-78c0-4325-8c49-59677432078d
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.server.unbherbarium_lib_unb_ca
+  module:
+    - search_api
+    - node
+id: nbnp_title_index
+name: 'NBNP Title Index'
+description: ''
+read_only: false
+field_settings: {  }
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - publication
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  rendered_item: {  }
+  add_url: {  }
+  aggregated_field: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+server: unbherbarium_lib_unb_ca

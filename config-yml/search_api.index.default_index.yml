@@ -177,17 +177,31 @@ datasource_settings:
       default: true
       selected: {  }
 processor_settings:
+  rendered_item:
+    weights:
+      add_properties: 0
+      pre_index_save: -10
+  content_access:
+    weights:
+      preprocess_index: -6
+      preprocess_query: -4
   tokenizer:
     all_fields: false
     fields:
-      - title
       - rendered_item
+      - title
     spaces: ''
     overlap_cjk: 1
     minimum_word_size: '3'
     weights:
       preprocess_index: -2
       preprocess_query: -5
+  add_url:
+    weights:
+      preprocess_index: -30
+  aggregated_field:
+    weights:
+      add_properties: 20
   html_filter:
     all_fields: false
     fields:
@@ -206,24 +220,25 @@ processor_settings:
   ignorecase:
     all_fields: false
     fields:
-      - title
       - rendered_item
+      - title
     weights:
       preprocess_index: -5
       preprocess_query: -8
+  entity_status: {  }
   transliteration:
     all_fields: false
     fields:
-      - title
       - rendered_item
+      - title
     weights:
       preprocess_index: -4
       preprocess_query: -7
   stopwords:
     all_fields: false
     fields:
-      - title
       - rendered_item
+      - title
     stopwords:
       - a
       - an
@@ -263,14 +278,6 @@ processor_settings:
     weights:
       preprocess_index: -5
       preprocess_query: -10
-  rendered_item:
-    weights:
-      add_properties: 0
-      pre_index_save: -10
-  content_access:
-    weights:
-      preprocess_index: -6
-      preprocess_query: -4
   highlight:
     highlight: always
     highlight_partial: true
@@ -281,15 +288,6 @@ processor_settings:
     suffix: '</strong>'
     weights:
       postprocess_query: 0
-  aggregated_field:
-    weights:
-      add_properties: 20
-  entity_status:
-    weights:
-      preprocess_index: -10
-  add_url:
-    weights:
-      preprocess_index: -30
 tracker_settings:
   default:
     indexing_order: fifo
