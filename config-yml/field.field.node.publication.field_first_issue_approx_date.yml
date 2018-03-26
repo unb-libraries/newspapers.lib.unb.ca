@@ -10,7 +10,7 @@ field_name: field_first_issue_approx_date
 entity_type: node
 bundle: publication
 label: 'Verbatim date'
-description: "The first issue's approximate date of publication<br />\r\n<i>Some dates are indeterminate and may only contain the year component or be of a descriptive nature</i><br />\r\n"
+description: "The first issue's approximate date of publication <i>as provided</i>. Will display in place of the date range.<br />\r\n<i>Some dates are indeterminate and may only contain the year component or be of a descriptive nature</i>\r\n"
 required: false
 translatable: false
 default_value: {  }

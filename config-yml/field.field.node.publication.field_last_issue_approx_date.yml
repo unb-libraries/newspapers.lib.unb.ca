@@ -10,7 +10,7 @@ field_name: field_last_issue_approx_date
 entity_type: node
 bundle: publication
 label: 'Verbatim date'
-description: "The last issue's date of publication <i>as provided</i><br />\r\n<i>Some dates are indeterminate and may only contain the year component or be of a descriptive n"
+description: "The last issue's date of publication <i>as provided</i>. Will display in place of the date range.<br />\r\n<i>Some dates are indeterminate and may only contain the year component or be of a descriptive nature"
 required: false
 translatable: false
 default_value: {  }
