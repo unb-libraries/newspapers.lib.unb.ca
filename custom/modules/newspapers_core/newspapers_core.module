@@ -217,11 +217,11 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
 function _newspapers_core_validate_handler(array &$form, FormStateInterface $form_state) {
   $first_issue_element = 'field_first_issue_date';
   $last_issue_element = 'field_last_issue_date';
-  $family_element = 'field_family';
   $first_issue_date = $form_state->getValue($first_issue_element);
   $last_issue_date = $form_state->getValue($last_issue_element);
   $first_date_label = t("date");
   $last_date_label = t("date");
+  $family_element = 'field_family';
 
   if ($form_state->getValue(['field_first_issue_date_type', '0'])['value'] == 'exact') {
     if (is_null($first_issue_date['0']['value'])) {
@@ -295,12 +295,16 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
     }
   }
 
+  // Require Family Name entity reference when associated checkbox checked.
+  $family_name = $form_state
+    ->getValue(['field_family', '0'])['target_id'];
   if ($form_state->getValue(['field_this_is_part_of_a_family', 'value'])) {
-    if (!$form_state->getValue(['field_family', 'value'])) {
+    if (empty($family_name)) {
       $form_state->setErrorByName(
         $family_element,
         t("<em>Family Name</em> is required when <em>This is part of a family</em> is checked")
       );
     }
   }
+
 }
