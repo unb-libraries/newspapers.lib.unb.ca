@@ -1,6 +1,6 @@
 uuid: 88081c44-4fb6-4421-9c84-8e81464d7efc
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - user
@@ -177,14 +177,6 @@ datasource_settings:
       default: true
       selected: {  }
 processor_settings:
-  rendered_item:
-    weights:
-      add_properties: 0
-      pre_index_save: -10
-  content_access:
-    weights:
-      preprocess_index: -6
-      preprocess_query: -4
   tokenizer:
     all_fields: false
     fields:
@@ -196,12 +188,6 @@ processor_settings:
     weights:
       preprocess_index: -2
       preprocess_query: -5
-  add_url:
-    weights:
-      preprocess_index: -30
-  aggregated_field:
-    weights:
-      add_properties: 20
   html_filter:
     all_fields: false
     fields:
@@ -225,7 +211,6 @@ processor_settings:
     weights:
       preprocess_index: -5
       preprocess_query: -8
-  entity_status: {  }
   transliteration:
     all_fields: false
     fields:
@@ -278,6 +263,14 @@ processor_settings:
     weights:
       preprocess_index: -5
       preprocess_query: -10
+  rendered_item:
+    weights:
+      add_properties: 0
+      pre_index_save: -10
+  content_access:
+    weights:
+      preprocess_index: -6
+      preprocess_query: -4
   highlight:
     highlight: always
     highlight_partial: true
@@ -288,6 +281,13 @@ processor_settings:
     suffix: '</strong>'
     weights:
       postprocess_query: 0
+  aggregated_field:
+    weights:
+      add_properties: 20
+  entity_status: {  }
+  add_url:
+    weights:
+      preprocess_index: -30
 tracker_settings:
   default:
     indexing_order: fifo

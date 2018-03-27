@@ -3,6 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_subtitle
+    - field.storage.node.field_title_notes
+    - field.storage.node.field_description
     - search_api.server.unbherbarium_lib_unb_ca
   module:
     - search_api
@@ -11,7 +14,38 @@ id: nbnp_title_index
 name: 'NBNP Title Index'
 description: ''
 read_only: false
-field_settings: {  }
+field_settings:
+  title:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: text
+    boost: !!float 8
+  field_subtitle:
+    label: Subtitle
+    datasource_id: 'entity:node'
+    property_path: field_subtitle
+    type: text
+    boost: !!float 2
+    dependencies:
+      config:
+        - field.storage.node.field_subtitle
+  field_title_notes:
+    label: 'Title Notes'
+    datasource_id: 'entity:node'
+    property_path: field_title_notes
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_title_notes
+  field_description:
+    label: Description
+    datasource_id: 'entity:node'
+    property_path: field_description
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_description
 datasource_settings:
   'entity:node':
     bundles:
@@ -23,8 +57,8 @@ datasource_settings:
       selected: {  }
 processor_settings:
   rendered_item: {  }
-  add_url: {  }
   aggregated_field: {  }
+  add_url: {  }
 tracker_settings:
   default:
     indexing_order: fifo
