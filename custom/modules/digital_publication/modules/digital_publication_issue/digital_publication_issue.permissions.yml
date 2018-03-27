@@ -1,0 +1,33 @@
+add digital publication issue entities:
+  title: 'Create new Digital publication issue entities'
+
+administer digital publication issue entities:
+  title: 'Administer Digital publication issue entities'
+  description: 'Allow to access the administration form to configure Digital publication issue entities.'
+  restrict access: true
+
+delete digital publication issue entities:
+  title: 'Delete Digital publication issue entities'
+
+edit digital publication issue entities:
+  title: 'Edit Digital publication issue entities'
+
+access digital publication issue overview:
+  title: 'Access the Digital publication issue overview page'
+
+view published digital publication issue entities:
+  title: 'View published Digital publication issue entities'
+
+view unpublished digital publication issue entities:
+  title: 'View unpublished Digital publication issue entities'
+
+view all digital publication issue revisions:
+  title: 'View all Digital publication issue revisions'
+
+revert all digital publication issue revisions:
+  title: 'Revert all Digital publication issue revisions'
+  description: 'Role requires permission <em>view Digital publication issue revisions</em> and <em>edit rights</em> for digital publication issue entities in question or <em>administer digital publication issue entities</em>.'
+
+delete all digital publication issue revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Digital publication issue revisions</em> and <em>delete rights</em> for digital publication issue entities in question or <em>administer digital publication issue entities</em>.'

@@ -1,0 +1,8 @@
+name: Digital Publication Page
+type: module
+description: Digital publication page
+core: 8.x
+package: Serials
+
+dependencies:
+  - drupal:image

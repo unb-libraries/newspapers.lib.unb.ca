@@ -1,0 +1,14 @@
+
+# Digital publication title menu items definition
+entity.digital_publication_title.collection:
+  title: 'Digital publication title list'
+  route_name: entity.digital_publication_title.collection
+  description: 'List Digital publication title entities'
+  parent: system.admin_structure
+  weight: 100
+
+digital_publication_title.admin.structure.settings:
+  title: Digital publication title settings
+  description: 'Configure Digital publication title entities'
+  route_name: digital_publication_title.settings
+  parent: system.admin_structure

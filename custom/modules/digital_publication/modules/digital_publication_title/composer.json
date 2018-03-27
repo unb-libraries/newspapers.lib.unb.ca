@@ -1,0 +1,14 @@
+{
+  "name": "drupal/digital_publication_title",
+  "type": "drupal-module",
+  "description": "Digital Publication Title",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/digital_publication_title",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/digital_publication_title",
+    "source": "http://cgit.drupalcode.org/digital_publication_title"
+  },
+  "require": { }
+}

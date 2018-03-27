@@ -1,0 +1,5 @@
+name: Digital Publication
+type: module
+description: Digital publication.
+core: 8.x
+package: Serials

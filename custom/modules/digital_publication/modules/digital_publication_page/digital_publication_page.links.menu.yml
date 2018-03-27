@@ -1,0 +1,14 @@
+
+# Digital publication page menu items definition
+entity.digital_publication_page.collection:
+  title: 'Digital publication page list'
+  route_name: entity.digital_publication_page.collection
+  description: 'List Digital publication page entities'
+  parent: system.admin_structure
+  weight: 100
+
+digital_publication_page.admin.structure.settings:
+  title: Digital publication page settings
+  description: 'Configure Digital publication page entities'
+  route_name: digital_publication_page.settings
+  parent: system.admin_structure

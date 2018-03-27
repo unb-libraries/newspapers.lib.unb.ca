@@ -1,0 +1,5 @@
+entity.digital_publication_issue.add_form:
+  route_name: entity.digital_publication_issue.add_form
+  title: 'Add Digital publication issue'
+  appears_on:
+    - entity.digital_publication_issue.collection

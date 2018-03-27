@@ -1,0 +1,9 @@
+name: Digital Publication Issue
+type: module
+description: Digital publication issue
+core: 8.x
+package: Serials
+
+dependencies:
+  - digital_publication:digital_publication_page
+  - digital_publication:digital_publication_title

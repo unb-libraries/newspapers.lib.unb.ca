@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains digital_publication_page.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function digital_publication_page_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the digital_publication_page module.
+    case 'help.page.digital_publication_page':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Digital publication page') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function digital_publication_page_theme() {
+  return [
+    'digital_publication_page' => [
+      'render element' => 'children',
+    ],
+  ];
+}
