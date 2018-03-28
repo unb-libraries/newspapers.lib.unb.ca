@@ -1,0 +1,14 @@
+
+# Digital serial issue menu items definition
+entity.digital_serial_issue.collection:
+  title: 'Digital serial issue list'
+  route_name: entity.digital_serial_issue.collection
+  description: 'List Digital serial issue entities'
+  parent: system.admin_structure
+  weight: 100
+
+digital_serial_issue.admin.structure.settings:
+  title: Digital serial issue settings
+  description: 'Configure Digital serial issue entities'
+  route_name: digital_serial_issue.settings
+  parent: system.admin_structure

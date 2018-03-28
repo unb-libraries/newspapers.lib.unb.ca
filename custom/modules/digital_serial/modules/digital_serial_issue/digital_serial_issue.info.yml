@@ -1,0 +1,9 @@
+name: Digital Serial Issue
+type: module
+description: Digital Serial Issue
+core: 8.x
+package: Serials
+
+dependencies:
+  - digital_serial:digital_serial_page
+  - digital_serial:digital_serial_title

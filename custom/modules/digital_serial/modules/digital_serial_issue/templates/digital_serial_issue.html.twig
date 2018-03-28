@@ -1,0 +1,22 @@
+{#
+/**
+ * @file digital_serial_issue.html.twig
+ * Default theme implementation to present Digital serial issue data.
+ *
+ * This template is used when viewing Digital serial issue pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_digital_serial_issue()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('digital_serial_issue') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

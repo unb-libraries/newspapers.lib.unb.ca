@@ -1,5 +1,0 @@
-entity.digital_publication_title.add_form:
-  route_name: entity.digital_publication_title.add_form
-  title: 'Add Digital publication title'
-  appears_on:
-    - entity.digital_publication_title.collection

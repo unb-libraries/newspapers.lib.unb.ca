@@ -1,0 +1,14 @@
+{
+  "name": "drupal/digital_serial_page",
+  "type": "drupal-module",
+  "description": "Digital Serial Page",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/digital_serial_page",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/digital_serial_page",
+    "source": "http://cgit.drupalcode.org/digital_serial_page"
+  },
+  "require": { }
+}
