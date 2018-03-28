@@ -101,6 +101,20 @@
   color: $widget-hover-color;
 }
 
+/* Search results */
+.search-result {
+  margin-bottom: 1.5em;
+}
+.search-result h3 {
+  margin-bottom: 0;
+}
+.views-field-search-api-excerpt {
+  color: #767676;
+}
+.views-field-search-api-excerpt strong {
+  color: #000;
+}
+
 /* unb-lib.css + overrides.min.css override */
 .select-wrapper select,
 input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {

@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_subtitle
     - search_api.index.nbnp_title_index
   module:
     - search_api
@@ -64,17 +63,18 @@ display:
             previous: ‹‹
             next: ››
       style:
-        type: html_list
+        type: default
+        options:
+          grouping: {  }
+          row_class: search-result
+          default_row_class: true
       row:
         type: fields
       fields:
         title:
+          id: title
           table: search_api_index_nbnp_title_index
           field: title
-          id: title
-          entity_type: null
-          entity_field: null
-          plugin_id: search_api_field
           relationship: none
           group_type: group
           admin_label: ''
@@ -107,21 +107,22 @@ display:
             trim: false
             preserve_tags: ''
             html: false
-          element_type: ''
+          element_type: h3
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
           type: string
-          settings: {  }
+          settings:
+            link_to_entity: true
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -139,10 +140,13 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
-        field_subtitle:
-          id: field_subtitle
+          entity_type: null
+          entity_field: null
+          plugin_id: search_api_field
+        search_api_excerpt:
+          id: search_api_excerpt
           table: search_api_index_nbnp_title_index
-          field: field_subtitle
+          field: search_api_excerpt
           relationship: none
           group_type: group
           admin_label: ''
@@ -181,34 +185,17 @@ display:
           element_label_class: ''
           element_label_colon: false
           element_wrapper_type: ''
-          element_wrapper_class: description
-          element_default_classes: false
+          element_wrapper_class: ''
+          element_default_classes: true
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
+          link_to_item: false
+          use_highlighting: false
           multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          field_rendering: true
-          fallback_handler: search_api
-          fallback_options:
-            link_to_item: false
-            use_highlighting: false
-            multi_type: separator
-            multi_separator: ', '
-          plugin_id: search_api_field
+          multi_separator: ', '
+          plugin_id: search_api
       filters:
         search_api_fulltext:
           id: search_api_fulltext
@@ -291,8 +278,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-      tags:
-        - 'config:field.storage.node.field_subtitle'
+      tags: {  }
   page_1:
     display_plugin: page
     id: page_1
@@ -308,5 +294,4 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-      tags:
-        - 'config:field.storage.node.field_subtitle'
+      tags: {  }

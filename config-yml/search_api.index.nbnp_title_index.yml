@@ -6,8 +6,15 @@ dependencies:
     - field.storage.node.field_subtitle
     - field.storage.node.field_title_notes
     - field.storage.node.field_description
+    - field.storage.node.field_family
+    - field.storage.node.field_place_of_publication
+    - field.storage.node.field_subjects
+    - field.storage.node.field_subject_notes
+    - field.storage.node.field_issn
+    - field.storage.node.field_oclc
     - search_api.server.unbherbarium_lib_unb_ca
   module:
+    - taxonomy
     - search_api
     - node
 id: nbnp_title_index
@@ -46,6 +53,64 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_description
+  name:
+    label: 'Family Name » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_family:entity:name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_family
+      module:
+        - taxonomy
+  locality:
+    label: 'Place of Publication » The locality (i.e. city).'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:locality'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
+  administrative_area:
+    label: 'Place of Publication » The top-level administrative subdivision of the country.'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:administrative_area'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
+  field_subjects:
+    label: Subjects
+    datasource_id: 'entity:node'
+    property_path: field_subjects
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_subjects
+  field_subject_notes:
+    label: 'Subject Notes'
+    datasource_id: 'entity:node'
+    property_path: field_subject_notes
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_subject_notes
+  field_issn:
+    label: ISSN
+    datasource_id: 'entity:node'
+    property_path: field_issn
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_issn
+  field_oclc:
+    label: OCLC
+    datasource_id: 'entity:node'
+    property_path: field_oclc
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_oclc
 datasource_settings:
   'entity:node':
     bundles:
@@ -57,6 +122,16 @@ datasource_settings:
       selected: {  }
 processor_settings:
   rendered_item: {  }
+  highlight:
+    highlight: always
+    highlight_partial: true
+    excerpt: true
+    excerpt_length: 256
+    exclude_fields: {  }
+    prefix: '<strong>'
+    suffix: '</strong>'
+    weights:
+      postprocess_query: 0
   aggregated_field: {  }
   add_url: {  }
 tracker_settings:
