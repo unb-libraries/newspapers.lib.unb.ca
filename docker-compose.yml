@@ -16,7 +16,7 @@ services:
     env_file:
       - ./env/redis.env
 
-  drupal.elasticsearch.lib.unb.ca:
+  drupal-elasticsearch-lib-unb-ca:
     build:
       context: elasticsearch/
     restart: always

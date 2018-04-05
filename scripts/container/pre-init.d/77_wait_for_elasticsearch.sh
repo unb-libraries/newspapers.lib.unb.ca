@@ -3,7 +3,7 @@
 
 # Check if Elasticsearch env vars exist.
 if [[ -z "$ELASTICSEARCH_HOSTNAME" ]]; then
- ELASTICSEARCH_HOSTNAME='drupal.elasticsearch.lib.unb.ca'
+ ELASTICSEARCH_HOSTNAME='drupal-elasticsearch-lib-unb-ca'
 fi
 if [[ -z "$ELASTICSEARCH_PORT" ]]; then
  ELASTICSEARCH_PORT='9200'
