@@ -108,7 +108,7 @@
         "drupal/ldap": "3.0-beta3",
         "drupal/pathauto": "1.1",
         "drupal/redis": "1.0-rc2",
-        "drupal/search_api": "1.7",
+        "drupal/search_api": "1.8",
         "drupal/token": "1.1",
         "drush/drush": "^8.1.15",
         "harvesthq/chosen": "~1.8",
