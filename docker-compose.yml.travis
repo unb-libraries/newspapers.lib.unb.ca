@@ -2,7 +2,7 @@ version: '2'
 
 services:
   mysql:
-    image: mysql
+    image: mysql:5.7
     restart: always
     command: mysqld --skip-name-resolve --max_allowed_packet=64M
     env_file:
