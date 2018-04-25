@@ -130,3 +130,12 @@ input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit
 .panel-default > .panel-heading a {
   color: #333;
 }
+a:hover,
+a:active,
+a:focus {
+  border: none;
+  text-decoration: underline;
+}
+.panel-heading a {
+  font-weight: bold;
+}
