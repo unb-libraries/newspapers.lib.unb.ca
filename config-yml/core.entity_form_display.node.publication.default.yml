@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.publication.field_additional_indexed_text
     - field.field.node.publication.field_continued_by
     - field.field.node.publication.field_continues
     - field.field.node.publication.field_credit
@@ -58,9 +59,9 @@ third_party_settings:
       format_settings:
         label: 'Date of Publication'
         open: true
-        required_fields: true
         id: ''
         classes: ''
+        required_fields: false
       label: 'Date of Publication'
       region: content
     group_title_details:
@@ -75,10 +76,11 @@ third_party_settings:
       weight: 1
       format_type: details
       format_settings:
+        label: 'Title Details'
+        open: true
         id: ''
         classes: ''
-        open: true
-        required_fields: true
+        required_fields: false
       label: 'Title Details'
       region: content
 id: node.publication.default
@@ -92,6 +94,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_additional_indexed_text:
+    weight: 43
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_continued_by:
     weight: 16
     settings:

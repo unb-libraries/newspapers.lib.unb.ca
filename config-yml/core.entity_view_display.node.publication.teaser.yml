@@ -47,6 +47,7 @@ content:
     region: content
 hidden:
   field_abbreviated_title: true
+  field_additional_indexed_text: true
   field_city_town: true
   field_continued_by: true
   field_continues: true
