@@ -32,8 +32,9 @@ function newspapers_core_help($route_name, RouteMatchInterface $route_match) {
  */
 function newspapers_core_theme() {
   return [
-    'newspapers_core' => [
-      'render element' => 'children',
+    'node__publication' => [
+      'template' => 'node--publication',
+      'base hook' => 'node',
     ],
   ];
 }
