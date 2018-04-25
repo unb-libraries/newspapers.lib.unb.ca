@@ -44,15 +44,6 @@
   outline: none;
   padding-right: 0;
 }
-.panel-heading a:before {
-  font-family: 'Glyphicons Halflings';
-  content: "\e159";
-  margin-right: .25em;
-  vertical-align: text-top;
-}
-.panel-heading a[aria-expanded="true"]:before {
-  content: "\e160";
-}
 
 .form-item {
   transition: all linear 0.4s;

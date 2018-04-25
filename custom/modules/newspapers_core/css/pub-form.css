@@ -10,3 +10,55 @@
 .field--type-daterange div + label {
 	margin-top: .5em;
 }
+
+.panel-heading a:before {
+	font-family: 'Glyphicons Halflings';
+	content: "\e159";
+	color: #5cb85c;
+	font-weight: normal;
+	margin-right: .25em;
+	vertical-align: text-top;
+}
+.panel-heading a[aria-expanded="true"]:before {
+	content: "\e160";
+	color: #5cb85c;
+}
+.panel-default > .panel-heading a:hover:before {
+	color: #449d44;
+}
+
+button.field-add-more-submit:before {
+	font-family: 'Glyphicons Halflings';
+	content:"\e081";
+	color: #5cb85c;
+	margin-right: .33em;
+	vertical-align: top;
+}
+button.field-add-more-submit:hover:before {
+	color: #449d44;
+}
+button.field-add-more-submit {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc;
+	margin-bottom: 1.5em;
+}
+button.field-add-more-submit:hover,
+button.field-add-more-submit:focus {
+	color: #333;
+	background-color: #e6e6e6;
+	border-color: #adadad;
+	text-decoration: none;
+}
+
+/* Bootstrap details panel + Address 'Required field' indicator */
+div.required-fields a:after,
+div[id^="edit-field-place-of-publication"] a:after {
+	background-image: url(/themes/contrib/bootstrap/css/images/required.svg);
+	background-size: 10px 7px;
+	content: "";
+	display: inline-block;
+	line-height: 1;
+	height: 7px;
+	width: 10px;
+}
