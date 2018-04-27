@@ -88,7 +88,7 @@
         }
     ],
     "require": {
-        "commerceguys/addressing": "1.x-dev",
+        "commerceguys/addressing": "1.0.0-beta5",
         "composer/installers": "^1.2.0",
         "cweagans/composer-patches": "1.6.3",
         "drupal-composer/drupal-scaffold": "~2.2.0",
