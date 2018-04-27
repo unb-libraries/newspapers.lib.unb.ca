@@ -72,7 +72,7 @@ field_settings:
       config:
         - field.storage.node.field_place_of_publication
   administrative_area:
-    label: 'Place of Publication » The top-level administrative subdivision of the country.'
+    label: 'Place of Publication »  Administrative area abbreviation (i.e. province).'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:administrative_area'
     type: text
@@ -111,6 +111,22 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_oclc
+  administrative_area_name:
+    label: 'Place of Publication » Administrative area full name (i.e. province).'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:administrative_area_name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
+  country_name:
+    label: 'Place of Publication » Full name of the country.'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:country_name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
 datasource_settings:
   'entity:node':
     bundles:
