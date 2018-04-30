@@ -12,6 +12,7 @@ dependencies:
     - field.storage.node.field_subject_notes
     - field.storage.node.field_issn
     - field.storage.node.field_oclc
+    - field.storage.node.field_publisher
     - search_api.server.unbherbarium_lib_unb_ca
   module:
     - taxonomy
@@ -127,6 +128,16 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
+  name_1:
+    label: 'Publisher » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_publisher:entity:name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_publisher
+      module:
+        - taxonomy
 datasource_settings:
   'entity:node':
     bundles:
