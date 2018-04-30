@@ -418,7 +418,7 @@ display:
           empty: true
           tokenize: true
           content:
-            value: "<div class=\"alert alert-warning fade in\">\n    <span class=\"glyphicon glyphicon-warning-sign\"></span>\n    No results were found."
+            value: "<div class=\"alert alert-warning fade in\">\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n    No results were found."
             format: full_html
           plugin_id: text
       relationships: {  }

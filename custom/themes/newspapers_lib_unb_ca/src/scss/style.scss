@@ -31,6 +31,15 @@
   margin-top: 1em;
 }
 
+#edit-reset:before {
+  font-family: 'Glyphicons Halflings';
+  content: "\e031";
+  color: #777;
+  font-size: smaller;
+  margin-right: 0.25em;
+  vertical-align: text-bottom;
+}
+
 /* Fix overrides.min.css / unb-lib.css conflict */
 .panel-default > .panel-heading {
   color: $unb-lib-panel-heading;
