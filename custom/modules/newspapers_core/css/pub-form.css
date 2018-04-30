@@ -1,7 +1,4 @@
 /* Target range date title panel */
-.field--type-daterange .panel-default > .panel-heading {
-	background: #d6d6d6;
-}
 .field--type-daterange .panel-default > .panel-heading .panel-title {
 	color: #333;
 }
