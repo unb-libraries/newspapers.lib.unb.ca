@@ -111,7 +111,6 @@
         "drupal/ldap": "3.0-beta3",
         "drupal/material_admin": "1.0-alpha6",
         "drupal/pathauto": "1.2",
-        "drupal/redis": "1.0-rc2",
         "drupal/search_api": "1.8",
         "drupal/token": "1.1",
         "drush/drush": "^8.1.15",

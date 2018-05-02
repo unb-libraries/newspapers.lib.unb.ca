@@ -19,7 +19,7 @@ RUN /scripts/DeployUpstreamContainerScripts.sh && \
   /scripts/deleteUpstreamTree.sh
 
 # Add LDAP, Mail Sending, rsyslog
-RUN apk update && apk --update add rsyslog postfix php7-ldap php7-redis && \
+RUN apk update && apk --update add rsyslog postfix php7-ldap && \
   rm -f /var/cache/apk/* && \
   touch /var/log/nginx/access.log && touch /var/log/nginx/error.log && \
   mkdir -p /var/spool/rsyslog; chgrp adm /var/spool/rsyslog; chmod g+w /var/spool/rsyslog && \
