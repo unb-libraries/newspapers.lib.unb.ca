@@ -10,7 +10,7 @@ field_name: field_first_issue_approx_date
 entity_type: node
 bundle: publication
 label: 'Verbatim date'
-description: "Some dates are indeterminate and may be of a descriptive nature. Enter the approximate date <i>as provided</i> - this field displays <i>in place of</i> the date range.<br>\r\n<b>Example:</b> October (?), 1863\r\n"
+description: "Enter the <b>first</b> issue date <i>as provided</i> - this value displays <b>in place of</b> the approximate date range.<br>\r\n<b>Example:</b> 2010\r\n"
 required: false
 translatable: false
 default_value: {  }

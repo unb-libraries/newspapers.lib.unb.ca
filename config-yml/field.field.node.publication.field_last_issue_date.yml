@@ -12,7 +12,7 @@ field_name: field_last_issue_date
 entity_type: node
 bundle: publication
 label: 'Last Issue Date Range'
-description: "<b>Note:</b> Approximate dates require a date <i>range</i> - enter the start and end of the range described by the <i>verbatim</i> date.<br>\r\n<b>Example:</b> <i>May 2010</i> would be entered using <kbd>2010/05/01</kbd> as the <i>start</i> and <kbd>2010/05/31</kbd> as the <i>end</i> date."
+description: "<b>Note:</b> Approximate dates require a date <i>range</i> - enter the start and end of the range described by the <i>verbatim</i> date.<br>\r\n<b>Example:</b> <i>1995 or 1996</i> would be entered using <kbd>1995/01/01</kbd> as the <i>start</i> and <kbd>1996/12/31</kbd> as the <i>end</i> date."
 required: false
 translatable: false
 default_value: {  }

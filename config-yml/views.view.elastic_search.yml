@@ -44,7 +44,7 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: "<div class=\"alert alert-info fade in\">\n    <span class=\"glyphicon glyphicon-question-sign\"></span>\n    Enter 1 or more keyword filters and click on Apply to see results.\n</div>"
+          text_input_required: "<div class=\"alert alert-info fade in\">\n    <span class=\"glyphicon glyphicon-question-sign\"></span>\n    Enter 1 or more keyword filters and use the <q>Apply Search</q> button to get results.\n</div>"
           text_input_required_format: full_html
       pager:
         type: mini
