@@ -94,14 +94,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_additional_indexed_text:
-    weight: 43
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_continued_by:
     weight: 16
     settings:
@@ -507,6 +499,7 @@ content:
     region: content
     third_party_settings: {  }
 hidden:
+  field_additional_indexed_text: true
   field_first_issue_sort_date: true
   field_last_issue_sort_date: true
   field_serial_holdings: true

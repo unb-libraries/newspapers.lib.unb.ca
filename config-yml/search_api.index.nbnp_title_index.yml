@@ -13,6 +13,7 @@ dependencies:
     - field.storage.node.field_issn
     - field.storage.node.field_oclc
     - field.storage.node.field_publisher
+    - field.storage.node.field_additional_indexed_text
     - search_api.server.unbherbarium_lib_unb_ca
   module:
     - taxonomy
@@ -138,6 +139,14 @@ field_settings:
         - field.storage.node.field_publisher
       module:
         - taxonomy
+  field_additional_indexed_text:
+    label: 'Additional indexed text'
+    datasource_id: 'entity:node'
+    property_path: field_additional_indexed_text
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_additional_indexed_text
 datasource_settings:
   'entity:node':
     bundles:
@@ -148,7 +157,6 @@ datasource_settings:
       default: true
       selected: {  }
 processor_settings:
-  rendered_item: {  }
   highlight:
     highlight: always
     highlight_partial: true
@@ -160,6 +168,7 @@ processor_settings:
     weights:
       postprocess_query: 0
   aggregated_field: {  }
+  rendered_item: {  }
   add_url: {  }
 tracker_settings:
   default:
