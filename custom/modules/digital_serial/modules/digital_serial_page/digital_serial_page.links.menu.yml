@@ -1,0 +1,14 @@
+
+# Serial page menu items definition
+entity.digital_serial_page.collection:
+  title: 'Serial page list'
+  route_name: entity.digital_serial_page.collection
+  description: 'List Serial page entities'
+  parent: system.admin_structure
+  weight: 100
+
+digital_serial_page.admin.structure.settings:
+  title: Serial page settings
+  description: 'Configure Serial page entities'
+  route_name: digital_serial_page.settings
+  parent: system.admin_structure

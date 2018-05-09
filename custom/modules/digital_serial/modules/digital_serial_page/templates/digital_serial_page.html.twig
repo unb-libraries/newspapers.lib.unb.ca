@@ -1,0 +1,22 @@
+{#
+/**
+ * @file digital_serial_page.html.twig
+ * Default theme implementation to present Serial page data.
+ *
+ * This template is used when viewing Serial page pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_digital_serial_page()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('digital_serial_page') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

@@ -1,0 +1,22 @@
+add serial page entities:
+  title: 'Create new Serial page entities'
+
+administer serial page entities:
+  title: 'Administer Serial page entities'
+  description: 'Allow to access the administration form to configure Serial page entities.'
+  restrict access: true
+
+delete serial page entities:
+  title: 'Delete Serial page entities'
+
+edit serial page entities:
+  title: 'Edit Serial page entities'
+
+access serial page overview:
+  title: 'Access the Serial page overview page'
+
+view published serial page entities:
+  title: 'View published Serial page entities'
+
+view unpublished serial page entities:
+  title: 'View unpublished Serial page entities'
