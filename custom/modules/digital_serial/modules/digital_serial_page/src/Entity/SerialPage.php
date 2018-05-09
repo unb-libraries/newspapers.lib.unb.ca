@@ -37,7 +37,6 @@ use Drupal\user\UserInterface;
  *   admin_permission = "administer serial page entities",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "name",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
@@ -70,15 +69,15 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   /**
    * {@inheritdoc}
    */
-  public function getName() {
-    return $this->get('name')->value;
+  public function getPageNo() {
+    return $this->get('page_no')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setName($name) {
-    $this->set('name', $name);
+  public function setPageNo($page_no) {
+    $this->set('page_no', $page_no);
     return $this;
   }
 
@@ -148,36 +147,32 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Authored by'))
-      ->setDescription(t('The user ID of author of the Serial page entity.'))
-      ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'user')
-      ->setSetting('handler', 'default')
-      ->setTranslatable(TRUE)
+    $fields['page_no'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Page Number'))
+      ->setDescription(t('Enter the page number.'))
+      ->setSettings([
+        'max_length' => 16,
+        'text_processing' => 0,
+      ])
+      ->setRequired(TRUE)
+      ->setDefaultValue('')
       ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'author',
-        'weight' => 0,
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -4,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'weight' => 5,
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'autocomplete_type' => 'tags',
-          'placeholder' => '',
-        ],
+        'type' => 'string_textfield',
+        'weight' => -10,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Name'))
-      ->setDescription(t('The name of the Serial page entity.'))
+    $fields['page_sort'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Page Sort'))
+      ->setDescription(t('Enter the value to use for alphanumeric page sorting.'))
       ->setSettings([
-        'max_length' => 50,
+        'max_length' => 16,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
@@ -188,7 +183,23 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
-        'weight' => -4,
+        'weight' => -10,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['page_image'] = BaseFieldDefinition::create('image')
+      ->setLabel(t('Image'))
+      ->setDescription(t('Upload the digital image of the page.'))
+      ->setRequired(TRUE)
+      ->setSettings([
+        'file_directory' => 'digital_serial/pages',
+        'alt_field_required' => FALSE,
+        'file_extensions' => 'png jpg jpeg tiff tif',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'image',
+        'weight' => 0,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);

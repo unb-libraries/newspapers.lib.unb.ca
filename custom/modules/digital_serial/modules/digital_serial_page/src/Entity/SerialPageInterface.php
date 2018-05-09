@@ -14,23 +14,23 @@ use Drupal\user\EntityOwnerInterface;
 interface SerialPageInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
   /**
-   * Gets the Serial page name.
+   * Gets the Serial page number.
    *
    * @return string
-   *   Name of the Serial page.
+   *   Number of the Serial page.
    */
-  public function getName();
+  public function getPageNo();
 
   /**
-   * Sets the Serial page name.
+   * Sets the Serial page number.
    *
-   * @param string $name
-   *   The Serial page name.
+   * @param string $page_no
+   *   The Serial page number.
    *
    * @return \Drupal\digital_serial_page\Entity\SerialPageInterface
    *   The called Serial page entity.
    */
-  public function setName($name);
+  public function setPageNo($page_no);
 
   /**
    * Gets the Serial page creation timestamp.

@@ -17,8 +17,7 @@ class SerialPageListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('Serial page ID');
-    $header['name'] = $this->t('Name');
+    $header['page_no'] = $this->t('Page No');
     return $header + parent::buildHeader();
   }
 
@@ -27,12 +26,7 @@ class SerialPageListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\digital_serial_page\Entity\SerialPage */
-    $row['id'] = $entity->id();
-    $row['name'] = Link::createFromRoute(
-      $entity->label(),
-      'entity.digital_serial_page.edit_form',
-      ['digital_serial_page' => $entity->id()]
-    );
+    $row['page_no'] = $entity->getPageNo();
     return $row + parent::buildRow($entity);
   }
 
