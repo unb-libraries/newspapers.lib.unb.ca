@@ -1,8 +1,0 @@
-name: Digital Serial Page
-type: module
-description: Digital Serial Page
-core: 8.x
-package: Serials
-
-dependencies:
-  - drupal:image

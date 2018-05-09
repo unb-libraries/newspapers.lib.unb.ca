@@ -1,5 +1,0 @@
-entity.digital_serial_title.add_form:
-  route_name: entity.digital_serial_title.add_form
-  title: 'Add Digital serial title'
-  appears_on:
-    - entity.digital_serial_title.collection
