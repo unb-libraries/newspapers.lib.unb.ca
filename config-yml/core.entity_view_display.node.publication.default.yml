@@ -109,9 +109,9 @@ content:
     weight: 1
     label: above
     settings:
-      separator: '-'
-      format_type: medium
       timezone_override: ''
+      format_type: html_date
+      separator: '-'
     third_party_settings: {  }
     type: daterange_default
     region: content
@@ -175,9 +175,9 @@ content:
     weight: 4
     label: above
     settings:
-      separator: '-'
-      format_type: medium
       timezone_override: ''
+      format_type: html_date
+      separator: '-'
     third_party_settings: {  }
     type: daterange_default
     region: content
