@@ -40,6 +40,25 @@
   vertical-align: text-bottom;
 }
 
+#edit-delete:before {
+  font-family: 'Glyphicons Halflings';
+  content:"\e020";
+  color: #777;
+  display: inline-block;
+  font-size: smaller;
+  margin-right: 0.25em;
+  vertical-align: text-bottom;
+}
+#edit-cancel:before {
+  font-family: 'Glyphicons Halflings';
+  content:"\e014";
+  color: #777;
+  display: inline-block;
+  font-size: smaller;
+  margin-right: 0.25em;
+  vertical-align: text-bottom;
+}
+
 /* Fix overrides.min.css / unb-lib.css conflict */
 .panel-default > .panel-heading {
   color: $unb-lib-panel-heading;
