@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\Entity\Node;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_help().
@@ -48,7 +49,51 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
     case 'node_publication_edit_form':
       $form['#attached']['library'][] = 'newspapers_core/pubform';
       array_unshift($form['#validate'], "_newspapers_core_validate_handler");
+
+      $form['actions']['submit_cancel'] = [
+        '#type' => 'submit',
+        '#weight' => 50,
+        '#value' => t('Cancel'),
+        '#submit' => ['_newspapers_core_cancel_redirect_callback'],
+        '#limit_validation_errors' => [],
+        '#attributes' => [
+          'class' => ['btn-warning'],
+        ],
+      ];
   }
+}
+
+/**
+ * Cancel changes and return to admin content or node view.
+ *
+ * @param array $form
+ *   The form element.
+ * @param Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ *
+ * @return string
+ *   The redirection url or route name.
+ */
+function _newspapers_core_cancel_redirect_callback(array &$form, FormStateInterface &$form_state) {
+  $current_route = \Drupal::routeMatch()->getRouteName();
+
+  switch ($current_route) {
+    case 'entity.node.edit_form':
+      // Get node id and return canonical node url.
+      $node = $form_state
+        ->getFormObject()
+        ->getEntity();
+      $url = Url::fromRoute(
+        'entity.node.canonical',
+        ['node' => $node->id()]
+      );
+      return $form_state->setRedirectUrl($url);
+
+    case 'node.add':
+      // Return Admin Content overview route name.
+      return $form_state->setRedirect('system.admin_content');
+  }
+
 }
 
 /**
