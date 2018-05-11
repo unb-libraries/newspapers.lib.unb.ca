@@ -60,7 +60,7 @@
     },
     "license": "MIT",
     "minimum-stability": "stable",
-    "name": "unblibraries/newspapers.lib.unb.ca",
+    "name": "unb-libraries/newspapers.lib.unb.ca",
     "repositories": [
         {
             "type": "composer",
