@@ -8,6 +8,9 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\user\UserInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Link;
 
 /**
  * Defines the Serial page entity.
@@ -79,6 +82,13 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   public function setPageNo($page_no) {
     $this->set('page_no', $page_no);
     return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPageImage() {
+    return $this->get('page_image')->get(0)->entity;
   }
 
   /**
@@ -218,6 +228,63 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
+  }
+
+  /**
+   * Implements getStyledImage() method.
+   *
+   * @param string $image_style
+   *   The machine name of an image style.
+   *
+   * @return array
+   *   The render array of a given image style.
+   */
+  public function getStyledImage($image_style) {
+    $file = $this->getPageImage();
+    $variables = [
+      'style_name' => $image_style,
+      'uri' => $file->getFileUri(),
+    ];
+
+    // The image.factory service will check if our image is valid.
+    $image = \Drupal::service('image.factory')->get($file->getFileUri());
+    if ($image->isValid()) {
+      $variables['width'] = $image->getWidth();
+      $variables['height'] = $image->getHeight();
+    }
+    else {
+      $variables['width'] = $variables['height'] = NULL;
+    }
+
+    $render_array = [
+      '#theme' => 'image_style',
+      '#width' => $variables['width'],
+      '#height' => $variables['height'],
+      '#style_name' => $variables['style_name'],
+      '#uri' => $variables['uri'],
+    ];
+
+    return $render_array;
+  }
+
+  /**
+   * Implements getLinkedStyledImage() method.
+   *
+   * @param string $image_style
+   *   The machine name of an image style.
+   *
+   * @return object
+   *   The link object containing the image.
+   */
+  public function getLinkedStyledImage($image_style) {
+    $image = $this->getStyledImage($image_style);
+    $rendered_image = render($image);
+    $image_markup = Markup::create($rendered_image);
+    $file = $this->getPageImage();
+    $uri = $file->getFileUri();
+    $url = Url::fromUri(file_create_url($uri));
+
+    return (Link::fromTextAndUrl($image_markup, $url));
   }
 
 }

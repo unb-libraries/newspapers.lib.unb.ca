@@ -33,6 +33,22 @@ interface SerialPageInterface extends ContentEntityInterface, EntityChangedInter
   public function setPageNo($page_no);
 
   /**
+   * Gets the styled image.
+   *
+   * @return array
+   *   The render array of the styled image.
+   */
+  public function getStyledImage($image_style);
+
+  /**
+   * Gets the styled image linked to original.
+   *
+   * @return string
+   *   The link object to the original image.
+   */
+  public function getLinkedStyledImage($image_style);
+
+  /**
    * Gets the Serial page creation timestamp.
    *
    * @return int
