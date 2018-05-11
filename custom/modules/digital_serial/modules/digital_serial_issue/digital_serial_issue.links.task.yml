@@ -1,0 +1,22 @@
+# Serial issue routing definition
+serial_issue.settings_tab:
+  route_name: serial_issue.settings
+  title: 'Settings'
+  base_route: serial_issue.settings
+
+entity.serial_issue.canonical:
+  route_name: entity.serial_issue.canonical
+  base_route: entity.serial_issue.canonical
+  title: 'View'
+
+entity.serial_issue.edit_form:
+  route_name: entity.serial_issue.edit_form
+  base_route: entity.serial_issue.canonical
+  title: 'Edit'
+
+entity.serial_issue.delete_form:
+  route_name:  entity.serial_issue.delete_form
+  base_route:  entity.serial_issue.canonical
+  title: Delete
+  weight: 10
+

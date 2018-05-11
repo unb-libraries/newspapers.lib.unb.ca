@@ -1,0 +1,22 @@
+add serial issue entities:
+  title: 'Create new Serial issue entities'
+
+administer serial issue entities:
+  title: 'Administer Serial issue entities'
+  description: 'Allow to access the administration form to configure Serial issue entities.'
+  restrict access: true
+
+delete serial issue entities:
+  title: 'Delete Serial issue entities'
+
+edit serial issue entities:
+  title: 'Edit Serial issue entities'
+
+access serial issue overview:
+  title: 'Access the Serial issue overview page'
+
+view published serial issue entities:
+  title: 'View published Serial issue entities'
+
+view unpublished serial issue entities:
+  title: 'View unpublished Serial issue entities'
