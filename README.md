@@ -23,11 +23,11 @@ The following packages are required to be globally installed on your development
 In the ```env/drupal.env``` file, change the environment settings to match your local development environment.
 
 ```
-DOCKER_ENDPOINT_IP=192.168.99.100
+DOCKER_ENDPOINT_IP=localhost
 LOCAL_USER_GROUP=20
 ```
 
-* ```DOCKER_ENDPOINT_IP``` - This is the IP of your docker daemon. In OSX, this is likely the [IP of your docker-machine](https://docs.docker.com/machine/reference/ip/). On Linux, this is probably localhost.
+* ```DOCKER_ENDPOINT_IP``` - This is the IP of your docker daemon, likely 'localhost'.
 * ```LOCAL_USER_GROUP``` - The [group id](https://kb.iu.edu/d/adwf) of your local user. This is used to change permissions when deploying locally.
 
 ### 2. Deploy Instance
