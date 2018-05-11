@@ -2,7 +2,7 @@
   "license": "MIT",
   "minimum-stability": "stable",
   "name": "unb-libraries/newspapers.lib.unb.ca",
-  "description": "Provision/scaffolding for developing drupal instance.",
+  "description": "Scaffold and provision local development for newspapers.lib.unb.ca",
   "config": {
     "preferred-install": {
       "*": "dist"
