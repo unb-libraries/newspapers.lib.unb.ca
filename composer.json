@@ -22,7 +22,7 @@
     "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x"
   },
   "require-dev": {
-    "unblibraries/dockworker": "^8.0.0"
+    "unb-libraries/dockworker": "^8.0.0"
   },
   "scripts": {
     "post-update-cmd": [
