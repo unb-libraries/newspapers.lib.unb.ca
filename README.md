@@ -33,7 +33,7 @@ composer install --prefer-dist
 ```
 
 ```
-dockworker container:start-over
+dockworker start-over
 ```
 
 ### 3. Other useful commands
