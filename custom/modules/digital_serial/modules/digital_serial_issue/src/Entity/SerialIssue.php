@@ -295,6 +295,88 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['issue_missingp'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Missing Pages'))
+      ->setDescription(t('Pages missing from the issue.'))
+      ->setSettings([
+        'max_length' => 50,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -25,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -25,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['issue_errata'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Errata'))
+      ->setDescription(t('Add issue errata.'))
+      ->setSettings([
+        'default_value' => '',
+        'text_processing' => 0,
+      ])
+      ->setDisplayOptions('form', []
+        'settings' => [
+          'rows' => 4,
+        ],
+        'type' => 'text_textarea',
+        'weight' => -20,
+      ))
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'weight' => -20,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['ssue_language'] = BaseFieldDefinition::create('list_string')
+      ->setLabel(t('Language'))
+      ->setDescription(t('The language of the issue.'))
+      ->setSettings([
+        'allowed_values' => [
+          'eng' => 'English',
+          'fre' => 'French',
+        ],
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'list_default',
+        'weight' => -15,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'options_select',
+        'weight' => -15,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['issue_media'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Source Media'))
+      ->setDescription(t('Source Media.'))
+      ->setSettings([
+        'max_length' => 50,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('Print')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -10,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -10,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
       ->setDescription(t('A boolean indicating whether the Serial issue is published.'))
