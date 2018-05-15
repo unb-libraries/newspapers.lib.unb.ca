@@ -3,10 +3,10 @@
 namespace Drupal\digital_serial_issue\Entity;
 
 use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\user\UserInterface;
 
 /**
@@ -232,7 +232,6 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-
     $fields['issue_issue'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Issue'))
       ->setDescription(t('Issue number of the issue.'))
@@ -264,11 +263,34 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
-        'weight' => -4,
+        'weight' => -35,
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
-        'weight' => -4,
+        'weight' => -35,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['issue_date'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('Publication Date'))
+      ->setDescription(t('The date the issue was published.'))
+      ->setRevisionable(FALSE)
+      ->setSettings([
+        'datetime_type' => 'date',
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'datetime_default',
+        'settings' => [
+          'format_type' => 'html_date',
+        ],
+        'weight' => 14,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'datetime',
+        'weight' => -48,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
