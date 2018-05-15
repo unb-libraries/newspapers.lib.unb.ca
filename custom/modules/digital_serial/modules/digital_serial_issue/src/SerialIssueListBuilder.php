@@ -18,7 +18,7 @@ class SerialIssueListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['id'] = $this->t('Serial issue ID');
-    $header['name'] = $this->t('Name');
+    $header['issue_title'] = $this->t('Title');
     return $header + parent::buildHeader();
   }
 
@@ -28,8 +28,8 @@ class SerialIssueListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\digital_serial_issue\Entity\SerialIssue */
     $row['id'] = $entity->id();
-    $row['name'] = Link::createFromRoute(
-      $entity->label(),
+    $row['issue_title'] = Link::createFromRoute(
+      $entity->getIssueTitle(),
       'entity.serial_issue.edit_form',
       ['serial_issue' => $entity->id()]
     );
