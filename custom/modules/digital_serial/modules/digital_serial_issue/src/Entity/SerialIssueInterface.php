@@ -14,25 +14,6 @@ use Drupal\user\EntityOwnerInterface;
 interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
   /**
-   * Gets the Serial issue name.
-   *
-   * @return string
-   *   Name of the Serial issue.
-   */
-  public function getName();
-
-  /**
-   * Sets the Serial issue name.
-   *
-   * @param string $name
-   *   The Serial issue name.
-   *
-   * @return \Drupal\digital_serial_issue\Entity\SerialIssueInterface
-   *   The called Serial issue entity.
-   */
-  public function setName($name);
-
-  /**
    * Gets the Serial issue creation timestamp.
    *
    * @return int
