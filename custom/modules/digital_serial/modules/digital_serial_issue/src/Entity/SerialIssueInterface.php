@@ -53,4 +53,80 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
    */
   public function setPublished($published);
 
+  /**
+   * Gets the Serial issue title.
+   *
+   * @return string
+   *   Title of the Serial issue.
+   */
+  public function getIssueTitle();
+
+  /**
+   * Sets the Serial issue title.
+   *
+   * @param string $issue_title
+   *   The Serial issue title.
+   *
+   * @return \Drupal\digital_serial_issue\Entity\SerialIssueInterface
+   *   The called Serial issue entity.
+   */
+  public function setIssueTitle($issue_title);
+
+  /**
+   * Gets the Serial issue title.
+   *
+   * @return string
+   *   Title of the Serial issue.
+   */
+  public function getIssueVol();
+
+  /**
+   * Sets the Serial issue volume.
+   *
+   * @param string $issue_vol
+   *   The Serial issue volume.
+   *
+   * @return \Drupal\digital_serial_issue\Entity\SerialIssueInterface
+   *   The called Serial issue entity.
+   */
+  public function setIssueVol($issue_vol);
+
+  /**
+   * Gets the Serial issue Volume.
+   *
+   * @return string
+   *   Volume of the Serial issue.
+   */
+  public function getIssueIssue();
+
+  /**
+   * Sets the Serial issue issue.
+   *
+   * @param string $issue_issue
+   *   The Serial issue issue number.
+   *
+   * @return \Drupal\digital_serial_issue\Entity\SerialIssueInterface
+   *   The called Serial issue entity.
+   */
+  public function setIssueIssue($issue_issue);
+
+  /**
+   * Gets the Serial issue edition.
+   *
+   * @return string
+   *   Edition of the Serial issue.
+   */
+  public function getIssueEdition();
+
+  /**
+   * Sets the Serial issue edition.
+   *
+   * @param string $issue_edition
+   *   The Serial issue edition.
+   *
+   * @return \Drupal\digital_serial_issue\Entity\SerialIssueInterface
+   *   The called Serial issue entity.
+   */
+  public function setIssueEdition($issue_edition);
+
 }
