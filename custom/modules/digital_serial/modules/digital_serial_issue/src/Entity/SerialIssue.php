@@ -37,7 +37,6 @@ use Drupal\user\UserInterface;
  *   admin_permission = "administer serial issue entities",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "name",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
@@ -65,21 +64,6 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
     $values += [
       'user_id' => \Drupal::currentUser()->id(),
     ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getName() {
-    return $this->get('name')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setName($name) {
-    $this->set('name', $name);
-    return $this;
   }
 
   /**
@@ -145,37 +129,133 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * {@inheritdoc}
    */
+  public function getIssueTitle() {
+    return $this->get('issue_title')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setIssueTitle($issue_title) {
+    $this->set('issue_title', $issue_title);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getIssueVol() {
+    return $this->get('issue_vol')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setIssueVol($issue_vol) {
+    $this->set('issue_vol', $issue_vol);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getIssueIssue() {
+    return $this->get('issue_issue')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setIssueIssue($issue_issue) {
+    $this->set('issue_issue', $issue_issue);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getIssueEdition() {
+    return $this->get('issue_edition')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setIssueEdition($issue_edition) {
+    $this->set('issue_edition', $issue_edition);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Authored by'))
-      ->setDescription(t('The user ID of author of the Serial issue entity.'))
-      ->setRevisionable(TRUE)
-      ->setSetting('target_type', 'user')
-      ->setSetting('handler', 'default')
-      ->setTranslatable(TRUE)
+    $fields['issue_title'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Printed Title'))
+      ->setDescription(t('Printed title.'))
+      ->setSettings([
+        'max_length' => 50,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
       ->setDisplayOptions('view', [
-        'label' => 'hidden',
-        'type' => 'author',
-        'weight' => 0,
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -50,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'weight' => 5,
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => '60',
-          'autocomplete_type' => 'tags',
-          'placeholder' => '',
-        ],
+        'type' => 'string_textfield',
+        'weight' => -50,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Name'))
-      ->setDescription(t('The name of the Serial issue entity.'))
+    $fields['issue_vol'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Volume'))
+      ->setDescription(t('Volume number of the issue.'))
+      ->setSettings([
+        'max_length' => 16,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -45,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -45,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+
+    $fields['issue_issue'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Issue'))
+      ->setDescription(t('Issue number of the issue.'))
+      ->setSettings([
+        'max_length' => 16,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -40,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -40,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['issue_edition'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Edition'))
+      ->setDescription(t('Edition of the issue.'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
