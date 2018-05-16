@@ -345,6 +345,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
           'fre' => 'French',
         ],
       ])
+      ->setDefaultValue('eng')
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'list_default',
