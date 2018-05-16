@@ -322,13 +322,13 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
         'default_value' => '',
         'text_processing' => 0,
       ])
-      ->setDisplayOptions('form', []
+      ->setDisplayOptions('form', [
         'settings' => [
           'rows' => 4,
         ],
         'type' => 'text_textarea',
         'weight' => -20,
-      ))
+      ])
       ->setDisplayOptions('view', [
         'label' => 'above',
         'weight' => -20,
