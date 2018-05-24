@@ -1,0 +1,6 @@
+serial_issue.manage_pages:
+  path: '/digital_serial/digital_serial_issue/{serial_issue}/pages'
+  defaults:
+    _entity_list: 'digital_serial_page'
+  requirements:
+    _permission: 'administer serial issue entities'
