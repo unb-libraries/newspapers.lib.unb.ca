@@ -337,7 +337,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['issue_errata'] = BaseFieldDefinition::create('text_long')
+    $fields['issue_errata'] = BaseFieldDefinition::create('string_long')
       ->setLabel(t('Errata'))
       ->setDescription(t('Add issue errata.'))
       ->setSettings([
@@ -346,7 +346,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ])
       ->setDisplayOptions('form', [
         'settings' => [
-          'rows' => 4,
+          'rows' => 3,
         ],
         'type' => 'text_textarea',
         'weight' => -20,
@@ -360,7 +360,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
 
     $fields['ssue_language'] = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Language'))
-      ->setDescription(t('The language of the issue.'))
+      ->setDescription(t('Select the language of the issue.'))
       ->setSettings([
         'allowed_values' => [
           'eng' => 'English',
@@ -382,7 +382,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
 
     $fields['issue_media'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Source Media'))
-      ->setDescription(t('Source Media.'))
+      ->setDescription(t('Enter Source Media, eg. <i>Print</i>.'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
