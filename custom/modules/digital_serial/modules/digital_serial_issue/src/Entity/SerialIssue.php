@@ -7,6 +7,7 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -189,6 +190,26 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * {@inheritdoc}
    */
+  public function getIssuePages() {
+    return $this->get('issue_pages')->referencedEntities();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function hasCabinetModule(CabinetModuleInterface $module) {
+    $module_ids = [];
+    foreach ($this->getCabinetModules() as $stored_module) {
+      if ($stored_module->id() == $module->id()) {
+        return TRUE;
+      }
+    };
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -280,6 +301,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
         'datetime_type' => 'date',
       ])
       ->setDefaultValue('')
+      ->setRequired(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'datetime_default',
@@ -377,6 +399,12 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
+
+    $fields['issue_pages'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Pages'))
+      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+      ->setSetting('target_type', 'digital_serial_page')
+      ->setDisplayConfigurable('form', TRUE);
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
