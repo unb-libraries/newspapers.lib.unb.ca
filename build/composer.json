@@ -112,7 +112,7 @@
         "drupal/material_admin": "1.0-alpha6",
         "drupal/pathauto": "1.2",
         "drupal/search_api": "1.8",
-        "drupal/token": "1.2",
+        "drupal/token": "1.3",
         "drush/drush": "^8.1.15",
         "harvesthq/chosen": "~1.8",
         "nodespark/des-connector": "5.x-dev",
