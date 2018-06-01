@@ -12,11 +12,15 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class SerialPageForm extends ContentEntityForm {
 
+  protected $issueEid;
+
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state, $digital_serial_issue = NULL) {
     /* @var $entity \Drupal\digital_serial_page\Entity\SerialPage */
+    $this->issueEid = $digital_serial_issue;
+
     $form = parent::buildForm($form, $form_state);
 
     $entity = $this->entity;

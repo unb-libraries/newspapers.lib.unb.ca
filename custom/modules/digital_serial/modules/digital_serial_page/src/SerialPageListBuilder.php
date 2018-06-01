@@ -29,8 +29,7 @@ class SerialPageListBuilder extends EntityListBuilder {
       '#url' => Url::fromRoute(
         'entity.serial_issue.add_page',
         [
-          'serial_issue' => 1,
-          // \Drupal::routeMatch()->getParameters()->get('serial_issue'),
+          'serial_issue' => \Drupal::routeMatch()->getParameters()->get('serial_issue'),
         ]
       ),
     ];
