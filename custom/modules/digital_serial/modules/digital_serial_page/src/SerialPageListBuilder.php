@@ -4,6 +4,7 @@ namespace Drupal\digital_serial_page;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
+use Drupal\Core\Url;
 
 /**
  * Defines a class to build a listing of Serial page entities.
@@ -11,6 +12,30 @@ use Drupal\Core\Entity\EntityListBuilder;
  * @ingroup digital_serial_page
  */
 class SerialPageListBuilder extends EntityListBuilder {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function render() {
+    $build = parent::render();
+    $build['table']['#empty'] = 'No pages have been added to this issue yet.';
+    // Add project modules.
+    $build['add_pages_button'] = [
+      '#attributes' => [
+        'class' => ['btn btn-info btn-add'],
+      ],
+      '#title' => t('Add New Page'),
+      '#type' => 'link',
+      '#url' => Url::fromRoute(
+        'entity.serial_issue.add_page',
+        [
+          'serial_issue' => 1,
+          // \Drupal::routeMatch()->getParameters()->get('serial_issue'),
+        ]
+      ),
+    ];
+    return $build;
+  }
 
   /**
    * {@inheritdoc}
