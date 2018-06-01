@@ -4,6 +4,38 @@
 // Subtheme local variables.
 @import 'local-variables';
 
+/* unb-lib.css + overrides.min.css override */
+.select-wrapper select,
+input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
+  line-height: normal;
+}
+.tabledrag-handle:hover {
+  border: none;
+}
+.table {
+  margin-bottom: initial;
+}
+.panel-body {
+  border-top: none;
+  padding: 15px;
+}
+.panel-default > .panel-heading {
+  background: #dedede;
+  color: #333;
+}
+.panel-default > .panel-heading a {
+  color: #333;
+}
+a:hover,
+a:active,
+a:focus {
+  border-style: none;
+  text-decoration: underline;
+}
+.panel-heading a {
+  font-weight: bold;
+}
+
 .description {
   color: $text-muted;
 }
@@ -77,6 +109,28 @@
   transition: all linear 0.4s;
 }
 
+a.btn-add {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  margin-bottom: 1.5em;
+}
+a.btn-add:hover,
+a.btn-add:focus,
+a.btn-add:active {
+  color: #333;
+  background-color: #e6e6e6;
+  border: 1px solid #adadad;
+  text-decoration: none;
+}
+a.btn-add::before {
+  font-family: 'Glyphicons Halflings';
+  content: "\e081";
+  color: #5cb85c;
+  margin-right: .33em;
+  vertical-align: top;
+}
+
 .messages--info {
   color: #325e1c;
   border-color: #c9e1bd #c9e1bd #c9e1bd transparent;
@@ -136,34 +190,3 @@
   color: #000;
 }
 
-/* unb-lib.css + overrides.min.css override */
-.select-wrapper select,
-input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
-  line-height: normal;
-}
-.tabledrag-handle:hover {
-  border: none;
-}
-.table {
-  margin-bottom: initial;
-}
-.panel-body {
-  border-top: none;
-  padding: 15px;
-}
-.panel-default > .panel-heading {
-  background: #dedede;
-  color: #333;
-}
-.panel-default > .panel-heading a {
-  color: #333;
-}
-a:hover,
-a:active,
-a:focus {
-  border: none;
-  text-decoration: underline;
-}
-.panel-heading a {
-  font-weight: bold;
-}
