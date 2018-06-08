@@ -51,14 +51,25 @@ class SerialPageListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var $entity \Drupal\digital_serial_page\Entity\SerialPage */
-    $row['page_no'] = $entity->getPageNo();
-    /* $image = $entity->getStyledImage('thumbnail'); */
-    /* $row['page_image'] = render($image); */
-    $linked_image = $entity->getLinkedStyledImage('thumbnail');
-    $row['page_image2'] = $linked_image->toString();
+    /* @var $entity \Drupal\digital_serial_page\SerialPage */
 
-    return $row + parent::buildRow($entity);
+    $issue_eid = \Drupal::routeMatch()->getParameters()->get('serial_issue');
+
+    // Add module to entity reference.
+    $issue = \Drupal::entityTypeManager()
+      ->getStorage('serial_issue')
+      ->load($issue_eid);
+
+    if ($issue->hasPage($entity)) {
+      $row['page_no'] = $entity->getPageNo();
+      /* $image = $entity->getStyledImage('thumbnail'); */
+      /* $row['page_image'] = render($image); */
+      $linked_image = $entity->getLinkedStyledImage('thumbnail');
+      $row['page_image2'] = $linked_image->toString();
+
+      return $row + parent::buildRow($entity);
+    }
+    return FALSE;
   }
 
 }

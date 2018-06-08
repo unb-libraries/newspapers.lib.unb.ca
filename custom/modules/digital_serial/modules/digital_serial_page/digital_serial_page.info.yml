@@ -1,5 +1,6 @@
 name: Digital Serial Page
-type: module
 description: Digital serial page content
-core: 8.x
 package: Serials
+
+type: module
+core: 8.x

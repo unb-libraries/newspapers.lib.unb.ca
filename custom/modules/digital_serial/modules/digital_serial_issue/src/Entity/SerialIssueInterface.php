@@ -5,6 +5,7 @@ namespace Drupal\digital_serial_issue\Entity;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\user\EntityOwnerInterface;
+use Drupal\digital_serial_page\Entity\SerialPageInterface;
 
 /**
  * Provides an interface for defining Serial issue entities.
@@ -128,5 +129,34 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
    *   The called Serial issue entity.
    */
   public function setIssueEdition($issue_edition);
+
+  /**
+   * Check if a Page is associated with this Issue.
+   *
+   * @param \Drupal\digital_serial_page\SerialPageInterface $page
+   *   The page.
+   *
+   * @return bool
+   *   TRUE if the page is associated with this issue. FALSE otherwise.
+   */
+  public function hasPage(SerialPageInterface $page);
+
+  /**
+   * Set the pages associated with this issue.
+   *
+   * @param \Drupal\digital_serial_page\SerialPageInterface $page
+   *   The page to add to the issue.
+   *
+   * @return $this
+   */
+  public function addPage(SerialPageInterface $page);
+
+  /**
+   * Gets the entity IDs of the pages associated with this issue.
+   *
+   * @return int[]
+   *   An array of entity IDs.
+   */
+  public function getPageIds();
 
 }

@@ -35,6 +35,7 @@ class SerialPageForm extends ContentEntityForm {
     $entity = &$this->entity;
 
     $status = parent::save($form, $form_state);
+    dump($status);
 
     switch ($status) {
       case SAVED_NEW:
@@ -48,6 +49,32 @@ class SerialPageForm extends ContentEntityForm {
           '%label' => $entity->label(),
         ]));
     }
+
+    // Add module to entity reference.
+    $issue = \Drupal::entityTypeManager()
+      ->getStorage('serial_issue')
+      ->load($project_eid);
+
+    $new_item = TRUE;
+    foreach ($issue->getPageIds() as $page_id) {
+      if ($page_id == $entity->id()) {
+        $new_item = FALSE;
+        break;
+      }
+    }
+    if ($new_item) {
+      $issue->addPage($entity);
+    }
+    $issue->save();
+
+    // Redirect back to cabinet module list.
+    $form_state->setRedirect(
+      'cabinetry_cabinet_project.manage_modules',
+      [
+        'cabinetry_cabinet_project' => $project_eid,
+      ]
+    );
+
     $form_state->setRedirect('entity.digital_serial_page.canonical', ['digital_serial_page' => $entity->id()]);
   }
 

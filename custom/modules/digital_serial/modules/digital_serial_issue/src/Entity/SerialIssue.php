@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\user\UserInterface;
+use Drupal\digital_serial_page\Entity\SerialPageInterface;
 
 /**
  * Defines the Serial issue entity.
@@ -185,13 +186,6 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   public function setIssueEdition($issue_edition) {
     $this->set('issue_edition', $issue_edition);
     return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getIssuePages() {
-    return $this->get('issue_pages')->referencedEntities();
   }
 
   /**
@@ -402,9 +396,14 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
 
     $fields['issue_pages'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Pages'))
+      ->setDescription(t('Pages in this issue.'))
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setSetting('target_type', 'digital_serial_page')
-      ->setDisplayConfigurable('form', TRUE);
+      ->setSettings(
+        [
+          'target_type' => 'digital_serial_page',
+          'handler' => 'default',
+        ]
+      );
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
@@ -420,6 +419,43 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getIssuePages() {
+    return $this->get('issue_pages')->referencedEntities();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function hasPage(SerialPageInterface $page) {
+    foreach ($this->getIssuePages() as $stored_page) {
+      if ($stored_page->id() == $page->id()) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function addPage(SerialPageInterface $page) {
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPageIds() {
+    $page_ids = [];
+    foreach ($this->getIssuePages() as $page) {
+      $page_ids[] = $page->id();
+    }
+    return $page_ids;
   }
 
 }
