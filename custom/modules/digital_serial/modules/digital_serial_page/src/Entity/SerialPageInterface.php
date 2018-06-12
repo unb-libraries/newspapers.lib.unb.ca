@@ -88,4 +88,12 @@ interface SerialPageInterface extends ContentEntityInterface, EntityChangedInter
    */
   public function setPublished($published);
 
+  /**
+   * Gets the parent issue for this page.
+   *
+   * @return \Drupal\digital_serial_issue\Entity\SerialIssueInterface
+   *   The parent issue.
+   */
+  public function getParentIssue();
+
 }

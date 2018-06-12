@@ -19,7 +19,14 @@ class SerialPageForm extends ContentEntityForm {
    */
   public function buildForm(array $form, FormStateInterface $form_state, $digital_serial_issue = NULL) {
     /* @var $entity \Drupal\digital_serial_page\Entity\SerialPage */
-    $this->issueEid = $digital_serial_issue;
+
+    if ($digital_serial_issue == NULL) {
+      // This has been called from Entity Operations field in table.
+      $this->issueEid = $this->entity->getParentIssue()->id();
+    }
+    else {
+      $this->issueEid = $digital_serial_issue;
+    }
 
     $form = parent::buildForm($form, $form_state);
 

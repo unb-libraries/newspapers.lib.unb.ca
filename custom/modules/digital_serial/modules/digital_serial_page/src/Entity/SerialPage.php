@@ -288,4 +288,20 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     return (Link::fromTextAndUrl($image_markup, $url));
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getParentIssue() {
+    $query = \Drupal::service('entity.query')
+      ->get('digital_serial_issue')
+      ->condition('issue_pages', $this->id());
+    $entity_ids = $query->execute();
+    foreach ($entity_ids as $entity_id) {
+      return \Drupal::entityTypeManager()
+        ->getStorage('digital_serial_issue')
+        ->load($entity_id);
+    }
+    return $this;
+  }
+
 }
