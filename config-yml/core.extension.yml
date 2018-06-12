@@ -18,6 +18,7 @@ module:
   datetime_range: 0
   dblog: 0
   digital_serial: 0
+  digital_serial_issue: 0
   digital_serial_page: 0
   dynamic_page_cache: 0
   editor: 0
