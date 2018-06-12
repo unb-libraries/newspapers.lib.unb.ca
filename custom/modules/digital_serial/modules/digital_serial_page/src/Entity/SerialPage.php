@@ -11,6 +11,7 @@ use Drupal\user\UserInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Link;
+use Drupal\digital_serial_issue\Entity;
 
 /**
  * Defines the Serial page entity.

@@ -1,12 +1,12 @@
-serial_issue.manage_pages:
-  path: '/digital_serial/digital_serial_issue/{serial_issue}/pages'
+digital_serial_issue.manage_pages:
+  path: '/digital_serial/digital_serial_issue/{digital_serial_issue}/pages'
   defaults:
     _entity_list: 'digital_serial_page'
   requirements:
     _permission: 'administer serial issue entities'
 
-entity.serial_issue.add_page:
-   path: '/digital_serial/digital_serial_issue/{serial_issue}/pages/add'
+entity.digital_serial_issue.add_page:
+   path: '/digital_serial/digital_serial_issue/{digital_serial_issue}/pages/add'
    defaults:
      _entity_form: digital_serial_page.add
      _title: 'Add serial issue page'

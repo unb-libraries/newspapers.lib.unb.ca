@@ -1,14 +1,14 @@
 
 # Serial issue menu items definition
-entity.serial_issue.collection:
+entity.digital_serial_issue.collection:
   title: 'Serial issue list'
-  route_name: entity.serial_issue.collection
+  route_name: entity.digital_serial_issue.collection
   description: 'List Serial issue entities'
   parent: system.admin_structure
   weight: 100
 
-serial_issue.admin.structure.settings:
+digital_serial_issue.admin.structure.settings:
   title: Serial issue settings
   description: 'Configure Serial issue entities'
-  route_name: serial_issue.settings
+  route_name: digital_serial_issue.settings
   parent: system.admin_structure

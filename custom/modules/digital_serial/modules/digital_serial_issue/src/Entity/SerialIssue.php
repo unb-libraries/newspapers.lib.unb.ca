@@ -17,7 +17,7 @@ use Drupal\digital_serial_page\Entity\SerialPageInterface;
  * @ingroup digital_serial_issue
  *
  * @ContentEntityType(
- *   id = "serial_issue",
+ *   id = "digital_serial_issue",
  *   label = @Translation("Serial issue"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
@@ -35,7 +35,7 @@ use Drupal\digital_serial_page\Entity\SerialPageInterface;
  *       "html" = "Drupal\digital_serial_issue\SerialIssueHtmlRouteProvider",
  *     },
  *   },
- *   base_table = "serial_issue",
+ *   base_table = "digital_serial_issue",
  *   admin_permission = "administer serial issue entities",
  *   entity_keys = {
  *     "id" = "id",
@@ -45,13 +45,13 @@ use Drupal\digital_serial_page\Entity\SerialPageInterface;
  *     "status" = "status",
  *   },
  *   links = {
- *     "canonical" = "/admin/structure/serial_issue/{serial_issue}",
- *     "add-form" = "/admin/structure/serial_issue/add",
- *     "edit-form" = "/admin/structure/serial_issue/{serial_issue}/edit",
- *     "delete-form" = "/admin/structure/serial_issue/{serial_issue}/delete",
- *     "collection" = "/admin/structure/serial_issue",
+ *     "canonical" = "/admin/structure/digital_serial_issue/{digital_serial_issue}",
+ *     "add-form" = "/admin/structure/digital_serial_issue/add",
+ *     "edit-form" = "/admin/structure/digital_serial_issue/{digital_serial_issue}/edit",
+ *     "delete-form" = "/admin/structure/digital_serial_issue/{digital_serial_issue}/delete",
+ *     "collection" = "/admin/structure/digital_serial_issue",
  *   },
- *   field_ui_base_route = "serial_issue.settings"
+ *   field_ui_base_route = "digital_serial_issue.settings"
  * )
  */
 class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
@@ -352,7 +352,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['ssue_language'] = BaseFieldDefinition::create('list_string')
+    $fields['issue_language'] = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Language'))
       ->setDescription(t('Select the language of the issue.'))
       ->setSettings([
@@ -444,7 +444,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    * {@inheritdoc}
    */
   public function addPage(SerialPageInterface $page) {
-
+    return $this->get('issue_pages')->appendItem($page);
   }
 
   /**

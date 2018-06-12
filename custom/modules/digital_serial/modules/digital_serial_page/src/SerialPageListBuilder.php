@@ -27,9 +27,9 @@ class SerialPageListBuilder extends EntityListBuilder {
       '#title' => t('Add New Page'),
       '#type' => 'link',
       '#url' => Url::fromRoute(
-        'entity.serial_issue.add_page',
+        'entity.digital_serial_issue.add_page',
         [
-          'serial_issue' => \Drupal::routeMatch()->getParameters()->get('serial_issue'),
+          'digital_serial_issue' => \Drupal::routeMatch()->getParameters()->get('digital_serial_issue'),
         ]
       ),
     ];
@@ -53,11 +53,11 @@ class SerialPageListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\digital_serial_page\SerialPage */
 
-    $issue_eid = \Drupal::routeMatch()->getParameters()->get('serial_issue');
+    $issue_eid = \Drupal::routeMatch()->getParameters()->get('digital_serial_issue');
 
     // Add module to entity reference.
     $issue = \Drupal::entityTypeManager()
-      ->getStorage('serial_issue')
+      ->getStorage('digital_serial_issue')
       ->load($issue_eid);
 
     if ($issue->hasPage($entity)) {

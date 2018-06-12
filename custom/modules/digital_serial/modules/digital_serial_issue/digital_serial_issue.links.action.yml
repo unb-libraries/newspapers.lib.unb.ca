@@ -1,5 +1,5 @@
-entity.serial_issue.add_form:
-  route_name: entity.serial_issue.add_form
+entity.digital_serial_issue.add_form:
+  route_name: entity.digital_serial_issue.add_form
   title: 'Add Serial issue'
   appears_on:
-    - entity.serial_issue.collection
+    - entity.digital_serial_issue.collection

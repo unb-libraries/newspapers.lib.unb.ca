@@ -28,24 +28,13 @@ class SerialIssueListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\digital_serial_issue\Entity\SerialIssue */
 
-    /* $project_eid = \Drupal::routeMatch()->getParameters()->get('cabinetry_cabinet_project'); */
-
-    // Add module to entity reference.
-    /*$project = \Drupal::entityTypeManager()
-    ->getStorage('cabinetry_cabinet_project')
-    ->load($project_eid);*/
-
-    /*if ($project->hasCabinetModule($entity)) { */
     $row['id'] = $entity->id();
     $row['issue_title'] = Link::createFromRoute(
       $entity->getIssueTitle(),
-      'entity.serial_issue.edit_form',
-      ['serial_issue' => $entity->id()]
+      'entity.digital_serial_issue.edit_form',
+      ['digital_serial_issue' => $entity->id()]
     );
     return $row + parent::buildRow($entity);
-
-    /*  }
-    return FALSE;*/
   }
 
 }

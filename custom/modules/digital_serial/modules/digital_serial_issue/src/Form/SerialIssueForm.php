@@ -44,7 +44,7 @@ class SerialIssueForm extends ContentEntityForm {
           '%label' => $entity->label(),
         ]));
     }
-    $form_state->setRedirect('entity.serial_issue.canonical', ['serial_issue' => $entity->id()]);
+    $form_state->setRedirect('entity.digital_serial_issue.canonical', ['digital_serial_issue' => $entity->id()]);
   }
 
 }
