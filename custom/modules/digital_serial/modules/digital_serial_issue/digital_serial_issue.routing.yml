@@ -12,3 +12,10 @@ entity.digital_serial_issue.add_page:
      _title: 'Add serial issue page'
    requirements:
      _permission: 'administer serial issue entities'
+
+entity.digital_serial_issue.canonical:
+  path: '/digital_serial/digital_serial_issue/{digital_serial_issue}'
+  defaults:
+    _entity_view: 'digital_serial_issue'
+  requirements:
+    _permission: 'view published serial issue entities'

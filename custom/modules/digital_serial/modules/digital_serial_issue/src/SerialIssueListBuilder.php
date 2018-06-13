@@ -31,7 +31,7 @@ class SerialIssueListBuilder extends EntityListBuilder {
     $row['id'] = $entity->id();
     $row['issue_title'] = Link::createFromRoute(
       $entity->getIssueTitle(),
-      'entity.digital_serial_issue.edit_form',
+      'entity.digital_serial_issue.canonical',
       ['digital_serial_issue' => $entity->id()]
     );
     return $row + parent::buildRow($entity);

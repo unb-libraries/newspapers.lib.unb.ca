@@ -8,8 +8,8 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\user\UserInterface;
 use Drupal\digital_serial_page\Entity\SerialPageInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Defines the Serial issue entity.
@@ -45,11 +45,11 @@ use Drupal\digital_serial_page\Entity\SerialPageInterface;
  *     "status" = "status",
  *   },
  *   links = {
- *     "canonical" = "/admin/structure/digital_serial_issue/{digital_serial_issue}",
- *     "add-form" = "/admin/structure/digital_serial_issue/add",
- *     "edit-form" = "/admin/structure/digital_serial_issue/{digital_serial_issue}/edit",
- *     "delete-form" = "/admin/structure/digital_serial_issue/{digital_serial_issue}/delete",
- *     "collection" = "/admin/structure/digital_serial_issue",
+ *     "canonical" = "/digital_serial/digital_serial_issue/{digital_serial_issue}",
+ *     "add-form" = "/digital_serial/digital_serial_issue/add",
+ *     "edit-form" = "/digital_serial/digital_serial_issue/{digital_serial_issue}/edit",
+ *     "delete-form" = "/digital_serial/digital_serial_issue/{digital_serial_issue}/delete",
+ *     "collection" = "/digital_serial/digital_serial_issue",
  *   },
  *   field_ui_base_route = "digital_serial_issue.settings"
  * )

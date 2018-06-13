@@ -4,7 +4,7 @@ digital_serial_issue.settings_tab:
   route_name: digital_serial_issue.settings
   base_route: digital_serial_issue.settings
 
-entity.digital_serial_issue.canonical:
+entity.digital_serial_issue.view:
   title: 'View'
   route_name: entity.digital_serial_issue.canonical
   base_route: entity.digital_serial_issue.canonical

@@ -1,4 +1,3 @@
-
 # Serial issue menu items definition
 entity.digital_serial_issue.collection:
   title: 'Serial issue list'
