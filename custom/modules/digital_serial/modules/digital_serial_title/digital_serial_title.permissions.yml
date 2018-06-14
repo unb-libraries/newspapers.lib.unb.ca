@@ -1,0 +1,22 @@
+add digital serial title entities:
+  title: 'Create new Digital Serial Title entities'
+
+administer digital serial title entities:
+  title: 'Administer Digital Serial Title entities'
+  description: 'Allow to access the administration form to configure Digital Serial Title entities.'
+  restrict access: true
+
+delete digital serial title entities:
+  title: 'Delete Digital Serial Title entities'
+
+edit digital serial title entities:
+  title: 'Edit Digital Serial Title entities'
+
+access digital serial title overview:
+  title: 'Access the Digital Serial Title overview page'
+
+view published digital serial title entities:
+  title: 'View published Digital Serial Title entities'
+
+view unpublished digital serial title entities:
+  title: 'View unpublished Digital Serial Title entities'

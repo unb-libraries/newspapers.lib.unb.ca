@@ -1,0 +1,14 @@
+
+# Digital Serial Title menu items definition
+entity.digital_serial_title.collection:
+  title: 'Digital Serial Title list'
+  route_name: entity.digital_serial_title.collection
+  description: 'List Digital Serial Title entities'
+  parent: system.admin_structure
+  weight: 100
+
+digital_serial_title.admin.structure.settings:
+  title: Digital Serial Title settings
+  description: 'Configure Digital Serial Title entities'
+  route_name: digital_serial_title.settings
+  parent: system.admin_structure
