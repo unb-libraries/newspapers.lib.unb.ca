@@ -4,6 +4,8 @@ namespace Drupal\serial_holding\Entity;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\node\NodeInterface;
+use Drupal\taxonomy\TermInterface;
 use Drupal\user\EntityOwnerInterface;
 
 /**
@@ -11,9 +13,7 @@ use Drupal\user\EntityOwnerInterface;
  *
  * @ingroup serial_holding
  */
-interface SerialHoldingInterface extends  ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
-
-  // Add get/set methods for your configuration properties here.
+interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
   /**
    * Gets the Serial holding name.
@@ -67,11 +67,49 @@ interface SerialHoldingInterface extends  ContentEntityInterface, EntityChangedI
    * Sets the published status of a Serial holding.
    *
    * @param bool $published
-   *   TRUE to set this Serial holding to published, FALSE to set it to unpublished.
+   *   TRUE to set this holding to published, FALSE to set as unpublished.
    *
    * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
    *   The called Serial holding entity.
    */
   public function setPublished($published);
+
+  /**
+   * Returns the parent title of the Serial Holding.
+   *
+   * @return \Drupal\node\NodeInterface
+   *   The parent title if one exists.
+   */
+  public function getParentTitle();
+
+  /**
+   * Sets the parent title of a Serial holding.
+   *
+   * @param \Drupal\node\NodeInterface $title
+   *   The title to set as parent.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setParentTitle(NodeInterface $title);
+
+  /**
+   * Returns the holding type of the Serial Holding.
+   *
+   * @return \Drupal\taxonomy\TermInterface
+   *   The holding type.
+   */
+  public function getHoldingType();
+
+  /**
+   * Sets the holding type of a Serial holding.
+   *
+   * @param \Drupal\taxonomy\TermInterface $type
+   *   The holding type to set.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setHoldingType(TermInterface $type);
 
 }

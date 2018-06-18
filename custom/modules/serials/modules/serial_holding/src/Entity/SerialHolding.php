@@ -7,6 +7,8 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\node\NodeInterface;
+use Drupal\taxonomy\TermInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -145,18 +147,30 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
-  public function getParentEntity() {
-    $query = \Drupal::service('entity.query')
-      ->get(SERIAL_HOLDING_ENTITY_REF_TYPE)
-      ->condition(SERIAL_HOLDING_ENTITY_REF_FIELD, $this->id());
+  public function getParentTitle() {
+    return $this->get('parent_title')->entity;
+  }
 
-    $entity_ids = $query->execute();
+  /**
+   * {@inheritdoc}
+   */
+  public function setParentTitle(NodeInterface $title) {
+    $this->set('parent_title', $title->id());
+    return $this;
+  }
 
-    foreach ($entity_ids as $entity_id) {
-      return \Drupal::entityTypeManager()
-        ->getStorage(SERIAL_HOLDING_ENTITY_REF_TYPE)
-        ->load($entity_id);
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function getHoldingType() {
+    return $this->get('holding_type')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHoldingType(TermInterface $type) {
+    $this->set('holding_type', $type->id());
     return $this;
   }
 
@@ -223,6 +237,51 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
+
+    $fields['holding_type'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Type'))
+      ->setDescription(t('Select the holding type.'))
+      ->setRequired(TRUE)
+      ->setSettings(
+        [
+          'target_type' => 'taxonomy_term',
+          'handler' => 'default:taxonomy_term',
+          'handler_settings' => [
+            'target_bundles' => [
+              'serial_holding_types' => 'serial_holding_types',
+            ],
+          ],
+        ]
+      )
+      ->setDisplayOptions(
+        'view',
+        [
+          'label' => 'above',
+          'type' => 'number',
+          'weight' => -1,
+        ]
+      )
+      ->setDisplayOptions(
+        'form',
+        [
+          'type' => 'options_select',
+          'weight' => -1,
+        ]
+      );
+
+    $fields['parent_title'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Parent Title'))
+      ->setSettings(
+        [
+          'target_type' => 'node',
+          'handler' => 'default',
+          'handler_settings' => [
+            'target_bundles' => [
+              SERIAL_HOLDING_ENTITY_REF_TYPE => SERIAL_HOLDING_ENTITY_REF_TYPE,
+            ],
+          ],
+        ]
+      );
 
     return $fields;
   }

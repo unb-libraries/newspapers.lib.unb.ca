@@ -26,7 +26,6 @@ dependencies:
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_publisher
-    - field.field.node.publication.field_serial_holdings
     - field.field.node.publication.field_sort_title
     - field.field.node.publication.field_subject_notes
     - field.field.node.publication.field_subjects
@@ -76,7 +75,6 @@ hidden:
   field_place_of_publication: true
   field_province_state: true
   field_publisher: true
-  field_serial_holdings: true
   field_sort_title: true
   field_subject_notes: true
   field_subjects: true

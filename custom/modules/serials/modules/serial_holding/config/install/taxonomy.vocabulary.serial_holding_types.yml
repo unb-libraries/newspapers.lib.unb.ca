@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Serial Holding Types'
+vid: serial_holding_types
+description: 'Types of holdings.'
+hierarchy: 0
+weight: 0
