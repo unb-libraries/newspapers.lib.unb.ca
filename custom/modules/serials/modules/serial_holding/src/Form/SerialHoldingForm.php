@@ -53,6 +53,21 @@ class SerialHoldingForm extends ContentEntityForm {
       hide($form['holding_call_no']);
     }
 
+    // If we have term types 'Physical', set up states.
+    if ($physical_id != 0) {
+      $form['holding_retention']['#states'] = [
+        'visible' => [
+          'select[name="holding_type"]' => [
+            ['value' => $physical_id],
+          ],
+        ],
+      ];
+    }
+    // Otherwise, hide them altogether.
+    else {
+      hide($form['holding_retention']);
+    }
+
     return $form;
   }
 

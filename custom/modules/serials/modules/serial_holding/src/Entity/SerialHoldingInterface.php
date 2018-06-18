@@ -208,4 +208,23 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingCallNumber($call_no);
 
+  /**
+   * Gets the Serial holding retention period.
+   *
+   * @return string
+   *   The retention period of the Serial holding.
+   */
+  public function getHoldingRetentionPeriod();
+
+  /**
+   * Sets the Serial holding retention period.
+   *
+   * @param string $retention
+   *   The Serial holding retention period.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setHoldingRetentionPeriod($retention);
+
 }
