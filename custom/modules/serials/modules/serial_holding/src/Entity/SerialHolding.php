@@ -40,7 +40,7 @@ use Drupal\user\UserInterface;
  *   admin_permission = "administer serial holding entities",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "name",
+ *     "label" = "holding_coverage",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
