@@ -434,11 +434,11 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         'settings' => [
           'format_type' => 'html_date',
         ],
-        'weight' => 15,
+        'weight' => -80,
       ])
       ->setDisplayOptions('form', [
         'type' => 'datetime',
-        'weight' => 15,
+        'weight' => -80,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
@@ -458,11 +458,11 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         'settings' => [
           'format_type' => 'html_date',
         ],
-        'weight' => 15,
+        'weight' => -70,
       ])
       ->setDisplayOptions('form', [
         'type' => 'datetime',
-        'weight' => 15,
+        'weight' => -70,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
@@ -479,11 +479,11 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
-        'weight' => -4,
+        'weight' => -60,
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
-        'weight' => -4,
+        'weight' => -60,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
