@@ -21,6 +21,7 @@ class SerialHoldingForm extends ContentEntityForm {
   public function buildForm(array $form, FormStateInterface $form_state, $node = NULL) {
     /* @var $entity \Drupal\serial_holding\Entity\SerialHolding */
     $form = parent::buildForm($form, $form_state);
+    $this->parentEid = $node;
 
     $entity = $this->entity;
 
@@ -115,6 +116,7 @@ class SerialHoldingForm extends ContentEntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $entity = &$this->entity;
+    $form_state->setValue('parent_title', $this->parentEid);
 
     $status = parent::save($form, $form_state);
 
