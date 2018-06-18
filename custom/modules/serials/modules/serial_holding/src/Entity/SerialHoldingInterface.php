@@ -265,4 +265,23 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingLastReceived($last_rec);
 
+  /**
+   * Gets the Serial holding digital URI.
+   *
+   * @return string
+   *   The URI of the Serial holding.
+   */
+  public function getHoldingUri();
+
+  /**
+   * Sets the Serial holding URI.
+   *
+   * @param string $uri
+   *   The Serial holding URI.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setHoldingUri($uri);
+
 }
