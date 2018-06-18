@@ -246,4 +246,23 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingFiledAs($filed_as);
 
+  /**
+   * Gets the Serial holding last received.
+   *
+   * @return string
+   *   The last received as of the Serial holding.
+   */
+  public function getHoldingLastReceived();
+
+  /**
+   * Sets the Serial holding filed as.
+   *
+   * @param string $last_rec
+   *   The Serial holding last received.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setHoldingLastReceived($last_rec);
+
 }

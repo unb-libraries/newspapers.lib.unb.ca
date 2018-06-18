@@ -77,10 +77,18 @@ class SerialHoldingForm extends ContentEntityForm {
           ],
         ],
       ];
+      $form['holding_last_rec']['#states'] = [
+        'visible' => [
+          'select[name="holding_type"]' => [
+            ['value' => $microfilm_id],
+          ],
+        ],
+      ];
     }
     // Otherwise, hide them altogether.
     else {
       hide($form['holding_filed_as']);
+      hide($form['holding_last_rec']);
     }
 
     return $form;

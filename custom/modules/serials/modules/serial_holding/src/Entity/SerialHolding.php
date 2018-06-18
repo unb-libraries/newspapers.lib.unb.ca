@@ -283,6 +283,21 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getHoldingLastReceived() {
+    return $this->get('holding_last_rec')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHoldingLastReceived($last_rec) {
+    $this->set('holding_last_rec', $last_rec);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -521,6 +536,26 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
     $fields['holding_filed_as'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Filed As'))
       ->setDescription(t('Enter the filed as value.'))
+      ->setSettings([
+        'max_length' => 256,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['holding_last_rec'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Last Received'))
+      ->setDescription(t('Enter the date this holding was last received.'))
       ->setSettings([
         'max_length' => 256,
         'text_processing' => 0,
