@@ -151,4 +151,23 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingEndDate(DrupalDateTime $date);
 
+  /**
+   * Gets the Serial holding coverage statement.
+   *
+   * @return string
+   *   The coverage statement of the Serial holding.
+   */
+  public function getHoldingCoverage();
+
+  /**
+   * Sets the Serial holding coverage statement.
+   *
+   * @param string $coverage
+   *   The Serial holding coverage statement.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setHoldingCoverage($coverage);
+
 }

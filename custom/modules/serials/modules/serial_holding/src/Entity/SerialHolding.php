@@ -208,6 +208,21 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getHoldingCoverage() {
+    return $this->get('holding_coverage')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHoldingCoverage($coverage) {
+    $this->set('holding_coverage', $coverage);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -358,6 +373,27 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setDisplayOptions('form', [
         'type' => 'datetime',
         'weight' => 15,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['holding_coverage'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Holding Coverage Statement'))
+      ->setDescription(t('Enter the holding coverage statement. Ex: July 1, 1869 - June 1871; Jan 1872 - Sept 6, 1873'))
+      ->setSettings([
+        'max_length' => 256,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setRequired(TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -4,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
