@@ -268,6 +268,21 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getHoldingFiledAs() {
+    return $this->get('holding_filed_as')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHoldingFiledAs($filed_as) {
+    $this->set('holding_filed_as', $filed_as);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -486,6 +501,26 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
     $fields['holding_retention'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Retention Period'))
       ->setDescription(t('Enter the retention period.'))
+      ->setSettings([
+        'max_length' => 256,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['holding_filed_as'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Filed As'))
+      ->setDescription(t('Enter the filed as value.'))
       ->setSettings([
         'max_length' => 256,
         'text_processing' => 0,

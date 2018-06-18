@@ -227,4 +227,23 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingRetentionPeriod($retention);
 
+  /**
+   * Gets the Serial holding filed as.
+   *
+   * @return string
+   *   The filed as of the Serial holding.
+   */
+  public function getHoldingFiledAs();
+
+  /**
+   * Sets the Serial holding filed as.
+   *
+   * @param string $filed_as
+   *   The Serial holding filed as.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setHoldingFiledAs($filed_as);
+
 }

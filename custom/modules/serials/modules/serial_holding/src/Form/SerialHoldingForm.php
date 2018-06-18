@@ -68,6 +68,21 @@ class SerialHoldingForm extends ContentEntityForm {
       hide($form['holding_retention']);
     }
 
+    // If we have term types 'Microfilm', set up states.
+    if ($microfilm_id != 0) {
+      $form['holding_filed_as']['#states'] = [
+        'visible' => [
+          'select[name="holding_type"]' => [
+            ['value' => $microfilm_id],
+          ],
+        ],
+      ];
+    }
+    // Otherwise, hide them altogether.
+    else {
+      hide($form['holding_filed_as']);
+    }
+
     return $form;
   }
 
