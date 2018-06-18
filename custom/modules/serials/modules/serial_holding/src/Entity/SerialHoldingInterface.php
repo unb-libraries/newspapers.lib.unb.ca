@@ -17,25 +17,6 @@ use Drupal\user\EntityOwnerInterface;
 interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
   /**
-   * Gets the Serial holding name.
-   *
-   * @return string
-   *   Name of the Serial holding.
-   */
-  public function getName();
-
-  /**
-   * Sets the Serial holding name.
-   *
-   * @param string $name
-   *   The Serial holding name.
-   *
-   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
-   *   The called Serial holding entity.
-   */
-  public function setName($name);
-
-  /**
    * Gets the Serial holding creation timestamp.
    *
    * @return int
