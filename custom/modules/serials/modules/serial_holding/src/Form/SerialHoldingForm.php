@@ -4,6 +4,7 @@ namespace Drupal\serial_holding\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\serial_holding\TaxonomyHelper;
 
 /**
  * Form controller for Serial holding edit forms.
@@ -22,6 +23,26 @@ class SerialHoldingForm extends ContentEntityForm {
     $form = parent::buildForm($form, $form_state);
 
     $entity = $this->entity;
+
+    // Get term ids for the holding types.
+    $physical_id = TaxonomyHelper::getHoldingTermId('Physical');
+    $microfilm_id = TaxonomyHelper::getHoldingTermId('Microfilm');
+
+    // If we have term types 'Physical' or 'Microfilm', set up states.
+    if ($physical_id != 0  || $microfilm_id != 0) {
+      $form['holding_location']['#states'] = [
+        'visible' => [
+          'select[name="holding_type"]' => [
+            ['value' => $physical_id],
+            ['value' => $microfilm_id],
+          ],
+        ],
+      ];
+    }
+    // Otherwise, hide them altogether.
+    else {
+      hide($form['holding_location']);
+    }
 
     return $form;
   }

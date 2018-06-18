@@ -170,4 +170,23 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingCoverage($coverage);
 
+  /**
+   * Gets the Serial holding location.
+   *
+   * @return string
+   *   The location of the Serial holding.
+   */
+  public function getHoldingLocation();
+
+  /**
+   * Sets the Serial holding location.
+   *
+   * @param string $location
+   *   The Serial holding location.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setHoldingLocation($location);
+
 }

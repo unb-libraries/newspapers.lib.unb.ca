@@ -223,6 +223,21 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getHoldingLocation() {
+    return $this->get('holding_location')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHoldingLocation($location) {
+    $this->set('holding_location', $location);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -386,6 +401,26 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ])
       ->setDefaultValue('')
       ->setRequired(TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['holding_location'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Location'))
+      ->setDescription(t('Enter the location. Ex: ENG-STACKS or HIL-STORN'))
+      ->setSettings([
+        'max_length' => 256,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
