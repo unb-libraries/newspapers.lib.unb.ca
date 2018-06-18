@@ -394,14 +394,14 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         [
           'label' => 'above',
           'type' => 'number',
-          'weight' => -1,
+          'weight' => -100,
         ]
       )
       ->setDisplayOptions(
         'form',
         [
           'type' => 'options_select',
-          'weight' => -1,
+          'weight' => -100,
         ]
       );
 
