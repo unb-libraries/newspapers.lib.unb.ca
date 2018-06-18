@@ -193,6 +193,21 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getHoldingEndDate() {
+    return $this->get('holding_end_date')->date;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHoldingEndDate(DrupalDateTime $date) {
+    $this->set('holding_end_date', $date);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -302,6 +317,30 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
     $fields['holding_start_date'] = BaseFieldDefinition::create('datetime')
       ->setLabel(t('Holding Start Date'))
       ->setDescription(t('The serial holding start date.'))
+      ->setRevisionable(FALSE)
+      ->setSettings([
+        'datetime_type' => 'date',
+      ])
+      ->setDefaultValue('')
+      ->setRequired(TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'datetime_default',
+        'settings' => [
+          'format_type' => 'html_date',
+        ],
+        'weight' => 15,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'datetime',
+        'weight' => 15,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['holding_end_date'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('Holding End Date'))
+      ->setDescription(t('The serial holding end date.'))
       ->setRevisionable(FALSE)
       ->setSettings([
         'datetime_type' => 'date',

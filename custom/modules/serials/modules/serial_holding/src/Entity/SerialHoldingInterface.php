@@ -132,4 +132,23 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingStartDate(DrupalDateTime $date);
 
+  /**
+   * Gets the Serial holding end date.
+   *
+   * @return \Drupal\Core\Datetime\DrupalDateTime
+   *   Object of the holding end date the Serial holding.
+   */
+  public function getHoldingEndDate();
+
+  /**
+   * Sets the Serial holding holding end date.
+   *
+   * @param \Drupal\Core\Datetime\DrupalDateTime $date
+   *   The Serial holding end date.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The Serial holding entity.
+   */
+  public function setHoldingEndDate(DrupalDateTime $date);
+
 }
