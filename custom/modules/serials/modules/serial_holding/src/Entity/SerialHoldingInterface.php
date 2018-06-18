@@ -2,6 +2,7 @@
 
 namespace Drupal\serial_holding\Entity;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\node\NodeInterface;
@@ -111,5 +112,24 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    *   The called Serial holding entity.
    */
   public function setHoldingType(TermInterface $type);
+
+  /**
+   * Gets the Serial holding start date.
+   *
+   * @return \Drupal\Core\Datetime\DrupalDateTime
+   *   Object of the holding start date the Serial holding.
+   */
+  public function getHoldingStartDate();
+
+  /**
+   * Sets the Serial holding holding start date.
+   *
+   * @param \Drupal\Core\Datetime\DrupalDateTime $date
+   *   The Serial holding start date.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The Serial holding entity.
+   */
+  public function setHoldingStartDate(DrupalDateTime $date);
 
 }

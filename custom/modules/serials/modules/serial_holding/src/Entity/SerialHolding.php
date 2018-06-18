@@ -2,6 +2,7 @@
 
 namespace Drupal\serial_holding\Entity;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
@@ -177,6 +178,21 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getHoldingStartDate() {
+    return $this->get('holding_start_date')->date;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHoldingStartDate(DrupalDateTime $date) {
+    $this->set('holding_start_date', $date);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -282,6 +298,30 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
           ],
         ]
       );
+
+    $fields['holding_start_date'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('Holding Start Date'))
+      ->setDescription(t('The serial holding start date.'))
+      ->setRevisionable(FALSE)
+      ->setSettings([
+        'datetime_type' => 'date',
+      ])
+      ->setDefaultValue('')
+      ->setRequired(TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'datetime_default',
+        'settings' => [
+          'format_type' => 'html_date',
+        ],
+        'weight' => 15,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'datetime',
+        'weight' => 15,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }
