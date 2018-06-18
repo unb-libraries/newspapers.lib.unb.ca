@@ -189,4 +189,23 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingLocation($location);
 
+  /**
+   * Gets the Serial holding call number.
+   *
+   * @return string
+   *   The call number of the Serial holding.
+   */
+  public function getHoldingCallNumber();
+
+  /**
+   * Sets the Serial holding call number.
+   *
+   * @param string $call_no
+   *   The Serial holding call number.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setHoldingCallNumber($call_no);
+
 }

@@ -238,6 +238,21 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getHoldingCallNumber() {
+    return $this->get('holding_call_no')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHoldingCallNumber($call_no) {
+    $this->set('holding_call_no', $call_no);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -416,6 +431,26 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
     $fields['holding_location'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Location'))
       ->setDescription(t('Enter the location. Ex: ENG-STACKS or HIL-STORN'))
+      ->setSettings([
+        'max_length' => 256,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['holding_call_no'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Call Number'))
+      ->setDescription(t('Enter the call number. Ex: PR 8923 W6 L36 1990 c.3'))
       ->setSettings([
         'max_length' => 256,
         'text_processing' => 0,
