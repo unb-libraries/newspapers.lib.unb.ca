@@ -29,7 +29,7 @@ class SerialHoldingForm extends ContentEntityForm {
     $microfilm_id = TaxonomyHelper::getHoldingTermId('Microfilm');
 
     // If we have term types 'Physical' or 'Microfilm', set up states.
-    if ($physical_id != 0  || $microfilm_id != 0) {
+    if ($physical_id != 0 || $microfilm_id != 0) {
       $form['holding_location']['#states'] = [
         'visible' => [
           'select[name="holding_type"]' => [
