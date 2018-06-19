@@ -265,4 +265,23 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingUri($uri);
 
+  /**
+   * Gets the Serial holding notes.
+   *
+   * @return string
+   *   The notes of the Serial holding.
+   */
+  public function getHoldingNotes();
+
+  /**
+   * Sets the Serial holding notes.
+   *
+   * @param string $notes
+   *   The Serial holding notes.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setHoldingNotes($notes);
+
 }

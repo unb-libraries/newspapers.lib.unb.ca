@@ -298,6 +298,21 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getHoldingNotes() {
+    return $this->get('holding_uri')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setHoldingNotes($notes) {
+    $this->set('holding_notes', $notes);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -552,6 +567,27 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
         'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['holding_notes'] = BaseFieldDefinition::create('text_long')
+      ->setLabel(t('Notes'))
+      ->setDescription(t('Notes related to this holding.'))
+      ->setSettings([
+        'default_value' => '',
+        'max_length' => 2048,
+        'text_processing' => 0,
+      ])
+      ->setDisplnayOptions('view', [
+        'label' => 'above',
+        'type' => 'text_long',
+        'weight' => -3,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'text_long',
+        'text_processing' => 0,
+        'weight' => -3,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
