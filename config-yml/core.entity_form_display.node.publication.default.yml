@@ -383,7 +383,7 @@ content:
   field_place_of_publication:
     weight: 3
     settings:
-      default_country: CA
+      default_country: ''
     third_party_settings: {  }
     type: address_default
     region: content
