@@ -579,7 +579,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         'max_length' => 2048,
         'text_processing' => 0,
       ])
-      ->setDisplnayOptions('view', [
+      ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'text_long',
         'weight' => -3,
