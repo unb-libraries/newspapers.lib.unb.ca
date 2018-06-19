@@ -1,0 +1,5 @@
+services:
+  visreg_content.migrate_subscriber:
+    class: Drupal\visreg_content\Event\TitleMigrateEvent
+    tags:
+      - { name: event_subscriber }
