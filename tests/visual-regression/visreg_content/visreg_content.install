@@ -22,7 +22,7 @@ function visreg_content_install() {
   );
 
   // Run migrations.
-  foreach ($imports as $import) {
+  foreach (array_sort($imports) as $import) {
     $pathinfo = pathinfo($import);
     $migration_name = basename($pathinfo['filename']);
     drush_migrate_tools_migrate_import($migration_name);
