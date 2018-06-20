@@ -20,6 +20,7 @@ module:
   digital_serial: 0
   digital_serial_issue: 0
   digital_serial_page: 0
+  digital_serial_title: 0
   dynamic_page_cache: 0
   editor: 0
   elasticsearch_connector: 0
