@@ -21,9 +21,14 @@ class SerialHoldingForm extends ContentEntityForm {
   public function buildForm(array $form, FormStateInterface $form_state, $node = NULL) {
     /* @var $entity \Drupal\serial_holding\Entity\SerialHolding */
     $form = parent::buildForm($form, $form_state);
-    $this->parentEid = $node;
-
     $entity = $this->entity;
+
+    if (!empty($this->parentEid)) {
+      $this->parentEid = $node;
+    }
+    else {
+      $this->parentEid = $entity->getParentTitle()->id();
+    }
 
     // Get term ids for the holding types.
     $physical_id = TaxonomyHelper::getHoldingTermId('Physical');
@@ -109,6 +114,24 @@ class SerialHoldingForm extends ContentEntityForm {
     }
 
     return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
+    $values = $form_state->getValues();
+    $holding_start_date = $values['holding_start_date'][0]['value'];
+    $holding_end_date = $values['holding_end_date'][0]['value'];
+
+    if ($holding_start_date > $holding_end_date) {
+      $form_state->setErrorByName(
+        'holding_start_date',
+        $this->t('The holding start date cannot be later than the end date.'
+        )
+      );
+    }
   }
 
   /**
