@@ -60,7 +60,8 @@ class SerialHoldingListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['id'] = $this->t('ID');
-    $header['name'] = $this->t('Name');
+    $header['type'] = $this->t('Holding Type');
+    $header['coverage'] = $this->t('Coverage');
     return $header + parent::buildHeader();
   }
 
@@ -70,8 +71,9 @@ class SerialHoldingListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\serial_holding\Entity\SerialHolding */
     $row['id'] = $entity->id();
-    $row['name'] = Link::createFromRoute(
-      $entity->label(),
+    $row['type'] = $entity->getHoldingType()->getName();
+    $row['coverage'] = Link::createFromRoute(
+      $entity->getHoldingCoverage(),
       'entity.serial_holding.edit_form',
       ['serial_holding' => $entity->id()]
     );
