@@ -174,7 +174,17 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['field_digital_serial_issues'] = BaseFieldDefinition::create('entity_reference')
+    $fields['parent_title'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Parent Title'))
+      ->setSettings(
+        [
+          'target_type' => 'node',
+          'handler' => 'default',
+          'handler_settings' => ['target_bundles' => ['publication' => 'publication']],
+        ]
+      );
+
+    $fields['issues'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Issues'))
       ->setDescription(t('Issues in this title.'))
       ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
@@ -183,7 +193,7 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
           'target_type' => 'digital_serial_issue',
           'handler' => 'default',
         ]
-      );
+    );
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
