@@ -5,7 +5,10 @@ DRUSH_COMMAND="drush --root=${DRUPAL_ROOT} --uri=default --yes"
 $DRUSH_COMMAND cr
 
 # Squash update emails.
-drush --root=${DRUPAL_ROOT} --uri=default --yes config-set update.settings notification.emails.0 ''
+$DRUSH_COMMAND config-set update.settings notification.emails.0 ''
+
+# Enable serial holding and import taxonomy terms.
+$DRUSH_COMMAND en serial_holding
 
 # Import content.
 if [ "$DEPLOY_ENV" = "local" ]; then
