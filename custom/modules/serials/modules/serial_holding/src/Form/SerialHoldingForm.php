@@ -114,25 +114,18 @@ class SerialHoldingForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    */
-  public function save(array $form, FormStateInterface $form_state) {
-    $entity = &$this->entity;
-    $form_state->setValue('parent_title', $this->parentEid);
-
-    $status = parent::save($form, $form_state);
-
-    switch ($status) {
-      case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Serial holding.', [
-          '%label' => $entity->label(),
-        ]));
-        break;
-
-      default:
-        drupal_set_message($this->t('Saved the %label Serial holding.', [
-          '%label' => $entity->label(),
-        ]));
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    if (!empty($this->parentEid)) {
+      $form_state->setValue('parent_title', $this->parentEid);
     }
-    $form_state->setRedirect('entity.serial_holding.canonical', ['serial_holding' => $entity->id()]);
+
+    $form_state->setRedirect('serial_holding.manage_serial_holdings',
+      [
+        'node' => $this->parentEid,
+      ]
+    );
+
+    return parent::submitForm($form, $form_state);;
   }
 
 }
