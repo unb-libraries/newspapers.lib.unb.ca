@@ -36,6 +36,19 @@ class SerialHoldingListBuilder extends EntityListBuilder {
    */
   public function render() {
     $build = parent::render();
+
+    $title = [
+      "#type" => "processed_text",
+      "#text" => t("Holdings"),
+      "#format" => "full_html",
+      "#langcode" => "en",
+    ];
+
+    $build['title'] = $title;
+    $build['title']['#prefix'] = '<h2 class="issue-list-title">';
+    $build['title']['#suffix'] = '</h2>';
+    $build['title']['#weight'] = -100;
+
     $build['table']['#empty'] = 'No holdings have been added to this title yet.';
 
     $build['add_holdings_button'] = [

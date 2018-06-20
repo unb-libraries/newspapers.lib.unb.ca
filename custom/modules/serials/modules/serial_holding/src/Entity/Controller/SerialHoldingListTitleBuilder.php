@@ -13,12 +13,7 @@ class SerialHoldingListTitleBuilder {
     $nid = \Drupal::routeMatch()->getParameters()->get('node');
     $node = Node::load($nid);
 
-    return t(
-      '@node_title - Holdings',
-      [
-        '@node_title' => $node->getTitle(),
-      ]
-    );
+    return $node->getTitle();
   }
 
 }

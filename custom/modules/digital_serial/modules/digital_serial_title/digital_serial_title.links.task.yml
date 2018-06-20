@@ -24,4 +24,4 @@ digital_serial_title.digital_issues:
   route_name: digital_serial_title.digital_issues
   title: 'Digital Issues'
   base_route: entity.node.canonical
-  weight: 100
+  weight: 150
