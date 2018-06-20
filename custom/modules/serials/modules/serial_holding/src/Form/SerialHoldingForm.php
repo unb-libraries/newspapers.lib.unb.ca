@@ -22,11 +22,10 @@ class SerialHoldingForm extends ContentEntityForm {
     /* @var $entity \Drupal\serial_holding\Entity\SerialHolding */
     $form = parent::buildForm($form, $form_state);
     $entity = $this->entity;
+    $this->parentEid = $node;
 
-    if (!empty($this->parentEid)) {
-      $this->parentEid = $node;
-    }
-    else {
+    // This has been called from the edit form link.
+    if (empty($this->parentEid)) {
       $this->parentEid = $entity->getParentTitle()->id();
     }
 
