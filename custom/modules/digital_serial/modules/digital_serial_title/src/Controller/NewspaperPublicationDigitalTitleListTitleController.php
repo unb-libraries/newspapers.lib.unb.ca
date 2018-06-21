@@ -17,4 +17,11 @@ class NewspaperPublicationDigitalTitleListTitleController {
     return $actualNode->getTitle();
   }
 
+  /**
+   * Get title of digital serial title.
+   */
+  public function getTitleIssuesTitle($digital_serial_title) {
+    return 'This is a title';
+  }
+
 }

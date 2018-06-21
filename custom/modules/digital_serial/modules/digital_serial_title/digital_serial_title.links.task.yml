@@ -25,3 +25,9 @@ digital_serial_title.digital_issues:
   title: 'Digital Issues'
   base_route: entity.node.canonical
   weight: 150
+
+digital_serial_title.title_issues:
+  route_name: digital_serial_title.title_issues
+  title: 'Issues'
+  base_route: entity.digital_serial_title.canonical
+  weight: 150

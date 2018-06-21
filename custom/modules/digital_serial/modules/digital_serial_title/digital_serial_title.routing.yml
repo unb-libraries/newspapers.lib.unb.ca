@@ -6,9 +6,10 @@ digital_serial_title.digital_issues:
   requirements:
     _custom_access: '\Drupal\digital_serial_title\Controller\NewspaperPublicationCheckController::checkAccess'
 
-digital_serial_title.title_view:
-  path: '/serials/{digital_serial_title}'
+digital_serial_title.title_issues:
+  path: '/serials/{digital_serial_title}/issues'
   defaults:
-    _entity_view: 'digital_serial_title'
+    _title_callback: '\Drupal\digital_serial_title\Controller\NewspaperPublicationDigitalTitleListTitleController::getTitleIssuesTitle'
+    _form: '\Drupal\digital_serial_title\Form\TitleDigitalTitleListForm'
   requirements:
-    _permission: 'access content'
+    _permission: 'view published serial issue entities'
