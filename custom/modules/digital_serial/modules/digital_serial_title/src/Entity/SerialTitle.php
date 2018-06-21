@@ -38,7 +38,7 @@ use Drupal\user\UserInterface;
  *   admin_permission = "administer digital serial title entities",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "name",
+ *     "label" = "id",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",

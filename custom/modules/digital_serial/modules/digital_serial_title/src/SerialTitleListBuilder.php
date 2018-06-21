@@ -18,7 +18,6 @@ class SerialTitleListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['id'] = $this->t('Digital Serial Title ID');
-    $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }
 
@@ -27,9 +26,8 @@ class SerialTitleListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\digital_serial_title\Entity\SerialTitle */
-    $row['id'] = $entity->id();
-    $row['name'] = Link::createFromRoute(
-      $entity->label(),
+    $row['id'] = Link::createFromRoute(
+      $entity->id(),
       'entity.digital_serial_title.edit_form',
       ['digital_serial_title' => $entity->id()]
     );
