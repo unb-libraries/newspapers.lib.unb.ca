@@ -1,0 +1,5 @@
+services:
+  digital_serial_title.breadcrumb:
+    class: Drupal\digital_serial_title\DigitalSerialTitleBreadcrumbBuilder
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }
