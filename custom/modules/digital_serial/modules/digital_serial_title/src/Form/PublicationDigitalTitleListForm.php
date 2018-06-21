@@ -52,6 +52,7 @@ class PublicationDigitalTitleListForm extends FormBase {
       return $form;
     }
 
+    $this->setAddIssue($form, $form_state);
     return $form;
   }
 
@@ -94,6 +95,41 @@ class PublicationDigitalTitleListForm extends FormBase {
         'node' => $this->parentEid,
       ]
     );
+  }
+
+  /**
+   * Form submit callback. Create a digital serial issue for a publication.
+   *
+   * @param array $form
+   *   The form to modify.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   */
+  public function createDigitalIssue(array &$form, FormStateInterface $form_state) {
+    // Redirect.
+    $form_state->setRedirect('digital_serial_title.digital_issues',
+      [
+        'node' => $this->parentEid,
+      ]
+    );
+  }
+
+  /**
+   * Add elements to a form to add a digital issue to the title.
+   *
+   * @param array $form
+   *   The form to modify.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   */
+  private function setAddIssue(array &$form, FormStateInterface $form_state) {
+    $form['issue_list']['create'] = [
+      '#type' => 'submit',
+      '#value' => t('Create New Issue'),
+      '#submit' => [
+        [$this, 'createDigitalIssue'],
+      ],
+    ];
   }
 
   /**
