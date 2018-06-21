@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\digital_serial_title\Entity\SerialTitleInterface;
 
 /**
  * Implements hook_help().
@@ -39,4 +40,18 @@ function digital_serial_title_theme() {
  */
 function digital_serial_title_preprocess_digital_serial_title(&$variables) {
   // pass.
+}
+
+/**
+ * Label callback for the SerialTitle entity.
+ *
+ * @param \Drupal\digital_serial_title\Entity\SerialTitleInterface $digital_serial_title
+ *   The entity.
+ *
+ * @return string
+ *   The string to serve as label.
+ */
+function digital_serial_title_format_label(SerialTitleInterface $digital_serial_title) {
+  $publication = $digital_serial_title->get('parent_title')->entity;
+  return $publication->getTitle();
 }

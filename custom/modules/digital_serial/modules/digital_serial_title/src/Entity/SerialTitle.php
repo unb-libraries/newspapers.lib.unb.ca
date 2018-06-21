@@ -38,12 +38,12 @@ use Drupal\user\UserInterface;
  *   admin_permission = "administer digital serial title entities",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "id",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
  *     "status" = "status",
  *   },
+ *   label_callback = "digital_serial_title_format_label",
  *   links = {
  *     "canonical" = "/serials/{digital_serial_title}",
  *     "add-form" = "/serials/add",
