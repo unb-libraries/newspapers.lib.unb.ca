@@ -45,11 +45,11 @@ use Drupal\user\UserInterface;
  *     "status" = "status",
  *   },
  *   links = {
- *     "canonical" = "/digital_serial/digital_serial_title/digital_serial_title/{digital_serial_title}",
- *     "add-form" = "/digital_serial/digital_serial_title/digital_serial_title/add",
- *     "edit-form" = "/digital_serial/digital_serial_title/digital_serial_title/{digital_serial_title}/edit",
- *     "delete-form" = "/digital_serial/digital_serial_title/digital_serial_title/{digital_serial_title}/delete",
- *     "collection" = "/digital_serial/digital_serial_title/digital_serial_title",
+ *     "canonical" = "/digital_serial/digital_serial_title/{digital_serial_title}",
+ *     "add-form" = "/digital_serial/digital_serial_title/add",
+ *     "edit-form" = "/digital_serial/digital_serial_title/{digital_serial_title}/edit",
+ *     "delete-form" = "/digital_serial/digital_serial_title/{digital_serial_title}/delete",
+ *     "collection" = "/digital_serial/digital_serial_title",
  *   },
  *   field_ui_base_route = "digital_serial_title.settings"
  * )
