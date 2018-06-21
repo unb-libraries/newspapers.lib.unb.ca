@@ -5,3 +5,10 @@ digital_serial_title.digital_issues:
     _form: '\Drupal\digital_serial_title\Form\PublicationDigitalTitleListForm'
   requirements:
     _custom_access: '\Drupal\digital_serial_title\Controller\NewspaperPublicationCheckController::checkAccess'
+
+digital_serial_title.title_view:
+  path: '/serials/{digital_serial_title}'
+  defaults:
+    _entity_view: 'digital_serial_title'
+  requirements:
+    _permission: 'access content'
