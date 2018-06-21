@@ -4,6 +4,7 @@ namespace Drupal\digital_serial_title\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\digital_serial_title\Entity\SerialTitle;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 
@@ -103,6 +104,14 @@ class PublicationDigitalTitleListForm extends FormBase {
    */
   public function createDigitalTitle(array &$form, FormStateInterface $form_state) {
     // Create entity.
+    $entity_values = [
+      'user_id' => \Drupal::currentUser()->id(),
+      'status' => 1,
+      'parent_title' => $this->parentEid,
+    ];
+
+    $title = SerialTitle::create($entity_values);
+    $title->save();
 
     // Redirect.
     $form_state->setRedirect('digital_serial_title.digital_issues',
