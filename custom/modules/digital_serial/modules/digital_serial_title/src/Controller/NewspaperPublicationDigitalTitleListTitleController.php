@@ -21,7 +21,10 @@ class NewspaperPublicationDigitalTitleListTitleController {
    * Get title of digital serial title.
    */
   public function getTitleIssuesTitle($digital_serial_title) {
-    return 'This is a title';
+    $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_title');
+    $title = $storage->load($digital_serial_title);
+    $publication = $title->get('parent_title')->entity;
+    return $publication->getTitle();
   }
 
 }
