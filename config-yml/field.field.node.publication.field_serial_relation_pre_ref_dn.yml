@@ -10,7 +10,7 @@ field_name: field_serial_relation_pre_ref_dn
 entity_type: node
 bundle: publication
 label: 'Preceding Downstream'
-description: ''
+description: 'Choose a publication'
 required: false
 translatable: false
 default_value: {  }

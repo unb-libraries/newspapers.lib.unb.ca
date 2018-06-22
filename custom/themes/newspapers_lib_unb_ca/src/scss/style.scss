@@ -91,21 +91,25 @@ a:focus {
   vertical-align: text-bottom;
 }
 
-div[class*="ref-up"] label:before {
-  font-family: 'Glyphicons Halflings';
-  content:"\e093";
-  color: #5cb85c;
-  margin-right: 2px;
-}
+div[class*="ref-up"] label:before,
 div[class*="ref-dn"] label:before {
   font-family: 'Glyphicons Halflings';
-  content:"\e094";
+  content:"\e027";
   color: #5cb85c;
   margin-right: 2px;
+  vertical-align: middle;
+}
+div[class*="ref-up"] label:before {
+  content: "\e027";
+}
+div[class*="ref-dn"] label:before {
+  content:"\e026";
 }
 div[class*="ref-up"] .chosen-container,
-div[class*="ref-dn"] .chosen-container {
-  margin: 0 18px;
+div[class*="ref-up"] .description,
+div[class*="ref-dn"] .chosen-container,
+div[class*="ref-dn"] .description {
+  margin-left: 19px;
 }
 
 /* Chosen overrides */
@@ -117,7 +121,10 @@ select[multiple="multiple"] + .form-control {
 .chosen-container-multi .chosen-choices li.search-choice {
   margin-top: 6px;
 }
-
+.chosen-container-multi .chosen-choices li.search-field input[type="text"]:before {
+  font-family: 'Glyphicons Halflings';
+  content:"\e003";
+}
 /* Fix overrides.min.css / unb-lib.css conflict */
 .panel-default > .panel-heading {
   color: $unb-lib-panel-heading;

@@ -6,7 +6,7 @@ jquery_selector: "select:visible,select#edit-field-serial-relation-suc-ref-dn,se
 search_contains: false
 disable_search: false
 allow_single_deselect: false
-placeholder_text_multiple: 'Choose some options'
+placeholder_text_multiple: 'Choose your option(s)'
 placeholder_text_single: 'Choose an option'
 no_results_text: 'No results match'
 disabled_themes:

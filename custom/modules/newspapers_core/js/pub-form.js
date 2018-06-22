@@ -48,50 +48,63 @@ function lastIssueDateRange() {
 
 function updatePrecedingLabel() {
     var $upLabel;
+    var $upDescription;
     var $selection = jQuery("#edit-field-serial-relationship-op-pre option:selected").val();
     switch($selection) {
         case 'continues':
             $upLabel = 'Continues:';
+            $upDescription = 'Please select a single publication from the list';
             break;
         case 'union':
             $upLabel = 'Formed By The Union Of:';
+            $upDescription = 'Please select at least 2 publications from the list';
             break;
         case 'absorbed':
             $upLabel = 'Absorbed:';
+            $upDescription = 'Please select a single publication from the list';
             break;
         case 'separated':
             $upLabel = 'Separated from:';
+            $upDescription = 'Please select a single publication from the list';
             break;
         default:
             $upLabel = 'N/A';
     }
     jQuery('label[for="edit-field-serial-relation-pre-ref-up"]').text($upLabel);
+    jQuery('.form-item-field-serial-relation-pre-ref-up .description').text($upDescription);
 }
 
 function updateSucceedingLabel() {
     var $upLabel;
     var $downLabel;
+    var $upDescription;
+    var $downDescription;
     var $selection = jQuery("#edit-field-serial-relationship-op-suc option:selected").val();
     switch($selection) {
         case 'continued_by':
             $downLabel = 'Continued by:';
+            $downDescription = 'Please select a single publication from the list';
             break;
         case 'split_into':
             $downLabel = 'Split into:';
+            $downDescription = 'Please select at least 2 publications from the list';
             break;
         case 'absorbed_by':
             $downLabel = 'Absorbed by:';
+            $downDescription = 'Please select a single publication from the list';
             break;
         case 'merged_with_form':
             $upLabel = 'Merged with:';
             $downLabel = 'to form:';
+            $upDescription = $downDescription = 'Please select a single publication from the list';
             break;
         default:
-            $upLabel = 'N/A';
-            $downLabel = 'N/A';
+            $upLabel = $downLabel = $upDescription = $downDescription = 'N/A';
     }
     jQuery('label[for="edit-field-serial-relation-suc-ref-up"]').text($upLabel);
+    jQuery('.form-item-field-serial-relation-suc-ref-up .description').text($upDescription);
     jQuery('label[for="edit-field-serial-relation-suc-ref-dn"]').text($downLabel);
+    jQuery('.form-item-field-serial-relation-suc-ref-dn .description').text($downDescription);
 }
 
 jQuery(document).ready(function () {
