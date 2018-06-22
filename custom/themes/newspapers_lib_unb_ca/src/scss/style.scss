@@ -91,6 +91,16 @@ a:focus {
   vertical-align: text-bottom;
 }
 
+/* Chosen overrides */
+select[multiple="multiple"] + .form-control {
+  border: none;
+  padding: 0;
+  width: 100%!important;
+}
+.chosen-container-multi .chosen-choices li.search-choice {
+  margin-top: 6px;
+}
+
 /* Fix overrides.min.css / unb-lib.css conflict */
 .panel-default > .panel-heading {
   color: $unb-lib-panel-heading;
