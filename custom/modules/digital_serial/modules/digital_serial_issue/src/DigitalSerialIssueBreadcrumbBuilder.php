@@ -19,6 +19,7 @@ class DigitalSerialIssueBreadcrumbBuilder implements BreadcrumbBuilderInterface 
     $route = $route_match->getRouteName();
     $applies = [
       'digital_serial_issue.title_issues',
+      'digital_serial_issue.title_add_issue',
     ];
     return in_array($route, $applies);
   }
@@ -43,13 +44,18 @@ class DigitalSerialIssueBreadcrumbBuilder implements BreadcrumbBuilderInterface 
     // Set breadcrumb.
     $breadcrumb = new Breadcrumb();
     $breadcrumb->addLink(Link::createFromRoute('Newspapers', '<front>'));
+    $breadcrumb->addLink(Link::createFromRoute($title->label(), '<front>'));
 
     if ($route == 'digital_serial_issue.title_issues') {
-      $breadcrumb->addLink(Link::createFromRoute($title->label(), '<front>'));
       $breadcrumb->addLink(Link::createFromRoute('Issues', '<nolink>'));
-      $breadcrumb->addCacheTags(["digital_serial_title:{$title->id()}"]);
     }
 
+    if ($route == 'digital_serial_issue.title_add_issue') {
+      $breadcrumb->addLink(Link::createFromRoute('Issues', '<front>'));
+      $breadcrumb->addLink(Link::createFromRoute('Add Issue', '<nolink>'));
+    }
+
+    $breadcrumb->addCacheTags(["digital_serial_title:{$title->id()}"]);
     $breadcrumb->addCacheContexts(['url']);
 
     return $breadcrumb;
