@@ -33,7 +33,7 @@ digital_serial_issue.title_issues:
   weight: 150
 
 entity.digital_serial_issue.view_custom:
-  title: 'View Pages'
+  title: 'View Issue'
   route_name: digital_serial_issue.title_view_issue
   base_route: digital_serial_issue.title_view_issue
 
