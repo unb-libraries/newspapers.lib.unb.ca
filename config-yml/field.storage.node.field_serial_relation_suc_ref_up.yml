@@ -1,0 +1,19 @@
+uuid: 9eac6799-4eaf-40eb-8ff0-9df490d2354d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_serial_relation_suc_ref_up
+field_name: field_serial_relation_suc_ref_up
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 3
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

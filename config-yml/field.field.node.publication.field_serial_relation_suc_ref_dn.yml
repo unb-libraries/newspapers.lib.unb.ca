@@ -1,0 +1,27 @@
+uuid: 9a0b48ca-354d-4e5d-879b-546262f3c626
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_serial_relation_suc_ref_dn
+    - node.type.publication
+id: node.publication.field_serial_relation_suc_ref_dn
+field_name: field_serial_relation_suc_ref_dn
+entity_type: node
+bundle: publication
+label: 'Succeeding Downstream'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      publication: publication
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,23 @@
+uuid: 28bacbbc-1262-4e59-8e8b-50c8b02f9e7f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_serial_relationship_op_pre
+    - node.type.publication
+  module:
+    - options
+id: node.publication.field_serial_relationship_op_pre
+field_name: field_serial_relationship_op_pre
+entity_type: node
+bundle: publication
+label: Precedings
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: separated
+default_value_callback: ''
+settings: {  }
+field_type: list_string

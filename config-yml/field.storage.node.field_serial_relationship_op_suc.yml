@@ -1,0 +1,33 @@
+uuid: 8c990f97-0ec8-4696-9d00-bd0369530805
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_serial_relationship_op_suc
+field_name: field_serial_relationship_op_suc
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: continued_by
+      label: 'Continued by'
+    -
+      value: split_into
+      label: 'Split into'
+    -
+      value: absorbed_by
+      label: 'Absorbed by'
+    -
+      value: merged_with_form
+      label: 'Merged with to form'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

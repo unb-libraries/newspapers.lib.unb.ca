@@ -4,8 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.node.publication.field_additional_indexed_text
-    - field.field.node.publication.field_continued_by
-    - field.field.node.publication.field_continues
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_description
     - field.field.node.publication.field_family
@@ -26,6 +24,12 @@ dependencies:
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_publisher
+    - field.field.node.publication.field_serial_relation_pre_ref_dn
+    - field.field.node.publication.field_serial_relation_pre_ref_up
+    - field.field.node.publication.field_serial_relation_suc_ref_dn
+    - field.field.node.publication.field_serial_relation_suc_ref_up
+    - field.field.node.publication.field_serial_relationship_op_pre
+    - field.field.node.publication.field_serial_relationship_op_suc
     - field.field.node.publication.field_sort_title
     - field.field.node.publication.field_subject_notes
     - field.field.node.publication.field_subjects
@@ -65,22 +69,6 @@ targetEntityType: node
 bundle: publication
 mode: default
 content:
-  field_continued_by:
-    weight: 14
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_continues:
-    weight: 13
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
   field_description:
     weight: 11
     label: above
@@ -209,6 +197,52 @@ content:
       link: false
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
+  field_serial_relation_pre_ref_dn:
+    weight: 24
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_serial_relation_pre_ref_up:
+    weight: 23
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_serial_relation_suc_ref_dn:
+    weight: 26
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_serial_relation_suc_ref_up:
+    weight: 25
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_serial_relationship_op_pre:
+    weight: 21
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_serial_relationship_op_suc:
+    weight: 22
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_subject_notes:
     weight: 8

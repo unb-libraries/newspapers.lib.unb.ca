@@ -4,8 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.node.publication.field_additional_indexed_text
-    - field.field.node.publication.field_continued_by
-    - field.field.node.publication.field_continues
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_description
     - field.field.node.publication.field_family
@@ -26,6 +24,12 @@ dependencies:
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_publisher
+    - field.field.node.publication.field_serial_relation_pre_ref_dn
+    - field.field.node.publication.field_serial_relation_pre_ref_up
+    - field.field.node.publication.field_serial_relation_suc_ref_dn
+    - field.field.node.publication.field_serial_relation_suc_ref_up
+    - field.field.node.publication.field_serial_relationship_op_pre
+    - field.field.node.publication.field_serial_relationship_op_suc
     - field.field.node.publication.field_sort_title
     - field.field.node.publication.field_subject_notes
     - field.field.node.publication.field_subjects
@@ -89,28 +93,10 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 19
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_continued_by:
-    weight: 16
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
-  field_continues:
-    weight: 15
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   field_credit:
     weight: 13
     settings:
@@ -298,7 +284,7 @@ content:
     type: string_textfield
     region: content
   field_language:
-    weight: 17
+    weight: 15
     settings:
       format:
         name: name
@@ -396,6 +382,44 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
+  field_serial_relation_pre_ref_dn:
+    weight: 24
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_serial_relation_pre_ref_up:
+    weight: 23
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_serial_relation_suc_ref_dn:
+    weight: 27
+    settings: {  }
+    third_party_settings:
+      conditional_fields: {  }
+    type: options_select
+    region: content
+  field_serial_relation_suc_ref_up:
+    weight: 26
+    settings: {  }
+    third_party_settings:
+      conditional_fields: {  }
+    type: options_select
+    region: content
+  field_serial_relationship_op_pre:
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_serial_relationship_op_suc:
+    weight: 25
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_sort_title:
     weight: 7
     settings:
@@ -455,7 +479,7 @@ content:
     region: content
   path:
     type: path
-    weight: 22
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -463,21 +487,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 20
+    weight: 18
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 23
+    weight: 21
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 21
+    weight: 19
     region: content
     third_party_settings: {  }
   title:
@@ -490,7 +514,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 18
+    weight: 16
     settings:
       match_operator: CONTAINS
       size: 60
