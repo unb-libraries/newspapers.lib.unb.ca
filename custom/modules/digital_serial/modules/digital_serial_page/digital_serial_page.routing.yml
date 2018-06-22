@@ -5,3 +5,11 @@ digital_serial_page.manage_pages:
     _entity_list: digital_serial_page
   requirements:
     _permission: 'view published serial issue entities'
+
+digital_serial_page.issue_add_page:
+  path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages/add'
+  defaults:
+     _entity_form: digital_serial_page.add
+     _title: 'Add Page'
+  requirements:
+    _permission: 'view published serial issue entities'

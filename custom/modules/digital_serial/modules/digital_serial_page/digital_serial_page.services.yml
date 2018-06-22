@@ -1,0 +1,5 @@
+services:
+  digital_serial_page.breadcrumb:
+    class: Drupal\digital_serial_page\DigitalSerialPageBreadcrumbBuilder
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }

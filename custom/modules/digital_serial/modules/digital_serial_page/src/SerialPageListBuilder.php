@@ -19,7 +19,7 @@ class SerialPageListBuilder extends EntityListBuilder {
   public function render() {
     $build = parent::render();
     $build['table']['#empty'] = 'No pages have been added to this issue yet.';
-    // Add project modules.
+
     $build['add_pages_button'] = [
       '#attributes' => [
         'class' => ['btn btn-info btn-add'],
@@ -27,12 +27,14 @@ class SerialPageListBuilder extends EntityListBuilder {
       '#title' => t('Add New Page'),
       '#type' => 'link',
       '#url' => Url::fromRoute(
-        'entity.digital_serial_issue.add_page',
+        'digital_serial_page.issue_add_page',
         [
+          'digital_serial_title' => \Drupal::routeMatch()->getParameters()->get('digital_serial_title'),
           'digital_serial_issue' => \Drupal::routeMatch()->getParameters()->get('digital_serial_issue'),
         ]
       ),
     ];
+
     return $build;
   }
 
