@@ -30,7 +30,7 @@ digital_serial_page.issue_view_page:
       digital_serial_page:
         type: entity:digital_serial_page
 
-digital_serial_page.title_edit_issue:
+digital_serial_page.title_edit_page:
   path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages/{digital_serial_page}/edit'
   defaults:
      _entity_form: digital_serial_page.edit
