@@ -46,14 +46,66 @@ function lastIssueDateRange() {
     }
 }
 
+function updatePrecedingLabel() {
+    var $upLabel;
+    var $selection = jQuery("#edit-field-serial-relationship-op-pre option:selected").val();
+    switch($selection) {
+        case 'continues':
+            $upLabel = 'Continues:';
+            break;
+        case 'union':
+            $upLabel = 'Formed By The Union Of:';
+            break;
+        case 'absorbed':
+            $upLabel = 'Absorbed:';
+            break;
+        case 'separated':
+            $upLabel = 'Separated from:';
+            break;
+        default:
+            $upLabel = 'N/A';
+    }
+    jQuery('label[for="edit-field-serial-relation-pre-ref-up"]').text($upLabel);
+}
+
+function updateSucceedingLabel() {
+    var $upLabel;
+    var $downLabel;
+    var $selection = jQuery("#edit-field-serial-relationship-op-suc option:selected").val();
+    switch($selection) {
+        case 'continued_by':
+            $downLabel = 'Continued by:';
+            break;
+        case 'split_into':
+            $downLabel = 'Split into:';
+            break;
+        case 'absorbed_by':
+            $downLabel = 'Absorbed by:';
+            break;
+        case 'merged_with_form':
+            $upLabel = 'Merged with:';
+            $downLabel = 'to form:';
+            break;
+        default:
+            $upLabel = 'N/A';
+            $downLabel = 'N/A';
+    }
+    jQuery('label[for="edit-field-serial-relation-suc-ref-up"]').text($upLabel);
+    jQuery('label[for="edit-field-serial-relation-suc-ref-dn"]').text($downLabel);
+}
+
 jQuery(document).ready(function () {
     /**
-     * Adjust Date of Publication fieldset daterange widgets on form load + UI click (approximate dates).
+     * Adjust Precedings / Succeedings select label text.
      */
     firstIssueDateRange();
     lastIssueDateRange();
+    updatePrecedingLabel();
+    updateSucceedingLabel();
 
-    jQuery("#edit-field-first-issue-date-type").change(firstIssueDateRange);
-    jQuery("#edit-field-last-issue-date-type").change(lastIssueDateRange);
+    jQuery('#edit-field-first-issue-date-type').change(firstIssueDateRange);
+    jQuery('#edit-field-last-issue-date-type').change(lastIssueDateRange);
+    jQuery('#edit-field-serial-relationship-op-pre').change(updatePrecedingLabel);
+    jQuery('#edit-field-serial-relationship-op-suc').change(updateSucceedingLabel);
 });
 
