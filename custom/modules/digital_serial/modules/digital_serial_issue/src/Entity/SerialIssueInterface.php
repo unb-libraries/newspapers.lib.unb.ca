@@ -160,4 +160,12 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
    */
   public function setParentTitleById($title_id);
 
+  /**
+   * Get the display title for this issue.
+   *
+   * @return string
+   *   The display title.
+   */
+  public function getDisplayTitle();
+
 }
