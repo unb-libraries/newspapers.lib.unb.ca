@@ -6,11 +6,14 @@ use Drupal\Core\Breadcrumb\BreadcrumbBuilderInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Breadcrumb\Breadcrumb;
 use Drupal\Core\Link;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Breadcrumb builder for digital serials.
  */
 class DigitalSerialTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface {
+
+  use StringTranslationTrait;
 
   /**
    * {@inheritdoc}
@@ -41,8 +44,17 @@ class DigitalSerialTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface 
 
     // Set breadcrumb.
     $breadcrumb = new Breadcrumb();
-    $breadcrumb->addLink(Link::createFromRoute('Newspapers', '<front>'));
-    $breadcrumb->addLink(Link::createFromRoute($title->label(), '<nolink>'));
+    $breadcrumb->addLink(Link::createFromRoute(
+      $this->t('Newspapers'),
+      '<front>')
+    );
+    $breadcrumb->addLink(
+      Link::createFromRoute(
+        $title->label(),
+        'entity.digital_serial_title.canonical',
+        ['digital_serial_title' => $title->id()]
+      )
+    );
 
     // Control Caching.
     $breadcrumb->addCacheTags(["digital_serial_title:{$title->id()}"]);
