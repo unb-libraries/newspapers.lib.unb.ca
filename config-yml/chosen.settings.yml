@@ -1,5 +1,5 @@
 minimum_single: 7
-minimum_multiple: 7
+minimum_multiple: 0
 disable_search_threshold: 0
 minimum_width: null
 jquery_selector: "select:visible,select#edit-field-serial-relation-suc-ref-dn,select#edit-field-serial-relation-suc-ref-up\r\n"
