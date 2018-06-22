@@ -4,6 +4,7 @@ namespace Drupal\digital_serial_page\Entity;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\digital_serial_issue\Entity\SerialIssueInterface;
 use Drupal\user\EntityOwnerInterface;
 
 /**
@@ -95,5 +96,27 @@ interface SerialPageInterface extends ContentEntityInterface, EntityChangedInter
    *   The parent issue.
    */
   public function getParentIssue();
+
+  /**
+   * Sets the parent issue of a Serial page.
+   *
+   * @param \Drupal\digital_serial_issue\Entity\SerialIssueInterface $issue
+   *   The issue to set as parent.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setParentIssue(SerialIssueInterface $issue);
+
+  /**
+   * Sets the parent title of a Serial page.
+   *
+   * @param int $issue_id
+   *   The ID of the issue to set as parent.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
+   */
+  public function setParentIssueById($issue_id);
 
 }

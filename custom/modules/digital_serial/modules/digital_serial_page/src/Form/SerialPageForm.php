@@ -13,11 +13,12 @@ use Drupal\Core\Form\FormStateInterface;
 class SerialPageForm extends ContentEntityForm {
 
   protected $issueEid;
+  protected $titleEid;
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $digital_serial_issue = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $digital_serial_title = NULL, $digital_serial_issue = NULL) {
     /* @var $entity \Drupal\digital_serial_page\Entity\SerialPage */
 
     if ($digital_serial_issue == NULL) {
@@ -26,6 +27,14 @@ class SerialPageForm extends ContentEntityForm {
     }
     else {
       $this->issueEid = $digital_serial_issue;
+    }
+
+    if ($digital_serial_title == NULL) {
+      // This has been called from Entity Operations field in table.
+      $this->titleEid = $this->entity->getParentIssue()->getParentTitle()->id();
+    }
+    else {
+      $this->titleEid = $digital_serial_title;
     }
 
     $form = parent::buildForm($form, $form_state);
@@ -37,8 +46,10 @@ class SerialPageForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    $entity = $this->entity;
-    $form_state->set('parent_issue', $this->issueEid);
+    /* @var $entity \Drupal\digital_serial_page\Entity\SerialPage */
+    $entity = &$this->entity;
+
+    $entity->setParentIssueById($this->issueEid);
 
     $status = parent::save($form, $form_state);
 
@@ -57,8 +68,9 @@ class SerialPageForm extends ContentEntityForm {
 
     // Redirect back to cabinet module list.
     $form_state->setRedirect(
-      'digital_serial_issue.manage_pages',
+      'digital_serial_page.manage_pages',
       [
+        'digital_serial_title' => $this->titleEid,
         'digital_serial_issue' => $this->issueEid,
       ]
     );

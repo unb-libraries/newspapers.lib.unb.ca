@@ -7,11 +7,11 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\digital_serial_issue\Entity\SerialIssueInterface;
 use Drupal\user\UserInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Link;
-use Drupal\digital_serial_issue\Entity;
 
 /**
  * Defines the Serial page entity.
@@ -149,6 +149,29 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    */
   public function setPublished($published) {
     $this->set('status', $published ? TRUE : FALSE);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getParentIssue() {
+    return $this->get('parent_issue')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setParentIssue(SerialIssueInterface $issue) {
+    $this->set('parent_issue', $issue->id());
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setParentIssueById($issue_id) {
+    $this->set('parent_issue', $issue_id);
     return $this;
   }
 
@@ -296,22 +319,6 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $url = Url::fromUri(file_create_url($uri));
 
     return (Link::fromTextAndUrl($image_markup, $url));
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getParentIssue() {
-    $query = \Drupal::service('entity.query')
-      ->get('digital_serial_issue')
-      ->condition('issue_pages', $this->id());
-    $entity_ids = $query->execute();
-    foreach ($entity_ids as $entity_id) {
-      return \Drupal::entityTypeManager()
-        ->getStorage('digital_serial_issue')
-        ->load($entity_id);
-    }
-    return $this;
   }
 
 }
