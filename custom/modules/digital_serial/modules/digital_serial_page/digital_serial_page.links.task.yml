@@ -20,3 +20,7 @@ entity.digital_serial_page.delete_form:
   title: Delete
   weight: 10
 
+entity.digital_serial_issue.manage_pages:
+  title: 'Manage Pages'
+  route_name: digital_serial_page.manage_pages
+  base_route: digital_serial_issue.title_view_issue

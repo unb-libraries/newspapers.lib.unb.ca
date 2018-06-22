@@ -1,7 +1,7 @@
-digital_serial_title.digital_issues:
-  path: '/node/{node}/digital_issues'
+digital_serial_page.manage_pages:
+  path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages'
   defaults:
-    _title_callback: '\Drupal\digital_serial_title\Controller\NewspaperPublicationDigitalTitleListTitleController::getDigitalListTitle'
-    _controller: '\Drupal\digital_serial_title\Controller\NewspaperPublicationDigitalTabRedirect::triageRequest'
+    _title_callback: '\Drupal\digital_serial_title\Controller\NewspaperPublicationDigitalTitleListTitleController::getTitleIssuesTitle'
+    _entity_list: digital_serial_page
   requirements:
-    _custom_access: '\Drupal\digital_serial_title\Controller\NewspaperPublicationCheckController::checkAccess'
+    _permission: 'view published serial issue entities'
