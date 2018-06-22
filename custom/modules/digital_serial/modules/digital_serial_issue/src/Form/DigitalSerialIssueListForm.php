@@ -8,6 +8,7 @@ use Drupal\Core\Url;
 use Drupal\digital_serial_title\Entity\SerialTitle;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
+use Drupal\views\Views;
 
 /**
  * DigitalSerialIssueListForm object.
@@ -46,6 +47,12 @@ class DigitalSerialIssueListForm extends FormBase {
     $form['issue_list']['title'] = $title;
     $form['issue_list']['title']['#prefix'] = '<h2 class="issue-list-title">';
     $form['issue_list']['title']['#suffix'] = '</h2>';
+
+    $view = Views::getView('digital_issue_list');
+    $view->setDisplay('block_2');
+    $view->setArguments([$this->parentEid]);
+    $render = $view->render();
+    $form['select_block_view'] = $render;
 
     $form['add_issue'] = [
       '#type' => 'link',
