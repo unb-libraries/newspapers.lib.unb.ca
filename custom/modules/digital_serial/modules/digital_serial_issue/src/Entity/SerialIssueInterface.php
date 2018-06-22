@@ -4,8 +4,8 @@ namespace Drupal\digital_serial_issue\Entity;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
+use Drupal\digital_serial_title\Entity\SerialTitleInterface;
 use Drupal\user\EntityOwnerInterface;
-use Drupal\digital_serial_page\Entity\SerialPageInterface;
 
 /**
  * Provides an interface for defining Serial issue entities.
@@ -131,32 +131,33 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
   public function setIssueEdition($issue_edition);
 
   /**
-   * Check if a Page is associated with this Issue.
+   * Returns the parent title of the Serial Holding.
    *
-   * @param \Drupal\digital_serial_page\SerialPageInterface $page
-   *   The page.
-   *
-   * @return bool
-   *   TRUE if the page is associated with this issue. FALSE otherwise.
+   * @return \Drupal\digital_serial_title\Entity\SerialTitleInterface
+   *   The parent title if one exists.
    */
-  public function hasPage(SerialPageInterface $page);
+  public function getParentTitle();
 
   /**
-   * Set the pages associated with this issue.
+   * Sets the parent title of a Serial holding.
    *
-   * @param \Drupal\digital_serial_page\SerialPageInterface $page
-   *   The page to add to the issue.
+   * @param \Drupal\digital_serial_title\Entity\SerialTitleInterface $title
+   *   The title to set as parent.
    *
-   * @return $this
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
    */
-  public function addPage(SerialPageInterface $page);
+  public function setParentTitle(SerialTitleInterface $title);
 
   /**
-   * Gets the entity IDs of the pages associated with this issue.
+   * Sets the parent title of a Serial holding by the entity ID.
    *
-   * @return int[]
-   *   An array of entity IDs.
+   * @param int $title_id
+   *   The entity ID of the title to set as parent.
+   *
+   * @return \Drupal\serial_holding\Entity\SerialHoldingInterface
+   *   The called Serial holding entity.
    */
-  public function getPageIds();
+  public function setParentTitleById($title_id);
 
 }

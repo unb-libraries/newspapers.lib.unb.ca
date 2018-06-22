@@ -7,8 +7,7 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\digital_serial_page\Entity\SerialPageInterface;
+use Drupal\digital_serial_title\Entity\SerialTitleInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -185,6 +184,29 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    */
   public function setIssueEdition($issue_edition) {
     $this->set('issue_edition', $issue_edition);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getParentTitle() {
+    return $this->get('parent_title')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setParentTitle(SerialTitleInterface $title) {
+    $this->set('parent_title', $title->id());
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setParentTitleById($title_id) {
+    $this->set('parent_title', $title_id);
     return $this;
   }
 
@@ -405,43 +427,6 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getIssuePages() {
-    return $this->get('issue_pages')->referencedEntities();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function hasPage(SerialPageInterface $page) {
-    foreach ($this->getIssuePages() as $stored_page) {
-      if ($stored_page->id() == $page->id()) {
-        return TRUE;
-      }
-    }
-    return FALSE;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function addPage(SerialPageInterface $page) {
-    return $this->get('issue_pages')->appendItem($page);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getPageIds() {
-    $page_ids = [];
-    foreach ($this->getIssuePages() as $page) {
-      $page_ids[] = $page->id();
-    }
-    return $page_ids;
   }
 
 }
