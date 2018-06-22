@@ -5,7 +5,7 @@ namespace Drupal\digital_serial_title\Controller;
 use Drupal\node\Entity\Node;
 
 /**
- * NewspaperPublicationDigitalTitleListTitleController object.
+ * DigitalSerialIssueViewTitleController object.
  */
 class NewspaperPublicationDigitalTitleListTitleController {
 

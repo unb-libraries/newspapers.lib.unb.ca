@@ -35,3 +35,17 @@ digital_serial_issue.title_add_issue:
      _title: 'Add Issue'
   requirements:
     _permission: 'view published serial issue entities'
+
+digital_serial_issue.title_view_issue:
+  path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}'
+  defaults:
+     _entity_view: digital_serial_issue
+     _title_callback: '\Drupal\digital_serial_issue\Controller\DigitalSerialIssueViewTitleController::getTitle'
+  requirements:
+    _permission: 'view published serial issue entities'
+  options:
+    parameters:
+      digital_serial_title:
+        type: entity:digital_serial_title
+      digital_serial_issue:
+        type: entity:digital_serial_issue

@@ -23,6 +23,7 @@ class DigitalSerialIssueBreadcrumbBuilder implements BreadcrumbBuilderInterface 
     $applies = [
       'digital_serial_issue.title_issues',
       'digital_serial_issue.title_add_issue',
+      'digital_serial_issue.title_view_issue',
     ];
     return in_array($route, $applies);
   }
@@ -63,6 +64,33 @@ class DigitalSerialIssueBreadcrumbBuilder implements BreadcrumbBuilderInterface 
       $breadcrumb->addLink(
         Link::createFromRoute(
           $this->t('Issues'),
+          '<nolink>'
+        )
+      );
+    }
+
+    if ($route == 'digital_serial_issue.title_view_issue') {
+      // Load title object.
+      $issue_eid = $route_match->getParameter('digital_serial_issue');
+
+      if (!is_object($issue_eid)) {
+        $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_issue');
+        $issue = $storage->load($issue_eid);
+      }
+      else {
+        $issue = $issue_eid;
+      }
+
+      $breadcrumb->addLink(
+        Link::createFromRoute(
+          $this->t('Issues'),
+          'digital_serial_issue.title_issues',
+          ['digital_serial_title' => $title->id()]
+        )
+      );
+      $breadcrumb->addLink(
+        Link::createFromRoute(
+          $issue->getDisplayTitle(),
           '<nolink>'
         )
       );
