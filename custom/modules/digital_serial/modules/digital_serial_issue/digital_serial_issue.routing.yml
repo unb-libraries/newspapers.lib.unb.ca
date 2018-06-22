@@ -54,6 +54,6 @@ digital_serial_issue.title_edit_issue:
   path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/edit'
   defaults:
      _entity_form: digital_serial_issue.edit
-     _title: 'Add Issue'
+     _title: 'Edit Metadata'
   requirements:
     _permission: 'view published serial issue entities'
