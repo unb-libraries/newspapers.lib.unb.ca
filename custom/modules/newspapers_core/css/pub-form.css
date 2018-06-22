@@ -49,8 +49,7 @@ button.field-add-more-submit:focus {
 }
 
 /* Bootstrap details panel + Address 'Required field' indicator */
-div.required-fields a:after,
-div[id^="edit-field-place-of-publication"] a:after {
+div.required-fields a:after {
 	background-image: url(/themes/contrib/bootstrap/css/images/required.svg);
 	background-size: 10px 7px;
 	content: "";
