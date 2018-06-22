@@ -13,13 +13,19 @@ use Drupal\Core\Form\FormStateInterface;
 class SerialIssueForm extends ContentEntityForm {
 
   /**
+   * The parent entity of the digital issue.
+   *
+   * @var int
+   */
+  protected $parentEid;
+
+  /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state, $digital_serial_issue = NULL) {
     /* @var $entity \Drupal\digital_serial_issue\Entity\SerialIssue */
     $form = parent::buildForm($form, $form_state);
-
-    $entity = $this->entity;
+    $this->parentEid = $digital_serial_issue;
 
     return $form;
   }
@@ -29,6 +35,7 @@ class SerialIssueForm extends ContentEntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $entity = &$this->entity;
+    $form_state->set('parent_title', $this->parentEid);
 
     $status = parent::save($form, $form_state);
 

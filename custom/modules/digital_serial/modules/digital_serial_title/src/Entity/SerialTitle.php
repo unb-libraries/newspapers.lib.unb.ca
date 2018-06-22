@@ -184,17 +184,6 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
         ]
       );
 
-    $fields['issues'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Issues'))
-      ->setDescription(t('Issues in this title.'))
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
-      ->setSettings(
-        [
-          'target_type' => 'digital_serial_issue',
-          'handler' => 'default',
-        ]
-    );
-
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
       ->setDescription(t('A boolean indicating whether the Digital Serial Title is published.'))

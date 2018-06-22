@@ -39,10 +39,28 @@ class SerialPageListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
+  public function load() {
+    $issue = \Drupal::routeMatch()->getParameters()->get('digital_serial_issue');
+
+    $query = $this->getStorage()->getQuery()
+      ->condition('parent_issue', $issue)
+      ->sort('page_sort');
+
+    // Only add the pager if a limit is specified.
+    if ($this->limit) {
+      $query->pager($this->limit);
+    }
+
+    $entity_ids = $query->execute();
+    return $this->storage->loadMultiple($entity_ids);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildHeader() {
     $header['page_no'] = $this->t('Page No');
-    /* $header['page_image'] = $this->t('Preview'); */
-    $header['page_image2'] = $this->t('Page Preview');
+    $header['page_image'] = $this->t('Page Preview');
 
     return $header + parent::buildHeader();
   }
@@ -52,24 +70,11 @@ class SerialPageListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\digital_serial_page\SerialPage */
+    $row['page_no'] = $entity->getPageNo();
+    $linked_image = $entity->getLinkedStyledImage('thumbnail');
+    $row['page_image'] = $linked_image->toString();
 
-    $issue_eid = \Drupal::routeMatch()->getParameters()->get('digital_serial_issue');
-
-    // Add module to entity reference.
-    $issue = \Drupal::entityTypeManager()
-      ->getStorage('digital_serial_issue')
-      ->load($issue_eid);
-
-    if ($issue->hasPage($entity)) {
-      $row['page_no'] = $entity->getPageNo();
-      /* $image = $entity->getStyledImage('thumbnail'); */
-      /* $row['page_image'] = render($image); */
-      $linked_image = $entity->getLinkedStyledImage('thumbnail');
-      $row['page_image2'] = $linked_image->toString();
-
-      return $row + parent::buildRow($entity);
-    }
-    return FALSE;
+    return $row + parent::buildRow($entity);
   }
 
 }

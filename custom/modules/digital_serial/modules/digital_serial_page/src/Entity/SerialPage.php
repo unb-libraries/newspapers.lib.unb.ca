@@ -215,6 +215,16 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['parent_issue'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Parent Issue'))
+      ->setDescription(t('Issue this page is a part of.'))
+      ->setSettings(
+        [
+          'target_type' => 'digital_serial_issue',
+          'handler' => 'default',
+        ]
+      );
+
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publishing status'))
       ->setDescription(t('A boolean indicating whether the Serial page is published.'))

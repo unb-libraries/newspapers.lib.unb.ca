@@ -38,6 +38,7 @@ class SerialPageForm extends ContentEntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $entity = $this->entity;
+    $form_state->set('parent_issue', $this->issueEid);
 
     $status = parent::save($form, $form_state);
 
@@ -53,23 +54,6 @@ class SerialPageForm extends ContentEntityForm {
           '%label' => $entity->label(),
         ]));
     }
-
-    // Add module to entity reference.
-    $issue = \Drupal::entityTypeManager()
-      ->getStorage('digital_serial_issue')
-      ->load($this->issueEid);
-
-    $new_item = TRUE;
-    foreach ($issue->getPageIds() as $page_id) {
-      if ($page_id == $entity->id()) {
-        $new_item = FALSE;
-        break;
-      }
-    }
-    if ($new_item) {
-      $issue->addPage($entity);
-    }
-    $issue->save();
 
     // Redirect back to cabinet module list.
     $form_state->setRedirect(

@@ -7,3 +7,4 @@ type: module
 
 dependencies:
   - digital_serial
+  - digital_serial_issue

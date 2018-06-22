@@ -394,13 +394,12 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['issue_pages'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Pages'))
-      ->setDescription(t('Pages in this issue.'))
-      ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
+    $fields['parent_title'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Parent Title'))
+      ->setDescription(t('Parent Title this issue belongs to'))
       ->setSettings(
         [
-          'target_type' => 'digital_serial_page',
+          'target_type' => 'digital_serial_title',
           'handler' => 'default',
         ]
       );
