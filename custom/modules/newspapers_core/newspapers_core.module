@@ -60,7 +60,52 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
           'class' => ['btn-warning'],
         ],
       ];
+
+      $form['field_serial_relation_pre_ref_up']['#states'] = [
+        'visible' => [
+          [
+            'select[name="field_serial_relationship_op_pre"]' =>
+            [
+              ['value' => 'continues'],
+              'or',
+              ['value' => 'union'],
+              'or',
+              ['value' => 'absorbed'],
+              'or',
+              ['value' => 'separated'],
+            ],
+          ],
+        ],
+      ];
+      $form['field_serial_relation_pre_ref_dn']['#states'] = [
+        'visible' => [
+          'select[name="field_serial_relationship_op_pre"]' => ['value' => 'FORCE_INVISIBLE'],
+        ],
+      ];
+
+      $form['field_serial_relation_suc_ref_dn']['#states'] = [
+        'visible' => [
+          [
+            'select[name="field_serial_relationship_op_suc"]' =>
+            [
+              ['value' => 'continued_by'],
+              'or',
+              ['value' => 'split_into'],
+              'or',
+              ['value' => 'absorbed_by'],
+              'or',
+              ['value' => 'merged_with_form'],
+            ],
+          ],
+        ],
+      ];
+      $form['field_serial_relation_suc_ref_up']['#states'] = [
+        'visible' => [
+          'select[name="field_serial_relationship_op_suc"]' => ['value' => 'merged_with_form'],
+        ],
+      ];
   }
+
 }
 
 /**
