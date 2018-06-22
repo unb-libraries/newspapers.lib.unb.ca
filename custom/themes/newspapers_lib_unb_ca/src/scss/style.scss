@@ -91,11 +91,28 @@ a:focus {
   vertical-align: text-bottom;
 }
 
+div[class*="ref-up"] label:before {
+  font-family: 'Glyphicons Halflings';
+  content:"\e093";
+  color: #5cb85c;
+  margin-right: 2px;
+}
+div[class*="ref-dn"] label:before {
+  font-family: 'Glyphicons Halflings';
+  content:"\e094";
+  color: #5cb85c;
+  margin-right: 2px;
+}
+div[class*="ref-up"] .chosen-container,
+div[class*="ref-dn"] .chosen-container {
+  margin: 0 18px;
+}
+
 /* Chosen overrides */
 select[multiple="multiple"] + .form-control {
   border: none;
   padding: 0;
-  width: 100%!important;
+  width: 98%!important;
 }
 .chosen-container-multi .chosen-choices li.search-choice {
   margin-top: 6px;
