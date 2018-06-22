@@ -31,3 +31,19 @@ digital_serial_issue.title_issues:
   title: 'Issues'
   base_route: entity.digital_serial_title.canonical
   weight: 150
+
+entity.digital_serial_issue.view_custom:
+  title: 'View'
+  route_name: digital_serial_issue.title_view_issue
+  base_route: digital_serial_issue.title_view_issue
+
+entity.digital_serial_issue.edit_form_custom:
+  title: 'Edit'
+  route_name: digital_serial_issue.title_edit_issue
+  base_route: digital_serial_issue.title_view_issue
+
+entity.digital_serial_issue.delete_form_custom:
+  title: Delete
+  route_name:  entity.digital_serial_issue.delete_form
+  base_route:  digital_serial_issue.title_view_issue
+  weight: 10

@@ -49,3 +49,11 @@ digital_serial_issue.title_view_issue:
         type: entity:digital_serial_title
       digital_serial_issue:
         type: entity:digital_serial_issue
+
+digital_serial_issue.title_edit_issue:
+  path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/edit'
+  defaults:
+     _entity_form: digital_serial_issue.edit
+     _title: 'Add Issue'
+  requirements:
+    _permission: 'view published serial issue entities'
