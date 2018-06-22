@@ -22,10 +22,10 @@ class SerialIssueForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $digital_serial_issue = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $digital_serial_title = NULL) {
     /* @var $entity \Drupal\digital_serial_issue\Entity\SerialIssue */
     $form = parent::buildForm($form, $form_state);
-    $this->parentEid = $digital_serial_issue;
+    $this->parentEid = $digital_serial_title;
 
     return $form;
   }
@@ -51,7 +51,7 @@ class SerialIssueForm extends ContentEntityForm {
           '%label' => $entity->label(),
         ]));
     }
-    $form_state->setRedirect('entity.digital_serial_issue.canonical', ['digital_serial_issue' => $entity->id()]);
+    $form_state->setRedirect('digital_serial_title.title_issues', ['digital_serial_title' => $this->parentEid]);
   }
 
 }

@@ -1,17 +1,18 @@
 <?php
 
-namespace Drupal\digital_serial_title\Form;
+namespace Drupal\digital_serial_issue\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\digital_serial_title\Entity\SerialTitle;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 
 /**
- * TitleDigitalTitleListForm object.
+ * DigitalSerialIssueListForm object.
  */
-class TitleDigitalTitleListForm extends FormBase {
+class DigitalSerialIssueListForm extends FormBase {
 
   /**
    * The parent entity of the digital title.
@@ -45,6 +46,20 @@ class TitleDigitalTitleListForm extends FormBase {
     $form['issue_list']['title'] = $title;
     $form['issue_list']['title']['#prefix'] = '<h2 class="issue-list-title">';
     $form['issue_list']['title']['#suffix'] = '</h2>';
+
+    $form['add_issue'] = [
+      '#type' => 'link',
+      '#title' => t('Add New Issue'),
+      '#url' => Url::fromRoute(
+        'digital_serial_issue.title_add_issue',
+        [
+          'digital_serial_title' => $this->parentEid,
+        ]
+      ),
+      '#attributes' => [
+        'class' => ['btn btn-success'],
+      ],
+    ];
 
     return $form;
   }

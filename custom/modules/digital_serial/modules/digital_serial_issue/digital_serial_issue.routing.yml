@@ -19,3 +19,19 @@ entity.digital_serial_issue.canonical:
     _entity_view: 'digital_serial_issue'
   requirements:
     _permission: 'view published serial issue entities'
+
+digital_serial_title.title_issues:
+  path: '/serials/{digital_serial_title}/issues'
+  defaults:
+    _title_callback: '\Drupal\digital_serial_title\Controller\NewspaperPublicationDigitalTitleListTitleController::getTitleIssuesTitle'
+    _form: '\Drupal\digital_serial_issue\Form\DigitalSerialIssueListForm'
+  requirements:
+    _permission: 'view published serial issue entities'
+
+digital_serial_issue.title_add_issue:
+  path: '/serials/{digital_serial_title}/issues/add'
+  defaults:
+     _entity_form: digital_serial_issue.add
+     _title: 'Add Issue'
+  requirements:
+    _permission: 'view published serial issue entities'
