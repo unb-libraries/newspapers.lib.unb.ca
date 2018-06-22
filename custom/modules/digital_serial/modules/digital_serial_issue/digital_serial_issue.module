@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\views\Views;
 
 /**
  * Implements hook_help().
@@ -32,4 +33,16 @@ function digital_serial_issue_theme() {
       'render element' => 'children',
     ],
   ];
+}
+
+/**
+ * Implements hook_preprocess_entity().
+ */
+function digital_serial_issue_preprocess_digital_serial_issue(&$variables) {
+  $variables['issue_entity'] = $variables['children']['#digital_serial_issue'];
+
+  $view = Views::getView('digital_serial_issue_page_list');
+  $view->setDisplay('page_1');
+  $view->setArguments([$variables['issue_entity']->id()]);
+  $variables['page_list'] = $view->render();
 }
