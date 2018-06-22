@@ -9,11 +9,6 @@ entity.digital_serial_title.canonical:
   base_route: entity.digital_serial_title.canonical
   title: 'View'
 
-entity.digital_serial_title.edit_form:
-  route_name: entity.digital_serial_title.edit_form
-  base_route: entity.digital_serial_title.canonical
-  title: 'Edit'
-
 entity.digital_serial_title.delete_form:
   route_name:  entity.digital_serial_title.delete_form
   base_route:  entity.digital_serial_title.canonical
