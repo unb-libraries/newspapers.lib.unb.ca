@@ -191,19 +191,6 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * {@inheritdoc}
    */
-  public function hasCabinetModule(CabinetModuleInterface $module) {
-    $module_ids = [];
-    foreach ($this->getCabinetModules() as $stored_module) {
-      if ($stored_module->id() == $module->id()) {
-        return TRUE;
-      }
-    };
-    return FALSE;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
