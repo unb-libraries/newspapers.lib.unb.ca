@@ -93,7 +93,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 17
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -284,7 +284,7 @@ content:
     type: string_textfield
     region: content
   field_language:
-    weight: 15
+    weight: 21
     settings:
       format:
         name: name
@@ -383,39 +383,39 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_serial_relation_pre_ref_dn:
-    weight: 24
+    weight: 16
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_serial_relation_pre_ref_up:
-    weight: 23
+    weight: 15
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_serial_relation_suc_ref_dn:
-    weight: 27
+    weight: 19
     settings: {  }
     third_party_settings:
       conditional_fields: {  }
     type: options_select
     region: content
   field_serial_relation_suc_ref_up:
-    weight: 26
+    weight: 18
     settings: {  }
     third_party_settings:
       conditional_fields: {  }
     type: options_select
     region: content
   field_serial_relationship_op_pre:
-    weight: 22
+    weight: 14
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_serial_relationship_op_suc:
-    weight: 25
+    weight: 17
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -455,7 +455,7 @@ content:
     type: string_textfield
     region: content
   field_supplemental_information:
-    weight: 14
+    weight: 20
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
@@ -479,7 +479,7 @@ content:
     region: content
   path:
     type: path
-    weight: 20
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -487,21 +487,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 18
+    weight: 24
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 21
+    weight: 27
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 19
+    weight: 25
     region: content
     third_party_settings: {  }
   title:
@@ -514,7 +514,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 16
+    weight: 22
     settings:
       match_operator: CONTAINS
       size: 60
