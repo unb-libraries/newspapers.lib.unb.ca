@@ -23,7 +23,10 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
     $applies = [
       'digital_serial_page.manage_pages',
       'digital_serial_page.issue_add_page',
+      'entity.digital_serial_page.edit_form',
+      'digital_serial_page.issue_view_page',
     ];
+
     return in_array($route, $applies);
   }
 
@@ -94,6 +97,30 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
       $breadcrumb->addLink(
         Link::createFromRoute(
           $this->t('Add Page'),
+          '<nolink>'
+        )
+      );
+    }
+
+    if ($route == 'digital_serial_page.issue_view_page') {
+      // Load page object.
+      $page_eid = $route_match->getParameter('digital_serial_page');
+      if (!is_object($page_eid)) {
+        $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_page');
+        $page = $storage->load($page_eid);
+      }
+      else {
+        $page = $page_eid;
+      }
+
+      $breadcrumb->addLink(
+        Link::createFromRoute(
+          $this->t(
+            'Page @page_no',
+            [
+              '@page_no' => $page->getPageNo(),
+            ]
+          ),
           '<nolink>'
         )
       );

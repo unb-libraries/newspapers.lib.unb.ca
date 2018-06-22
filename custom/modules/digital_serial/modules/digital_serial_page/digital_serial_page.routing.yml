@@ -13,3 +13,27 @@ digital_serial_page.issue_add_page:
      _title: 'Add Page'
   requirements:
     _permission: 'view published serial issue entities'
+
+digital_serial_page.issue_view_page:
+  path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages/{digital_serial_page}'
+  defaults:
+     _entity_view: digital_serial_page
+     _title: 'Edit Page Data'
+  requirements:
+    _permission: 'view published serial page entities'
+  options:
+    parameters:
+      digital_serial_title:
+        type: entity:digital_serial_title
+      digital_serial_issue:
+        type: entity:digital_serial_issue
+      digital_serial_page:
+        type: entity:digital_serial_page
+
+digital_serial_page.title_edit_issue:
+  path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages/{digital_serial_page}/edit'
+  defaults:
+     _entity_form: digital_serial_page.edit
+     _title: 'Edit Page Data'
+  requirements:
+    _permission: 'view published serial page entities'
