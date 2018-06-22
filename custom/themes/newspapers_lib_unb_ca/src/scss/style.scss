@@ -98,7 +98,8 @@ a:focus {
 
 .panel-heading a,
 .panel-heading a:focus,
-.panel-heading a:hover {
+.panel-heading a:hover,
+.panel-title:hover:focus {
   background: none;
   color: $unb-lib-panel-heading;
   outline: none;
