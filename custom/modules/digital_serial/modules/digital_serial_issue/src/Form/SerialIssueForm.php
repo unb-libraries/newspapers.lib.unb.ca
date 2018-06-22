@@ -73,7 +73,7 @@ class SerialIssueForm extends ContentEntityForm {
     }
 
     $form_state->setRedirect(
-      'digital_serial_title.title_issues',
+      'digital_serial_issue.title_issues',
       [
         'digital_serial_title' => $this->parentEid,
       ]
