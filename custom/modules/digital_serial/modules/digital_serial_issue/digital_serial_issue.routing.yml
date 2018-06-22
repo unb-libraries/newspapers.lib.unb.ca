@@ -20,7 +20,7 @@ entity.digital_serial_issue.canonical:
   requirements:
     _permission: 'view published serial issue entities'
 
-digital_serial_title.title_issues:
+digital_serial_issue.title_issues:
   path: '/serials/{digital_serial_title}/issues'
   defaults:
     _title_callback: '\Drupal\digital_serial_title\Controller\NewspaperPublicationDigitalTitleListTitleController::getTitleIssuesTitle'
