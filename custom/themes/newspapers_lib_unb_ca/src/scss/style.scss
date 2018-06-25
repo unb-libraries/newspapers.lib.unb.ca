@@ -64,7 +64,7 @@ a:focus {
 }
 
 #edit-reset:before {
-  font-family: 'Glyphicons Halflings';
+  font-family: "Glyphicons Halflings";
   content: "\e031";
   color: #777;
   font-size: smaller;
@@ -73,7 +73,7 @@ a:focus {
 }
 
 #edit-delete:before {
-  font-family: 'Glyphicons Halflings';
+  font-family: "Glyphicons Halflings";
   content:"\e020";
   color: #777;
   display: inline-block;
@@ -82,7 +82,7 @@ a:focus {
   vertical-align: text-bottom;
 }
 #edit-cancel:before {
-  font-family: 'Glyphicons Halflings';
+  font-family: "Glyphicons Halflings";
   content:"\e014";
   color: #777;
   display: inline-block;
@@ -93,8 +93,8 @@ a:focus {
 
 div[class*="ref-up"] label:before,
 div[class*="ref-dn"] label:before {
-  font-family: 'Glyphicons Halflings';
-  content:"\e027";
+  font-family: "Glyphicons Halflings";
+  content: "\e027";
   color: #5cb85c;
   margin-right: 2px;
   vertical-align: middle;
@@ -112,6 +112,13 @@ div[class*="ref-dn"] .description {
   margin-left: 19px;
 }
 
+li.search-field:before {
+  font-family: "Glyphicons Halflings";
+  content: "\e003";
+  color: $text-muted;
+  display: inline-block;
+  padding: .5em 0;
+}
 /* Chosen overrides */
 select[multiple="multiple"] + .form-control {
   border: none;
@@ -122,8 +129,8 @@ select[multiple="multiple"] + .form-control {
   margin-top: 6px;
 }
 .chosen-container-multi .chosen-choices li.search-field input[type="text"]:before {
-  font-family: 'Glyphicons Halflings';
-  content:"\e003";
+  font-family: "Glyphicons Halflings";
+  content: "\e003";
 }
 /* Fix overrides.min.css / unb-lib.css conflict */
 .panel-default > .panel-heading {
@@ -159,7 +166,7 @@ a.btn-add:active {
   text-decoration: none;
 }
 a.btn-add::before {
-  font-family: 'Glyphicons Halflings';
+  font-family: "Glyphicons Halflings";
   content: "\e081";
   color: #5cb85c;
   margin-right: .33em;
