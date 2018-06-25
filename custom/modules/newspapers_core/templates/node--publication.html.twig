@@ -78,8 +78,83 @@
     {% endif %}
     {{ title_suffix }}
 
-    <div{{ content_attributes }}>
-        {{ content }}
-    </div>
+    {% if content.field_place_of_publication|field_value %}
+    <dl>
+        <dt>{{ content.field_place_of_publication|field_label }}:</dt>
+        <dd>{{ content.field_place_of_publication|field_value }}</dd>
+    </dl>
+    {% endif %}
+
+    {% if content.field_geographic_coverage|field_value %}
+    <dt>
+        <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
+        <dd>{{ content.field_geographic_coverage|field_value }}</dd>
+    </dl>
+    {% endif %}
+
+    {% if content.field_publisher|field_value %}
+    <dl>
+        <dt>{{ content.field_publisher|field_label }}:</dt>
+        <dd>{{ content.field_publisher|field_value}}</dd>
+    </dl>
+    {% endif %}
+
+
+    {% if (content.field_first_issue_date_type|field_value or content.field_last_issue_date_type|field_value) %}
+    <dl class="pub-dates">
+        <dt>Publication Date WIP:</dt>
+        <dd>Date detected: Range display will be custom contrusted in <i>hook_preprocess_node()</i></dd>
+    </dl>
+    {% endif %}
+
+    {% if content.field_description|field_value %}
+    <dl>
+        <dt>{{ content.field_description|field_label }}:</dt>
+        <dd>{{ content.field_description|field_value }}</dd>
+    </dl>
+    {% endif %}
+
+    {% if content.field_frequency|field_value %}
+    <dl class="frequency">
+        <dt>{{ content.field_frequency|field_label }}:</dt>
+        <dd>{{ content.field_frequency|field_value }}</dd>
+        {% if content.field_frequency_notes|field_value %}
+            <dt>{{ content.field_frequency_notes|field_label }}:</dt>
+            <dd>{{ content.field_frequency_notes|field_value }}</dd>
+        {% endif %}
+    </dl>
+    {% endif %}
+
+    {% if content.field_language|field_value %}
+    <dl>
+        <dt>{{ content.field_language|field_label }}:</dt>
+        <dd>{{ content.field_language|field_value }}</dd>
+    </dl>
+    {% endif %}
+
+    {% if content.field_subjects|field_value %}
+    <dl class="subjects">
+        <dt>{{ content.field_subjects|field_label }}:</dt>
+        <dd>{{ content.field_subjects|field_value }}</dd>
+        {% if content.field_subject_notes|field_value %}
+            <dt>{{ content.field_subject_notes|field_label }}:</dt>
+            <dd>{{ content.field_subject_notes|field_value }}</dd>
+        {% endif %}
+    </dl>
+    {% endif %}
+
+    {% if content.field_oclc|field_value %}
+    <dl>
+        <dt>{{ content.field_oclc|field_label }}:</dt>
+        <dd>{{ content.field_oclc|field_value }}</dd>
+    </dl>
+    {% endif %}
+
+    {% if content.field_issn|field_value %}
+    <dl>
+        <dt>{{ content.field_issn|field_label }}:</dt>
+        <dd>{{ content.field_issn|field_value }}</dd>
+    </dl>
+    {% endif %}
 
 </article>
