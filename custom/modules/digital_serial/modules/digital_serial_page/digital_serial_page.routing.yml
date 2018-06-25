@@ -17,8 +17,8 @@ digital_serial_page.issue_add_page:
 digital_serial_page.issue_view_page:
   path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages/{digital_serial_page}'
   defaults:
-     _entity_view: digital_serial_page
-     _title: 'Edit Page Data'
+     _form: '\Drupal\digital_serial_page\Form\SerialPageViewerForm'
+     _title_callback: '\Drupal\digital_serial_page\Controller\NewspaperPublicationPageViewTitleController::getTitle'
   requirements:
     _permission: 'view published serial page entities'
   options:
