@@ -11,6 +11,7 @@ function firstIssueDateRange() {
         jQuery("#edit-field-first-issue-date-0 label:first-child").text("Approximate start date");
         jQuery("#edit-field-first-issue-date-0-value + label").text("Approximate end date").slideDown(300);
         jQuery("#edit-field-first-issue-date-0-end-value-date").slideDown(300);
+        jQuery(".field--name-field-first-issue-approx-date label").addClass("form-required");
     } else {
         jQuery("#edit-field-first-issue-date-0 .panel-title").text("First Issue Date");
         jQuery("#edit-field-first-issue-date-0 label:first-child").text("Date");
@@ -20,6 +21,7 @@ function firstIssueDateRange() {
         jQuery("#edit-field-first-issue-date-0-end-value-date").datepicker("setDate", null).val('');
         jQuery("#edit-field-first-issue-date-0-value + label").slideUp(200);
         jQuery("#edit-field-first-issue-date-0-end-value-date").slideUp(200);
+        jQuery(".field--name-field-first-issue-approx-date label").removeClass("form-required");
         // jQuery("#edit-field-first-issue-date-wrapper .alert-danger").slideUp();
     }
 }
@@ -33,6 +35,7 @@ function lastIssueDateRange() {
         jQuery("#edit-field-last-issue-date-0 label:first-child").text("Approximate start date");
         jQuery("#edit-field-last-issue-date-0-value + label").text("Approximate end date").slideDown(300);
         jQuery("#edit-field-last-issue-date-0-end-value-date").slideDown(300);
+        jQuery(".field--name-field-last-issue-approx-date label").addClass("form-required");
     } else {
         jQuery("#edit-field-last-issue-date-0 .panel-title").text("Last Issue Date");
         jQuery("#edit-field-last-issue-date-0 label:first-child").text("Date");
@@ -42,6 +45,7 @@ function lastIssueDateRange() {
         jQuery('#edit-field-last-issue-date-0-end-value-date').val('');
         jQuery("#edit-field-last-issue-date-0-value + label").slideUp(200);
         jQuery("#edit-field-last-issue-date-0-end-value-date").slideUp(200);
+        jQuery(".field--name-field-last-issue-approx-date label").removeClass("form-required");
         // jQuery("#edit-field-last-issue-date-wrapper .alert-danger").slideUp();
     }
 }
