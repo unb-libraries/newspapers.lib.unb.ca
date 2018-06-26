@@ -88,7 +88,13 @@
     {% if content.field_geographic_coverage|field_value %}
     <dl>
         <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
-        <dd>{{ content.field_geographic_coverage|field_value }}</dd>
+        <dd>
+            <ul>
+                {% for key, item in content.field_geographic_coverage if key|first != '#' %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </dd>
     </dl>
     {% endif %}
 
@@ -105,15 +111,8 @@
         <dd>{{ publication_date_value }}</dd>
     </dl>
 
-    {% if content.field_description|field_value %}
-    <dl>
-        <dt>{{ content.field_description|field_label }}:</dt>
-        <dd>{{ content.field_description|field_value }}</dd>
-    </dl>
-    {% endif %}
-
     {% if content.field_frequency|field_value %}
-    <dl class="frequency">
+    <dl>
         <dt>{{ content.field_frequency|field_label }}:</dt>
         <dd>{{ content.field_frequency|field_value }}</dd>
         {% if content.field_frequency_notes|field_value %}
@@ -132,13 +131,15 @@
     {% endif %}
 
     {% if content.field_subjects|field_value %}
-    <dl class="subjects">
+    <dl>
         <dt>{{ content.field_subjects|field_label }}:</dt>
-        <dd>{{ content.field_subjects|field_value }}</dd>
-        {% if content.field_subject_notes|field_value %}
-            <dt>{{ content.field_subject_notes|field_label }}:</dt>
-            <dd>{{ content.field_subject_notes|field_value }}</dd>
-        {% endif %}
+        <dd>
+            <ul>
+                {% for key, item in content.field_subjects if key|first != '#' %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </dd>
     </dl>
     {% endif %}
 
