@@ -123,10 +123,11 @@
     </dl>
     {% endif %}
 
-    {% if content.field_language|field_value %}
+
+    {% if language_value %}
     <dl>
-        <dt>{{ content.field_language|field_label }}:</dt>
-        <dd>{{ content.field_language|field_value }}</dd>
+        <dt>{{ language_label }}:</dt>
+        <dd>{{ language_value }}</dd>
     </dl>
     {% endif %}
 
