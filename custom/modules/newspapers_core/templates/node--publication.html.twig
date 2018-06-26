@@ -68,7 +68,7 @@
  * @ingroup themeable
  */
 #}
-<article{{ attributes }}>
+<main{{ attributes }}>
 
     {{ title_prefix }}
     {% if not page %}
@@ -156,4 +156,13 @@
     </dl>
     {% endif %}
 
-</article>
+</main>
+
+{% if content.field_description %}
+<aside>
+    {% if content.field_description %}
+        {{ content.field_description }}
+    {% endif %}
+
+</aside>
+{% endif %}
