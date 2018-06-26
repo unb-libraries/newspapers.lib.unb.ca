@@ -1,3 +1,7 @@
 #seadragon-viewer {
   height: 800px;
 }
+
+#digital-serial-page-page-viewer-form > pre {
+  background-color: #f6f6f2;
+}

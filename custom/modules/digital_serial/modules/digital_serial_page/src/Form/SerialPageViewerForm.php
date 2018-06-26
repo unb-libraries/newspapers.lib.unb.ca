@@ -7,7 +7,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\node\Entity\Node;
+use Drupal\digital_serial_issue\Entity\SerialIssueInterface;
+use Drupal\digital_serial_page\Entity\SerialPageInterface;
+use Drupal\digital_serial_title\Entity\SerialTitleInterface;
 
 /**
  * ManageArchivalMasterForm object.
@@ -26,12 +28,17 @@ class SerialPageViewerForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $digital_serial_title = NULL, $digital_serial_issue = NULL, $digital_serial_page = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, SerialTitleInterface $digital_serial_title = NULL, SerialIssueInterface $digital_serial_issue = NULL, SerialPageInterface $digital_serial_page = NULL) {
     $form = [];
 
     $form['page_view']['back_link'] = [
       '#markup' => Link::fromTextAndUrl(
-        'Back to Issue',
+        $this->t(
+          '< Back to @issue_label',
+          [
+            '@issue_label' => $digital_serial_issue->getDisplayTitle(),
+          ]
+        ),
         Url::fromUri("internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}")
       )->toString(),
     ];
@@ -69,7 +76,7 @@ class SerialPageViewerForm extends FormBase {
       '#langcode' => 'en',
     ];
     $form['page_text']['title'] = $title;
-    $form['page_text']['title']['#prefix'] = '<h2 class="viewer-title">';
+    $form['page_text']['title']['#prefix'] = '<h2 class="ocr-title">';
     $form['page_text']['title']['#suffix'] = '</h2>';
 
     $form['page_text']['text'] = [
