@@ -16,9 +16,15 @@ function firstIssueDateRange() {
         jQuery("#edit-field-first-issue-date-0 .panel-title").text("First Issue Date");
         jQuery("#edit-field-first-issue-date-0 label:first-child").text("Date");
         /**
-         * Clear the end date widget when Approximate checkbox is unchecked.
+         * Clear the end date widget when Approximate is NOT selected.
          */
         jQuery("#edit-field-first-issue-date-0-end-value-date").datepicker("setDate", null).val('');
+        /**
+         * Clear the start date widget when Exact is NOT selected.
+         */
+        if (jQuery("#edit-field-first-issue-date-type").val() != 'exact') {
+            jQuery("#edit-field-first-issue-date-0-value-date").datepicker("setDate", null).val('');
+        }
         jQuery("#edit-field-first-issue-date-0-value + label").slideUp(200);
         jQuery("#edit-field-first-issue-date-0-end-value-date").slideUp(200);
         jQuery(".field--name-field-first-issue-approx-date label").removeClass("form-required");
@@ -40,9 +46,15 @@ function lastIssueDateRange() {
         jQuery("#edit-field-last-issue-date-0 .panel-title").text("Last Issue Date");
         jQuery("#edit-field-last-issue-date-0 label:first-child").text("Date");
         /**
-         * Clear the end date widget when Approximate checkbox is unchecked.
+         * Clear the start date widget when Exact is NOT selected.
          */
-        jQuery('#edit-field-last-issue-date-0-end-value-date').val('');
+        if (jQuery("#edit-field-last-issue-date-type").val() != 'exact') {
+            jQuery("#edit-field-last-issue-date-0-value-date").datepicker("setDate", null).val('');
+        }
+        /**
+         * Clear the end date widget when Approximate in NOT selected.
+         */
+        jQuery('#edit-field-last-issue-date-0-end-value-date').datepicker("setDate", null).val('');
         jQuery("#edit-field-last-issue-date-0-value + label").slideUp(200);
         jQuery("#edit-field-last-issue-date-0-end-value-date").slideUp(200);
         jQuery(".field--name-field-last-issue-approx-date label").removeClass("form-required");
