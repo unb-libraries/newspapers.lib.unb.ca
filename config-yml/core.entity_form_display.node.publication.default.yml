@@ -190,6 +190,23 @@ content:
             selector: ''
           entity_type: node
           bundle: publication
+        aa392129-f3bf-4021-b1cf-d1708a933d08:
+          dependee: field_first_issue_date_type
+          settings:
+            state: required
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: approximate
+            effect: show
+            effect_options: {  }
+            selector: ''
+          entity_type: node
+          bundle: publication
     type: string_textfield
     region: content
   field_first_issue_date:
@@ -335,6 +352,23 @@ content:
                 speed: '400'
               slide:
                 speed: '200'
+            selector: ''
+          entity_type: node
+          bundle: publication
+        0be6896f-e6c6-4edb-a615-8a8b6e08958d:
+          dependee: field_last_issue_date_type
+          settings:
+            state: required
+            condition: value
+            grouping: AND
+            values_set: 1
+            value: ''
+            values: {  }
+            value_form:
+              -
+                value: approximate
+            effect: show
+            effect_options: {  }
             selector: ''
           entity_type: node
           bundle: publication
