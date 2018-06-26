@@ -109,6 +109,84 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
 }
 
 /**
+ * Implements hook_preprocess_hook().
+ */
+function newspapers_core_preprocess_node__publication(&$variables) {
+  $node = $variables['elements']['#node'];
+
+  // Set up the publication date display.
+  $none_txt = "Unknown";
+  $ongoing_txt = "Current";
+
+  $first_date_type = $node
+    ->get('field_first_issue_date_type')
+    ->getString();
+  $first_date_range = $node
+    ->get('field_first_issue_date')
+    ->getString();
+  $first_date_verbatim = $node
+    ->get('field_first_issue_approx_date')
+    ->getString();
+
+  switch ($first_date_type) {
+    case NULL:
+      $first_date_txt = $none_txt;
+      break;
+
+    case "exact":
+      $first_date_txt = date("F j, Y", strtotime($first_date_range));
+      break;
+
+    case "approximate":
+      $first_date_txt = $first_date_verbatim;
+      break;
+
+    default:
+      $first_date_txt = "N/A";
+  }
+
+  $last_date_type = $node
+    ->get('field_last_issue_date_type')
+    ->getString();
+  $last_date_range = $node
+    ->get('field_last_issue_date')
+    ->getString();
+  $last_date_verbatim = $node
+    ->get('field_last_issue_approx_date')
+    ->getString();
+
+  switch ($last_date_type) {
+    case NULL:
+      $last_date_txt = $none_txt;
+      break;
+
+    case "exact":
+      $last_date_txt = date("F j, Y", strtotime($last_date_range));
+      break;
+
+    case "approximate":
+      $last_date_txt = $last_date_verbatim;
+      break;
+
+    case "ongoing":
+      $last_date_txt = $ongoing_txt;
+      break;
+
+    default:
+      $first_date_txt = "N/A";
+  }
+
+  if ($first_date_txt == $none_txt && $last_date_txt == $none_txt) {
+    $variables['publication_date_value'] = $none_txt;
+  }
+  else {
+    $variables['publication_date_value'] = $first_date_txt . " - " . $last_date_txt;
+  }
+  $variables['publication_date_label'] = t("Dates of publication");
+
+}
+
+/**
  * Cancel changes and return to admin content or node view.
  *
  * @param array $form
@@ -230,7 +308,6 @@ function newspapers_core_node_presave(EntityInterface $node) {
         ->getString();
       if ($frequency_none != 'varies') {
         $blank_the_fields[] = "field_frequency_notes";
-
       }
 
       if (!empty($blank_the_fields)) {

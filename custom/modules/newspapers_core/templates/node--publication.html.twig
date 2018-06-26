@@ -100,12 +100,10 @@
     {% endif %}
 
 
-    {% if (content.field_first_issue_date_type|field_value or content.field_last_issue_date_type|field_value) %}
-    <dl class="pub-dates">
-        <dt>Publication Date WIP:</dt>
-        <dd>Date detected: Range display will be custom contrusted in <i>hook_preprocess_node()</i></dd>
+    <dl>
+        <dt>{{ publication_date_label }}:</dt>
+        <dd>{{ publication_date_value }}</dd>
     </dl>
-    {% endif %}
 
     {% if content.field_description|field_value %}
     <dl>
