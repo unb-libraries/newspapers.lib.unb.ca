@@ -238,6 +238,34 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['page_ocr'] = BaseFieldDefinition::create('file')
+      ->setLabel(t('Page OCR'))
+      ->setDescription(t('Upload the OCR file corresponding to the page.'))
+      ->setSettings([
+        'file_directory' => 'digital_serial/ocr',
+        'file_extensions' => 'txt',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'file',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['page_hocr'] = BaseFieldDefinition::create('file')
+      ->setLabel(t('Page HOCR'))
+      ->setDescription(t('Upload the HOCR file corresponding to the page.'))
+      ->setSettings([
+        'file_directory' => 'digital_serial/hocr',
+        'file_extensions' => 'hocr',
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'file',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['parent_issue'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Parent Issue'))
       ->setDescription(t('Issue this page is a part of.'))
