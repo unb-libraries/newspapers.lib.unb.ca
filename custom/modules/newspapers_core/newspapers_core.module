@@ -184,6 +184,19 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   }
   $variables['publication_date_label'] = t("Dates of publication");
 
+  $language_label = $node
+    ->field_language
+    ->getFieldDefinition()
+    ->getLabel();
+
+  $language_value = $node
+    ->get('field_language')
+    ->get(0)
+    ->getNativeName();
+
+  $variables['language_label'] = $language_label;
+  $variables['language_value'] = $language_value;
+
 }
 
 /**
