@@ -4,11 +4,6 @@
 // Subtheme local variables.
 @import 'local-variables';
 
-/* unb-lib.css + overrides.min.css override */
-.select-wrapper select,
-input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
-  line-height: normal;
-}
 .tabledrag-handle:hover {
   border: none;
 }
@@ -133,6 +128,10 @@ select[multiple="multiple"] + .form-control {
   content: "\e003";
 }
 /* Fix overrides.min.css / unb-lib.css conflict */
+.select-wrapper select,
+input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
+  line-height: normal;
+}
 .panel-default > .panel-heading {
   color: $unb-lib-panel-heading;
 }
