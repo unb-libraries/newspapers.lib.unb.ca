@@ -23,7 +23,6 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
     $applies = [
       'digital_serial_page.manage_pages',
       'digital_serial_page.issue_add_page',
-      'entity.digital_serial_page.edit_form',
       'digital_serial_page.issue_view_page',
     ];
 
