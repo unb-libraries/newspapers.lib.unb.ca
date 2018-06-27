@@ -258,7 +258,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setDescription(t('Upload the HOCR file corresponding to the page.'))
       ->setSettings([
         'file_directory' => 'digital_serial/hocr',
-        'file_extensions' => 'hocr',
+        'file_extensions' => 'html',
       ])
       ->setDisplayOptions('form', [
         'type' => 'file',
