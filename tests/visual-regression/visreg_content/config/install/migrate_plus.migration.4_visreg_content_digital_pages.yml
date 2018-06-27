@@ -1,0 +1,46 @@
+id: 4_visreg_content_digital_pages
+label: Visual regression testing content for Newspaper Digital Pages
+
+migration_tags:
+  - CSV
+  - Visual Regression Content
+
+source:
+  plugin: csv
+  path: '/app/html/modules/custom/visreg_content/data/csv/4_visreg_content_digital_pages.csv'
+  header_row_count: 1
+  keys:
+    - uuid
+  column_names:
+    0:
+      uuid: The UUID of the page
+    1:
+      parent_issue: The Parent Issue
+    2:
+      page_no: The Page Number
+    3:
+      page_sort: The Page number sort
+    4:
+      page_image: The page Image
+    5:
+      page_ocr: The OCR file for the page
+    6:
+      page_hocr: The HOCR file for the page
+
+destination:
+  plugin: entity:digital_serial_page
+
+process:
+  parent_issue: parent_issue
+  page_no: page_no
+  page_sort: page_sort
+  page_image: page_image_object
+  page_ocr: page_ocr_object
+  page_hocr: page_hocr_object
+
+dependencies:
+  module:
+    - visreg_content
+  enforced:
+    module:
+    - visreg_content
