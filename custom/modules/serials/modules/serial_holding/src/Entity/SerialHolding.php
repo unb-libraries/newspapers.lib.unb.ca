@@ -390,7 +390,6 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         'datetime_type' => 'date',
       ])
       ->setDefaultValue('')
-      ->setRequired(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'datetime_default',
@@ -414,7 +413,6 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         'datetime_type' => 'date',
       ])
       ->setDefaultValue('')
-      ->setRequired(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'datetime_default',
