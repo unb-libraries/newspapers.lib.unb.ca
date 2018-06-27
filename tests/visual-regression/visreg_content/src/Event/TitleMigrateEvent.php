@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class TitleMigrateEvent implements EventSubscriberInterface {
 
-  const MIGRATION_ID = 'visreg_content_titles';
+  const MIGRATION_ID = '0_visreg_content_titles';
 
   /**
    * {@inheritdoc}

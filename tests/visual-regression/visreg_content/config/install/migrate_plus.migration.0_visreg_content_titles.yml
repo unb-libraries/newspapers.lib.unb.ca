@@ -1,4 +1,4 @@
-id: visreg_content_titles
+id: 0_visreg_content_titles
 label: Visual regression testing content for Newspaper Titles
 
 migration_tags:
@@ -7,7 +7,7 @@ migration_tags:
 
 source:
   plugin: csv
-  path: '/app/html/modules/custom/visreg_content/data/csv/visreg_content_titles.csv'
+  path: '/app/html/modules/custom/visreg_content/data/csv/0_visreg_content_titles.csv'
   header_row_count: 1
   keys:
     - uuid
