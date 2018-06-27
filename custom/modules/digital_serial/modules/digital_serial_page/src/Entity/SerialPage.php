@@ -42,6 +42,7 @@ use Drupal\Core\Link;
  *   entity_keys = {
  *     "id" = "id",
  *     "uuid" = "uuid",
+ *     "label" = "page_no",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
  *     "status" = "status",
