@@ -1,5 +1,5 @@
-id: 0_visreg_content_titles
-label: Visual regression testing content for Newspaper Titles
+id: 1_visreg_content_holdings
+label: Visual regression testing content for Newspaper Holdings
 
 migration_tags:
   - CSV
@@ -7,24 +7,51 @@ migration_tags:
 
 source:
   plugin: csv
-  path: '/app/html/modules/custom/visreg_content/data/csv/0_visreg_content_titles.csv'
+  path: '/app/html/modules/custom/visreg_content/data/csv/1_visreg_content_holdings.csv'
   header_row_count: 1
   keys:
     - uuid
   column_names:
     0:
-      uuid: Unique ID
+      uuid: The UUID of the holding
     1:
-      name: Name of the Title
+      parent_title: The Parent Title of the Holding
+    2:
+      holding_type: The Type of Holding
+    3:
+      holding_start_date: The Holding Start Date
+    4:
+      holding_end_date: The Holding End Date
+    5:
+      holding_coverage: The Holding Statement
+    6:
+      holding_location: The Holding Location
+    7:
+      holding_filed_as: Holding Filed As Statements
+    8:
+      holding_retention: Holding Retention
+    9:
+      holding_call_no: Call Number
+    10:
+      holding_last_rec: Last Recieved
+    11:
+      holding_uri: URI
 
 destination:
-  plugin: entity:node
+  plugin: entity:serial_holding
 
 process:
-  type:
-    plugin: default_value
-    default_value: publication
-  title: name
+  parent_title: parent_title
+  holding_type: holding_type
+  holding_start_date: holding_start_date
+  holding_end_date: holding_end_date
+  holding_coverage: holding_coverage
+  holding_location: holding_location
+  holding_filed_as: holding_filed_as
+  holding_retention: holding_retention
+  holding_call_no: holding_call_no
+  holding_last_rec: holding_last_rec
+  holding_uri: holding_uri
 
 dependencies:
   module:

@@ -9,9 +9,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Defines the migrate event subscriber.
  */
-class TitleMigrateEvent implements EventSubscriberInterface {
+class HoldingMigrateEvent implements EventSubscriberInterface {
 
-  const MIGRATION_ID = '0_visreg_content_titles';
+  const MIGRATION_ID = '1_visreg_content_holdings';
 
   /**
    * {@inheritdoc}

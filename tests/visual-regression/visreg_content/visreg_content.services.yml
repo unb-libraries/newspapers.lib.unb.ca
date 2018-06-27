@@ -1,5 +1,9 @@
 services:
-  visreg_content.migrate_subscriber:
+  visreg_content.0_title_migrate_subscriber:
     class: Drupal\visreg_content\Event\TitleMigrateEvent
+    tags:
+      - { name: event_subscriber }
+  visreg_content.1_holdings_migrate_subscriber:
+    class: Drupal\visreg_content\Event\HoldingMigrateEvent
     tags:
       - { name: event_subscriber }
