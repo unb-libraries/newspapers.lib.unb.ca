@@ -24,6 +24,7 @@ dependencies:
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_publisher
+    - field.field.node.publication.field_sample_image
     - field.field.node.publication.field_serial_relation_pre_ref_dn
     - field.field.node.publication.field_serial_relation_pre_ref_up
     - field.field.node.publication.field_serial_relation_suc_ref_dn
@@ -37,12 +38,14 @@ dependencies:
     - field.field.node.publication.field_supplemental_information
     - field.field.node.publication.field_this_is_part_of_a_family
     - field.field.node.publication.field_title_notes
+    - image.style.sample_publication_image
     - node.type.publication
   module:
     - address
     - datetime_range
     - field_group
     - file
+    - image
     - options
     - user
 third_party_settings:
@@ -197,6 +200,15 @@ content:
       link: false
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
+  field_sample_image:
+    weight: 27
+    label: hidden
+    settings:
+      image_style: sample_publication_image
+      image_link: ''
+    third_party_settings: {  }
+    type: image
     region: content
   field_serial_relation_pre_ref_dn:
     weight: 24

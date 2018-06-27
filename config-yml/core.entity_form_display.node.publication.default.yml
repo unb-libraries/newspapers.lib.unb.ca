@@ -24,6 +24,7 @@ dependencies:
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_publisher
+    - field.field.node.publication.field_sample_image
     - field.field.node.publication.field_serial_relation_pre_ref_dn
     - field.field.node.publication.field_serial_relation_pre_ref_up
     - field.field.node.publication.field_serial_relation_suc_ref_dn
@@ -37,6 +38,7 @@ dependencies:
     - field.field.node.publication.field_supplemental_information
     - field.field.node.publication.field_this_is_part_of_a_family
     - field.field.node.publication.field_title_notes
+    - image.style.thumbnail
     - node.type.publication
   module:
     - address
@@ -44,6 +46,7 @@ dependencies:
     - datetime_range
     - field_group
     - file
+    - image
     - languagefield
     - path
 third_party_settings:
@@ -112,7 +115,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 24
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -127,7 +130,7 @@ content:
   field_description:
     weight: 2
     settings:
-      rows: 3
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
@@ -320,7 +323,7 @@ content:
     type: string_textfield
     region: content
   field_language:
-    weight: 22
+    weight: 16
     settings:
       format:
         name: name
@@ -435,6 +438,14 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
+  field_sample_image:
+    weight: 17
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
   field_serial_relation_pre_ref_dn:
     weight: 17
     settings: {  }
@@ -508,7 +519,7 @@ content:
     type: string_textfield
     region: content
   field_supplemental_information:
-    weight: 21
+    weight: 15
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
@@ -532,7 +543,7 @@ content:
     region: content
   path:
     type: path
-    weight: 27
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -540,21 +551,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 25
+    weight: 20
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 28
+    weight: 23
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 26
+    weight: 21
     region: content
     third_party_settings: {  }
   title:
@@ -567,7 +578,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 23
+    weight: 18
     settings:
       match_operator: CONTAINS
       size: 60
