@@ -57,6 +57,10 @@ class SerialPageViewerForm extends FormBase {
       '#markup' => '<div id="seadragon-viewer"></div>',
     ];
 
+    $file = $digital_serial_page->get('page_image')->entity;
+    $uri = $file->getFileUri();
+    $image_path = file_url_transform_relative(file_create_url($uri));
+
     $form['#attached'] = [
       'library' => [
         'digital_serial_page/openseadragon',
@@ -64,7 +68,7 @@ class SerialPageViewerForm extends FormBase {
       ],
       'drupalSettings' => [
         'digital_serial_page' => [
-          'dzi_filepath' => "/sites/default/files/dzi/1.dzi",
+          'jpg_filepath' => $image_path,
         ],
       ],
     ];
