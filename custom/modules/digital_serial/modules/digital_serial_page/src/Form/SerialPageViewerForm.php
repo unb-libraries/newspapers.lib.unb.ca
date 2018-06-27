@@ -69,19 +69,27 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
-    $title = [
-      '#type' => 'processed_text',
-      '#text' => $this->t('Text On Page'),
-      '#format' => 'full_html',
-      '#langcode' => 'en',
-    ];
-    $form['page_text']['title'] = $title;
-    $form['page_text']['title']['#prefix'] = '<h2 class="ocr-title">';
-    $form['page_text']['title']['#suffix'] = '</h2>';
+    $file = $digital_serial_page->get('page_ocr')->entity;
+    if (!empty($file)) {
+      $title = [
+        '#type' => 'processed_text',
+        '#text' => $this->t('Text On Page'),
+        '#format' => 'full_html',
+        '#langcode' => 'en',
+      ];
+      $form['page_text']['title'] = $title;
+      $form['page_text']['title']['#prefix'] = '<h2 class="ocr-title">';
+      $form['page_text']['title']['#suffix'] = '</h2>';
 
-    $form['page_text']['text'] = [
-      '#markup' => "<blockquote>Bacon ipsum dolor amet meatloaf shoulder boudin sirloin meatball pork chop flank picanha corned beef t-bone tenderloin beef ribs strip steak swine drumstick. Porchetta burgdoggen prosciutto spare ribs flank pancetta. Cupim sausage shank capicola. Meatball rump alcatra ribeye drumstick pastrami flank jowl bacon landjaeger cow cupim.\n\nShank ham brisket venison pastrami sirloin frankfurter corned beef. Biltong buffalo tail, chicken cow short loin chuck pastrami. Strip steak tri-tip pork loin fatback tail ball tip bacon kielbasa capicola ribeye pork chop hamburger flank burgdoggen andouille. Cow frankfurter corned beef short ribs jerky brisket t-bone, drumstick pork loin short loin turducken swine tongue. Turkey alcatra sirloin cow burgdoggen. Prosciutto shankle bresaola shank, venison leberkas strip steak brisket spare ribs picanha meatloaf. Shoulder pork belly tri-tip doner cupim short ribs prosciutto jerky leberkas meatloaf ground round ribeye.</blockquote>",
-    ];
+      $uri = $file->getFileUri();
+      $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager')->getViaUri($uri);
+      $file_path = $stream_wrapper_manager->realpath();
+      $ocr_text = trim(file_get_contents($file_path));
+
+      $form['page_text']['text'] = [
+        '#markup' => "<pre>$ocr_text</pre>",
+      ];
+    }
 
     return $form;
   }
