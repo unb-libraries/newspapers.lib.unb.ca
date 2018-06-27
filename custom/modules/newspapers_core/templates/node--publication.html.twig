@@ -68,8 +68,8 @@
  * @ingroup themeable
  */
 #}
-<main{{ attributes }}>
-
+<main {{ attributes.addClass('no-gutters') }}>
+<section class="col-sm-8">
     {{ title_prefix }}
     {% if not page %}
         <h2{{ title_attributes }}>
@@ -77,6 +77,10 @@
         </h2>
     {% endif %}
     {{ title_suffix }}
+
+    {% if content.field_subtitle|field_value %}
+        <blockquote>{{ content.field_subtitle|field_value }}</blockquote>
+    {% endif %}
 
     {% if content.field_place_of_publication|field_value %}
     <dl>
@@ -143,6 +147,13 @@
     </dl>
     {% endif %}
 
+    {% if content.field_subject_notes|field_value %}
+        <dl>
+            <dt>{{ content.field_subject_notes|field_label }}:</dt>
+            <dd>{{ content.field_subject_notes|field_value }}</dd>
+        </dl>
+    {% endif %}
+
     {% if content.field_oclc|field_value %}
     <dl>
         <dt>{{ content.field_oclc|field_label }}:</dt>
@@ -157,13 +168,24 @@
     </dl>
     {% endif %}
 
-</main>
+</section>
 
 {% if content.field_description %}
-<aside>
+<aside class="col-sm-4">
+    {% if content.field_sample_image %}
+        <figure>
+            {{ content.field_sample_image }}
+            <figcaption>
+                Sample image of<i>{{ label }}</i>
+            </figcaption>
+        </figure>
+
+    {% endif %}
+
     {% if content.field_description %}
         {{ content.field_description }}
     {% endif %}
 
 </aside>
 {% endif %}
+</main>
