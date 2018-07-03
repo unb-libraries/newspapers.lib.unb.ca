@@ -2,6 +2,7 @@
 
 namespace Drupal\visreg_content\Event;
 
+use CommerceGuys\Addressing\Country\CountryRepository;
 use Drupal\migrate_plus\Event\MigrateEvents;
 use Drupal\migrate_plus\Event\MigratePrepareRowEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -37,6 +38,32 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       TRUE;
       // $row->setSourceProperty('geo_heritage', $heritage);.
     }
+
+    $country_name = $row->getSourceProperty('country');
+    $address_country = $this->getCountryCode($country_name);
+    $address_administrative_area = $row->getSourceProperty('administrative_area');
+    $address_city = $row->getSourceProperty('locality');
+
+    $row->setSourceProperty('country', $address_country);
+    $row->setSourceProperty('province', $address_administrative_area);
+    $row->setSourceProperty('city', $address_city);
+
+  }
+
+  /**
+   * Get 2-letter country code for Address w/ CommerceGuys Country Repository.
+   *
+   * @param string $country
+   *   The country name.
+   *
+   * @return string
+   *   The 2-letter country code.
+   */
+  public function getCountryCode($country) {
+    $countryRepository = new CountryRepository();
+    $countries = $countryRepository->getList();
+
+    return array_search($country, $countries);
   }
 
 }

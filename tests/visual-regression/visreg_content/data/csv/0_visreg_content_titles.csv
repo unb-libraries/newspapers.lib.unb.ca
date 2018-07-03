@@ -1,5 +1,5 @@
-UUID,Title
-1,Telegraph Journal
-2,Evening Times Globe
-3,The Brunswickan
-4,The Daily Gleaner
+UUID,Title,Country,Province,City
+1,Telegraph Journal,Canada,NB,Saint John
+2,Evening Times Globe,Canada,NB,Saint John
+3,The Brunswickan,Canada,NB,Fredericton
+4,The Daily Gleaner,Canada,NB,Fredericton
