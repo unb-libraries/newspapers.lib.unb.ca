@@ -57,13 +57,14 @@ class TitleMigrateEvent implements EventSubscriberInterface {
    *   The country name.
    *
    * @return string
-   *   The 2-letter country code.
+   *   The 2-letter country code, default Canada if not found.
    */
   public function getCountryCode($country) {
     $countryRepository = new CountryRepository();
     $countries = $countryRepository->getList();
+    $return = array_search($country, $countries);
 
-    return array_search($country, $countries);
+    return (empty($return)) ? "CA" : $return;
   }
 
 }
