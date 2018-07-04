@@ -36,17 +36,17 @@ class TitleMigrateEvent implements EventSubscriberInterface {
     // Only act on rows for this migration.
     if ($migration_id == self::MIGRATION_ID) {
       TRUE;
+
       // $row->setSourceProperty('geo_heritage', $heritage);.
+      $country_name = $row->getSourceProperty('country');
+      $address_country = $this->getCountryCode($country_name);
+      $address_administrative_area = $row->getSourceProperty('administrative_area');
+      $address_city = $row->getSourceProperty('locality');
+
+      $row->setSourceProperty('country_code', $address_country);
+      $row->setSourceProperty('province', $address_administrative_area);
+      $row->setSourceProperty('city', $address_city);
     }
-
-    $country_name = $row->getSourceProperty('country');
-    $address_country = $this->getCountryCode($country_name);
-    $address_administrative_area = $row->getSourceProperty('administrative_area');
-    $address_city = $row->getSourceProperty('locality');
-
-    $row->setSourceProperty('country', $address_country);
-    $row->setSourceProperty('province', $address_administrative_area);
-    $row->setSourceProperty('city', $address_city);
 
   }
 
