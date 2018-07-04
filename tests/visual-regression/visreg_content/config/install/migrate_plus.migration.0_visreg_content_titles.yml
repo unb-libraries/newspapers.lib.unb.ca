@@ -31,12 +31,10 @@ process:
     plugin: default_value
     default_value: publication
   title: name
-  field_place_of_publication/country_code:
-    plugin: default_value
-    default_value: CA
   field_place_of_publication/langcode:
     plugin: default_value
     default_value: en
+  field_place_of_publication/country_code: country_code
   field_place_of_publication/administrative_area: province
   field_place_of_publication/locality: city
 
