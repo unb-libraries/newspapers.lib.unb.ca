@@ -483,11 +483,17 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
       $last_issue_date['0']['value']->format('U')) {
       $form_state->setErrorByName(
         $first_issue_element,
-        t("First issue $first_date_label should be less than or equal to last issue $last_date_label.")
+        t("First issue @first_date_label should be less than or equal to last issue @last_date_label.", [
+          '@first_date_label' => $first_date_label,
+          '@last_date_label' => $last_date_label,
+        ])
       );
       $form_state->setErrorByName(
         $last_issue_element,
-        t("Last issue $last_date_label should be greater than or equal to first issue $first_date_label.")
+        t("Last issue @last_date_label should be greater than or equal to first issue @first_date_label.", [
+          '@last_date_label' => $last_date_label,
+          '@first_date_label' => $first_date_label,
+        ])
       );
     }
   }
