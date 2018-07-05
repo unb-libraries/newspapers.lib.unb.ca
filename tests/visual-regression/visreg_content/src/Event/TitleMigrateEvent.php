@@ -38,10 +38,10 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       TRUE;
 
       // $row->setSourceProperty('geo_heritage', $heritage);.
-      $country_name = $row->getSourceProperty('country');
-      $address_country = $this->getCountryCode($country_name);
-      $address_administrative_area = $row->getSourceProperty('administrative_area');
-      $address_city = $row->getSourceProperty('locality');
+      // $country_name = $row->getSourceProperty('country');.
+      $address_country = $row->getSourceProperty('publication_country');
+      $address_city = $row->getSourceProperty('publication_city');
+      $address_administrative_area = $row->getSourceProperty('publication_province');
 
       $row->setSourceProperty('country_code', $address_country);
       $row->setSourceProperty('province', $address_administrative_area);
