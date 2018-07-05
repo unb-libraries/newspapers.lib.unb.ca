@@ -15,13 +15,33 @@ source:
     0:
       uuid: Unique ID
     1:
-      name: Name of the Title
+      name: Newspaper Title
     2:
-      country: Country
+      abbr_title: Abbreviated Title
     3:
-      administrative_area: Province/State
+      publication_city: City of Publication
     4:
-      locality: City
+      publication_province: Province of Publication
+    5:
+      publication_country: Country of Publication
+    6:
+      geo_coverage: Geographic Coverage
+    7:
+      publisher: Publisher
+    8:
+      first_issue_date: Date of Publication (First Issue)
+    9:
+      last_issue_date: Date of Publication (Last Issue)
+    10:
+      frequency: Frequency
+    11:
+      blurb: Subject/Blurb
+    12:
+      issn: ISSN
+    13:
+      credit: Credit
+    14:
+      ingest_status: Internal ingest status
 
 destination:
   plugin: entity:node
