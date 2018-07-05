@@ -1,6 +1,97 @@
-UUID,Title,Country,Province,City
-1,Telegraph Journal,Canada,NB,Saint John
-2,Evening Times Globe,Canada,NB,Saint John
-3,The Brunswickan,Canada,NB,Fredericton
-4,The Daily Gleaner,Canada,NB,Fredericton
-5,Aroostook Pioneer,United States,ME,Houlton
+UUID,Newspaper Title,Abbreviated Title,City of Publication,Province of Publication,Country of Publication,Geographic Coverage,Publisher,Date of Publication (First Issue),Date of Publication (Last Issue),Frequency,Subject/Blurb,ISSN,Credit,Internal: ingest status
+1,Aroostook Pioneer,,Houlton,ME,US,,Presque Isle; W.S. Gilman,"December 1, 1857",11-Jan-33,Weekly,"United States, Maine, Aroostook, Houlton",Not Found,Library and Archives Canada,0
+2,Atlantic Business Report,ABR,Moncton,NB,CA,,,Feb-92,1995 or 1996,5x per year,,1192-0203,Library and Archives Canada,0
+3,Baldwin's London Weekly Journal,BLWJ,London, Middlesex,,,,"December 28, 1816",,,,Not Found,HIL Microforms,0
+4,The Brunswick Business Journal,BBJ,Fredericton,NB,CA,,Widdy Pub. Co.,"July12, 1884",1995?,Biweekly,New Brunswick commerce periodicals,0829-5239,Library and Archives Canada,0
+5,The Brunswickan,Bruns,Fredericton,NB,CA,,University of New Brunswick Student Union,01-Oct-22,Present,Weekly,,Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+6,Canadian Record,CR,Saint John,NB,CA,New Brunswick,,1882,,Monthly,,Not Found,"W.W. Butcher's Canadian Newspaper Directory, Canada Newspaper Advertising Agency, Toronto Canada, 1886",0
+7,Carleton North News,CNN,Florenceville,NB,CA,New Brunswick,Henley Publishing Ltd.,05-Apr-93,01-Dec-94,Weekly,Not Found,Not Found,Library and Archives Canada,0
+8,Church Guardian,CG,Moncton,NB,CA,,Church of England,1880,?,?,,Not Found,PANB Newspaper Directory,0
+9,Colonial Empire,,Saint John,NB,CA,,,1861,1863?,Varies,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+10,The Colonial Presbyterian,,St.Stephen,NB,CA,,,1855,?,Varies,,,PANB Newspaper Directory,0
+11,Colonial Times,CT,Chatham,NB,CA,Chatham (and later Richibucto),Davis P. Howe (publishing editor),"August 29, 1856",,Weekly,"""Devoted to Politics, Literature, Education, Agriculture, Commerce and General Intelligence"" and to promotion of the Miramichi Area",Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+12,The Daily Journal,TDJ,Saint John,NB,CA,,,26-Jun-22,14-Jul-23,Daily,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+13,The Daily Leader,,Moncton,NB,CA,,,"March 11, 1895","August 1, 1895",Daily,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+14,Eastern Advocate,EA,Hillsboro,NB,CA,,?,"October (?), 1863",1868,Weekly,,Not Found,PANB Newspaper Directory,0
+15,Forum of New Brunswick Education,FNBE,Fredericton,NB,CA,,,2/1/1943,?,Monthly,,1716-2106,Library and Archives Canada,0
+16,The Free Press,FP,Saint John,NB,CA,,"New Brunswick Free Press, Ltd.",23-Oct-36,?,Varies,,,PANB Newspaper Directory,0
+17,Gagetown Gazette,GG,Oromocto,NB,CA,New Brunswick,,14-Apr-66,26-Jul-72,Weekly,,0315-6397,HIL Microforms,0
+18,Gigmanag,GM,Charlottetown,PE,CA,Prince Edward Island,Native Council of Prince Edward Island,01-Feb-76,,Monthly,"Local and national news, with a focus on reporting on the Prince Edward Island Association of Metis and Non-Status Indians.",0226-6202,"""Island Newspapers Database,"" by UPEI",0
+19,The Gleaner,G,Fredericton,NB,CA,,,"May 1, 1884","November 23, 1889",3/weekly,,,PANB Newspaper Directory,0
+20,Grand Falls Gazette,,Grand Falls,NB,CA,,"Merritt, S.J.",1927,?,Weekly,,,PANB Newspaper Directory,0
+21,"Head Quarters, The ",,Fredericton,NB,CA,,,1853,1876,Weekly,,,PANB Newspaper Directory,0
+22,Houlton Pioneer Times,HPT,Houlton,ME,US,,Houlton Pub. Co.,"Januaru 18, 1933",?,Weekly,,,Library and Archives Canada,0
+23,The Independent,,St. John's,NL,CA,Newfoundland and Labrador,"Dobbin, Brian.",2003,2008,unknown,,Not Found,theindependent.ca/about,0
+24,The Kennebecasis Valley Post,TKVP,Fairvale,NB,CA,,Kennebecasis Publishing Co. Ltd.,12-Feb-79,19-Jun-81,Varies,,Not Found,PANB Newspaper Directory,0
+25,La/ The Gazette,TLG,Grand Falls,NB,CA,,Henley Publishing LTd.,04-Jun-80,30-Dec-80,,,Not Found,PANB Newspaper Directory,0
+26,The Liberal News,,Saint John,NB,CA,,"Ellis, F.B.",24-Oct-04,04-Nov-04,Daily,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+27,Liberal Notes,LN,Saint John,NB,CA,,Elder. Wm. Rev.,"June 1, 1882","June 19, 1882",Unknown,,,PANB Newspaper Directory,0
+28,The Liberal Review,LBR,,,US,,Council for Liberal Democracy ,01-Mar-86,12/1/1987,Monthly,,Not Found,Library and Archives Canada,0
+29,The Loyalist and Conservative,[unlisted],Fredericton,NB,CA,,,"January 1, 1846","June 30, 1846",Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+30,Mal-I-Mic News,MIM,Fredericton,NB,CA,,New Brunswick Assoc. of Metis & Non-Status Indians,1973,Present,Monthly,,0382-7291,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+31,The Maritime Broadcaster,MB,Saint John,NB,CA,,,29-Nov-30,01-Jul-36,Weekly,,Not Found,Library and Archives Canada,0
+32,Miramichi Headwaters,MH,Doaktown,NB,CA,New Brunswick,Cadogan Publishing Ltd.,07-May-85,07-May-85,Weekly,,Not Found,HIL Microforms,0
+33,Miramichi Press,,Catham,NB,CA,,,01-Nov-64,22-Oct-75,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+34,Montreal Herald,MH,Montréal,QC,CA,Québec,,1810,,Weekly,,,"W.W. Butcher's Canadian Newspaper Directory, Canada Newspaper Advertising Agency, Toronto Canada, 1886",0
+35,New Brunswick Courier,[subject to change],Saint John,NB,CA,,,"May 2, 1811","July 15, 1865",Weekly,,,PANB Newspaper Directory,0
+36,Nova Scotian,NS,Halifax,NS,CA,Nova Scotia,,1825,,Weekly,,,"W.W. Butcher's Canadian Newspaper Directory, Canada Newspaper Advertising Agency, Toronto Canada, 1886",0
+37,The Novascotian or Colonial Herald,NCH,,,US,,,,,,,,,0
+38,Presbyterian Advocate,,Saint John,NB,CA,,Morning Telegraph,"June 5, 1869","June 1, 1876",Weekly,,,PANB Newspaper Directory,0
+39,The Presbyterian Witness and Evangelical Advocate,,Hlaifax,NS,CA,Nova Scotia,"Barnes, James",Unknown,Unknown,Unknown,"""United with the christian guardian and the Canadian congregationalist to form the new outlook in June 1925""",924572 (Record ID),Toronto Public Library ,0
+40,The Providence Gazette and Country Journal,PGCJ,Providence,RI,US,"Providence, R.I.","Goddard, W.",1762,1795,Weekly,,,Library of Congress,0
+41,Quebec Mercury,QM,Montréal,QC,CA,Québec,Canadian Microfilming Co.,"January 5, 1805","January 8, 1863",Weekly,"Canada, Québec",1497-8423,Library and Archives Canada,0
+42,The Quoddy Tides,QT,Eastport,ME,US,Maine,"French, Edward",09-Nov-68,?,Semimonthly,"United States, Maine, Washington, Eastport",1521-1266,Library and Archives Canada,0
+43,The Recorder,,Saint John,NB,CA,,Recorder Publishing Co. Ltd.,20-Nov-30,1936,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+44,The Reporter and Temperance Journal,[unlisted],Fredericton,NB,CA,,,"March 24, 1888","September 29, 1888",Weekly,,,PANB Newspaper Directory,0
+45,The Restigouche Telephone,,Cap-Pelé,NB,CA,,"Chandler, E.W.","April 8, 1897",1901?,Varies,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+46,Riverview Gazette,RG,Riverview,NB,CA,,B.H. Publications Ltd.,09-Feb-83,21-Jun-83,Weekly,,0823-7573,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+47,Riverview This Week,RW,Riverview,NB,CA,New Brunswick,This Week Publications Ltd.,01-Nov-83,03-Sep-86,Weekly,,0827-2689,HIL Microforms,0
+48,Saint John Weekly Globe,,Saint John,NB,CA,,,1860,1861,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+49,The Semi Weekly Telegraph,SWT,Saint John,NB,CA,,,1898,March 1910?,2/weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+50,Semi-The Weekly Mail,SWM,Fredericton,NB,CA,New Brunswick,,"December 14, 1889",1909?,Semiweekly,"Canada, New Brunswick, Fredericton",1483-9393,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+51,The Standard Magazine,,Montréal,QC,CA,,Montréal Standard Pub. Co. ,1939,1953?,Weekly,,0830-4513,Library and Archives Canada,0
+52,The Star,TS,Saint John,NB,CA,,Sun Publishing Company,01-Jul-06,12-Mar-10,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+53,The Sussex Valley Register,SVR,Sussex,NB,CA,,,08-Oct-80,08-Oct-80,Weekly,,Not Found,PANB Newspaper Directory,0
+54,Telegraph and New Brunswick General Register,,Woodstock,NB,CA,,"McLauchlin, James",1840,"December 24, 1847",Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+55,The Telegraph,TT,,,US,,,,,,,,,0
+56,The Times Literary Supplement,,,,US,,,,,,,,,0
+57,The Times,,Saint John,NB,CA,,"Woodrow, Ross","March 10, 1853",?,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+58,"Toronto Weekly Mail, The ",,Toronto,ON,CA,,Mail Printing Co.,"August 6, 1880",1895,Weekly,"Canada, Ontario, Toronto",0839-380X,Library and Archives Canada,0
+59,Tracadie News,TN,Tracadie,NB,CA,,,15-Mar-47,,,,Not Found,Library and Archives Canada,0
+60,True Democracy,TD,Fredericton,NB,CA,,,1945,1948,Bimonthly,,Not Found,PANB Newspaper Directory,0
+61,The Truro Gleaner,,,,US,,,,,,,,,0
+62,Victoria County News,VCN,Grand Falls,NB,CA,,J.W. Correll,1900,1920,Weekly,,Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+63,The Weekly Gleaner,WG,Fredericton,NB,CA,,,1886,1886,N/A,,Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+64,Woodstock Weekly Clipper,,Woodstock,NB,CA,,"Colter, George","November 1, 1877",1878,unknown,,,PANB Newspaper Directory,0
+65,York Gleaner,,Fredericton,NB,CA,,,"January 1, 1881","December 24, 1884",Weekly,,,PANB Newspaper Directory,0
+66,The Amaranth,TA,Fredericton,NB,CA,,,1849,1851,Weekly,,,PANB Newspaper Directory,1
+67,British Colonist and Mechanics' And Traders'The  Advocate,BCMTA,Saint John,NB,CA,,,"January 5, 1836","December 27, 1836",Weekly,,,PANB Newspaper Directory,1
+68,The Cartoon,TC,Saint John,NB,CA,,,8/20/1878,9/10/1878,Weekly,,Not Found,PANB Newspaper Directory,1
+69,City Gazette,CG,Saint John,NB,CA,,,"January 9, 1813",1841,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+70,The Daily Herald,DH,Fredericton,NB,CA,,The Herald Printing and Publishing Co.,"April 24, 1882",07-Sep-09,Daily,,Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+71,The Daily Mail,DM,Fredericton,NB,CA,,The Mail Publishing Co.,03-Aug-10,16-May-39,Daily,,Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+72,Evening Times,ET,Saint John,NB,CA,New Brunswick,,09-Feb-05,03-Mar-10,Daily,,0836-8694,HIL Microforms,1
+73,The Herald,TH,St. Andrews,NB,CA,,,1827?,1828,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+74,"Loyalist,The  and Conservative Advocate",LC,Fredericton,NB,CA,,,"May 25, 1843","December 25, 1845",Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+75,The New Brunswick Chronicle,[subject to change],Saint John,NB,CA,,"Ryan, Michael","January 7, 1804","August 25, 1804",Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+76,New Brunswick Reporter and Fredericton Advertiser,NBFRA,Fredericton,NB,CA,,,"Novemner 23, 1844",3/10/1888,Weekly,,,PANB Newspaper Directory,1
+77,The Pancuremata,PA,,,US,,,,,,,,,1
+78,The Penny Dip,PD,Saint John,NB,CA,,,"December 28, 1877","July 27, 1878",Weekly,,,PANB Newspaper Directory,1
+79,The Polymorphian,PM,Saint John,NB,CA,,South End Polymorphian Club,"May 29, 1897",?,Weekly?,Queen Victoria of Great Britan,Not Found,Library and Archives Canada,1
+80,Quip,Q,Saint John,NB,CA,,"Smith, David G.","May 9, 1874","October 24, 1874",2/monthly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+81,Railway News,RN,Saint John,NB,CA,,The Railway News Publishing Co.,1897,1899,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+82,Saint John Gazette and General Advertiser,SJGGA,Saint John,NB,CA,,,"March 22, 1799","July 4, 1803",Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+83,The Saint John Mirror,SJM,Saint John,NB,CA,,,"December 2, 1841",1843,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+84,The Secret,S,Saint John,NB,CA,,,"March 8, 1879",?,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+85,The Sentinel and New Brunswick General Advertiser,SNBGA / SEN,Fredericton,NB,CA,,,"December 11, 1837",1844,Weekly,,,PANB Newspaper Directory,1
+86,St. John Morning News and General Advertising Newspaper,SJMN,Saint John,NB,CA,,"Fenety, G.E.","July 19, 1841","April 7, 1843",3/weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+87,Temperance Journal,[unlisted],Fredericton,NB,CA,,"Pitts, Herman A.","July 20, 1885",1892,Varies,,,,1
+88,Temperance Journal and The New Brunswick Reporter,[unlisted],Fredericton,NB,CA,,"Pitts, Herman A.","March 17, 1888","August 11, 1888",Weekly,,,PANB Newspaper Directory,1
+89,Temperance Telegraph,[unlisted],Saint John,NB,CA,,,1/24/1844,12/1/1860,Weekly,,Not Found,PANB Newspaper Directory,1
+90,The Mysterious East ,,Fredericton,NB,CA,,Rubber Duck Press,01-Nov-69,?,unknown,Atlantic Provinces ,0047-8547,Library and Archives Canada,1
+91,The Times; or True Briton,TTB,Saint John,NB,CA,,,"January 21, 1808",1811,Weekly,,,PANB Newspaper Directory,1
+92,Watchman,TW,Saint John,NB,CA,,"Livingston, J. ","January 5, 1875","June 9, 1877",Weekly,,,PANB Newspaper Directory,1
+93,Weekly Chronicle,WC,Saint John,NB,CA,,,"September 9, 1836","May 1, 1857",Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+94,West-The Side Review,WSR,Saint John,NB,CA,,"Ewing, W.J. ",1878,1879,2/monthly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
+95,Woodstock Journal,WJ,Woodstock,NB,CA,,"Melville, R.W.","May 1, 1854","May 1, 1864",Weekly,,Not Found,PANB Newspaper Directory,1
+96,The Temperance Journal,TJ,Fredericton,NB,CA,,,1883,,Weekly,,Not Found,"W.W. Butcher's Canadian Newspaper Directory, Canada Newspaper Advertising Agency, Toronto Canada, 1886",?
