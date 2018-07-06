@@ -49,6 +49,23 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       $issn = trim($row->getSourceProperty('issn'));
       $credit = trim($row->getSourceProperty('credit'));
 
+      $publisher_id = NULL;
+      if (!empty($publisher)) {
+        $publisher_tid = $this->taxTermExists($publisher, 'name', 'publisher');
+        if (!empty($publisher_tid)) {
+          $term = Term::load($publisher_tid);
+        }
+        else {
+          $term = Term::create([
+            'vid' => 'publisher',
+            'name' => $publisher,
+          ]);
+          $term->save();
+        }
+        $publisher_id = $term->id();
+      }
+      $row->setSourceProperty('publisher', $publisher_id);
+
       $row->setSourceProperty('country_code', $address_country);
       $row->setSourceProperty('province', $address_administrative_area);
       $row->setSourceProperty('city', $address_city);
