@@ -76,4 +76,33 @@ class TitleMigrateEvent implements EventSubscriberInterface {
     return (empty($return)) ? "CA" : $return;
   }
 
+  /**
+   * Check if a taxonomy term exists.
+   *
+   * @param string $value
+   *   The name of the term.
+   * @param string $field
+   *   The field to match when validating.
+   * @param string $vocabulary
+   *   The vid to match.
+   *
+   * @return mixed
+   *   Contains an INT of the tid if exists, FALSE otherwise.
+   */
+  public function taxTermExists($value, $field, $vocabulary) {
+    $query = \Drupal::entityQuery('taxonomy_term');
+    $query->condition('vid', $vocabulary);
+    $query->condition($field, $value);
+
+    dump($query);
+
+    $tids = $query->execute();
+    if (!empty($tids)) {
+      foreach ($tids as $tid) {
+        return $tid;
+      }
+    }
+    return FALSE;
+  }
+
 }
