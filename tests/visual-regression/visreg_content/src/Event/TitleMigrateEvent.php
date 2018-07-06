@@ -5,6 +5,7 @@ namespace Drupal\visreg_content\Event;
 use CommerceGuys\Addressing\Country\CountryRepository;
 use Drupal\migrate_plus\Event\MigrateEvents;
 use Drupal\migrate_plus\Event\MigratePrepareRowEvent;
+use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -39,13 +40,21 @@ class TitleMigrateEvent implements EventSubscriberInterface {
 
       // $row->setSourceProperty('geo_heritage', $heritage);.
       // $country_name = $row->getSourceProperty('country');.
-      $address_country = $row->getSourceProperty('publication_country');
-      $address_city = $row->getSourceProperty('publication_city');
-      $address_administrative_area = $row->getSourceProperty('publication_province');
+
+      $address_country = trim($row->getSourceProperty('publication_country'));
+      $address_city = trim($row->getSourceProperty('publication_city'));
+      $address_administrative_area = trim($row->getSourceProperty('publication_province'));
+      $geo_coverage = trim($row->getSourceProperty('geo_coverage'));
+      $publisher = trim($row->getSourceProperty('publisher'));
+      $issn = trim($row->getSourceProperty('issn'));
+      $credit = trim($row->getSourceProperty('credit'));
 
       $row->setSourceProperty('country_code', $address_country);
       $row->setSourceProperty('province', $address_administrative_area);
       $row->setSourceProperty('city', $address_city);
+      $row->setSourceProperty('geo_coverage', $geo_coverage);
+      $row->setSourceProperty('issn', $issn);
+      $row->setSourceProperty('credit', $credit);
     }
 
   }

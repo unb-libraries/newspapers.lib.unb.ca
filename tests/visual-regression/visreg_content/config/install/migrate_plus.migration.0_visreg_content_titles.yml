@@ -57,6 +57,10 @@ process:
   field_place_of_publication/country_code: country_code
   field_place_of_publication/administrative_area: province
   field_place_of_publication/locality: city
+  field_geographic_coverage: geo_coverage
+  field_issn: issn
+  field_credit: credit
+  field_publisher: publisher
 
 dependencies:
   module:
