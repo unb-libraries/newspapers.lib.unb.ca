@@ -1,3 +1,4 @@
+# Date range syntax: https://www.mtech-llc.com/blog/gerardo-hernandez/migrating-date-ranges-csv-date-range-module.
 id: 0_visreg_content_titles
 label: Visual regression testing content for Newspaper Titles
 
@@ -31,20 +32,21 @@ source:
     8:
       first_issue_date: Date of Publication (First Issue)
     9:
-      last_issue_date: Date of Publication (Last Issue)
+      first_issue_start_date: First Issue Start Date
     10:
-      frequency: Frequency
+      first_issue_end_date:  First Issue End Date
     11:
-      blurb: Subject/Blurb
+      last_issue_date: Date of Publication (Last Issue)
     12:
-      issn: ISSN
+      frequency: Frequency
     13:
-      credit: Credit
+      blurb: Subject/Blurb
     14:
+      issn: ISSN
+    15:
+      credit: Credit
+    16:
       ingest_status: Internal ingest status
-
-destination:
-  plugin: entity:node
 
 process:
   type:
@@ -61,6 +63,37 @@ process:
   field_issn: issn
   field_credit: credit
   field_publisher: publisher
+  field_test_date/value:
+    -
+      plugin: explode
+      source: first_issue_date_range
+      delimiter: '-'
+    -
+      plugin: extract
+      index:
+        - '0'
+    -
+      plugin: format_date
+      from_format: d/m/Y
+      to_format: Y-m-d
+  field_test_date/end_value:
+    -
+      plugin: explode
+      source: first_issue_date_range
+      delimiter: '-'
+    -
+      plugin: extract
+      index:
+        - '1'
+    -
+      plugin: format_date
+      from_format: d/m/Y
+      to_format: Y-m-d
+  field_first_issue_date_type: first_issue_date_type
+  field_first_issue_approx_date: first_issue_date
+
+destination:
+  plugin: entity:node
 
 dependencies:
   module:
