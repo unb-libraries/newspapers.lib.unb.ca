@@ -72,6 +72,7 @@ hidden:
   field_place_of_publication: true
   field_province_state: true
   field_publisher: true
+  field_sample_image: true
   field_serial_relation_pre_ref_dn: true
   field_serial_relation_pre_ref_up: true
   field_serial_relation_suc_ref_dn: true
@@ -83,6 +84,7 @@ hidden:
   field_subjects: true
   field_subtitle: true
   field_supplemental_information: true
+  field_test_date: true
   field_this_is_part_of_a_family: true
   field_title_notes: true
   langcode: true

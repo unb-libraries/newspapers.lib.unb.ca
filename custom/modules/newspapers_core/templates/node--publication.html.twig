@@ -168,6 +168,13 @@
     </dl>
     {% endif %}
 
+    {% if content.field_test_date|field_value %}
+        <dl>
+            <dt>{{ content.field_test_date|field_label }}:</dt>
+            <dd>{{ content.field_test_date|field_value }}</dd>
+        </dl>
+    {% endif %}
+
 </section>
 
 {% if content.field_sample_image|field_value %}

@@ -36,13 +36,13 @@ dependencies:
     - field.field.node.publication.field_subjects
     - field.field.node.publication.field_subtitle
     - field.field.node.publication.field_supplemental_information
+    - field.field.node.publication.field_test_date
     - field.field.node.publication.field_this_is_part_of_a_family
     - field.field.node.publication.field_title_notes
     - image.style.thumbnail
     - node.type.publication
   module:
     - address
-    - conditional_fields
     - datetime_range
     - field_group
     - file
@@ -56,6 +56,7 @@ third_party_settings:
         - field_first_issue_date_type
         - field_first_issue_date
         - field_first_issue_approx_date
+        - field_test_date
         - field_last_issue_date_type
         - field_last_issue_date
         - field_last_issue_approx_date
@@ -331,7 +332,7 @@ content:
     type: languagefield_select
     region: content
   field_last_issue_approx_date:
-    weight: 42
+    weight: 43
     settings:
       size: 60
       placeholder: ''
@@ -378,7 +379,7 @@ content:
     type: string_textfield
     region: content
   field_last_issue_date:
-    weight: 41
+    weight: 42
     settings: {  }
     third_party_settings:
       conditional_fields:
@@ -409,7 +410,7 @@ content:
     type: daterange_default
     region: content
   field_last_issue_date_type:
-    weight: 40
+    weight: 41
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -524,6 +525,12 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
+    region: content
+  field_test_date:
+    weight: 40
+    settings: {  }
+    third_party_settings: {  }
+    type: daterange_default
     region: content
   field_this_is_part_of_a_family:
     weight: 4
