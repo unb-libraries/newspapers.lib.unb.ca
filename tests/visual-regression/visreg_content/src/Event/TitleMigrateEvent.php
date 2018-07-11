@@ -77,13 +77,12 @@ class TitleMigrateEvent implements EventSubscriberInterface {
         else {
           $first_issue_date_type = "exact";
         }
-
-        $first_issue_date_range = $first_issue_start_date . "-" . $first_issue_end_date;
-        $row->setSourceProperty('first_issue_date_range', $first_issue_date_range);
       }
       else {
         print_r($row->getSourceProperty('uuid') . " FAILED date validation!\n");
       }
+      $first_issue_date_range = $first_issue_start_date . "-" . $first_issue_end_date;
+      $row->setSourceProperty('first_issue_date_range', $first_issue_date_range);
 
       $row->setSourceProperty('first_issue_date_type', $first_issue_date_type);
       $row->setSourceProperty('first_issue_verbatim_date', $first_issue_verbatim_date);
