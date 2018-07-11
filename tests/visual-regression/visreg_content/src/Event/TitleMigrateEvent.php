@@ -47,7 +47,7 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       $publisher = trim($row->getSourceProperty('publisher'));
       $issn = trim($row->getSourceProperty('issn'));
       $credit = trim($row->getSourceProperty('credit'));
-      $publisher_id = $first_issue_date_type = NULL;
+      $publisher_id = $first_issue_date_type = $first_issue_verbatim_date = $first_issue_end_date = NULL;
 
       if (!empty($publisher)) {
         $publisher_tid = $this->taxTermExists($publisher, 'name', 'publisher');
@@ -67,21 +67,27 @@ class TitleMigrateEvent implements EventSubscriberInterface {
 
       $first_issue_start_date = trim($row->getSourceProperty('first_issue_start_date'));
       list($first_start_day, $first_start_month, $first_start_year) = explode("/", $first_issue_start_date);
-      if (checkdate($first_start_month, $first_start_day, $first_start_year)) {
-        // Placeholder end date range.
-        $first_end_year = (int) $first_start_year;
-        $first_issue_end_date = $first_start_day . "/" . $first_start_month . "/" . ++$first_end_year;
+      if (checkdate((int) $first_start_month, (int) $first_start_day, (int) $first_start_year)) {
+        $first_issue_end_date = trim($row->getSourceProperty('first_issue_end_date'));
+        list($first_end_day, $first_end_month, $first_end_year) = explode("/", $first_issue_end_date);
+        if (checkdate((int) $first_end_month, (int) $first_end_day, (int) $first_end_year)) {
+          $first_issue_date_type = "approximate";
+          $first_issue_verbatim_date = trim($row->getSourceProperty('first_issue_date'));
+        }
+        else {
+          $first_issue_date_type = "exact";
+        }
+
         $first_issue_date_range = $first_issue_start_date . "-" . $first_issue_end_date;
         $row->setSourceProperty('first_issue_date_range', $first_issue_date_range);
-        print_r($row->getSourceProperty('uuid') . ": date range=" . $first_issue_date_range . "\n");
-
-        $first_issue_date_type = "approximate";
       }
       else {
         print_r($row->getSourceProperty('uuid') . " FAILED date validation!\n");
       }
 
       $row->setSourceProperty('first_issue_date_type', $first_issue_date_type);
+      $row->setSourceProperty('first_issue_verbatim_date', $first_issue_verbatim_date);
+      $row->setSourceProperty('field_first_issue_date_type', $first_issue_date_type);
       $row->setSourceProperty('country_code', $address_country);
       $row->setSourceProperty('province', $address_administrative_area);
       $row->setSourceProperty('city', $address_city);

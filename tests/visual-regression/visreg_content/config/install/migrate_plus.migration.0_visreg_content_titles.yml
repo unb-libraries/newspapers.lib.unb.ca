@@ -63,7 +63,9 @@ process:
   field_issn: issn
   field_credit: credit
   field_publisher: publisher
-  field_test_date/value:
+  field_first_issue_date_type: first_issue_date_type
+  field_first_issue_approx_date: first_issue_verbatim_date
+  field_first_issue_date/value:
     -
       plugin: explode
       source: first_issue_date_range
@@ -76,7 +78,7 @@ process:
       plugin: format_date
       from_format: d/m/Y
       to_format: Y-m-d
-  field_test_date/end_value:
+  field_first_issue_date/end_value:
     -
       plugin: explode
       source: first_issue_date_range
@@ -89,8 +91,6 @@ process:
       plugin: format_date
       from_format: d/m/Y
       to_format: Y-m-d
-  field_first_issue_date_type: first_issue_date_type
-  field_first_issue_approx_date: first_issue_date
 
 destination:
   plugin: entity:node
