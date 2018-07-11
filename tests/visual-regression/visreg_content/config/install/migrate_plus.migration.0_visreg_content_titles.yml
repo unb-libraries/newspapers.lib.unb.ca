@@ -34,18 +34,22 @@ source:
     9:
       first_issue_start_date: First Issue Start Date
     10:
-      first_issue_end_date:  First Issue End Date
+      first_issue_end_date: First Issue End Date
     11:
       last_issue_date: Date of Publication (Last Issue)
     12:
-      frequency: Frequency
+      last_issue_start_date: Last Issue Start Date
     13:
-      blurb: Subject/Blurb
+      last_issue_end_date: Last Issue End Date
     14:
-      issn: ISSN
+      frequency: Frequency
     15:
-      credit: Credit
+      blurb: Subject/Blurb
     16:
+      issn: ISSN
+    17:
+      credit: Credit
+    18:
       ingest_status: Internal ingest status
 
 process:
