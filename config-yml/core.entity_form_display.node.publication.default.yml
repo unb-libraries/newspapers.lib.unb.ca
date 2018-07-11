@@ -36,13 +36,13 @@ dependencies:
     - field.field.node.publication.field_subjects
     - field.field.node.publication.field_subtitle
     - field.field.node.publication.field_supplemental_information
-    - field.field.node.publication.field_test_date
     - field.field.node.publication.field_this_is_part_of_a_family
     - field.field.node.publication.field_title_notes
     - image.style.thumbnail
     - node.type.publication
   module:
     - address
+    - conditional_fields
     - datetime_range
     - field_group
     - file
@@ -525,12 +525,6 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
-    region: content
-  field_test_date:
-    weight: 40
-    settings: {  }
-    third_party_settings: {  }
-    type: daterange_default
     region: content
   field_this_is_part_of_a_family:
     weight: 4

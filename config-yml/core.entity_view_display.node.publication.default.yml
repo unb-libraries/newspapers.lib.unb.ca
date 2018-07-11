@@ -36,7 +36,6 @@ dependencies:
     - field.field.node.publication.field_subjects
     - field.field.node.publication.field_subtitle
     - field.field.node.publication.field_supplemental_information
-    - field.field.node.publication.field_test_date
     - field.field.node.publication.field_this_is_part_of_a_family
     - field.field.node.publication.field_title_notes
     - image.style.sample_publication_image
@@ -287,16 +286,6 @@ content:
       use_description_as_link_text: true
     third_party_settings: {  }
     type: file_default
-    region: content
-  field_test_date:
-    weight: 28
-    label: above
-    settings:
-      separator: '-'
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: daterange_default
     region: content
   field_this_is_part_of_a_family:
     weight: 17
