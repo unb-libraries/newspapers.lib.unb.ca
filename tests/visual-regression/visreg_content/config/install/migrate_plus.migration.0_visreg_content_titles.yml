@@ -95,6 +95,34 @@ process:
       plugin: format_date
       from_format: d/m/Y
       to_format: Y-m-d
+  field_last_issue_date_type: last_issue_date_type
+  field_last_issue_approx_date: last_issue_verbatim_date
+  field_last_issue_date/value:
+    -
+      plugin: explode
+      source: last_issue_date_range
+      delimiter: '-'
+    -
+      plugin: extract
+      index:
+        - '0'
+    -
+      plugin: format_date
+      from_format: d/m/Y
+      to_format: Y-m-d
+  field_last_issue_date/end_value:
+    -
+      plugin: explode
+      source: last_issue_date_range
+      delimiter: '-'
+    -
+      plugin: extract
+      index:
+        - '1'
+    -
+      plugin: format_date
+      from_format: d/m/Y
+      to_format: Y-m-d
 
 destination:
   plugin: entity:node
