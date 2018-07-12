@@ -15,21 +15,7 @@ label: 'Place of Publication'
 description: ''
 required: false
 translatable: false
-default_value:
-  -
-    country_code: CA
-    langcode: null
-    administrative_area: ''
-    locality: ''
-    dependent_locality: ''
-    postal_code: ''
-    sorting_code: ''
-    address_line1: ''
-    address_line2: ''
-    organization: ''
-    given_name: ''
-    additional_name: ''
-    family_name: ''
+default_value: {  }
 default_value_callback: ''
 settings:
   available_countries:
@@ -42,19 +28,27 @@ settings:
     RU: RU
     SL: SL
     LK: LK
+    GB: GB
     US: US
-  fields:
-    administrativeArea: administrativeArea
-    locality: locality
-    dependentLocality: '0'
-    postalCode: '0'
-    sortingCode: '0'
-    addressLine1: '0'
-    addressLine2: '0'
-    organization: '0'
-    givenName: '0'
-    additionalName: '0'
-    familyName: '0'
   langcode_override: ''
-  field_overrides: {  }
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    organization:
+      override: hidden
+    addressLine1:
+      override: hidden
+    addressLine2:
+      override: hidden
+    postalCode:
+      override: hidden
+    sortingCode:
+      override: hidden
+    dependentLocality:
+      override: hidden
+  fields: {  }
 field_type: address
