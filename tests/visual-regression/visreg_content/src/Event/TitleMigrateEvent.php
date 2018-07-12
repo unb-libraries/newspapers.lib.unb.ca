@@ -124,6 +124,22 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       $row->setSourceProperty('last_issue_verbatim_date', $last_issue_verbatim_date);
     }
 
+    $frequency_notes = trim($row->getSourceProperty('frequency'));
+    $frequency = strtolower($frequency_notes);
+    switch ($frequency) {
+      case NULL:
+      case 'daily':
+      case 'weekly':
+      case 'monthly':
+        $frequency_notes = NULL;
+        break;
+
+      default:
+        $frequency = 'varies';
+
+    }
+    $row->setSourceProperty('frequency', $frequency);
+    $row->setSourceProperty('frequency_notes', $frequency_notes);
   }
 
   /**
