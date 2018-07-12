@@ -18,6 +18,9 @@ settings:
       value: weekly
       label: Weekly
     -
+      value: triweekly
+      label: Triweekly
+    -
       value: monthly
       label: Monthly
     -

@@ -104,7 +104,6 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       }
       elseif (checkdate((int) $last_start_month, (int) $last_start_day, (int) $last_start_year)) {
         $last_issue_end_date = trim($row->getSourceProperty('last_issue_end_date'));
-        print "Last issue end date: " . $last_issue_end_date . "\n";
         list($last_end_day, $last_end_month, $last_end_year) = explode("/", $last_issue_end_date);
         if (checkdate((int) $last_end_month, (int) $last_end_day, (int) $last_end_year)) {
           $last_issue_date_type = "approximate";
@@ -131,6 +130,12 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       case 'daily':
       case 'weekly':
       case 'monthly':
+        $frequency_notes = NULL;
+        break;
+
+      case 'triweekly':
+      case '3/weekly':
+        $frequency = 'triweekly';
         $frequency_notes = NULL;
         break;
 
