@@ -103,7 +103,6 @@ class TitleMigrateEvent implements EventSubscriberInterface {
         $last_issue_verbatim_date = NULL;
       }
       elseif (checkdate((int) $last_start_month, (int) $last_start_day, (int) $last_start_year)) {
-        print "Found VALID last issue START DATE\n";
         $last_issue_end_date = trim($row->getSourceProperty('last_issue_end_date'));
         print "Last issue end date: " . $last_issue_end_date . "\n";
         list($last_end_day, $last_end_month, $last_end_year) = explode("/", $last_issue_end_date);
