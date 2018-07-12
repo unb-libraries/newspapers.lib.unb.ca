@@ -47,8 +47,15 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       $publisher = trim($row->getSourceProperty('publisher'));
       $issn = trim($row->getSourceProperty('issn'));
       $credit = trim($row->getSourceProperty('credit'));
-      $publisher_id = $first_issue_date_type = $first_issue_verbatim_date = $first_issue_end_date = NULL;
 
+      $row->setSourceProperty('country_code', $address_country);
+      $row->setSourceProperty('province', $address_administrative_area);
+      $row->setSourceProperty('city', $address_city);
+      $row->setSourceProperty('geo_coverage', $geo_coverage);
+      $row->setSourceProperty('issn', $issn);
+      $row->setSourceProperty('credit', $credit);
+
+      $publisher_id = NULL;
       if (!empty($publisher)) {
         $publisher_tid = $this->taxTermExists($publisher, 'name', 'publisher');
         if (!empty($publisher_tid)) {
@@ -65,6 +72,7 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       }
       $row->setSourceProperty('publisher', $publisher_id);
 
+      $first_issue_date_type = $first_issue_verbatim_date = $first_issue_end_date = NULL;
       $first_issue_start_date = trim($row->getSourceProperty('first_issue_start_date'));
       list($first_start_day, $first_start_month, $first_start_year) = explode("/", $first_issue_start_date);
       if (checkdate((int) $first_start_month, (int) $first_start_day, (int) $first_start_year)) {
@@ -79,20 +87,42 @@ class TitleMigrateEvent implements EventSubscriberInterface {
         }
       }
       else {
-        print_r($row->getSourceProperty('uuid') . " FAILED date validation!\n");
+        print_r($row->getSourceProperty('uuid') . " FAILED 1st issue date validation\n");
       }
       $first_issue_date_range = $first_issue_start_date . "-" . $first_issue_end_date;
-      $row->setSourceProperty('first_issue_date_range', $first_issue_date_range);
-
       $row->setSourceProperty('first_issue_date_type', $first_issue_date_type);
+      $row->setSourceProperty('first_issue_date_range', $first_issue_date_range);
       $row->setSourceProperty('first_issue_verbatim_date', $first_issue_verbatim_date);
-      $row->setSourceProperty('field_first_issue_date_type', $first_issue_date_type);
-      $row->setSourceProperty('country_code', $address_country);
-      $row->setSourceProperty('province', $address_administrative_area);
-      $row->setSourceProperty('city', $address_city);
-      $row->setSourceProperty('geo_coverage', $geo_coverage);
-      $row->setSourceProperty('issn', $issn);
-      $row->setSourceProperty('credit', $credit);
+
+      $last_issue_date_type = $last_issue_end_date = NULL;
+      $last_issue_start_date = trim($row->getSourceProperty('last_issue_start_date'));
+      $last_issue_verbatim_date = strtolower(trim($row->getSourceProperty('last_issue_date')));
+      list($last_start_day, $last_start_month, $last_start_year) = explode("/", $last_issue_start_date);
+      if ($last_issue_verbatim_date == "present") {
+        $last_issue_date_type = "ongoing";
+        $last_issue_verbatim_date = NULL;
+      }
+      elseif (checkdate((int) $last_start_month, (int) $last_start_day, (int) $last_start_year)) {
+        print "Found VALID last issue START DATE\n";
+        $last_issue_end_date = trim($row->getSourceProperty('last_issue_end_date'));
+        print "Last issue end date: " . $last_issue_end_date . "\n";
+        list($last_end_day, $last_end_month, $last_end_year) = explode("/", $last_issue_end_date);
+        if (checkdate((int) $last_end_month, (int) $last_end_day, (int) $last_end_year)) {
+          $last_issue_date_type = "approximate";
+          $last_issue_verbatim_date = trim($row->getSourceProperty('last_issue_date'));
+        }
+        else {
+          $last_issue_date_type = "exact";
+          $last_issue_verbatim_date = NULL;
+        }
+      }
+      else {
+        print_r($row->getSourceProperty('uuid') . " FAILED last issue date validation\n");
+      }
+      $last_issue_date_range = $last_issue_start_date . "-" . $last_issue_end_date;
+      $row->setSourceProperty('last_issue_date_type', $last_issue_date_type);
+      $row->setSourceProperty('last_issue_date_range', $last_issue_date_range);
+      $row->setSourceProperty('last_issue_verbatim_date', $last_issue_verbatim_date);
     }
 
   }
