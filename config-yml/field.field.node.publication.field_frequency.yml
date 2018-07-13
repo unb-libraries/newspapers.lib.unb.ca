@@ -1,12 +1,10 @@
-uuid: a4bce75c-9c4f-4a32-9113-78f83503a8ce
+uuid: ded9452f-dc90-4913-afc6-6fb9867fcb27
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_frequency
     - node.type.publication
-  module:
-    - options
 id: node.publication.field_frequency
 field_name: field_frequency
 entity_type: node
@@ -18,4 +16,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: list_string
+field_type: string

@@ -48,6 +48,7 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       $issn = trim($row->getSourceProperty('issn'));
       $credit = trim($row->getSourceProperty('credit'));
       $subject_notes = trim($row->getSourceProperty('blurb'));
+      $frequency = trim($row->getSourceProperty('frequency'));
 
       $row->setSourceProperty('country_code', $address_country);
       if ($address_country != "GB") {
@@ -56,10 +57,9 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       }
       else {
         $row->setSourceProperty('city', "$address_city, $address_administrative_area");
-        print "United Kingdom found\n";
-        print "Post town: $address_city, $address_administrative_area\n";
       }
       $row->setSourceProperty('geo_coverage', $geo_coverage);
+      $row->setSourceProperty('frequency', $frequency);
       $row->setSourceProperty('issn', $issn);
       $row->setSourceProperty('credit', $credit);
       $row->setSourceProperty('blurb', $subject_notes);
@@ -130,29 +130,6 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       $row->setSourceProperty('last_issue_date_type', $last_issue_date_type);
       $row->setSourceProperty('last_issue_date_range', $last_issue_date_range);
       $row->setSourceProperty('last_issue_verbatim_date', $last_issue_verbatim_date);
-
-      $frequency_notes = trim($row->getSourceProperty('frequency'));
-      $frequency = strtolower($frequency_notes);
-      switch ($frequency) {
-        case NULL:
-        case 'daily':
-        case 'weekly':
-        case 'monthly':
-          $frequency_notes = NULL;
-          break;
-
-        case 'triweekly':
-        case '3/weekly':
-          $frequency = 'triweekly';
-          $frequency_notes = NULL;
-          break;
-
-        default:
-          $frequency = 'varies';
-
-      }
-      $row->setSourceProperty('frequency', $frequency);
-      $row->setSourceProperty('frequency_notes', $frequency_notes);
     }
   }
 

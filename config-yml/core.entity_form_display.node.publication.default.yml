@@ -56,7 +56,6 @@ third_party_settings:
         - field_first_issue_date_type
         - field_first_issue_date
         - field_first_issue_approx_date
-        - field_test_date
         - field_last_issue_date_type
         - field_last_issue_date
         - field_last_issue_approx_date
@@ -247,9 +246,11 @@ content:
     region: content
   field_frequency:
     weight: 7
-    settings: {  }
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_select
+    type: string_textfield
     region: content
   field_frequency_notes:
     weight: 8
@@ -448,26 +449,26 @@ content:
     type: image_image
     region: content
   field_serial_relation_pre_ref_dn:
-    weight: 17
+    weight: 18
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_serial_relation_pre_ref_up:
-    weight: 16
+    weight: 17
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_serial_relation_suc_ref_dn:
-    weight: 20
+    weight: 21
     settings: {  }
     third_party_settings:
       conditional_fields: {  }
     type: options_select
     region: content
   field_serial_relation_suc_ref_up:
-    weight: 19
+    weight: 20
     settings: {  }
     third_party_settings:
       conditional_fields: {  }
@@ -480,7 +481,7 @@ content:
     type: options_select
     region: content
   field_serial_relationship_op_suc:
-    weight: 18
+    weight: 19
     settings: {  }
     third_party_settings: {  }
     type: options_select
