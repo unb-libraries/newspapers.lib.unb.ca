@@ -259,22 +259,24 @@ content:
       placeholder: ''
     third_party_settings:
       conditional_fields:
-        128d53c2-a5a5-4266-befa-c61bdc722051:
+        ba3c6eb6-17bd-4e09-8a68-b2b38bdfe7c7:
           dependee: field_frequency
           settings:
             state: visible
             condition: value
             grouping: AND
-            values_set: 3
+            values_set: 1
             value: ''
-            values: varies
-            value_form: {  }
-            effect: slide
+            values: {  }
+            value_form:
+              -
+                value: Varies
+            effect: fade
             effect_options:
               fade:
-                speed: '400'
+                speed: '300'
               slide:
-                speed: '200'
+                speed: '400'
             selector: ''
           entity_type: node
           bundle: publication

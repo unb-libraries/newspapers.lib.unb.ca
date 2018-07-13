@@ -95,9 +95,7 @@ class TitleMigrateEvent implements EventSubscriberInterface {
           $first_issue_date_type = "exact";
         }
       }
-      else {
-        print_r($row->getSourceProperty('uuid') . " FAILED 1st issue date validation\n");
-      }
+
       $first_issue_date_range = $first_issue_start_date . "-" . $first_issue_end_date;
       $row->setSourceProperty('first_issue_date_type', $first_issue_date_type);
       $row->setSourceProperty('first_issue_date_range', $first_issue_date_range);
@@ -123,9 +121,7 @@ class TitleMigrateEvent implements EventSubscriberInterface {
           $last_issue_verbatim_date = NULL;
         }
       }
-      else {
-        print_r($row->getSourceProperty('uuid') . " FAILED last issue date validation\n");
-      }
+
       $last_issue_date_range = $last_issue_start_date . "-" . $last_issue_end_date;
       $row->setSourceProperty('last_issue_date_type', $last_issue_date_type);
       $row->setSourceProperty('last_issue_date_range', $last_issue_date_range);
