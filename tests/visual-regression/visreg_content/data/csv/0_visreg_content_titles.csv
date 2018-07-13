@@ -6,7 +6,7 @@ UUID,Newspaper Title,Abbreviated Title,City of Publication,Province of Publicati
 5,The Brunswickan,Bruns,Fredericton,NB,CA,,University of New Brunswick Student Union,01-Oct-22,22/10/2001,,Present,,,Weekly,,Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
 6,Canadian Record,CR,Saint John,NB,CA,New Brunswick,,1882,01/01/1882,31/12/1882,,,,Monthly,,Not Found,"W.W. Butcher's Canadian Newspaper Directory, Canada Newspaper Advertising Agency, Toronto Canada, 1886",0
 7,Carleton North News,CNN,Florenceville,NB,CA,New Brunswick,Henley Publishing Ltd.,05-Apr-93,05/04/1993,,01-Dec-94,01/12/1994,,Weekly,Not Found,Not Found,Library and Archives Canada,0
-8,Church Guardian,CG,Moncton,NB,CA,,Church of England,1880,01/01/1880,31/12/1880,?,,,?,,Not Found,PANB Newspaper Directory,0
+8,Church Guardian,CG,Moncton,NB,CA,,Church of England,1880,01/01/1880,31/12/1880,?,,,Unknown,,Not Found,PANB Newspaper Directory,0
 9,Colonial Empire,,Saint John,NB,CA,,,1861,01/01/1861,31/12/1861,1863?,01/01/1863,31/12/1863,Varies,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
 10,The Colonial Presbyterian,,St. Stephen,NB,CA,,,1855,01/01/1855,31/12/1855,?,,,Varies,,,PANB Newspaper Directory,0
 11,Colonial Times,CT,Chatham,NB,CA,Chatham (and later Richibucto),Davis P. Howe (publishing editor),"August 29, 1856",29/08/1856,,,,,Weekly,"""Devoted to Politics, Literature, Education, Agriculture, Commerce and General Intelligence"" and to promotion of the Miramichi Area",Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
@@ -21,7 +21,7 @@ UUID,Newspaper Title,Abbreviated Title,City of Publication,Province of Publicati
 20,Grand Falls Gazette,,Grand Falls,NB,CA,,"Merritt, S.J.",1927,01/01/1927,31/12/1927,?,,,Weekly,,,PANB Newspaper Directory,0
 21,The Head Quarters,,Fredericton,NB,CA,,,1853,01/01/1853,31/12/1853,1876,01/01/1876,31/12/1876,Weekly,,,PANB Newspaper Directory,0
 22,Houlton Pioneer Times,HPT,Houlton,ME,US,,Houlton Pub. Co.,"January 18, 1933",18/01/1933,,?,,,Weekly,,,Library and Archives Canada,0
-23,The Independent,,St. John's,NL,CA,Newfoundland and Labrador,"Dobbin, Brian.",2003,01/01/2003,31/12/2003,2008,01/01/2008,31/12/2008,unknown,,Not Found,theindependent.ca/about,0
+23,The Independent,,St. John's,NL,CA,Newfoundland and Labrador,"Dobbin, Brian.",2003,01/01/2003,31/12/2003,2008,01/01/2008,31/12/2008,Unknown,,Not Found,theindependent.ca/about,0
 24,The Kennebecasis Valley Post,TKVP,Fairvale,NB,CA,,Kennebecasis Publishing Co. Ltd.,12-Feb-79,12/02/1979,,19-Jun-81,19/06/1981,,Varies,,Not Found,PANB Newspaper Directory,0
 25,La/ The Gazette,TLG,Grand Falls,NB,CA,,Henley Publishing LTd.,04-Jun-80,04/06/1980,,30-Dec-80,30/12/1980,,,,Not Found,PANB Newspaper Directory,0
 26,The Liberal News,,Saint John,NB,CA,,"Ellis, F.B.",24-Oct-04,24/10/2004,,04-Nov-04,04/11/2004,,Daily,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
@@ -61,8 +61,8 @@ UUID,Newspaper Title,Abbreviated Title,City of Publication,Province of Publicati
 60,True Democracy,TD,Fredericton,NB,CA,,,1945,01/01/1945,31/12/1945,1948,01/01/1948,31/12/1948,Bimonthly,,Not Found,PANB Newspaper Directory,0
 61,The Truro Gleaner,,,,US,,,,,,,,,,,,,0
 62,Victoria County News,VCN,Grand Falls,NB,CA,,J.W. Correll,1900,01/01/1900,31/12/1900,1920,01/01/1920,31/12/1920,Weekly,,Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
-63,The Weekly Gleaner,WG,Fredericton,NB,CA,,,1886,01/01/1886,31/12/1886,1886,01/01/1886,31/12/1886,N/A,,Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
-64,Woodstock Weekly Clipper,,Woodstock,NB,CA,,"Colter, George","November 1, 1877",01/11/1877,,1878,01/01/1878,31/12/1878,unknown,,,PANB Newspaper Directory,0
+63,The Weekly Gleaner,WG,Fredericton,NB,CA,,,1886,01/01/1886,31/12/1886,1886,01/01/1886,31/12/1886,Weekly,,Not Found,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",0
+64,Woodstock Weekly Clipper,,Woodstock,NB,CA,,"Colter, George","November 1, 1877",01/11/1877,,1878,01/01/1878,31/12/1878,Unknown,,,PANB Newspaper Directory,0
 65,York Gleaner,,Fredericton,NB,CA,,,"January 1, 1881",01/01/1881,,"December 24, 1884",24/12/1884,,Weekly,,,PANB Newspaper Directory,0
 66,The Amaranth,TA,Fredericton,NB,CA,,,1849,01/01/1849,31/12/1849,1851,01/01/1851,31/12/1851,Weekly,,,PANB Newspaper Directory,1
 67,British Colonist and Mechanics' And The Traders' Advocate,BCMTA,Saint John,NB,CA,,,"January 5, 1836",05/01/1836,,"December 27, 1836",27/12/1836,,Weekly,,,PANB Newspaper Directory,1
@@ -88,7 +88,7 @@ UUID,Newspaper Title,Abbreviated Title,City of Publication,Province of Publicati
 87,Temperance Journal,[unlisted],Fredericton,NB,CA,,"Pitts, Herman A.","July 20, 1885",20/07/1885,,1892,01/01/1892,31/12/1892,Varies,,,,1
 88,Temperance Journal and The New Brunswick Reporter,[unlisted],Fredericton,NB,CA,,"Pitts, Herman A.","March 17, 1888",17/03/1888,,"August 11, 1888",11/08/1888,,Weekly,,,PANB Newspaper Directory,1
 89,Temperance Telegraph,[unlisted],Saint John,NB,CA,,,1/24/1844,24/01/1844,,12/1/1860,12/01/1860,,Weekly,,Not Found,PANB Newspaper Directory,1
-90,The Mysterious East ,,Fredericton,NB,CA,,Rubber Duck Press,01-Nov-69,01/11/1969,,?,,,unknown,Atlantic Provinces ,0047-8547,Library and Archives Canada,1
+90,The Mysterious East ,,Fredericton,NB,CA,,Rubber Duck Press,01-Nov-69,01/11/1969,,?,,,Unknown,Atlantic Provinces ,0047-8547,Library and Archives Canada,1
 91,The Times; or True Briton,TTB,Saint John,NB,CA,,,"January 21, 1808",21/01/1808,,1811,01/01/1811,31/12/1811,Weekly,,,PANB Newspaper Directory,1
 92,Watchman,TW,Saint John,NB,CA,,"Livingston, J. ","January 5, 1875",05/01/1875,,"June 9, 1877",09/06/1877,,Weekly,,,PANB Newspaper Directory,1
 93,Weekly Chronicle,WC,Saint John,NB,CA,,,"September 9, 1836",09/09/1836,,"May 1, 1857",01/05/1857,,Weekly,,,"""Historical Directory of New Brunswick Newspapers and Periodicals,"" by J. Russell Harper",1
