@@ -47,6 +47,7 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       $publisher = trim($row->getSourceProperty('publisher'));
       $issn = trim($row->getSourceProperty('issn'));
       $credit = trim($row->getSourceProperty('credit'));
+      $subject_notes = trim($row->getSourceProperty('blurb'));
 
       $row->setSourceProperty('country_code', $address_country);
       $row->setSourceProperty('province', $address_administrative_area);
@@ -54,6 +55,7 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       $row->setSourceProperty('geo_coverage', $geo_coverage);
       $row->setSourceProperty('issn', $issn);
       $row->setSourceProperty('credit', $credit);
+      $row->setSourceProperty('blurb', $subject_notes);
 
       $publisher_id = NULL;
       if (!empty($publisher)) {

@@ -69,6 +69,7 @@ process:
   field_publisher: publisher
   field_frequency: frequency
   field_frequency_notes: frequency_notes
+  field_subject_notes: blurb
   field_first_issue_date_type: first_issue_date_type
   field_first_issue_approx_date: first_issue_verbatim_date
   field_first_issue_date/value:
