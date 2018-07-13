@@ -23,6 +23,7 @@ dependencies:
     - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
+    - field.field.node.publication.field_previous_identifications
     - field.field.node.publication.field_publisher
     - field.field.node.publication.field_sample_image
     - field.field.node.publication.field_serial_relation_pre_ref_dn
@@ -194,6 +195,14 @@ content:
     third_party_settings: {  }
     type: address_default
     region: content
+  field_previous_identifications:
+    type: string
+    weight: 33
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
   field_publisher:
     weight: 3
     label: above
