@@ -14,6 +14,7 @@ dependencies:
     - field.storage.node.field_oclc
     - field.storage.node.field_publisher
     - field.storage.node.field_additional_indexed_text
+    - field.storage.node.field_frequency
     - search_api.server.unbherbarium_lib_unb_ca
   module:
     - taxonomy
@@ -147,6 +148,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_additional_indexed_text
+  field_frequency:
+    label: Frequency
+    datasource_id: 'entity:node'
+    property_path: field_frequency
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_frequency
 datasource_settings:
   'entity:node':
     bundles:
@@ -157,6 +166,8 @@ datasource_settings:
       default: true
       selected: {  }
 processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
   highlight:
     highlight: always
     highlight_partial: true
@@ -167,9 +178,7 @@ processor_settings:
     suffix: '</strong>'
     weights:
       postprocess_query: 0
-  aggregated_field: {  }
   rendered_item: {  }
-  add_url: {  }
 tracker_settings:
   default:
     indexing_order: fifo
