@@ -50,8 +50,15 @@ class TitleMigrateEvent implements EventSubscriberInterface {
       $subject_notes = trim($row->getSourceProperty('blurb'));
 
       $row->setSourceProperty('country_code', $address_country);
-      $row->setSourceProperty('province', $address_administrative_area);
-      $row->setSourceProperty('city', $address_city);
+      if ($address_country != "GB") {
+        $row->setSourceProperty('province', $address_administrative_area);
+        $row->setSourceProperty('city', $address_city);
+      }
+      else {
+        $row->setSourceProperty('city', "$address_city, $address_administrative_area");
+        print "United Kingdom found\n";
+        print "Post town: $address_city, $address_administrative_area\n";
+      }
       $row->setSourceProperty('geo_coverage', $geo_coverage);
       $row->setSourceProperty('issn', $issn);
       $row->setSourceProperty('credit', $credit);
