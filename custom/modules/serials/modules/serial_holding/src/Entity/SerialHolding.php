@@ -432,7 +432,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setLabel(t('Holding Coverage Statement'))
       ->setDescription(t('Enter the holding coverage statement. Ex: July 1, 1869 - June 1871; Jan 1872 - Sept 6, 1873'))
       ->setSettings([
-        'max_length' => 256,
+        'max_length' => 512,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
