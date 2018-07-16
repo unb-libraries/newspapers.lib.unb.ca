@@ -182,8 +182,8 @@
 
     {% endif %}
 
-    {% if content.field_description %}
-        {{ content.field_description }}
+    {% if content.field_description|field_value %}
+        {{ content.field_description|field_value }}
     {% endif %}
 
 </aside>
