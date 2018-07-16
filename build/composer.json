@@ -96,7 +96,7 @@
         "drupal-composer/drupal-scaffold": "~2.2.0",
         "drupal/address": "1.4",
         "drupal/bootstrap": "3.11",
-        "drupal/chosen": "2.5",
+        "drupal/chosen": "2.6",
         "drupal/conditional_fields": "1.0-alpha4",
         "drupal/config_update": "1.5",
         "drupal/console": "~1.0",
