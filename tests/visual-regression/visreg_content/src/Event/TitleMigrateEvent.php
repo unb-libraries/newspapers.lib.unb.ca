@@ -164,8 +164,6 @@ class TitleMigrateEvent implements EventSubscriberInterface {
     $query->condition('vid', $vocabulary);
     $query->condition($field, $value);
 
-    dump($query);
-
     $tids = $query->execute();
     if (!empty($tids)) {
       foreach ($tids as $tid) {
