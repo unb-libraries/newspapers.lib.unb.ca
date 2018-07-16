@@ -117,12 +117,22 @@
 
     {% if content.field_serial_relationship_op_pre %}
     <dl>
-        <dt>{% trans %}Earlier Titles(s):{% endtrans %}</dt>
+        <dt>{% trans %}Earlier Titles(s){% endtrans %}:</dt>
         <dd>
             {{ content.field_serial_relationship_op_pre|field_value }}
             {{ content.field_serial_relation_pre_ref_up|field_value }}
         </dd>
     </dl>
+    {% endif %}
+
+    {% if content.field_serial_relationship_op_suc %}
+        <dl>
+            <dt>{% trans %}Later Titles(s){% endtrans %}:</dt>
+            <dd>
+                {{ content.field_serial_relationship_op_suc|field_value }}
+                {{ content.field_serial_relation_suc_ref_dn|field_value }}
+            </dd>
+        </dl>
     {% endif %}
 
     {% if content.field_frequency|field_value %}
