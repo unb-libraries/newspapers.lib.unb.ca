@@ -115,6 +115,16 @@
         <dd>{{ publication_date_value }}</dd>
     </dl>
 
+    {% if content.field_serial_relationship_op_pre %}
+    <dl>
+        <dt>{% trans %}Earlier Titles(s):{% endtrans %}</dt>
+        <dd>
+            {{ content.field_serial_relationship_op_pre|field_value }}
+            {{ content.field_serial_relation_pre_ref_up|field_value }}
+        </dd>
+    </dl>
+    {% endif %}
+
     {% if content.field_frequency|field_value %}
     <dl>
         <dt>{{ content.field_frequency|field_label }}:</dt>
@@ -167,7 +177,6 @@
         <dd>{{ content.field_issn|field_value }}</dd>
     </dl>
     {% endif %}
-
 </section>
 
 {% if content.field_sample_image|field_value %}
