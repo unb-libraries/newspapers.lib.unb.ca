@@ -11,6 +11,10 @@ services:
     class: Drupal\visreg_content\Event\HoldingMigrateEvent
     tags:
       - { name: event_subscriber }
+  visreg_content.1_families_migrate_subscriber:
+    class: Drupal\visreg_content\Event\MicroformsTitleFamilyMigrateEvent
+    tags:
+      - { name: event_subscriber }
   visreg_content.4_page_migrate_subscriber:
     class: Drupal\visreg_content\Event\PageMigrateEvent
     tags:
