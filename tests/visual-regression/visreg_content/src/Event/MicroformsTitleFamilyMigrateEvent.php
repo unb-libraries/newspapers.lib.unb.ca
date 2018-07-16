@@ -43,7 +43,6 @@ class MicroformsTitleFamilyMigrateEvent implements EventSubscriberInterface {
 
       $query = \Drupal::entityQuery('node')
         ->condition('type', 'publication')
-        ->condition('status', 1)
         ->condition('field_previous_identifications', $group_nid);
       $nids = $query->execute();
 
@@ -68,7 +67,7 @@ class MicroformsTitleFamilyMigrateEvent implements EventSubscriberInterface {
       $cur_title = $row->getSourceProperty('title');
       $query = \Drupal::entityQuery('node')
         ->condition('type', 'publication')
-        ->condition('title', $cur_title);
+        ->condition('field_previous_identifications', $row->getSourceProperty('uuid'));
       $nids = $query->execute();
 
       foreach ($nids as $nid) {
