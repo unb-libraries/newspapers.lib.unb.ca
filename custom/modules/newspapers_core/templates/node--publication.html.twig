@@ -115,22 +115,31 @@
         <dd>{{ publication_date_value }}</dd>
     </dl>
 
-    {% if content.field_serial_relationship_op_pre %}
+    {% set preceding = content.field_serial_relationship_op_pre|field_value %}
+    {% if preceding %}
     <dl>
         <dt>{% trans %}Earlier Titles(s){% endtrans %}:</dt>
         <dd>
-            {{ content.field_serial_relationship_op_pre|field_value }}
+            {{ preceding }}
             {{ content.field_serial_relation_pre_ref_up|field_value }}
         </dd>
     </dl>
     {% endif %}
 
-    {% if content.field_serial_relationship_op_suc %}
+    {% set succeeding = content.field_serial_relationship_op_suc|field_value %}
+    {% if succeeding %}
         <dl>
             <dt>{% trans %}Later Titles(s){% endtrans %}:</dt>
             <dd>
-                {{ content.field_serial_relationship_op_suc|field_value }}
-                {{ content.field_serial_relation_suc_ref_dn|field_value }}
+                 {% if "Merged" in succeeding|keys %}
+                  {% trans %}Merged with{% endtrans %}
+                  {{ content.field_serial_relation_suc_ref_dn|field_value }}
+                  {% trans %}to form{% endtrans %}
+                  {{ content.field_serial_relation_suc_ref_up|field_value }}
+                {% else %}
+                    {{ succeeding }}
+                    {{ content.field_serial_relation_suc_ref_dn|field_value }}
+                {% endif %}
             </dd>
         </dl>
     {% endif %}
