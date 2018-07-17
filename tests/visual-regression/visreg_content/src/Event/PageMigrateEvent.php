@@ -45,20 +45,28 @@ class PageMigrateEvent implements EventSubscriberInterface {
         );
       }
       if (!empty($row->getSourceProperty('page_ocr'))) {
-        $this->addFieldFile($row, 'page_ocr_object', $row->getSourceProperty('page_ocr'));
+        $page_ocr_text = file_get_contents($row->getSourceProperty('page_ocr'));
+        $row->setSourceProperty(
+          'page_ocr_text',
+          $page_ocr_text
+        );
       }
       else {
         $row->setSourceProperty(
-          'page_ocr_object',
+          'page_ocr_text',
           NULL
         );
       }
       if (!empty($row->getSourceProperty('page_hocr'))) {
-        $this->addFieldFile($row, 'page_hocr_object', $row->getSourceProperty('page_hocr'));
+        $page_hocr_text = file_get_contents($row->getSourceProperty('page_hocr'));
+        $row->setSourceProperty(
+          'page_hocr_text',
+          $page_hocr_text
+        );
       }
       else {
         $row->setSourceProperty(
-          'page_hocr_object',
+          'page_hocr_text',
           NULL
         );
       }

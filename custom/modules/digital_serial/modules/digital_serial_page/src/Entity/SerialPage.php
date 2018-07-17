@@ -239,33 +239,33 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['page_ocr'] = BaseFieldDefinition::create('file')
+    $fields['page_ocr'] = BaseFieldDefinition::create('string_long')
       ->setLabel(t('Page OCR'))
-      ->setDescription(t('Upload the OCR file corresponding to the page.'))
+      ->setDescription(t('The OCR corresponding to the page.'))
       ->setSettings([
-        'file_directory' => 'digital_serial/ocr',
-        'file_extensions' => 'txt',
+        'default_value' => '',
+        'text_processing' => 0,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'file',
-        'weight' => 0,
+        'type' => 'text_long',
+        'text_processing' => 0,
+        'weight' => -3,
       ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setDisplayConfigurable('form', TRUE);
 
-    $fields['page_hocr'] = BaseFieldDefinition::create('file')
+    $fields['page_hocr'] = BaseFieldDefinition::create('text_long')
       ->setLabel(t('Page HOCR'))
-      ->setDescription(t('Upload the HOCR file corresponding to the page.'))
+      ->setDescription(t('The HOCR corresponding to the page.'))
       ->setSettings([
-        'file_directory' => 'digital_serial/hocr',
-        'file_extensions' => 'html',
+        'default_value' => '',
+        'text_processing' => 1,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'file',
-        'weight' => 0,
+        'type' => 'text_long',
+        'text_processing' => 0,
+        'weight' => -3,
       ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setDisplayConfigurable('form', TRUE);
 
     $fields['parent_issue'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Parent Issue'))

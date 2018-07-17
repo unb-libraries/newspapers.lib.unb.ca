@@ -35,8 +35,8 @@ process:
   page_no: page_no
   page_sort: page_sort
   page_image: page_image_object
-  page_ocr: page_ocr_object
-  page_hocr: page_hocr_object
+  page_ocr: page_ocr_text
+  page_hocr: page_hocr_text
 
 dependencies:
   module:
