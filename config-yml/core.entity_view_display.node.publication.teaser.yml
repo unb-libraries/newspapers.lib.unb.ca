@@ -76,6 +76,7 @@ hidden:
   field_last_issue_sort_date: true
   field_oclc: true
   field_place_of_publication: true
+  field_previous_identifications: true
   field_province_state: true
   field_publisher: true
   field_sample_image: true
