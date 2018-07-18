@@ -250,9 +250,12 @@ function _newspapers_core_relationship_view(EntityReferenceFieldItemList $field_
     foreach ($field_list as $list_item => $publication) {
       $render_array['#items'][] = $publication->view();
     }
+    return $render_array;
+  }
+  else {
+    return NULL;
   }
 
-  return $render_array;
 }
 
 /**
