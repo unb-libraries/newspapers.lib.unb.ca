@@ -44,6 +44,24 @@ a:focus {
 .description {
   color: $text-muted;
 }
+dl .inline-list {
+  padding-left: 0;
+}
+.inline-list li {
+  display: inline;
+}
+
+// Separate inline lists like: one, two, three and four.
+.inline-list li:nth-child(n+2)::before {
+  content: ", ";
+}
+.inline-list li:last-child::before {
+  content: '';
+}
+.inline-list li:nth-last-child(2)::after {
+  content: " and ";
+}
+
 
 // Improve autocomplete.
 .ui-autocomplete li:first-child:before {
