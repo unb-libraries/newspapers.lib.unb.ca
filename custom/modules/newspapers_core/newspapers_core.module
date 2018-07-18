@@ -210,17 +210,19 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     ->getSettings();
   $preceding_setting_value = empty($preceding_selected) ? NULL : $preceding_setting['allowed_values'][$preceding_selected];
   $preceding_upstream = $node->get('field_serial_relation_pre_ref_up');
+  $variables['earlier_titles_up'] = _newspapers_core_relationship_view($preceding_upstream);
 
   $succeeding = $node->get('field_serial_relationship_op_suc');
-
   $succeeding_label = $succeeding
     ->getFieldDefinition()
     ->getLabel();
   $succeeding_selected = $succeeding->getString();
   $succeeding_setting = $succeeding->getSettings();
   $succeeding_setting_value = empty($succeeding_selected) ? NULL : $succeeding_setting['allowed_values'][$succeeding_selected];
-
-  $variables['preceding_upstream'] = _newspapers_core_relationship_view($preceding_upstream);
+  $succeeding_upstream = $node->get('field_serial_relation_suc_ref_up');
+  $succeeding_downstream = $node->get('field_serial_relation_suc_ref_dn');
+  $variables['later_titles_up'] = _newspapers_core_relationship_view($succeeding_upstream);
+  $variables['later_titles_down'] = _newspapers_core_relationship_view($succeeding_downstream);
 
 }
 

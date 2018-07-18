@@ -125,14 +125,13 @@
         </dl>
     {% endif %}
 
-    {% set succeeding = content.field_serial_relationship_op_suc|field_value %}
-    {% if succeeding %}
+    {% if later_titles_down %}
+        {% set count = content.field_serial_relation_suc_ref_up|field_value|length %}
         <dl>
-            <dt>{% trans %}Later Titles(s){% endtrans %}:</dt>
-            <dd>
-                {{ succeeding }}
-                {{ content.field_serial_relation_suc_ref_dn|field_value }}
-            </dd>
+            {% if count > 1 %}<dt>{% trans %}Later titles{% endtrans %}:</dt>
+            {% else %}<dt>{% trans %}Later title{% endtrans %}:</dt>
+            {% endif %}
+            <dd>{{ content.field_serial_relationship_op_suc|field_value }}{{ later_titles_down }}</dd>
         </dl>
     {% endif %}
 
