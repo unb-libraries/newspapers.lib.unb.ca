@@ -7,6 +7,7 @@
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\node\Entity\Node;
@@ -197,6 +198,59 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $variables['language_label'] = $language_label;
   $variables['language_value'] = $language_value;
 
+  // Relationships.
+  $preceding = $node
+    ->get('field_serial_relationship_op_pre');
+  $preceding_label = $preceding
+    ->getFieldDefinition()
+    ->getLabel();
+  $preceding_selected = $preceding
+    ->getString();
+  $preceding_setting = $preceding
+    ->getSettings();
+  $preceding_setting_value = empty($preceding_selected) ? NULL : $preceding_setting['allowed_values'][$preceding_selected];
+  $preceding_upstream = $node->get('field_serial_relation_pre_ref_up');
+
+  $succeeding = $node->get('field_serial_relationship_op_suc');
+
+  $succeeding_label = $succeeding
+    ->getFieldDefinition()
+    ->getLabel();
+  $succeeding_selected = $succeeding->getString();
+  $succeeding_setting = $succeeding->getSettings();
+  $succeeding_setting_value = empty($succeeding_selected) ? NULL : $succeeding_setting['allowed_values'][$succeeding_selected];
+
+  $variables['preceding_upstream'] = _newspapers_core_relationship_view($preceding_upstream);
+
+}
+
+/**
+ * Determine if a multi-valued field list contains entity references.
+ *
+ * @param Drupal\Core\Field\EntityReferenceFieldItemList $field_list
+ *   The entity reference multi-valued field list.
+ *
+ * @return array
+ *   Render array of the field entity references with separators.
+ */
+function _newspapers_core_relationship_view(EntityReferenceFieldItemList $field_list) {
+  $render_array = [
+    '#attributes' => [
+      'class' => 'inline-list',
+    ],
+    '#items' => [],
+    '#list_type' => 'ul',
+    '#theme' => 'item_list',
+  ];
+
+  $count = count($field_list);
+  if ($count > 0) {
+    foreach ($field_list as $list_item => $publication) {
+      $render_array['#items'][] = $publication->view();
+    }
+  }
+
+  return $render_array;
 }
 
 /**
