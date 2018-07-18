@@ -115,13 +115,13 @@
         <dd>{{ publication_date_value }}</dd>
     </dl>
 
-    {% if preceding_upstream %}
+    {% if earlier_titles_up %}
         {% set count = content.field_serial_relation_pre_ref_up|field_value|length %}
         <dl>
             {% if count > 1 %}<dt>{% trans %}Earlier titles{% endtrans %}:</dt>
             {% else %}<dt>{% trans %}Earlier title{% endtrans %}:</dt>
             {% endif %}
-            <dd>{{ preceding_upstream }}</dd>
+            <dd>{{ content.field_serial_relationship_op_pre|field_value }}{{ earlier_titles_up }}</dd>
         </dl>
     {% endif %}
 
