@@ -16,13 +16,13 @@ settings:
       label: Continues
     -
       value: union
-      label: 'Formed by the Union of'
+      label: 'Formed by the union of'
     -
       value: absorbed
       label: Absorbed
     -
       value: separated
-      label: 'Separated From'
+      label: 'Separated from'
   allowed_values_function: ''
 module: options
 locked: false
