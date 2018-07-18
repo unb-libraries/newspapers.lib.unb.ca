@@ -115,15 +115,14 @@
         <dd>{{ publication_date_value }}</dd>
     </dl>
 
-    {% set preceding = content.field_serial_relationship_op_pre|field_value %}
-    {% if preceding %}
-    <dl>
-        <dt>{% trans %}Earlier Titles(s){% endtrans %}:</dt>
-        <dd>
-            {{ preceding }}
-            {{ content.field_serial_relation_pre_ref_up|field_value }}
-        </dd>
-    </dl>
+    {% if preceding_upstream %}
+        {% set count = content.field_serial_relation_pre_ref_up|field_value|length %}
+        <dl>
+            {% if count > 1 %}<dt>{% trans %}Earlier titles{% endtrans %}:</dt>
+            {% else %}<dt>{% trans %}Earlier title{% endtrans %}:</dt>
+            {% endif %}
+            <dd>{{ preceding_upstream }}</dd>
+        </dl>
     {% endif %}
 
     {% set succeeding = content.field_serial_relationship_op_suc|field_value %}
@@ -131,15 +130,8 @@
         <dl>
             <dt>{% trans %}Later Titles(s){% endtrans %}:</dt>
             <dd>
-                 {% if "Merged" in succeeding|keys %}
-                  {% trans %}Merged with{% endtrans %}
-                  {{ content.field_serial_relation_suc_ref_dn|field_value }}
-                  {% trans %}to form{% endtrans %}
-                  {{ content.field_serial_relation_suc_ref_up|field_value }}
-                {% else %}
-                    {{ succeeding }}
-                    {{ content.field_serial_relation_suc_ref_dn|field_value }}
-                {% endif %}
+                {{ succeeding }}
+                {{ content.field_serial_relation_suc_ref_dn|field_value }}
             </dd>
         </dl>
     {% endif %}
