@@ -115,75 +115,8 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
 function newspapers_core_preprocess_node__publication(&$variables) {
   $node = $variables['elements']['#node'];
 
-  // Set up the publication date display.
-  $none_txt = "Unknown";
-  $ongoing_txt = "Current";
-
-  $first_date_type = $node
-    ->get('field_first_issue_date_type')
-    ->getString();
-  $first_date_range = $node
-    ->get('field_first_issue_date')
-    ->getString();
-  $first_date_verbatim = $node
-    ->get('field_first_issue_approx_date')
-    ->getString();
-
-  switch ($first_date_type) {
-    case NULL:
-      $first_date_txt = $none_txt;
-      break;
-
-    case "exact":
-      $first_date_txt = date("F j, Y", strtotime($first_date_range));
-      break;
-
-    case "approximate":
-      $first_date_txt = $first_date_verbatim;
-      break;
-
-    default:
-      $first_date_txt = "N/A";
-  }
-
-  $last_date_type = $node
-    ->get('field_last_issue_date_type')
-    ->getString();
-  $last_date_range = $node
-    ->get('field_last_issue_date')
-    ->getString();
-  $last_date_verbatim = $node
-    ->get('field_last_issue_approx_date')
-    ->getString();
-
-  switch ($last_date_type) {
-    case NULL:
-      $last_date_txt = $none_txt;
-      break;
-
-    case "exact":
-      $last_date_txt = date("F j, Y", strtotime($last_date_range));
-      break;
-
-    case "approximate":
-      $last_date_txt = $last_date_verbatim;
-      break;
-
-    case "ongoing":
-      $last_date_txt = $ongoing_txt;
-      break;
-
-    default:
-      $first_date_txt = "N/A";
-  }
-
-  if ($first_date_txt == $none_txt && $last_date_txt == $none_txt) {
-    $variables['publication_date_value'] = $none_txt;
-  }
-  else {
-    $variables['publication_date_value'] = $first_date_txt . " - " . $last_date_txt;
-  }
   $variables['publication_date_label'] = t("Dates of publication");
+  $variables['publication_date_value'] = _newspapers_core_get_daterange($node);
 
   $language_label = $node
     ->field_language
@@ -233,7 +166,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
  *   The entity reference multi-valued field list.
  *
  * @return array
- *   Render array of the field entity references with separators.
+ *   Render array of the field entity references.
  */
 function _newspapers_core_relationship_view(EntityReferenceFieldItemList $field_list) {
   $render_array = [
@@ -567,6 +500,87 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
         t("<em>Family Name</em> is required when <em>This is part of a family</em> is checked")
       );
     }
+  }
+
+}
+
+/**
+ * Determine a publication's date range string.
+ *
+ * * @param \Drupal\node\Entity\Node $node
+ *   The node of the publication.
+ *
+ * @return string
+ *   The generated date range string.
+ */
+function _newspapers_core_get_daterange(Node $node) {
+  // Set up the publication date display.
+  $none_txt = "Unknown";
+  $ongoing_txt = "Current";
+
+  $first_date_type = $node
+    ->get('field_first_issue_date_type')
+    ->getString();
+  $first_date_range = $node
+    ->get('field_first_issue_date')
+    ->getString();
+  $first_date_verbatim = $node
+    ->get('field_first_issue_approx_date')
+    ->getString();
+
+  switch ($first_date_type) {
+    case NULL:
+      $first_date_txt = $none_txt;
+      break;
+
+    case "exact":
+      $first_date_txt = date("F j, Y", strtotime($first_date_range));
+      break;
+
+    case "approximate":
+      $first_date_txt = $first_date_verbatim;
+      break;
+
+    default:
+      $first_date_txt = "N/A";
+  }
+
+  $last_date_type = $node
+    ->get('field_last_issue_date_type')
+    ->getString();
+  $last_date_range = $node
+    ->get('field_last_issue_date')
+    ->getString();
+  $last_date_verbatim = $node
+    ->get('field_last_issue_approx_date')
+    ->getString();
+
+  switch ($last_date_type) {
+    case NULL:
+      $last_date_txt = $none_txt;
+      break;
+
+    case "exact":
+      $last_date_txt = date("F j, Y", strtotime($last_date_range));
+      break;
+
+    case "approximate":
+      $last_date_txt = $last_date_verbatim;
+      break;
+
+    case "ongoing":
+      $last_date_txt = $ongoing_txt;
+      break;
+
+    default:
+      $first_date_txt = "N/A";
+  }
+
+  if ($first_date_txt == $none_txt && $last_date_txt == $none_txt) {
+    return $none_txt;
+  }
+  else {
+    return $first_date_txt . " - " . $last_date_txt;
   }
 
 }
