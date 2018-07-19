@@ -25,12 +25,86 @@ name: 'NBNP Title Index'
 description: ''
 read_only: false
 field_settings:
-  title:
-    label: Title
+  administrative_area:
+    label: 'Place of Publication »  Administrative area abbreviation (i.e. province).'
     datasource_id: 'entity:node'
-    property_path: title
+    property_path: 'field_place_of_publication:administrative_area'
     type: text
-    boost: !!float 8
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
+  administrative_area_name:
+    label: 'Place of Publication » Administrative area full name (i.e. province).'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:administrative_area_name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
+  country_name:
+    label: 'Place of Publication » Full name of the country.'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:country_name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
+  field_additional_indexed_text:
+    label: 'Additional indexed text'
+    datasource_id: 'entity:node'
+    property_path: field_additional_indexed_text
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_additional_indexed_text
+  field_description:
+    label: Description
+    datasource_id: 'entity:node'
+    property_path: field_description
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_description
+  field_frequency:
+    label: Frequency
+    datasource_id: 'entity:node'
+    property_path: field_frequency
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_frequency
+  field_issn:
+    label: ISSN
+    datasource_id: 'entity:node'
+    property_path: field_issn
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_issn
+  field_oclc:
+    label: OCLC
+    datasource_id: 'entity:node'
+    property_path: field_oclc
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_oclc
+  field_subject_notes:
+    label: 'Subject Notes'
+    datasource_id: 'entity:node'
+    property_path: field_subject_notes
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_subject_notes
+  field_subjects:
+    label: Subjects
+    datasource_id: 'entity:node'
+    property_path: field_subjects
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_subjects
   field_subtitle:
     label: Subtitle
     datasource_id: 'entity:node'
@@ -48,14 +122,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_title_notes
-  field_description:
-    label: Description
+  locality:
+    label: 'Place of Publication » The locality (i.e. city).'
     datasource_id: 'entity:node'
-    property_path: field_description
+    property_path: 'field_place_of_publication:locality'
     type: text
     dependencies:
       config:
-        - field.storage.node.field_description
+        - field.storage.node.field_place_of_publication
   name:
     label: 'Family Name » Taxonomy term » Name'
     datasource_id: 'entity:node'
@@ -66,70 +140,6 @@ field_settings:
         - field.storage.node.field_family
       module:
         - taxonomy
-  locality:
-    label: 'Place of Publication » The locality (i.e. city).'
-    datasource_id: 'entity:node'
-    property_path: 'field_place_of_publication:locality'
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_place_of_publication
-  administrative_area:
-    label: 'Place of Publication »  Administrative area abbreviation (i.e. province).'
-    datasource_id: 'entity:node'
-    property_path: 'field_place_of_publication:administrative_area'
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_place_of_publication
-  field_subjects:
-    label: Subjects
-    datasource_id: 'entity:node'
-    property_path: field_subjects
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_subjects
-  field_subject_notes:
-    label: 'Subject Notes'
-    datasource_id: 'entity:node'
-    property_path: field_subject_notes
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_subject_notes
-  field_issn:
-    label: ISSN
-    datasource_id: 'entity:node'
-    property_path: field_issn
-    type: string
-    dependencies:
-      config:
-        - field.storage.node.field_issn
-  field_oclc:
-    label: OCLC
-    datasource_id: 'entity:node'
-    property_path: field_oclc
-    type: string
-    dependencies:
-      config:
-        - field.storage.node.field_oclc
-  administrative_area_name:
-    label: 'Place of Publication » Administrative area full name (i.e. province).'
-    datasource_id: 'entity:node'
-    property_path: 'field_place_of_publication:administrative_area_name'
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_place_of_publication
-  country_name:
-    label: 'Place of Publication » Full name of the country.'
-    datasource_id: 'entity:node'
-    property_path: 'field_place_of_publication:country_name'
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_place_of_publication
   name_1:
     label: 'Publisher » Taxonomy term » Name'
     datasource_id: 'entity:node'
@@ -140,22 +150,12 @@ field_settings:
         - field.storage.node.field_publisher
       module:
         - taxonomy
-  field_additional_indexed_text:
-    label: 'Additional indexed text'
+  title:
+    label: Title
     datasource_id: 'entity:node'
-    property_path: field_additional_indexed_text
+    property_path: title
     type: text
-    dependencies:
-      config:
-        - field.storage.node.field_additional_indexed_text
-  field_frequency:
-    label: Frequency
-    datasource_id: 'entity:node'
-    property_path: field_frequency
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_frequency
+    boost: !!float 8
 datasource_settings:
   'entity:node':
     bundles:
