@@ -14,34 +14,6 @@ use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
 
 /**
- * Implements hook_help().
- */
-function newspapers_core_help($route_name, RouteMatchInterface $route_match) {
-  switch ($route_name) {
-    // Main module help for the newspapers_core module.
-    case 'help.page.newspapers_core':
-      $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Newspaper Core Functions') . '</p>';
-      return $output;
-
-    default:
-  }
-}
-
-/**
- * Implements hook_theme().
- */
-function newspapers_core_theme() {
-  return [
-    'node__publication' => [
-      'template' => 'node--publication',
-      'base hook' => 'node',
-    ],
-  ];
-}
-
-/**
  * Implements hook_FORM_alter().
  */
 function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $form_id) {
@@ -110,118 +82,19 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
 }
 
 /**
- * Implements hook_preprocess_hook().
+ * Implements hook_help().
  */
-function newspapers_core_preprocess_node__publication(&$variables) {
-  $node = $variables['elements']['#node'];
+function newspapers_core_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the newspapers_core module.
+    case 'help.page.newspapers_core':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Newspaper Core Functions') . '</p>';
+      return $output;
 
-  $variables['publication_date_label'] = t("Dates of publication");
-  $variables['publication_date_value'] = _newspapers_core_get_daterange($node);
-
-  $language_label = $node
-    ->field_language
-    ->getFieldDefinition()
-    ->getLabel();
-
-  $language_value = $node
-    ->get('field_language')
-    ->get(0)
-    ->getNativeName();
-
-  $variables['language_label'] = $language_label;
-  $variables['language_value'] = $language_value;
-
-  // Relationships.
-  $preceding = $node
-    ->get('field_serial_relationship_op_pre');
-  $preceding_label = $preceding
-    ->getFieldDefinition()
-    ->getLabel();
-  $preceding_selected = $preceding
-    ->getString();
-  $preceding_setting = $preceding
-    ->getSettings();
-  $preceding_setting_value = empty($preceding_selected) ? NULL : $preceding_setting['allowed_values'][$preceding_selected];
-  $preceding_upstream = $node->get('field_serial_relation_pre_ref_up');
-  $variables['earlier_titles_up'] = _newspapers_core_relationship_view($preceding_upstream);
-
-  $succeeding = $node->get('field_serial_relationship_op_suc');
-  $succeeding_label = $succeeding
-    ->getFieldDefinition()
-    ->getLabel();
-  $succeeding_selected = $succeeding->getString();
-  $succeeding_setting = $succeeding->getSettings();
-  $succeeding_setting_value = empty($succeeding_selected) ? NULL : $succeeding_setting['allowed_values'][$succeeding_selected];
-  $succeeding_upstream = $node->get('field_serial_relation_suc_ref_up');
-  $succeeding_downstream = $node->get('field_serial_relation_suc_ref_dn');
-  $variables['later_titles_up'] = _newspapers_core_relationship_view($succeeding_upstream);
-  $variables['later_titles_down'] = _newspapers_core_relationship_view($succeeding_downstream);
-
-}
-
-/**
- * Determine if a multi-valued field list contains entity references.
- *
- * @param Drupal\Core\Field\EntityReferenceFieldItemList $field_list
- *   The entity reference multi-valued field list.
- *
- * @return array
- *   Render array of the field entity references.
- */
-function _newspapers_core_relationship_view(EntityReferenceFieldItemList $field_list) {
-  $render_array = [
-    '#attributes' => [
-      'class' => 'inline-list',
-    ],
-    '#items' => [],
-    '#list_type' => 'ul',
-    '#theme' => 'item_list',
-  ];
-
-  $count = count($field_list);
-  if ($count > 0) {
-    foreach ($field_list as $list_item => $publication) {
-      $render_array['#items'][] = $publication->view();
-    }
-    return $render_array;
+    default:
   }
-  else {
-    return NULL;
-  }
-
-}
-
-/**
- * Cancel changes and return to admin content or node view.
- *
- * @param array $form
- *   The form element.
- * @param Drupal\Core\Form\FormStateInterface $form_state
- *   The form state.
- *
- * @return string
- *   The redirection url or route name.
- */
-function _newspapers_core_cancel_redirect_callback(array &$form, FormStateInterface &$form_state) {
-  $current_route = \Drupal::routeMatch()->getRouteName();
-
-  switch ($current_route) {
-    case 'entity.node.edit_form':
-      // Get node id and return canonical node url.
-      $node = $form_state
-        ->getFormObject()
-        ->getEntity();
-      $url = Url::fromRoute(
-        'entity.node.canonical',
-        ['node' => $node->id()]
-      );
-      return $form_state->setRedirectUrl($url);
-
-    case 'node.add':
-      // Return Admin Content overview route name.
-      return $form_state->setRedirect('system.admin_content');
-  }
-
 }
 
 /**
@@ -335,6 +208,91 @@ function newspapers_core_node_presave(EntityInterface $node) {
 }
 
 /**
+ * Implements hook_preprocess_hook().
+ */
+function newspapers_core_preprocess_node__publication(&$variables) {
+  $node = $variables['elements']['#node'];
+
+  $variables['publication_date_label'] = t("Dates of publication");
+  $variables['publication_date_value'] = _newspapers_core_get_daterange($node);
+
+  $language_label = $node
+    ->field_language
+    ->getFieldDefinition()
+    ->getLabel();
+
+  $language_value = $node
+    ->get('field_language')
+    ->get(0)
+    ->getNativeName();
+
+  $variables['language_label'] = $language_label;
+  $variables['language_value'] = $language_value;
+
+  // Relationships.
+  $preceding = $node
+    ->get('field_serial_relationship_op_pre');
+  $preceding_label = $preceding
+    ->getFieldDefinition()
+    ->getLabel();
+  $preceding_selected = $preceding
+    ->getString();
+  $preceding_setting = $preceding
+    ->getSettings();
+  $preceding_setting_value = empty($preceding_selected) ? NULL : $preceding_setting['allowed_values'][$preceding_selected];
+  $preceding_upstream = $node->get('field_serial_relation_pre_ref_up');
+  $variables['earlier_titles_up'] = _newspapers_core_get_rendered_relationship($preceding_upstream);
+
+  $succeeding = $node->get('field_serial_relationship_op_suc');
+  $succeeding_label = $succeeding
+    ->getFieldDefinition()
+    ->getLabel();
+  $succeeding_selected = $succeeding->getString();
+  $succeeding_setting = $succeeding->getSettings();
+  $succeeding_setting_value = empty($succeeding_selected) ? NULL : $succeeding_setting['allowed_values'][$succeeding_selected];
+  $succeeding_upstream = $node->get('field_serial_relation_suc_ref_up');
+  $succeeding_downstream = $node->get('field_serial_relation_suc_ref_dn');
+  $variables['later_titles_up'] = _newspapers_core_get_rendered_relationship($succeeding_upstream);
+  $variables['later_titles_down'] = _newspapers_core_get_rendered_relationship($succeeding_downstream);
+
+}
+
+/**
+ * Implements hook_theme().
+ */
+function newspapers_core_theme() {
+  return [
+    'node__publication' => [
+      'template' => 'node--publication',
+      'base hook' => 'node',
+    ],
+  ];
+}
+
+/**
+ * Nullify all fields of a given array.
+ *
+ * @param \Drupal\node\Entity\Node $node
+ *   The node of the newspaper publication.
+ * @param array $fields
+ *   The array of field machine names to set to NULL.
+ */
+function _newspapers_core_blank_fields(Node $node, array $fields) {
+  foreach ($fields as $field) {
+    if (!$node->hasField($field)) {
+      $msg = "The <em class=\"placeholder\">$field</em> field does not exist - not clearing!";
+      drupal_set_message(t($msg), 'error');
+    }
+    else {
+      // $field_label = $node->$field->getFieldDefinition()->getLabel();
+      $node
+        ->get($field)
+        ->setValue(NULL);
+    }
+  }
+}
+
+/**
  * Determine if a boolean checkbox field is checked.
  *
  * @param \Drupal\node\Entity\Node $node
@@ -373,26 +331,190 @@ function _newspapers_core_boolean_is_true(Node $node, $field) {
 }
 
 /**
- * Nullify all fields of a given array.
+ * Cancel changes and return to admin content or node view.
  *
- * @param \Drupal\node\Entity\Node $node
- *   The node of the newspaper publication.
- * @param array $fields
- *   The array of field machine names to set to NULL.
+ * @param array $form
+ *   The form element.
+ * @param Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ *
+ * @return string
+ *   The redirection url or route name.
  */
-function _newspapers_core_blank_fields(Node $node, array $fields) {
-  foreach ($fields as $field) {
-    if (!$node->hasField($field)) {
-      $msg = "The <em class=\"placeholder\">$field</em> field does not exist - not clearing!";
-      drupal_set_message(t($msg), 'error');
-    }
-    else {
-      // $field_label = $node->$field->getFieldDefinition()->getLabel();
-      $node
-        ->get($field)
-        ->setValue(NULL);
-    }
+function _newspapers_core_cancel_redirect_callback(array &$form, FormStateInterface &$form_state) {
+  $current_route = \Drupal::routeMatch()->getRouteName();
+
+  switch ($current_route) {
+    case 'entity.node.edit_form':
+      // Get node id and return canonical node url.
+      $node = $form_state
+        ->getFormObject()
+        ->getEntity();
+      $url = Url::fromRoute(
+        'entity.node.canonical',
+        ['node' => $node->id()]
+      );
+      return $form_state->setRedirectUrl($url);
+
+    case 'node.add':
+      // Return Admin Content overview route name.
+      return $form_state->setRedirect('system.admin_content');
   }
+
+}
+
+/**
+ * Determine a publication's date range string.
+ *
+ * * @param \Drupal\node\Entity\Node $node
+ *   The node of the publication.
+ *
+ * @return string
+ *   The generated date range string.
+ */
+function _newspapers_core_get_daterange(Node $node) {
+  // Set up the publication date display.
+  $none_txt = "Unknown";
+  $ongoing_txt = "Current";
+
+  $first_date_type = $node
+    ->get('field_first_issue_date_type')
+    ->getString();
+  $first_date_range = $node
+    ->get('field_first_issue_date')
+    ->getString();
+  $first_date_verbatim = $node
+    ->get('field_first_issue_approx_date')
+    ->getString();
+
+  switch ($first_date_type) {
+    case NULL:
+      $first_date_txt = $none_txt;
+      break;
+
+    case "exact":
+      $first_date_txt = date("F j, Y", strtotime($first_date_range));
+      break;
+
+    case "approximate":
+      $first_date_txt = $first_date_verbatim;
+      break;
+
+    default:
+      $first_date_txt = "N/A";
+  }
+
+  $last_date_type = $node
+    ->get('field_last_issue_date_type')
+    ->getString();
+  $last_date_range = $node
+    ->get('field_last_issue_date')
+    ->getString();
+  $last_date_verbatim = $node
+    ->get('field_last_issue_approx_date')
+    ->getString();
+
+  switch ($last_date_type) {
+    case NULL:
+      $last_date_txt = $none_txt;
+      break;
+
+    case "exact":
+      $last_date_txt = date("F j, Y", strtotime($last_date_range));
+      break;
+
+    case "approximate":
+      $last_date_txt = $last_date_verbatim;
+      break;
+
+    case "ongoing":
+      $last_date_txt = $ongoing_txt;
+      break;
+
+    default:
+      $first_date_txt = "N/A";
+  }
+
+  if ($first_date_txt == $none_txt && $last_date_txt == $none_txt) {
+    return $none_txt;
+  }
+  else {
+    return $first_date_txt . " - " . $last_date_txt;
+  }
+
+}
+
+/**
+ * Determine if a multi-valued field list contains entity references.
+ *
+ * @param Drupal\Core\Field\EntityReferenceFieldItemList $field_list
+ *   The entity reference multi-valued field list.
+ *
+ * @return array
+ *   Render array of the vocabulary entity reference.
+ */
+function _newspapers_core_get_family_view(EntityReferenceFieldItemList $field_list) {
+  $field_name = $field_list->getName();
+  $term_id = $field_list->getString();
+
+  $nodes = \Drupal::entityTypeManager()
+    ->getStorage('node')
+    ->loadByProperties([
+      $field_name => $term_id,
+    ]);
+  foreach ($nodes as $node) {
+    dpm($node->id());
+  }
+
+  $render_array = [
+    '#items' => [],
+    '#list_type' => 'ul',
+    '#theme' => 'item_list',
+  ];
+
+  $count = count($field_list);
+  if ($count > 0) {
+    foreach ($field_list as $list_item => $vocabulary) {
+
+    }
+    return $render_array;
+  }
+  else {
+    return NULL;
+  }
+
+}
+
+/**
+ * Determine if a multi-valued field list contains entity references.
+ *
+ * @param Drupal\Core\Field\EntityReferenceFieldItemList $field_list
+ *   The entity reference multi-valued field list.
+ *
+ * @return array
+ *   Render array of the field entity references.
+ */
+function _newspapers_core_get_rendered_relationship(EntityReferenceFieldItemList $field_list) {
+  $render_array = [
+    '#attributes' => [
+      'class' => 'inline-list',
+    ],
+    '#items' => [],
+    '#list_type' => 'ul',
+    '#theme' => 'item_list',
+  ];
+
+  $count = count($field_list);
+  if ($count > 0) {
+    foreach ($field_list as $list_item => $publication) {
+      $render_array['#items'][] = $publication->view();
+    }
+    return $render_array;
+  }
+  else {
+    return NULL;
+  }
+
 }
 
 /**
@@ -500,87 +622,6 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
         t("<em>Family Name</em> is required when <em>This is part of a family</em> is checked")
       );
     }
-  }
-
-}
-
-/**
- * Determine a publication's date range string.
- *
- * * @param \Drupal\node\Entity\Node $node
- *   The node of the publication.
- *
- * @return string
- *   The generated date range string.
- */
-function _newspapers_core_get_daterange(Node $node) {
-  // Set up the publication date display.
-  $none_txt = "Unknown";
-  $ongoing_txt = "Current";
-
-  $first_date_type = $node
-    ->get('field_first_issue_date_type')
-    ->getString();
-  $first_date_range = $node
-    ->get('field_first_issue_date')
-    ->getString();
-  $first_date_verbatim = $node
-    ->get('field_first_issue_approx_date')
-    ->getString();
-
-  switch ($first_date_type) {
-    case NULL:
-      $first_date_txt = $none_txt;
-      break;
-
-    case "exact":
-      $first_date_txt = date("F j, Y", strtotime($first_date_range));
-      break;
-
-    case "approximate":
-      $first_date_txt = $first_date_verbatim;
-      break;
-
-    default:
-      $first_date_txt = "N/A";
-  }
-
-  $last_date_type = $node
-    ->get('field_last_issue_date_type')
-    ->getString();
-  $last_date_range = $node
-    ->get('field_last_issue_date')
-    ->getString();
-  $last_date_verbatim = $node
-    ->get('field_last_issue_approx_date')
-    ->getString();
-
-  switch ($last_date_type) {
-    case NULL:
-      $last_date_txt = $none_txt;
-      break;
-
-    case "exact":
-      $last_date_txt = date("F j, Y", strtotime($last_date_range));
-      break;
-
-    case "approximate":
-      $last_date_txt = $last_date_verbatim;
-      break;
-
-    case "ongoing":
-      $last_date_txt = $ongoing_txt;
-      break;
-
-    default:
-      $first_date_txt = "N/A";
-  }
-
-  if ($first_date_txt == $none_txt && $last_date_txt == $none_txt) {
-    return $none_txt;
-  }
-  else {
-    return $first_date_txt . " - " . $last_date_txt;
   }
 
 }
