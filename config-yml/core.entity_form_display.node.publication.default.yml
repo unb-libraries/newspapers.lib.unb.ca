@@ -61,7 +61,7 @@ third_party_settings:
         - field_last_issue_date
         - field_last_issue_approx_date
       parent_name: ''
-      weight: 6
+      weight: 7
       format_type: details
       format_settings:
         label: 'Date of Publication'
@@ -121,7 +121,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_credit:
-    weight: 13
+    weight: 17
     settings:
       rows: 2
       placeholder: ''
@@ -246,7 +246,7 @@ content:
     type: options_select
     region: content
   field_frequency:
-    weight: 7
+    weight: 8
     settings:
       size: 60
       placeholder: ''
@@ -254,7 +254,7 @@ content:
     type: string_textfield
     region: content
   field_frequency_notes:
-    weight: 8
+    weight: 9
     settings:
       size: 60
       placeholder: ''
@@ -284,7 +284,7 @@ content:
     type: string_textfield
     region: content
   field_geographic_coverage:
-    weight: 4
+    weight: 5
     settings:
       size: 60
       placeholder: ''
@@ -320,7 +320,7 @@ content:
     type: boolean_checkbox
     region: content
   field_issn:
-    weight: 11
+    weight: 12
     settings:
       size: 60
       placeholder: ''
@@ -420,7 +420,7 @@ content:
     type: options_select
     region: content
   field_oclc:
-    weight: 12
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -428,14 +428,14 @@ content:
     type: string_textfield
     region: content
   field_place_of_publication:
-    weight: 3
+    weight: 4
     settings:
       default_country: ''
     third_party_settings: {  }
     type: address_default
     region: content
   field_previous_identifications:
-    weight: 43
+    weight: 24
     settings:
       size: 60
       placeholder: ''
@@ -443,7 +443,7 @@ content:
     type: string_textfield
     region: content
   field_publisher:
-    weight: 5
+    weight: 6
     settings:
       match_operator: CONTAINS
       size: 60
@@ -452,7 +452,7 @@ content:
     type: entity_reference_autocomplete
     region: content
   field_sample_image:
-    weight: 17
+    weight: 3
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -460,39 +460,39 @@ content:
     type: image_image
     region: content
   field_serial_relation_pre_ref_dn:
-    weight: 18
+    weight: 19
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_serial_relation_pre_ref_up:
-    weight: 17
+    weight: 18
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_serial_relation_suc_ref_dn:
-    weight: 21
+    weight: 22
     settings: {  }
     third_party_settings:
       conditional_fields: {  }
     type: options_select
     region: content
   field_serial_relation_suc_ref_up:
-    weight: 20
+    weight: 21
     settings: {  }
     third_party_settings:
       conditional_fields: {  }
     type: options_select
     region: content
   field_serial_relationship_op_pre:
-    weight: 15
+    weight: 17
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
   field_serial_relationship_op_suc:
-    weight: 19
+    weight: 20
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -507,7 +507,7 @@ content:
     type: string_textfield
     region: content
   field_subject_notes:
-    weight: 10
+    weight: 11
     settings:
       rows: 4
       placeholder: ''
@@ -515,7 +515,7 @@ content:
     type: string_textarea
     region: content
   field_subjects:
-    weight: 9
+    weight: 10
     settings:
       size: 60
       placeholder: ''
