@@ -11,7 +11,7 @@ id: node.publication.field_supplemental_information
 field_name: field_supplemental_information
 entity_type: node
 bundle: publication
-label: 'Supplemental Information'
+label: 'Broad Title History'
 description: '<b>Example:</b> PDF of title tree image'
 required: false
 translatable: false
@@ -21,7 +21,7 @@ settings:
   file_directory: '[date:custom:Y]-[date:custom:m]'
   file_extensions: 'pdf jpg gif png'
   max_filesize: ''
-  description_field: false
+  description_field: true
   handler: 'default:file'
   handler_settings: {  }
 field_type: file

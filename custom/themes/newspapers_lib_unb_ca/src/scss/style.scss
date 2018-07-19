@@ -217,7 +217,31 @@ a.btn-add::before {
   float: none;
 }
 
+.title-history .file-icon {
+  display: none;
+}
+.title-history .file,
+.no-borders .file-link {
+  font-size: inherit;
+  width: auto;
+}
+.title-history .file-size {
+  color: $text-muted;
+  padding-left: .5em;
+  text-align: left;
+}
+.title-history .file-size::before {
+  content: "(";
+}
+.title-history .file-size::after {
+  content: ")";
+}
+
 /* Helper classes */
+.no-borders,
+.title-history .file>span {
+  border: none;
+}
 .no-gutters{
   margin-left: 0;
   margin-right: 0;
