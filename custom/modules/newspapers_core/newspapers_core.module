@@ -255,6 +255,9 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $variables['later_titles_up'] = _newspapers_core_get_rendered_relationship($succeeding_upstream);
   $variables['later_titles_down'] = _newspapers_core_get_rendered_relationship($succeeding_downstream);
 
+  // Family.
+  $variables['family'] = _newspapers_core_get_rendered_family($node);
+
 }
 
 /**
@@ -445,43 +448,55 @@ function _newspapers_core_get_daterange(Node $node) {
 }
 
 /**
- * Determine if a multi-valued field list contains entity references.
+ * Determine if a publications family field contains entity reference.
  *
- * @param Drupal\Core\Field\EntityReferenceFieldItemList $field_list
- *   The entity reference multi-valued field list.
+ * @param \Drupal\node\Entity\Node $node
+ *   The node of the publication.
  *
  * @return array
- *   Render array of the vocabulary entity reference.
+ *   Render array of the referenced family vocabulary terms, NULL is none.
  */
-function _newspapers_core_get_family_view(EntityReferenceFieldItemList $field_list) {
-  $field_name = $field_list->getName();
-  $term_id = $field_list->getString();
+function _newspapers_core_get_rendered_family(Node $node) {
+  $family_field = $node->get('field_family');
+  if (empty($family_field)) {
+    return NULL;
+  }
 
-  $nodes = \Drupal::entityTypeManager()
+  // dpm($node->id());
+  $term_id = $family_field->getString();
+
+  $family_nodes = \Drupal::entityTypeManager()
     ->getStorage('node')
     ->loadByProperties([
-      $field_name => $term_id,
+      'field_family' => $term_id,
     ]);
-  foreach ($nodes as $node) {
-    dpm($node->id());
+
+  foreach ($family_nodes as $family_node) {
+    $start_date = $family_node
+      ->get('field_first_issue_date')
+      ->value;
+
+    $data[] = [
+      'daterange' => _newspapers_core_get_daterange($family_node),
+      'id' => $family_node->id(),
+      'timestamp' => $start_date,
+      'title' => $family_node->getTitle(),
+    ];
+
   }
+
+  array_multisort(array_column($data, 'timestamp'), SORT_ASC, $data);
 
   $render_array = [
     '#items' => [],
     '#list_type' => 'ul',
     '#theme' => 'item_list',
   ];
-
-  $count = count($field_list);
-  if ($count > 0) {
-    foreach ($field_list as $list_item => $vocabulary) {
-
-    }
-    return $render_array;
+  foreach ($data as $item) {
+    $render_array['#items'][] = $item['title'] . " " . $item['daterange'];
   }
-  else {
-    return NULL;
-  }
+
+  return $render_array;
 
 }
 

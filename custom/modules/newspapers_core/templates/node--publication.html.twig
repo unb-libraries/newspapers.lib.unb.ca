@@ -141,11 +141,15 @@
         </dl>
     {% endif %}
 
-    {% if content.field_supplemental_information|field_value %}
+
+    {% if content.field_supplemental_information|field_value or family %}
     <dl class="title-history">
         <dt>{{ content.field_supplemental_information|field_label }}:</dt>
         <dd class="no-borders">({% trans %}This field includes titles and publication dates of UNB Holdings only{%  endtrans %})<br >
             {{ content.field_supplemental_information|field_value }}</dd>
+            {% if family %}
+                {{ family }}
+            {% endif %}
     </dl>
     {% endif %}
 
