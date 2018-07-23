@@ -11,7 +11,7 @@ id: node.publication.field_supplemental_information
 field_name: field_supplemental_information
 entity_type: node
 bundle: publication
-label: 'Broad Title History'
+label: 'Supplemental Information'
 description: '<b>Example:</b> PDF of title tree image illustrating the complete publication history.'
 required: false
 translatable: false
