@@ -1,0 +1,20 @@
+uuid: 2e7ebe4d-6b8f-41ed-8369-4b6e99941b01
+langcode: en
+status: true
+dependencies:
+  module:
+    - digital_serial_issue
+    - serialization
+    - user
+id: entity.digital_serial_issue
+plugin_id: 'entity:digital_serial_issue'
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PATCH
+  formats:
+    - json
+  authentication:
+    - cookie

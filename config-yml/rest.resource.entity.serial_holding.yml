@@ -1,0 +1,18 @@
+uuid: c6a0ba2d-a23e-44df-8fa5-68f56893a55b
+langcode: en
+status: false
+dependencies:
+  module:
+    - serial_holding
+    - serialization
+    - user
+id: entity.serial_holding
+plugin_id: 'entity:serial_holding'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - cookie

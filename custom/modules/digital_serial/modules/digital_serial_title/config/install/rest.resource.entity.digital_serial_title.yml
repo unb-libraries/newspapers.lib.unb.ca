@@ -1,0 +1,20 @@
+uuid: 2a7627d9-259c-4082-a673-f51ff8569060
+langcode: en
+status: true
+dependencies:
+  module:
+    - digital_serial_title
+    - serialization
+    - user
+id: entity.digital_serial_title
+plugin_id: 'entity:digital_serial_title'
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PATCH
+  formats:
+    - json
+  authentication:
+    - cookie
