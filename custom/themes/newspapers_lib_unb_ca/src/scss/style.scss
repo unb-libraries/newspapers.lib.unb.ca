@@ -217,6 +217,7 @@ a.btn-add::before {
   float: none;
 }
 
+// Broad title history.
 .title-history .file-icon {
   display: none;
 }
@@ -235,6 +236,25 @@ a.btn-add::before {
 }
 .title-history .file-size::after {
   content: ")";
+}
+.history-list {
+  margin: 1em auto;
+}
+.history-list span {
+  font-style: italic;
+  margin-left: .25em;
+}
+.history-list .current-title {
+  list-style-type: none;
+}
+.history-list .current-title::before {
+  color: $checkmark;
+  content:"\e013";
+  float: left;
+  font-family: 'Glyphicons Halflings';
+  font-size: x-small;
+  margin-left: -1.75em;
+  margin-top: .25em;
 }
 
 /* Helper classes */
