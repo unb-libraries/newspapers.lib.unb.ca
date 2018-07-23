@@ -9,9 +9,10 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
 
 /**
  * Implements hook_FORM_alter().
@@ -462,7 +463,6 @@ function _newspapers_core_get_rendered_family(Node $node) {
     return NULL;
   }
 
-  // dpm($node->id());
   $term_id = $family_field->getString();
 
   $family_nodes = \Drupal::entityTypeManager()
@@ -488,14 +488,25 @@ function _newspapers_core_get_rendered_family(Node $node) {
   array_multisort(array_column($data, 'timestamp'), SORT_ASC, $data);
 
   $render_array = [
+    '#attributes' => [
+      'class' => 'history-list',
+    ],
     '#items' => [],
     '#list_type' => 'ul',
     '#theme' => 'item_list',
   ];
-  foreach ($data as $item) {
-    $render_array['#items'][] = $item['title'] . " " . $item['daterange'];
+  $options = [
+    'absolute' => TRUE,
+  ];
+  foreach ($data as $key => $item) {
+    $url = Link::createFromRoute($item['title'], 'entity.node.canonical', ['node' => $item['id']], $options);
+    $item_array = $url->toRenderable();
+    $item_array['#suffix'] = '<span class="description">' . $item['daterange'] . '</span>';
+    $render_array['#items'][] = $item_array;
+    if ($item['id'] == $node->id()) {
+      $render_array['#items'][$key]['#wrapper_attributes']['class'] = 'current-title';
+    }
   }
-
   return $render_array;
 
 }
