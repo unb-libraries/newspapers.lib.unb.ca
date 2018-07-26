@@ -215,7 +215,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $node = $variables['elements']['#node'];
 
   $variables['publication_date_label'] = t("Dates of publication");
-  $variables['publication_date_value'] = _newspapers_core_get_daterange($node);
+  $variables['publication_date_value'] = _newspapers_core_get_daterange($node, TRUE);
 
   $language_label = $node
     ->field_language
@@ -370,13 +370,15 @@ function _newspapers_core_cancel_redirect_callback(array &$form, FormStateInterf
 /**
  * Determine a publication's date range string.
  *
- * * @param \Drupal\node\Entity\Node $node
+ * @param \Drupal\node\Entity\Node $node
  *   The node of the publication.
+ * @param bool $append_frequency
+ *   TRUE if frequency is to be appended to string, FALSE if date range only.
  *
  * @return string
  *   The generated date range string.
  */
-function _newspapers_core_get_daterange(Node $node) {
+function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FALSE) {
   // Set up the publication date display.
   $none_txt = "Unknown";
   $ongoing_txt = "Current";
@@ -438,12 +440,20 @@ function _newspapers_core_get_daterange(Node $node) {
     default:
       $first_date_txt = "N/A";
   }
-
+  $frequency = NULL;
+  if ($append_frequency) {
+    $field_frequency = $node
+      ->get('field_frequency')
+      ->getString();
+    if (!empty($field_frequency)) {
+      $frequency = " (" . $field_frequency . ")";
+    }
+  }
   if ($first_date_txt == $none_txt && $last_date_txt == $none_txt) {
-    return $none_txt;
+    return $none_txt . $frequency;
   }
   else {
-    return $first_date_txt . " - " . $last_date_txt;
+    return $first_date_txt . " - " . $last_date_txt . $frequency;
   }
 
 }
