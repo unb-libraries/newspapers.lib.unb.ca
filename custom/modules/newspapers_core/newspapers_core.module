@@ -458,12 +458,12 @@ function _newspapers_core_get_daterange(Node $node) {
  *   Render array of the referenced family vocabulary terms, NULL is none.
  */
 function _newspapers_core_get_rendered_family(Node $node) {
-  $family_field = $node->get('field_family');
-  if (empty($family_field)) {
+  $term_id = $node
+    ->get('field_family')
+    ->getString();
+  if (empty($term_id)) {
     return NULL;
   }
-
-  $term_id = $family_field->getString();
 
   $family_nodes = \Drupal::entityTypeManager()
     ->getStorage('node')
@@ -482,7 +482,6 @@ function _newspapers_core_get_rendered_family(Node $node) {
       'timestamp' => $start_date,
       'title' => $family_node->getTitle(),
     ];
-
   }
 
   array_multisort(array_column($data, 'timestamp'), SORT_ASC, $data);
