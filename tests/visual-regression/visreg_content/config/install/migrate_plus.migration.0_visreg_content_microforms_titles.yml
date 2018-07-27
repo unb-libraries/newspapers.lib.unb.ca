@@ -61,25 +61,26 @@ process:
   type:
     plugin: default_value
     default_value: publication
-  title: title
-  field_place_of_publication/langcode:
-    plugin: default_value
-    default_value: en
-  field_place_of_publication/country_code: country_code
-  field_place_of_publication/administrative_area: province
-  field_place_of_publication/locality: city
-  field_issn: issn
-  field_frequency: frequency
   field_first_issue_date_type:
     plugin: default_value
     default_value: exact
   field_first_issue_date/value: coverage_start
+  field_is_supplementary_title: supplementary
+  field_issn: issn
+  field_frequency: frequency
   field_last_issue_date_type:
     plugin: default_value
     default_value: exact
   field_last_issue_date/value: coverage_end
-  field_title_notes: title_notes
+  field_place_of_publication/administrative_area: province
+  field_place_of_publication/country_code: country_code
+  field_place_of_publication/langcode:
+    plugin: default_value
+    default_value: en
+  field_place_of_publication/locality: city
   field_previous_identifications: uuid
+  field_title_notes: title_notes
+  title: title
 
 destination:
   plugin: entity:node
