@@ -40,18 +40,10 @@ class MicroformsTitleMigrateEvent implements EventSubscriberInterface {
       $address_country = trim($row->getSourceProperty('country'));
       $address_administrative_area = trim($row->getSourceProperty('prov_state'));
       $address_city = trim($row->getSourceProperty('city_town'));
-      $is_related = trim($row->getSourceProperty('is_related'));
-      if ($is_related == "Y") {
-        $supplementary = 1;
-        print $row->getSourceProperty('uuid') . " is a supplementary title.\n";
-      }
-      else {
-        $supplementary = 0;
-      }
+
       $row->setSourceProperty('country_code', $address_country);
       $row->setSourceProperty('province', $address_administrative_area);
       $row->setSourceProperty('city', $address_city);
-      $row->setSourceProperty('supplementary', $supplementary);
     }
 
   }

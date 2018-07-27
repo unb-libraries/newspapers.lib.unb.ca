@@ -64,16 +64,24 @@ class MicroformsTitleFamilyMigrateEvent implements EventSubscriberInterface {
       }
 
       // Load the publication this row corresponds to and attach the term.
-      $cur_title = $row->getSourceProperty('title');
       $query = \Drupal::entityQuery('node')
         ->condition('type', 'publication')
         ->condition('field_previous_identifications', $row->getSourceProperty('uuid'));
       $nids = $query->execute();
 
+      $row_uuid = $row->getSourceProperty('uuid');
+      $is_related = trim($row->getSourceProperty('is_related'));
+
       foreach ($nids as $nid) {
         $row_node = Node::Load($nid);
+        $uuid = $row_node->get('field_previous_identifications')->getString();
         $row_node->set('field_family', $term->id());
         $row_node->set('field_this_is_part_of_a_family', TRUE);
+        if ($uuid == $row_uuid) {
+          if ($is_related == "Y") {
+            $row_node->set('field_is_supplementary_title', TRUE);
+          }
+        }
         $row_node->save();
       }
     }
