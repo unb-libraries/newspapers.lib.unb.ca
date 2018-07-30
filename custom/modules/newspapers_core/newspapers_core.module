@@ -283,15 +283,16 @@ function newspapers_core_preprocess_node__publication(&$variables) {
  */
 function newspapers_core_preprocess_page_title(&$variables) {
   $node = \Drupal::routeMatch()->getParameter('node');
-
-  // Append '(supplementary title)' to title of publications
-  // whose 'This is supplementary title' field is checked.
-  if ($node->getType() == 'publication' && $node->get('field_is_supplementary_title')->value) {
-    $custom_title = [
-      '#markup' => '<span>' . $node->getTitle() . '<em> (supplementary title)</em></span>',
-      '#allowed_tags' => Xss::getAdminTagList(),
-    ];
-    $variables['title'] = $custom_title;
+  if (isset($node)) {
+    // Append '(supplementary title)' to title of publications
+    // whose 'This is supplementary title' field is checked.
+    if ($node->getType() == 'publication' && $node->get('field_is_supplementary_title')->value) {
+      $custom_title = [
+        '#markup' => '<span>' . $node->getTitle() . ' <small>(supplementary title)</small></span>',
+        '#allowed_tags' => Xss::getAdminTagList(),
+      ];
+      $variables['title'] = $custom_title;
+    }
   }
 }
 
