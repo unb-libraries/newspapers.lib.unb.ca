@@ -459,68 +459,6 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
 }
 
 /**
- * Determine if a publications family field contains entity reference.
- *
- * @param \Drupal\node\Entity\Node $node
- *   The node of the publication.
- *
- * @return array
- *   Render array of the referenced family vocabulary terms, NULL is none.
- */
-function _newspapers_core_get_rendered_family(Node $node) {
-  $term_id = $node
-    ->get('field_family')
-    ->getString();
-  if (empty($term_id)) {
-    return NULL;
-  }
-
-  $family_nodes = \Drupal::entityTypeManager()
-    ->getStorage('node')
-    ->loadByProperties([
-      'field_family' => $term_id,
-    ]);
-
-  foreach ($family_nodes as $family_node) {
-    $start_date = $family_node
-      ->get('field_first_issue_date')
-      ->value;
-
-    $data[] = [
-      'daterange' => _newspapers_core_get_daterange($family_node),
-      'id' => $family_node->id(),
-      'timestamp' => $start_date,
-      'title' => $family_node->getTitle(),
-    ];
-  }
-
-  array_multisort(array_column($data, 'timestamp'), SORT_ASC, $data);
-
-  $render_array = [
-    '#attributes' => [
-      'class' => 'history-list',
-    ],
-    '#items' => [],
-    '#list_type' => 'ul',
-    '#theme' => 'item_list',
-  ];
-  $options = [
-    'absolute' => TRUE,
-  ];
-  foreach ($data as $key => $item) {
-    $url = Link::createFromRoute($item['title'], 'entity.node.canonical', ['node' => $item['id']], $options);
-    $item_array = $url->toRenderable();
-    $item_array['#suffix'] = '<span class="description">' . $item['daterange'] . '</span>';
-    $render_array['#items'][] = $item_array;
-    if ($item['id'] == $node->id()) {
-      $render_array['#items'][$key]['#wrapper_attributes']['class'] = 'current-title';
-    }
-  }
-  return $render_array;
-
-}
-
-/**
  * Determine if a multi-valued field list contains entity references.
  *
  * @param Drupal\Core\Field\EntityReferenceFieldItemList $field_list
@@ -549,6 +487,88 @@ function _newspapers_core_get_rendered_relationship(EntityReferenceFieldItemList
   else {
     return NULL;
   }
+
+}
+
+/**
+ * Determine if a publications family field contains entity reference.
+ *
+ * @param \Drupal\node\Entity\Node $node
+ *   The node of the publication.
+ * @param bool $supplemental_titles
+ *   TRUE to return only supplemental titles, FALSE to return non-supplemental titles.
+ *
+ * @return array
+ *   Render array of the referenced family vocabulary terms, NULL is none.
+ */
+function _newspapers_core_get_rendered_title_history(Node $node, bool $supplemental_titles = FALSE) {
+  $term_id = $node
+    ->get('field_family')
+    ->getString();
+  if (empty($term_id)) {
+    return NULL;
+  }
+
+  $family_nodes = \Drupal::entityTypeManager()
+    ->getStorage('node')
+    ->loadByProperties([
+      'field_family' => $term_id,
+    ]);
+  if (empty($family_nodes)) {
+    return NULL;
+  }
+
+  foreach ($family_nodes as $family_node) {
+    $field_start_date = $family_node
+      ->get('field_first_issue_date')
+      ->value;
+    $field_supplementary = $family_node
+      ->get('field_is_supplementary_title')
+      ->value;
+
+    if ($supplemental_titles) {
+      if (empty($field_supplementary)) {
+        continue;
+      }
+    }
+    elseif (!empty($field_supplementary)) {
+      continue;
+    }
+
+    $data[] = [
+      'daterange' => _newspapers_core_get_daterange($family_node),
+      'id' => $family_node->id(),
+      'timestamp' => $field_start_date,
+      'title' => $family_node->getTitle(),
+    ];
+  }
+  if (empty($data)) {
+    return NULL;
+  }
+
+  array_multisort(array_column($data, 'timestamp'), SORT_ASC, $data);
+
+  $render_array = [
+    '#attributes' => [
+      'class' => 'history-list',
+    ],
+    '#items' => [],
+    '#list_type' => 'ul',
+    '#theme' => 'item_list',
+  ];
+  $options = [
+    'absolute' => TRUE,
+  ];
+  foreach ($data as $key => $item) {
+    $url = Link::createFromRoute($item['title'], 'entity.node.canonical', ['node' => $item['id']], $options);
+    $item_array = $url->toRenderable();
+    $item_array['#suffix'] = '<span class="description">' . $item['daterange'] . '</span>';
+    $render_array['#items'][] = $item_array;
+    if ($item['id'] == $node->id()) {
+      $render_array['#items'][$key]['#wrapper_attributes']['class'] = 'current-title';
+    }
+  }
+  return $render_array;
 
 }
 
