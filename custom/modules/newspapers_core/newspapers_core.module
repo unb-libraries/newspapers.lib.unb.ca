@@ -284,7 +284,8 @@ function newspapers_core_preprocess_node__publication(&$variables) {
 function newspapers_core_preprocess_page_title(&$variables) {
   $node = \Drupal::routeMatch()->getParameter('node');
 
-  // Append '(supplementary title)' to title of publication nodes whose 'This is supplementary title' field is checked.
+  // Append '(supplementary title)' to title of publications
+  // whose 'This is supplementary title' field is checked.
   if ($node->getType() == 'publication' && $node->get('field_is_supplementary_title')->value) {
     $custom_title = [
       '#markup' => '<span>' . $node->getTitle() . '<em> (supplementary title)</em></span>',
@@ -529,7 +530,7 @@ function _newspapers_core_get_rendered_relationship(EntityReferenceFieldItemList
  * @param \Drupal\node\Entity\Node $node
  *   The node of the publication.
  * @param bool $supplemental_titles
- *   TRUE to return only supplemental titles, FALSE to return non-supplemental titles.
+ *   TRUE returns supplemental titles, FALSE returns non-supplemental titles.
  *
  * @return array
  *   Render array of the referenced family vocabulary terms, NULL is none.
