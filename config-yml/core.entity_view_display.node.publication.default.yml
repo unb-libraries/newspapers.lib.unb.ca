@@ -53,13 +53,12 @@ third_party_settings:
   field_group:
     group_publication_dates:
       children:
-        - field_title_notes
         - field_first_issue_date
         - field_first_issue_approx_date
         - field_last_issue_date
         - field_last_issue_approx_date
       parent_name: ''
-      weight: 4
+      weight: 5
       format_type: details
       format_settings:
         id: ''
@@ -74,14 +73,14 @@ bundle: publication
 mode: default
 content:
   field_description:
-    weight: 12
+    weight: 13
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: content
   field_family:
-    weight: 14
+    weight: 15
     label: above
     settings:
       link: true
@@ -107,21 +106,13 @@ content:
     type: daterange_default
     region: content
   field_first_issue_date_type:
-    weight: 18
+    weight: 19
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_frequency:
-    weight: 6
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_frequency_notes:
     weight: 7
     label: above
     settings:
@@ -129,8 +120,16 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_frequency_notes:
+    weight: 8
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_geographic_coverage:
-    weight: 2
+    weight: 3
     label: above
     settings:
       link_to_entity: false
@@ -138,7 +137,7 @@ content:
     type: string
     region: content
   field_is_supplementary_title:
-    weight: 16
+    weight: 17
     label: above
     settings:
       format: default
@@ -148,7 +147,7 @@ content:
     type: boolean
     region: content
   field_issn:
-    weight: 10
+    weight: 11
     label: above
     settings:
       link_to_entity: false
@@ -174,14 +173,14 @@ content:
     type: daterange_default
     region: content
   field_last_issue_date_type:
-    weight: 17
+    weight: 18
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
   field_oclc:
-    weight: 11
+    weight: 12
     label: above
     settings:
       link_to_entity: false
@@ -189,7 +188,7 @@ content:
     type: string
     region: content
   field_place_of_publication:
-    weight: 1
+    weight: 2
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -197,14 +196,14 @@ content:
     region: content
   field_previous_identifications:
     type: string
-    weight: 26
+    weight: 27
     region: content
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
   field_publisher:
-    weight: 3
+    weight: 4
     label: above
     settings:
       link: false
@@ -212,7 +211,7 @@ content:
     type: entity_reference_label
     region: content
   field_sample_image:
-    weight: 25
+    weight: 26
     label: hidden
     settings:
       image_style: sample_publication_image
@@ -221,30 +220,6 @@ content:
     type: image
     region: content
   field_serial_relation_pre_ref_dn:
-    weight: 22
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_serial_relation_pre_ref_up:
-    weight: 21
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_serial_relation_suc_ref_dn:
-    weight: 24
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_serial_relation_suc_ref_up:
     weight: 23
     label: above
     settings:
@@ -252,29 +227,53 @@ content:
     third_party_settings: {  }
     type: entity_reference_label
     region: content
-  field_serial_relationship_op_pre:
-    weight: 19
+  field_serial_relation_pre_ref_up:
+    weight: 22
     label: above
-    settings: {  }
+    settings:
+      link: true
     third_party_settings: {  }
-    type: list_default
+    type: entity_reference_label
     region: content
-  field_serial_relationship_op_suc:
+  field_serial_relation_suc_ref_dn:
+    weight: 25
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_serial_relation_suc_ref_up:
+    weight: 24
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_serial_relationship_op_pre:
     weight: 20
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: content
+  field_serial_relationship_op_suc:
+    weight: 21
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
   field_subject_notes:
-    weight: 9
+    weight: 10
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: content
   field_subjects:
-    weight: 8
+    weight: 9
     label: above
     settings:
       link_to_entity: false
@@ -290,7 +289,7 @@ content:
     type: string
     region: content
   field_supplemental_information:
-    weight: 5
+    weight: 6
     label: above
     settings:
       use_description_as_link_text: true
@@ -298,7 +297,7 @@ content:
     type: file_default
     region: content
   field_this_is_part_of_a_family:
-    weight: 15
+    weight: 16
     label: above
     settings:
       format: default
@@ -308,14 +307,14 @@ content:
     type: boolean
     region: content
   field_title_notes:
-    weight: 0
+    weight: 1
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
     region: content
   links:
-    weight: 13
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
