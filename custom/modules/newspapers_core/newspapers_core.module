@@ -5,6 +5,7 @@
  * Contains newspapers_core.module.
  */
 
+use Drupal\Component\Utility\Xss;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
@@ -274,6 +275,22 @@ function newspapers_core_preprocess_node__publication(&$variables) {
 
     default:
       $variables['supplemental_title_label'] = t("Supplementary Titles");
+  }
+}
+
+/**
+ * Implements hook_preprocess_page_title().
+ */
+function newspapers_core_preprocess_page_title(&$variables) {
+  $node = \Drupal::routeMatch()->getParameter('node');
+
+  // Append '(supplementary title)' to title of publication nodes whose 'This is supplementary title' field is checked.
+  if ($node->getType() == 'publication' && $node->get('field_is_supplementary_title')->value) {
+    $custom_title = [
+      '#markup' => '<span>' . $node->getTitle() . '<em> (supplementary title)</em></span>',
+      '#allowed_tags' => Xss::getAdminTagList(),
+    ];
+    $variables['title'] = $custom_title;
   }
 }
 
