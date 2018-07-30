@@ -256,9 +256,25 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $variables['later_titles_up'] = _newspapers_core_get_rendered_relationship($succeeding_upstream);
   $variables['later_titles_down'] = _newspapers_core_get_rendered_relationship($succeeding_downstream);
 
-  // Family.
-  $variables['family'] = _newspapers_core_get_rendered_family($node);
+  // This is part of a family.
+  $variables['family'] = _newspapers_core_get_rendered_title_history($node);
 
+  // This is a supplementary title.
+  $variables['supplemental_title'] = _newspapers_core_get_rendered_title_history($node, TRUE);
+  $st_count = ($variables['supplemental_title']['#items']) ? count($variables['supplemental_title']['#items']) : 0;
+
+  switch ($st_count) {
+    case 0:
+      $variables['supplemental_title_label'] = NULL;
+      break;
+
+    case 1:
+      $variables['supplemental_title_label'] = t("Supplementary Title");
+      break;
+
+    default:
+      $variables['supplemental_title_label'] = t("Supplementary Titles");
+  }
 }
 
 /**
