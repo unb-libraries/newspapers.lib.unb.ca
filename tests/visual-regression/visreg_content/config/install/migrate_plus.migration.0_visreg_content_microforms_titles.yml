@@ -56,22 +56,83 @@ source:
       frequency: Frequency
     21:
       local_notes: Local Notes
+    24:
+      first_issue_date: First Issue Verbatim Date
+    25:
+      first_issue_start_date: First Issue Start Date
+    26:
+      first_issue_end_date: First Issue End Date
+    27:
+      last_issue_date: Last Issue Verbatim Date
+    28:
+      last_issue_start_date: Last Issue Start Date
+    29:
+      last_issue_end_date: Last Issue End Date
+
 
 process:
   type:
     plugin: default_value
     default_value: publication
-  field_first_issue_date_type:
-    plugin: default_value
-    default_value: exact
-  field_first_issue_date/value: coverage_start
   field_is_supplementary_title: supplementary
   field_issn: issn
   field_frequency: frequency
-  field_last_issue_date_type:
-    plugin: default_value
-    default_value: exact
-  field_last_issue_date/value: coverage_end
+  field_first_issue_date_type: first_issue_date_type
+  field_first_issue_approx_date: first_issue_verbatim_date
+  field_first_issue_date/value:
+    -
+      plugin: explode
+      source: first_issue_date_range
+      delimiter: '-'
+    -
+      plugin: extract
+      index:
+        - '0'
+    -
+      plugin: format_date
+      from_format: d/m/Y
+      to_format: Y-m-d
+  field_first_issue_date/end_value:
+    -
+      plugin: explode
+      source: first_issue_date_range
+      delimiter: '-'
+    -
+      plugin: extract
+      index:
+        - '1'
+    -
+      plugin: format_date
+      from_format: d/m/Y
+      to_format: Y-m-d
+  field_last_issue_date_type: last_issue_date_type
+  field_last_issue_approx_date: last_issue_verbatim_date
+  field_last_issue_date/value:
+    -
+      plugin: explode
+      source: last_issue_date_range
+      delimiter: '-'
+    -
+      plugin: extract
+      index:
+        - '0'
+    -
+      plugin: format_date
+      from_format: d/m/Y
+      to_format: Y-m-d
+  field_last_issue_date/end_value:
+    -
+      plugin: explode
+      source: last_issue_date_range
+      delimiter: '-'
+    -
+      plugin: extract
+      index:
+        - '1'
+    -
+      plugin: format_date
+      from_format: d/m/Y
+      to_format: Y-m-d
   field_place_of_publication/administrative_area: province
   field_place_of_publication/country_code: country_code
   field_place_of_publication/langcode:
