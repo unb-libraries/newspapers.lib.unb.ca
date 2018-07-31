@@ -7,10 +7,10 @@ services:
     class: Drupal\visreg_content\Event\MicroformsTitleMigrateEvent
     tags:
       - { name: event_subscriber }
-  visreg_content.1_holdings_migrate_subscriber:
-    class: Drupal\visreg_content\Event\HoldingMigrateEvent
+  visreg_content.0_holding_types_migrate_subscriber:
+    class: Drupal\visreg_content\Event\MicroformsHoldingMigrateEvent
     tags:
-      - { name: event_subscriber }
+    - { name: event_subscriber }
   visreg_content.1_families_migrate_subscriber:
     class: Drupal\visreg_content\Event\MicroformsTitleFamilyMigrateEvent
     tags:

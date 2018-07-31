@@ -1,0 +1,34 @@
+id: 0_visreg_content_holding_types
+label: Visual regression testing content for Holding Types
+
+migration_tags:
+  - CSV
+  - Visual Regression Content
+
+source:
+  plugin: csv
+  path: '/app/html/modules/custom/visreg_content/data/csv/0_visreg_content_holding_types.csv'
+  header_row_count: 1
+  keys:
+    - uuid
+  column_names:
+    0:
+      uuid: Unique ID
+    1:
+      holding_type: Type
+
+process:
+  vid:
+    plugin: default_value
+    default_value: serial_holding_types
+  name: holding_type
+
+destination:
+  plugin: entity:taxonomy_term
+
+dependencies:
+  module:
+    - visreg_content
+  enforced:
+    module:
+    - visreg_content
