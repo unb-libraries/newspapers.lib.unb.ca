@@ -115,17 +115,6 @@
         <dd>{{ publication_date_value }}</dd>
     </dl>
 
-
-    {% if content.field_title_notes|field_value %}
-        <dl>
-            <dt>{{ content.field_title_notes|field_label }}:</dt>
-            <dd>{{ content.field_title_notes|field_value }}</dd>
-        </dl>
-    {% endif %}
-
-
-    <hr />
-
     {% if earlier_titles_up %}
         {% set count = content.field_serial_relation_pre_ref_up|field_value|length %}
         <dl>
@@ -152,6 +141,15 @@
         </dl>
     {% endif %}
 
+    {% if content.field_title_notes|field_value %}
+        <dl>
+            <dt>{{ content.field_title_notes|field_label }}:</dt>
+            <dd>{{ content.field_title_notes|field_value }}</dd>
+        </dl>
+    {% endif %}
+
+
+    <hr />
 
     {% if content.field_supplemental_information|field_value or family %}
     <dl class="title-history">
@@ -167,17 +165,6 @@
             <dd>
                 {{ supplemental_title }}
             </dd>
-        {% endif %}
-    </dl>
-    {% endif %}
-
-    {% if content.field_frequency|field_value %}
-    <dl>
-        <dt>{{ content.field_frequency|field_label }}:</dt>
-        <dd>{{ content.field_frequency|field_value }}</dd>
-        {% if content.field_frequency_notes|field_value %}
-            <dt>{{ content.field_frequency_notes|field_label }}:</dt>
-            <dd>{{ content.field_frequency_notes|field_value }}</dd>
         {% endif %}
     </dl>
     {% endif %}
@@ -214,6 +201,17 @@
         <dt>{{ content.field_issn|field_label }}:</dt>
         <dd>{{ content.field_issn|field_value }}</dd>
     </dl>
+    {% endif %}
+
+    {% if content.field_frequency|field_value %}
+        <dl>
+            <dt>{{ content.field_frequency|field_label }}:</dt>
+            <dd>{{ content.field_frequency|field_value }}</dd>
+            {% if content.field_frequency_notes|field_value %}
+                <dt>{{ content.field_frequency_notes|field_label }}:</dt>
+                <dd>{{ content.field_frequency_notes|field_value }}</dd>
+            {% endif %}
+        </dl>
     {% endif %}
 
     {% if language_value %}
