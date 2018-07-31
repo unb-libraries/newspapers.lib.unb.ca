@@ -580,7 +580,7 @@ function _newspapers_core_get_rendered_title_history(Node $node, bool $supplemen
     $data[] = [
       'daterange' => _newspapers_core_get_daterange($family_node),
       'id' => $family_node->id(),
-      'timestamp' => $field_start_date,
+      'timestamp' => empty($field_start_date) ? date('Y-m-d') : $field_start_date,
       'title' => $family_node->getTitle(),
     ];
   }
