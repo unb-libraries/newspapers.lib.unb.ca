@@ -516,7 +516,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: elastic-search
+      path: search
     cache_metadata:
       max-age: -1
       contexts:
