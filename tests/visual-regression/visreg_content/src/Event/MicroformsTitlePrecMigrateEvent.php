@@ -57,10 +57,17 @@ class MicroformsTitlePrecMigrateEvent implements EventSubscriberInterface {
         ->condition(self::PUBLICATION_OLD_ID_FIELD, $old_pub_id);
       $nids = $query->execute();
 
-      foreach ($nids as $nid) {
-        $pub_node = Node::load($nid);
+      foreach ($nids as $source_nid) {
+        $pub_node = Node::load($source_nid);
         $pub_node->set(self::PRECEDING_OP_FIELD_NAME, $preceding_codes[$relationship_type]);
-        $pub_node->set(self::PRECEDING_UPSTREAM_FIELD_NAME, $targets);
+
+        // Get current target NIDs.
+        $targets_query = \Drupal::entityQuery('node')
+          ->condition('type', self::PUBLICATION_NODE_TYPE)
+          ->condition(self::PUBLICATION_OLD_ID_FIELD, $targets, 'IN');
+        $target_nids = $targets_query->execute();
+
+        $pub_node->set(self::PRECEDING_UPSTREAM_FIELD_NAME, $target_nids);
         $pub_node->save();
       }
     }

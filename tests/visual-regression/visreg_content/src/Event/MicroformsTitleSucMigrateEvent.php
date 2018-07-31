@@ -59,19 +59,25 @@ class MicroformsTitleSucMigrateEvent implements EventSubscriberInterface {
         ->condition(self::PUBLICATION_OLD_ID_FIELD, $old_pub_id);
       $nids = $query->execute();
 
-      foreach ($nids as $nid) {
-        $pub_node = Node::load($nid);
+      foreach ($nids as $source_nid) {
+        $pub_node = Node::load($source_nid);
         $pub_node->set(self::SUCC_OP_FIELD_NAME, $succeding_codes[$relationship_type]);
+
+        // Get current target NIDs.
+        $targets_query = \Drupal::entityQuery('node')
+          ->condition('type', self::PUBLICATION_NODE_TYPE)
+          ->condition(self::PUBLICATION_OLD_ID_FIELD, $targets, 'IN');
+        $target_nids = $targets_query->execute();
 
         // Merged is the only type that uses the downstream field.
         switch ($relationship_type) {
           case '7':
-            $pub_node->set(self::SUCC_UPSTREAM_FIELD_NAME, [$targets[0]]);
-            $pub_node->set(self::SUCC_DOWNSTREAM_FIELD_NAME, [$targets[1]]);
+            $pub_node->set(self::SUCC_UPSTREAM_FIELD_NAME, [$target_nids[0]]);
+            $pub_node->set(self::SUCC_DOWNSTREAM_FIELD_NAME, [$target_nids[1]]);
             break;
 
           default:
-            $pub_node->set(self::SUCC_DOWNSTREAM_FIELD_NAME, $targets);
+            $pub_node->set(self::SUCC_DOWNSTREAM_FIELD_NAME, $target_nids);
             break;
         }
 
