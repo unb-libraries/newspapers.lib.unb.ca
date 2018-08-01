@@ -50,9 +50,9 @@
             },
             "drupal/core": {
                 "Extend Daterange functionality": "https://www.drupal.org/files/issues/2794481-50.patch",
+                "HTML5 validation issue": "https://www.drupal.org/files/issues/2018-07-13/1797438-145.patch",
                 "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch",
-                "To display exposed filter block titles": "https://www.drupal.org/files/issues/2720101-38.patch",
-                "HTML5 validation issue": "https://www.drupal.org/files/issues/2018-07-13/1797438-145.patch"
+                "To display exposed filter block titles": "https://www.drupal.org/files/issues/2720101-38.patch"
             },
             "drupal/elasticsearch_connector": {
                 "Cannot combine elasticsearch with other backends": "https://www.drupal.org/files/issues/elasticsearch_connector-fix-serialize-closure-error-2904033-9.patch"
@@ -101,7 +101,7 @@
         "drupal/conditional_fields": "1.0-alpha4",
         "drupal/config_update": "1.5",
         "drupal/console": "~1.0",
-        "drupal/core": "8.5.5",
+        "drupal/core": "8.5.6",
         "drupal/elasticsearch_connector": "5.0-alpha2",
         "drupal/externalauth": "1.1",
         "drupal/features": "3.7",
@@ -110,13 +110,13 @@
         "drupal/languagefield": "1.4",
         "drupal/ldap": "3.0-beta3",
         "drupal/material_admin": "1.0-alpha6",
+        "drupal/migrate_plus": "4.0-beta3",
+        "drupal/migrate_source_csv": "2.2",
+        "drupal/migrate_tools": "4.0-rc1",
         "drupal/pathauto": "1.2",
         "drupal/search_api": "1.9",
         "drupal/token": "1.3",
         "drupal/twig_field_value": "1.1",
-        "drupal/migrate_plus": "4.0-beta3",
-        "drupal/migrate_tools": "4.0-rc1",
-        "drupal/migrate_source_csv": "2.2",
         "drush/drush": "^9.3.0",
         "harvesthq/chosen": "~1.8",
         "nodespark/des-connector": "5.x-dev",
