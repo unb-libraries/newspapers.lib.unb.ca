@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains digital_serial_import.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function digital_serial_import_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the digital_serial_import module.
+    case 'help.page.digital_serial_import':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Digital Serial Import Tools') . '</p>';
+      return $output;
+
+    default:
+  }
+}

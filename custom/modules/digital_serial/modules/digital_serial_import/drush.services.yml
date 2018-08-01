@@ -1,0 +1,5 @@
+services:
+  digital_serial_issue_import.commands:
+    class: \Drupal\digital_serial_import\Drush\DigitalSerialIssueImportCommands
+    tags:
+    - { name: drush.command }

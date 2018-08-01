@@ -1,0 +1,21 @@
+{
+  "name": "drupal/digital_serial_import",
+  "type": "drupal-module",
+  "description": "Digital Serial Import Tools",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/digital_serial_import",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/digital_serial_import",
+    "source": "http://cgit.drupalcode.org/digital_serial_import"
+  },
+  "require": { },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^9"
+      }
+    }
+  }
+}
