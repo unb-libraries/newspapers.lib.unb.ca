@@ -281,6 +281,61 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   if ($family_count + $st_count < 2) {
     $variables['family'] = NULL;
   }
+
+  $holdings = _newspapers_core_get_publication_holdings($node->id());
+  foreach ($holdings as $key => $value) {
+    switch ($key) {
+      case 'microfilm':
+      case 'digital':
+      case 'physical':
+        $variables['holding'] = _newspapers_core_get_holding_vars($key, $value);
+        break;
+
+      default:
+        throw new Exception("An error occurred. Unknown holding type: $key.");
+    }
+  }
+}
+
+function _newspapers_core_get_holding_vars($holding_key, $holding) {
+  $variable_array[$holding_key] = [
+    'location' => [
+      'label' => 'Location',
+      'value' => $holding->getHoldingLocation() . ", filed as " . $holding->getHoldingFiledAs(),
+    ],
+    'coverage' => [
+      'label' => 'Coverage Statement',
+      'value' => $holding->getHoldingCoverage(),
+    ],
+    'notes' => [
+      'label' => 'Notes',
+      'value' => $holding->getHoldingNotes(),
+    ],
+  ];
+
+  return $variable_array;
+}
+
+function _newspapers_core_get_publication_holdings($nid) {
+  $holding_section = NULL;
+
+  $query = Drupal::service('entity.query')
+    ->get('serial_holding')
+    ->condition('parent_title', $nid);
+  $entity_ids = $query->execute();
+  $holdings = \Drupal::entityTypeManager()
+    ->getStorage('serial_holding')
+    ->loadMultiple($entity_ids);
+
+  foreach ($holdings as $holding) {
+    $holding_key = strtolower(
+      $holding
+        ->getHoldingType()
+        ->getName()
+    );
+    $holding_section[$holding_key] = $holding;
+  }
+  return $holding_section;
 }
 
 /**
