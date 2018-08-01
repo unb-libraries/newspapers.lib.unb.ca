@@ -283,16 +283,18 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   }
 
   $holdings = _newspapers_core_get_publication_holdings($node->id());
-  foreach ($holdings as $key => $value) {
-    switch ($key) {
-      case 'microfilm':
-      case 'digital':
-      case 'physical':
-        $variables['holding'] = _newspapers_core_get_holding_vars($key, $value);
-        break;
+  if ($holdings) {
+    foreach ($holdings as $key => $value) {
+      switch ($key) {
+        case 'microfilm':
+        case 'digital':
+        case 'physical':
+          $variables['holding'] = _newspapers_core_get_holding_vars($key, $value);
+          break;
 
-      default:
-        throw new Exception("An error occurred. Unknown holding type: $key.");
+        default:
+          throw new Exception("An error occurred. Unknown holding type: $key.");
+      }
     }
   }
 }
