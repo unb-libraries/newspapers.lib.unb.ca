@@ -299,7 +299,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
    * {@inheritdoc}
    */
   public function getHoldingNotes() {
-    return $this->get('holding_uri')->value;
+    return $this->get('holding_notes')->value;
   }
 
   /**
