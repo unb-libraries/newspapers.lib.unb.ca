@@ -7,9 +7,6 @@ $DRUSH_COMMAND cr
 # Squash update emails.
 $DRUSH_COMMAND config-set update.settings notification.emails.0 ''
 
-# Enable serial holding and import taxonomy terms.
-$DRUSH_COMMAND en serial_holding
-
 # Import content.
 if [ "$DEPLOY_ENV" = "local" ]; then
   cp -r ${DRUPAL_TESTING_ROOT}/visual-regression/visreg_content ${DRUPAL_ROOT}/modules/custom
