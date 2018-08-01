@@ -144,6 +144,38 @@ li.search-field:before {
   padding: .5em 0;
 }
 
+.publication fieldset {
+  margin-bottom: 1em;
+}
+.publication legend {
+  font-size: inherit;
+  font-weight: bold;
+}
+.publication .panel-title a {
+  display: block;
+}
+.publication .panel-body {
+  padding-bottom: 0;
+}
+.publication .panel-body dl:last-child {
+  margin-bottom: 0;
+}
+.panel-title > a:before {
+  float: right !important;
+  font-family: FontAwesome;
+  content:"\f068";
+  padding-right: 5px;
+}
+.panel-title > a.collapsed:before {
+  float: right !important;
+  content:"\f067";
+}
+.panel-title > a:hover,
+.panel-title > a:active,
+.panel-title > a:focus  {
+  text-decoration:none;
+}
+
 /* Chosen overrides */
 select[multiple="multiple"] + .form-control {
   border: none;
