@@ -213,28 +213,32 @@
         </dl>
     {% endif %}
 
-   <fieldset>
-       <legend>Holdings: </legend>
     {% if holding.microfilm|length > 0 %}
-        <div role="tablist" aria-multiselectable="true">
-            <div class="panel-title" role="tab" id="headingMicrofilm">
-                <a role="button" data-toggle="collapse" href="#collapseMicrofilm" aria-expanded="false" aria-controls="collapseMicrofilm" class="collapsed">
-                    {% trans %}Microforms{% endtrans %}
-                </a>
-            </div>
-            <div id="collapseMicrofilm" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMicrofilm">
-                <div class="panel-body">
-                    {% for item in holding.microfilm %}
-                        <dl>
-                            <dt>{{ item.label }}:</dt>
-                            <dd>{{ item.value }}</dd>
-                        </dl>
-                    {% endfor %}
+    <fieldset>
+       <legend>Holdings: </legend>
+        {% if holding.microfilm|length > 0 %}
+            <div role="tablist" aria-multiselectable="true">
+                <div class="panel-title" role="tab" id="headingMicrofilm">
+                    <a role="button" data-toggle="collapse" href="#collapseMicrofilm" aria-expanded="false" aria-controls="collapseMicrofilm" class="collapsed">
+                        {% trans %}Microforms{% endtrans %}
+                    </a>
+                </div>
+                <div id="collapseMicrofilm" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMicrofilm">
+                    <div class="panel-body">
+                        {% for item in holding.microfilm %}
+                            {% if item.value %}
+                            <dl>
+                                <dt>{{ item.label }}:</dt>
+                                <dd>{{ item.value }}</dd>
+                            </dl>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
+    </fieldset>
     {% endif %}
-   </fieldset>
 
     {% if language_value %}
         <dl>
