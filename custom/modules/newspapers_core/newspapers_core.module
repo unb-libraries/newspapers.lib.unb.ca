@@ -348,7 +348,7 @@ function newspapers_core_preprocess_page_title(&$variables) {
   if (isset($node)) {
     // Append '(supplementary title)' to title of publications
     // whose 'This is supplementary title' field is checked.
-    if ($node instanceof NodeInterface &&
+    if (is_object($node) &&
       $node->getType() == 'publication' &&
       $node->get('field_is_supplementary_title')->value) {
       $custom_title = [
