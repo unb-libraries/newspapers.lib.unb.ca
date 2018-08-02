@@ -21,7 +21,7 @@ entity.serial_holding.delete_form:
   weight: 10
 
 serials.manage_serial_holdings:
-  title: 'Holdings'
+  title: 'Manage Holdings'
   route_name: serial_holding.manage_serial_holdings
   base_route: entity.node.canonical
   weight: 100
