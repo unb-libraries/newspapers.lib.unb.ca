@@ -538,13 +538,13 @@ function _newspapers_core_get_holding_vars($key, $holding) {
 /**
  * Determine if a node has holding entities referencing it.
  *
- * @param \Drupal\node\Entity\Node $nid
+ * @param int $nid
  *   The id of the node with holding reference.
  *
  * @return array
  *   Associative array of holdings, with olding type as key.
  */
-function _newspapers_core_get_publication_holdings(Node $nid) {
+function _newspapers_core_get_publication_holdings(int $nid) {
   $holding_section = NULL;
 
   $query = Drupal::service('entity.query')
