@@ -17,6 +17,6 @@ entity.digital_serial_title.delete_form:
 
 digital_serial_title.digital_issues:
   route_name: digital_serial_title.digital_issues
-  title: 'Digital Issues'
+  title: 'Manage Digital Issues'
   base_route: entity.node.canonical
   weight: 150
