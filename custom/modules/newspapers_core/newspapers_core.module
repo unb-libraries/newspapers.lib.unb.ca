@@ -498,20 +498,12 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
     default:
       $first_date_txt = "N/A";
   }
-  $frequency = NULL;
-  if ($append_frequency) {
-    $field_frequency = $node
-      ->get('field_frequency')
-      ->getString();
-    if (!empty($field_frequency)) {
-      $frequency = " (" . $field_frequency . ")";
-    }
-  }
+
   if ($first_date_txt == $none_txt && $last_date_txt == $none_txt) {
-    return $none_txt . $frequency;
+    return $none_txt;
   }
   else {
-    return $first_date_txt . " - " . $last_date_txt . $frequency;
+    return $first_date_txt . " - " . $last_date_txt;
   }
 
 }
