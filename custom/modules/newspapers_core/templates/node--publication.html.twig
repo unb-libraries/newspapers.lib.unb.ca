@@ -121,7 +121,7 @@
             {% if count > 1 %}<dt>{% trans %}Earlier titles{% endtrans %}:</dt>
             {% else %}<dt>{% trans %}Earlier title{% endtrans %}:</dt>
             {% endif %}
-            <dd>{{ content.field_serial_relationship_op_pre|field_value }}{{ earlier_titles_up }}</dd>
+            <dd>{{ content.field_serial_relationship_op_pre|field_value }} {{ earlier_titles_up }}</dd>
         </dl>
     {% endif %}
 
@@ -137,7 +137,7 @@
             {% if count > 1 %}<dt>{% trans %}Later titles{% endtrans %}:</dt>
             {% else %}<dt>{% trans %}Later title{% endtrans %}:</dt>
             {% endif %}
-            <dd>{{ content.field_serial_relationship_op_suc|field_value }}{{ later_titles_down }}</dd>
+            <dd>{{ content.field_serial_relationship_op_suc|field_value }} {{ later_titles_down }}</dd>
         </dl>
     {% endif %}
 
@@ -213,6 +213,13 @@
         </dl>
     {% endif %}
 
+    {% if language_value %}
+        <dl>
+            <dt>{{ language_label }}:</dt>
+            <dd>{{ language_value }}</dd>
+        </dl>
+    {% endif %}
+
     {% if holding.microfilm|length > 0 %}
     <fieldset>
        <legend>Holdings: </legend>
@@ -240,12 +247,6 @@
     </fieldset>
     {% endif %}
 
-    {% if language_value %}
-        <dl>
-            <dt>{{ language_label }}:</dt>
-            <dd>{{ language_value }}</dd>
-        </dl>
-    {% endif %}
 </section>
 
 {% if content.field_sample_image|field_value %}
