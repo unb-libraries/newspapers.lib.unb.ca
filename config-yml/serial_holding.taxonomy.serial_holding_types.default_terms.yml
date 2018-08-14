@@ -1,0 +1,10 @@
+langcode: en
+status: true
+mode: default
+items:
+  -
+    name: 'Physical'
+  -
+    name: 'Microfilm'
+  -
+    name: 'Digital'
