@@ -1,6 +1,23 @@
 <!-- Add you custom twig html here -->
-Here is some metadata.
 
-How about more?
+<main>
+    {% if metadata|length > 0 %}
+    <header>
+        <dl>
+            <dt>Descriptor</dt>
+            <dd>Value</dd>
+        </dl>
+    </header>
 
-{{ page_list }}
+    <section>
+        <dl>
+            {% for label,value in metadata %}
+                <dt>{{ label }}</dt>
+                <dd>{{ value }}</dd>
+            {% endfor %}
+        </dl>
+    </section>
+    {% endif %}
+
+    {{ page_list }}
+</main>
