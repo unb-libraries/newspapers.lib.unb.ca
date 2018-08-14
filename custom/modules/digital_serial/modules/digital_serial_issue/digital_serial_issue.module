@@ -40,6 +40,26 @@ function digital_serial_issue_theme() {
  */
 function digital_serial_issue_preprocess_digital_serial_issue(&$variables) {
   $variables['issue_entity'] = $variables['children']['#digital_serial_issue'];
+  $variables['parent_title'] = $variables['issue_entity']->getParentTitle();
+  $variables['metadata'] = [];
+
+  $fields_to_parse = [
+    'issue_title' => t('Issue Title'),
+    'issue_volume' => t('Volume'),
+    'issue_issue' => t('Issue'),
+    'issue_edition' => t('Edition'),
+    'issue_date' => t('Date'),
+    'issue_missingp' => t('Missing Pages'),
+    'issue_errata' => t('Errata'),
+    'langcode' => t('Issue Language'),
+    'issue_media' => t('Media'),
+  ];
+
+  foreach ($fields_to_parse as $field_name => $field_label) {
+    if (!empty($variables['issue_entity']->$field_name->value)) {
+      $variables['metadata'][$field_label->render()] = $variables['issue_entity']->$field_name->value;
+    }
+  }
 
   $view = Views::getView('digital_serial_issue_page_list');
   $view->setDisplay('page_1');
