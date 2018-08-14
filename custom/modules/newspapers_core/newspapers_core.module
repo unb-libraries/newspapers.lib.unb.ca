@@ -320,6 +320,14 @@ function newspapers_core_preprocess_page_title(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_views_exposed_form().
+ */
+function newspapers_core_preprocess_views_exposed_form(&$variables) {
+  // Convert Views exposed filter > text-based date input fields to HTML5 date type.
+  $variables['#attached']['library'][] = 'newspapers_core/views-exposed-filters';
+}
+
+/**
  * Implements hook_theme().
  */
 function newspapers_core_theme() {

@@ -6,3 +6,9 @@ pubform:
     js/pub-form.js: {}
   dependencies:
      - core/jquery
+
+views-exposed-filters:
+  js:
+    js/newspapers_core.views_exposed_filters.js: {}
+  dependencies:
+  - core/jquery
