@@ -1,0 +1,20 @@
+uuid: 1a175622-3363-4343-a50f-5def771e8d16
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: breadcrumbs
+theme: newspapers_lib_unb_ca
+region: header
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

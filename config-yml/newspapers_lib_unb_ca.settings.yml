@@ -23,3 +23,4 @@ table: ''
 header_uri: 'https://lib.unb.ca/core/inc-2015/head-nav.php'
 header_refresh_seconds: '900'
 header_write_path: /app/html/sites/default/files/head-nav.html.twig
+breadcrumb_home: 1
