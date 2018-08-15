@@ -192,6 +192,10 @@ select[multiple="multiple"] + .form-control {
 }
 
 /* Fix overrides.min.css / unb-lib.css conflict */
+.user-logged-in .breadcrumb {
+  display: block;
+}
+
 .select-wrapper select,
 input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
   line-height: normal;
