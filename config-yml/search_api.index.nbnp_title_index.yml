@@ -3,18 +3,18 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_subtitle
-    - field.storage.node.field_title_notes
-    - field.storage.node.field_description
-    - field.storage.node.field_family
     - field.storage.node.field_place_of_publication
-    - field.storage.node.field_subjects
-    - field.storage.node.field_subject_notes
+    - field.storage.node.field_additional_indexed_text
+    - field.storage.node.field_description
+    - field.storage.node.field_frequency
     - field.storage.node.field_issn
     - field.storage.node.field_oclc
+    - field.storage.node.field_subject_notes
+    - field.storage.node.field_subjects
+    - field.storage.node.field_subtitle
+    - field.storage.node.field_title_notes
+    - field.storage.node.field_family
     - field.storage.node.field_publisher
-    - field.storage.node.field_additional_indexed_text
-    - field.storage.node.field_frequency
     - search_api.server.unbherbarium_lib_unb_ca
   module:
     - taxonomy
@@ -150,12 +150,33 @@ field_settings:
         - field.storage.node.field_publisher
       module:
         - taxonomy
+  node_grants:
+    label: 'Node access information'
+    property_path: search_api_node_grants
+    type: string
+    indexed_locked: true
+    type_locked: true
+    hidden: true
+  status:
+    label: null
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+    indexed_locked: true
+    type_locked: true
   title:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
     type: text
     boost: !!float 8
+  uid:
+    label: null
+    datasource_id: 'entity:node'
+    property_path: uid
+    type: integer
+    indexed_locked: true
+    type_locked: true
 datasource_settings:
   'entity:node':
     bundles:
@@ -168,6 +189,9 @@ datasource_settings:
 processor_settings:
   add_url: {  }
   aggregated_field: {  }
+  content_access:
+    weights:
+      preprocess_query: -30
   highlight:
     highlight: always
     highlight_partial: true
