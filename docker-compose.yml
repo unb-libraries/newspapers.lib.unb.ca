@@ -10,6 +10,15 @@ services:
     expose:
      - "3306"
 
+  drupal-solr-lib-unb-ca:
+    image: unblibraries/solr-drupal:7.x
+    ports:
+    - "8983:8983"
+    entrypoint:
+    - docker-entrypoint.sh
+    - solr-precreate
+    - newspapers.lib.unb.ca
+
   newspapers.lib.unb.ca:
     build:
       context: .

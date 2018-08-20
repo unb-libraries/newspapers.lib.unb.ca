@@ -6,5 +6,5 @@ dockworker:
     upstream_image:
       - unblibraries/drupal:alpine-nginx-php7-8.x-composer
       - mysql:5.7
-      - docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+      - unblibraries/solr-drupal:7.x
   options:

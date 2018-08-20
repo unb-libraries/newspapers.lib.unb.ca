@@ -14,7 +14,7 @@ third_party_settings:
     commit_before_finalize: false
     commit_after_finalize: false
 id: solr_newspapers_lib_unb_ca
-name: solr.newspapers.lib.unb.ca
+name: newspapers.lib.unb.ca
 description: ''
 read_only: false
 field_settings: {  }
