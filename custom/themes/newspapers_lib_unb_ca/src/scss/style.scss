@@ -195,6 +195,44 @@ select[multiple="multiple"] + .form-control {
   content: "\e003";
 }
 
+// Elements.
+dd {
+  margin-bottom: .5em;
+}
+// Clear separation of multi-line multiple value list items.
+dd li {
+  line-height: 1.2em;
+  margin-bottom: .5em;
+}
+dd li:nth-child(even) {
+  margin: .3em auto;
+}
+dd li:last-child {
+  margin-bottom: 0;
+}
+p {
+  margin-bottom: 1em;
+}
+.digital-serial-page-meta dl,
+.digital-serial-page-meta dt,
+.digital-serial-page-meta dd {
+  border: 1px solid #ddd;
+}
+.digital-serial-page-meta dt,
+.digital-serial-page-meta dd {
+  float: left;
+  margin: 0;
+  padding: .25em .5%;
+  vertical-align: top;
+}
+.digital-serial-page-meta dt {
+  width: 40%;
+}
+.digital-serial-page-meta dd {
+  width: 60%;
+}
+
+
 /* Owl Carousel overrides */
 .owl-theme .owl-controls .owl-page.active span {
   background: $link-color-hover;
