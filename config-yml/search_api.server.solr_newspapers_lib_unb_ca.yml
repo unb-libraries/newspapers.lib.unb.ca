@@ -1,0 +1,29 @@
+uuid: 2be112de-0df6-4461-b185-0db3b7025b00
+langcode: en
+status: true
+dependencies:
+  module:
+    - search_api_solr
+id: solr_newspapers_lib_unb_ca
+name: solr.newspapers.lib.unb.ca
+description: ''
+backend: search_api_solr
+backend_config:
+  connector: standard
+  connector_config:
+    scheme: http
+    host: gauntlet.hil.unb.ca
+    port: '8983'
+    path: /solr
+    core: newspapers.lib.unb.ca
+    timeout: 5
+    index_timeout: 5
+    optimize_timeout: 10
+    commit_within: 1000
+    solr_version: '7'
+    http_method: AUTO
+  retrieve_data: false
+  highlight_data: false
+  skip_schema_check: false
+  domain: generic
+  site_hash: false
