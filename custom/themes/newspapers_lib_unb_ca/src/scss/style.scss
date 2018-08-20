@@ -11,6 +11,10 @@ figure img {
 figcaption {
   margin-bottom: 1em;
 }
+figcaption .glyphicon {
+  margin-right: .25em;
+  top: 3px;
+}
 a:hover,
 a:active,
 a:focus {
@@ -189,6 +193,34 @@ select[multiple="multiple"] + .form-control {
 .chosen-container-multi .chosen-choices li.search-field input[type="text"]:before {
   font-family: "Glyphicons Halflings";
   content: "\e003";
+}
+
+/* Owl Carousel overrides */
+.owl-theme .owl-controls .owl-page.active span {
+  background: $link-color-hover;
+}
+.owl-theme .owl-controls .owl-buttons div {
+  background: $unb-lib-panel-heading;
+}
+.owl-theme .owl-controls .owl-buttons div:first-child::before {
+  content: '« ';
+}
+.owl-theme .owl-controls .owl-buttons div:last-child::after {
+  content: ' »';
+}
+
+.owl-theme figure img {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  padding: 4px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 
 /* Fix overrides.min.css / unb-lib.css conflict */

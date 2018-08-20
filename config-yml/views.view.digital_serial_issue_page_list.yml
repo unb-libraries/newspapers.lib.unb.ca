@@ -369,7 +369,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<figure class=\"text-center\">\n{{ page_image__target_id }}\n<figcaption>\nPage {{ page_no }}\n</figcaption>\n</figure>"
+            text: "<figure class=\"text-center\">\n{{ page_image__target_id }}\n<figcaption>\n<i class=\"glyphicon glyphicon-zoom-in\"></i>Zoomable high-resolution image of page {{ page_no }}\n</figcaption>\n</figure>"
             make_link: true
             path: '/serials/{{ parent_title }}/issues/{{  parent_issue }}/pages/{{ id }}'
             absolute: false
