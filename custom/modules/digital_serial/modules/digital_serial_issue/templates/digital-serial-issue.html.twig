@@ -9,7 +9,7 @@
         </dl>
     </header>
 
-    <section>
+    <section class="digital-serial-page-meta col-sm-8">
         <dl>
             {% for label,value in metadata %}
                 <dt>{{ label }}</dt>
@@ -17,7 +17,9 @@
             {% endfor %}
         </dl>
     </section>
-    {% endif %}
 
-    {{ page_list }}
+    <aside class="digital-serial-page-preview col-sm-4">
+        {{ page_list }}
+    </aside>
+    {% endif %}
 </main>
