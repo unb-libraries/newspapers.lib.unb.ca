@@ -1,9 +1,0 @@
-uuid: 7e30449d-400f-4ea7-a0e1-4a7b7106914d
-langcode: en
-status: true
-dependencies: {  }
-index_id: unbherbarium_lib_unb_ca
-name: unbherbarium_lib_unb_ca
-num_of_shards: 5
-num_of_replica: 1
-server: drupal_elasticsearch_lib_unb_ca
