@@ -368,8 +368,8 @@ display:
           label: ''
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: "<figure class=\"text-center\">\n{{ page_image__target_id }}\n<figcaption>\nPage {{ page_no }}\n</figcaption>\n</figure>"
             make_link: true
             path: '/serials/{{ parent_title }}/issues/{{  parent_issue }}/pages/{{ id }}'
             absolute: false
@@ -482,6 +482,7 @@ display:
           plugin_id: numeric
       display_extenders: {  }
       use_ajax: false
+      css_class: ''
     cache_metadata:
       max-age: -1
       contexts:
