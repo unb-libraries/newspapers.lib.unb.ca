@@ -425,7 +425,21 @@ display:
           entity_field: page_image
           plugin_id: field
       filters: {  }
-      sorts: {  }
+      sorts:
+        page_sort:
+          id: page_sort
+          table: digital_serial_page
+          field: page_sort
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          entity_type: digital_serial_page
+          entity_field: page_sort
+          plugin_id: standard
       title: 'Digital Serial Issue Page List'
       header: {  }
       footer: {  }
