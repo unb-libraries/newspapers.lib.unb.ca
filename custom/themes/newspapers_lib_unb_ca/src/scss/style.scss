@@ -213,10 +213,9 @@ dd li:last-child {
 p {
   margin-bottom: 1em;
 }
-.digital-serial-page-meta dl,
 .digital-serial-page-meta dt,
 .digital-serial-page-meta dd {
-  border: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 .digital-serial-page-meta dt,
 .digital-serial-page-meta dd {
