@@ -18,6 +18,7 @@ services:
     - docker-entrypoint.sh
     - solr-precreate
     - newspapers.lib.unb.ca
+    - /solr-conf
 
   newspapers.lib.unb.ca:
     image: newspapers.lib.unb.ca:latest
