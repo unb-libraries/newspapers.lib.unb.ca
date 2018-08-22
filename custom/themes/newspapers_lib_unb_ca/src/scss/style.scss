@@ -218,7 +218,7 @@ ul.js-facets-checkbox-links + a::after {
   display: inline-block;
   font-size: smaller;
   margin-left: .25em;
-  vertical-align: bottom;
+  vertical-align: text-bottom;
 }
 ul.js-facets-checkbox-links + a.open::after {
   content: "\e113";
@@ -234,6 +234,9 @@ ul.js-facets-checkbox-links + a.open::after {
 }
 .facets-widget-checkbox {
   margin-bottom: 1em;
+}
+.facets-soft-limit-link {
+  margin-left: .5em;
 }
 
 // Elements.
