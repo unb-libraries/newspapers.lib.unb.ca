@@ -195,6 +195,21 @@ select[multiple="multiple"] + .form-control {
   content: "\e003";
 }
 
+//Facets overrides.
+.facets-widget-checkbox ul {
+  padding-left: .5em;
+}
+.facet-item {
+  list-style: none;
+}
+input[type="checkbox"].facets-checkbox {
+  margin-right: .25em;
+}
+.block-facets h3 {
+  background: $heading-bg;
+  padding: 4px;
+}
+
 // Elements.
 dd {
   margin-bottom: .5em;
