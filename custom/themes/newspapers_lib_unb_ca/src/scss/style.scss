@@ -167,13 +167,13 @@ li.search-field:before {
 }
 .panel-title > a:before {
   float: right !important;
-  font-family: FontAwesome;
-  content:"\f068";
+  font-family: "Glyphicons Halflings";
+  content: "\e113";
   padding-right: 5px;
 }
 .panel-title > a.collapsed:before {
   float: right !important;
-  content:"\f067";
+  content: "\e114";
 }
 .panel-title > a:hover,
 .panel-title > a:active,
@@ -196,6 +196,9 @@ select[multiple="multiple"] + .form-control {
 }
 
 //Facets overrides.
+.block-facets h3:first-child {
+  margin-top: .25em;
+}
 .facets-widget-checkbox ul {
   padding-left: .5em;
 }
@@ -209,14 +212,15 @@ input[type="checkbox"].facets-checkbox {
   background: $heading-bg;
   padding: 4px;
 }
-ul.js-facets-checkbox-links + a::before {
+ul.js-facets-checkbox-links + a::after {
   font-family: "Glyphicons Halflings";
   content: "\e114";
   display: inline-block;
   font-size: smaller;
+  margin-left: .25em;
   vertical-align: bottom;
 }
-ul.js-facets-checkbox-links + a.open::before {
+ul.js-facets-checkbox-links + a.open::after {
   content: "\e113";
 }
 
