@@ -1,26 +1,26 @@
-uuid: 6e2a22a6-c10f-4824-82a8-f081bf4408cc
+uuid: 32c8584c-8cba-4213-9bd5-bbec71ef1483
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.province_state
+    - facets.facet.city_locality
   module:
     - facets
     - system
   theme:
     - newspapers_lib_unb_ca
-id: provincestate
+id: citylocality
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -3
+weight: 0
 provider: null
-plugin: 'facet_block:province_state'
+plugin: 'facet_block:city_locality'
 settings:
-  id: 'facet_block:province_state'
-  label: Province/State
+  id: 'facet_block:city_locality'
+  label: City/Locality
   provider: facets
   label_display: '0'
-  block_id: provincestate
+  block_id: citylocality
 visibility:
   request_path:
     id: request_path
