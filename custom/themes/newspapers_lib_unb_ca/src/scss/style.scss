@@ -223,6 +223,15 @@ ul.js-facets-checkbox-links + a::after {
 ul.js-facets-checkbox-links + a.open::after {
   content: "\e113";
 }
+.facet-item input {
+  vertical-align: top;
+}
+.facet-item input:hover + label,
+.facet-item label:hover {
+  cursor: pointer;
+  color: $link-color-hover;
+  text-decoration: underline;
+}
 
 // Elements.
 dd {
