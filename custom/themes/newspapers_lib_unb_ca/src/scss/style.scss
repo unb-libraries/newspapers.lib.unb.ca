@@ -209,6 +209,16 @@ input[type="checkbox"].facets-checkbox {
   background: $heading-bg;
   padding: 4px;
 }
+ul.js-facets-checkbox-links + a::before {
+  font-family: "Glyphicons Halflings";
+  content: "\e114";
+  display: inline-block;
+  font-size: smaller;
+  vertical-align: bottom;
+}
+ul.js-facets-checkbox-links + a.open::before {
+  content: "\e113";
+}
 
 // Elements.
 dd {

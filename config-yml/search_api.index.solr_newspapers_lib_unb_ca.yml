@@ -38,8 +38,8 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
-  administrative_area_name_1:
-    label: 'Place of Publication » top-level subdivision facet'
+  administrative_area_name_facet:
+    label: 'Facet » top-level subdivision'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:administrative_area_name'
     type: string
@@ -54,8 +54,8 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
-  country_name_1:
-    label: 'Place of Publication » country facet'
+  country_name_facet:
+    label: 'Facet » country'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:country_name'
     type: string

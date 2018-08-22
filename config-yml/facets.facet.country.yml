@@ -1,4 +1,4 @@
-uuid: 18eedc41-5f57-4810-8179-e266aa091654
+uuid: 0008b3ca-9a0b-4a3c-8058-5006f0e66bca
 langcode: en
 status: true
 dependencies:
@@ -7,13 +7,13 @@ dependencies:
     - views.view.search
   module:
     - search_api
-id: place_of_publication_country_
+id: country
 name: Country
-url_alias: place_of_publication_country_
+url_alias: country
 weight: 0
 min_count: 1
-show_only_one_result: true
-field_identifier: country_name_1
+show_only_one_result: false
+field_identifier: country_name_facet
 facet_source_id: 'search_api:views_page__search__search_page'
 widget:
   type: checkbox
@@ -31,13 +31,6 @@ hard_limit: 0
 exclude: false
 only_visible_when_facet_source_is_visible: true
 processor_configs:
-  count_limit:
-    processor_id: count_limit
-    weights:
-      build: 50
-    settings:
-      minimum_items: 1
-      maximum_items: null
   count_widget_order:
     processor_id: count_widget_order
     weights:
