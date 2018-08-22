@@ -6,6 +6,7 @@ dependencies:
     - search_api.index.solr_newspapers_lib_unb_ca
   module:
     - search_api
+    - user
 id: search
 label: search
 module: views
@@ -22,8 +23,9 @@ display:
     position: 0
     display_options:
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access content'
       cache:
         type: tag
         options: {  }
@@ -42,7 +44,7 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: "<div class=\"alert alert-info fade in\">\n    <span class=\"glyphicon glyphicon-question-sign\"></span>\n    Enter 1 or more keyword filters and use the <q>Apply Search</q> button to get results.\n</div>"
+          text_input_required: "<div class=\"alert alert-info fade in\">\n    <span class=\"glyphicon glyphicon-question-sign\"></span>\n    Enter 1 or more keyword filters and use the <em>Apply Search</em> button to get results.\n</div>"
           text_input_required_format: full_html
       pager:
         type: full
@@ -106,14 +108,14 @@ display:
             trim: false
             preserve_tags: ''
             html: false
-          element_type: ''
+          element_type: h3
           element_class: ''
           element_label_type: ''
           element_label_class: ''
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -140,6 +142,59 @@ display:
             multi_type: separator
             multi_separator: ', '
           plugin_id: search_api_field
+        search_api_excerpt:
+          id: search_api_excerpt
+          table: search_api_index_solr_newspapers_lib_unb_ca
+          field: search_api_excerpt
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          plugin_id: search_api
       filters:
         search_api_fulltext:
           id: search_api_fulltext
@@ -183,7 +238,19 @@ display:
           min_length: 3
           fields: {  }
           plugin_id: search_api_fulltext
-      sorts: {  }
+      sorts:
+        search_api_relevance:
+          id: search_api_relevance
+          table: search_api_index_solr_newspapers_lib_unb_ca
+          field: search_api_relevance
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          plugin_id: search_api
       title: Search
       header:
         result:
@@ -217,6 +284,7 @@ display:
       filter_groups:
         operator: AND
         groups: {  }
+      css_class: search-results
     cache_metadata:
       max-age: -1
       contexts:
@@ -224,15 +292,20 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
-  page_1:
+  search_page:
     display_plugin: page
-    id: page_1
+    id: search_page
     display_title: Page
     position: 1
     display_options:
       display_extenders: {  }
       path: search
+      cache:
+        type: none
+      defaults:
+        cache: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -240,4 +313,5 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags: {  }
