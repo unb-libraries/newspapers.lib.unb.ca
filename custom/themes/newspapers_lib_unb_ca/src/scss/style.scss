@@ -232,6 +232,9 @@ ul.js-facets-checkbox-links + a.open::after {
   color: $link-color-hover;
   text-decoration: underline;
 }
+.facets-widget-checkbox {
+  margin-bottom: 1em;
+}
 
 // Elements.
 dd {
