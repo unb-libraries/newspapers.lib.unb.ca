@@ -38,11 +38,27 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
+  administrative_area_name_1:
+    label: 'Place of Publication » top-level subdivision facet'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:administrative_area_name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
   country_name:
     label: 'Place of Publication » The full name of the country.'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:country_name'
     type: text
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
+  country_name_1:
+    label: 'Place of Publication » country facet'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:country_name'
+    type: string
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
@@ -138,21 +154,33 @@ field_settings:
         - field.storage.node.field_publisher
       module:
         - taxonomy
+  node_grants:
+    label: 'Node access information'
+    property_path: search_api_node_grants
+    type: string
+    indexed_locked: true
+    type_locked: true
+    hidden: true
   status:
     label: Published
     datasource_id: 'entity:node'
     property_path: status
     type: boolean
+    indexed_locked: true
+    type_locked: true
   title:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
     type: text
+    boost: !!float 13
   uid:
     label: uid
     datasource_id: 'entity:node'
     property_path: uid
     type: integer
+    indexed_locked: true
+    type_locked: true
 datasource_settings:
   'entity:node':
     bundles:
@@ -165,7 +193,19 @@ datasource_settings:
 processor_settings:
   add_url: {  }
   aggregated_field: {  }
-  entity_status: {  }
+  content_access:
+    weights:
+      preprocess_query: -30
+  highlight:
+    highlight: always
+    highlight_partial: true
+    excerpt: true
+    excerpt_length: 256
+    exclude_fields: {  }
+    prefix: '<strong>'
+    suffix: '</strong>'
+    weights:
+      postprocess_query: 0
   rendered_item: {  }
   solr_date_range:
     weights:

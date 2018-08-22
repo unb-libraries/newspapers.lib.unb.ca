@@ -1,0 +1,29 @@
+uuid: 5f391d6e-b616-4308-a194-6c6717651068
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.place_of_publication_country_
+  module:
+    - facets
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: placeofpublicationcountryfacet
+theme: newspapers_lib_unb_ca
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:place_of_publication_country_'
+settings:
+  id: 'facet_block:place_of_publication_country_'
+  label: Country
+  provider: facets
+  label_display: '0'
+  block_id: placeofpublicationcountryfacet
+visibility:
+  request_path:
+    id: request_path
+    pages: /search
+    negate: false
+    context_mapping: {  }
