@@ -17,6 +17,7 @@ dependencies:
     - field.storage.node.field_issn
     - field.storage.node.field_oclc
     - field.storage.node.field_publisher
+    - field.storage.node.field_sort_title
     - field.storage.node.field_subject_notes
     - field.storage.node.field_subjects
     - field.storage.node.field_title_notes
@@ -47,6 +48,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
+  aggregated_field:
+    label: 'Aggregated Place of Publication'
+    property_path: aggregated_field
+    type: string
+    configuration:
+      type: union
+      fields:
+        - 'entity:node/field_place_of_publication'
   country_name:
     label: 'Place of Publication » The full name of the country.'
     datasource_id: 'entity:node'
@@ -111,6 +120,22 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_oclc
+  field_sort_province:
+    label: 'Sortable place of publication'
+    datasource_id: 'entity:node'
+    property_path: 'field_place_of_publication:administrative_area_name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_place_of_publication
+  field_sort_title:
+    label: 'Sortable title'
+    datasource_id: 'entity:node'
+    property_path: field_sort_title
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_sort_title
   field_subject_notes:
     label: 'Subject Notes'
     datasource_id: 'entity:node'
