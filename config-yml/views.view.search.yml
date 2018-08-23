@@ -3,12 +3,15 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_place_of_publication
+    - field.storage.node.field_sort_title
     - search_api.index.solr_newspapers_lib_unb_ca
   module:
+    - address
     - search_api
     - user
 id: search
-label: search
+label: Search
 module: views
 description: ''
 tag: ''
@@ -68,18 +71,77 @@ display:
             offset_label: Offset
           quantity: 9
       style:
-        type: default
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            field_sort_title: field_sort_title
+            field_place_of_publication: field_place_of_publication
+            country_name_facet: country_name_facet
+            locality_facet: locality_facet
+            administrative_area_name_facet: administrative_area_name_facet
+            field_sort_province: field_sort_province
+          info:
+            field_sort_title:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_place_of_publication:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            country_name_facet:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            locality_facet:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            administrative_area_name_facet:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_sort_province:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: false
       row:
         type: fields
       fields:
-        title:
-          id: title
+        field_sort_title:
+          id: field_sort_title
           table: search_api_index_solr_newspapers_lib_unb_ca
-          field: title
+          field: field_sort_title
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: Title
           exclude: false
           alter:
             alter_text: false
@@ -108,14 +170,14 @@ display:
             trim: false
             preserve_tags: ''
             html: false
-          element_type: h3
+          element_type: ''
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: false
+          element_default_classes: true
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -141,6 +203,76 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
+          plugin_id: search_api_field
+        field_place_of_publication:
+          id: field_place_of_publication
+          table: search_api_datasource_solr_newspapers_lib_unb_ca_entity_node
+          field: field_place_of_publication
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Place of Publication'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: langcode
+          type: address_default
+          settings: {  }
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+          entity_type: node
           plugin_id: search_api_field
         country_name_facet:
           id: country_name_facet
@@ -301,18 +433,18 @@ display:
           multi_type: separator
           multi_separator: ', '
           plugin_id: search_api
-        search_api_excerpt:
-          id: search_api_excerpt
+        field_sort_province:
+          id: field_sort_province
           table: search_api_index_solr_newspapers_lib_unb_ca
-          field: search_api_excerpt
+          field: field_sort_province
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
+          label: 'Place of publication'
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '{{ field_place_of_publication }}'
             make_link: false
             path: ''
             absolute: false
@@ -341,11 +473,11 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
-          empty: '{{ locality_facet }}, {{ administrative_area_name_facet }}'
+          empty: '<small class="text-muted"><i class="glyphicon glyphicon-warning-sign"></i>&nbsp;Undefined</small>'
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
@@ -464,7 +596,9 @@ display:
         - url
         - url.query_args
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.node.field_place_of_publication'
+        - 'config:field.storage.node.field_sort_title'
   search_page:
     display_plugin: page
     id: search_page
@@ -485,4 +619,6 @@ display:
         - url
         - url.query_args
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.node.field_place_of_publication'
+        - 'config:field.storage.node.field_sort_title'
