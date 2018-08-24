@@ -450,6 +450,9 @@ a.btn-add::before {
 }
 
 /* Search results */
+.search-results table a {
+  display: block;
+}
 .search-results .glyphicon {
   font-size: smaller;
   margin-right: .1em;
