@@ -121,17 +121,18 @@ function newspapers_core_node_presave(EntityInterface $node) {
       switch ($first_issue_date_type) {
         case 'exact':
           $blank_the_fields[] = "field_first_issue_approx_date";
-          $first_sort_timestamp = strtotime($first_issue_start_date);
+          $first_sort_timestamp = $date_min_timestamp = strtotime($first_issue_start_date);
           break;
 
         case 'approximate':
           $first_sort_timestamp = (strtotime($first_issue_start_date) + strtotime($first_issue_end_date)) / 2;
+          $date_min_timestamp = strtotime($first_issue_start_date);
           break;
 
         default:
           $blank_the_fields[] = "field_first_issue_date";
           $blank_the_fields[] = "field_first_issue_approx_date";
-          $first_sort_timestamp = NULL;
+          $first_sort_timestamp = $date_min_timestamp = NULL;
       }
 
       // $first_sort_timestamp == false if strtotime invalid format, i.e. null.
@@ -141,6 +142,13 @@ function newspapers_core_node_presave(EntityInterface $node) {
       $node
         ->get('field_first_issue_sort_date')
         ->setValue($first_sort_date);
+
+      $date_min =
+        $date_min_timestamp ? DrupalDateTime::createFromTimestamp($date_min_timestamp)
+          ->format('Y-m-d') : NULL;
+      $node
+        ->get('field_first_issue_search_date')
+        ->setValue($date_min);
 
       $last_issue_daterange = $node
         ->get('field_last_issue_date')
@@ -152,20 +160,28 @@ function newspapers_core_node_presave(EntityInterface $node) {
       $last_issue_date_type = $node
         ->get('field_last_issue_date_type')
         ->getString();
+
       switch ($last_issue_date_type) {
         case 'exact':
           $blank_the_fields[] = "field_last_issue_approx_date";
-          $last_sort_timestamp = strtotime($last_issue_start_date);
+          $date_max_timestamp = $last_sort_timestamp = strtotime($last_issue_start_date);
           break;
 
         case 'approximate':
+          $date_max_timestamp = strtotime($last_issue_end_date);
           $last_sort_timestamp = (strtotime($last_issue_start_date) + strtotime($last_issue_end_date)) / 2;
+          break;
+
+        case 'ongoing':
+          $blank_the_fields[] = "field_last_issue_approx_date";
+          $last_issue_end_date = date("Y-m-d");
+          $date_max_timestamp = $last_sort_timestamp = strtotime($last_issue_end_date);
           break;
 
         default:
           $blank_the_fields[] = "field_last_issue_date";
           $blank_the_fields[] = "field_last_issue_approx_date";
-          $last_sort_timestamp = NULL;
+          $date_max_timestamp = $last_sort_timestamp = NULL;
       }
 
       // $last_sort_timestamp == false if strtotime invalid format, i.e. null.
@@ -175,6 +191,13 @@ function newspapers_core_node_presave(EntityInterface $node) {
       $node
         ->get('field_last_issue_sort_date')
         ->setValue($last_sort_date);
+
+      $date_max =
+        $date_max_timestamp ? DrupalDateTime::createFromTimestamp($date_max_timestamp)
+          ->format('Y-m-d') : NULL;
+      $node
+        ->get('field_last_issue_search_date')
+        ->setValue($date_max);
 
       // Clear family + supplementary field if Is Family checkbox unchecked.
       if (!_newspapers_core_boolean_is_true($node, 'field_this_is_part_of_a_family')) {
@@ -323,7 +346,7 @@ function newspapers_core_preprocess_page_title(&$variables) {
  * Implements hook_preprocess_views_exposed_form().
  */
 function newspapers_core_preprocess_views_exposed_form(&$variables) {
-  // Convert Views exposed filter > text-based date input fields to HTML5 date type.
+  // Convert Views exposed filter > text date input fields to HTML5 date type.
   $variables['#attached']['library'][] = 'newspapers_core/views-exposed-filters';
 }
 
