@@ -14,6 +14,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
+use Drupal\serial_holding\Entity\SerialHolding;
 
 /**
  * Implements hook_FORM_alter().
@@ -539,7 +540,18 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
 
 }
 
-function _newspapers_core_get_holding_vars($key, $holding) {
+/**
+ * Determine if a node has holding entities referencing it.
+ *
+ * @param string $key
+ *   The name of the holding type.
+ * @param \Drupal\serial_holding\Entity\SerialHolding $holding
+ *   The serial holding object.
+ *
+ * @return array
+ *   Associative array of label/value pairs for template holdings variables.
+ */
+function _newspapers_core_get_holding_vars($key, SerialHolding $holding) {
   $holding_variables[$key] = [
     'location' => [
       'label' => 'Location',
@@ -565,7 +577,7 @@ function _newspapers_core_get_holding_vars($key, $holding) {
  *   The id of the node with holding reference.
  *
  * @return array
- *   Associative array of holdings, with olding type as key.
+ *   Associative array of holdings, with holding type as key.
  */
 function _newspapers_core_get_publication_holdings(int $nid) {
   $holding_section = NULL;
