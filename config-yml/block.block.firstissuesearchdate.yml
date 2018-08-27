@@ -1,0 +1,29 @@
+uuid: b564a4a4-04e9-43ce-ac02-ddcf6764c945
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.first_issue_search_date
+  module:
+    - facets
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: firstissuesearchdate
+theme: newspapers_lib_unb_ca
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:first_issue_search_date'
+settings:
+  id: 'facet_block:first_issue_search_date'
+  label: 'First Issue Search Date'
+  provider: facets
+  label_display: '0'
+  block_id: firstissuesearchdate
+visibility:
+  request_path:
+    id: request_path
+    pages: /search
+    negate: false
+    context_mapping: {  }
