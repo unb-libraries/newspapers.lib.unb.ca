@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.publication.field_first_issue_approx_date
     - field.field.node.publication.field_first_issue_date
     - field.field.node.publication.field_first_issue_date_type
+    - field.field.node.publication.field_first_issue_search_date
     - field.field.node.publication.field_first_issue_sort_date
     - field.field.node.publication.field_frequency
     - field.field.node.publication.field_frequency_notes
@@ -20,6 +21,7 @@ dependencies:
     - field.field.node.publication.field_last_issue_approx_date
     - field.field.node.publication.field_last_issue_date
     - field.field.node.publication.field_last_issue_date_type
+    - field.field.node.publication.field_last_issue_search_date
     - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
@@ -43,6 +45,7 @@ dependencies:
     - node.type.publication
   module:
     - address
+    - datetime
     - datetime_range
     - field_group
     - file
@@ -112,6 +115,15 @@ content:
     third_party_settings: {  }
     type: list_default
     region: content
+  field_first_issue_search_date:
+    weight: 28
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_frequency:
     weight: 7
     label: above
@@ -178,6 +190,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
+  field_last_issue_search_date:
+    weight: 29
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
     region: content
   field_oclc:
     weight: 12

@@ -1,0 +1,21 @@
+uuid: 06dd7582-1d05-45ab-8bd6-69624c2c8587
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_last_issue_search_date
+    - node.type.publication
+  module:
+    - datetime
+id: node.publication.field_last_issue_search_date
+field_name: field_last_issue_search_date
+entity_type: node
+bundle: publication
+label: 'Last Issue Search Date'
+description: 'Used for end date index'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

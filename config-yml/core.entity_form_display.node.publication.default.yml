@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.publication.field_first_issue_approx_date
     - field.field.node.publication.field_first_issue_date
     - field.field.node.publication.field_first_issue_date_type
+    - field.field.node.publication.field_first_issue_search_date
     - field.field.node.publication.field_first_issue_sort_date
     - field.field.node.publication.field_frequency
     - field.field.node.publication.field_frequency_notes
@@ -20,6 +21,7 @@ dependencies:
     - field.field.node.publication.field_last_issue_approx_date
     - field.field.node.publication.field_last_issue_date
     - field.field.node.publication.field_last_issue_date_type
+    - field.field.node.publication.field_last_issue_search_date
     - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
@@ -600,6 +602,8 @@ content:
     third_party_settings: {  }
 hidden:
   field_additional_indexed_text: true
+  field_first_issue_search_date: true
   field_first_issue_sort_date: true
+  field_last_issue_search_date: true
   field_last_issue_sort_date: true
   langcode: true

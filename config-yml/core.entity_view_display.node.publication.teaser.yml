@@ -61,6 +61,7 @@ hidden:
   field_first_issue_date: true
   field_first_issue_date_type: true
   field_first_issue_precise_date: true
+  field_first_issue_search_date: true
   field_first_issue_sort_date: true
   field_frequency: true
   field_frequency_notes: true
@@ -73,6 +74,7 @@ hidden:
   field_last_issue_date: true
   field_last_issue_date_type: true
   field_last_issue_precise_date: true
+  field_last_issue_search_date: true
   field_last_issue_sort_date: true
   field_oclc: true
   field_place_of_publication: true
