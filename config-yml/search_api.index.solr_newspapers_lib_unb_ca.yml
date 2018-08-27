@@ -8,19 +8,21 @@ dependencies:
     - search_api
     - node
   config:
-    - field.storage.node.field_place_of_publication
     - field.storage.node.field_additional_indexed_text
     - field.storage.node.field_description
+    - field.storage.node.field_place_of_publication
+    - field.storage.node.field_family
     - field.storage.node.field_first_issue_date
+    - field.storage.node.field_first_issue_search_date
     - field.storage.node.field_frequency
     - field.storage.node.field_issn
+    - field.storage.node.field_last_issue_search_date
     - field.storage.node.field_oclc
+    - field.storage.node.field_publisher
     - field.storage.node.field_sort_title
     - field.storage.node.field_subject_notes
     - field.storage.node.field_subjects
     - field.storage.node.field_title_notes
-    - field.storage.node.field_family
-    - field.storage.node.field_publisher
     - search_api.server.solr_newspapers_lib_unb_ca
 third_party_settings:
   search_api_solr:
@@ -88,6 +90,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_first_issue_date
+  field_first_issue_search_date:
+    label: 'First Issue Search Date'
+    datasource_id: 'entity:node'
+    property_path: field_first_issue_search_date
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_first_issue_search_date
   field_frequency:
     label: Frequency
     datasource_id: 'entity:node'
@@ -104,6 +114,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_issn
+  field_last_issue_search_date:
+    label: 'Last Issue Search Date'
+    datasource_id: 'entity:node'
+    property_path: field_last_issue_search_date
+    type: date
+    dependencies:
+      config:
+        - field.storage.node.field_last_issue_search_date
   field_oclc:
     label: OCLC
     datasource_id: 'entity:node'
