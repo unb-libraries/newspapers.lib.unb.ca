@@ -251,7 +251,7 @@ field_settings:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: solr_text_phonetic
+    type: solr_text_ngram
     boost: !!float 13
   uid:
     label: uid
