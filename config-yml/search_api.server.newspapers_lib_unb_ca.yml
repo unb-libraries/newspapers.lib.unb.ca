@@ -1,0 +1,29 @@
+uuid: 9286fde1-677c-4c94-a44e-f80871f721fa
+langcode: en
+status: true
+dependencies:
+  module:
+    - search_api_solr
+id: newspapers_lib_unb_ca
+name: pages-drupal-solr-lib-unb-ca
+description: ''
+backend: search_api_solr
+backend_config:
+  connector: standard
+  connector_config:
+    scheme: http
+    host: drupal-solr-lib-unb-ca
+    port: '8983'
+    path: /solr
+    core: pages.newspapers.lib.unb.ca
+    timeout: 5
+    index_timeout: 5
+    optimize_timeout: 10
+    commit_within: 1000
+    solr_version: ''
+    http_method: AUTO
+  retrieve_data: false
+  highlight_data: false
+  skip_schema_check: false
+  domain: generic
+  site_hash: false

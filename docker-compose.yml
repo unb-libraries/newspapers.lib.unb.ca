@@ -15,10 +15,9 @@ services:
     ports:
     - "8983:8983"
     entrypoint:
-    - docker-entrypoint.sh
-    - solr-precreate
-    - newspapers.lib.unb.ca
-    - /solr-conf
+    - docker-entrypoint-multiple.sh
+    - newspapers.lib.unb.ca:/solr-conf
+    - pages.newspapers.lib.unb.ca:/solr-conf
 
   newspapers.lib.unb.ca:
     build:
