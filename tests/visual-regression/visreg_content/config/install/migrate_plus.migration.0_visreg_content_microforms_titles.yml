@@ -142,6 +142,7 @@ process:
   field_previous_identifications: uuid
   field_title_notes: title_notes
   title: title
+  field_sort_title: sort_title
 
 destination:
   plugin: entity:node
