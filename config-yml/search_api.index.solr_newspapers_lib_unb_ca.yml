@@ -41,7 +41,7 @@ field_settings:
     label: 'Place of Publication » The full name of the country subdivision (i.e. province).'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:administrative_area_name'
-    type: text
+    type: solr_text_phonetic
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
@@ -57,7 +57,7 @@ field_settings:
     label: 'Place of Publication » The full name of the country.'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:country_name'
-    type: text
+    type: solr_text_phonetic
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
@@ -169,7 +169,7 @@ field_settings:
     label: 'Subject Notes'
     datasource_id: 'entity:node'
     property_path: field_subject_notes
-    type: text
+    type: solr_text_phonetic
     dependencies:
       config:
         - field.storage.node.field_subject_notes
@@ -177,7 +177,7 @@ field_settings:
     label: Subjects
     datasource_id: 'entity:node'
     property_path: field_subjects
-    type: text
+    type: solr_text_phonetic
     dependencies:
       config:
         - field.storage.node.field_subjects
@@ -185,7 +185,7 @@ field_settings:
     label: 'Title Notes'
     datasource_id: 'entity:node'
     property_path: field_title_notes
-    type: text
+    type: solr_text_phonetic
     dependencies:
       config:
         - field.storage.node.field_title_notes
@@ -193,7 +193,7 @@ field_settings:
     label: 'Place of Publication » The locality (i.e. city).'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:locality'
-    type: text
+    type: solr_text_phonetic
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
@@ -219,7 +219,7 @@ field_settings:
     label: 'Publisher » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_publisher:entity:name'
-    type: text
+    type: solr_text_phonetic
     dependencies:
       config:
         - field.storage.node.field_publisher
@@ -251,7 +251,7 @@ field_settings:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: text
+    type: solr_text_phonetic
     boost: !!float 13
   uid:
     label: uid
