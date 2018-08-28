@@ -248,6 +248,14 @@
     </fieldset>
     {% endif %}
 
+
+    {% set digital_issue_view = drupal_view('publication_digital_issue_lister', 'block_1', node.id)|render  %}
+    {% if digital_issue_view|striptags|trim %}
+        <fieldset>
+            <legend>Digital Issues: </legend>
+            {{ digital_issue_view }}
+        </fieldset>
+    {% endif %}
 </section>
 
 {% if content.field_sample_image|field_value %}
