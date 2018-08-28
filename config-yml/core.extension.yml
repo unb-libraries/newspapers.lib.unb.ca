@@ -46,6 +46,7 @@ module:
   rdf: 0
   rest: 0
   search_api: 0
+  search_api_autocomplete: 0
   search_api_db: 0
   search_api_solr: 0
   serialization: 0
