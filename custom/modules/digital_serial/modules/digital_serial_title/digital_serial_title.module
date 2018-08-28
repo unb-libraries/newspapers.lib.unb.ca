@@ -53,6 +53,5 @@ function digital_serial_title_preprocess_digital_serial_title(&$variables) {
  *   The string to serve as label.
  */
 function digital_serial_title_format_label(SerialTitleInterface $digital_serial_title) {
-  $publication = $digital_serial_title->get('parent_title')->entity;
-  return $publication->getTitle();
+  return NULL;
 }

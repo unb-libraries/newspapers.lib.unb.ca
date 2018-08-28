@@ -41,21 +41,32 @@ class DigitalSerialIssueBreadcrumbBuilder implements BreadcrumbBuilderInterface 
     if (!is_object($title_eid)) {
       $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_title');
       $title = $storage->load($title_eid);
+      $parent_title = $title->get('parent_title')->entity;
     }
     else {
       $title = $title_eid;
+      $parent_title = $title->get('parent_title')->entity;
     }
 
-    // Set upstreams breadcrumbs.
+    // Set upstream breadcrumbs.
     $breadcrumb = new Breadcrumb();
     $breadcrumb->addLink(
       Link::createFromRoute(
         $this->t('Newspapers'),
         '<front>')
     );
+
     $breadcrumb->addLink(
       Link::createFromRoute(
-        $title->label(),
+        $parent_title->label(),
+        'entity.node.canonical',
+        ['node' => $parent_title->id()]
+      )
+    );
+
+    $breadcrumb->addLink(
+      Link::createFromRoute(
+        t('Digital Issues'),
         'entity.digital_serial_title.canonical',
         ['digital_serial_title' => $title->id()]
       )
@@ -64,34 +75,7 @@ class DigitalSerialIssueBreadcrumbBuilder implements BreadcrumbBuilderInterface 
     if ($route == 'digital_serial_issue.title_issues') {
       $breadcrumb->addLink(
         Link::createFromRoute(
-          $this->t('Issues'),
-          '<nolink>'
-        )
-      );
-    }
-
-    if ($route == 'digital_serial_issue.title_view_issue') {
-      // Load title object.
-      $issue_eid = $route_match->getParameter('digital_serial_issue');
-
-      if (!is_object($issue_eid)) {
-        $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_issue');
-        $issue = $storage->load($issue_eid);
-      }
-      else {
-        $issue = $issue_eid;
-      }
-
-      $breadcrumb->addLink(
-        Link::createFromRoute(
-          $this->t('Issues'),
-          'digital_serial_issue.title_issues',
-          ['digital_serial_title' => $title->id()]
-        )
-      );
-      $breadcrumb->addLink(
-        Link::createFromRoute(
-          $issue->getDisplayTitle(),
+          $this->t('Manage Issues'),
           '<nolink>'
         )
       );

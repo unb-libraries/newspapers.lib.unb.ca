@@ -37,9 +37,11 @@ class DigitalSerialTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface 
     if (!is_object($title_eid)) {
       $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_title');
       $title = $storage->load($title_eid);
+      $parent_title = $title->get('parent_title')->entity;
     }
     else {
       $title = $title_eid;
+      $parent_title = $title->get('parent_title')->entity;
     }
 
     // Set breadcrumb.
@@ -48,17 +50,21 @@ class DigitalSerialTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface 
       $this->t('Newspapers'),
       '<front>')
     );
+
     $breadcrumb->addLink(
       Link::createFromRoute(
-        $title->label(),
-        'entity.digital_serial_title.canonical',
-        ['digital_serial_title' => $title->id()]
+        $parent_title->label(),
+        'entity.node.canonical',
+        ['node' => $parent_title->id()]
       )
     );
 
-    // Control Caching.
-    $breadcrumb->addCacheTags(["digital_serial_title:{$title->id()}"]);
-    $breadcrumb->addCacheContexts(['url']);
+    $breadcrumb->addLink(
+      Link::createFromRoute(
+        'Digital Issues',
+        '<nolink>'
+      )
+    );
 
     return $breadcrumb;
   }

@@ -1,0 +1,5 @@
+services:
+  newspapers_core.breadcrumb:
+    class: Drupal\newspapers_core\NewspaperTitleBreadcrumbBuilder
+    tags:
+      - { name: breadcrumb_builder, priority: 100 }
