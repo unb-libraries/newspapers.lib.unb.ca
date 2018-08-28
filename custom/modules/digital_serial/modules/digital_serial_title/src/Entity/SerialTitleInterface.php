@@ -74,4 +74,12 @@ interface SerialTitleInterface extends ContentEntityInterface, EntityChangedInte
    */
   public function setPublished($published);
 
+  /**
+   * Returns the parent publication of the digital title.
+   *
+   * @return \Drupal\node\Entity\Node
+   *   The parent publication if one exists.
+   */
+  public function getParentPublication();
+
 }
