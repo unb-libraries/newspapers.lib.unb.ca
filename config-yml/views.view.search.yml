@@ -85,12 +85,18 @@ display:
           summary: ''
           description: ''
           columns:
+            title: title
             field_sort_title: field_sort_title
             field_place_of_publication: field_place_of_publication
             sort_locality: sort_locality
-            field_first_issue_search_date_1: field_first_issue_search_date_1
-            field_last_issue_search_date_1: field_last_issue_search_date_1
+            field_first_issue_search_date_sort: field_first_issue_search_date_sort
+            field_last_issue_search_date_sort: field_last_issue_search_date_sort
           info:
+            title:
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
             field_sort_title:
               sortable: true
               default_sort_order: asc
@@ -110,16 +116,16 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            field_first_issue_search_date_1:
+            field_first_issue_search_date_sort:
               sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            field_last_issue_search_date_1:
+            field_last_issue_search_date_sort:
               sortable: true
-              default_sort_order: asc
+              default_sort_order: desc
               align: ''
               separator: ''
               empty_column: false
@@ -393,10 +399,10 @@ display:
           multi_type: separator
           multi_separator: ', '
           plugin_id: search_api
-        field_first_issue_search_date_1:
-          id: field_first_issue_search_date_1
+        field_first_issue_search_date_sort:
+          id: field_first_issue_search_date_sort
           table: search_api_index_solr_newspapers_lib_unb_ca
-          field: field_first_issue_search_date
+          field: field_first_issue_search_date_sort
           relationship: none
           group_type: group
           admin_label: ''
@@ -437,7 +443,7 @@ display:
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
-          empty: ''
+          empty: '<small class="text-muted"><i class="glyphicon glyphicon-question-sign"></i> Unknown</small>'
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
@@ -464,10 +470,10 @@ display:
             multi_type: separator
             multi_separator: ', '
           plugin_id: search_api_field
-        field_last_issue_search_date_1:
-          id: field_last_issue_search_date_1
+        field_last_issue_search_date_sort:
+          id: field_last_issue_search_date_sort
           table: search_api_index_solr_newspapers_lib_unb_ca
-          field: field_last_issue_search_date
+          field: field_last_issue_search_date_sort
           relationship: none
           group_type: group
           admin_label: ''
@@ -508,7 +514,7 @@ display:
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
-          empty: ''
+          empty: '<small class="text-muted"><i class="glyphicon glyphicon-question-sign"></i> Unknown</small>'
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true

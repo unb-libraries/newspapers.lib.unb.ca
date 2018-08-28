@@ -109,6 +109,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_first_issue_search_date
+  field_first_issue_search_date_sort:
+    label: 'Sortable First Issue Search Date'
+    datasource_id: 'entity:node'
+    property_path: field_first_issue_search_date
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_first_issue_search_date
   field_frequency:
     label: Frequency
     datasource_id: 'entity:node'
@@ -146,6 +154,14 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: field_last_issue_search_date
     type: date
+    dependencies:
+      config:
+        - field.storage.node.field_last_issue_search_date
+  field_last_issue_search_date_sort:
+    label: 'Sortable Last Issue Search Date'
+    datasource_id: 'entity:node'
+    property_path: field_last_issue_search_date
+    type: string
     dependencies:
       config:
         - field.storage.node.field_last_issue_search_date
