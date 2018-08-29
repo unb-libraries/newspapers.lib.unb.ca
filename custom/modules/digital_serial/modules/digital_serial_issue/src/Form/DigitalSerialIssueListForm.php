@@ -5,9 +5,6 @@ namespace Drupal\digital_serial_issue\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\digital_serial_title\Entity\SerialTitle;
-use Drupal\node\Entity\Node;
-use Drupal\node\NodeInterface;
 use Drupal\views\Views;
 
 /**

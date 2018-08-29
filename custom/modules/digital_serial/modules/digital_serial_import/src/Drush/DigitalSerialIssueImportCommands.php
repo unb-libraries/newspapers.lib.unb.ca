@@ -15,16 +15,6 @@ use Symfony\Component\Finder\Finder;
  */
 class DigitalSerialIssueImportCommands extends DrushCommands {
 
-  const ERROR_CURRENT_USER_ROOT = 'This command should almost never be run as root.';
-  const ERROR_DRUPAL_USER_ADMIN = 'This command must be run in Drush with the -u (UID) argument.';
-  const ERROR_EXISTING_ISSUE_EXIST = 'The existing issue of ID [@parent_issue_id] does not exist or is not a digital serial issue entity.';
-  const ERROR_ISSUE_TITLE_MISSING = 'An issue title (--issue-title) is required for new issues.';
-  const ERROR_ISSUE_TIMESTAMP_MISSING = 'An issue timestamp (--issue-timestamp) is required for new issues.';
-  const ERROR_ISSUE_TIMESTAMP_INVALID = 'The issue timestamp (--issue-timestamp) is invalid.';
-  const ERROR_NO_IMAGES_IN_DIR = 'No images with the extension @image_extension were found in @source_dir';
-  const ERROR_PARENT_TITLE_EXIST = 'The parent title ID [@parent_title_id] does not exist or is not a digital serial title entity.';
-  const ERROR_SOURCE_DIRECTORY_MISSING = 'The source directory [@source_dir] is not accessible.';
-
   /**
    * The batch array.
    *
@@ -228,7 +218,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
       if (empty($this->issue)) {
         $this->displayErrorQuit(
           t(
-            self::ERROR_EXISTING_ISSUE_EXIST,
+            'The existing issue of ID [@parent_issue_id] does not exist or is not a digital serial issue entity.',
             [
               '@parent_issue_id' => $this->parent_issue_id,
             ]
@@ -312,7 +302,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
     $user = User::load(\Drupal::currentUser()->id());
     if ($user->id() == 0) {
       $this->displayErrorQuit(
-        t(self::ERROR_DRUPAL_USER_ADMIN)
+        t('This command must be run in Drush with the -u (UID) argument.')
       );
     }
   }
@@ -325,7 +315,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
     if (empty($this->files)) {
       $this->displayErrorQuit(
         t(
-          self::ERROR_NO_IMAGES_IN_DIR,
+          'No images with the extension @image_extension were found in @source_dir',
           [
             '@image_extension' => $this->imageExtension,
             '@source_dir' => $this->sourceDirectory,
@@ -341,7 +331,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
   private function validateIssueTitle() {
     if (empty($this->parent_issue_id) && empty($this->options['issue-title'])) {
       $this->displayErrorQuit(
-        t(self::ERROR_ISSUE_TITLE_MISSING)
+        t('An issue title (--issue-title) is required for new issues.')
       );
     }
   }
@@ -352,13 +342,13 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
   private function validateIssueTimestamp() {
     if (empty($this->parent_issue_id) && empty($this->options['issue-timestamp'])) {
       $this->displayErrorQuit(
-        t(self::ERROR_ISSUE_TIMESTAMP_MISSING)
+        t('An issue timestamp (--issue-timestamp) is required for new issues.')
       );
     }
 
     if (empty($this->parent_issue_id) && !$this->isValidTimeStamp($this->options['issue-timestamp'])) {
       $this->displayErrorQuit(
-        t(self::ERROR_ISSUE_TIMESTAMP_INVALID)
+        t('The issue timestamp (--issue-timestamp) is invalid.')
       );
     }
   }
@@ -386,7 +376,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
     if (empty($this->parentSerialTitle)) {
       $this->displayErrorQuit(
         t(
-          self::ERROR_PARENT_TITLE_EXIST,
+          'The parent title ID [@parent_title_id] does not exist or is not a digital serial title entity.',
           [
             '@parent_title_id' => $this->parentSerialId,
           ]
@@ -405,7 +395,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
     ) {
       $this->displayErrorQuit(
         t(
-          self::ERROR_SOURCE_DIRECTORY_MISSING,
+          'The source directory [@source_dir] is not accessible.',
           [
             '@source_dir' => $this->sourceDirectory,
           ]
@@ -421,7 +411,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
     $processUser = posix_getpwuid(posix_geteuid());
     if ($processUser['name'] == 'root') {
       $this->displayErrorQuit(
-        t(self::ERROR_CURRENT_USER_ROOT)
+        t('This command should almost never be run as root.')
       );
     }
   }

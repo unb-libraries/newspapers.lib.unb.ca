@@ -14,7 +14,7 @@ class SerialHoldingDeleteForm extends ContentEntityDeleteForm {
   /**
    * {@inheritdoc}
    */
-  public function getCancelURL() {
+  public function getCancelUrl() {
     $parent_project = $this->getEntity()->getParentEntity();
     return Url::fromUri("internal:/node/{$parent_project->id()}/holdings");
   }

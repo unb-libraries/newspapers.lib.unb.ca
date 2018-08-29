@@ -4,6 +4,9 @@ namespace Drupal\serial_holding\Entity\Controller;
 
 use Drupal\node\Entity\Node;
 
+/**
+ * SerialHoldingListTitleBuilder object.
+ */
 class SerialHoldingListTitleBuilder {
 
   /**

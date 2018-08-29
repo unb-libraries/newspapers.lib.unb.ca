@@ -10,7 +10,6 @@ use Drupal\Core\Routing\RouteMatchInterface;
 define('SERIAL_HOLDING_ENTITY_REF_FIELD', 'field_serial_holdings');
 define('SERIAL_HOLDING_ENTITY_REF_TYPE', 'publication');
 
-
 /**
  * Implements hook_help().
  */
