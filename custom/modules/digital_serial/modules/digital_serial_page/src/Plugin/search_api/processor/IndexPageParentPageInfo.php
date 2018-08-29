@@ -69,6 +69,38 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
         'processor_id' => $this->getPluginId(),
       ];
       $properties['parent_publication_id'] = new ProcessorProperty($definition);
+
+      $definition = [
+        'label' => $this->t('Parent Publication Title'),
+        'description' => $this->t('The parent publication title'),
+        'type' => 'string',
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['parent_publication_title'] = new ProcessorProperty($definition);
+
+      $definition = [
+        'label' => $this->t('Parent Issue Volume'),
+        'description' => $this->t('The parent issue volume'),
+        'type' => 'string',
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['parent_issue_volume'] = new ProcessorProperty($definition);
+
+      $definition = [
+        'label' => $this->t('Parent Issue Issue'),
+        'description' => $this->t('The parent issue issue'),
+        'type' => 'string',
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['parent_issue_issue'] = new ProcessorProperty($definition);
+
+      $definition = [
+        'label' => $this->t('Parent Issue Date'),
+        'description' => $this->t('The parent issue date'),
+        'type' => 'string',
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['parent_issue_date'] = new ProcessorProperty($definition);
     }
 
     return $properties;
@@ -104,6 +136,34 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
         ->filterForPropertyPath($item->getFields(), NULL, 'parent_publication_id');
       foreach ($fields as $field) {
         $field->addValue($publication_entity->id());
+      }
+
+      // Issue Volume.
+      $fields = $this->getFieldsHelper()
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_publication_title');
+      foreach ($fields as $field) {
+        $field->addValue($publication_entity->getTitle());
+      }
+
+      // Issue Volume.
+      $fields = $this->getFieldsHelper()
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_volume');
+      foreach ($fields as $field) {
+        $field->addValue($issue_entity->getIssueVol());
+      }
+
+      // Issue Issue.
+      $fields = $this->getFieldsHelper()
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_issue');
+      foreach ($fields as $field) {
+        $field->addValue($issue_entity->getIssueIssue());
+      }
+
+      // Issue Date.
+      $fields = $this->getFieldsHelper()
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_date');
+      foreach ($fields as $field) {
+        $field->addValue($issue_entity->get('issue_date')->date);
       }
     }
   }
