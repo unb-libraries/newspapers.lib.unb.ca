@@ -470,4 +470,7 @@ a.btn-add::before {
 .views-field-search-api-excerpt strong {
   color: #000;
 }
-
+/* Override Search API Autocomplete */
+.search-api-autocomplete-search .ui-menu-item:hover {
+  background: inherit;
+}
