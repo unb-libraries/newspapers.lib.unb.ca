@@ -17,14 +17,63 @@ id: pages_newspapers_lib_unb_ca
 name: pages.newspapers.lib.unb.ca
 description: ''
 read_only: false
-field_settings: {  }
+field_settings:
+  page_ocr:
+    label: 'Page OCR'
+    datasource_id: 'entity:digital_serial_page'
+    property_path: page_ocr
+    type: solr_text_ngram
+  parent_digital_issue_id:
+    label: 'Parent Issue ID'
+    property_path: parent_digital_issue_id
+    type: integer
+  parent_issue_issue:
+    label: 'Parent Issue Issue'
+    property_path: parent_issue_issue
+    type: integer
+  parent_issue_volume:
+    label: 'Parent Issue Volume'
+    property_path: parent_issue_volume
+    type: integer
+  parent_publication_title:
+    label: 'Parent Publication Title'
+    property_path: parent_publication_title
+    type: string
 datasource_settings:
   'entity:digital_serial_page': {  }
 processor_settings:
   add_url: {  }
   aggregated_field: {  }
+  highlight:
+    highlight: always
+    highlight_partial: true
+    excerpt: true
+    excerpt_length: 416
+    exclude_fields: {  }
+    prefix: '<strong>'
+    suffix: '</strong>'
+    weights:
+      postprocess_query: 0
+  html_filter:
+    all_fields: false
+    fields:
+      - parent_publication_title
+    title: true
+    alt: true
+    tags:
+      b: 2
+      h1: 5
+      h2: 3
+      h3: 2
+      strong: 2
+    weights:
+      preprocess_index: -15
+      preprocess_query: -15
+  index_parent_page_info: {  }
   rendered_item: {  }
-  solr_date_range: {  }
+  solr_date_range:
+    weights:
+      preprocess_index: 0
 tracker_settings:
   default:
     indexing_order: fifo
