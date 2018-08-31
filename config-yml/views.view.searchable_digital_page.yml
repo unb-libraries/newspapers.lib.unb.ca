@@ -74,68 +74,6 @@ display:
           separator: ''
           hide_empty: false
       fields:
-        parent_digital_issue_id:
-          id: parent_digital_issue_id
-          table: search_api_index_pages_newspapers_lib_unb_ca
-          field: parent_digital_issue_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          set_precision: false
-          precision: 0
-          decimal: .
-          separator: ','
-          format_plural: false
-          format_plural_string: !!binary MQNAY291bnQ=
-          prefix: ''
-          suffix: ''
-          link_to_item: false
-          use_highlighting: false
-          multi_type: separator
-          multi_separator: ', '
-          format_plural_values: {  }
-          plugin_id: search_api_numeric
         page_no:
           id: page_no
           table: search_api_datasource_pages_newspapers_lib_unb_ca_entity_digital_serial_page
@@ -266,7 +204,7 @@ display:
           field: parent_issue_volume
           relationship: none
           group_type: group
-          admin_label: ''
+          admin_label: 'Volume Display'
           label: ''
           exclude: true
           alter:
@@ -313,84 +251,13 @@ display:
           multi_type: separator
           multi_separator: ', '
           plugin_id: search_api
-        page_no_1:
-          id: page_no_1
-          table: search_api_datasource_pages_newspapers_lib_unb_ca_entity_digital_serial_page
-          field: page_no
-          relationship: none
-          group_type: group
-          admin_label: 'Page Number (Link)'
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          field_rendering: true
-          fallback_handler: search_api
-          fallback_options:
-            link_to_item: false
-            use_highlighting: false
-            multi_type: separator
-            multi_separator: ', '
-          entity_type: digital_serial_page
-          plugin_id: search_api_field
-        parent_issue_issue_1:
-          id: parent_issue_issue_1
+        parent_digital_title_id:
+          id: parent_digital_title_id
           table: search_api_index_pages_newspapers_lib_unb_ca
-          field: parent_issue_issue
+          field: parent_digital_title_id
           relationship: none
           group_type: group
-          admin_label: 'Issue Number (Link)'
+          admin_label: ''
           label: ''
           exclude: true
           alter:
@@ -432,11 +299,144 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ','
+          format_plural: false
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
           link_to_item: false
           use_highlighting: false
           multi_type: separator
           multi_separator: ', '
-          plugin_id: search_api
+          format_plural_values: {  }
+          plugin_id: search_api_numeric
+        parent_digital_issue_id:
+          id: parent_digital_issue_id
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: parent_digital_issue_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ','
+          format_plural: false
+          format_plural_string: !!binary Aw==
+          prefix: ''
+          suffix: ''
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          format_plural_values: {  }
+          plugin_id: search_api_numeric
+        parent_digital_page_id:
+          id: parent_digital_page_id
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: parent_digital_page_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ','
+          format_plural: false
+          format_plural_string: !!binary Aw==
+          prefix: ''
+          suffix: ''
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          format_plural_values: {  }
+          plugin_id: search_api_numeric
         parent_publication_title:
           id: parent_publication_title
           table: search_api_index_pages_newspapers_lib_unb_ca
@@ -450,7 +450,7 @@ display:
             alter_text: true
             text: '{{ parent_publication_title }}:{{ parent_issue_volume }}{{ parent_issue_issue }}{{ page_no }}'
             make_link: true
-            path: '/serials/{{ parent_digital_issue_id }}/issues/{{ parent_issue_issue_1 }}/pages/{{ page_no_1 }}'
+            path: '/serials/{{ parent_digital_title_id }}/issues/{{ parent_digital_issue_id }}/pages/{{ parent_digital_page_id }}'
             absolute: false
             external: false
             replace_spaces: false
