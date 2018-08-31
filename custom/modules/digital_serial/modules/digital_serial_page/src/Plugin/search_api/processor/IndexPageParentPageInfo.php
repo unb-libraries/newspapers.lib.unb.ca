@@ -47,6 +47,14 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
 
     if (!$datasource) {
       $definition = [
+        'label' => $this->t('Parent Page ID'),
+        'description' => $this->t('The parent digital Page ID'),
+        'type' => 'integer',
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['parent_digital_page_id'] = new ProcessorProperty($definition);
+
+      $definition = [
         'label' => $this->t('Parent Issue ID'),
         'description' => $this->t('The parent digital Issue ID'),
         'type' => 'integer',
@@ -122,6 +130,13 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
         ->filterForPropertyPath($item->getFields(), NULL, 'parent_digital_issue_id');
       foreach ($fields as $field) {
         $field->addValue($issue_entity->id());
+      }
+
+      // Digital Page ID.
+      $fields = $this->getFieldsHelper()
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_digital_page_id');
+      foreach ($fields as $field) {
+        $field->addValue($page_entity->id());
       }
 
       // Digital Title ID.
