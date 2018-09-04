@@ -5,7 +5,28 @@
  * Contains digital_serial_page.module.
  */
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_entity_presave().
+ */
+function digital_serial_page_entity_presave(EntityInterface $entity) {
+  switch ($entity->bundle()) {
+
+    case 'digital_serial_page':
+      // Avoid multiple whitespaces.
+      $entity->set(
+        'page_ocr',
+        preg_replace(
+          '!\s+!',
+          ' ',
+          $entity->get('page_ocr')->value
+        )
+      );
+      break;
+  }
+}
 
 /**
  * Implements hook_help().
