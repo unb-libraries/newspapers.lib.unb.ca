@@ -119,4 +119,42 @@ interface SerialPageInterface extends ContentEntityInterface, EntityChangedInter
    */
   public function setParentIssueById($issue_id);
 
+  /**
+   * Gets the Serial page OCR.
+   *
+   * @return string
+   *   OCR content of the Serial page.
+   */
+  public function getPageOcr();
+
+  /**
+   * Sets the Serial page OCR.
+   *
+   * @param string $page_ocr
+   *   The Serial page OCR content.
+   *
+   * @return \Drupal\digital_serial_page\Entity\SerialPageInterface
+   *   The called Serial page entity.
+   */
+  public function setPageOcr($page_ocr);
+
+  /**
+   * Gets the Serial page HOCR.
+   *
+   * @return string
+   *   HOCR content of the Serial page.
+   */
+  public function getPageHocr();
+
+  /**
+   * Sets the Serial page HOCR.
+   *
+   * @param string $page_hocr
+   *   The Serial page HOCR content.
+   *
+   * @return \Drupal\digital_serial_page\Entity\SerialPageInterface
+   *   The called Serial page entity.
+   */
+  public function setPageHocr($page_hocr);
+
 }

@@ -9,6 +9,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\digital_serial_issue\Entity\SerialIssueInterface;
 use Drupal\digital_serial_page\Entity\SerialPageInterface;
+use Drupal\digital_serial_page\SerialPageHocr;
 use Drupal\digital_serial_title\Entity\SerialTitleInterface;
 
 /**
@@ -61,6 +62,27 @@ class SerialPageViewerForm extends FormBase {
     $uri = $file->getFileUri();
     $image_path = file_url_transform_relative(file_create_url($uri));
 
+    $overlays = [];
+    $highlight = explode(' ', \Drupal::request()->query->get('highlight'));
+
+    $hocr = $digital_serial_page->getPageHocr();
+    if (!empty($hocr)) {
+      $hocr_obj = new SerialPageHocr($hocr);
+      $results = $hocr_obj->search($highlight, ['case_sensitive' => TRUE]);
+      $page = $hocr_obj->getPageDimensions();
+
+      foreach ($results as $ocr_item) {
+        $bounding_box = $ocr_item['bbox'];
+        $overlays[] = [
+          'x' => $bounding_box['left'] / $page['width'],
+          'y' => $bounding_box['top'] / $page['width'],
+          'width' => ($bounding_box['right'] - $bounding_box['left']) / $page['width'],
+          'height' => ($bounding_box['bottom'] - $bounding_box['top']) / $page['width'],
+          'className' => "digital-serial-page-highlight",
+        ];
+      }
+    }
+
     $form['#attached'] = [
       'library' => [
         'digital_serial_page/openseadragon',
@@ -69,6 +91,7 @@ class SerialPageViewerForm extends FormBase {
       'drupalSettings' => [
         'digital_serial_page' => [
           'jpg_filepath' => $image_path,
+          'overlays' => $overlays,
         ],
       ],
     ];

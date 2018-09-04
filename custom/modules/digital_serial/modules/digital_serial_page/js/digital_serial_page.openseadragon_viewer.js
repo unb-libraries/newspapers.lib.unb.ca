@@ -4,5 +4,6 @@ var viewer = OpenSeadragon({
   tileSources: {
     type: 'image',
     url:  drupalSettings.digital_serial_page.jpg_filepath
-  }
+  },
+  overlays: drupalSettings.digital_serial_page.overlays
 });

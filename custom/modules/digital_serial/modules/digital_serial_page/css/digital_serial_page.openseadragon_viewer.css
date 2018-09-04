@@ -5,3 +5,8 @@
 #digital-serial-page-page-viewer-form > pre {
   background-color: #f6f6f2;
 }
+
+.digital-serial-page-highlight {
+  background-color: #f00;
+  opacity: 0.5;
+}
