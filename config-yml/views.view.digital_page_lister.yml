@@ -704,6 +704,7 @@ display:
         filters: false
         filter_groups: false
         sorts: false
+        css_class: false
       fields:
         parent_digital_title_id:
           id: parent_digital_title_id
@@ -1093,6 +1094,7 @@ display:
             label: ''
           plugin_id: search_api
       display_description: ''
+      css_class: ''
     cache_metadata:
       max-age: -1
       contexts:
