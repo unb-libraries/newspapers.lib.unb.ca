@@ -31,16 +31,25 @@ class SerialPageViewerForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, SerialTitleInterface $digital_serial_title = NULL, SerialIssueInterface $digital_serial_issue = NULL, SerialPageInterface $digital_serial_page = NULL) {
     $form = [];
+    $highlight = explode(' ', \Drupal::request()->query->get('highlight'));
 
+    if (empty($highlight[0])) {
+      $link_text = "Back to " . $digital_serial_issue->getDisplayTitle();
+      $url = "internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}";
+    }
+    else {
+      $link_text = "Back to search results";
+      $url = \Drupal::request()->server->get('HTTP_REFERER');
+    }
     $form['page_view']['back_link'] = [
       '#markup' => Link::fromTextAndUrl(
         $this->t(
-          '< Back to @issue_label',
+          '@link_label',
           [
-            '@issue_label' => $digital_serial_issue->getDisplayTitle(),
+            '@link_label' => $link_text,
           ]
         ),
-        Url::fromUri("internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}")
+        Url::fromUri($url)
       )->toString(),
     ];
 
@@ -63,7 +72,6 @@ class SerialPageViewerForm extends FormBase {
     $image_path = file_url_transform_relative(file_create_url($uri));
 
     $overlays = [];
-    $highlight = explode(' ', \Drupal::request()->query->get('highlight'));
 
     $hocr = $digital_serial_page->getPageHocr();
     if (!empty($hocr)) {

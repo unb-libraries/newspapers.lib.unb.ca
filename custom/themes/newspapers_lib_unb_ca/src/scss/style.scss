@@ -474,3 +474,13 @@ a.btn-add::before {
 .search-api-autocomplete-search .ui-menu-item:hover {
   background: inherit;
 }
+/* High Resolution Image back link */
+#digital-serial-page-page-viewer-form > a::before {
+  font-family: "Glyphicons Halflings";
+  content:"\e251";
+  color: $text-muted;
+  display: inline-block;
+  font-size: smaller;
+  margin-right: 0.25em;
+  vertical-align: text-bottom;
+}
