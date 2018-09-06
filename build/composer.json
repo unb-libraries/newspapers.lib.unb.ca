@@ -106,7 +106,7 @@
         "drupal/conditional_fields": "1.0-alpha4",
         "drupal/config_update": "1.5",
         "drupal/console": "~1.0",
-        "drupal/core": "8.5.6",
+        "drupal/core": "8.6.0",
         "drupal/externalauth": "1.1",
         "drupal/facets": "1.1",
         "drupal/features": "3.7",
