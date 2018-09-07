@@ -1,0 +1,33 @@
+services:
+  instance_initial_content.0_title_migrate_subscriber:
+    class: Drupal\instance_initial_content\Event\TitleMigrateEvent
+    tags:
+      - { name: event_subscriber }
+  instance_initial_content.0_microforms_title_migrate_subscriber:
+    class: Drupal\instance_initial_content\Event\MicroformsTitleMigrateEvent
+    tags:
+      - { name: event_subscriber }
+  instance_initial_content.0_holding_types_migrate_subscriber:
+    class: Drupal\instance_initial_content\Event\MicroformsHoldingMigrateEvent
+    tags:
+    - { name: event_subscriber }
+  instance_initial_content.1_families_migrate_subscriber:
+    class: Drupal\instance_initial_content\Event\MicroformsTitleFamilyMigrateEvent
+    tags:
+      - { name: event_subscriber }
+  instance_initial_content.1_mfholdings_migrate_subscriber:
+    class: Drupal\instance_initial_content\Event\MicroformsTitleHoldingMigrateEvent
+    tags:
+      - { name: event_subscriber }
+  instance_initial_content.1_mfprec_migrate_subscriber:
+    class: Drupal\instance_initial_content\Event\MicroformsTitlePrecMigrateEvent
+    tags:
+      - { name: event_subscriber }
+  instance_initial_content.1_mfsucc_migrate_subscriber:
+    class: Drupal\instance_initial_content\Event\MicroformsTitleSucMigrateEvent
+    tags:
+      - { name: event_subscriber }
+  instance_initial_content.4_page_migrate_subscriber:
+    class: Drupal\instance_initial_content\Event\PageMigrateEvent
+    tags:
+      - { name: event_subscriber }

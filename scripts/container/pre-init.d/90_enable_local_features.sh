@@ -6,11 +6,3 @@ $DRUSH_COMMAND cr
 
 # Squash update emails.
 $DRUSH_COMMAND config-set update.settings notification.emails.0 ''
-
-# Import content.
-if [ "$DEPLOY_ENV" = "local" ]; then
-  cp -r ${DRUPAL_TESTING_ROOT}/visual-regression/visreg_content ${DRUPAL_ROOT}/modules/custom
-  $DRUSH_COMMAND en visreg_content
-  $DRUSH_COMMAND pmu visreg_content migrate migrate_plus migrate_source_csv migrate_tools
-  rm -rf ${DRUPAL_ROOT}/modules/custom/visreg_content
-fi

@@ -7,11 +7,12 @@ LABEL vcs-url="https://github.com/unb-libraries/newspapers.lib.unb.ca"
 
 # Universal environment variables.
 ENV DEPLOY_ENV prod
+ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
 ENV DRUPAL_DEPLOY_CONFIGURATION TRUE
+ENV DRUPAL_IMPORT_CONTENT FALSE
 ENV DRUPAL_SITE_ID newspapers
 ENV DRUPAL_SITE_URI newspapers.lib.unb.ca
 ENV DRUPAL_SITE_UUID NULL
-ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
 
 # Add scripts, remove delete upstream drupal build.
 COPY ./scripts/container /scripts

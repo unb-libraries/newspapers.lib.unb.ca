@@ -29,3 +29,5 @@ services:
       - "80:80"
     env_file:
       - ./env/drupal.env
+    volumes:
+      - ./content:/app/content

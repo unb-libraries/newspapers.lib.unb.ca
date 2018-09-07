@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * @file
+ * Contains instance_initial_content.install.
+ */
+
+use Drupal\node\Entity\Node;
+
+function instance_initial_content_install() {
+  // Get access to drush functions.
+  module_load_include('inc', 'migrate_tools', 'migrate_tools.drush');
+
+  // Determine migrations to run. If there is a CSV file, we assume a migration.
+  $csv_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'instance_initial_content') . '/data/csv';
+  $imports = array_diff(
+    scandir($csv_path),
+    [
+      '.',
+      '..',
+    ]
+  );
+  asort($imports);
+
+  // Run migrations.
+  foreach ($imports as $import) {
+    $pathinfo = pathinfo($import);
+    $migration_name = basename($pathinfo['filename']);
+    drush_migrate_tools_migrate_import($migration_name);
+  }
+
+}
