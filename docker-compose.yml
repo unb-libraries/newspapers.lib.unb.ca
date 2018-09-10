@@ -1,4 +1,4 @@
-version: '3'
+version: '3.6'
 
 services:
   mysql:
@@ -50,3 +50,4 @@ services:
 
 networks:
   newspapers.lib.unb.ca:
+    name: newspapers.lib.unb.ca
