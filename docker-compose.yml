@@ -14,8 +14,8 @@ services:
 
   drupal-solr-lib-unb-ca:
     image: unblibraries/solr-drupal:7.x
-    ports:
-    - "8983:8983"
+    expose:
+    - "8983"
     networks:
     - newspapers.lib.unb.ca
     entrypoint:
