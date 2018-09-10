@@ -656,10 +656,104 @@ display:
         - 'config:field.storage.node.field_last_issue_search_date'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
+  search_block:
+    display_plugin: page
+    id: search_block
+    display_title: 'Search Block'
+    position: 2
+    display_options:
+      display_extenders: {  }
+      exposed_block: true
+      path: search2
+      display_description: ''
+      filters:
+        search_api_fulltext:
+          id: search_api_fulltext
+          table: search_api_index_solr_newspapers_lib_unb_ca
+          field: search_api_fulltext
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: and
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: search_api_fulltext_op
+            label: 'New Brunswick Newspapers'
+            description: ''
+            use_operator: false
+            operator: search_api_fulltext_op
+            identifier: query
+            required: true
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          parse_mode: terms
+          min_length: 3
+          fields: {  }
+          plugin_id: search_api_fulltext
+      defaults:
+        filters: false
+        filter_groups: false
+        title: false
+        exposed_form: false
+        header: false
+        empty: false
+        sorts: false
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      title: 'New Brunswick Newspapers'
+      exposed_form:
+        type: input_required
+        options:
+          submit_button: 'Browse/Search Titles'
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: "<div class=\"alert alert-info fade in\">\r\n    <span class=\"glyphicon glyphicon-question-sign\"></span>\r\n    Search Newspaper Titles\r\n</div>"
+          text_input_required_format: full_html
+      header: {  }
+      empty: {  }
+      sorts: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_first_issue_search_date'
+        - 'config:field.storage.node.field_last_issue_search_date'
+        - 'config:field.storage.node.field_place_of_publication'
+        - 'config:field.storage.node.field_sort_title'
   search_page:
     display_plugin: page
     id: search_page
-    display_title: Page
+    display_title: 'Search Page'
     position: 1
     display_options:
       display_extenders: {  }
@@ -668,6 +762,8 @@ display:
         type: none
       defaults:
         cache: false
+      display_description: ''
+      exposed_block: true
     cache_metadata:
       max-age: -1
       contexts:

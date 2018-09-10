@@ -1,0 +1,29 @@
+uuid: 7aa55ab8-508a-4944-b898-15d58b6a0c35
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.search
+  module:
+    - system
+    - views
+  theme:
+    - newspapers_lib_unb_ca
+id: exposedformsearchsearch_page
+theme: newspapers_lib_unb_ca
+region: content
+weight: -3
+provider: null
+plugin: 'views_exposed_filter_block:search-search_page'
+settings:
+  id: 'views_exposed_filter_block:search-search_page'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: "<front>\r\n/search"
+    negate: false
+    context_mapping: {  }
