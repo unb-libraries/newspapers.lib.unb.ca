@@ -7,7 +7,7 @@ dependencies:
 id: primaryadminactions
 theme: newspapers_lib_unb_ca
 region: content
-weight: 0
+weight: -5
 provider: null
 plugin: local_actions_block
 settings:

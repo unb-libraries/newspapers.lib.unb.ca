@@ -9,7 +9,7 @@ dependencies:
 id: mainpagecontent
 theme: newspapers_lib_unb_ca
 region: content
-weight: 1
+weight: -2
 provider: null
 plugin: system_main_block
 settings:
