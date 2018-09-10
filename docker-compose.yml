@@ -9,11 +9,15 @@ services:
       - ./env/mysql.env
     expose:
      - "3306"
+    networks:
+    - newspapers.lib.unb.ca
 
   drupal-solr-lib-unb-ca:
     image: unblibraries/solr-drupal:7.x
     ports:
     - "8983:8983"
+    networks:
+    - newspapers.lib.unb.ca
     entrypoint:
     - docker-entrypoint-multiple.sh
     - newspapers.lib.unb.ca:/solr-conf
@@ -30,6 +34,8 @@ services:
       - "80"
     ports:
       - "3095:80"
+    networks:
+      - newspapers.lib.unb.ca
     env_file:
       - ./env/drupal.env
     volumes:
@@ -38,3 +44,6 @@ services:
       - ./custom/modules:/app/modules/custom
       - ./custom/themes:/app/themes/custom
       - ./tests:/app/tests
+
+networks:
+  newspapers.lib.unb.ca:
