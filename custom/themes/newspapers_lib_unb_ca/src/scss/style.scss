@@ -490,9 +490,10 @@ a.btn-add::before {
   display: none;
 }
 .path-frontpage section.block-views-exposed-filter-blocksearch-search-page {
-  background: url(../img/newspapers-and-glasses.png) 100% 100%;
+  background: url(../img/newspapers-and-glasses.png) center center no-repeat;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0, 0.9); /* Black with a little bit see-through */
+  background-size: cover;
   min-height: 500px;
   text-align: center;
 }
