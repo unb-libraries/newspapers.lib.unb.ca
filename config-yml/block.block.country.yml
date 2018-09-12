@@ -12,7 +12,7 @@ dependencies:
 id: country
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -7
+weight: -8
 provider: null
 plugin: 'facet_block:country'
 settings:

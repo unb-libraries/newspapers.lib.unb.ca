@@ -178,7 +178,7 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
       $fields = $this->getFieldsHelper()
         ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_date');
       foreach ($fields as $field) {
-        $field->addValue($issue_entity->get('issue_date')->date);
+        $field->addValue($issue_entity->get('issue_date')->getString());
       }
     }
   }

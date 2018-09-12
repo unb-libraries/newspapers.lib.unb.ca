@@ -1,26 +1,26 @@
-uuid: e96dc46c-488b-454c-b94a-a789a6736041
+uuid: bc8c7bef-4c2d-4211-ab47-856d5cf91d30
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.issue_number
+    - facets.facet.issue_date
   module:
     - facets
     - system
   theme:
     - newspapers_lib_unb_ca
-id: issuenumber
+id: issuedate
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -2
+weight: 0
 provider: null
-plugin: 'facet_block:issue_number'
+plugin: 'facet_block:issue_date'
 settings:
-  id: 'facet_block:issue_number'
-  label: 'Issue Number'
+  id: 'facet_block:issue_date'
+  label: 'Issue Date'
   provider: facets
   label_display: '0'
-  block_id: issuenumber
+  block_id: issuedate
 visibility:
   request_path:
     id: request_path

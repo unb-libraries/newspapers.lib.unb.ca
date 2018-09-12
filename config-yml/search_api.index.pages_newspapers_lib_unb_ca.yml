@@ -35,6 +35,10 @@ field_settings:
     label: 'Parent Digital Title ID'
     property_path: parent_digital_title_id
     type: integer
+  parent_issue_date:
+    label: 'Parent Issue Date'
+    property_path: parent_issue_date
+    type: date
   parent_issue_issue:
     label: 'Parent Issue Issue'
     property_path: parent_issue_issue
