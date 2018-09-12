@@ -1,4 +1,4 @@
-version: '2'
+version: '3.6'
 
 services:
   mysql:
@@ -9,11 +9,15 @@ services:
       - ./env/mysql.env
     expose:
      - "3306"
+    networks:
+    - newspapers.lib.unb.ca
 
   drupal-solr-lib-unb-ca:
     image: unblibraries/solr-drupal:7.x
-    ports:
-    - "8983:8983"
+    expose:
+    - "8983"
+    networks:
+    - newspapers.lib.unb.ca
     entrypoint:
     - docker-entrypoint-multiple.sh
     - newspapers.lib.unb.ca:/solr-conf
@@ -23,11 +27,20 @@ services:
     image: newspapers.lib.unb.ca:latest
     restart: always
     container_name: newspapers.lib.unb.ca
+    depends_on:
+      - mysql
+      - drupal-solr-lib-unb-ca
     expose:
       - "80"
     ports:
       - "80:80"
+    networks:
+      - newspapers.lib.unb.ca
     env_file:
       - ./env/drupal.env
     volumes:
       - ./content:/app/content
+
+networks:
+  newspapers.lib.unb.ca:
+    name: newspapers.lib.unb.ca
