@@ -1124,6 +1124,7 @@ display:
         filter_groups: false
         exposed_form: false
         pager: false
+        cache: false
       fields:
         page_no:
           id: page_no
@@ -1702,6 +1703,8 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+      cache:
+        type: none
     cache_metadata:
       max-age: -1
       contexts:

@@ -1,29 +1,29 @@
-uuid: 9b9a9fe8-56a5-4bbf-8744-ec4dffe92e3f
+uuid: 6a6eb089-c097-429a-bad6-65416e51d18d
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.country
+    - facets.facet.volume_number
   module:
     - facets
     - system
   theme:
     - newspapers_lib_unb_ca
-id: country
+id: volumenumber
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -7
+weight: -2
 provider: null
-plugin: 'facet_block:country'
+plugin: 'facet_block:volume_number'
 settings:
-  id: 'facet_block:country'
-  label: Country
+  id: 'facet_block:volume_number'
+  label: 'Volume Number'
   provider: facets
   label_display: '0'
-  block_id: country
+  block_id: volumenumber
 visibility:
   request_path:
     id: request_path
-    pages: /search
+    pages: /page-search
     negate: false
     context_mapping: {  }

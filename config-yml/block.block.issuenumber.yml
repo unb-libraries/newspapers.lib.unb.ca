@@ -1,29 +1,29 @@
-uuid: 9b9a9fe8-56a5-4bbf-8744-ec4dffe92e3f
+uuid: e96dc46c-488b-454c-b94a-a789a6736041
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.country
+    - facets.facet.issue_number
   module:
     - facets
     - system
   theme:
     - newspapers_lib_unb_ca
-id: country
+id: issuenumber
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -7
+weight: -1
 provider: null
-plugin: 'facet_block:country'
+plugin: 'facet_block:issue_number'
 settings:
-  id: 'facet_block:country'
-  label: Country
+  id: 'facet_block:issue_number'
+  label: 'Issue Number'
   provider: facets
   label_display: '0'
-  block_id: country
+  block_id: issuenumber
 visibility:
   request_path:
     id: request_path
-    pages: /search
+    pages: /page-search
     negate: false
     context_mapping: {  }
