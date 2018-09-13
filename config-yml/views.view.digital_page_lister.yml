@@ -1676,7 +1676,7 @@ display:
           empty: true
           tokenize: true
           content:
-            value: "<div class=\"alert alert-warning fade in\">\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n    No results were found for <b>{{ filters.search_api_fulltext }}</b>.\n</div>"
+            value: "<div class=\"alert alert-warning fade in\">\r\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No results were found<span class=\"results-{{ filters.search_api_fulltext }}\"> for <b>{{ filters.search_api_fulltext }}</b></span>.\r\n</div>"
             format: full_html
           plugin_id: text
       filters:
