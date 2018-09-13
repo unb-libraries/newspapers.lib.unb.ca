@@ -461,6 +461,10 @@ a.btn-add::before {
 .search-results .views-row {
   margin-bottom: 1.5em;
 }
+/* Empty search no-results text hack */
+.search-results .results- {
+  display: none;
+}
 .search-results h3 {
   margin-bottom: 0;
 }
