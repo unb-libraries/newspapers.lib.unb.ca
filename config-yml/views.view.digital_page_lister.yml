@@ -1761,6 +1761,7 @@ display:
           quantity: 9
       cache:
         type: none
+      title: 'Search digital fulltext'
     cache_metadata:
       max-age: -1
       contexts:
