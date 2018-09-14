@@ -705,6 +705,7 @@ display:
         filter_groups: false
         sorts: false
         css_class: false
+        pager: false
       fields:
         parent_digital_title_id:
           id: parent_digital_title_id
@@ -1053,12 +1054,12 @@ display:
           rewindSpeed: '1000'
           autoPlay: 0
           stopOnHover: 0
-          navigation: 0
+          navigation: 1
           prevText: prev
           nextText: next
           rewindNav: 1
           scrollPerPage: 0
-          pagination: 1
+          pagination: 0
           paginationNumbers: 0
           responsive: 1
           responsiveRefreshRate: '200'
@@ -1095,13 +1096,16 @@ display:
           plugin_id: search_api
       display_description: ''
       css_class: ''
+      pager:
+        type: none
+        options:
+          offset: 0
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
         - user.permissions
       tags: {  }
   page_search:
