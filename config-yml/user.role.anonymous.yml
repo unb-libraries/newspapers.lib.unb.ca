@@ -11,3 +11,5 @@ is_admin: false
 permissions:
   - 'access content'
   - 'use text format restricted_html'
+  - 'view published serial issue entities'
+  - 'view published serial page entities'
