@@ -7,7 +7,6 @@ use Drupal\search_api\IndexInterface;
 use Drupal\search_api\Item\ItemInterface;
 use Drupal\search_api\Processor\ProcessorPluginBase;
 use Drupal\search_api\Processor\ProcessorProperty;
-use Drupal\address;
 
 /**
  * Adds the parent issue and title info to indexed pages.
