@@ -414,7 +414,7 @@ class SerialPageHocr {
    *   The XPath predicate to match the given term exactly.
    */
   protected function getCaseSensitiveMatchTermExpression($term, $node = 'text()') {
-    return "$node = '{$term}'";
+    return "contains($node, '{$term}')";
   }
 
   /**
@@ -430,7 +430,7 @@ class SerialPageHocr {
    */
   protected function getCaseInsensitiveMatchTermExpression($term, $node = 'text()') {
     $term = mb_strtolower($term);
-    return "php:functionString('mb_strtolower', $node) = '{$term}'";
+    return "contains(php:functionString('mb_strtolower', $node), '{$term}')";
   }
 
 }
