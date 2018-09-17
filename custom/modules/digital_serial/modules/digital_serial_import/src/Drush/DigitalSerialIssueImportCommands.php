@@ -276,7 +276,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
     foreach ($this->files as $page_image_filepath) {
       $page_no = pathinfo($page_image_filepath, PATHINFO_FILENAME);
       $page_ocr_filepath = $this->replaceFileExtension($page_image_filepath, 'txt');
-      $page_hocr_filepath = $this->replaceFileExtension($page_image_filepath, 'html');
+      $page_hocr_filepath = $this->replaceFileExtension($page_image_filepath, 'hocr');
 
       $this->batch['operations'][] = [
         [
@@ -459,8 +459,8 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
       'page_no' => $page_no,
       'page_sort' => $page_sort,
       'page_image' => $image_file->id(),
-      'page_ocr' => $page_ocr_filepath,
-      'page_hocr' => $page_hocr_filepath,
+      'page_ocr' => $ocr_contents,
+      'page_hocr' => $hocr_contents,
       'parent_issue' => $parent_issue,
       'status' => TRUE,
     ]);
