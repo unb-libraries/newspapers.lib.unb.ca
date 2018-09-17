@@ -6,6 +6,7 @@ dependencies:
     - image.style.large
     - search_api.index.pages_newspapers_lib_unb_ca
   module:
+    - digital_serial_issue
     - image
     - owlcarousel
     - search_api
@@ -641,7 +642,13 @@ display:
             value: "<div class=\"alert alert-warning fade in\">\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n    No results were found.\n</div>"
             format: full_html
           plugin_id: text
-      relationships: {  }
+      relationships:
+        parent_issue:
+          id: parent_issue
+          table: search_api_datasource_pages_newspapers_lib_unb_ca_entity_digital_serial_page
+          field: parent_issue
+          entity_type: digital_serial_page
+          plugin_id: search_api
       arguments:
         parent_digital_issue_id:
           id: parent_digital_issue_id
@@ -1130,6 +1137,7 @@ display:
         pager: false
         cache: false
         title: false
+        relationships: false
       fields:
         page_no:
           id: page_no
@@ -1547,59 +1555,6 @@ display:
           multi_type: separator
           multi_separator: ', '
           plugin_id: search_api
-        search_api_excerpt:
-          id: search_api_excerpt
-          table: search_api_index_pages_newspapers_lib_unb_ca
-          field: search_api_excerpt
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: text-muted
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          link_to_item: false
-          use_highlighting: false
-          multi_type: separator
-          multi_separator: ', '
-          plugin_id: search_api
         parent_issue_date:
           id: parent_issue_date
           table: search_api_index_pages_newspapers_lib_unb_ca
@@ -1644,6 +1599,112 @@ display:
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          plugin_id: search_api
+        parent_issue_locality:
+          id: parent_issue_locality
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: parent_issue_locality
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          plugin_id: search_api
+        search_api_excerpt:
+          id: search_api_excerpt
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: search_api_excerpt
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: text-muted
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -1766,6 +1827,7 @@ display:
       cache:
         type: none
       title: 'Search digital fulltext'
+      relationships: {  }
     cache_metadata:
       max-age: -1
       contexts:

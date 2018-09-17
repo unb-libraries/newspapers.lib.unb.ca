@@ -1,26 +1,26 @@
-uuid: bc8c7bef-4c2d-4211-ab47-856d5cf91d30
+uuid: 53389814-a36d-469d-a7dd-3484b9a4d03a
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.issue_date
+    - facets.facet.city_town
   module:
     - facets
     - system
   theme:
     - newspapers_lib_unb_ca
-id: issuedate
+id: citytown
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -3
+weight: -1
 provider: null
-plugin: 'facet_block:issue_date'
+plugin: 'facet_block:city_town'
 settings:
-  id: 'facet_block:issue_date'
-  label: 'Issue Date'
+  id: 'facet_block:city_town'
+  label: City/Town
   provider: facets
   label_display: '0'
-  block_id: issuedate
+  block_id: citytown
 visibility:
   request_path:
     id: request_path

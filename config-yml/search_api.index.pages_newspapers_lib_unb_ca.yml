@@ -43,6 +43,10 @@ field_settings:
     label: 'Parent Issue Issue'
     property_path: parent_issue_issue
     type: integer
+  parent_issue_locality:
+    label: 'Parent Issue City'
+    property_path: parent_issue_locality
+    type: string
   parent_issue_volume:
     label: 'Parent Issue Volume'
     property_path: parent_issue_volume

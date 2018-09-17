@@ -7,6 +7,7 @@ use Drupal\search_api\IndexInterface;
 use Drupal\search_api\Item\ItemInterface;
 use Drupal\search_api\Processor\ProcessorPluginBase;
 use Drupal\search_api\Processor\ProcessorProperty;
+use Drupal\address;
 
 /**
  * Adds the parent issue and title info to indexed pages.
@@ -109,6 +110,14 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
         'processor_id' => $this->getPluginId(),
       ];
       $properties['parent_issue_date'] = new ProcessorProperty($definition);
+
+      $definition = [
+        'label' => $this->t('Parent Issue Locality'),
+        'description' => $this->t('The parent issue place of publication city/etc'),
+        'type' => 'string',
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['parent_issue_locality'] = new ProcessorProperty($definition);
     }
 
     return $properties;
@@ -174,11 +183,11 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
         $field->addValue($issue_entity->getIssueIssue());
       }
 
-      // Issue Date.
+      // Issue City Location.
       $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_date');
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_locality');
       foreach ($fields as $field) {
-        $field->addValue($issue_entity->get('issue_date')->getString());
+        $field->addValue($publication_entity->get('field_place_of_publication')->first()->getLocality());
       }
     }
   }
