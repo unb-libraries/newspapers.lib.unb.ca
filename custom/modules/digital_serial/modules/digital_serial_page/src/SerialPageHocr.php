@@ -288,7 +288,6 @@ class SerialPageHocr {
   public function search(array $terms, array $options = []) {
     $options += [
       'classes' => ['ocrx_word'],
-      'case_sensitive' => FALSE,
     ];
     $nodes = $this->findTermNodes($terms, $options);
     return $nodes ? $this->getProperties($nodes) : [];

@@ -76,7 +76,7 @@ class SerialPageViewerForm extends FormBase {
     $hocr = $digital_serial_page->getPageHocr();
     if (!empty($hocr)) {
       $hocr_obj = new SerialPageHocr($hocr);
-      $results = $hocr_obj->search($highlight, ['case_sensitive' => TRUE]);
+      $results = $hocr_obj->search($highlight, ['case_sensitive' => FALSE]);
       $page = $hocr_obj->getPageDimensions();
 
       foreach ($results as $ocr_item) {
