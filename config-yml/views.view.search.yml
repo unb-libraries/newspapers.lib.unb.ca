@@ -178,7 +178,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -242,14 +242,14 @@ display:
             trim: false
             preserve_tags: ''
             html: false
-          element_type: '0'
+          element_type: ''
           element_class: ''
           element_label_type: ''
           element_label_class: ''
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: false
+          element_default_classes: true
           empty: '<span class="text-muted">Title undefined</span>'
           hide_empty: false
           empty_zero: false
@@ -406,7 +406,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'First Issue Date'
+          label: '1st Issue Date'
           exclude: false
           alter:
             alter_text: false
@@ -643,6 +643,7 @@ display:
         operator: AND
         groups: {  }
       css_class: search-results
+      use_ajax: false
     cache_metadata:
       max-age: -1
       contexts:
