@@ -10,6 +10,7 @@ weight: 1
 is_admin: false
 permissions:
   - 'access content'
+  - 'use search_api_autocomplete for search'
   - 'use text format basic_html'
   - 'view published serial issue entities'
   - 'view published serial page entities'
