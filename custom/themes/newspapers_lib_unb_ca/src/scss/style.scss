@@ -422,6 +422,9 @@ a.btn-add::before {
 .no-gutters > aside {
   padding-right: 0;
 }
+.no-wrap {
+  white-space: nowrap;
+}
 
 /* Chosen + Bootstrap */
 .select-wrapper .chosen-container {
@@ -461,6 +464,28 @@ a.btn-add::before {
 .search-results .views-row {
   margin-bottom: 1.5em;
 }
+.search-results .table > thead > tr > th {
+  padding: 0;
+}
+.table > thead:first-child > tr:first-child > th[class*="-sort"] {
+  border-top: 2px solid #ddd;
+}
+th[class*="-sort"] a {
+  padding: .5em;
+  white-space: nowrap;
+}
+th[class*="-sort"] a:focus,
+th[class*="-sort"] a:hover {
+  background: #f9f9f9;
+}
+th[class*="-sort"] a::before {
+  content: "\e150";
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-size: x-small;
+  margin-right: 0.3em;
+  white-space: nowrap;
+}
 /* Empty search no-results text hack */
 .search-results .results- {
   display: none;
@@ -478,6 +503,7 @@ a.btn-add::before {
 .search-api-autocomplete-search .ui-menu-item:hover {
   background: inherit;
 }
+
 /* High Resolution Image back link */
 #digital-serial-page-page-viewer-form > a::before {
   font-family: "Glyphicons Halflings";
