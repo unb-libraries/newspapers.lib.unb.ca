@@ -2,11 +2,12 @@
 
 namespace Drupal\digital_serial_title;
 
-use Drupal\Core\Breadcrumb\BreadcrumbBuilderInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Breadcrumb\Breadcrumb;
+use Drupal\Core\Breadcrumb\BreadcrumbBuilderInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 
 /**
  * Breadcrumb builder for digital serials.
@@ -46,9 +47,19 @@ class DigitalSerialTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface 
 
     // Set breadcrumb.
     $breadcrumb = new Breadcrumb();
-    $breadcrumb->addLink(Link::createFromRoute(
-      $this->t('Newspapers'),
-      '<front>')
+
+    $breadcrumb->addLink(
+      Link::fromTextAndUrl(
+        $this->t('UNB Libraries'),
+        Url::fromUri('https://lib.unb.ca')
+      )
+    );
+
+    $breadcrumb->addLink(
+      Link::createFromRoute(
+        $this->t('Newspapers'),
+        '<front>'
+      )
     );
 
     $breadcrumb->addLink(
