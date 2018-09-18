@@ -73,21 +73,24 @@ class SerialPageViewerForm extends FormBase {
 
     $overlays = [];
     $highlight = explode(' ', \Drupal::request()->query->get('highlight'));
-    $hocr = $digital_serial_page->getPageHocr();
-    if (!empty($hocr)) {
-      $hocr_obj = new SerialPageHocr($hocr);
-      $results = $hocr_obj->search($highlight, ['case_sensitive' => FALSE]);
-      $page = $hocr_obj->getPageDimensions();
 
-      foreach ($results as $ocr_item) {
-        $bounding_box = $ocr_item['bbox'];
-        $overlays[] = [
-          'x' => $bounding_box['left'] / $page['width'],
-          'y' => $bounding_box['top'] / $page['width'],
-          'width' => ($bounding_box['right'] - $bounding_box['left']) / $page['width'],
-          'height' => ($bounding_box['bottom'] - $bounding_box['top']) / $page['width'],
-          'className' => "digital-serial-page-highlight",
-        ];
+    if (!empty($highlight[0])) {
+      $hocr = $digital_serial_page->getPageHocr();
+      if (!empty($hocr)) {
+        $hocr_obj = new SerialPageHocr($hocr);
+        $results = $hocr_obj->search($highlight, ['case_sensitive' => FALSE]);
+        $page = $hocr_obj->getPageDimensions();
+
+        foreach ($results as $ocr_item) {
+          $bounding_box = $ocr_item['bbox'];
+          $overlays[] = [
+            'x' => $bounding_box['left'] / $page['width'],
+            'y' => $bounding_box['top'] / $page['width'],
+            'width' => ($bounding_box['right'] - $bounding_box['left']) / $page['width'],
+            'height' => ($bounding_box['bottom'] - $bounding_box['top']) / $page['width'],
+            'className' => "digital-serial-page-highlight",
+          ];
+        }
       }
     }
 
