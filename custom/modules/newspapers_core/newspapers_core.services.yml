@@ -3,3 +3,8 @@ services:
     class: Drupal\newspapers_core\NewspaperTitleBreadcrumbBuilder
     tags:
       - { name: breadcrumb_builder, priority: 100 }
+
+  newspapers_core.homepage_breadcrumb:
+    class: Drupal\newspapers_core\HomePageBreadcrumbBuilder
+    tags:
+    - { name: breadcrumb_builder, priority: 100 }
