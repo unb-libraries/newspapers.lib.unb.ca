@@ -1,0 +1,29 @@
+uuid: 31f9155d-26cd-40c5-8af7-933a41717528
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.parent_issue_province
+  module:
+    - facets
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: parentissueprovince
+theme: newspapers_lib_unb_ca
+region: sidebar_first
+weight: -1
+provider: null
+plugin: 'facet_block:parent_issue_province'
+settings:
+  id: 'facet_block:parent_issue_province'
+  label: 'Parent Issue Province'
+  provider: facets
+  label_display: '0'
+  block_id: parentissueprovince
+visibility:
+  request_path:
+    id: request_path
+    pages: '/page-search*'
+    negate: false
+    context_mapping: {  }
