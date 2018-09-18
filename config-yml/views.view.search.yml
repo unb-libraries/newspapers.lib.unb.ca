@@ -619,7 +619,7 @@ display:
           group_type: group
           admin_label: ''
           empty: false
-          content: "<div class=\"alert alert-success fade in\">\n    <span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span>\n    Displaying @start - @end of @total results\n</div>"
+          content: "<h2 class=\"alert alert-success fade in\">\r\n    <span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span>\r\n    Displaying @start - @end of @total results\r\n</h2>"
           plugin_id: result
       footer: {  }
       empty:

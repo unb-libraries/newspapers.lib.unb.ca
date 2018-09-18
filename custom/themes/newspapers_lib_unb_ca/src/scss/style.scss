@@ -458,8 +458,6 @@ a.btn-add::before {
 }
 .search-results .glyphicon {
   font-size: smaller;
-  margin-right: .1em;
-  vertical-align: baseline;
 }
 .search-results .views-row {
   margin-bottom: 1.5em;
@@ -490,7 +488,11 @@ th[class*="-sort"] a::before {
 .search-results .results- {
   display: none;
 }
+.search-results h2 {
+  font-size: 1em;
+}
 .search-results h3 {
+  font-size: 1.15em;
   margin-bottom: 0;
 }
 .views-field-search-api-excerpt {
