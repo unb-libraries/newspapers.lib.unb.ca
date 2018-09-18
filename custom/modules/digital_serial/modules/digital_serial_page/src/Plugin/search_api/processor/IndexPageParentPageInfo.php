@@ -2,6 +2,7 @@
 
 namespace Drupal\digital_serial_page\Plugin\search_api\processor;
 
+use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\IndexInterface;
 use Drupal\search_api\Item\ItemInterface;
@@ -111,8 +112,16 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
       $properties['parent_issue_date'] = new ProcessorProperty($definition);
 
       $definition = [
+        'label' => $this->t('Parent Issue Province'),
+        'description' => $this->t('The parent issue place of publication:administrative area'),
+        'type' => 'string',
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['parent_issue_administrative_area'] = new ProcessorProperty($definition);
+
+      $definition = [
         'label' => $this->t('Parent Issue Locality'),
-        'description' => $this->t('The parent issue place of publication city/etc'),
+        'description' => $this->t('The parent issue place of publication:city/etc'),
         'type' => 'string',
         'processor_id' => $this->getPluginId(),
       ];
@@ -161,7 +170,7 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
         $field->addValue($publication_entity->id());
       }
 
-      // Issue Volume.
+      // Issue Title.
       $fields = $this->getFieldsHelper()
         ->filterForPropertyPath($item->getFields(), NULL, 'parent_publication_title');
       foreach ($fields as $field) {
@@ -180,6 +189,17 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
         ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_issue');
       foreach ($fields as $field) {
         $field->addValue($issue_entity->getIssueIssue());
+      }
+
+      // Issue Province Location.
+      $fields = $this->getFieldsHelper()
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_administrative_area');
+      $subdivision_repo = new SubdivisionRepository();
+      $administrative_area_code = $publication_entity->get('field_place_of_publication')->first()->getAdministrativeArea();
+      $administrative_area_list = $subdivision_repo->getList([$country_code]);
+      $administrative_area = $administrative_area_list[$administrative_area_code];
+      foreach ($fields as $field) {
+        $field->addValue($administrative_area);
       }
 
       // Issue City Location.
