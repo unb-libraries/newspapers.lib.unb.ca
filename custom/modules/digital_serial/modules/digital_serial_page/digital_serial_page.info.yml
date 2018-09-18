@@ -6,5 +6,6 @@ core: 8.x
 type: module
 
 dependencies:
+  - address
   - digital_serial
   - digital_serial_issue
