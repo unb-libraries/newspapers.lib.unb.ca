@@ -2,6 +2,7 @@
 
 namespace Drupal\digital_serial_page\Plugin\search_api\processor;
 
+use CommerceGuys\Addressing\Country\CountryRepository;
 use CommerceGuys\Addressing\Subdivision\SubdivisionRepository;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\IndexInterface;
@@ -112,6 +113,14 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
       $properties['parent_issue_date'] = new ProcessorProperty($definition);
 
       $definition = [
+        'label' => $this->t('Parent Issue Country'),
+        'description' => $this->t('The parent issue place of publication:country'),
+        'type' => 'string',
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['parent_issue_country'] = new ProcessorProperty($definition);
+
+      $definition = [
         'label' => $this->t('Parent Issue Province'),
         'description' => $this->t('The parent issue place of publication:administrative area'),
         'type' => 'string',
@@ -189,6 +198,17 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
         ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_issue');
       foreach ($fields as $field) {
         $field->addValue($issue_entity->getIssueIssue());
+      }
+
+      // Issue Country Location.
+      $fields = $this->getFieldsHelper()
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_country');
+      $country_repo = new CountryRepository();
+      $country_code = $publication_entity->get('field_place_of_publication')->first()->getCountryCode();
+      $country_list = $country_repo->getList();
+      $country_name = $country_list[$country_code];
+      foreach ($fields as $field) {
+        $field->addValue($country_name);
       }
 
       // Issue Province Location.
