@@ -35,6 +35,14 @@ field_settings:
     label: 'Parent Digital Title ID'
     property_path: parent_digital_title_id
     type: integer
+  parent_issue_administrative_area:
+    label: 'Parent Issue Province'
+    property_path: parent_issue_administrative_area
+    type: string
+  parent_issue_country:
+    label: 'Parent Issue Country'
+    property_path: parent_issue_country
+    type: string
   parent_issue_date:
     label: 'Parent Issue Date'
     property_path: parent_issue_date
