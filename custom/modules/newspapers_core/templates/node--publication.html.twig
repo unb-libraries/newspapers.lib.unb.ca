@@ -68,8 +68,15 @@
  * @ingroup themeable
  */
 #}
+{% if back_link %}
+    <nav class="tabbable">
+        {{ back_link }}
+    </nav>
+{% endif %}
 <main {{ attributes.addClass('no-gutters') }}>
 <section class="publication col-sm-8">
+
+
     {{ title_prefix }}
     {% if not page %}
         <h2{{ title_attributes }}>
