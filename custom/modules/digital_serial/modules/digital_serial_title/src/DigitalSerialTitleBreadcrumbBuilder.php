@@ -77,6 +77,9 @@ class DigitalSerialTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface 
       )
     );
 
+    $breadcrumb->addCacheTags(["digital_serial_title:{$title->id()}"]);
+    $breadcrumb->addCacheContexts(['url']);
+
     return $breadcrumb;
   }
 

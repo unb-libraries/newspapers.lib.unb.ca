@@ -121,7 +121,7 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
     }
 
     // Control Caching.
-    $breadcrumb->addCacheTags(["digital_serial_title:{$title->id()}"]);
+    $breadcrumb->addCacheTags(["digital_serial_issue:{$issue->id()}"]);
     $breadcrumb->addCacheContexts(['url']);
 
     return $breadcrumb;
