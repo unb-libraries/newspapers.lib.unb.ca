@@ -507,6 +507,7 @@ th[class*="-sort"] a::before {
 }
 
 /* High Resolution Image back link */
+a.back-results::before,
 #digital-serial-page-page-viewer-form > a::before {
   font-family: "Glyphicons Halflings";
   content:"\e251";
