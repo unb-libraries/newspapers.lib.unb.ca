@@ -324,7 +324,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
 
   $referer = \Drupal::request()->server->get('HTTP_REFERER');
   if ((strpos($referer, 'search') !== FALSE)) {
-    $link_text = "Back to search results";
+    $link_text = t("Back to search results");
     $back_link = Url::fromUri($referer);
     $link_options = [
       'attributes' => [
@@ -334,7 +334,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
       ],
     ];
     $back_link->setOptions($link_options);
-    $link = Link::fromTextAndUrl(t($link_text), $back_link);
+    $link = Link::fromTextAndUrl($link_text, $back_link);
     $variables['back_link'] = $link->toRenderable();
   }
   else {
