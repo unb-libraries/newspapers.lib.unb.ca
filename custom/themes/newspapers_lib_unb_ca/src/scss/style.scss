@@ -305,10 +305,15 @@ p {
 }
 
 /* Fix overrides.min.css / unb-lib.css conflict */
+.breadcrumb li:first-of-type a {
+  font-size: 0;
+}
+.breadcrumb li:first-of-type a::after {
+  top: -16px;
+}
 .user-logged-in .breadcrumb {
   display: block;
 }
-
 .select-wrapper select,
 input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
   line-height: normal;
