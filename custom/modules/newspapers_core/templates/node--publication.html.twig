@@ -265,8 +265,8 @@
     {% endif %}
 </section>
 
-{% if content.field_sample_image|field_value %}
 <aside class="col-sm-4">
+{% if content.field_sample_image|field_value %}
     {% if content.field_sample_image|field_value %}
         <figure>
             {{ content.field_sample_image }}
@@ -280,7 +280,10 @@
     {% if content.field_description|field_value %}
         {{ content.field_description|field_value }}
     {% endif %}
-
-</aside>
+{% else %}
+    <figure>
+        <img class="no-borders" src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
+    </figure>
 {% endif %}
+</aside>
 </main>

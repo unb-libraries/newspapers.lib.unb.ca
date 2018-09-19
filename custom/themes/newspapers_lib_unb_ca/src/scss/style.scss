@@ -500,11 +500,11 @@ th[class*="-sort"] a::before {
   font-size: 1.15em;
   margin-bottom: 0;
 }
-.views-field-search-api-excerpt {
-  color: #767676;
+.search-results .excerpt {
+  color: #545454;
 }
-.views-field-search-api-excerpt strong {
-  color: #000;
+.search-results strong {
+  color: $unb-lib-panel-heading;
 }
 /* Override Search API Autocomplete */
 .search-api-autocomplete-search .ui-menu-item:hover {
