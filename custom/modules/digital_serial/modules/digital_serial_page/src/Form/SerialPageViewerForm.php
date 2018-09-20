@@ -33,25 +33,89 @@ class SerialPageViewerForm extends FormBase {
     $form = [];
     $referrer = \Drupal::request()->server->get('HTTP_REFERER');
 
+    $prev_next = $this->getPrevNextPageUrls(
+      $digital_serial_title->id(),
+      $digital_serial_issue->id(),
+      $digital_serial_page->id()
+    );
+
+    $prev_text = '« ' . t('Previous page');
+    $next_text = t('Next Page') . ' »';
+
     if ((strpos($referrer, 'search') !== FALSE)) {
-      $link_text = "Back to search results";
-      $url = $referrer;
+      $back_text = "Back to search results";
+      $url = Url::fromUri($referrer);
     }
     else {
-      $link_text = "Back to Issue (" . $digital_serial_issue->getDisplayTitle() . ')';
-      $url = "internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}";
+      $back_text = "Back to " . $digital_serial_issue->getDisplayTitle();
+      $uri = "internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}";
+      $url = Url::fromUri($uri);
     }
+
+    $link_options = [
+      'attributes' => [
+        'class' => [
+          'back-link',
+        ],
+      ],
+    ];
+    $url->setOptions($link_options);
+
     $form['page_view']['back_link'] = [
       '#markup' => Link::fromTextAndUrl(
         $this->t(
           '@link_label',
           [
-            '@link_label' => $link_text,
+            '@link_label' => $back_text,
           ]
         ),
-        Url::fromUri($url)
-      )->toString(),
+        $url)
+        ->toString(),
     ];
+    $form['page_view']['back_link'];
+
+    $disabled_link_options = [
+      'attributes' => [
+        'class' => [
+          'btn',
+          'btn-default',
+          'disabled',
+        ],
+      ],
+    ];
+    $link_options = [
+      'attributes' => [
+        'class' => [
+          'btn',
+          'btn-primary',
+        ],
+      ],
+    ];
+    if (empty($prev_next['previous'])) {
+      $prev_next['previous'] = Url::fromUri('internal:#');
+      $prev_next['previous']->setOptions($disabled_link_options);
+    }
+    else {
+      $prev_next['previous']->setOptions($link_options);
+    }
+    $prev_link = [
+      '#markup' => Link::fromTextAndUrl($prev_text, $prev_next['previous'])
+        ->toString(),
+    ];
+    $form['page_view']['prev_page'] = $prev_link;
+
+    if (empty($prev_next['next'])) {
+      $prev_next['next'] = Url::fromUri('internal:#');
+      $prev_next['next']->setOptions($disabled_link_options);
+    }
+    else {
+      $prev_next['next']->setOptions($link_options);
+    }
+    $next_link = [
+      '#markup' => Link::fromTextAndUrl($next_text, $prev_next['next'])
+        ->toString(),
+    ];
+    $form['page_view']['next_page'] = $next_link;
 
     $form['page_view']['zoom'] = [
       '#markup' => '<div id="seadragon-viewer"></div>',
@@ -96,12 +160,6 @@ class SerialPageViewerForm extends FormBase {
         ],
       ],
     ];
-
-    $prev_next = $this->getPrevNextPageUrls(
-      $digital_serial_title->id(),
-      $digital_serial_issue->id(),
-      $digital_serial_page->id()
-    );
 
     return $form;
   }
