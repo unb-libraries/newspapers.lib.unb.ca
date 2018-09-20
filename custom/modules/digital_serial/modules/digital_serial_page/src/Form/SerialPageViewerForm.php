@@ -74,7 +74,7 @@ class SerialPageViewerForm extends FormBase {
     ];
     $form['page_view']['back_link'];
 
-    $form['page_view']['nav'] = [
+    $form['page_view']['pager'] = [
       '#type' => 'container',
       '#attributes' => [
         'class' => ['pager'],
@@ -109,7 +109,7 @@ class SerialPageViewerForm extends FormBase {
       '#markup' => Link::fromTextAndUrl($prev_text, $prev_next['previous'])
         ->toString(),
     ];
-    $form['page_view']['nav']['prev_page'] = $prev_link;
+    $form['page_view']['pager']['prev_page'] = $prev_link;
 
     if (empty($prev_next['next'])) {
       $prev_next['next'] = Url::fromUri('internal:#');
@@ -122,7 +122,7 @@ class SerialPageViewerForm extends FormBase {
       '#markup' => Link::fromTextAndUrl($next_text, $prev_next['next'])
         ->toString(),
     ];
-    $form['page_view']['nav']['next_page'] = $next_link;
+    $form['page_view']['pager']['next_page'] = $next_link;
 
     $form['page_view']['zoom'] = [
       '#markup' => '<div id="seadragon-viewer"></div>',
