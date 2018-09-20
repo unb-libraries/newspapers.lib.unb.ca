@@ -167,6 +167,13 @@
         </dl>
     {% endif %}
 
+    {% if content.field_supplemental_information|field_value %}
+        <dl>
+            <dt>{{ content.field_supplemental_information|field_label }}:</dt>
+            <dd>{{ content.field_supplemental_information|field_value }}</dd>
+        </dl>
+    {% endif %}
+
     {% if family %}
     <hr />
     <dl class="title-history">
