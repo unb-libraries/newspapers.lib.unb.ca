@@ -277,7 +277,6 @@ p {
   width: 60%;
 }
 
-
 /* Owl Carousel overrides */
 .owl-theme .owl-controls .owl-page.active span {
   background: $link-color-hover;
@@ -291,7 +290,6 @@ p {
 .owl-theme .owl-controls .owl-buttons div:last-child::after {
   content: ' »';
 }
-
 .owl-theme figure img {
   display: inline-block;
   max-width: 100%;
@@ -304,6 +302,11 @@ p {
   -webkit-transition: all .2s ease-in-out;
   -o-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
+}
+
+/* High resolution Page pager */
+.pager a.btn {
+  margin: auto .5em;
 }
 
 /* Fix overrides.min.css / unb-lib.css conflict */
