@@ -739,7 +739,7 @@ function _newspapers_core_get_rendered_title_history(Node $node, bool $supplemen
   foreach ($data as $key => $item) {
     $url = Link::createFromRoute($item['title'], 'entity.node.canonical', ['node' => $item['id']], $options);
     $item_array = $url->toRenderable();
-    $item_array['#suffix'] = '<span class="description">' . $item['daterange'] . '</span>';
+    $item_array['#suffix'] = '<span class="description">&nbsp;' . $item['daterange'] . '</span>';
     $render_array['#items'][] = $item_array;
     if ($item['id'] == $node->id()) {
       $render_array['#items'][$key]['#wrapper_attributes']['class'] = 'current-title';
