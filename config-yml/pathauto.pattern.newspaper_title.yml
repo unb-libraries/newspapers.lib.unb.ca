@@ -1,0 +1,22 @@
+uuid: 3b08ddf7-5d1c-48ef-ad23-2b2a23ffa9ee
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: newspaper_title
+label: 'Newspaper title'
+type: 'canonical_entities:node'
+pattern: '/newspaper/[node:title]'
+selection_criteria:
+  f6240a5e-4001-4e74-b1f9-7b2926f9d7e4:
+    id: node_type
+    bundles:
+      publication: publication
+    negate: false
+    context_mapping:
+      node: node
+    uuid: f6240a5e-4001-4e74-b1f9-7b2926f9d7e4
+selection_logic: and
+weight: -5
+relationships: {  }
