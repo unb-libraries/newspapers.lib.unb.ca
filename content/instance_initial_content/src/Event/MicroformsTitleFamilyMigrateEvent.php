@@ -107,6 +107,7 @@ class MicroformsTitleFamilyMigrateEvent implements EventSubscriberInterface {
             $file->save();
 
             $term->get('field_supplemental_information')->setValue($file);
+            $term->get('field_supplemental_information')->description = 'Broad Title History Map';
             $term->save();
           }
         }
