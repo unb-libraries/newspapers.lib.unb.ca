@@ -2,6 +2,7 @@
 
 namespace Drupal\instance_initial_content\Event;
 
+use Drupal\file\Entity\File;
 use Drupal\migrate_plus\Event\MigrateEvents;
 use Drupal\migrate_plus\Event\MigratePrepareRowEvent;
 use Drupal\taxonomy\Entity\Term;
@@ -74,13 +75,41 @@ class MicroformsTitleFamilyMigrateEvent implements EventSubscriberInterface {
 
       foreach ($nids as $nid) {
         $row_node = Node::Load($nid);
-        $row_uuid = $row_node->get('field_previous_identifications')->getString();
+        $row_uuid = $row_node->get('field_previous_identifications')
+          ->getString();
         $row_node->set('field_family', $term->id());
         $row_node->set('field_this_is_part_of_a_family', TRUE);
         if ($is_related == "Y" && $row_uuid == $uuid) {
           $row_node->set('field_is_supplementary_title', TRUE);
         }
         $row_node->save();
+
+        // Attach PDF to family.
+        $module_handler = \Drupal::service('module_handler');
+        $module_relative_path = $module_handler->getModule('instance_initial_content')
+          ->getPath();
+        $pdf_dir = DRUPAL_ROOT . "/$module_relative_path/data/pdf";
+        $pdf_file = "$pdf_dir/{$row->getSourceProperty('uuid')}.pdf";
+        if (file_exists($pdf_file)) {
+          $file_basename = basename($pdf_file);
+          $file_destination = "public://$file_basename";
+
+          if (file_exists($pdf_file)) {
+            $file_uri = file_unmanaged_copy(
+              $pdf_file,
+              $file_destination,
+              FILE_EXISTS_REPLACE
+            );
+            $file = File::Create([
+              'uri' => $file_uri,
+            ]);
+            $file->setPermanent();
+            $file->save();
+
+            $term->get('field_supplemental_information')->setValue($file);
+            $term->save();
+          }
+        }
       }
     }
   }
