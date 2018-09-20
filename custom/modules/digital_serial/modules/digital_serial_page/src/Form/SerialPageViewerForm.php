@@ -107,8 +107,93 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
+    $prev_next = $this->getPrevNextPageUrls(
+      $digital_serial_title->id(),
+      $digital_serial_issue->id(),
+      $digital_serial_page->id()
+    );
 
     return $form;
+  }
+
+  /**
+   * Get a url corresponding to a page.
+   *
+   * @param int $title_id
+   *   The serial title ID.
+   * @param int $issue_id
+   *   The serial issue ID.
+   * @param int $page_id
+   *   The serial page ID.
+   *
+   * @return \Drupal\Core\Url
+   *   The Drupal URL.
+   */
+  private static function getPageUrl($title_id, $issue_id, $page_id) {
+    $uri = "internal:/serials/$title_id/issues/$issue_id/pages/$page_id";
+    return Url::fromUri($uri);
+  }
+
+  /**
+   * Get the IDs of adjacent pages of a page in an issue.
+   *
+   * @param int $issue_id
+   *   The serial issue ID.
+   * @param int $page_id
+   *   The serial page ID.
+   *
+   * @return array
+   *   An associative array of previous and next page IDs.
+   */
+  private function getPrevNextPageIds($issue_id, $page_id) {
+    $adjacent_page_ids = [
+      'previous' => NULL,
+      'next' => NULL,
+    ];
+
+    $query = \Drupal::entityQuery('digital_serial_page')
+      ->condition('parent_issue', $issue_id)
+      ->sort('page_sort');
+    $entity_ids = $query->execute();
+
+    if (!empty($entity_ids[$page_id - 1])) {
+      $adjacent_page_ids['previous'] = $entity_ids[$page_id - 1];
+    }
+    if (!empty($entity_ids[$page_id + 1])) {
+      $adjacent_page_ids['next'] = $entity_ids[$page_id + 1];
+    }
+
+    return $adjacent_page_ids;
+  }
+
+  /**
+   * Get the Urls of adjacent pages of a page in an issue.
+   *
+   * @param int $title_id
+   *   The serial title ID.
+   * @param int $issue_id
+   *   The serial issue ID.
+   * @param int $page_id
+   *   The serial page ID.
+   *
+   * @return array
+   *   An associative array of previous and next page URLs.
+   */
+  private function getPrevNextPageUrls($title_id, $issue_id, $page_id) {
+    $adjacent_page_urls = [
+      'previous' => NULL,
+      'next' => NULL,
+    ];
+
+    $prev_next_ids = $this->getPrevNextPageIds($issue_id, $page_id);
+    if (!empty($prev_next_ids['previous'])) {
+      $adjacent_page_urls['previous'] = $this->getPageUrl($title_id, $issue_id, $prev_next_ids['previous']);
+    }
+    if (!empty($prev_next_ids['next'])) {
+      $adjacent_page_urls['next'] = $this->getPageUrl($title_id, $issue_id, $prev_next_ids['next']);
+    }
+
+    return $adjacent_page_urls;
   }
 
   /**
