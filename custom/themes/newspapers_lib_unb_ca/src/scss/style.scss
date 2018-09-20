@@ -195,7 +195,7 @@ select[multiple="multiple"] + .form-control {
   content: "\e003";
 }
 
-//Facets overrides.
+/* Facets overrides */
 .block-facets h3:first-child {
   margin-top: .25em;
 }
@@ -246,14 +246,16 @@ dd {
 // Clear separation of multi-line multiple value list items.
 dd li {
   line-height: 1.2em;
-  margin-bottom: .5em;
+  margin-bottom: .3em;
 }
+/*
 dd li:nth-child(even) {
   margin: .3em auto;
 }
 dd li:last-child {
   margin-bottom: 0;
 }
+*/
 p {
   margin-bottom: 1em;
 }
@@ -454,6 +456,11 @@ a.btn-add::before {
 }
 .chosen-container-single .chosen-single span {
   margin-right: 5em;
+}
+
+/* Bootstrap overrides */
+.text-muted {
+  color: $text-muted;
 }
 
 /* Search results */
