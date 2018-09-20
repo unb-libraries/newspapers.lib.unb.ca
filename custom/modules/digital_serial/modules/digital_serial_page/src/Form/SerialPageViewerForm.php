@@ -107,27 +107,6 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
-    $file = $digital_serial_page->get('page_ocr')->entity;
-    if (!empty($file)) {
-      $title = [
-        '#type' => 'processed_text',
-        '#text' => $this->t('Text On Page'),
-        '#format' => 'full_html',
-        '#langcode' => 'en',
-      ];
-      $form['page_text']['title'] = $title;
-      $form['page_text']['title']['#prefix'] = '<h2 class="ocr-title">';
-      $form['page_text']['title']['#suffix'] = '</h2>';
-
-      $uri = $file->getFileUri();
-      $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager')->getViaUri($uri);
-      $file_path = $stream_wrapper_manager->realpath();
-      $ocr_text = trim(file_get_contents($file_path));
-
-      $form['page_text']['text'] = [
-        '#markup' => "<pre>$ocr_text</pre>",
-      ];
-    }
 
     return $form;
   }
