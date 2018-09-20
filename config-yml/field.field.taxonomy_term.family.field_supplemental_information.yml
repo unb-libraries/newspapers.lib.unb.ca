@@ -1,18 +1,18 @@
-uuid: dddb7be6-a4d7-4ead-a4e4-6c831d24d8b7
+uuid: 90c8e10d-1f3d-4370-8b90-15d2ad0df9e6
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_supplemental_information
-    - node.type.publication
+    - field.storage.taxonomy_term.field_supplemental_information
+    - taxonomy.vocabulary.family
   module:
     - file
-id: node.publication.field_supplemental_information
+id: taxonomy_term.family.field_supplemental_information
 field_name: field_supplemental_information
-entity_type: node
-bundle: publication
+entity_type: taxonomy_term
+bundle: family
 label: 'Supplemental Information'
-description: '<b>Example:</b> PDF of additional information about the publication.'
+description: '<b>Example:</b> PDF of title tree image illustrating the complete publication history.'
 required: false
 translatable: false
 default_value: {  }

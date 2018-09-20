@@ -1,4 +1,4 @@
-uuid: 4ca10ad4-d85c-43e5-a036-ae039700529f
+uuid: 3e856516-64e6-4e38-8bc0-f9fb97d64089
 langcode: en
 status: true
 dependencies:
@@ -7,27 +7,26 @@ dependencies:
     - taxonomy.vocabulary.family
   module:
     - file
+    - text
 id: taxonomy_term.family.default
 targetEntityType: taxonomy_term
 bundle: family
 mode: default
 content:
-  field_supplemental_information:
-    weight: 1
-    settings:
-      progress_indicator: throbber
-    third_party_settings: {  }
-    type: file_generic
-    region: content
-  name:
-    type: string_textfield
+  description:
+    label: hidden
+    type: text_default
     weight: 0
     region: content
-    settings:
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
+  field_supplemental_information:
+    weight: 1
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
 hidden:
-  description: true
   langcode: true
-  path: true
