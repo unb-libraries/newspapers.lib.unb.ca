@@ -38,7 +38,7 @@ class SerialPageViewerForm extends FormBase {
       $url = $referrer;
     }
     else {
-      $link_text = "Back to " . $digital_serial_issue->getDisplayTitle();
+      $link_text = "Back to Issue (" . $digital_serial_issue->getDisplayTitle() . ')';
       $url = "internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}";
     }
     $form['page_view']['back_link'] = [
@@ -52,16 +52,6 @@ class SerialPageViewerForm extends FormBase {
         Url::fromUri($url)
       )->toString(),
     ];
-
-    $title = [
-      '#type' => 'processed_text',
-      '#text' => $this->t('High Resolution Image'),
-      '#format' => 'full_html',
-      '#langcode' => 'en',
-    ];
-    $form['page_view']['title'] = $title;
-    $form['page_view']['title']['#prefix'] = '<h2 class="viewer-title">';
-    $form['page_view']['title']['#suffix'] = '</h2>';
 
     $form['page_view']['zoom'] = [
       '#markup' => '<div id="seadragon-viewer"></div>',
