@@ -322,6 +322,9 @@ a.disabled {
 .user-logged-in .breadcrumb {
   display: block;
 }
+.tab-content {
+  border-top: 1px solid #333;
+}
 .select-wrapper select,
 input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
   line-height: normal;
@@ -535,53 +538,16 @@ a.back-link::before {
   vertical-align: text-bottom;
 }
 
-/* Exposed search block on front page */
-.path-frontpage .page-header {
-  display: none;
+/* Tab Navigation (i.e. Front page form) */
+.nav-tabs {
+  border-bottom: none;
 }
-.path-frontpage section.block-views-exposed-filter-blocksearch-search-page {
-  background: url(../img/newspapers-and-glasses.png) center center no-repeat;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0, 0.9); /* Black with a little bit see-through */
-  background-size: cover;
-  min-height: 500px;
-  text-align: center;
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  border-color: #333;
+  border-bottom: none;
 }
-.path-frontpage section.block-views-exposed-filter-blocksearch-search-page form {
-  height: 40%;
-  width: 100%;
-  position: absolute;
-  z-index: 1;
-  top: 30%;
-  background-color: rgb(0, 0, 8);
-  background-color: rgba(0, 0, 8, 0.85);
-}
-.path-frontpage section.block-views-exposed-filter-blocksearch-search-page form .form-inline {
-  position: relative;
-  top: 50%;
-  width: 100%;
-  text-align: center;
-  margin: auto;
-  display: block;
-}
-.path-frontpage section.block-views-exposed-filter-blocksearch-search-page form .control-label {
-  visibility: hidden;
-  width: 0;
-}
-.path-frontpage section.block-views-exposed-filter-blocksearch-search-page form .control-label:after {
-  content: 'New Brunswick Newspapers';
-  font-family: cursive;
-  font-size: 2.2em;
-  color: #fff;
-  display: block;
-  position: absolute;
-  top: -1.7em;
-  left: 0;
-  width: 100%;
-  visibility: visible;
-}
-.path-frontpage section.block-views-exposed-filter-blocksearch-search-page form label::after {
-  content: "";
-  clear: both;
-  display: table;
+.nav-tabs > li > a {
+  border:none;
 }

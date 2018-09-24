@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\block_content\Entity\BlockContent;
+use Drupal\Core\Link;
 use Drupal\Core\Url;
 
 /**
@@ -27,23 +28,111 @@ class HomePageForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = [];
+    $fulltext_text = t('Fulltext');
+    $title_text = t('Title');
 
-    $form['fulltext_input'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('FullText:'),
+    $title_url = Url::fromUri("internal:/");
+    $fulltext_url = Url::fromUri("internal:/");
+
+    $title_link_options = [
+      'attributes' => [
+        'role' => [
+          'tab',
+        ],
+        'data-toggle' => [
+          'tab',
+        ],
+      ],
+      'fragment' => 'title',
+    ];
+    $title_url->setOptions($title_link_options);
+
+    $fulltext_link_options = [
+      'attributes' => [
+        'role' => [
+          'tab',
+        ],
+        'data-toggle' => [
+          'tab',
+        ],
+      ],
+      'fragment' => 'fulltext',
+    ];
+    $fulltext_url->setOptions($fulltext_link_options);
+
+    $form['nav-tabs'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'ul',
+      '#attributes' => [
+        'class' => [
+          'nav',
+          'nav-tabs',
+        ],
+        'role' => [
+          'tablist',
+        ],
+      ],
+    ];
+    $form['nav-tabs']['title'] = [
+      '#markup' => '<li class="active">' . Link::fromTextAndUrl(t('Fulltext search'), $fulltext_url)
+        ->toString() . '</li>',
     ];
 
-    $form['submit_fulltext_input'] = [
+    $form['nav-tabs']['fulltext'] = [
+      '#markup' => '<li>' . Link::fromTextAndUrl(t('Title search'), $title_url)
+        ->toString() . '</li>',
+    ];
+
+    $form['tab-content'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'tab-content',
+        ],
+      ],
+    ];
+
+    $form['tab-content']['fulltext'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'tab-pane',
+          'fade',
+          'active',
+          'in',
+        ],
+        'id' => [
+          'fulltext',
+        ],
+      ],
+    ];
+    $form['tab-content']['fulltext']['input_fulltext'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Search FullText for terms containing:'),
+    ];
+    $form['tab-content']['fulltext']['submit_fulltext'] = [
       '#type' => 'submit',
       '#value' => t('Search FullText'),
     ];
 
-    $form['title_input'] = [
+    $form['tab-content']['title'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'tab-pane',
+          'fade',
+        ],
+        'id' => [
+          'title',
+        ],
+      ],
+    ];
+    $form['tab-content']['title']['input_title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Title:'),
+      '#title' => $this->t('Search Titles for terms containing:'),
     ];
 
-    $form['submit_title_input'] = [
+    $form['tab-content']['title']['submit_title'] = [
       '#type' => 'submit',
       '#value' => t('Search/Browse Titles'),
     ];
@@ -56,12 +145,13 @@ class HomePageForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
-    $op = (string) $form_state->getValue('op');
-    $fulltext_input = (string) $values['fulltext_input'];
-    $title_input = (string) $values['title_input'];
 
-    if ($op === 'Search FullText' && empty($fulltext_input) && empty($title_input)) {
-      $form_state->setErrorByName('fulltext_input', $this->t('Please provide a search term'));
+    /* Enforce fulltext search term */
+    $value = (string) $values['input_fulltext'];
+    $op = (string) $form_state->getValue('op');
+
+    if ($op === 'Search FullText' && empty($value)) {
+      $form_state->setErrorByName('input_fulltext', $this->t('Please provide a fulltext search term'));
     }
 
   }
@@ -72,23 +162,18 @@ class HomePageForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     $op = (string) $form_state->getValue('op');
-    $title_input = (string) $values['title_input'];
-    $fulltext_input = (string) $values['fulltext_input'];
 
-    if ($op === 'Search FullText' && empty($fulltext_input) && !empty($title_input)) {
-      $query = $this->getQueryFromValue($title_input);
-      $form_state->setRedirectUrl(
-        Url::fromUri("internal:/search?query=$query")
-      );
-    }
-    elseif ($op === 'Search FullText' && !empty($fulltext_input)) {
-      $query = $this->getQueryFromValue($fulltext_input);
+    $input_fulltext = (string) $values['input_fulltext'];
+    $input_title = (string) $values['input_title'];
+
+    if ($op === 'Search FullText') {
+      $query = $this->getQueryFromValue($input_fulltext);
       $form_state->setRedirectUrl(
         Url::fromUri("internal:/page-search?fulltext=$query")
       );
     }
     elseif ($op === 'Search/Browse Titles') {
-      $query = $this->getQueryFromValue($title_input);
+      $query = $this->getQueryFromValue($input_title);
       $form_state->setRedirectUrl(
         Url::fromUri("internal:/search?query=$query")
       );
