@@ -23,7 +23,13 @@ class NewspaperTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface {
    * {@inheritdoc}
    */
   public function applies(RouteMatchInterface $route_match) {
-    return $route_match->getRouteName() == 'entity.node.canonical'
+    return in_array(
+      $route_match->getRouteName(),
+      [
+        'entity.node.canonical',
+        'entity.node.edit_form',
+      ]
+      )
       && $route_match->getParameter('node') instanceof NodeInterface
       && $route_match->getParameter('node')->bundle() == 'publication';
   }
@@ -50,6 +56,23 @@ class NewspaperTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface {
         '<front>'
       )
     );
+
+    if ($route_match->getRouteName() == 'entity.node.edit_form') {
+      $breadcrumb->addLink(
+        Link::createFromRoute(
+          $node->getTitle(),
+          'entity.node.canonical',
+          ['node' => $node->id()]
+        )
+      );
+
+      $breadcrumb->addLink(
+        Link::createFromRoute(
+          $this->t('Edit'),
+          '<nolink>'
+        )
+      );
+    }
 
     return $breadcrumb;
   }
