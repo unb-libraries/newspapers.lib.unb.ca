@@ -36,7 +36,7 @@ class HomePageForm extends FormBase {
     $title_link_options = [
       'attributes' => [
         'id' => [
-          'tab2',
+          'tab-title',
         ],
         'role' => [
           'tab',
@@ -58,7 +58,7 @@ class HomePageForm extends FormBase {
     $fulltext_link_options = [
       'attributes' => [
         'id' => [
-          'tab1',
+          'tab-fulltext',
         ],
         'role' => [
           'tab',
@@ -122,7 +122,7 @@ class HomePageForm extends FormBase {
           'fulltext',
         ],
         'aria-labelledby' => [
-          'tab1',
+          'tab-fulltext',
         ],
       ],
     ];
@@ -145,7 +145,7 @@ class HomePageForm extends FormBase {
           'title',
         ],
         'aria-labelledby' => [
-          'tab2',
+          'tab-title',
         ],
       ],
     ];
@@ -157,6 +157,11 @@ class HomePageForm extends FormBase {
     $form['tab-content']['title']['submit_title'] = [
       '#type' => 'submit',
       '#value' => t('Search/Browse Titles'),
+      '#attributes' => [
+        'class' => [
+          'btn-danger',
+        ],
+      ],
     ];
 
     return $form;
