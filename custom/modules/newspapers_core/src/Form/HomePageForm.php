@@ -5,7 +5,6 @@ namespace Drupal\newspapers_core\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\block_content\Entity\BlockContent;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 
@@ -74,12 +73,12 @@ class HomePageForm extends FormBase {
       ],
     ];
     $form['nav-tabs']['title'] = [
-      '#markup' => '<li class="active">' . Link::fromTextAndUrl(t('Fulltext search'), $fulltext_url)
+      '#markup' => '<li class="active">' . Link::fromTextAndUrl(t('Fulltext Search'), $fulltext_url)
         ->toString() . '</li>',
     ];
 
     $form['nav-tabs']['fulltext'] = [
-      '#markup' => '<li>' . Link::fromTextAndUrl(t('Title search'), $title_url)
+      '#markup' => '<li>' . Link::fromTextAndUrl(t('Title Search'), $title_url)
         ->toString() . '</li>',
     ];
 
@@ -88,6 +87,7 @@ class HomePageForm extends FormBase {
       '#attributes' => [
         'class' => [
           'tab-content',
+          'search-form',
         ],
       ],
     ];
@@ -97,7 +97,6 @@ class HomePageForm extends FormBase {
       '#attributes' => [
         'class' => [
           'tab-pane',
-          'fade',
           'active',
           'in',
         ],
@@ -120,7 +119,6 @@ class HomePageForm extends FormBase {
       '#attributes' => [
         'class' => [
           'tab-pane',
-          'fade',
         ],
         'id' => [
           'title',
@@ -153,7 +151,6 @@ class HomePageForm extends FormBase {
     if ($op === 'Search FullText' && empty($value)) {
       $form_state->setErrorByName('input_fulltext', $this->t('Please provide a fulltext search term'));
     }
-
   }
 
   /**
@@ -178,6 +175,7 @@ class HomePageForm extends FormBase {
         Url::fromUri("internal:/search?query=$query")
       );
     }
+
   }
 
   /**
