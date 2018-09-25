@@ -113,6 +113,14 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
       $properties['parent_issue_date'] = new ProcessorProperty($definition);
 
       $definition = [
+        'label' => $this->t('Parent Issue Year'),
+        'description' => $this->t('The parent issue year'),
+        'type' => 'integer',
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['parent_issue_year'] = new ProcessorProperty($definition);
+
+      $definition = [
         'label' => $this->t('Parent Issue Country'),
         'description' => $this->t('The parent issue place of publication:country'),
         'type' => 'string',
@@ -177,6 +185,13 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
         ->filterForPropertyPath($item->getFields(), NULL, 'parent_publication_id');
       foreach ($fields as $field) {
         $field->addValue($publication_entity->id());
+      }
+
+      // Publication ID.
+      $fields = $this->getFieldsHelper()
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_year');
+      foreach ($fields as $field) {
+        $field->addValue((int) $issue_entity->getYear());
       }
 
       // Issue Title.

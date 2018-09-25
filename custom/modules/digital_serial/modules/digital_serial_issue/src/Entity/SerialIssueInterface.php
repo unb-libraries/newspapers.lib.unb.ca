@@ -168,4 +168,12 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
    */
   public function getDisplayTitle();
 
+  /**
+   * Get the issue year for this issue.
+   *
+   * @return int
+   *   The issue year.
+   */
+  public function getYear();
+
 }

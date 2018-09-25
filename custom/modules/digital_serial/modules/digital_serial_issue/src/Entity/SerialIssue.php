@@ -222,6 +222,13 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * {@inheritdoc}
    */
+  public function getYear() {
+    return (int) $this->get('issue_date')->date->format('Y');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
