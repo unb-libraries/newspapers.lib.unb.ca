@@ -7,8 +7,14 @@ pubform:
   dependencies:
      - core/jquery
 
+tab-search:
+  js:
+    js/newspapers_core.tab_search.js: {}
+  dependencies:
+    - core/jquery
+
 views-exposed-filters:
   js:
     js/newspapers_core.views_exposed_filters.js: {}
   dependencies:
-  - core/jquery
+    - core/jquery
