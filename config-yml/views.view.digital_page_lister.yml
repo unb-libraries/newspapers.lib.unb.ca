@@ -1932,7 +1932,7 @@ display:
           quantity: 9
       cache:
         type: none
-      title: 'Search digital fulltext'
+      title: 'Search Fulltext in Pages'
       relationships: {  }
     cache_metadata:
       max-age: -1

@@ -609,7 +609,7 @@ display:
           expose:
             label: ''
           plugin_id: search_api
-      title: Search
+      title: 'Newspaper Title Search'
       header:
         result:
           id: result
