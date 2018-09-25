@@ -59,6 +59,10 @@ field_settings:
     label: 'Parent Issue Volume'
     property_path: parent_issue_volume
     type: integer
+  parent_issue_year:
+    label: 'Parent Issue Year'
+    property_path: parent_issue_year
+    type: integer
   parent_publication_title:
     label: 'Parent Publication Title'
     property_path: parent_publication_title
