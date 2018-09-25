@@ -1,0 +1,17 @@
+/* Tab Navigation style for Front page form */
+form .nav-tabs {
+    border-bottom: none;
+}
+form .nav-tabs > li.active > a,
+form .nav-tabs > li.active > a:hover,
+form .nav-tabs > li.active > a:focus {
+    border-color: #333;
+    border-bottom: none;
+}
+form .nav-tabs > li > a {
+    border:none;
+}
+
+form .nav-tabs > li.active > a:focus {
+    outline: none;
+}

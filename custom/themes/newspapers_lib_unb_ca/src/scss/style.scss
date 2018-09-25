@@ -537,17 +537,3 @@ a.back-link::before {
   margin-right: 0.25em;
   vertical-align: text-bottom;
 }
-
-/* Tab Navigation (i.e. Front page form) */
-.nav-tabs {
-  border-bottom: none;
-}
-.nav-tabs > li.active > a,
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus {
-  border-color: #333;
-  border-bottom: none;
-}
-.nav-tabs > li > a {
-  border:none;
-}

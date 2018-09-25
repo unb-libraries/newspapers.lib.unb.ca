@@ -8,6 +8,9 @@ pubform:
      - core/jquery
 
 tab-search:
+  css:
+    theme:
+      css/newspapers_core.tab_search.css: {}
   js:
     js/newspapers_core.tab_search.js: {}
   dependencies:
