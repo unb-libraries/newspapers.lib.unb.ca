@@ -80,6 +80,11 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
           'select[name="field_serial_relationship_op_suc"]' => ['value' => 'merged_with_form'],
         ],
       ];
+      break;
+
+    case 'newspapers_core_homepage':
+      $form['#attached']['library'][] = 'newspapers_core/tab-search';
+      break;
   }
 
 }
