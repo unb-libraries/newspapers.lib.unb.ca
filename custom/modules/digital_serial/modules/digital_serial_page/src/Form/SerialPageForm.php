@@ -4,6 +4,8 @@ namespace Drupal\digital_serial_page\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerTrait;
+use Drupal\digital_serial_page\Entity\SerialPage;
 
 /**
  * Form controller for Serial page edit forms.
@@ -12,15 +14,26 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class SerialPageForm extends ContentEntityForm {
 
+  use MessengerTrait;
+
+  /**
+   * The entity ID of the parent digital issue.
+   *
+   * @var int
+   */
   protected $issueEid;
+
+  /**
+   * The entity ID of the parent digital title.
+   *
+   * @var int
+   */
   protected $titleEid;
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $digital_serial_title = NULL, $digital_serial_issue = NULL) {
-    /* @var $entity \Drupal\digital_serial_page\Entity\SerialPage */
-
     if ($digital_serial_issue == NULL) {
       // This has been called from Entity Operations field in table.
       $this->issueEid = $this->entity->getParentIssue()->id();
@@ -48,25 +61,9 @@ class SerialPageForm extends ContentEntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     /* @var $entity \Drupal\digital_serial_page\Entity\SerialPage */
     $entity = &$this->entity;
+    $this->saveAndReportSaveAction($form, $form_state, $entity);
 
-    $entity->setParentIssueById($this->issueEid);
-
-    $status = parent::save($form, $form_state);
-
-    switch ($status) {
-      case SAVED_NEW:
-        drupal_set_message($this->t('Created the %label Serial page.', [
-          '%label' => $entity->label(),
-        ]));
-        break;
-
-      default:
-        drupal_set_message($this->t('Saved the %label Serial page.', [
-          '%label' => $entity->label(),
-        ]));
-    }
-
-    // Redirect back to cabinet module list.
+    // Redirect back to serial page list.
     $form_state->setRedirect(
       'digital_serial_page.manage_pages',
       [
@@ -74,6 +71,55 @@ class SerialPageForm extends ContentEntityForm {
         'digital_serial_issue' => $this->issueEid,
       ]
     );
+  }
+
+  /**
+   * Report the entity save action to the user.
+   *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   * @param int $status
+   *   The status of the entity save operation.
+   * @param \Drupal\digital_serial_page\Entity\SerialPage $entity
+   *   The entity that was saved.
+   */
+  private function reportSaveAction(array $form, FormStateInterface $form_state, $status, SerialPage $entity) {
+    switch ($status) {
+      case SAVED_NEW:
+        $op = 'Created';
+        break;
+
+      default:
+        $op = 'Saved';
+    }
+
+    $this->messenger()->addMessage(
+      $this->t(
+        '%op the %label Serial page.',
+        [
+          '%op' => $op,
+          '%label' => $entity->label(),
+        ]
+      )
+    );
+  }
+
+  /**
+   * Save the entity and report the action to the user.
+   *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   * @param \Drupal\digital_serial_page\Entity\SerialPage $entity
+   *   The entity that was saved.
+   */
+  private function saveAndReportSaveAction(array $form, FormStateInterface $form_state, SerialPage $entity) {
+    $entity->setParentIssueById($this->issueEid);
+    $status = parent::save($form, $form_state);
+    $this->reportSaveAction($form, $form_state, $status, $entity);
   }
 
 }
