@@ -6,7 +6,7 @@
             // Simulate click function when user presses enter key.
             $(window).keypress(function (e) {
                 var keyCode = e.which;
-                if (keyCode == 13) {
+                if ($(".search-form input:focus") && keyCode == 13) {
                     $(".search-form button[type=submit]:visible").click();
                 }
             });
