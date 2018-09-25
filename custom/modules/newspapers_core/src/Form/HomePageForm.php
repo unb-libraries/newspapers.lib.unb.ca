@@ -35,11 +35,20 @@ class HomePageForm extends FormBase {
 
     $title_link_options = [
       'attributes' => [
+        'id' => [
+          'tab2',
+        ],
         'role' => [
           'tab',
         ],
         'data-toggle' => [
           'tab',
+        ],
+        'aria-selected' => [
+          'false',
+        ],
+        'tabindex' => [
+          '-1',
         ],
       ],
       'fragment' => 'title',
@@ -48,11 +57,20 @@ class HomePageForm extends FormBase {
 
     $fulltext_link_options = [
       'attributes' => [
+        'id' => [
+          'tab1',
+        ],
         'role' => [
           'tab',
         ],
         'data-toggle' => [
           'tab',
+        ],
+        'aria-selected' => [
+          'true',
+        ],
+        'tabindex' => [
+          '0',
         ],
       ],
       'fragment' => 'fulltext',
@@ -73,12 +91,12 @@ class HomePageForm extends FormBase {
       ],
     ];
     $form['nav-tabs']['title'] = [
-      '#markup' => '<li class="active">' . Link::fromTextAndUrl(t('Fulltext Search'), $fulltext_url)
+      '#markup' => '<li class="tab active">' . Link::fromTextAndUrl(t('Fulltext Search'), $fulltext_url)
         ->toString() . '</li>',
     ];
 
     $form['nav-tabs']['fulltext'] = [
-      '#markup' => '<li>' . Link::fromTextAndUrl(t('Title Search'), $title_url)
+      '#markup' => '<li class="tab">' . Link::fromTextAndUrl(t('Title Search'), $title_url)
         ->toString() . '</li>',
     ];
 
@@ -103,6 +121,9 @@ class HomePageForm extends FormBase {
         'id' => [
           'fulltext',
         ],
+        'aria-labelledby' => [
+          'tab1',
+        ],
       ],
     ];
     $form['tab-content']['fulltext']['input_fulltext'] = [
@@ -122,6 +143,9 @@ class HomePageForm extends FormBase {
         ],
         'id' => [
           'title',
+        ],
+        'aria-labelledby' => [
+          'tab2',
         ],
       ],
     ];
