@@ -234,37 +234,9 @@
             <dd>{{ language_value }}</dd>
         </dl>
     {% endif %}
-
-    {% if holding.microfilm|length > 0 %}
-    <fieldset>
-       <legend>{% trans %}UNB Libraries' Holdings{% endtrans %}:</legend>
-        {% if holding.microfilm|length > 0 %}
-            <div role="tablist" aria-multiselectable="true">
-                <div class="panel-title" role="tab" id="headingMicrofilm">
-                    <a role="button" data-toggle="collapse" href="#collapseMicrofilm" aria-expanded="false" aria-controls="collapseMicrofilm" class="collapsed">
-                        {% trans %}Microforms{% endtrans %}
-                    </a>
-                </div>
-                <div id="collapseMicrofilm" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMicrofilm">
-                    <div class="panel-body">
-                        {% for item in holding.microfilm %}
-                            {% if item.value %}
-                            <dl>
-                                <dt>{{ item.label }}:</dt>
-                                <dd>{{ item.value }}</dd>
-                            </dl>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    </fieldset>
-    {% endif %}
-
 </section>
 
-<aside class="col-sm-4">
+<aside class="col-sm-4 publication">
 {% if content.field_sample_image|field_value %}
     {% if content.field_sample_image|field_value %}
         <figure>
@@ -284,5 +256,31 @@
         <img class="no-borders" src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
     </figure>
 {% endif %}
+    {% if holding.microfilm|length > 0 %}
+        <fieldset>
+            <legend>{% trans %}UNB Libraries' Holdings{% endtrans %}:</legend>
+            {% if holding.microfilm|length > 0 %}
+                <div role="tablist" aria-multiselectable="true">
+                    <div class="panel-title" role="tab" id="headingMicrofilm">
+                        <a role="button" data-toggle="collapse" href="#collapseMicrofilm" aria-expanded="false" aria-controls="collapseMicrofilm" class="collapsed">
+                            {% trans %}Microforms{% endtrans %}
+                        </a>
+                    </div>
+                    <div id="collapseMicrofilm" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMicrofilm">
+                        <div class="panel-body">
+                            {% for item in holding.microfilm %}
+                                {% if item.value %}
+                                    <dl>
+                                        <dt>{{ item.label }}:</dt>
+                                        <dd>{{ item.value }}</dd>
+                                    </dl>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </fieldset>
+    {% endif %}
 </aside>
 </main>
