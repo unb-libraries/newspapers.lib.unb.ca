@@ -52,16 +52,6 @@ processor_configs:
       sort: 40
     settings:
       sort: ASC
-  hide_1_result_facet:
-    processor_id: hide_1_result_facet
-    weights:
-      build: 50
-    settings: {  }
-  hide_non_narrowing_result_processor:
-    processor_id: hide_non_narrowing_result_processor
-    weights:
-      build: 40
-    settings: {  }
   range_slider:
     processor_id: range_slider
     weights:
