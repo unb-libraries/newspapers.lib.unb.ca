@@ -8,7 +8,7 @@ dependencies:
   module:
     - search_api
 id: publication_years
-name: 'Publication Years'
+name: 'Publication Date'
 url_alias: publication_years
 weight: 0
 min_count: 1
