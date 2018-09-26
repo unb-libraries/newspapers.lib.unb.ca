@@ -208,10 +208,15 @@ select[multiple="multiple"] + .form-control {
   margin-top: .25em;
 }
 .facet-slider {
-  margin: 3em 1em 0 1em;
+  margin: 3em 1em 0 1.15em;
 }
 .block-facet--range-slider {
   padding-bottom: 1.35em;
+}
+.ui-slider-pip-first .ui-slider-label:hover,
+.ui-slider-pip-last .ui-slider-label:hover {
+  text-decoration: underline;
+  z-index: 1;
 }
 .facets-widget-checkbox ul {
   padding-left: .5em;
