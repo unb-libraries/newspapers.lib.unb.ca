@@ -5,27 +5,28 @@ dependencies:
   module:
     - search_api_solr
     - taxonomy
-    - search_api
     - node
+    - search_api
+    - newspapers_core
   config:
-    - field.storage.node.field_place_of_publication
     - field.storage.node.field_additional_indexed_text
     - field.storage.node.field_description
-    - field.storage.node.field_first_issue_approx_date
+    - field.storage.node.field_place_of_publication
+    - field.storage.node.field_family
     - field.storage.node.field_first_issue_date
     - field.storage.node.field_first_issue_search_date
     - field.storage.node.field_frequency
     - field.storage.node.field_frequency_notes
     - field.storage.node.field_issn
-    - field.storage.node.field_last_issue_approx_date
     - field.storage.node.field_last_issue_search_date
     - field.storage.node.field_oclc
+    - field.storage.node.field_publisher
     - field.storage.node.field_sort_title
     - field.storage.node.field_subject_notes
     - field.storage.node.field_subjects
     - field.storage.node.field_title_notes
-    - field.storage.node.field_family
-    - field.storage.node.field_publisher
+    - field.storage.node.field_last_issue_approx_date
+    - field.storage.node.field_first_issue_approx_date
     - search_api.server.solr_newspapers_lib_unb_ca
 third_party_settings:
   search_api_solr:
@@ -231,6 +232,7 @@ field_settings:
         - field.storage.node.field_family
       module:
         - taxonomy
+        - taxonomy
   name_1:
     label: 'Publisher » Taxonomy term » Name'
     datasource_id: 'entity:node'
@@ -240,6 +242,7 @@ field_settings:
       config:
         - field.storage.node.field_publisher
       module:
+        - taxonomy
         - taxonomy
   node_grants:
     label: 'Node access information'
@@ -263,12 +266,18 @@ field_settings:
     type: boolean
     indexed_locked: true
     type_locked: true
+    dependencies:
+      module:
+        - node
   title:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
     type: solr_text_ngram
     boost: !!float 13
+    dependencies:
+      module:
+        - node
   uid:
     label: uid
     datasource_id: 'entity:node'
@@ -276,6 +285,13 @@ field_settings:
     type: integer
     indexed_locked: true
     type_locked: true
+    dependencies:
+      module:
+        - node
+  years_published:
+    label: 'Publication Years'
+    property_path: years_published
+    type: integer
 datasource_settings:
   'entity:node':
     bundles:
@@ -291,6 +307,7 @@ processor_settings:
   content_access:
     weights:
       preprocess_query: -30
+  index_parent_title_info: {  }
   rendered_item: {  }
   solr_date_range:
     weights:

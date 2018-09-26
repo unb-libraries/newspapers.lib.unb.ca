@@ -1,26 +1,26 @@
-uuid: b564a4a4-04e9-43ce-ac02-ddcf6764c945
+uuid: 5c3f951d-1b0a-41ad-b54e-5aeaf387f5b9
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.first_issue_search_date
+    - facets.facet.publication_years
   module:
     - facets
     - system
   theme:
     - newspapers_lib_unb_ca
-id: firstissuesearchdate
+id: publicationyears
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -5
+weight: -8
 provider: null
-plugin: 'facet_block:first_issue_search_date'
+plugin: 'facet_block:publication_years'
 settings:
-  id: 'facet_block:first_issue_search_date'
-  label: 'First Issue Search Date'
+  id: 'facet_block:publication_years'
+  label: 'Year of Publication'
   provider: facets
-  label_display: '0'
-  block_id: firstissuesearchdate
+  label_display: visible
+  block_id: publicationyears
 visibility:
   request_path:
     id: request_path
