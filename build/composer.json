@@ -91,6 +91,21 @@
                 "version": "1.8.2"
             },
             "type": "package"
+        },
+        {
+            "package": {
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/v1.11.3.zip"
+                },
+                "name": "simeydotme/jQuery-ui-Slider-Pips",
+                "require": {
+                    "composer/installers": "^1.2.0"
+                },
+                "type": "drupal-library",
+                "version": "1.11.3"
+            },
+            "type": "package"
         }
     ],
     "require": {
@@ -123,6 +138,7 @@
         "drush/drush": "^9.3.0",
         "harvesthq/chosen": "~1.8",
         "nodespark/des-connector": "5.x-dev",
+        "simeydotme/jQuery-ui-Slider-Pips": "~1.11",
         "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x",
         "webflo/drupal-finder": "^1.1",
         "webmozart/path-util": "^2.3"
