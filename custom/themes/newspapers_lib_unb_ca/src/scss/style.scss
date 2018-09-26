@@ -204,8 +204,14 @@ select[multiple="multiple"] + .form-control {
   font-size: 18px;
   padding: 5px;
 }
-.block-facets h3:first-child {
+.block-facets h3 {
   margin-top: .25em;
+}
+.facet-slider {
+  margin: 3em 1em 0 1em;
+}
+.block-facet--range-slider {
+  padding-bottom: 1.35em;
 }
 .facets-widget-checkbox ul {
   padding-left: .5em;
