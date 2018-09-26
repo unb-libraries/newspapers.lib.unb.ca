@@ -27,7 +27,7 @@ a#tab-fulltext:before {
 }
 a#tab-title:before {
     font-family: "Glyphicons Halflings";
-    content: "\e047";
+    content: "\e056";
     font-size: small;
     padding-right: 4px;
 }
