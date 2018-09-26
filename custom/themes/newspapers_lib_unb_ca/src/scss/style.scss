@@ -199,6 +199,11 @@ select[multiple="multiple"] + .form-control {
 }
 
 /* Facets overrides */
+.block-facets h3 {
+  background: $heading-bg;
+  font-size: 18px;
+  padding: 5px;
+}
 .block-facets h3:first-child {
   margin-top: .25em;
 }
@@ -208,12 +213,14 @@ select[multiple="multiple"] + .form-control {
 .facet-item {
   list-style: none;
 }
+.facet-item label {
+  font-weight: normal;
+}
+.facet-item__count {
+  color: $text-muted
+}
 input[type="checkbox"].facets-checkbox {
   margin-right: .25em;
-}
-.block-facets h3 {
-  background: $heading-bg;
-  padding: 4px;
 }
 ul.js-facets-checkbox-links + a::after {
   font-family: "Glyphicons Halflings";
@@ -227,11 +234,23 @@ ul.js-facets-checkbox-links + a.open::after {
   content: "\e113";
 }
 .facet-item input {
-  vertical-align: top;
+  float:left;
 }
-.facet-item input:hover + label,
-.facet-item label:hover {
+.facet-item label {
+  margin-left: 18px;
+}
+.facet-item input,
+.facet-item label {
+  display: block;
+}
+.facet-item:hover,
+.facet-item:hover input,
+.facet-item:hover label {
   cursor: pointer;
+}
+.facet-item input:focus,
+.facet-item input:hover,
+.facet-item:hover .facet-item__value {
   color: $link-color-hover;
   text-decoration: underline;
 }
