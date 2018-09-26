@@ -17,6 +17,35 @@ use Drupal\node\Entity\Node;
 use Drupal\serial_holding\Entity\SerialHolding;
 
 /**
+ * Implements hook_cron().
+ */
+function newspapers_core_cron() {
+  // Update the ongoing dates for publications every 3 hours.
+  $last_ongoing_run = \Drupal::state()->get('newspapers_core.last_ongoing_run', 0);
+  $time_now = time();
+  if (($time_now - $last_ongoing_run) > 10800) {
+    update_ongoing_publication_dates();
+    \Drupal::state()->set('newspapers_core.last_ongoing_run', $time_now);
+  }
+}
+
+/**
+ * Update the dates of ongoing publications to reflect today.
+ */
+function update_ongoing_publication_dates() {
+  $query = \Drupal::entityQuery('node')
+    ->condition('type', 'publication')
+    ->condition('field_last_issue_date_type', 'ongoing');
+  $results = $query->execute();
+
+  foreach ($results as $result) {
+    $node = Node::load($result);
+    $node->setNewRevision(FALSE);
+    $node->save();
+  }
+}
+
+/**
  * Implements hook_FORM_alter().
  */
 function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $form_id) {
