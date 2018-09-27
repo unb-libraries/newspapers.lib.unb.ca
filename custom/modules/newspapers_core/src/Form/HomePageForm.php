@@ -45,10 +45,10 @@ class HomePageForm extends FormBase {
           'tab',
         ],
         'aria-selected' => [
-          'false',
+          'true',
         ],
         'tabindex' => [
-          '-1',
+          '0',
         ],
       ],
       'fragment' => 'title',
@@ -67,10 +67,10 @@ class HomePageForm extends FormBase {
           'tab',
         ],
         'aria-selected' => [
-          'true',
+          'false',
         ],
         'tabindex' => [
-          '0',
+          '-1',
         ],
       ],
       'fragment' => 'fulltext',
@@ -90,13 +90,14 @@ class HomePageForm extends FormBase {
         ],
       ],
     ];
-    $form['nav-tabs']['title'] = [
-      '#markup' => '<li class="tab active">' . Link::fromTextAndUrl(t('Fulltext Search'), $fulltext_url)
+
+    $form['nav-tabs']['fulltext'] = [
+      '#markup' => '<li class="tab active">' . Link::fromTextAndUrl(t('Title Search'), $title_url)
         ->toString() . '</li>',
     ];
 
-    $form['nav-tabs']['fulltext'] = [
-      '#markup' => '<li class="tab">' . Link::fromTextAndUrl(t('Title Search'), $title_url)
+    $form['nav-tabs']['title'] = [
+      '#markup' => '<li class="tab">' . Link::fromTextAndUrl(t('Fulltext Search'), $fulltext_url)
         ->toString() . '</li>',
     ];
 
@@ -115,8 +116,6 @@ class HomePageForm extends FormBase {
       '#attributes' => [
         'class' => [
           'tab-pane',
-          'active',
-          'in',
         ],
         'id' => [
           'fulltext',
@@ -133,6 +132,11 @@ class HomePageForm extends FormBase {
     $form['tab-content']['fulltext']['submit_fulltext'] = [
       '#type' => 'submit',
       '#value' => t('Search FullText'),
+      '#attributes' => [
+        'class' => [
+          'btn-danger',
+        ],
+      ],
     ];
 
     $form['tab-content']['title'] = [
@@ -140,6 +144,8 @@ class HomePageForm extends FormBase {
       '#attributes' => [
         'class' => [
           'tab-pane',
+          'active',
+          'in',
         ],
         'id' => [
           'title',
@@ -157,11 +163,6 @@ class HomePageForm extends FormBase {
     $form['tab-content']['title']['submit_title'] = [
       '#type' => 'submit',
       '#value' => t('Search/Browse Titles'),
-      '#attributes' => [
-        'class' => [
-          'btn-danger',
-        ],
-      ],
     ];
 
     return $form;
