@@ -41,7 +41,7 @@ display:
           bypass_access: false
           skip_access: false
       exposed_form:
-        type: input_required
+        type: basic
         options:
           submit_button: 'Browse/Search Titles'
           reset_button: true
@@ -50,8 +50,6 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: "<div class=\"alert alert-info fade in\">\n    <span class=\"glyphicon glyphicon-question-sign\"></span>\n    Enter 1 or more keyword terms to filter the result list.\n</div>"
-          text_input_required_format: full_html
       pager:
         type: full
         options:
