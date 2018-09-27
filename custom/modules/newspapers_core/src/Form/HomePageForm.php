@@ -26,13 +26,22 @@ class HomePageForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    // Configure appropriate active tab/pane classes.
+    $user_input = $form_state->getUserInput();
+    $op = isset($user_input['op']) ? $user_input['op'] : NULL;
+    if ($op == 'Search FullText') {
+      $title_tab_class = $title_pane_class = NULL;
+      $fulltext_tab_class = " active";
+      $fulltext_pane_class = "active in";
+    }
+    else {
+      $fulltext_tab_class = $fulltext_pane_class = NULL;
+      $title_tab_class = " active";
+      $title_pane_class = "active in";
+    }
+
     $form = [];
-    $fulltext_text = t('Fulltext');
-    $title_text = t('Title');
-
     $title_url = Url::fromUri("internal:/");
-    $fulltext_url = Url::fromUri("internal:/");
-
     $title_link_options = [
       'attributes' => [
         'id' => [
@@ -55,6 +64,7 @@ class HomePageForm extends FormBase {
     ];
     $title_url->setOptions($title_link_options);
 
+    $fulltext_url = Url::fromUri("internal:/");
     $fulltext_link_options = [
       'attributes' => [
         'id' => [
@@ -90,14 +100,12 @@ class HomePageForm extends FormBase {
         ],
       ],
     ];
-
-    $form['nav-tabs']['fulltext'] = [
-      '#markup' => '<li class="tab active">' . Link::fromTextAndUrl(t('Title Search'), $title_url)
+    $form['nav-tabs']['title'] = [
+      '#markup' => '<li class="tab' . $title_tab_class . '">' . Link::fromTextAndUrl(t('Title Search'), $title_url)
         ->toString() . '</li>',
     ];
-
-    $form['nav-tabs']['title'] = [
-      '#markup' => '<li class="tab">' . Link::fromTextAndUrl(t('Fulltext Search'), $fulltext_url)
+    $form['nav-tabs']['fulltext'] = [
+      '#markup' => '<li class="tab' . $fulltext_tab_class . '">' . Link::fromTextAndUrl(t('Fulltext Search'), $fulltext_url)
         ->toString() . '</li>',
     ];
 
@@ -110,12 +118,36 @@ class HomePageForm extends FormBase {
         ],
       ],
     ];
+    $form['tab-content']['title'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'tab-pane',
+          $title_pane_class,
+        ],
+        'id' => [
+          'title',
+        ],
+        'aria-labelledby' => [
+          'tab-title',
+        ],
+      ],
+    ];
+    $form['tab-content']['title']['input_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Search Titles for terms containing:'),
+    ];
 
+    $form['tab-content']['title']['submit_title'] = [
+      '#type' => 'submit',
+      '#value' => t('Search/Browse Titles'),
+    ];
     $form['tab-content']['fulltext'] = [
       '#type' => 'container',
       '#attributes' => [
         'class' => [
           'tab-pane',
+          $fulltext_pane_class,
         ],
         'id' => [
           'fulltext',
@@ -137,32 +169,6 @@ class HomePageForm extends FormBase {
           'btn-danger',
         ],
       ],
-    ];
-
-    $form['tab-content']['title'] = [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' => [
-          'tab-pane',
-          'active',
-          'in',
-        ],
-        'id' => [
-          'title',
-        ],
-        'aria-labelledby' => [
-          'tab-title',
-        ],
-      ],
-    ];
-    $form['tab-content']['title']['input_title'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Search Titles for terms containing:'),
-    ];
-
-    $form['tab-content']['title']['submit_title'] = [
-      '#type' => 'submit',
-      '#value' => t('Search/Browse Titles'),
     ];
 
     return $form;
