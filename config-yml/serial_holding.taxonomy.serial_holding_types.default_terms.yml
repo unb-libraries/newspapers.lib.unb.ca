@@ -3,8 +3,8 @@ status: true
 mode: default
 items:
   -
-    name: Physical
+    name: 'Physical'
   -
-    name: Microfilm
+    name: 'Microfilm'
   -
-    name: Digital
+    name: 'Digital'
