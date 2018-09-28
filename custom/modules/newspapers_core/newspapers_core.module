@@ -339,9 +339,9 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     $variables['family'] = NULL;
   }
 
+  $variables['holding'] = [];
   $holdings = _newspapers_core_get_publication_holdings($node->id());
   if ($holdings) {
-    $variables['holding'] = [];
     foreach ($holdings as $type => $type_holdings) {
       $variables['holding'][$type] = _newspapers_core_get_holding_details($type, $type_holdings);
     }
