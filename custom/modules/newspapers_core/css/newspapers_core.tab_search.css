@@ -11,6 +11,9 @@ form .nav-tabs > li.active > a:focus {
 form .nav-tabs > li > a {
     border:none;
 }
+.tab-content {
+    padding: 5em 4em!important; /* unb-lib.css override */
+}
 .tab a:focus {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
@@ -30,4 +33,19 @@ a#tab-title:before {
     content: "\e056";
     font-size: small;
     padding-right: 4px;
+}
+.tab-pane > div {
+    width: 75%;
+    float:left;
+}
+.tab-pane > div input {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    height: 34px!important; /* unb-lib.css override */
+}
+.tab-pane > div + span {
+    width: 25%;
+}
+.tab-pane > div + span button {
+    margin-top: 27px;
 }

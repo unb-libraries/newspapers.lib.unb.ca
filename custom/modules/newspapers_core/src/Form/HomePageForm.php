@@ -135,12 +135,14 @@ class HomePageForm extends FormBase {
     ];
     $form['tab-content']['title']['input_title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Search Titles for terms containing:'),
+      '#title' => $this->t('Search for Newspaper Titles'),
+      '#description' => $this->t('Search by title, location, publisher, notes, description or combination, i.e. Moncton 1932'),
     ];
 
     $form['tab-content']['title']['submit_title'] = [
       '#type' => 'submit',
-      '#value' => t('Search/Browse Titles'),
+      '#value' => $this->t('Search/Browse Titles'),
+      '#field_prefix' => '<span class="input-group-btn">',
     ];
     $form['tab-content']['fulltext'] = [
       '#type' => 'container',
@@ -159,11 +161,13 @@ class HomePageForm extends FormBase {
     ];
     $form['tab-content']['fulltext']['input_fulltext'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Search FullText for terms containing:'),
+      '#title' => $this->t('Search the fulltext of digitized newspapers'),
+      '#description' => $this->t('Search for keywords within the fulltext content of newspapers.'),
     ];
     $form['tab-content']['fulltext']['submit_fulltext'] = [
       '#type' => 'submit',
-      '#value' => t('Search FullText'),
+      '#value' => $this->t('Search FullText'),
+      '#field_prefix' => '<span class="input-group-btn">',
       '#attributes' => [
         'class' => [
           'btn-danger',
