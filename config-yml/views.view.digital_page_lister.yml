@@ -1907,7 +1907,7 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required: "<div class=\"alert alert-info fade in\">\r\n  <span class=\"glyphicon glyphicon-question-sign\"></span> Enter 1 or more keyword terms to filter the result list.\r\n</div>"
           text_input_required_format: full_html
       pager:
         type: full

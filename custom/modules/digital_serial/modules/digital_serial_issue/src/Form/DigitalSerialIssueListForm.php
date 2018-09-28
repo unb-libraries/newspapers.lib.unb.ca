@@ -46,7 +46,7 @@ class DigitalSerialIssueListForm extends FormBase {
     $form['issue_list']['title']['#suffix'] = '</h2>';
 
     $view = Views::getView('digital_issue_list');
-    $view->setDisplay('block_2');
+    $view->setDisplay('manage_title_issues_block');
     $view->setArguments([$this->parentEid]);
     $render = $view->render();
     $form['select_block_view'] = $render;
