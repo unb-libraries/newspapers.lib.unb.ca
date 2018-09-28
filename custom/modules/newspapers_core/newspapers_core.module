@@ -342,17 +342,9 @@ function newspapers_core_preprocess_node__publication(&$variables) {
 
   $holdings = _newspapers_core_get_publication_holdings($node->id());
   if ($holdings) {
-    foreach ($holdings as $key => $value) {
-      switch ($key) {
-        case 'microfilm':
-        case 'digital':
-        case 'physical':
-          $variables['holding'] = _newspapers_core_get_holding_vars($key, $value);
-          break;
-
-        default:
-          throw new Exception("An error occurred. Unknown holding type: $key.");
-      }
+    $variables['holding'] = [];
+    foreach ($holdings as $type => $type_holdings) {
+      $variables['holding'][$type] = _newspapers_core_get_holding_details($type, $type_holdings);
     }
   }
 
@@ -610,31 +602,44 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
 /**
  * Determine if a node has holding entities referencing it.
  *
- * @param string $key
+ * @param string $type
  *   The name of the holding type.
- * @param \Drupal\serial_holding\Entity\SerialHolding $holding
+ * @param \Drupal\serial_holding\Entity\SerialHolding[] $holdings
  *   The serial holding object.
  *
  * @return array
  *   Associative array of label/value pairs for template holdings variables.
  */
-function _newspapers_core_get_holding_vars($key, SerialHolding $holding) {
-  $holding_variables[$key] = [
-    'location' => [
-      'label' => 'Location',
-      'value' => $holding->getHoldingLocation() . ", filed as " . $holding->getHoldingFiledAs(),
-    ],
-    'coverage' => [
-      'label' => 'Coverage Statement',
-      'value' => $holding->getHoldingCoverage(),
-    ],
-    'notes' => [
-      'label' => 'Notes',
-      'value' => $holding->getHoldingNotes(),
-    ],
-  ];
+function _newspapers_core_get_holding_details($type, array $holdings) {
+  $holding_infos = [];
 
-  return $holding_variables;
+  foreach ($holdings as $holding) {
+    switch ($type) {
+      case 'microfilm':
+        $holding_infos[] = [
+          'location' => [
+            'label' => 'Location',
+            'value' => $holding->getHoldingLocation() . ", filed as " . $holding->getHoldingFiledAs(),
+          ],
+          'coverage' => [
+            'label' => 'Coverage Statement',
+            'value' => $holding->getHoldingCoverage(),
+          ],
+          'notes' => [
+            'label' => 'Notes',
+            'value' => $holding->getHoldingNotes(),
+          ],
+        ];
+      case 'digital':
+      case 'physical':
+        break;
+
+      default:
+        throw new Exception("An error occurred. Unknown holding type: $type.");
+    }
+  }
+
+  return $holding_infos;
 }
 
 /**
@@ -646,9 +651,8 @@ function _newspapers_core_get_holding_vars($key, SerialHolding $holding) {
  * @return array
  *   Associative array of holdings, with holding type as key.
  */
-function _newspapers_core_get_publication_holdings(int $nid) {
-  $holding_section = NULL;
-
+function _newspapers_core_get_publication_holdings($nid) {
+  $holding_section = [];
   $query = Drupal::service('entity.query')
     ->get('serial_holding')
     ->condition('parent_title', $nid);
@@ -659,12 +663,16 @@ function _newspapers_core_get_publication_holdings(int $nid) {
     ->loadMultiple($entity_ids);
 
   foreach ($holdings as $holding) {
-    $holding_key = strtolower(
+    $holding_type = strtolower(
       $holding
         ->getHoldingType()
         ->getName()
     );
-    $holding_section[$holding_key] = $holding;
+
+    if (empty($holding_section[$holding_type])) {
+      $holding_section[$holding_type] = [];
+    }
+    $holding_section[$holding_type][] = $holding;
   }
   return $holding_section;
 }
