@@ -1,0 +1,13 @@
+uuid: a0ed6834-8f12-466d-86a6-240a38f91b51
+langcode: en
+status: true
+dependencies: {  }
+id: newspaper_administrator
+label: 'Newspaper Administrator'
+weight: 3
+is_admin: null
+permissions:
+  - 'access toolbar'
+  - 'create publication content'
+  - 'delete any publication content'
+  - 'edit any publication content'

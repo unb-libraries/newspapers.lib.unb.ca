@@ -1,0 +1,14 @@
+uuid: dd50e98d-79ff-4219-86a3-301027909539
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.newspaper_administrator
+  module:
+    - user
+id: user_remove_role_action.newspaper_administrator
+label: 'Remove the Newspaper Administrator role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: newspaper_administrator

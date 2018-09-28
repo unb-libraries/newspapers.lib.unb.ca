@@ -1,0 +1,14 @@
+uuid: 4f2ecc90-7ca5-4588-88d9-f25f7208328a
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.newspaper_administrator
+  module:
+    - user
+id: user_add_role_action.newspaper_administrator
+label: 'Add the Newspaper Administrator role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: newspaper_administrator
