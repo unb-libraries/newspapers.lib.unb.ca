@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - datetime
     - digital_serial_issue
     - user
 id: digital_issue_list
@@ -38,7 +39,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Filter
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -81,8 +82,10 @@ display:
             parent_title: parent_title
             id: id
             issue_title: issue_title
+            issue_date: issue_date
             issue_vol: issue_vol
             issue_issue: issue_issue
+            issue_title_1: issue_title_1
           info:
             parent_title:
               sortable: false
@@ -105,14 +108,28 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
+            issue_date:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
             issue_vol:
-              sortable: false
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             issue_issue:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            issue_title_1:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -457,7 +474,7 @@ display:
           plugin_id: entity_link_edit
       filters: {  }
       sorts: {  }
-      title: 'Digital Serial Issue List'
+      title: ''
       header: {  }
       footer: {  }
       empty:
@@ -478,6 +495,7 @@ display:
       arguments: {  }
       display_extenders: {  }
       use_ajax: true
+      css_class: search-results
     cache_metadata:
       max-age: -1
       contexts:
@@ -632,7 +650,7 @@ display:
           field: issue_title
           relationship: none
           group_type: group
-          admin_label: ''
+          admin_label: 'Printed Title'
           label: 'Printed Title'
           exclude: false
           alter:
@@ -915,6 +933,7 @@ display:
           entity_type: digital_serial_issue
           entity_field: parent_title
           plugin_id: numeric
+      block_description: ''
     cache_metadata:
       max-age: -1
       contexts:
@@ -960,10 +979,10 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: false
+          specify_validation: true
           validate:
             type: none
-            fail: 'not found'
+            fail: empty
           validate_options: {  }
           break_phrase: false
           not: false
@@ -976,6 +995,10 @@ display:
         title: false
         fields: false
         access: false
+        header: false
+        relationships: false
+        filters: false
+        filter_groups: false
       empty:
         area:
           id: area
@@ -987,11 +1010,11 @@ display:
           empty: true
           tokenize: false
           content:
-            value: "<div class=\"alert alert-warning fade in\">\r\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No issues have been found for this title.\r\n</div>"
+            value: "<div class=\"alert alert-warning fade in\">\r\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No issues have been found that match your filter selection.\r\n</div>"
             format: full_html
           plugin_id: text
       enabled: true
-      title: Issues
+      title: ''
       fields:
         parent_title:
           id: parent_title
@@ -1188,6 +1211,72 @@ display:
           entity_type: digital_serial_issue
           entity_field: issue_title
           plugin_id: field
+        issue_date:
+          id: issue_date
+          table: digital_serial_issue
+          field: issue_date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Publication Date'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: datetime_default
+          settings:
+            timezone_override: ''
+            format_type: html_date
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: digital_serial_issue
+          entity_field: issue_date
+          plugin_id: field
         issue_vol:
           id: issue_vol
           table: digital_serial_issue
@@ -1214,9 +1303,9 @@ display:
             suffix: ''
             target: ''
             nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
+            max_length: null
+            word_boundary: false
+            ellipsis: false
             more_link: false
             more_link_text: ''
             more_link_path: ''
@@ -1318,10 +1407,219 @@ display:
           entity_type: digital_serial_issue
           entity_field: issue_issue
           plugin_id: field
+        issue_title_1:
+          id: issue_title_1
+          table: digital_serial_issue
+          field: issue_title
+          relationship: none
+          group_type: group
+          admin_label: 'Heading Title'
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: null
+            word_boundary: false
+            ellipsis: false
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: digital_serial_issue
+          entity_field: issue_title
+          plugin_id: field
       access:
         type: perm
         options:
           perm: 'view published serial issue entities'
+      block_description: ''
+      header:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          content: "<h2 class=\"alert alert-success fade in\">\r\n    <span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span>\r\n    Displaying @start - @end of @total issues\r\n</h2>"
+          plugin_id: result
+      relationships: {  }
+      filters:
+        issue_date:
+          id: issue_date
+          table: digital_serial_issue
+          field: issue_date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: issue_date_op
+            label: 'Publication Date'
+            description: ''
+            use_operator: false
+            operator: issue_date_op
+            identifier: date
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              newspaper_administrator: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: digital_serial_issue
+          entity_field: issue_date
+          plugin_id: string
+        issue_vol:
+          id: issue_vol
+          table: digital_serial_issue
+          field: issue_vol
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: issue_vol_op
+            label: 'Volume No.'
+            description: ''
+            use_operator: false
+            operator: issue_vol_op
+            identifier: vol
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              newspaper_administrator: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: digital_serial_issue
+          entity_field: issue_vol
+          plugin_id: string
+        issue_issue:
+          id: issue_issue
+          table: digital_serial_issue
+          field: issue_issue
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: issue_issue_op
+            label: 'Issue No.'
+            description: ''
+            use_operator: false
+            operator: issue_issue_op
+            identifier: issue
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              newspaper_administrator: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: digital_serial_issue
+          entity_field: issue_issue
+          plugin_id: string
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
     cache_metadata:
       max-age: -1
       contexts:
