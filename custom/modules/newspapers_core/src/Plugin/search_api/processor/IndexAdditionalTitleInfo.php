@@ -75,13 +75,10 @@ class IndexAdditionalTitleInfo extends ProcessorPluginBase {
           ->filterForPropertyPath($item->getFields(), NULL, 'years_published');
         foreach ($fields as $field) {
           if (!empty($node->get('field_first_issue_search_date')->date) && !empty($node->get('field_last_issue_search_date')->date)) {
-            $pub_start = new DateTime($node->get('field_first_issue_search_date')->date->format('Y-m-d'));
-            $pub_end = new DateTime($node->get('field_last_issue_search_date')->date->format('Y-m-d'));
-            $interval = new DateInterval('P1Y');
-            $period = new DatePeriod($pub_start, $interval, $pub_end);
-
-            foreach ($period as $dt) {
-              $field->addValue($dt->format("Y"));
+            $pub_start_year = $node->get('field_first_issue_search_date')->date->format('Y');
+            $pub_end_year = $node->get('field_last_issue_search_date')->date->format('Y');
+            for ($year = $pub_start_year; $year <= $pub_end_year; $year++) {
+              $field->addValue($year);
             }
           }
         }
