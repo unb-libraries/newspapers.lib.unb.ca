@@ -23,10 +23,9 @@ entity.digital_serial_issue.canonical:
 digital_serial_issue.title_issues:
   path: '/serials/{digital_serial_title}/issues'
   defaults:
-    _title: NULL
     _form: '\Drupal\digital_serial_issue\Form\DigitalSerialIssueListForm'
   requirements:
-    _permission: 'view published serial issue entities'
+    _permission: 'administer serial issue entities'
 
 digital_serial_issue.title_add_issue:
   path: '/serials/{digital_serial_title}/issues/add'
