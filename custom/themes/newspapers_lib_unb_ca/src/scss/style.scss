@@ -518,18 +518,22 @@ a.btn-add::before {
 .search-results .table > thead > tr > th {
   padding: 0;
 }
-.table > thead:first-child > tr:first-child > th[class*="-sort"] {
+.table > thead:first-child > tr:first-child > th {
   border-top: 2px solid #ddd;
 }
-th[class*="-sort"] a {
+th[class*="-sort"] a,
+th[class*="-date"] a {
   padding: .5em;
   white-space: nowrap;
 }
 th[class*="-sort"] a:focus,
-th[class*="-sort"] a:hover {
+th[class*="-date"] a:focus,
+th[class*="-sort"] a:hover,
+th[class*="-date"] a:hover{
   background: #f9f9f9;
 }
-th[class*="-sort"] a::before {
+th[class*="-sort"] a::before,
+th[class*="-date"] a::before {
   content: "\e150";
   display: inline-block;
   font-family: 'Glyphicons Halflings';
