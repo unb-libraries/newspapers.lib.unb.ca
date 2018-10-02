@@ -41,6 +41,7 @@ function digital_serial_title_theme() {
 function digital_serial_title_preprocess_digital_serial_title(&$variables) {
   $variables['title_entity'] = $variables['children']['#digital_serial_title'];
   $variables['parent_publication'] = $variables['title_entity']->get('parent_title')->entity;
+  $variables['digital_serial_title_id'] = $variables['title_entity']->id();
 }
 
 /**
