@@ -263,6 +263,28 @@ function newspapers_core_node_presave(EntityInterface $node) {
 
       break;
   }
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function newspapers_core_entity_presave(EntityInterface $entity) {
+  $entity_type = $entity->getEntityTypeId();
+  switch ($entity_type) {
+    case 'digital_serial_issue':
+      // Check Digital Issue Volume/Issue #s, set appropriate alpha sort values.
+      $issue_vol_no = $entity->getIssueVol();
+      $issue_iss_no = $entity->getIssueIssue();
+      if (isset($issue_vol_no)) {
+        $issue_vol_sort = str_pad($issue_vol_no, 16, "0", STR_PAD_LEFT);
+        $entity->setIssueVolSort($issue_vol_sort);
+      }
+      if (isset($issue_iss_no)) {
+        $issue_iss_sort = str_pad($issue_iss_no, 16, "0", STR_PAD_LEFT);
+        $entity->setIssueIssueSort($issue_iss_sort);
+      }
+      break;
+  }
 
 }
 
