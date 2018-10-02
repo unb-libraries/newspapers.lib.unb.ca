@@ -101,11 +101,11 @@ class HomePageForm extends FormBase {
       ],
     ];
     $form['nav-tabs']['title'] = [
-      '#markup' => '<li class="tab' . $title_tab_class . '">' . Link::fromTextAndUrl(t('Title Search'), $title_url)
+      '#markup' => '<li class="tab' . $title_tab_class . '">' . Link::fromTextAndUrl($this->t('Title Search'), $title_url)
         ->toString() . '</li>',
     ];
     $form['nav-tabs']['fulltext'] = [
-      '#markup' => '<li class="tab' . $fulltext_tab_class . '">' . Link::fromTextAndUrl(t('Fulltext Search'), $fulltext_url)
+      '#markup' => '<li class="tab' . $fulltext_tab_class . '">' . Link::fromTextAndUrl($this->t('Fulltext Search'), $fulltext_url)
         ->toString() . '</li>',
     ];
 
