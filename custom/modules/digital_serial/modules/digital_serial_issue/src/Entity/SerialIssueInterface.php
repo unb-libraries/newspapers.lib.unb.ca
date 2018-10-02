@@ -93,6 +93,17 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
   public function setIssueVol($issue_vol);
 
   /**
+   * Sets the Serial issue volume.
+   *
+   * @param string $issue_vol_sort
+   *   The Serial issue volume.
+   *
+   * @return \Drupal\digital_serial_issue\Entity\SerialIssueInterface
+   *   The called Serial issue entity.
+   */
+  public function setIssueVolSort($issue_vol_sort);
+
+  /**
    * Gets the Serial issue Volume.
    *
    * @return string
@@ -110,6 +121,17 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
    *   The called Serial issue entity.
    */
   public function setIssueIssue($issue_issue);
+
+  /**
+   * Sets the Serial issue issue.
+   *
+   * @param string $issue_issue_sort
+   *   The Serial issue issue number.
+   *
+   * @return \Drupal\digital_serial_issue\Entity\SerialIssueInterface
+   *   The called Serial issue entity.
+   */
+  public function setIssueIssueSort($issue_issue_sort);
 
   /**
    * Gets the Serial issue edition.

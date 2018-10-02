@@ -160,6 +160,14 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * {@inheritdoc}
    */
+  public function setIssueVolSort($issue_vol_sort) {
+    $this->set('issue_vol_sort', $issue_vol_sort);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getIssueIssue() {
     return $this->get('issue_issue')->value;
   }
@@ -169,6 +177,14 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    */
   public function setIssueIssue($issue_issue) {
     $this->set('issue_issue', $issue_issue);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setIssueIssueSort($issue_issue_sort) {
+    $this->set('issue_issue_sort', $issue_issue_sort);
     return $this;
   }
 
