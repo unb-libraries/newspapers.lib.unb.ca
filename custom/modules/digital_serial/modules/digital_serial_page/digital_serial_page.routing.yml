@@ -12,7 +12,7 @@ digital_serial_page.issue_add_page:
      _entity_form: digital_serial_page.add
      _title: 'Add Page'
   requirements:
-    _permission: 'view published serial issue entities'
+    _permission: 'add serial page entities'
 
 digital_serial_page.issue_view_page:
   path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages/{digital_serial_page}'
