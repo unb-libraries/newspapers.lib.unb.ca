@@ -148,6 +148,7 @@ class HomePageForm extends FormBase {
       '#type' => 'container',
       '#attributes' => [
         'class' => [
+          'clearfix',
           'tab-pane',
           $fulltext_pane_class,
         ],
@@ -159,12 +160,20 @@ class HomePageForm extends FormBase {
         ],
       ],
     ];
-    $form['tab-content']['fulltext']['input_fulltext'] = [
+    $form['tab-content']['fulltext']['wrapper'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'clearfix',
+        ],
+      ],
+    ];
+    $form['tab-content']['fulltext']['wrapper']['input_fulltext'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search the fulltext of digitized newspapers'),
       '#description' => $this->t('Search for keywords within the fulltext content of newspapers.'),
     ];
-    $form['tab-content']['fulltext']['submit_fulltext'] = [
+    $form['tab-content']['fulltext']['wrapper']['submit_fulltext'] = [
       '#type' => 'submit',
       '#value' => $this->t('Search FullText'),
       '#field_prefix' => '<span class="input-group-btn">',
@@ -173,6 +182,14 @@ class HomePageForm extends FormBase {
           'btn-danger',
         ],
       ],
+    ];
+    $form['tab-content']['fulltext']['notes'] = [
+      '#type' => 'markup',
+      '#markup' => '<p class="alert alert-info fade in">
+        <span class="glyphicon glyphicon glyphicon-ok-circle"></span>
+        <b>Note:</b>
+        Only a limited number of newspapers have been digitized.
+        See a full listing of digitally available titles.</p>',
     ];
 
     return $form;
