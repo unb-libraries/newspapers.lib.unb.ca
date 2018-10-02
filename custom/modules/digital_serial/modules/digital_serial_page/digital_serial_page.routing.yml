@@ -4,7 +4,7 @@ digital_serial_page.manage_pages:
     _title: NULL
     _entity_list: digital_serial_page
   requirements:
-    _permission: 'view published serial issue entities'
+    _permission: 'administer serial page entities'
 
 digital_serial_page.issue_add_page:
   path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages/add'
