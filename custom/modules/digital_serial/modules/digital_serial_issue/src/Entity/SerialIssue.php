@@ -272,6 +272,17 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['issue_vol_sort'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Volume Sort'))
+      ->setDescription(t('Sort volume number of the issue.'))
+      ->setSettings([
+        'max_length' => 16,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayConfigurable('form', FALSE)
+      ->setDisplayConfigurable('view', FALSE);
+
     $fields['issue_issue'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Issue'))
       ->setDescription(t('Issue number of the issue.'))
@@ -291,6 +302,17 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
+
+    $fields['issue_issue_sort'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Issue Sort'))
+      ->setDescription(t('Sort issue number of the issue.'))
+      ->setSettings([
+        'max_length' => 16,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayConfigurable('form', FALSE)
+      ->setDisplayConfigurable('view', FALSE);
 
     $fields['issue_edition'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Edition'))
