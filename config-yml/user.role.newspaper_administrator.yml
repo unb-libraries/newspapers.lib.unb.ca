@@ -8,6 +8,9 @@ weight: 3
 is_admin: null
 permissions:
   - 'access toolbar'
+  - 'administer digital serial title entities'
+  - 'administer serial issue entities'
+  - 'administer serial page entities'
   - 'create publication content'
   - 'delete any publication content'
   - 'edit any publication content'
