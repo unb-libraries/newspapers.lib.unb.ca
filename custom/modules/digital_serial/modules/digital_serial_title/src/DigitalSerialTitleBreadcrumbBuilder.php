@@ -70,13 +70,6 @@ class DigitalSerialTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface 
       )
     );
 
-    $breadcrumb->addLink(
-      Link::createFromRoute(
-        'Digital Issues',
-        '<nolink>'
-      )
-    );
-
     $breadcrumb->addCacheTags(["digital_serial_title:{$title->id()}"]);
     $breadcrumb->addCacheContexts(['url']);
 
