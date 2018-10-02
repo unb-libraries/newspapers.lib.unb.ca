@@ -1,5 +1,2 @@
 <!-- Digital Serial Title Issues template -->
-{% set url = url('<current>') %}
-{% set context_id = url['#markup']|split('/')|last %}
-
-{{ drupal_view('digital_issue_list','view_title_issues_block', context_id) }}
+{{ drupal_view('digital_issue_list','view_title_issues_block', digital_serial_title_id) }}
