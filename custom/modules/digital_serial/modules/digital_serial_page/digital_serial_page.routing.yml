@@ -36,4 +36,4 @@ digital_serial_page.title_edit_page:
      _entity_form: digital_serial_page.edit
      _title: 'Edit Page Data'
   requirements:
-    _permission: 'view published serial page entities'
+    _permission: 'edit serial page entities'
