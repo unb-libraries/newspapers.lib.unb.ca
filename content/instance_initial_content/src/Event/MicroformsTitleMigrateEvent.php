@@ -39,6 +39,8 @@ class MicroformsTitleMigrateEvent implements EventSubscriberInterface {
 
       $address_country = trim($row->getSourceProperty('country'));
       $address_administrative_area = trim($row->getSourceProperty('prov_state'));
+      // Fix incorrect local code for Quebec.
+      $address_administrative_area = $address_administrative_area === 'PQ' ? 'QC' : $address_administrative_area;
       $address_city = trim($row->getSourceProperty('city_town'));
 
       $row->setSourceProperty('country_code', $address_country);
