@@ -14,3 +14,4 @@ permissions:
   - 'create publication content'
   - 'delete any publication content'
   - 'edit any publication content'
+  - 'edit serial page entities'

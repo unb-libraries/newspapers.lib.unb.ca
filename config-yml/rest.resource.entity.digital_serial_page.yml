@@ -3,9 +3,9 @@ langcode: en
 status: true
 dependencies:
   module:
+    - basic_auth
     - digital_serial_page
     - serialization
-    - user
 id: entity.digital_serial_page
 plugin_id: 'entity:digital_serial_page'
 granularity: resource
@@ -17,4 +17,4 @@ configuration:
   formats:
     - json
   authentication:
-    - cookie
+    - basic_auth

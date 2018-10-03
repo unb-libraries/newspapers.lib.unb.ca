@@ -1,6 +1,6 @@
 uuid: 2e7ebe4d-6b8f-41ed-8369-4b6e99941b01
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - digital_serial_issue

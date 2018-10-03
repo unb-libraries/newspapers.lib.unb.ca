@@ -1,6 +1,6 @@
 uuid: 2a7627d9-259c-4082-a673-f51ff8569060
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - digital_serial_title
