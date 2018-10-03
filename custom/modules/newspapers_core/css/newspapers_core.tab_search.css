@@ -53,3 +53,14 @@ a#tab-title:before {
 .tab-pane div.form-type-textfield + span button {
     margin-top: 27px;
 }
+
+@media (max-width: 990px) {
+    .tab-pane div.form-item, .tab-pane div.description {
+        width: 100%;
+        float: none;
+    }
+    .tab-pane div.form-type-textfield + span button {
+        margin-top: 0;
+        margin-button: 2em;
+    }
+}
