@@ -21,8 +21,8 @@ widget:
     show_numbers: true
     soft_limit: 10
     soft_limit_settings:
-      show_less_label: 'Show less'
-      show_more_label: 'Show more'
+      show_less_label: 'Show Less'
+      show_more_label: 'Show All'
 query_operator: or
 use_hierarchy: false
 expand_hierarchy: false

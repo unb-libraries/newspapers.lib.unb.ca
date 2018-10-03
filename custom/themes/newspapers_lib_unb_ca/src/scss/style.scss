@@ -202,7 +202,7 @@ select[multiple="multiple"] + .form-control {
 .block-facets h3 {
   background: $heading-bg;
   font-size: 18px;
-  padding: 5px;
+  padding: 6px;
 }
 .block-facets h3 {
   margin-top: .25em;
@@ -233,15 +233,15 @@ select[multiple="multiple"] + .form-control {
 input[type="checkbox"].facets-checkbox {
   margin-right: .25em;
 }
-ul.js-facets-checkbox-links + a::after {
+ul.js-facets-checkbox-links + a::before {
   font-family: "Glyphicons Halflings";
   content: "\e114";
   display: inline-block;
-  font-size: smaller;
-  margin-left: .25em;
+  font-size: small;
+  margin: 0 4px 0 1px;
   vertical-align: text-bottom;
 }
-ul.js-facets-checkbox-links + a.open::after {
+ul.js-facets-checkbox-links + a.open::before {
   content: "\e113";
 }
 .facet-item input {
