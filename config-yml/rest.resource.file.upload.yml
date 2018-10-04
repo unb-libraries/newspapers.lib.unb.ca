@@ -1,19 +1,17 @@
-uuid: 2e7ebe4d-6b8f-41ed-8369-4b6e99941b01
+uuid: b150e17e-39d5-463e-9f72-80b9a81ecece
 langcode: en
 status: true
 dependencies:
   module:
     - basic_auth
-    - digital_serial_issue
+    - file
     - serialization
-id: entity.digital_serial_issue
-plugin_id: 'entity:digital_serial_issue'
+id: file.upload
+plugin_id: 'file:upload'
 granularity: resource
 configuration:
   methods:
-    - GET
     - POST
-    - PATCH
   formats:
     - json
   authentication:
