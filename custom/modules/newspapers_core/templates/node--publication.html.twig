@@ -228,45 +228,19 @@
 </section>
 
 <aside class="col-sm-4 publication">
-    {% if holding|length > 0 %}
     <fieldset>
         <legend>{% trans %}UNB Libraries' Holdings{% endtrans %}</legend>
-
-        {% if holding.local_digital|length > 0 %}
-        <div role="tablist" aria-multiselectable="true">
-            <div class="panel-title" role="tab" id="headingDigital">
-                <a role="button" data-toggle="collapse" href="#collapseDigitial" aria-expanded="true" aria-controls="collapseDigitial">
-                    {% trans %}Digital Versions{% endtrans %}
-                </a>
-            </div>
-            <div id="collapseDigitial" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingDigital">
-                <div class="panel-body">
-                    {% for item in holding.local_digital %}
-                        <div class="holding-details">
-                            <dl>
-                                {% for field in item %}
-                                    {% if field.value %}
-                                        <dt>{{ field.label }}:</dt>
-                                        <dd>{{ field.value }}</dd>
-                                    {% endif %}
-                                {% endfor %}
-                            </dl>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-
-        {% if holding.microfilm|length > 0 %}
+        {% if holding|length > 0 %}
+            {% if holding.local_digital|length > 0 %}
             <div role="tablist" aria-multiselectable="true">
-                <div class="panel-title" role="tab" id="headingMicrofilm">
-                    <a role="button" data-toggle="collapse" href="#collapseMicrofilm" aria-expanded="true" aria-controls="collapseMicrofilm">
-                        {% trans %}Microfilms{% endtrans %}
+                <div class="panel-title" role="tab" id="headingDigital">
+                    <a role="button" data-toggle="collapse" href="#collapseDigitial" aria-expanded="true" aria-controls="collapseDigitial">
+                        {% trans %}Digital Versions{% endtrans %}
                     </a>
                 </div>
-                <div id="collapseMicrofilm" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingMicrofilm">
+                <div id="collapseDigitial" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingDigital">
                     <div class="panel-body">
-                        {% for item in holding.microfilm %}
+                        {% for item in holding.local_digital %}
                             <div class="holding-details">
                                 <dl>
                                     {% for field in item %}
@@ -280,9 +254,39 @@
                         {% endfor %}
                     </div>
                 </div>
-            </div>
+            {% endif %}
+
+            {% if holding.microfilm|length > 0 %}
+                <div role="tablist" aria-multiselectable="true">
+                    <div class="panel-title" role="tab" id="headingMicrofilm">
+                        <a role="button" data-toggle="collapse" href="#collapseMicrofilm" aria-expanded="true" aria-controls="collapseMicrofilm">
+                            {% trans %}Microfilms{% endtrans %}
+                        </a>
+                    </div>
+                    <div id="collapseMicrofilm" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingMicrofilm">
+                        <div class="panel-body">
+                            {% for item in holding.microfilm %}
+                                <div class="holding-details">
+                                    <dl>
+                                        {% for field in item %}
+                                            {% if field.value %}
+                                                <dt>{{ field.label }}:</dt>
+                                                <dd>{{ field.value }}</dd>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </dl>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+         {% else %}
+                <div class="text-muted">
+                    <small><i class="glyphicon glyphicon-info-sign"></i></small>
+                    {% trans %}No holdings found.{% endtrans %}
+                </div>
         {% endif %}
         </fieldset>
-    {% endif %}
 </aside>
 </main>
