@@ -523,7 +523,9 @@ a.btn-add::before {
   border-top: 2px solid #ddd;
 }
 th[class*="-sort"] a,
-th[class*="-date"] a {
+th[class*="-date"] a,
+th#view-issue-title-table-column,
+th#view-nothing-table-column {
   padding: .5em;
   white-space: nowrap;
 }
