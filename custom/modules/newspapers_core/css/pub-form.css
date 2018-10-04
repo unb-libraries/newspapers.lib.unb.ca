@@ -12,6 +12,7 @@
 	font-family: 'Glyphicons Halflings';
 	content: "\e159";
 	color: #5cb85c;
+	display: inline-block;
 	font-weight: normal;
 	margin-right: .25em;
 	vertical-align: text-top;
