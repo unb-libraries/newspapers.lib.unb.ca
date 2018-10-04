@@ -75,8 +75,6 @@
 {% endif %}
 <main {{ attributes.addClass('no-gutters') }}>
 <section class="publication col-sm-8">
-
-
     {{ title_prefix }}
     {% if not page %}
         <h2{{ title_attributes }}>
@@ -89,113 +87,113 @@
         <blockquote>{{ content.field_subtitle|field_value }}</blockquote>
     {% endif %}
 
-    {% if content.field_place_of_publication|field_value %}
-    <dl>
-        <dt>{{ content.field_place_of_publication|field_label }}:</dt>
-        <dd>{{ content.field_place_of_publication|field_value }}</dd>
-    </dl>
-    {% endif %}
+    <fieldset class="title-info">
+        <legend>{% trans %}Description{% endtrans %}</legend>
+        <dl>
+        {% if content.field_sample_image|field_value %}
+            {% if content.field_sample_image|field_value %}
+                <figure>
+                    {{ content.field_sample_image }}
+                    <figcaption class="sr-only">
+                        Sample image of <i>{{ label }}</i>
+                    </figcaption>
+                </figure>
 
-    {% if content.field_geographic_coverage|field_value %}
-    <dl>
-        <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
-        <dd>
-            <ul>
-                {% for key, item in content.field_geographic_coverage if key|first != '#' %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-            </ul>
-        </dd>
-    </dl>
-    {% endif %}
+            {% endif %}
 
-    {% if content.field_publisher|field_value %}
-    <dl>
-        <dt>{{ content.field_publisher|field_label }}:</dt>
-        <dd>{{ content.field_publisher|field_value}}</dd>
-    </dl>
-    {% endif %}
+            {% if content.field_description|field_value %}
+                {{ content.field_description|field_value }}
+            {% endif %}
+        {% else %}
+            <figure>
+                <img class="no-borders image-placeholder" src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
+            </figure>
+        {% endif %}
 
+        {% if content.field_place_of_publication|field_value %}
+            <dt>{{ content.field_place_of_publication|field_label }}:</dt>
+            <dd>{{ content.field_place_of_publication|field_value }}</dd>
+        {% endif %}
 
-    <dl>
+        {% if content.field_geographic_coverage|field_value %}
+            <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
+            <dd>
+                <ul>
+                    {% for key, item in content.field_geographic_coverage if key|first != '#' %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </dd>
+        {% endif %}
+
+        {% if content.field_publisher|field_value %}
+            <dt>{{ content.field_publisher|field_label }}:</dt>
+            <dd>{{ content.field_publisher|field_value}}</dd>
+        {% endif %}
+
         <dt>{{ publication_date_label }}:</dt>
         <dd>{{ publication_date_value }}</dd>
-    </dl>
 
+        {% if content.field_frequency|field_value %}
+                <dt>{{ content.field_frequency|field_label }}:</dt>
+                <dd>{{ content.field_frequency|field_value }}</dd>
+                {% if content.field_frequency_notes|field_value %}
+                    <dt>{{ content.field_frequency_notes|field_label }}:</dt>
+                    <dd>{{ content.field_frequency_notes|field_value }}</dd>
+                {% endif %}
+        {% endif %}
 
-    {% if content.field_frequency|field_value %}
-        <dl>
-            <dt>{{ content.field_frequency|field_label }}:</dt>
-            <dd>{{ content.field_frequency|field_value }}</dd>
-            {% if content.field_frequency_notes|field_value %}
-                <dt>{{ content.field_frequency_notes|field_label }}:</dt>
-                <dd>{{ content.field_frequency_notes|field_value }}</dd>
-            {% endif %}
-        </dl>
-    {% endif %}
-
-    {% if earlier_titles_up %}
-        {% set count = content.field_serial_relation_pre_ref_up|field_value|length %}
-        <dl>
+        {% if earlier_titles_up %}
+            {% set count = content.field_serial_relation_pre_ref_up|field_value|length %}
             {% if count > 1 %}<dt>{% trans %}Earlier titles{% endtrans %}:</dt>
             {% else %}<dt>{% trans %}Earlier title{% endtrans %}:</dt>
             {% endif %}
             <dd>{{ content.field_serial_relationship_op_pre|field_value }} {{ earlier_titles_up }}</dd>
-        </dl>
-    {% endif %}
+        {% endif %}
 
-    {% if later_titles_up and later_titles_down %}
-        <dl>
+        {% if later_titles_up and later_titles_down %}
             <dt>{% trans %}Later title{% endtrans %}:</dt>
             <dd>{% trans %}Merged with{% endtrans %} {{ later_titles_up }}
                 {% trans %}to form{% endtrans %} {{ later_titles_down }}</dd>
-        </dl>
-    {% elseif later_titles_down %}
-        {% set count = content.field_serial_relation_suc_ref_dn|field_value|length %}
-        <dl>
+        {% elseif later_titles_down %}
+            {% set count = content.field_serial_relation_suc_ref_dn|field_value|length %}
             {% if count > 1 %}<dt>{% trans %}Later titles{% endtrans %}:</dt>
             {% else %}<dt>{% trans %}Later title{% endtrans %}:</dt>
             {% endif %}
             <dd>{{ content.field_serial_relationship_op_suc|field_value }} {{ later_titles_down }}</dd>
-        </dl>
-    {% endif %}
+        {% endif %}
 
-    {% if content.field_title_notes|field_value %}
-        <dl>
+        {% if content.field_title_notes|field_value %}
             <dt>{{ content.field_title_notes|field_label }}:</dt>
             <dd>{{ content.field_title_notes|field_value }}</dd>
-        </dl>
-    {% endif %}
+        {% endif %}
 
-    {% if content.field_supplemental_information|field_value %}
-        <dl>
+        {% if content.field_supplemental_information|field_value %}
             <dt>{{ content.field_supplemental_information|field_label }}:</dt>
             <dd>{{ content.field_supplemental_information|field_value }}</dd>
-        </dl>
-    {% endif %}
-
-    {% if family %}
-    <hr />
-    <dl class="title-history">
-        <dt>{% trans %}Broad Title History{% endtrans %}:</dt>
-        <dd class="no-borders">({% trans %}This field includes titles and publication dates of UNB Holdings only{%  endtrans %})<br >
-            {% set supplemental_tid = node.field_family.target_id %}
-            {% if supplemental_tid %}
-                {{ drupal_field('field_supplemental_information', 'taxonomy_term', supplemental_tid) }}
-            {% endif %}
-            {{ family }}
-        </dd>
-        {% if supplemental_title %}
-            <dt>{{ supplemental_title_label }}:</dt>
-            <dd>
-                {{ supplemental_title }}
-            </dd>
         {% endif %}
-    </dl>
-    {% endif %}
 
-    {% if content.field_subjects|field_value %}
-    <dl>
+        {% if family %}
+        <hr />
+        <div class="title-history">
+            <dt>{% trans %}Broad Title History{% endtrans %}:</dt>
+            <dd class="no-borders">({% trans %}This field includes titles and publication dates of UNB Holdings only{%  endtrans %})<br >
+                {% set supplemental_tid = node.field_family.target_id %}
+                {% if supplemental_tid %}
+                    {{ drupal_field('field_supplemental_information', 'taxonomy_term', supplemental_tid) }}
+                {% endif %}
+                {{ family }}
+            </dd>
+            {% if supplemental_title %}
+                <dt>{{ supplemental_title_label }}:</dt>
+                <dd>
+                    {{ supplemental_title }}
+                </dd>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if content.field_subjects|field_value %}
         <dt>{{ content.field_subjects|field_label }}:</dt>
         <dd>
             <ul>
@@ -204,72 +202,71 @@
                 {% endfor %}
             </ul>
         </dd>
-    </dl>
-    {% endif %}
+        {% endif %}
 
-    {% if content.field_subject_notes|field_value %}
-        <dl>
+        {% if content.field_subject_notes|field_value %}
             <dt>{{ content.field_subject_notes|field_label }}:</dt>
             <dd>{{ content.field_subject_notes|field_value }}</dd>
-        </dl>
-    {% endif %}
+        {% endif %}
 
-    {% if content.field_oclc|field_value %}
-    <dl>
-        <dt>{{ content.field_oclc|field_label }}:</dt>
-        <dd>{{ content.field_oclc|field_value }}</dd>
-    </dl>
-    {% endif %}
+        {% if content.field_oclc|field_value %}
+            <dt>{{ content.field_oclc|field_label }}:</dt>
+            <dd>{{ content.field_oclc|field_value }}</dd>
+        {% endif %}
 
-    {% if content.field_issn|field_value %}
-    <dl>
-        <dt>{{ content.field_issn|field_label }}:</dt>
-        <dd>{{ content.field_issn|field_value }}</dd>
-    </dl>
-    {% endif %}
+        {% if content.field_issn|field_value %}
+            <dt>{{ content.field_issn|field_label }}:</dt>
+            <dd>{{ content.field_issn|field_value }}</dd>
+        {% endif %}
 
-    {% if language_value %}
-        <dl>
+        {% if language_value %}
             <dt>{{ language_label }}:</dt>
             <dd>{{ language_value }}</dd>
+        {% endif %}
         </dl>
-    {% endif %}
+    </fieldset>
 </section>
 
 <aside class="col-sm-4 publication">
-{% if content.field_sample_image|field_value %}
-    {% if content.field_sample_image|field_value %}
-        <figure>
-            {{ content.field_sample_image }}
-            <figcaption>
-                Sample image of <i>{{ label }}</i>
-            </figcaption>
-        </figure>
-
-    {% endif %}
-
-    {% if content.field_description|field_value %}
-        {{ content.field_description|field_value }}
-    {% endif %}
-{% else %}
-    <figure>
-        <img class="no-borders" src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
-    </figure>
-{% endif %}
     {% if holding|length > 0 %}
-        <fieldset>
-            <legend>{% trans %}UNB Libraries' Holdings{% endtrans %}:</legend>
+    <fieldset>
+        <legend>{% trans %}UNB Libraries' Holdings{% endtrans %}</legend>
 
-            {% if holding.local_digital|length > 0 %}
+        {% if holding.local_digital|length > 0 %}
+        <div role="tablist" aria-multiselectable="true">
+            <div class="panel-title" role="tab" id="headingDigital">
+                <a role="button" data-toggle="collapse" href="#collapseDigitial" aria-expanded="true" aria-controls="collapseDigitial">
+                    {% trans %}Digital Versions{% endtrans %}
+                </a>
+            </div>
+            <div id="collapseDigitial" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingDigital">
+                <div class="panel-body">
+                    {% for item in holding.local_digital %}
+                        <div class="holding-details">
+                            <dl>
+                                {% for field in item %}
+                                    {% if field.value %}
+                                        <dt>{{ field.label }}:</dt>
+                                        <dd>{{ field.value }}</dd>
+                                    {% endif %}
+                                {% endfor %}
+                            </dl>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if holding.microfilm|length > 0 %}
             <div role="tablist" aria-multiselectable="true">
-                <div class="panel-title" role="tab" id="headingDigital">
-                    <a role="button" data-toggle="collapse" href="#collapseDigitial" aria-expanded="true" aria-controls="collapseDigitial">
-                        {% trans %}Digital Versions{% endtrans %}
+                <div class="panel-title" role="tab" id="headingMicrofilm">
+                    <a role="button" data-toggle="collapse" href="#collapseMicrofilm" aria-expanded="true" aria-controls="collapseMicrofilm">
+                        {% trans %}Microfilms{% endtrans %}
                     </a>
                 </div>
-                <div id="collapseDigitial" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingDigital">
+                <div id="collapseMicrofilm" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingMicrofilm">
                     <div class="panel-body">
-                        {% for item in holding.local_digital %}
+                        {% for item in holding.microfilm %}
                             <div class="holding-details">
                                 <dl>
                                     {% for field in item %}
@@ -283,33 +280,8 @@
                         {% endfor %}
                     </div>
                 </div>
-            {% endif %}
-
-            {% if holding.microfilm|length > 0 %}
-                <div role="tablist" aria-multiselectable="true">
-                    <div class="panel-title" role="tab" id="headingMicrofilm">
-                        <a role="button" data-toggle="collapse" href="#collapseMicrofilm" aria-expanded="true" aria-controls="collapseMicrofilm">
-                            {% trans %}Microfilms{% endtrans %}
-                        </a>
-                    </div>
-                    <div id="collapseMicrofilm" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingMicrofilm">
-                        <div class="panel-body">
-                            {% for item in holding.microfilm %}
-                                <div class="holding-details">
-                                    <dl>
-                                        {% for field in item %}
-                                            {% if field.value %}
-                                                <dt>{{ field.label }}:</dt>
-                                                <dd>{{ field.value }}</dd>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </dl>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+            </div>
+        {% endif %}
         </fieldset>
     {% endif %}
 </aside>
