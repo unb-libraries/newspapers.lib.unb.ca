@@ -47,7 +47,7 @@ function digital_serial_title_preprocess_digital_serial_title(&$variables) {
     ->condition('status', 1)
     ->condition('parent_title', $variables['title_entity']->id());
   $issue_results = $query->execute();
-  $variables['title_issue_count'] = count($issue_results);
+  $variables['title_issue_count'] = count($issue_results) ? count($issue_results) : NULL;
 
   if (!empty($issue_results)) {
     $query = \Drupal::entityQuery('digital_serial_page')
