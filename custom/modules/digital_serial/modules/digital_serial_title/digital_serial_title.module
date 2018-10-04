@@ -42,6 +42,18 @@ function digital_serial_title_preprocess_digital_serial_title(&$variables) {
   $variables['title_entity'] = $variables['children']['#digital_serial_title'];
   $variables['parent_publication'] = $variables['title_entity']->get('parent_title')->entity;
   $variables['digital_serial_title_id'] = $variables['title_entity']->id();
+
+  $query = \Drupal::entityQuery('digital_serial_issue')
+    ->condition('status', 1)
+    ->condition('parent_title', $variables['title_entity']->id());
+  $issue_results = $query->execute();
+  $variables['title_issue_count'] = count($issue_results);
+
+  $query = \Drupal::entityQuery('digital_serial_page')
+    ->condition('status', 1)
+    ->condition('parent_issue', $issue_results, 'IN');
+  $page_results = $query->execute();
+  $variables['title_page_count'] = count($page_results);
 }
 
 /**
