@@ -23,6 +23,10 @@ a:not(.btn):focus {
 }
 
 /* Class/ID style tweaks */
+.title-info figure {
+  float: right;
+  margin-left: 1em;
+}
 .tabledrag-handle:hover {
   border: none;
 }
@@ -148,16 +152,16 @@ li.search-field:before {
   padding: .5em 0;
 }
 
+.publication legend {
+  background: #f5f5f5;
+  border-bottom: none;
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 0.5em;
+  padding: 6px;
+}
 .publication figure {
   margin-bottom: 1em;
-}
-.publication fieldset {
-  margin-bottom: 1em;
-}
-.publication legend {
-  font-size: inherit;
-  font-weight: bold;
-  margin-bottom: .5em;
 }
 .publication .panel-title a {
   display: block;
@@ -275,21 +279,14 @@ ul.js-facets-checkbox-links + a.open::before {
 
 // Elements.
 dd {
-  margin-bottom: .5em;
+  margin-bottom: .75em;
 }
 // Clear separation of multi-line multiple value list items.
 dd li {
   line-height: 1.2em;
   margin-bottom: .3em;
 }
-/*
-dd li:nth-child(even) {
-  margin: .3em auto;
-}
-dd li:last-child {
-  margin-bottom: 0;
-}
-*/
+
 p {
   margin-bottom: 1em;
 }
@@ -461,6 +458,9 @@ a.btn-add::before {
 .title-history .file>span {
   border: none;
 }
+.image-placeholder {
+  max-width: 180px; /* same as Sample publication image style */
+}
 .no-gutters{
   margin-left: 0;
   margin-right: 0;
@@ -576,4 +576,10 @@ a.back-link::before {
   font-size: smaller;
   margin-right: 0.25em;
   vertical-align: text-bottom;
+}
+
+@media (max-width: 767px) {
+  .no-gutters > aside {
+    padding-left: 0;
+  }
 }

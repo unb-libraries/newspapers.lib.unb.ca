@@ -3,13 +3,13 @@ langcode: en
 status: true
 dependencies: {  }
 name: sample_publication_image
-label: 'Sample publication image'
+label: 'Sample publication image (width:100px)'
 effects:
   b1c9d7a1-d8bc-4060-998a-ecd788d3c6b1:
     uuid: b1c9d7a1-d8bc-4060-998a-ecd788d3c6b1
     id: image_scale
     weight: 1
     data:
-      width: 380
-      height: null
+      width: null
+      height: 180
       upscale: false
