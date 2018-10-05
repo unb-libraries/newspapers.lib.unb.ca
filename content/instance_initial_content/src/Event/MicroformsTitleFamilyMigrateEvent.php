@@ -92,7 +92,7 @@ class MicroformsTitleFamilyMigrateEvent implements EventSubscriberInterface {
         $pdf_file = "$pdf_dir/{$row->getSourceProperty('uuid')}.pdf";
         if (file_exists($pdf_file)) {
           $file_basename = basename($pdf_file);
-          $file_destination = "public://$file_basename";
+          $file_destination = "public://serials/families/supporting-information/$file_basename";
 
           if (file_exists($pdf_file)) {
             $file_uri = file_unmanaged_copy(

@@ -18,7 +18,7 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  file_directory: publication-images
+  file_directory: serials/publications/thumbnails
   file_extensions: 'png gif jpg jpeg'
   max_filesize: ''
   max_resolution: ''

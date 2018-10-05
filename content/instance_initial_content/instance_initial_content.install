@@ -8,6 +8,10 @@
 use Drupal\node\Entity\Node;
 
 function instance_initial_content_install() {
+  // Make sure directories are set up.
+  module_load_include('install', 'newspapers_core', 'newspapers_core');
+  newspapers_core_install();
+
   // Get access to drush functions.
   module_load_include('inc', 'migrate_tools', 'migrate_tools.drush');
 

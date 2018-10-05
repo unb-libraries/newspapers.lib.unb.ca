@@ -258,7 +258,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setDescription(t('Upload the digital image of the page.'))
       ->setRequired(TRUE)
       ->setSettings([
-        'file_directory' => 'digital_serial/pages',
+        'file_directory' => 'serials/pages',
         'alt_field_required' => FALSE,
         'file_extensions' => 'png jpg jpeg tiff tif',
       ])

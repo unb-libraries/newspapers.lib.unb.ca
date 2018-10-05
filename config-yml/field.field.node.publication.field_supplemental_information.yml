@@ -18,7 +18,7 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_directory: serials/publications/supporting-information
   file_extensions: 'pdf jpg gif png'
   max_filesize: ''
   description_field: true
