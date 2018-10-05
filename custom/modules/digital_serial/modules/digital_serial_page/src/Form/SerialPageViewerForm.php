@@ -131,7 +131,24 @@ class SerialPageViewerForm extends FormBase {
     $file = $digital_serial_page->get('page_image')->entity;
     $uri = $file->getFileUri();
     $image_path = file_url_transform_relative(file_create_url($uri));
+    $full_path = DRUPAL_ROOT . $image_path;
+    $image_extension = pathinfo($full_path, PATHINFO_EXTENSION);
+    $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
 
+    // Determine if we're using DZI or the plain old image.
+    if (file_exists($dzi_path)) {
+      $tile_sources = str_replace(".$image_extension", '.dzi', $image_path);
+    }
+    else {
+      $tile_sources = json_encode(
+        [
+          'type' => 'image',
+          'url' => $image_path,
+        ]
+      );
+    }
+
+    // Highlighting.
     $overlays = [];
     $highlight = explode(' ', \Drupal::request()->query->get('highlight'));
 
@@ -162,7 +179,7 @@ class SerialPageViewerForm extends FormBase {
       ],
       'drupalSettings' => [
         'digital_serial_page' => [
-          'jpg_filepath' => $image_path,
+          'tile_sources' => $tile_sources,
           'overlays' => $overlays,
         ],
       ],

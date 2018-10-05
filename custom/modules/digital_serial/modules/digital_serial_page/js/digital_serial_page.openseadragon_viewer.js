@@ -1,9 +1,6 @@
 var viewer = OpenSeadragon({
   id: "seadragon-viewer",
   prefixUrl: "//openseadragon.github.io/openseadragon/images/",
-  tileSources: {
-    type: 'image',
-    url:  drupalSettings.digital_serial_page.jpg_filepath
-  },
+  tileSources: drupalSettings.digital_serial_page.tile_sources,
   overlays: drupalSettings.digital_serial_page.overlays
 });
