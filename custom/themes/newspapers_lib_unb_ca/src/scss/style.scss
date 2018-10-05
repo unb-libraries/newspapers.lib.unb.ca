@@ -516,16 +516,16 @@ a.btn-add::before {
 .search-results .views-row {
   margin-bottom: 1.5em;
 }
-.search-results .table > thead > tr > th {
-  padding: 0;
-}
 .table > thead:first-child > tr:first-child > th {
   border-top: 2px solid #ddd;
 }
+.search-results thead > tr > th {
+  padding: 0;
+}
 th[class*="-sort"] a,
 th[class*="-date"] a,
-th#view-issue-title-table-column,
-th#view-nothing-table-column {
+th#view-nothing-table-column,
+.search-results thead > tr > th.views-field-issue-title {
   padding: .5em;
   white-space: nowrap;
 }

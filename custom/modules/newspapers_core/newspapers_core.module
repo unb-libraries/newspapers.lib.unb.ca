@@ -733,6 +733,7 @@ function _newspapers_core_get_publication_holdings($nid) {
     }
     $holding_section[$holding_type][] = $holding;
   }
+
   return $holding_section;
 }
 
