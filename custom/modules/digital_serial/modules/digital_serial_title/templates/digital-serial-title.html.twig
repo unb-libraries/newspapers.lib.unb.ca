@@ -1,9 +1,8 @@
 {# Digital Serial Title Issues template: embedded digital_issue_list view #}
 {% if title_issue_count %}
-<div class="alert alert-info fade in alert-dismissable">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+<p>
     <small><i class="glyphicon glyphicon-info-sign"></i></small>
     <b>Found {{ title_page_count }} pages in {{ title_issue_count }} issues.</b>
-</div>
+</p
 {% endif %}
 {{ drupal_view('digital_issue_list','view_title_issues_block', digital_serial_title_id) }}

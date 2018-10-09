@@ -260,7 +260,8 @@ ul.js-facets-checkbox-links + a.open::before {
 }
 .facet-item:hover,
 .facet-item:hover input,
-.facet-item:hover label {
+.facet-item:hover label,
+label.checkbox-toggle:hover {
   cursor: pointer;
 }
 .facet-item input:focus,
