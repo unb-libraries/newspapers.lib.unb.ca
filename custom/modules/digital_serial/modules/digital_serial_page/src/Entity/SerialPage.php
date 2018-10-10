@@ -119,6 +119,21 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   /**
    * {@inheritdoc}
    */
+  public function getPageSort() {
+    return $this->get('page_sort')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setPageSort($page_sort) {
+    $this->set('page_sort', $page_sort);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getPageImage() {
     return $this->get('page_image')->get(0)->entity;
   }

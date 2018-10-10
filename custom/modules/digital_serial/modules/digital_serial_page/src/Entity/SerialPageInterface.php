@@ -34,6 +34,25 @@ interface SerialPageInterface extends ContentEntityInterface, EntityChangedInter
   public function setPageNo($page_no);
 
   /**
+   * Gets the Serial page sort string.
+   *
+   * @return string
+   *   Sort String of the Serial page.
+   */
+  public function getPageSort();
+
+  /**
+   * Sets the Serial page number.
+   *
+   * @param string $page_sort
+   *   The Serial page sort number.
+   *
+   * @return \Drupal\digital_serial_page\Entity\SerialPageInterface
+   *   The called Serial page entity.
+   */
+  public function setPageSort($page_sort);
+
+  /**
    * Gets the styled image.
    *
    * @return array
