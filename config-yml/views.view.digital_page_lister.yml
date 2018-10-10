@@ -1089,10 +1089,10 @@ display:
         groups:
           1: AND
       sorts:
-        parent_digital_page_id:
-          id: parent_digital_page_id
+        page_sort:
+          id: page_sort
           table: search_api_index_pages_newspapers_lib_unb_ca
-          field: parent_digital_page_id
+          field: page_sort
           relationship: none
           group_type: group
           admin_label: ''
