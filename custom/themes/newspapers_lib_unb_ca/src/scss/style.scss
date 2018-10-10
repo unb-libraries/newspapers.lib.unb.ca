@@ -607,6 +607,12 @@ a.back-link::before {
   .no-gutters > aside {
     padding-left: 0;
   }
+  .filters button.form-submit {
+    margin-top: 0;
+  }
+  .filters .form-group {
+    max-width: 35%;
+  }
 }
 @media (max-width: 600px) {
   .image-placeholder {
