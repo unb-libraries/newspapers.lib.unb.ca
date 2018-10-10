@@ -567,6 +567,20 @@ th[class*="-date"] a::before {
   background: inherit;
 }
 
+/* Digital Issue List exposed Views filters */
+.toggle-wrapper input {
+  vertical-align: top;
+}
+.filters .form-group {
+  max-width: 24.9%;
+}
+.filters label {
+  display: block;
+}
+.filters button.form-submit {
+  margin-top: 1.6em;
+}
+
 /* High Resolution Image back link */
 a.back-results::before,
 a.back-link::before {
