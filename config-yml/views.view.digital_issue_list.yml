@@ -40,7 +40,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Filter
+          submit_button: 'Apply Filters'
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -1851,7 +1851,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: ' (ed. {{ issue_edition }})'
+            text: ' <ins>(ed. {{ issue_edition }})</ins>'
             make_link: false
             path: ''
             absolute: false

@@ -21,6 +21,10 @@ a:not(.btn):focus {
   border-style: none;
   text-decoration: underline;
 }
+ins {
+  color: $text-muted;
+  text-decoration: none;
+}
 
 /* Class/ID style tweaks */
 .title-info figure {
