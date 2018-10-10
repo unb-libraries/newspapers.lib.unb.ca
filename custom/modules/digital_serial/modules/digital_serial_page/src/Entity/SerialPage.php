@@ -231,7 +231,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setLabel(t('Page Number'))
       ->setDescription(t('Enter the page number.'))
       ->setSettings([
-        'max_length' => 16,
+        'max_length' => 32,
         'text_processing' => 0,
       ])
       ->setRequired(TRUE)
@@ -252,7 +252,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setLabel(t('Page Sort'))
       ->setDescription(t('Enter the value to use for alphanumeric page sorting.'))
       ->setSettings([
-        'max_length' => 16,
+        'max_length' => 32,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')

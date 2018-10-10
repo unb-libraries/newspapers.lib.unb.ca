@@ -252,7 +252,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setLabel(t('Printed Title'))
       ->setDescription(t('Printed title.'))
       ->setSettings([
-        'max_length' => 50,
+        'max_length' => 256,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
@@ -272,7 +272,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setLabel(t('Volume'))
       ->setDescription(t('Volume number of the issue.'))
       ->setSettings([
-        'max_length' => 16,
+        'max_length' => 32,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
@@ -292,7 +292,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setLabel(t('Volume Sort'))
       ->setDescription(t('Sort volume number of the issue.'))
       ->setSettings([
-        'max_length' => 16,
+        'max_length' => 32,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
@@ -303,7 +303,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setLabel(t('Issue'))
       ->setDescription(t('Issue number of the issue.'))
       ->setSettings([
-        'max_length' => 16,
+        'max_length' => 32,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
@@ -323,7 +323,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setLabel(t('Issue Sort'))
       ->setDescription(t('Sort issue number of the issue.'))
       ->setSettings([
-        'max_length' => 16,
+        'max_length' => 32,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
@@ -334,7 +334,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setLabel(t('Edition'))
       ->setDescription(t('Edition of the issue.'))
       ->setSettings([
-        'max_length' => 50,
+        'max_length' => 128,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
@@ -378,7 +378,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->setLabel(t('Missing Pages'))
       ->setDescription(t('Pages missing from the issue.'))
       ->setSettings([
-        'max_length' => 50,
+        'max_length' => 128,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
