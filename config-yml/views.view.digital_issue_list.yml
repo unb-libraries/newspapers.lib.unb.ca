@@ -82,15 +82,14 @@ display:
           columns:
             parent_title: parent_title
             id: id
-            parent_title_2: parent_title_2
+            parent_title_1: parent_title_1
             issue_title: issue_title
-            issue_edition: issue_edition
             issue_date: issue_date
             issue_vol: issue_vol
             issue_vol_sort: issue_vol_sort
+            issue_edition: issue_edition
             issue_issue: issue_issue
             issue_issue_sort: issue_issue_sort
-            nothing: nothing
           info:
             parent_title:
               sortable: false
@@ -106,7 +105,7 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            parent_title_2:
+            parent_title_1:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -120,16 +119,9 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            issue_edition:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
             issue_date:
               sortable: true
-              default_sort_order: asc
+              default_sort_order: desc
               align: ''
               separator: ''
               empty_column: false
@@ -143,6 +135,13 @@ display:
               responsive: ''
             issue_vol_sort:
               sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            issue_edition:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
@@ -162,14 +161,7 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            nothing:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: '-1'
+          default: issue_date
           empty_table: false
       row:
         type: fields
