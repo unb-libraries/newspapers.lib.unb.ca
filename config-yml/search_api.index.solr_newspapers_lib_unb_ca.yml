@@ -270,11 +270,19 @@ field_settings:
       module:
         - node
   title:
-    label: Title
+    label: 'Title (Partial)'
     datasource_id: 'entity:node'
     property_path: title
     type: solr_text_ngram
     boost: !!float 8
+    dependencies:
+      module:
+        - node
+  title_1:
+    label: 'Title (Spelling)'
+    datasource_id: 'entity:node'
+    property_path: title
+    type: solr_text_phonetic
     dependencies:
       module:
         - node
