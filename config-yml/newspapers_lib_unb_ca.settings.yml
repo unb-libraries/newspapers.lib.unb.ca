@@ -4,9 +4,9 @@ schemas:
   newspapers_lib_unb_ca: 8000
 favicon:
   mimetype: image/vnd.microsoft.icon
-  path: ''
+  path: themes/custom/newspapers_lib_unb_ca/src/img/favicon.ico
   url: 'http://192.168.99.100:3095/themes/contrib/unb_lib_theme/favicon.ico'
-  use_default: 1
+  use_default: 0
 features:
   comment_user_picture: 1
   comment_user_verification: 1
