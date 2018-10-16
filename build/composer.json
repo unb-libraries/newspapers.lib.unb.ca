@@ -139,7 +139,7 @@
         "drupal/token": "1.5",
         "drupal/twig_field_value": "1.1",
         "drupal/twig_tweak": "2.1",
-        "drush/drush": "9.4.0",
+        "drush/drush": "^9.5.1",
         "harvesthq/chosen": "~1.8",
         "nodespark/des-connector": "5.x-dev",
         "simeydotme/jquery-ui-slider-pips": "~1.11",
