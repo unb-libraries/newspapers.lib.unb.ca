@@ -1,22 +1,24 @@
-uuid: 46d57110-8d49-43ee-8a38-5bc39fe63194
+uuid: 7334a26a-ef16-485c-80bd-f0c7724d49d8
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_first_issue_date
+    - field.storage.node.field_first_issue_sort_date
+    - field.storage.node.field_last_issue_sort_date
     - field.storage.node.field_place_of_publication
+    - field.storage.node.field_sort_title
   module:
     - address
-    - datetime_range
+    - datetime
+    - digital_serial_title
     - node
-    - user
 id: digital_title_listing
 label: 'Digital Title Listing'
 module: views
 description: ''
 tag: ''
-base_table: node_field_data
-base_field: nid
+base_table: digital_serial_title
+base_field: id
 core: 8.x
 display:
   default:
@@ -26,9 +28,8 @@ display:
     position: 0
     display_options:
       access:
-        type: perm
-        options:
-          perm: 'access content'
+        type: none
+        options: {  }
       cache:
         type: tag
         options: {  }
@@ -43,7 +44,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: 'Apply filter'
+          submit_button: 'Apply filters'
           reset_button: true
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -83,29 +84,69 @@ display:
           summary: ''
           description: ''
           columns:
-            title: title
+            parent_title: parent_title
+            field_sort_title: field_sort_title
+            field_place_of_publication: field_place_of_publication
+            field_place_of_publication_locality: field_place_of_publication_locality
+            field_first_issue_sort_date: field_first_issue_sort_date
+            field_last_issue_sort_date: field_last_issue_sort_date
           info:
-            title:
+            parent_title:
               sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-          default: '-1'
+            field_sort_title:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_place_of_publication:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_place_of_publication_locality:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_first_issue_sort_date:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_last_issue_sort_date:
+              sortable: true
+              default_sort_order: desc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: field_sort_title
           empty_table: false
       row:
         type: fields
       fields:
-        title:
-          id: title
-          table: node_field_data
-          field: title
+        parent_title:
+          id: parent_title
+          table: digital_serial_title
+          field: parent_title
           relationship: none
           group_type: group
           admin_label: ''
-          label: ''
-          exclude: false
+          label: Title
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -137,7 +178,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: false
+          element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -145,10 +186,75 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: digital_serial_title
+          entity_field: parent_title
+          plugin_id: field
+        field_sort_title:
+          id: field_sort_title
+          table: node__field_sort_title
+          field: field_sort_title
+          relationship: parent_title
+          group_type: group
+          admin_label: ''
+          label: Title
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ parent_title }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: '<span class="text-muted">Title undefined</span>'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
           click_sort_column: value
           type: string
           settings:
-            link_to_entity: true
+            link_to_entity: false
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -164,11 +270,11 @@ display:
           id: field_place_of_publication
           table: node__field_place_of_publication
           field: field_place_of_publication
-          relationship: none
+          relationship: parent_title
           group_type: group
           admin_label: ''
           label: 'Place of Publication'
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -222,14 +328,64 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-        field_first_issue_date:
-          id: field_first_issue_date
-          table: node__field_first_issue_date
-          field: field_first_issue_date
-          relationship: none
+        field_place_of_publication_locality:
+          id: field_place_of_publication_locality
+          table: node__field_place_of_publication
+          field: field_place_of_publication_locality
+          relationship: parent_title
           group_type: group
           admin_label: ''
-          label: 'First Issue Date Range'
+          label: 'Place of Publication'
+          exclude: false
+          alter:
+            alter_text: true
+            text: '{{ field_place_of_publication }}'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: '<small class="text-muted"><i class="glyphicon glyphicon-warning-sign"></i> Undefined</small>'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          display_name: false
+          plugin_id: subdivision
+        field_first_issue_sort_date:
+          id: field_first_issue_sort_date
+          table: node__field_first_issue_sort_date
+          field: field_first_issue_sort_date
+          relationship: parent_title
+          group_type: group
+          admin_label: ''
+          label: '1st Issue Date'
           exclude: false
           alter:
             alter_text: false
@@ -266,16 +422,79 @@ display:
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
-          empty: ''
+          empty: '<small class="text-muted"><i class="glyphicon glyphicon-question-sign"></i> Unknown</small>'
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: daterange_default
+          type: datetime_default
           settings:
             timezone_override: ''
             format_type: html_date
-            separator: '-'
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        field_last_issue_sort_date:
+          id: field_last_issue_sort_date
+          table: node__field_last_issue_sort_date
+          field: field_last_issue_sort_date
+          relationship: parent_title
+          group_type: group
+          admin_label: ''
+          label: 'Last Issue Date'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: '<small class="text-muted"><i class="glyphicon glyphicon-question-sign"></i> Unknown</small>'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: datetime_default
+          settings:
+            timezone_override: ''
+            format_type: html_date
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -288,22 +507,11 @@ display:
           field_api_classes: false
           plugin_id: field
       filters:
-        status:
-          value: '1'
-          table: node_field_data
-          field: status
-          plugin_id: boolean
-          entity_type: node
-          entity_field: status
-          id: status
-          expose:
-            operator: ''
-          group: 1
         title:
           id: title
           table: node_field_data
           field: title
-          relationship: none
+          relationship: parent_title
           group_type: group
           admin_label: ''
           operator: allwords
@@ -312,7 +520,7 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: Title
+            label: 'Filter by 1 or more title terms '
             description: ''
             use_operator: false
             operator: title_op
@@ -341,28 +549,49 @@ display:
           entity_type: node
           entity_field: title
           plugin_id: string
-      sorts:
-        title:
-          id: title
-          table: node_field_data
-          field: title
+      sorts: {  }
+      title: 'Digital Title Listing'
+      header:
+        result:
+          id: result
+          table: views
+          field: result
           relationship: none
           group_type: group
           admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          entity_type: node
-          entity_field: title
-          plugin_id: standard
-      title: 'Digital Title Listing'
-      header: {  }
+          empty: false
+          content: "<h2 class=\"alert alert-success fade in\">\r\n    <span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span>\r\n    Displaying @start - @end of @total results\r\n</h2>"
+          plugin_id: result
       footer: {  }
-      empty: {  }
-      relationships: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: "<div class=\"alert alert-warning fade in\">\r\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No results were found.\r\n</div>"
+            format: full_html
+          plugin_id: text
+      relationships:
+        parent_title:
+          id: parent_title
+          table: digital_serial_title
+          field: parent_title
+          relationship: none
+          group_type: group
+          admin_label: Content
+          required: false
+          entity_type: digital_serial_title
+          entity_field: parent_title
+          plugin_id: standard
       arguments: {  }
       display_extenders: {  }
+      css_class: search-results
     cache_metadata:
       max-age: -1
       contexts:
@@ -370,19 +599,20 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
       tags:
-        - 'config:field.storage.node.field_first_issue_date'
+        - 'config:field.storage.node.field_first_issue_sort_date'
+        - 'config:field.storage.node.field_last_issue_sort_date'
         - 'config:field.storage.node.field_place_of_publication'
-  page_1:
+        - 'config:field.storage.node.field_sort_title'
+  page_listing:
     display_plugin: page
-    id: page_1
-    display_title: Page
+    id: page_listing
+    display_title: 'Digital titles'
     position: 1
     display_options:
       display_extenders: {  }
       path: digital-title-listing
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:
@@ -390,8 +620,8 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
       tags:
-        - 'config:field.storage.node.field_first_issue_date'
+        - 'config:field.storage.node.field_first_issue_sort_date'
+        - 'config:field.storage.node.field_last_issue_sort_date'
         - 'config:field.storage.node.field_place_of_publication'
+        - 'config:field.storage.node.field_sort_title'
