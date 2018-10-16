@@ -530,7 +530,8 @@ a.btn-add::before {
 th[class*="-sort"] a,
 th[class*="-date"] a,
 th#view-nothing-table-column,
-.search-results thead > tr > th.views-field-issue-title {
+.search-results thead > tr > th.views-field-issue-title,
+.search-results thead > tr > th.views-field-field-place-of-publication-locality {
   padding: .5em;
   white-space: nowrap;
 }
@@ -541,7 +542,8 @@ th[class*="-date"] a:hover{
   background: #f9f9f9;
 }
 th[class*="-sort"] a::before,
-th[class*="-date"] a::before {
+th[class*="-date"] a::before,
+th[class*="-locality"] a::before{
   content: "\e150";
   display: inline-block;
   font-family: 'Glyphicons Halflings';
