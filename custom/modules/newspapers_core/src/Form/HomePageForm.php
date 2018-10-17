@@ -189,7 +189,7 @@ class HomePageForm extends FormBase {
         <span class="glyphicon glyphicon glyphicon-ok-circle"></span>
         <b>Note:</b>
         Only a limited number of newspapers have been digitized.
-        See a full listing of digitally available titles.</p>',
+        See a full <a href="/digital-titles">listing of digitally available titles</a>.</p>',
     ];
 
     return $form;
