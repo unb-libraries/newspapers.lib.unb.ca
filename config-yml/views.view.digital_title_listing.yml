@@ -3,13 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_first_issue_sort_date
-    - field.storage.node.field_last_issue_sort_date
     - field.storage.node.field_place_of_publication
     - field.storage.node.field_sort_title
   module:
     - address
-    - datetime
     - digital_serial_title
     - node
 id: digital_title_listing
@@ -328,65 +325,15 @@ display:
           separator: ', '
           field_api_classes: false
           plugin_id: field
-        field_place_of_publication_locality:
-          id: field_place_of_publication_locality
+        field_place_of_publication:
+          id: field_place_of_publication
           table: node__field_place_of_publication
-          field: field_place_of_publication_locality
+          field: field_place_of_publication
           relationship: parent_title
           group_type: group
           admin_label: ''
           label: 'Place of Publication'
-          exclude: false
-          alter:
-            alter_text: true
-            text: '{{ field_place_of_publication }}'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: '<small class="text-muted"><i class="glyphicon glyphicon-warning-sign"></i> Undefined</small>'
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          display_name: false
-          plugin_id: subdivision
-        field_first_issue_sort_date:
-          id: field_first_issue_sort_date
-          table: node__field_first_issue_sort_date
-          field: field_first_issue_sort_date
-          relationship: parent_title
-          group_type: group
-          admin_label: ''
-          label: '1st Issue Date'
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -486,26 +433,12 @@ display:
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
-          empty: '<small class="text-muted"><i class="glyphicon glyphicon-question-sign"></i> Unknown</small>'
+          empty: '<small class="text-muted"><i class="glyphicon glyphicon-warning-sign"></i> Undefined</small>'
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: value
-          type: datetime_default
-          settings:
-            timezone_override: ''
-            format_type: html_date
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          plugin_id: field
+          display_name: false
+          plugin_id: subdivision
       filters:
         title:
           id: title
@@ -600,18 +533,16 @@ display:
         - url
         - url.query_args
       tags:
-        - 'config:field.storage.node.field_first_issue_sort_date'
-        - 'config:field.storage.node.field_last_issue_sort_date'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
-  page_listing:
+  page_digital_listing:
     display_plugin: page
-    id: page_listing
+    id: page_digital_listing
     display_title: 'Digital titles'
     position: 1
     display_options:
       display_extenders: {  }
-      path: digital-title-listing
+      path: digital-titles
       display_description: ''
     cache_metadata:
       max-age: -1
@@ -621,7 +552,5 @@ display:
         - url
         - url.query_args
       tags:
-        - 'config:field.storage.node.field_first_issue_sort_date'
-        - 'config:field.storage.node.field_last_issue_sort_date'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
