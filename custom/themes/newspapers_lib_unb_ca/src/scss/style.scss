@@ -15,11 +15,17 @@ figcaption .glyphicon {
   margin-right: .25em;
   top: 3px;
 }
+a:not(.btn):focus,
 a:not(.btn):hover,
-a:not(.btn):active,
-a:not(.btn):focus {
-  border-style: none;
+a:not(.btn):active {
+  border-bottom-style: none;
   text-decoration: underline;
+}
+.pagination a:focus,
+.pagination a:hover,
+.pagination a:active {
+  border-bottom-style: solid;
+  text-decoration: none;
 }
 ins {
   color: $text-muted;
