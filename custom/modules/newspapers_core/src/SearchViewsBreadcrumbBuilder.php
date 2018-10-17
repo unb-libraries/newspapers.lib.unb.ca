@@ -27,6 +27,7 @@ class SearchViewsBreadcrumbBuilder implements BreadcrumbBuilderInterface {
       [
         'view.digital_page_lister.page_search',
         'view.search.search_page',
+        'view.digital_title_listing.page_listing',
       ]
     );
   }
