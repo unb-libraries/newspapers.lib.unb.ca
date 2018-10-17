@@ -529,16 +529,18 @@ a.btn-add::before {
 }
 th[class*="-sort"] a,
 th[class*="-date"] a,
+th[class*="-locality"] a,
 th#view-nothing-table-column,
-.search-results thead > tr > th.views-field-issue-title,
-.search-results thead > tr > th.views-field-field-place-of-publication-locality {
+.search-results thead > tr > th.views-field-issue-title {
   padding: .5em;
   white-space: nowrap;
 }
 th[class*="-sort"] a:focus,
 th[class*="-date"] a:focus,
 th[class*="-sort"] a:hover,
-th[class*="-date"] a:hover{
+th[class*="-date"] a:hover,
+th[class*="-locality"] a:focus,
+th[class*="-locality"] a:hover {
   background: #f9f9f9;
 }
 th[class*="-sort"] a::before,
@@ -575,6 +577,14 @@ th[class*="-locality"] a::before{
 .ui-autocomplete a:focus,
 .ui-autocomplete a:hover {
   text-decoration: none;
+}
+
+/* Digital Title List exposed Views filters */
+.search-results .form-inline > div:first-child {
+  margin-top: .5em;
+}
+.search-results label {
+  display: block;
 }
 
 /* Digital Issue List exposed Views filters */
