@@ -404,7 +404,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: '1st Issue Date'
+          label: 'First Issue'
           exclude: false
           alter:
             alter_text: false
@@ -475,7 +475,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Last Issue Date'
+          label: 'Last Issue'
           exclude: false
           alter:
             alter_text: false
