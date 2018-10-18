@@ -271,7 +271,7 @@
                                         {% for field in item %}
                                             {% if field.value %}
                                                 <dt>{{ field.label }}:</dt>
-                                                <dd>{{ field.value }}</dd>
+                                                <dd>{{ field.value|raw }}</dd>
                                             {% endif %}
                                         {% endfor %}
                                     </dl>
