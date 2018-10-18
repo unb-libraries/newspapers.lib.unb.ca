@@ -690,7 +690,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
           ],
           'notes' => [
             'label' => 'Notes',
-            'value' => $holding->getHoldingNotes(),
+            'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
           ],
         ];
       case 'digital':
