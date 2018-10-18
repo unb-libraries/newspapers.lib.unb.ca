@@ -856,6 +856,27 @@ function _newspapers_core_get_rendered_title_history(Node $node, bool $supplemen
 }
 
 /**
+ * Custom markup sanitation.
+ *
+ * @param string $markup
+ *   Text string to be checked for markup.
+ *
+ * @return array
+ *   Text with any disallowed HTML markup stripped, NULL for empty markup.
+ */
+function _newspapers_core_sanitize_markup($markup) {
+  if (empty(trim($markup))) {
+    return NULL;
+  }
+  else {
+    return [
+      '#markup' => $markup,
+      '#allowed_tags' => Xss::getAdminTagList(),
+    ];
+  }
+}
+
+/**
  * Custom Publication Form Daterange validation.
  *
  * @param array $form
