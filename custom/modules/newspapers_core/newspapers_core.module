@@ -684,6 +684,10 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
             'label' => 'Coverage Statement',
             'value' => $holding->getHoldingCoverage(),
           ],
+          'last_received' => [
+            'label' => 'Last Microfilm Received',
+            'value' => $holding->getHoldingLastReceived(),
+          ],
           'notes' => [
             'label' => 'Notes',
             'value' => $holding->getHoldingNotes(),
