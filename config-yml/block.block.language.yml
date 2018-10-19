@@ -1,0 +1,29 @@
+uuid: 12d9f646-d180-4eea-af3f-4f88c297e167
+langcode: en
+status: false
+dependencies:
+  config:
+    - facets.facet.language
+  module:
+    - facets
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: language
+theme: newspapers_lib_unb_ca
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:language'
+settings:
+  id: 'facet_block:language'
+  label: Language
+  provider: facets
+  label_display: '0'
+  block_id: language
+visibility:
+  request_path:
+    id: request_path
+    pages: '/search*'
+    negate: false
+    context_mapping: {  }
