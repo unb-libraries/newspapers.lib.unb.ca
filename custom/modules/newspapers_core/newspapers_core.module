@@ -410,9 +410,12 @@ function _newspapers_core_inject_local_digital_titles(array &$holdings, $nid) {
       $holdings['local_digital'] = [];
     }
     foreach ($results as $result) {
+      $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_title');
+      $title = $storage->load($result);
+
       $holdings['local_digital'][] = [
         'link' => [
-          'label' => t('Browse and Search'),
+          'label' => $title->getHoldingsStatement(),
           'value' => Link::fromTextAndUrl(
             'Click Here',
             Url::fromRoute(

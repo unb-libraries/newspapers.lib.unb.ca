@@ -2,11 +2,12 @@
 
 namespace Drupal\digital_serial_title\Entity;
 
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -56,6 +57,7 @@ use Drupal\user\UserInterface;
 class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
 
   use EntityChangedTrait;
+  use StringTranslationTrait;
 
   /**
    * {@inheritdoc}
@@ -227,6 +229,51 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
       $issue = $storage->load($issue_id);
       $issue->delete();
     }
+  }
+
+  /**
+   * Get a holdings statement for this digital title.
+   */
+  public function getHoldingsStatement() {
+    $digital_dates = $this->getHoldingDates();
+    if (!empty($digital_dates) && count($digital_dates) > 1) {
+      $reversed = array_reverse($digital_dates);
+      $first_date = array_pop($reversed);
+      $last_date = array_pop($digital_dates);
+      $holdings_statement = $this->t('Issues between ') .
+        $first_date->format('Y-m-d') .
+        ' - ' .
+        $last_date->format('Y-m-d');
+      return $holdings_statement;
+    }
+    elseif (!empty($digital_dates) && count($digital_dates) == 1) {
+      $only_date = array_pop($digital_dates);
+      return $only_date->format('Y-m-d');
+    }
+    else {
+      return "No holdings found";
+    }
+  }
+
+  /**
+   * Get a holdings dates for all issues.
+   */
+  public function getHoldingDates() {
+    $query = \Drupal::entityQuery('digital_serial_issue')
+      ->condition('parent_title', $this->id());
+    $issue_ids = $query->execute();
+
+    $holdings_dates = [];
+    foreach ($issue_ids as $issue_id) {
+      $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_issue');
+      $issue = $storage->load($issue_id);
+      if (!empty($issue->get('issue_date')->date)) {
+        $holdings_dates[] = $issue->get('issue_date')->date;
+      }
+    }
+    sort($holdings_dates);
+
+    return $holdings_dates;
   }
 
 }
