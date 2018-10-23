@@ -228,11 +228,14 @@ class SerialPageViewerForm extends FormBase {
       ->sort('page_sort');
     $entity_ids = $query->execute();
 
-    if (!empty($entity_ids[$page_id - 1])) {
-      $adjacent_page_ids['previous'] = $entity_ids[$page_id - 1];
+    $keys = array_flip(array_keys($entity_ids));
+    $values = array_values($entity_ids);
+
+    if (!empty($values[$keys[$page_id] - 1])) {
+      $adjacent_page_ids['previous'] = $values[$keys[$page_id] - 1];
     }
-    if (!empty($entity_ids[$page_id + 1])) {
-      $adjacent_page_ids['next'] = $entity_ids[$page_id + 1];
+    if (!empty($values[$keys[$page_id] + 1])) {
+      $adjacent_page_ids['next'] = $values[$keys[$page_id] + 1];
     }
 
     return $adjacent_page_ids;
