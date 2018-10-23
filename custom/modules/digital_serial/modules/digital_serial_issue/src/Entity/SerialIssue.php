@@ -483,4 +483,27 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
     return $fields;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function delete() {
+    $this->deleteChildPages();
+    parent::delete();
+  }
+
+  /**
+   * Delete the child pages that belong to this issue.
+   */
+  private function deleteChildPages() {
+    $query = \Drupal::entityQuery('digital_serial_page')
+      ->condition('parent_issue', $this->id());
+    $page_ids = $query->execute();
+
+    foreach ($page_ids as $page_id) {
+      $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_page');
+      $page = $storage->load($page_id);
+      $page->delete();
+    }
+  }
+
 }

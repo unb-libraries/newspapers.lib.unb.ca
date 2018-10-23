@@ -206,4 +206,27 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
     return $fields;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function delete() {
+    $this->deleteChildPages();
+    parent::delete();
+  }
+
+  /**
+   * Delete the child issues that belong to this title.
+   */
+  private function deleteChildPages() {
+    $query = \Drupal::entityQuery('digital_serial_issue')
+      ->condition('parent_title', $this->id());
+    $issue_ids = $query->execute();
+
+    foreach ($issue_ids as $issue_id) {
+      $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_issue');
+      $issue = $storage->load($issue_id);
+      $issue->delete();
+    }
+  }
+
 }
