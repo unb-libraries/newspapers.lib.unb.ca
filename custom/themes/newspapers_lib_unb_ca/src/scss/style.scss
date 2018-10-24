@@ -625,6 +625,31 @@ a.back-link::before {
   vertical-align: text-bottom;
 }
 
+.title-details,
+.holding-type {
+  padding: 0 6px;
+}
+
+/* Holdings */
+.holding-type dt {
+  border-bottom: 2px solid #e5e5e5;
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: .5em;
+}
+.holding-item dt {
+  border-bottom: none;
+  font-size: initial;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.holding-type dd {
+  margin-bottom: 1.5em;
+}
+.holding-item dd {
+  margin-bottom: .75em;
+}
+
 @media (max-width: 767px) {
   .no-gutters > aside {
     padding-left: 0;
