@@ -262,6 +262,22 @@
                 {% endfor %}
              </dd>
             {% endif %}
+
+            {% if holding.physical|length > 0 %}
+                <dt>{% trans %}Physical{% endtrans %}:</dt>
+                <dd>
+                    {% for item in holding.physical %}
+                        <dl class="holding-item">
+                            {% for field in item %}
+                                {% if field.value %}
+                                    <dt>{{ field.label }}:</dt>
+                                    <dd>{{ field.value|raw }}</dd>
+                                {% endif %}
+                            {% endfor %}
+                        </dl>
+                    {% endfor %}
+                </dd>
+            {% endif %}
             </dl>
          {% else %}
             <div class="text-muted">
