@@ -675,15 +675,19 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
   foreach ($holdings as $holding) {
     switch ($type) {
       case 'microfilm':
-        $holding_infos[] = [
-          'location' => [
-            'label' => 'Location',
-            'value' => $holding->getHoldingLocation() . ", filed as " . $holding->getHoldingFiledAs(),
-          ],
+        $filed_as = $holding->getHoldingFiledAs();
+        $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
+          ", filed as " . $filed_as;
+        $holding_infos['microfilm'] = [
           'coverage' => [
             'label' => 'Coverage Statement',
             'value' => $holding->getHoldingCoverage(),
           ],
+          'location' => [
+            'label' => 'Location',
+            'value' => $location_value,
+          ],
+
           'last_received' => [
             'label' => 'Last Microfilm Received',
             'value' => $holding->getHoldingLastReceived(),
@@ -695,8 +699,24 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         ];
         break;
 
-      case 'digital':
       case 'physical':
+        $holding_infos['physical'] = [
+          'coverage_statement' => [
+            'label' => 'Coverage Statement',
+            'value' => $holding->getHoldingCoverage(),
+          ],
+          'retention_period' => [
+            'label' => 'Retention Period',
+            'value' => $holding->getHoldingRetentionPeriod(),
+          ],
+          'notes' => [
+            'label' => 'Notes',
+            'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
+          ],
+        ];
+        break;
+
+      case 'digital':
         break;
 
       default:
