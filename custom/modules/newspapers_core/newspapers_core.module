@@ -678,6 +678,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         $filed_as = $holding->getHoldingFiledAs();
         $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
           ", filed as " . $filed_as;
+
         $holding_infos['microfilm'] = [
           'coverage' => [
             'label' => 'Coverage Statement',
@@ -711,7 +712,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         else {
           $location_call_value = $location;
         }
-        dump($location_call_value);
+
         $holding_infos['physical'] = [
           'coverage_statement' => [
             'label' => 'Coverage Statement',
