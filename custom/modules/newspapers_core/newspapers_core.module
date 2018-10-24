@@ -700,10 +700,26 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         break;
 
       case 'physical':
+        $location = trim($holding->getHoldingLocation());
+        $call_no = trim($holding->getHoldingCallNumber());
+        if (!empty($location) && !empty($call_no)) {
+          $location_call_value = $location . " " . $call_no;
+        }
+        elseif (!empty($call_no)) {
+          $location_call_value = $call_no;
+        }
+        else {
+          $location_call_value = $location;
+        }
+        dump($location_call_value);
         $holding_infos['physical'] = [
           'coverage_statement' => [
             'label' => 'Coverage Statement',
             'value' => $holding->getHoldingCoverage(),
+          ],
+          'location_call_no' => [
+            'label' => 'Location and Call Number',
+            'value' => $location_call_value,
           ],
           'retention_period' => [
             'label' => 'Retention Period',
