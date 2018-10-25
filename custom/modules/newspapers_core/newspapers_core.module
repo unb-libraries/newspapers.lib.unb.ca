@@ -704,12 +704,15 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         $location = trim($holding->getHoldingLocation());
         $call_no = trim($holding->getHoldingCallNumber());
         if (!empty($location) && !empty($call_no)) {
+          $location_call_label = 'Location and Call Number';
           $location_call_value = $location . " " . $call_no;
         }
         elseif (!empty($call_no)) {
+          $location_call_label = 'Call Number';
           $location_call_value = $call_no;
         }
         else {
+          $location_call_label = 'Location';
           $location_call_value = $location;
         }
 
@@ -719,7 +722,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
             'value' => $holding->getHoldingCoverage(),
           ],
           'location_call_no' => [
-            'label' => 'Location and Call Number',
+            'label' => $location_call_label,
             'value' => $location_call_value,
           ],
           'retention_period' => [
