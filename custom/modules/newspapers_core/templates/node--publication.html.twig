@@ -248,7 +248,7 @@
             {% endif %}
 
             {% if holding.microfilm|length > 0 %}
-            <dt>{% trans %}Microfilms{% endtrans %}:</dt>
+            <dt>{% trans %}Microfilm{% endtrans %}:</dt>
             <dd>
                 {% for item in holding.microfilm %}
                     <dl class="holding-item">
@@ -264,7 +264,7 @@
             {% endif %}
 
             {% if holding.physical|length > 0 %}
-                <dt>{% trans %}Physical{% endtrans %}:</dt>
+                <dt>{% trans %}Print{% endtrans %}:</dt>
                 <dd>
                     {% for item in holding.physical %}
                         <dl class="holding-item">
