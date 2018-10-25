@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains serial_holding_export.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function serial_holding_export_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the serial_holding_export module.
+    case 'help.page.serial_holding_export':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides an endpoint to view serial holding lists') . '</p>';
+      return $output;
+
+    default:
+  }
+}

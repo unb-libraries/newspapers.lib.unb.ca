@@ -407,7 +407,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
 
     $fields['holding_end_date'] = BaseFieldDefinition::create('datetime')
       ->setLabel(t('Holding End Date'))
-      ->setDescription(t('The serial holding end date.'))
+      ->setDescription(t('The serial holding end date. NOTE : If holding is "ongoing", leave this empty.'))
       ->setRevisionable(FALSE)
       ->setSettings([
         'datetime_type' => 'date',

@@ -1,0 +1,7 @@
+serial_holding_export.export_holdings:
+  path: '/serials/holdings/export/{holding_type}'
+  defaults:
+    _controller: '\Drupal\serial_holding_export\Controller\HoldingsExport::serveFile'
+    _title: 'Export Holdings'
+  requirements:
+    _permission: 'view serial holding exports'

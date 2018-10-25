@@ -142,6 +142,7 @@
         "drush/drush": "^9.5.1",
         "harvesthq/chosen": "~1.8",
         "nodespark/des-connector": "5.x-dev",
+        "phpoffice/phpspreadsheet": "^1.5.0",
         "simeydotme/jquery-ui-slider-pips": "~1.11",
         "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x",
         "webflo/drupal-finder": "^1.1",
