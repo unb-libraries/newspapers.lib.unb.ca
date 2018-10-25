@@ -1,0 +1,105 @@
+langcode: en
+mode: default
+status: true
+holding_types:
+  Physical:
+    action: overlay
+    collection_name: 'UNB Libraries Newspapers Database (Online)'
+    collection_id: customer.133054.unbnewsdb
+    coverage_depth: fulltext
+    column_mapping:
+      publication_title: getPublicationTitle
+      print_identifier: null
+      online_identifier: null
+      date_first_issue_online: null
+      num_first_vol_online: null
+      num_first_issue_online: null
+      date_last_issue_online: null
+      num_last_vol_online: null
+      num_last_issue_online: null
+      title_url: null
+      first_author: null
+      title_id: null
+      embargo_info: null
+      coverage_depth: getCoverageDepth
+      coverage_notes: null
+      publisher_name: null
+      location: null
+      title_notes: null
+      staff_notes: null
+      vendor_id: null
+      oclc_collection_name: getOclcCollectionName
+      oclc_collection_id: getOclcCollectionId
+      oclc_entry_id: null
+      oclc_linkscheme: null
+      oclc_number: null
+      ACTION: getAction
+  Microfilm:
+    action: overlay
+    collection_name: 'UNB Libraries Newspapers Database (Online)'
+    collection_id: customer.133054.unbnewsdb
+    coverage_depth: fulltext
+    column_mapping:
+      publication_title: getPublicationTitle
+      print_identifier: null
+      online_identifier: null
+      date_first_issue_online: null
+      num_first_vol_online: null
+      num_first_issue_online: null
+      date_last_issue_online: null
+      num_last_vol_online: null
+      num_last_issue_online: null
+      title_url: null
+      first_author: null
+      title_id: null
+      embargo_info: null
+      coverage_depth: getCoverageDepth
+      coverage_notes: null
+      publisher_name: null
+      location: null
+      title_notes: null
+      staff_notes: null
+      vendor_id: null
+      oclc_collection_name: getOclcCollectionName
+      oclc_collection_id: getOclcCollectionId
+      oclc_entry_id: null
+      oclc_linkscheme: null
+      oclc_number: null
+      ACTION: getAction
+  Digital:
+    action: overlay
+    collection_name: 'UNB Libraries Newspapers Database (Online)'
+    collection_id: customer.133054.unbnewsdb
+    coverage_depth: fulltext
+    column_mapping:
+      publication_title: getPublicationTitle
+      print_identifier: null
+      online_identifier: null
+      date_first_issue_online: null
+      num_first_vol_online: null
+      num_first_issue_online: null
+      date_last_issue_online: null
+      num_last_vol_online: null
+      num_last_issue_online: null
+      title_url: null
+      first_author: null
+      title_id: null
+      embargo_info: null
+      coverage_depth: getCoverageDepth
+      coverage_notes: null
+      publisher_name: null
+      location: null
+      title_notes: null
+      staff_notes: null
+      vendor_id: null
+      oclc_collection_name: getOclcCollectionName
+      oclc_collection_id: getOclcCollectionId
+      oclc_entry_id: null
+      oclc_linkscheme: null
+      oclc_number: null
+      ACTION: getAction
+dependencies:
+  module:
+    - serial_holding_export
+_core:
+  default_config_hash: Bz4MQnw1cOUoyQPO5fEZHVqYR45tx8Ai93u-X56XhpI
