@@ -60,7 +60,7 @@
                 "Cannot parse content access": "https://www.drupal.org/files/issues/2018-06-07/elasticsearch_connector-convert_boolean_fields-2978005-2.patch"
             },
             "drupal/facets": {
-                "Titles do not show for slider facets": "https://www.drupal.org/files/issues/2018-09-26/slider_facet_titles-3002580-2.patch"
+                "Titles do not show for slider facets": "https://www.drupal.org/files/issues/2018-10-18/3002580_6.patch"
             }
         }
     },
