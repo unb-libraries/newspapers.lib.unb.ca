@@ -91,8 +91,11 @@ class XlsHoldingExport {
   protected function __construct($type) {
     $this->setType($type);
     $this->validateType($type);
-    $this->setHoldings();
-    $this->validateHoldings();
+
+    if (empty($this->response)) {
+      $this->setHoldings();
+      $this->validateHoldings();
+    }
 
     if (empty($this->response)) {
       $this->setConfig();
@@ -128,7 +131,9 @@ class XlsHoldingExport {
           'name' => $type_name,
         ]
       );
-    $this->type = array_values($type_term_result)[0];
+    if (!empty(array_values($type_term_result)[0])) {
+      $this->type = array_values($type_term_result)[0];
+    }
   }
 
   /**
