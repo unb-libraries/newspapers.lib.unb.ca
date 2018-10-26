@@ -90,7 +90,7 @@ class XlsHoldingExport {
    */
   protected function __construct($type) {
     $this->setType($type);
-    $this->validateType();
+    $this->validateType($type);
     $this->setHoldings();
     $this->validateHoldings();
 
@@ -134,9 +134,9 @@ class XlsHoldingExport {
   /**
    * Validate the currently set holding type.
    */
-  private function validateType() {
+  private function validateType($type_string) {
     if (!$this->isValidType()) {
-      $this->setInvalidTypeResponse();
+      $this->setInvalidTypeResponse($type_string);
     }
   }
 
@@ -153,12 +153,12 @@ class XlsHoldingExport {
   /**
    * Set the response indicating that an invalid type was provided.
    */
-  private function setInvalidTypeResponse() {
+  private function setInvalidTypeResponse($type_string) {
     $this->response = $this->generateErrorResponse(
       $this->t(
         'The holding type [@type] is invalid.',
         [
-          '@type' => $this->type->getName(),
+          '@type' => $type_string,
         ]
       )
     );
