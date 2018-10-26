@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Contains newspapers_lib_unb_ca.theme.
+ */
+
+/**
+ * Implements hook_preprocess_breadcrumb().
+ */
+function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
+  // Modules cannot alter entity titles in breadcrumbs, so we process here.
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  if ($route_name == 'entity.digital_serial_title.canonical') {
+    $variables['breadcrumb'][3]['text'] = t('Digital Issues');
+  }
+
+  if ($route_name == 'digital_serial_issue.title_view_issue') {
+    $variables['breadcrumb'][4]['text'] = trim(
+      explode(':', $variables['breadcrumb'][4]['text'])[1]
+    );
+  }
+
+  if ($route_name == 'digital_serial_page.issue_view_page') {
+    $variables['breadcrumb'][5]['text'] = trim(
+      explode('-', $variables['breadcrumb'][5]['text']->render())[3]
+    );
+  }
+}
