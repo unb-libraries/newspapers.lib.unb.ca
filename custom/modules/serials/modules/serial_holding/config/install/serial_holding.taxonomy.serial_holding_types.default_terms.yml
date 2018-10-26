@@ -3,7 +3,7 @@ status: true
 mode: default
 items:
   -
-    name: 'Physical'
+    name: 'Print'
   -
     name: 'Microfilm'
   -

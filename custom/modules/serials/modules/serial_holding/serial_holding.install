@@ -14,3 +14,22 @@ function serial_holding_install() {
   module_set_weight('serial_holding', 100);
   TaxonomyHelper::addDefaultHoldingTypeTerms();
 }
+
+/**
+ * Rename any physical holding types to print.
+ */
+function serial_holding_update_8101() {
+  $physical_holding_terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties(
+      [
+        'vid' => 'serial_holding_types',
+        'name' => 'Physical',
+      ]
+    );
+
+  foreach ($physical_holding_terms as $term) {
+    $term->setName('Print');
+    $term->save();
+  }
+}

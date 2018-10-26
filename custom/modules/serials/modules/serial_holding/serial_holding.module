@@ -5,6 +5,7 @@
  * Contains serial_holding.module.
  */
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 define('SERIAL_HOLDING_ENTITY_REF_FIELD', 'field_serial_holdings');
@@ -35,4 +36,24 @@ function serial_holding_theme() {
       'render element' => 'children',
     ],
   ];
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function serial_holding_entity_delete(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->getType() == 'publication') {
+    // Delete associated holdings.
+    $associated_holdings = \Drupal::entityTypeManager()
+      ->getStorage('serial_holding')
+      ->loadByProperties(
+        [
+          'parent_title' => $entity->id(),
+        ]
+      );
+
+    foreach ($associated_holdings as $holding) {
+      $holding->delete();
+    }
+  }
 }

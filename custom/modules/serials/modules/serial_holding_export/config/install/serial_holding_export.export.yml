@@ -2,7 +2,7 @@ langcode: en
 mode: default
 status: true
 holding_types:
-  Physical:
+  Print:
     action: overlay
     collection_name: UNB Libraries Newspapers Database (Online)
     collection_id: customer.133054.unbnewsdb

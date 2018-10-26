@@ -30,11 +30,11 @@ class SerialHoldingForm extends ContentEntityForm {
     }
 
     // Get term ids for the holding types.
-    $physical_id = TaxonomyHelper::getHoldingTermId('Physical');
+    $physical_id = TaxonomyHelper::getHoldingTermId('Print');
     $microfilm_id = TaxonomyHelper::getHoldingTermId('Microfilm');
     $digital_id = TaxonomyHelper::getHoldingTermId('Digital');
 
-    // If we have term types 'Physical' or 'Microfilm', set up states.
+    // If we have term types 'Print' or 'Microfilm', set up states.
     if ($physical_id != 0 || $microfilm_id != 0) {
       $form['holding_location']['#states'] = [
         'visible' => [
@@ -59,7 +59,7 @@ class SerialHoldingForm extends ContentEntityForm {
       hide($form['holding_call_no']);
     }
 
-    // If we have term types 'Physical', set up states.
+    // If we have term types 'Print', set up states.
     if ($physical_id != 0) {
       $form['holding_retention']['#states'] = [
         'visible' => [
