@@ -4,27 +4,27 @@ status: true
 holding_types:
   Print:
     action: overlay
-    collection_name: UNB Libraries Newspapers Database (Online)
+    collection_name: Newspapers @ UNB Libraries (Print)
     collection_id: customer.133054.unbnewsdb
-    coverage_depth: fulltext
+    coverage_depth: print
     column_mapping:
       publication_title: getPublicationTitle
-      print_identifier: ~
+      print_identifier: getPublicationIssn
       online_identifier: ~
-      date_first_issue_online: ~
+      date_first_issue_online: getHoldingStartDate
       num_first_vol_online: ~
       num_first_issue_online: ~
-      date_last_issue_online: ~
+      date_last_issue_online: getHoldingEndDate
       num_last_vol_online: ~
       num_last_issue_online: ~
-      title_url: ~
+      title_url: getPublicationUrl
       first_author: ~
       title_id: ~
       embargo_info: ~
       coverage_depth: getCoverageDepth
-      coverage_notes: ~
+      coverage_notes: getCoverageNotes
       publisher_name: ~
-      location: ~
+      location: getHoldingLocation
       title_notes: ~
       staff_notes: ~
       vendor_id: ~
@@ -32,31 +32,31 @@ holding_types:
       oclc_collection_id: getOclcCollectionId
       oclc_entry_id: ~
       oclc_linkscheme: ~
-      oclc_number: ~
+      oclc_number: getPublicationOclcNumber
       ACTION: getAction
   Microfilm:
     action: overlay
-    collection_name: UNB Libraries Newspapers Database (Online)
+    collection_name: Newspapers @ UNB Libraries (Microfilm)
     collection_id: customer.133054.unbnewsdb
-    coverage_depth: fulltext
+    coverage_depth: print
     column_mapping:
       publication_title: getPublicationTitle
-      print_identifier: ~
+      print_identifier: getPublicationIssn
       online_identifier: ~
-      date_first_issue_online: ~
+      date_first_issue_online: getHoldingStartDate
       num_first_vol_online: ~
       num_first_issue_online: ~
-      date_last_issue_online: ~
+      date_last_issue_online:  getHoldingEndDate
       num_last_vol_online: ~
       num_last_issue_online: ~
-      title_url: ~
+      title_url: getPublicationUrl
       first_author: ~
       title_id: ~
       embargo_info: ~
       coverage_depth: getCoverageDepth
-      coverage_notes: ~
+      coverage_notes: getCoverageNotes
       publisher_name: ~
-      location: ~
+      location: getHoldingLocation
       title_notes: ~
       staff_notes: ~
       vendor_id: ~
@@ -64,31 +64,31 @@ holding_types:
       oclc_collection_id: getOclcCollectionId
       oclc_entry_id: ~
       oclc_linkscheme: ~
-      oclc_number: ~
+      oclc_number: getPublicationOclcNumber
       ACTION: getAction
   Digital:
     action: overlay
-    collection_name: UNB Libraries Newspapers Database (Online)
+    collection_name: Newspapers @ UNB Libraries (Digital)
     collection_id: customer.133054.unbnewsdb
     coverage_depth: fulltext
     column_mapping:
       publication_title: getPublicationTitle
-      print_identifier: ~
+      print_identifier: getPublicationIssn
       online_identifier: ~
-      date_first_issue_online: ~
+      date_first_issue_online: getHoldingStartDate
       num_first_vol_online: ~
       num_first_issue_online: ~
-      date_last_issue_online: ~
+      date_last_issue_online: getHoldingEndDate
       num_last_vol_online: ~
       num_last_issue_online: ~
-      title_url: ~
+      title_url: getPublicationUrl
       first_author: ~
       title_id: ~
       embargo_info: ~
       coverage_depth: getCoverageDepth
-      coverage_notes: ~
+      coverage_notes: getCoverageNotes
       publisher_name: ~
-      location: ~
+      location: getHoldingLocation
       title_notes: ~
       staff_notes: ~
       vendor_id: ~
@@ -96,7 +96,7 @@ holding_types:
       oclc_collection_id: getOclcCollectionId
       oclc_entry_id: ~
       oclc_linkscheme: ~
-      oclc_number: ~
+      oclc_number: getPublicationOclcNumber
       ACTION: getAction
 dependencies:
   module:
