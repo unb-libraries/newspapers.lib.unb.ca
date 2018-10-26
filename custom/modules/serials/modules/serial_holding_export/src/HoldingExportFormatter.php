@@ -166,4 +166,11 @@ class HoldingExportFormatter {
     return $this->publication->get('field_oclc')->getString();
   }
 
+  /**
+   * Formatter callback for publisher.
+   */
+  public function getPublicationPublisher() {
+    return $this->publication->get('field_publisher')->getString();
+  }
+
 }

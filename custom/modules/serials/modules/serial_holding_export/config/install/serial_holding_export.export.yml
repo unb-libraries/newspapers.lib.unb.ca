@@ -23,7 +23,7 @@ holding_types:
       embargo_info: ~
       coverage_depth: getCoverageDepth
       coverage_notes: getCoverageNotes
-      publisher_name: ~
+      publisher_name: getPublicationPublisher
       location: getHoldingLocation
       title_notes: ~
       staff_notes: ~
@@ -55,7 +55,7 @@ holding_types:
       embargo_info: ~
       coverage_depth: getCoverageDepth
       coverage_notes: getCoverageNotes
-      publisher_name: ~
+      publisher_name: getPublicationPublisher
       location: getHoldingLocation
       title_notes: ~
       staff_notes: ~
@@ -87,7 +87,7 @@ holding_types:
       embargo_info: ~
       coverage_depth: getCoverageDepth
       coverage_notes: getCoverageNotes
-      publisher_name: ~
+      publisher_name: getPublicationPublisher
       location: getHoldingLocation
       title_notes: ~
       staff_notes: ~
