@@ -300,16 +300,19 @@ class XlsHoldingExport {
     $spreadsheet_array = [];
     foreach ($this->holdings as $holding) {
       $row = [];
-      $formatter = HoldingExportFormatter::create($holding, $type_data);
-      foreach ($this->columnMapping as $map_key => $formatter_method) {
-        if (method_exists($formatter, $formatter_method)) {
-          $row[] = $formatter->$formatter_method();
+      $parent_title = $holding->getParentTitle();
+      if ($parent_title != NULL) {
+        $formatter = HoldingExportFormatter::create($holding, $parent_title, $type_data);
+        foreach ($this->columnMapping as $map_key => $formatter_method) {
+          if (method_exists($formatter, $formatter_method)) {
+            $row[] = $formatter->$formatter_method();
+          }
+          else {
+            $row[] = NULL;
+          }
         }
-        else {
-          $row[] = NULL;
-        }
+        $spreadsheet_array[] = $row;
       }
-      $spreadsheet_array[] = $row;
     }
     $this->sheet
       ->fromArray(

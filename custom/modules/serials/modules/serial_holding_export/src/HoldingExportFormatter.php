@@ -3,6 +3,7 @@
 namespace Drupal\serial_holding_export;
 
 use Drupal\serial_holding\Entity\SerialHoldingInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * HoldingExportFormatter object.
@@ -35,13 +36,15 @@ class HoldingExportFormatter {
    *
    * @param \Drupal\serial_holding\Entity\SerialHoldingInterface $holding
    *   The holding to use when generating the output.
+   * @param \Drupal\node\NodeInterface $publication
+   *   The holding to use when generating the output.
    * @param array $config
    *   An associative array of configuration for this holding type.
    */
-  protected function __construct(SerialHoldingInterface $holding, array $config) {
+  protected function __construct(SerialHoldingInterface $holding, NodeInterface $publication, array $config) {
     $this->holding = $holding;
+    $this->publication = $publication;
     $this->config = $config;
-    $this->publication = $holding->getParentTitle();
   }
 
   /**
@@ -49,13 +52,15 @@ class HoldingExportFormatter {
    *
    * @param \Drupal\serial_holding\Entity\SerialHoldingInterface $holding
    *   The holding to use when generating the output.
+   * @param \Drupal\node\NodeInterface $publication
+   *   The holding to use when generating the output.
    * @param array $config
    *   An associative array of configuration for this holding type.
    *
    * @return $this
    */
-  public static function create(SerialHoldingInterface $holding, array $config) {
-    return new static($holding, $config);
+  public static function create(SerialHoldingInterface $holding, NodeInterface $publication, array $config) {
+    return new static($holding, $publication, $config);
   }
 
   /**
