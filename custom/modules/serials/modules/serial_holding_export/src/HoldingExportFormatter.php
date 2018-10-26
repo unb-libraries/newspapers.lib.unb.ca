@@ -170,7 +170,10 @@ class HoldingExportFormatter {
    * Formatter callback for publisher.
    */
   public function getPublicationPublisher() {
-    return $this->publication->get('field_publisher')->getString();
+    if (!empty($this->publication->get('field_publisher')->entity)) {
+      return $this->publication->get('field_publisher')->entity->getName();
+    }
+    return NULL;
   }
 
 }
