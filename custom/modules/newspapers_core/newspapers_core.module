@@ -685,7 +685,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         ];
         break;
 
-      case 'physical':
+      case 'print':
         $location = trim($holding->getHoldingLocation());
         $call_no = trim($holding->getHoldingCallNumber());
         if (!empty($location) && !empty($call_no)) {
