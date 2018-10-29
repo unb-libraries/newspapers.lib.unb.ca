@@ -470,7 +470,7 @@ a.btn-add::before {
   border: none;
 }
 .image-placeholder {
-  max-width: 180px; /* same as Sample publication image style */
+  max-height: 230px; /* same as Sample publication image style */
 }
 .no-gutters{
   margin-left: 0;
@@ -663,12 +663,12 @@ a.back-link::before {
 }
 @media (max-width: 600px) {
   .image-placeholder {
-    max-width: 120px;
+    max-height: 120px;
   }
 }
 @media (min-width: 768px)
 and (max-width: 991px){
   .image-placeholder {
-    max-width: 120px;
+    max-width: 160px;
   }
 }
