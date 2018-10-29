@@ -665,10 +665,18 @@ a.back-link::before {
   .image-placeholder {
     max-height: 120px;
   }
+  .title-details img {
+    max-width: 120px;
+    max-height: 160px;
+  }
 }
 @media (min-width: 768px)
 and (max-width: 991px){
   .image-placeholder {
     max-width: 160px;
+  }
+  .title-details img {
+    max-width: 120px;
+    max-height: 160px;
   }
 }
