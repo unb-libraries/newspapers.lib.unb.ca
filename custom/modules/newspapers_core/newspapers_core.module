@@ -480,12 +480,7 @@ function _newspapers_core_blank_fields(Node $node, array $fields) {
   foreach ($fields as $field) {
     if (!$node->hasField($field)) {
       $messenger = \Drupal::messenger();
-      $messenger->addError(
-        'The <em class="placeholder">@field_name</em> field does not exist - not clearing!',
-        [
-          '@field_name' => $field,
-        ]
-      );
+      $messenger->addError("The '$field' field does not exist - not clearing!", FALSE);
     }
     else {
       $node
@@ -510,12 +505,7 @@ function _newspapers_core_boolean_is_true(Node $node, $field) {
   $messenger = \Drupal::messenger();
   // Check if field exists.
   if (!$node->hasField($field)) {
-    $messenger->addError(
-      'The <em class=\"placeholder\">@field_name</em> field does not exist!',
-      [
-        '@field_name' => $field,
-      ]
-    );
+    $messenger->addError("The '$field' field does not exist!", FALSE);
     return FALSE;
   }
 
@@ -525,12 +515,7 @@ function _newspapers_core_boolean_is_true(Node $node, $field) {
     ->getFieldDefinition()
     ->getType();
   if ($field_type != 'boolean') {
-    $messenger->addError(
-      'The <em class=\"placeholder\">@field_name</em> field is not a boolean field!',
-      [
-        '@field_name' => $field,
-      ]
-    );
+    $messenger->addError("The '$field' field is not a boolean field!", FALSE);
     return FALSE;
   }
 
