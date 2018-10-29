@@ -263,10 +263,10 @@
              </dd>
             {% endif %}
 
-            {% if holding.physical|length > 0 %}
+            {% if holding.print|length > 0 %}
                 <dt>{% trans %}Print{% endtrans %}:</dt>
                 <dd>
-                    {% for item in holding.physical %}
+                    {% for item in holding.print %}
                         <dl class="holding-item">
                             {% for field in item %}
                                 {% if field.value %}
