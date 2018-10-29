@@ -10,7 +10,7 @@ field_name: field_frequency
 entity_type: node
 bundle: publication
 label: Frequency
-description: "How often the paper was published.<br />\r\n<b>Note:</b> If a title's publication frequency changed over time enter <i>Varies</i> to toggle a <i>Frequency Notes</i> field for additional details."
+description: "How often the paper was published."
 required: false
 translatable: false
 default_value: {  }
