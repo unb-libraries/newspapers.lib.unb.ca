@@ -26,10 +26,13 @@ class NewspaperPublicationDigitalTabRedirect extends ControllerBase {
     $query = \Drupal::entityQuery('digital_serial_title')
       ->condition('status', 1)
       ->condition('parent_title', $node->id());
+    $nids = $query->execute();
 
-    if (!empty($query->execute())) {
-      return $this->redirect('entity.digital_serial_title.canonical', ['digital_serial_title' => 1]);
+    if (!empty($nids)) {
+      $serial_title_id = array_pop(array_values($nids));
+      return $this->redirect('entity.digital_serial_title.canonical', ['digital_serial_title' => $serial_title_id]);
     }
+
     return $this->formBuilder()->getForm('Drupal\digital_serial_title\Form\PublicationDigitalTitleAddForm', $node->id());
   }
 
