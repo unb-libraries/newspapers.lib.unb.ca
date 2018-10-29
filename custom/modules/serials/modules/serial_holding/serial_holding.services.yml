@@ -1,0 +1,5 @@
+services:
+  serial_holding.route_subscriber:
+    class: Drupal\serial_holding\Routing\EditHoldingRouteSubscriber
+    tags:
+    - { name: event_subscriber }
