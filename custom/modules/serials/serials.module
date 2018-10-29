@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_help().
@@ -21,4 +22,18 @@ function serials_help($route_name, RouteMatchInterface $route_match) {
 
     default:
   }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function serials_entity_update(EntityInterface $entity) {
+  $type = $entity->getEntityType()->id();
+  switch ($type) {
+    case 'serial_holding':
+      // Flush cache so twig template variables are up to date after holding edits.
+      drupal_flush_all_caches();
+      break;
+  }
+
 }
