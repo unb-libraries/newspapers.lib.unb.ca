@@ -124,7 +124,11 @@ class SerialHoldingForm extends ContentEntityForm {
     $holding_start_date = $values['holding_start_date'][0]['value'];
     $holding_end_date = $values['holding_end_date'][0]['value'];
 
-    if ($holding_start_date > $holding_end_date) {
+    if (
+      !empty($holding_start_date) &&
+      !empty($holding_end_date) &&
+      $holding_start_date > $holding_end_date
+    ) {
       $form_state->setErrorByName(
         'holding_start_date',
         $this->t('The holding start date cannot be later than the end date.'
