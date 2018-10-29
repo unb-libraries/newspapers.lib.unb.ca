@@ -70,3 +70,23 @@ function digital_serial_title_preprocess_digital_serial_title(&$variables) {
 function digital_serial_title_format_label(SerialTitleInterface $digital_serial_title) {
   return $digital_serial_title->getParentPublication()->getTitle() . t(': Digital Issues');
 }
+
+/**
+ * Implements hook_entity_delete().
+ */
+function digital_serial_title_entity_delete(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'node' && $entity->getType() == 'publication') {
+    // Delete associated digital_serial_titles.
+    $associated_titles = \Drupal::entityTypeManager()
+      ->getStorage('digital_serial_title')
+      ->loadByProperties(
+        [
+          'parent_title' => $entity->id(),
+        ]
+      );
+
+    foreach ($associated_titles as $title) {
+      $title->delete();
+    }
+  }
+}
