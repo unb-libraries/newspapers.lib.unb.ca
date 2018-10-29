@@ -5,16 +5,6 @@
  * Contains install and update functions for serial_holding.
  */
 
-use Drupal\serial_holding\TaxonomyHelper;
-
-/**
- * Implements hook_install().
- */
-function serial_holding_install() {
-  module_set_weight('serial_holding', 100);
-  TaxonomyHelper::addDefaultHoldingTypeTerms();
-}
-
 /**
  * Rename any physical holding types to print.
  */

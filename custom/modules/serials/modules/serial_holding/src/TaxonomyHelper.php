@@ -10,24 +10,6 @@ use Drupal\taxonomy\Entity\Term;
 class TaxonomyHelper {
 
   /**
-   * Creates the default taxonomy terms for serial holding types.
-   */
-  public static function addDefaultHoldingTypeTerms() {
-    $config = \Drupal::config('serial_holding.taxonomy.serial_holding_types.default_terms');
-    $holding_types = $config->get('items');
-
-    foreach ($holding_types as $holding_type) {
-      Term::create(
-        [
-          'parent' => [],
-          'name' => $holding_type['name'],
-          'vid' => 'serial_holding_types',
-        ]
-      )->save();
-    }
-  }
-
-  /**
    * Gets the current Holding types.
    *
    * @throws \Exception
