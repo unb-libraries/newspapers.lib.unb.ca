@@ -417,7 +417,7 @@ function _newspapers_core_inject_local_digital_titles(array &$holdings, $nid) {
         'link' => [
           'label' => $title->getHoldingsStatement(),
           'value' => Link::fromTextAndUrl(
-            'Click Here',
+            'View Digital Issues',
             Url::fromRoute(
               'entity.digital_serial_title.canonical',
               [
