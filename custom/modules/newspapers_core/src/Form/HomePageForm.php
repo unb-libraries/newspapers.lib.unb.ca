@@ -97,7 +97,7 @@ class HomePageForm extends FormBase {
         <a href=\"https://newspapers.lib.unb.ca/digital-titles\">New Brunswick Historical Newspapers Online</a>.
         For more worldwide digital newspaper content, consult
         <a href=\"https://lib.unb.ca/eresources/index.php?sub=journals&browseNewsColl=y\">UNB Libraries licensed
-        electronic Newspaper collections</a>.</p></div>"
+        electronic Newspaper collections</a>.</p></div>",
     ];
     $form['nav-tabs'] = [
       '#type' => 'html_tag',
