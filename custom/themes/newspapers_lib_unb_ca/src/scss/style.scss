@@ -33,7 +33,7 @@ ins {
 }
 
 /* Class/ID style tweaks */
-.title-info figure {
+.title-details figure {
   float: right;
   margin-left: 1em;
 }
@@ -81,7 +81,6 @@ dl .inline-list {
   content: " and ";
 }
 
-
 // Improve autocomplete.
 .ui-autocomplete li:first-child:before {
   border-bottom: 1px solid $text-muted;
@@ -103,6 +102,8 @@ dl .inline-list {
 
 .main-container {
   margin-top: 1em;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 #edit-reset:before {
@@ -162,13 +163,12 @@ li.search-field:before {
   padding: .5em 0;
 }
 
-.publication legend {
-  background: #f5f5f5;
-  border-bottom: none;
-  font-size: 18px;
-  font-weight: normal;
-  margin-bottom: 0.5em;
-  padding: 6px;
+
+.publication h2 {
+  color: $unb-lib-panel-heading;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 0;
 }
 .publication figure {
   margin-bottom: 1em;
@@ -483,12 +483,6 @@ a.btn-add::before {
   margin-left: 0;
   margin-right: 0;
 }
-.no-gutters > section {
-  padding-left: 0;
-}
-.no-gutters > aside {
-  padding-right: 0;
-}
 .no-wrap {
   white-space: nowrap;
 }
@@ -630,11 +624,6 @@ a.back-link::before {
   font-size: smaller;
   margin-right: 0.25em;
   vertical-align: text-bottom;
-}
-
-.title-details,
-.holding-type {
-  padding: 0 6px;
 }
 
 /* Holdings */
