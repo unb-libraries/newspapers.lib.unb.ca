@@ -87,6 +87,18 @@ class HomePageForm extends FormBase {
     ];
     $fulltext_url->setOptions($fulltext_link_options);
 
+    $form['preliminary'] = [
+      '#type' => 'markup',
+      '#markup' => "<div class=\"well\"><p>Newspapers &commat; UNB Libraries provides researchers with 
+        unified access to UNB Libraries&apos; current and historical newspaper collections in all formats, from New
+        Brunswick and across North America. Search and discover print, microfilm, and selected digital newspaper
+        titles (including New Brunswick Historical Newspapers Online collection) available from UNB Libraries.</p>
+        <p>Fulltext Search is available for titles included in
+        <a href=\"https://newspapers.lib.unb.ca/digital-titles\">New Brunswick Historical Newspapers Online</a>.
+        For more worldwide digital newspaper content, consult
+        <a href=\"https://lib.unb.ca/eresources/index.php?sub=journals&browseNewsColl=y\">UNB Libraries licensed
+        electronic Newspaper collections</a>.</p></div>"
+    ];
     $form['nav-tabs'] = [
       '#type' => 'html_tag',
       '#tag' => 'ul',
