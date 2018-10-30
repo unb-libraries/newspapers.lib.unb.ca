@@ -14,9 +14,6 @@ form .nav-tabs > li > a {
 .alert {
     margin-top: inherit!important; /* unb-lib.css override */
 }
-.tab-content {
-    padding: 5em 4em!important; /* unb-lib.css override */
-}
 .tab a:focus {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
