@@ -287,6 +287,13 @@ label.checkbox-toggle:hover {
   display: block;
   margin-left: .5em;
 }
+/* Slider facet override */
+.item-list__range_slider {
+  display: contents;
+}
+.item-list__range_slider li {
+  list-style-type: none;
+}
 
 // Elements.
 dd {
