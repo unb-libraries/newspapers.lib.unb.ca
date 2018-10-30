@@ -83,12 +83,8 @@
     {% endif %}
     {{ title_suffix }}
 
-    {% if content.field_subtitle|field_value %}
-        <blockquote>{{ content.field_subtitle|field_value }}</blockquote>
-    {% endif %}
-
     <fieldset class="title-info">
-        <legend>{% trans %}Description{% endtrans %}</legend>
+        <legend>{% trans %}Details{% endtrans %}</legend>
         <dl class="title-details">
         {% if content.field_sample_image|field_value %}
             {% if content.field_sample_image|field_value %}
@@ -108,6 +104,11 @@
             <figure>
                 <img class="no-borders image-placeholder" src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
             </figure>
+        {% endif %}
+
+        {% if content.field_subtitle|field_value %}
+            <dt>{% trans %}Subtitle / Tagline{% endtrans %}:</dt>
+            <dd>{{ content.field_subtitle|field_value }}</dd>
         {% endif %}
 
         {% if content.field_place_of_publication|field_value %}
@@ -191,6 +192,12 @@
                 </dd>
             {% endif %}
         </div>
+        <hr />
+        {% endif %}
+
+        {% if content.field_description|field_value %}
+            <dt>{{ content.field_description|field_label }}</dt>
+            <dd>{{ content.field_description|field_value }}</dd>
         {% endif %}
 
         {% if content.field_subjects|field_value %}
