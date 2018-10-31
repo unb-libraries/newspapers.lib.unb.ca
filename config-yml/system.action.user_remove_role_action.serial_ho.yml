@@ -1,0 +1,14 @@
+uuid: 29afce05-9b69-43c7-bace-1e1a4ba8dea7
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.serial_ho
+  module:
+    - user
+id: user_remove_role_action.serial_ho
+label: 'Remove the Serial Holdings Exporter role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: serial_ho

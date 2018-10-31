@@ -1,0 +1,14 @@
+uuid: 42573058-2883-4681-b985-77a771ef232f
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.serial_ho
+  module:
+    - user
+id: user_add_role_action.serial_ho
+label: 'Add the Serial Holdings Exporter role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: serial_ho
