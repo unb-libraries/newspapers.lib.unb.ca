@@ -27,4 +27,9 @@ function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
       explode('-', $variables['breadcrumb'][5]['text']->render())[3]
     );
   }
+
+  if ($route_name == 'newspapers_core.home') {
+    $variables['breadcrumb'][1]['text'] = t('Newspapers');
+  }
+
 }
