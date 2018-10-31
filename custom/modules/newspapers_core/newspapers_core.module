@@ -1013,3 +1013,15 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
   }
 
 }
+
+/**
+ * Implements hook_preprocess_views_view_field().
+ */
+function newspapers_core_preprocess_views_view_field(&$variables) {
+  $field = $variables['field'];
+  if ($field->field == 'field_last_issue_search_date_sort') {
+    if ($variables['field']->getValue($variables['row']) == date('Y-m-d')) {
+      $variables['output'] = t('Ongoing');
+    }
+  }
+}
