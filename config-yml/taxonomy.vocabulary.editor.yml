@@ -1,0 +1,9 @@
+uuid: aa035ede-96e9-49e1-aa89-1f0c778721c3
+langcode: en
+status: true
+dependencies: {  }
+name: Editor
+vid: editor
+description: 'The publication''s editor'
+hierarchy: 0
+weight: 0
