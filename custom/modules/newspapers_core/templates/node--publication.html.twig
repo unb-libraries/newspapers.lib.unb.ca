@@ -216,7 +216,7 @@
                 {% if content.field_subjects|field_value %}
                 <dt>{{ content.field_subjects|field_label }}:</dt>
                 <dd>
-                    <ul class="list-inline">
+                    <ul class="list-unstyled">
                         {% for key, item in content.field_subjects if key|first != '#' %}
                         <li>{{ item }}</li>
                         {% endfor %}
