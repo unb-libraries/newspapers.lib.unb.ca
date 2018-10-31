@@ -121,9 +121,20 @@
                 {% if content.field_geographic_coverage|field_value %}
                     <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
                     <dd>
-                        <ul>
+                        <ul class="list-unstyled">
                             {% for key, item in content.field_geographic_coverage if key|first != '#' %}
-                                <li>{{ item }}</li>
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </dd>
+                {% endif %}
+
+                {% if editor_values %}
+                    <dt>{{ editor_label }}:</dt>
+                    <dd>
+                        <ul class="list-unstyled">
+                            {% for item in editor_values %}
+                            <li>{{ item }}</li>
                             {% endfor %}
                         </ul>
                     </dd>
@@ -205,7 +216,7 @@
                 {% if content.field_subjects|field_value %}
                 <dt>{{ content.field_subjects|field_label }}:</dt>
                 <dd>
-                    <ul>
+                    <ul class="list-inline">
                         {% for key, item in content.field_subjects if key|first != '#' %}
                         <li>{{ item }}</li>
                         {% endfor %}
