@@ -301,6 +301,15 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     ->field_language
     ->getFieldDefinition()
     ->getLabel();
+  $languages = $node->get('field_language');
+  $language_values = [];
+  foreach ($languages as $language) {
+    $language_values[] = $language->getNativeName();
+  }
+  if (!empty($language_values)) {
+    $variables['language_label'] = count($language_values) < 2 ? $language_label : $language_label . 's';
+    $variables['language_values'] = $language_values;
+  }
 
   $language_value = $node
     ->get('field_language')
