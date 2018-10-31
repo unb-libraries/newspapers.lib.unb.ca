@@ -20,7 +20,7 @@ table_responsive: '-1'
 modal_enabled: 0
 tooltip_enabled: 0
 table: ''
-header_uri: 'https://lib.unb.ca/core/inc-2015/head-nav.php'
+header_uri: 'https://lib.unb.ca/core/inc-2015/head-nav.php?banner=nbnp'
 header_refresh_seconds: '900'
 header_write_path: /app/html/sites/default/files/head-nav.html.twig
 breadcrumb_home: 1
