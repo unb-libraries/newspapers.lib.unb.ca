@@ -55,6 +55,7 @@ hidden:
   field_city_town: true
   field_credit: true
   field_description: true
+  field_editor: true
   field_family: true
   field_first_issue: true
   field_first_issue_approx_date: true
