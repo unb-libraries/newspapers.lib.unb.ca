@@ -1,0 +1,29 @@
+uuid: 43898d89-daa6-4334-b037-676c0926a428
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_editor
+    - node.type.publication
+    - taxonomy.vocabulary.editor
+id: node.publication.field_editor
+field_name: field_editor
+entity_type: node
+bundle: publication
+label: Editor
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      editor: editor
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference
