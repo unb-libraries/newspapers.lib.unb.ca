@@ -284,4 +284,36 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function setHoldingNotes($notes);
 
+  /**
+   * Gets the Start date embargo code field.
+   *
+   * @return string
+   *   The start date embargo code.
+   */
+  public function getStartDateEmbargo();
+
+  /**
+   * Determine if the holding has a start date embargo code.
+   *
+   * @return bool
+   *   TRUE if the holding has a start date embargo code. False otherwise.
+   */
+  public function hasStartDateEmbargo();
+
+  /**
+   * Gets the End date embargo code field.
+   *
+   * @return string
+   *   The end date embargo code.
+   */
+  public function getEndDateEmbargo();
+
+  /**
+   * Determine if the holding has a end date embargo code.
+   *
+   * @return bool
+   *   TRUE if the holding has a end date embargo code. False otherwise.
+   */
+  public function hasEndDateEmbargo();
+
 }

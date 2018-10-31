@@ -111,11 +111,16 @@ class HoldingExportFormatter {
    * Formatter callback for holding start date.
    */
   public function getHoldingStartDate() {
+    if ($this->holding->hasStartDateEmbargo()) {
+      return $this->holding->getStartDateEmbargo();
+    }
+
     if (!empty($this->holding->get('holding_start_date')->date)) {
       return $this->formatHoldingDate(
         $this->holding->get('holding_start_date')->date
       );
     }
+
     return NULL;
   }
 
@@ -123,11 +128,16 @@ class HoldingExportFormatter {
    * Formatter callback for holding end date.
    */
   public function getHoldingEndDate() {
+    if ($this->holding->hasEndDateEmbargo()) {
+      return $this->holding->getEndDateEmbargo();
+    }
+
     if (!empty($this->holding->get('holding_end_date')->date)) {
       return $this->formatHoldingDate(
         $this->holding->get('holding_end_date')->date
       );
     }
+
     return NULL;
   }
 

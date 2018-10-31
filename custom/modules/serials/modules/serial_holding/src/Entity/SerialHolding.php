@@ -313,6 +313,34 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getStartDateEmbargo() {
+    return $this->get('holding_start_date_embargo')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function hasStartDateEmbargo() {
+    return !empty($this->get('holding_start_date_embargo')->value);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEndDateEmbargo() {
+    return $this->get('holding_end_date_embargo')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function hasEndDateEmbargo() {
+    return !empty($this->get('holding_end_date_embargo')->value);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -405,6 +433,26 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['holding_start_date_embargo'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Holding Start Date Embargo Code'))
+      ->setDescription(t('Enter the start date embargo code, if any.'))
+      ->setSettings([
+        'max_length' => 256,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -79,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -79,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['holding_end_date'] = BaseFieldDefinition::create('datetime')
       ->setLabel(t('Holding End Date'))
       ->setDescription(t('The serial holding end date. NOTE : If holding is "ongoing", leave this empty.'))
@@ -424,6 +472,26 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setDisplayOptions('form', [
         'type' => 'datetime',
         'weight' => -70,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['holding_end_date_embargo'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Holding End Date Embargo Code'))
+      ->setDescription(t('Enter the end date embargo code, if any.'))
+      ->setSettings([
+        'max_length' => 256,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -69,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -69,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
