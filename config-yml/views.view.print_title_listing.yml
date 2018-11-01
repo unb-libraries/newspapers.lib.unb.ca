@@ -587,49 +587,6 @@ display:
           field_api_classes: false
           plugin_id: field
       filters:
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          relationship: parent_title
-          group_type: group
-          admin_label: ''
-          operator: allwords
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: title_op
-            label: Title
-            description: 'Enter 1 or more terms'
-            use_operator: false
-            operator: title_op
-            identifier: title
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              newspaper_administrator: '0'
-              serial_ho: '0'
-            placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          entity_type: node
-          entity_field: title
-          plugin_id: string
         holding_type:
           id: holding_type
           table: serial_holding
@@ -674,6 +631,52 @@ display:
           entity_type: serial_holding
           entity_field: holding_type
           plugin_id: numeric
+        combine:
+          id: combine
+          table: views
+          field: combine
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: allwords
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: combine_op
+            label: Search
+            description: 'Enter 1 or more filter terms'
+            use_operator: false
+            operator: combine_op
+            identifier: query
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              newspaper_administrator: '0'
+              serial_ho: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          fields:
+            title: title
+            field_place_of_publication_locality: field_place_of_publication_locality
+            holding_retention: holding_retention
+            field_frequency: field_frequency
+          plugin_id: combine
       sorts: {  }
       title: 'Current Print Subscriptions of Newspapers'
       header:
