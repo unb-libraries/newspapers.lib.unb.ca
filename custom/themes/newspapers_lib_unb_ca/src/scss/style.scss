@@ -537,6 +537,8 @@ a.btn-add::before {
 th[class*="-sort"] a,
 th[class*="-date"] a,
 th[class*="-locality"] a,
+th[class*="-retention"] a,
+th[class*="-frequency"] a,
 th#view-nothing-table-column,
 th#view-holding-coverage-table-column,
 .search-results thead > tr > th.views-field-issue-title {
@@ -548,12 +550,18 @@ th[class*="-date"] a:focus,
 th[class*="-sort"] a:hover,
 th[class*="-date"] a:hover,
 th[class*="-locality"] a:focus,
-th[class*="-locality"] a:hover {
+th[class*="-locality"] a:hover,
+th[class*="-retention"] a:focus,
+th[class*="-retention"] a:hover,
+th[class*="-frequency"] a:focus,
+th[class*="-frequency"] a:hover {
   background: #f9f9f9;
 }
 th[class*="-sort"] a::before,
 th[class*="-date"] a::before,
-th[class*="-locality"] a::before {
+th[class*="-locality"] a::before,
+th[class*="-retention"] a:before,
+th[class*="-frequency"] a:before {
   content: "\e150";
   display: inline-block;
   font-family: 'Glyphicons Halflings';
