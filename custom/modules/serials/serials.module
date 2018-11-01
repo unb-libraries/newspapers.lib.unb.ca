@@ -25,9 +25,9 @@ function serials_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_entity_update().
+ * Implements hook_entity_presave().
  */
-function serials_entity_update(EntityInterface $entity) {
+function serials_entity_presave(EntityInterface $entity) {
   $type = $entity->getEntityType()->id();
   switch ($type) {
     case 'serial_holding':
