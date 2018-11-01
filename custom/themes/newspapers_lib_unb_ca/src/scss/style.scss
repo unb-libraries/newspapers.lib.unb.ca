@@ -538,6 +538,7 @@ th[class*="-sort"] a,
 th[class*="-date"] a,
 th[class*="-locality"] a,
 th#view-nothing-table-column,
+th#view-holding-coverage-table-column,
 .search-results thead > tr > th.views-field-issue-title {
   padding: .5em;
   white-space: nowrap;
@@ -552,7 +553,7 @@ th[class*="-locality"] a:hover {
 }
 th[class*="-sort"] a::before,
 th[class*="-date"] a::before,
-th[class*="-locality"] a::before{
+th[class*="-locality"] a::before {
   content: "\e150";
   display: inline-block;
   font-family: 'Glyphicons Halflings';
