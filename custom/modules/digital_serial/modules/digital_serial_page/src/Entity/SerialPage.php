@@ -395,4 +395,15 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     return (Link::fromTextAndUrl($image_markup, $url));
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function delete() {
+    $page_image = $this->getPageImage();
+    if (!empty($page_image)) {
+      $page_image->delete();
+    }
+    parent::delete();
+  }
+
 }
