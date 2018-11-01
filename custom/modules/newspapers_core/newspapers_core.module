@@ -252,16 +252,23 @@ function newspapers_core_node_presave(EntityInterface $node) {
         _newspapers_core_blank_fields($node, $blank_the_fields);
       }
 
-      // Populate Sort Title field, if blank.
-      $sort_title = $node
+      // Trim Title/Sort Title whitespace, autofill Sort Title field if blank.
+      $title = trim($node->getTitle());
+      $sort_title = trim($node
         ->get('field_sort_title')
-        ->getString();
-      if (empty(trim($sort_title))) {
+        ->getString()
+      );
+      $node->setTitle($title);
+      if (empty($sort_title)) {
         $node
           ->get('field_sort_title')
-          ->setValue($node->getTitle());
+          ->setValue($title);
       }
-
+      else {
+        $node
+          ->get('field_sort_title')
+          ->setValue($sort_title);
+      }
       break;
   }
 }
