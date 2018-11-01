@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_frequency
     - field.storage.node.field_place_of_publication
     - field.storage.node.field_sort_title
   module:
@@ -88,6 +89,8 @@ display:
             field_sort_title: field_sort_title
             field_place_of_publication: field_place_of_publication
             field_place_of_publication_locality: field_place_of_publication_locality
+            holding_retention: holding_retention
+            field_frequency: field_frequency
             holding_coverage: holding_coverage
           info:
             holding_type:
@@ -119,6 +122,20 @@ display:
               empty_column: false
               responsive: ''
             field_place_of_publication_locality:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            holding_retention:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_frequency:
               sortable: true
               default_sort_order: asc
               align: ''
@@ -441,14 +458,14 @@ display:
           hide_alter_empty: true
           display_name: true
           plugin_id: subdivision
-        holding_coverage:
-          id: holding_coverage
+        holding_retention:
+          id: holding_retention
           table: serial_holding
-          field: holding_coverage
+          field: holding_retention
           relationship: none
           group_type: group
           admin_label: ''
-          label: Coverage
+          label: 'Retention Period'
           exclude: false
           alter:
             alter_text: false
@@ -503,8 +520,71 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: null
-          entity_field: holding_coverage
+          entity_type: serial_holding
+          entity_field: holding_retention
+          plugin_id: field
+        field_frequency:
+          id: field_frequency
+          table: node__field_frequency
+          field: field_frequency
+          relationship: parent_title
+          group_type: group
+          admin_label: ''
+          label: Frequency
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
           plugin_id: field
       filters:
         title:
@@ -595,7 +675,7 @@ display:
           entity_field: holding_type
           plugin_id: numeric
       sorts: {  }
-      title: 'Titles Available in Print'
+      title: 'Current Print Subscriptions of Newspapers'
       header:
         result:
           id: result
@@ -647,6 +727,7 @@ display:
         - url.query_args
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_frequency'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
   page_listing:
@@ -667,5 +748,6 @@ display:
         - url.query_args
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_frequency'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
