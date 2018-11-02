@@ -29,6 +29,22 @@ class SerialHoldingForm extends ContentEntityForm {
       $this->parentEid = $entity->getParentTitle()->id();
     }
 
+    // Hide digital option if not already digital.
+    $is_digital_holding = FALSE;
+    $digital_key = array_search("Digital", $form['holding_type']['widget']['#options']);
+    if (
+      !empty($form['holding_type']['widget']['#default_value'][0]) &&
+      $form['holding_type']['widget']['#default_value'][0] == $digital_key
+    ) {
+      $is_digital_holding = TRUE;
+    }
+    if (!$is_digital_holding) {
+      unset($form['holding_type']['widget']['#options'][$digital_key]);
+    }
+    else {
+      $form['holding_type']['widget']['#options'] = array_intersect([$digital_key => 'Digital'], $form['holding_type']['widget']['#options']);
+    }
+
     // Get term ids for the holding types.
     $physical_id = TaxonomyHelper::getHoldingTermId('Print');
     $microfilm_id = TaxonomyHelper::getHoldingTermId('Microfilm');
