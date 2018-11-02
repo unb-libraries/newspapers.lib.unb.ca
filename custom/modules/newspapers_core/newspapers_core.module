@@ -737,7 +737,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
             'label' => 'Coverage and Access',
             'value' => Link::fromTextAndUrl(
               $holding->getHoldingCoverage(),
-              Url::fromUri($holding->getHoldingUri(), $uri_options)
+              Url::fromUri($uri, $uri_options)
             ),
           ],
           'notes' => [
