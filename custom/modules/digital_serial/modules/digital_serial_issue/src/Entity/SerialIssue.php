@@ -489,6 +489,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   public function delete() {
     $this->deleteChildPages();
     parent::delete();
+    $this->updateDigitalHoldingRecord();
   }
 
   /**
