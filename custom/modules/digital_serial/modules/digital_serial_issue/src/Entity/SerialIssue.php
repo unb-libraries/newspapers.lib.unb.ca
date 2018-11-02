@@ -522,7 +522,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
         $holding->save();
       }
       elseif (!empty($title_holding_dates) && count($title_holding_dates) == 1) {
-        $only_date = array_pop($digital_dates);
+        $only_date = array_pop($title_holding_dates);
         $holding->setHoldingStartDate($only_date);
         $holding->setHoldingEndDate($only_date);
         $holding->save();

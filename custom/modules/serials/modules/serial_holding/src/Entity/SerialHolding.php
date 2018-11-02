@@ -171,7 +171,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
    * {@inheritdoc}
    */
   public function setHoldingStartDate(DrupalDateTime $date) {
-    $this->set('holding_start_date', $date);
+    $this->set('holding_start_date', $date->format("Y-m-d"));
     return $this;
   }
 
@@ -186,7 +186,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
    * {@inheritdoc}
    */
   public function setHoldingEndDate(DrupalDateTime $date) {
-    $this->set('holding_end_date', $date);
+    $this->set('holding_end_date', $date->format("Y-m-d"));
     return $this;
   }
 
