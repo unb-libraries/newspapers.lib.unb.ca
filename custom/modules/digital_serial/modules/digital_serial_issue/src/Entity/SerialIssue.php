@@ -528,6 +528,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
         $holding->save();
       }
     }
+    drupal_flush_all_caches();
   }
 
   /**
