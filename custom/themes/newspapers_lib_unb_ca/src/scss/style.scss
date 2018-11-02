@@ -517,6 +517,9 @@ a.btn-add::before {
 }
 
 /* Bootstrap overrides */
+.page-header {
+  border-bottom: none;
+}
 .text-muted {
   color: $text-muted;
 }
