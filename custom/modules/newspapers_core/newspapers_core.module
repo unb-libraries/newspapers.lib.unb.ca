@@ -396,7 +396,6 @@ function newspapers_core_preprocess_node__publication(&$variables) {
       $variables['holding'][$type] = _newspapers_core_get_holding_details($type, $type_holdings);
     }
   }
-  _newspapers_core_inject_local_digital_titles($variables['holding'], $node->id());
 
   $referer = \Drupal::request()->server->get('HTTP_REFERER');
   if ((strpos($referer, 'search') !== FALSE)) {
@@ -417,46 +416,6 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     $variables['back_link'] = NULL;
   }
 
-}
-
-/**
- * Inject local digital titles into holdings.
- *
- * @param array $holdings
- *   The list of holdings.
- * @param int $nid
- *   The publication NID to check for local digital items.
- */
-function _newspapers_core_inject_local_digital_titles(array &$holdings, $nid) {
-  $query = \Drupal::entityQuery('digital_serial_title')
-    ->condition('status', 1)
-    ->condition('parent_title', $nid);
-  $results = $query->execute();
-
-  if (!empty($results)) {
-    if (empty($holdings['local_digital'])) {
-      $holdings['local_digital'] = [];
-    }
-    foreach ($results as $result) {
-      $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_title');
-      $title = $storage->load($result);
-
-      $holdings['local_digital'][] = [
-        'link' => [
-          'label' => $title->getHoldingsStatement(),
-          'value' => Link::fromTextAndUrl(
-            'View Digital Issues',
-            Url::fromRoute(
-              'entity.digital_serial_title.canonical',
-              [
-                'digital_serial_title' => $result,
-              ]
-            )
-          ),
-        ],
-      ];
-    }
-  }
 }
 
 /**
