@@ -12,7 +12,7 @@ field_name: field_language
 entity_type: node
 bundle: publication
 label: Language
-description: ''
+description: '<b>Note</b>: To delete a language, set the field value to <i>- None -</i>.'
 required: false
 translatable: false
 default_value:
