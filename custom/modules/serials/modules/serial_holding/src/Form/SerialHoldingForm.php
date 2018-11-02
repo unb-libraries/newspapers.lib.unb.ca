@@ -33,6 +33,7 @@ class SerialHoldingForm extends ContentEntityForm {
     $physical_id = TaxonomyHelper::getHoldingTermId('Print');
     $microfilm_id = TaxonomyHelper::getHoldingTermId('Microfilm');
     $online_id = TaxonomyHelper::getHoldingTermId('Online');
+    $digital_id = TaxonomyHelper::getHoldingTermId('Digital');
 
     // If we have term types 'Print' or 'Microfilm', set up states.
     if ($physical_id != 0 || $microfilm_id != 0) {

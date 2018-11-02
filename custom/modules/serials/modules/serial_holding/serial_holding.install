@@ -42,3 +42,25 @@ function serial_holding_update_8102() {
     $term->save();
   }
 }
+
+/**
+ * Ensure we now have a new 'Digital' type.
+ */
+function serial_holding_update_8103() {
+  $digital_holding_terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties(
+      [
+        'vid' => 'serial_holding_types',
+        'name' => 'Digital',
+      ]
+    );
+
+  if (empty($digital_holding_terms)) {
+    $term = \Drupal\taxonomy\Entity\Term::create([
+      'name' => 'Digital',
+      'vid' => 'serial_holding_types',
+    ])->save();
+  }
+
+}

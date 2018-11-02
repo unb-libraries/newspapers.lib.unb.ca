@@ -637,6 +637,16 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields['holding_digital_title'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Linked Digital Title'))
+      ->setDescription(t('Digital Title this issue belongs to'))
+      ->setSettings(
+        [
+          'target_type' => 'digital_serial_title',
+          'handler' => 'default',
+        ]
+      );
+
     $fields['holding_notes'] = BaseFieldDefinition::create('text_long')
       ->setLabel(t('Notes'))
       ->setDescription(t('Notes related to this holding.'))

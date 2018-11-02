@@ -98,6 +98,38 @@ holding_types:
       oclc_linkscheme: ~
       oclc_number: getPublicationOclcNumber
       ACTION: getAction
+  Digital:
+    action: overlay
+    collection_name: Newspapers @ UNB Libraries (Digital)
+    collection_id: customer.133054.unbnewsdb
+    coverage_depth: fulltext
+    column_mapping:
+      publication_title: getPublicationTitle
+      print_identifier: getPublicationIssn
+      online_identifier: ~
+      date_first_issue_online: getHoldingStartDate
+      num_first_vol_online: ~
+      num_first_issue_online: ~
+      date_last_issue_online: getHoldingEndDate
+      num_last_vol_online: ~
+      num_last_issue_online: ~
+      title_url: getPublicationUrl
+      first_author: ~
+      title_id: ~
+      embargo_info: ~
+      coverage_depth: getCoverageDepth
+      coverage_notes: getCoverageNotes
+      publisher_name: getPublicationPublisher
+      location: getHoldingLocation
+      title_notes: ~
+      staff_notes: ~
+      vendor_id: ~
+      oclc_collection_name: getOclcCollectionName
+      oclc_collection_id: getOclcCollectionId
+      oclc_entry_id: ~
+      oclc_linkscheme: ~
+      oclc_number: getPublicationOclcNumber
+      ACTION: getAction
 dependencies:
   module:
   - serial_holding_export
