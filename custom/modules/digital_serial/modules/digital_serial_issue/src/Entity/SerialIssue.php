@@ -492,6 +492,45 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function save() {
+    $this->updateDigitalHoldingRecord();
+    parent::save();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  private function updateDigitalHoldingRecord() {
+    $parent_title = $this->getParentTitle();
+    $query = \Drupal::entityQuery('serial_holding')
+      ->condition('holding_digital_title', $parent_title->id());
+    $holding_ids = $query->execute();
+
+    foreach ($holding_ids as $holding_id) {
+      $storage = \Drupal::entityTypeManager()->getStorage('serial_holding');
+      $holding = $storage->load($holding_id);
+      $title_holding_dates = $parent_title->getHoldingDates();
+
+      if (!empty($title_holding_dates) && count($title_holding_dates) > 1) {
+        $reversed = array_reverse($title_holding_dates);
+        $start_date = array_pop($reversed);
+        $end_date = array_pop($title_holding_dates);
+        $holding->setHoldingStartDate($start_date);
+        $holding->setHoldingEndDate($end_date);
+        $holding->save();
+      }
+      elseif (!empty($title_holding_dates) && count($title_holding_dates) == 1) {
+        $only_date = array_pop($digital_dates);
+        $holding->setHoldingStartDate($only_date);
+        $holding->setHoldingEndDate($only_date);
+        $holding->save();
+      }
+    }
+  }
+
+  /**
    * Delete the child pages that belong to this issue.
    */
   private function deleteChildPages() {

@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\digital_serial_title\Entity\SerialTitle;
 use Drupal\node\Entity\Node;
 use Drupal\serial_holding\Entity\SerialHolding;
+use Drupal\serial_holding\TaxonomyHelper;
 
 /**
  * PublicationDigitalTitleAddForm object.
@@ -104,7 +105,8 @@ class PublicationDigitalTitleAddForm extends FormBase {
       'holding_coverage' => 'Digital Issues at UNB Libraries',
       'user_id' => \Drupal::currentUser()->id(),
       'status' => 1,
-      'parent_title' => $title->id(),
+      'parent_title' => $this->parentEid,
+      'holding_digital_title' => $title->id(),
     ];
     $digital_holding = SerialHolding::create($entity_values);
     $digital_holding->save();

@@ -213,6 +213,7 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
    */
   public function delete() {
     $this->deleteChildPages();
+    $this->deleteHoldingRecords();
     parent::delete();
   }
 
@@ -228,6 +229,21 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
       $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_issue');
       $issue = $storage->load($issue_id);
       $issue->delete();
+    }
+  }
+
+  /**
+   * Delete the digital holdings records that belong to this title.
+   */
+  private function deleteHoldingRecords() {
+    $query = \Drupal::entityQuery('serial_holding')
+      ->condition('holding_digital_title', $this->id());
+    $holding_ids = $query->execute();
+
+    foreach ($holding_ids as $holding_id) {
+      $storage = \Drupal::entityTypeManager()->getStorage('serial_holding');
+      $holding = $storage->load($holding_id);
+      $holding->delete();
     }
   }
 
