@@ -729,6 +729,9 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         ];
         break;
 
+      case 'online':
+        break;
+
       default:
         $messenger = \Drupal::messenger();
         $messenger->addError("Warning: '$type' is not a valid holding type!", FALSE);
