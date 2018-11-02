@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\digital_serial_title\Entity\SerialTitle;
 use Drupal\node\Entity\Node;
+use Drupal\serial_holding\Entity\SerialHolding;
 
 /**
  * PublicationDigitalTitleAddForm object.
@@ -95,6 +96,18 @@ class PublicationDigitalTitleAddForm extends FormBase {
 
     $title = SerialTitle::create($entity_values);
     $title->save();
+
+    // Create a digital holding record.
+    $digital_id = TaxonomyHelper::getHoldingTermId('Digital');
+    $entity_values = [
+      'holding_type' => $digital_id,
+      'holding_coverage' => 'Digital Issues at UNB Libraries',
+      'user_id' => \Drupal::currentUser()->id(),
+      'status' => 1,
+      'parent_title' => $title->id(),
+    ];
+    $digital_holding = SerialHolding::create($entity_values);
+    $digital_holding->save();
 
     // Redirect to the newly created title.
     $form_state->setRedirect('entity.digital_serial_title.canonical',
