@@ -23,3 +23,22 @@ function serial_holding_update_8101() {
     $term->save();
   }
 }
+
+/**
+ * Rename any Digital holding types to Online.
+ */
+function serial_holding_update_8102() {
+  $physical_holding_terms = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties(
+      [
+        'vid' => 'serial_holding_types',
+        'name' => 'Digital',
+      ]
+    );
+
+  foreach ($physical_holding_terms as $term) {
+    $term->setName('Online');
+    $term->save();
+  }
+}
