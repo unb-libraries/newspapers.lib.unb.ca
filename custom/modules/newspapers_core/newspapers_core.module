@@ -730,6 +730,21 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         break;
 
       case 'online':
+        $uri = $holding->getHoldingUri();
+        $uri_options = [];
+        $holding_infos['online'] = [
+          'coverage_access' => [
+            'label' => 'Coverage and Access',
+            'value' => Link::fromTextAndUrl(
+              $holding->getHoldingCoverage(),
+              Url::fromUri($holding->getHoldingUri(), $uri_options)
+            ),
+          ],
+          'notes' => [
+            'label' => 'Notes',
+            'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
+          ],
+        ];
         break;
 
       default:
