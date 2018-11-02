@@ -292,4 +292,35 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
     return $holdings_dates;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function updateDigitalHoldingRecord() {
+    $query = \Drupal::entityQuery('serial_holding')
+      ->condition('holding_digital_title', $this->id());
+    $holding_ids = $query->execute();
+
+    foreach ($holding_ids as $holding_id) {
+      $storage = \Drupal::entityTypeManager()->getStorage('serial_holding');
+      $holding = $storage->load($holding_id);
+      $title_holding_dates = $this->getHoldingDates();
+
+      if (!empty($title_holding_dates) && count($title_holding_dates) > 1) {
+        $reversed = array_reverse($title_holding_dates);
+        $start_date = array_pop($reversed);
+        $end_date = array_pop($title_holding_dates);
+        $holding->setHoldingStartDate($start_date);
+        $holding->setHoldingEndDate($end_date);
+        $holding->save();
+      }
+      elseif (!empty($title_holding_dates) && count($title_holding_dates) == 1) {
+        $only_date = array_pop($title_holding_dates);
+        $holding->setHoldingStartDate($only_date);
+        $holding->setHoldingEndDate($only_date);
+        $holding->save();
+      }
+    }
+    drupal_flush_all_caches();
+  }
+
 }
