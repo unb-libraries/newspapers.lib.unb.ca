@@ -709,6 +709,24 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         break;
 
       case 'digital':
+        $holding_infos['digital'] = [
+          'coverage_statement' => [
+            'label' => 'Coverage:',
+            'value' => Link::fromTextAndUrl(
+              $holding->getHoldingCoverage(),
+              Url::fromRoute(
+                'entity.digital_serial_title.canonical',
+                [
+                  'digital_serial_title' => $holding->get('holding_digital_title')->entity->id(),
+                ]
+              )
+            ),
+          ],
+          'notes' => [
+            'label' => 'Notes',
+            'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
+          ],
+        ];
         break;
 
       default:

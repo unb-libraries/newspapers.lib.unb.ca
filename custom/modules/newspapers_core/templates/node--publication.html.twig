@@ -259,9 +259,9 @@
                 <h2 class="well well-sm">{% trans %}UNB Libraries' Holdings{% endtrans %}</h2>
                 {% if holding|length > 0 %}
                     <dl class="holding-type">
-                    {% if holding.local_digital|length > 0 %}
+                    {% if holding.digital|length > 0 %}
                     <dt>{% trans %}Digital Versions{% endtrans %}:</dt>
-                    <dd>{% for item in holding.local_digital %}
+                    <dd>{% for item in holding.digital %}
                         <dl class="holding-item">
                             {% for field in item %}
                                 {% if field.value %}
