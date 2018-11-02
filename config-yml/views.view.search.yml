@@ -650,6 +650,7 @@ display:
               anonymous: '0'
               administrator: '0'
               newspaper_administrator: '0'
+              serial_ho: '0'
             placeholder: ''
           is_grouped: false
           group_info:

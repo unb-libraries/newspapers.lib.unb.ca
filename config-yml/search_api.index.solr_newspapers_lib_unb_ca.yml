@@ -11,6 +11,7 @@ dependencies:
   config:
     - field.storage.node.field_additional_indexed_text
     - field.storage.node.field_description
+    - field.storage.node.field_editor
     - field.storage.node.field_place_of_publication
     - field.storage.node.field_language
     - field.storage.node.field_family
@@ -71,6 +72,28 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
+  editor_name:
+    label: 'Editor » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_editor:entity:name'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_editor
+      module:
+        - taxonomy
+        - taxonomy
+  family_name:
+    label: 'Family Name » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_family:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_family
+      module:
+        - taxonomy
+        - taxonomy
   field_additional_indexed_text:
     label: 'Additional indexed text'
     datasource_id: 'entity:node'
@@ -231,18 +254,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
-  name:
-    label: 'Family Name » Taxonomy term » Name'
-    datasource_id: 'entity:node'
-    property_path: 'field_family:entity:name'
+  node_grants:
+    label: 'Node access information'
+    property_path: search_api_node_grants
     type: string
-    dependencies:
-      config:
-        - field.storage.node.field_family
-      module:
-        - taxonomy
-        - taxonomy
-  name_1:
+    indexed_locked: true
+    type_locked: true
+    hidden: true
+  publisher_name:
     label: 'Publisher » Taxonomy term » Name'
     datasource_id: 'entity:node'
     property_path: 'field_publisher:entity:name'
@@ -253,13 +272,6 @@ field_settings:
       module:
         - taxonomy
         - taxonomy
-  node_grants:
-    label: 'Node access information'
-    property_path: search_api_node_grants
-    type: string
-    indexed_locked: true
-    type_locked: true
-    hidden: true
   sort_locality:
     label: 'Sortable locality (i.e. city).'
     datasource_id: 'entity:node'
