@@ -29,7 +29,8 @@ class NewspaperPublicationDigitalTabRedirect extends ControllerBase {
     $nids = $query->execute();
 
     if (!empty($nids)) {
-      $serial_title_id = array_pop(array_values($nids));
+      $nid_values = array_values($nids);
+      $serial_title_id = array_pop($nid_values);
       return $this->redirect('entity.digital_serial_title.canonical', ['digital_serial_title' => $serial_title_id]);
     }
 
