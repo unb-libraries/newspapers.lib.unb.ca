@@ -45,6 +45,15 @@ class SerialHoldingForm extends ContentEntityForm {
       $form['holding_type']['widget']['#options'] = array_intersect([$digital_key => 'Digital'], $form['holding_type']['widget']['#options']);
     }
 
+    // If digital holding, disable start/end date widgets.
+    if ($is_digital_holding) {
+      $description = $this->t('Manually setting date ranges is not possible for digital holdings.');
+      $form['holding_start_date']['widget'][0]['value']['#description'] = $description;
+      $form['holding_start_date']['#disabled'] = 'disabled';
+      $form['holding_end_date']['widget'][0]['value']['#description'] = $description;
+      $form['holding_end_date']['#disabled'] = 'disabled';
+    }
+
     // Get term ids for the holding types.
     $physical_id = TaxonomyHelper::getHoldingTermId('Print');
     $microfilm_id = TaxonomyHelper::getHoldingTermId('Microfilm');
