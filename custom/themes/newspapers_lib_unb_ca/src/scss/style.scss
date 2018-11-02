@@ -163,7 +163,6 @@ li.search-field:before {
   padding: .5em 0;
 }
 
-
 .publication h2 {
   color: $unb-lib-panel-heading;
   font-size: 20px;
@@ -540,7 +539,6 @@ th[class*="-locality"] a,
 th[class*="-retention"] a,
 th[class*="-frequency"] a,
 th#view-nothing-table-column,
-th#view-holding-coverage-table-column,
 .search-results thead > tr > th.views-field-issue-title {
   padding: .5em;
   white-space: nowrap;
@@ -653,6 +651,11 @@ a.back-link::before {
 }
 .holding-item dd {
   margin-bottom: .75em;
+}
+
+/* Front page */
+.message {
+  margin-bottom: 2.5em;
 }
 
 @media (max-width: 767px) {

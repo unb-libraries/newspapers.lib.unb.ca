@@ -89,7 +89,7 @@ class HomePageForm extends FormBase {
 
     $form['preliminary'] = [
       '#type' => 'markup',
-      '#markup' => "<div class=\"well\"><p>Newspapers &commat; UNB Libraries provides researchers with 
+      '#markup' => "<div class=\"message well\"><p>Newspapers &commat; UNB Libraries provides researchers with 
         unified access to UNB Libraries&apos; current and historical newspaper collections in all formats, from New
         Brunswick and across North America. Search and discover
         <a href=\"/print-titles\">print</a>, microfilm, and selected digital newspaper
