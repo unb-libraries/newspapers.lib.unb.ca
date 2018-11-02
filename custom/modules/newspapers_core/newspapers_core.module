@@ -732,6 +732,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
       case 'online':
         $uri = $holding->getHoldingUri();
         $uri_options = [];
+        // Check for valid Uri!
         $holding_infos['online'] = [
           'coverage_access' => [
             'label' => 'Coverage and Access',
