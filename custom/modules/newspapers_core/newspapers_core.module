@@ -711,7 +711,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
       case 'digital':
         $holding_infos['digital'] = [
           'coverage_statement' => [
-            'label' => 'Coverage:',
+            'label' => 'Coverage',
             'value' => Link::fromTextAndUrl(
               $holding->getHoldingCoverage(),
               Url::fromRoute(
