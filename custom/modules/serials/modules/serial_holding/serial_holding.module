@@ -33,6 +33,7 @@ function serial_holding_help($route_name, RouteMatchInterface $route_match) {
  */
 function serial_holding_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   switch ($form_id) {
+    case 'serial_holding_add_form':
     case 'serial_holding_edit_form':
       $form['#attached']['library'][] = 'serial_holding/serial-holding-form';
       break;
