@@ -89,19 +89,12 @@
                 <h2 class="well well-sm">{% trans %}Details{% endtrans %}</h2>
                 <dl class="title-details">
                 {% if content.field_sample_image|field_value %}
-                    {% if content.field_sample_image|field_value %}
-                        <figure>
-                            {{ content.field_sample_image }}
-                            <figcaption class="sr-only">
-                                Sample image of <i>{{ label }}</i>
-                            </figcaption>
-                        </figure>
-
-                    {% endif %}
-
-                    {% if content.field_description|field_value %}
-                        {{ content.field_description|field_value }}
-                    {% endif %}
+                    <figure>
+                        {{ content.field_sample_image }}
+                        <figcaption class="sr-only">
+                            Sample image of <i>{{ label }}</i>
+                        </figcaption>
+                    </figure>
                 {% else %}
                     <figure>
                         <img class="no-borders image-placeholder" src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
