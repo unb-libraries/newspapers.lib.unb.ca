@@ -162,8 +162,17 @@ class SerialHoldingForm extends ContentEntityForm {
     ) {
       $form_state->setErrorByName(
         'holding_start_date',
-        $this->t('The holding start date cannot be later than the end date.'
-        )
+        $this->t('The holding start date cannot be later than the end date.')
+      );
+    }
+
+    // Disallow empty URI field for Online holding type.
+    $holding_target_id = $form_state->getValue("holding_type")[0]["target_id"];
+    $holding_uri = $form_state->getValue("holding_uri")[0]["uri"];
+    if ($holding_target_id == 3 && empty($holding_uri)) {
+      $form_state->setErrorByName(
+        'holding_uri',
+        $this->t("The 'URI' field cannot be empty for 'Online' holding type.")
       );
     }
   }
