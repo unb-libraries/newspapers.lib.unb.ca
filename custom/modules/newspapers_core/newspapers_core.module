@@ -731,16 +731,20 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
 
       case 'online':
         $uri = $holding->getHoldingUri();
-        $uri_options = [];
-        // Check for valid Uri!
+        // Uri validation done via Link field.
+        if (!empty($uri)) {
+          $uri_options = [];
+          $holding_infos['online'] = [
+            'coverage_access' => [
+              'label' => 'Coverage and Access',
+              'value' => Link::fromTextAndUrl(
+                $holding->getHoldingCoverage(),
+                Url::fromUri($uri, $uri_options)
+              ),
+            ],
+          ];
+        }
         $holding_infos['online'] = [
-          'coverage_access' => [
-            'label' => 'Coverage and Access',
-            'value' => Link::fromTextAndUrl(
-              $holding->getHoldingCoverage(),
-              Url::fromUri($uri, $uri_options)
-            ),
-          ],
           'notes' => [
             'label' => 'Notes',
             'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
