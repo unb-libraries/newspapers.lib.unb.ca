@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 define('SERIAL_HOLDING_ENTITY_REF_FIELD', 'field_serial_holdings');
@@ -24,6 +25,17 @@ function serial_holding_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_FORM_alter().
+ */
+function serial_holding_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  switch ($form_id) {
+    case 'serial_holding_edit_form':
+      $form['#attached']['library'][] = 'serial_holding/serial-holding-form';
+      break;
   }
 }
 
