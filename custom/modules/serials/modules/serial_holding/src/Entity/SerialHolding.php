@@ -285,7 +285,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
    * {@inheritdoc}
    */
   public function getHoldingUri() {
-    return $this->get('holding_uri')->value;
+    return $this->get('holding_uri')->getString();
   }
 
   /**
@@ -618,17 +618,16 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['holding_uri'] = BaseFieldDefinition::create('string')
+    $fields['holding_uri'] = BaseFieldDefinition::create('link')
       ->setLabel(t('URI'))
       ->setDescription(t('Enter the URI pointing to the digital holding.'))
       ->setSettings([
-        'max_length' => 512,
-        'text_processing' => 0,
+        'link_type' => LinkItemInterface::LINK_GENERIC,
+        'title' => DRUPAL_DISABLED,
       ])
       ->setDefaultValue('')
       ->setDisplayOptions('view', [
         'label' => 'above',
-        'type' => 'string',
         'weight' => -4,
       ])
       ->setDisplayOptions('form', [
