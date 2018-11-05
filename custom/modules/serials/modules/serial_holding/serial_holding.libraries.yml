@@ -1,0 +1,5 @@
+serial-holding-form:
+  js:
+    js/serial-holding-form.js: {}
+  dependencies:
+  - core/jquery
