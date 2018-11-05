@@ -245,7 +245,7 @@ content:
     label: hidden
     settings:
       image_style: sample_publication_image
-      image_link: ''
+      image_link: file
     third_party_settings: {  }
     type: image
     region: content
