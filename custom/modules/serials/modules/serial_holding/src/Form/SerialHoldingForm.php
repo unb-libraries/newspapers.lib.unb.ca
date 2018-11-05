@@ -131,6 +131,11 @@ class SerialHoldingForm extends ContentEntityForm {
             ['value' => $online_id],
           ],
         ],
+        'required' => [
+          'select[name="holding_type"]' => [
+            ['value' => $online_id],
+          ],
+        ],
       ];
     }
     // Otherwise, hide them altogether.
