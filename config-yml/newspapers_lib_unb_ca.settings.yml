@@ -5,7 +5,7 @@ schemas:
 favicon:
   mimetype: image/vnd.microsoft.icon
   path: themes/custom/newspapers_lib_unb_ca/src/img/favicon.ico
-  url: 'http://192.168.99.100:3095/themes/contrib/unb_lib_theme/favicon.ico'
+  url: 'http://localhost:3095/themes/custom/newspapers_lib_unb_ca/src/img/favicon.ico'
   use_default: 0
 features:
   comment_user_picture: 1
@@ -16,11 +16,9 @@ logo:
   path: ''
   url: ''
   use_default: 1
-table_responsive: '-1'
-modal_enabled: 0
+modal_enabled: 1
 tooltip_enabled: 0
-table: ''
 header_uri: 'https://lib.unb.ca/core/inc-2015/head-nav.php?banner=nbnp'
 header_refresh_seconds: '900'
 header_write_path: /app/html/sites/default/files/head-nav.html.twig
-breadcrumb_home: 1
+table: ''
