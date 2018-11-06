@@ -624,6 +624,42 @@ display:
             multi_separator: ', '
           plugin_id: search_api_field
       filters:
+        status:
+          id: status
+          table: search_api_index_solr_newspapers_lib_unb_ca
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: search_api_boolean
         search_api_fulltext:
           id: search_api_fulltext
           table: search_api_index_solr_newspapers_lib_unb_ca
@@ -725,7 +761,8 @@ display:
       display_extenders: {  }
       filter_groups:
         operator: AND
-        groups: {  }
+        groups:
+          1: AND
       css_class: search-results
       use_ajax: false
     cache_metadata:
