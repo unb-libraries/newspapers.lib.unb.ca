@@ -324,6 +324,38 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     $variables['language_values'] = $language_values;
   }
 
+  // Frequency.
+  $frequency_label = $node
+    ->field_marc_frequency
+    ->getFieldDefinition()
+    ->getLabel();
+  $frequency_value = $node
+    ->get('field_marc_frequency')
+    ->getString();
+  $frequency_notes_value = trim(
+    $node
+      ->get('field_frequency_notes')
+      ->getString()
+  );
+  $variables['frequency_label'] = $frequency_label;
+  if (!empty($frequency_value)) {
+    if (!empty($frequency_notes_value)) {
+      $frequency_notes_value = " (" . $frequency_notes_value . ")";
+    }
+    $variables['frequency_value'] = $frequency_value . $frequency_notes_value;
+  }
+  else {
+    // Default to legacy frequency value, if field still exists.
+    if ($node->hasField('field_frequency')) {
+      $frequency_legacy_value = $node
+        ->get('field_frequency')
+        ->getString();
+    }
+    if (!empty($frequency_legacy_value)) {
+      $variables['frequency_value'] = $frequency_legacy_value;
+    }
+  }
+
   // Editors.
   $editor_label = $node
     ->field_editor
