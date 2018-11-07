@@ -543,6 +543,17 @@ a.btn-add::before {
 }
 
 /* Search results */
+.search-results .holding {
+  color: $text-muted;
+  display: inline;
+  font-size: smaller;
+}
+.search-results .views-field-field-sort-title span:first-of-type::before {
+  content: '(';
+}
+.search-results .views-field-field-sort-title span:last-of-type::after {
+  content: ')';
+}
 .search-results table a {
   display: block;
 }
