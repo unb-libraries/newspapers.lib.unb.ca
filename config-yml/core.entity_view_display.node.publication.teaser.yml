@@ -77,6 +77,7 @@ hidden:
   field_last_issue_precise_date: true
   field_last_issue_search_date: true
   field_last_issue_sort_date: true
+  field_marc_frequency: true
   field_oclc: true
   field_place_of_publication: true
   field_previous_identifications: true

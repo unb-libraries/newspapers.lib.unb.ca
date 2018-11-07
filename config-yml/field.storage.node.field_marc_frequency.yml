@@ -67,7 +67,7 @@ settings:
       label: 'Weekly (Issued or updated once a week)'
     -
       value: Other
-      label: 'Other (The frequency of the item cannot be defined by any of the values above)'
+      label: 'Other (The frequency of the item cannot be defined by any of the other values)'
     -
       value: 'Frequency varies'
       label: 'Frequency varies'
