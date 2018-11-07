@@ -1,0 +1,21 @@
+uuid: 08a510ad-76e0-441d-b12e-b8a467f7a773
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_marc_frequency
+    - node.type.publication
+  module:
+    - options
+id: node.publication.field_marc_frequency
+field_name: field_marc_frequency
+entity_type: node
+bundle: publication
+label: Frequency
+description: 'Controlled list of MARC Frequency of Issue terms'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

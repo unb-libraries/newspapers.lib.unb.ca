@@ -24,6 +24,7 @@ dependencies:
     - field.field.node.publication.field_last_issue_date_type
     - field.field.node.publication.field_last_issue_search_date
     - field.field.node.publication.field_last_issue_sort_date
+    - field.field.node.publication.field_marc_frequency
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_previous_identifications
@@ -102,7 +103,7 @@ third_party_settings:
         - field_serial_relation_suc_ref_up
         - field_serial_relation_suc_ref_dn
       parent_name: ''
-      weight: 15
+      weight: 16
       format_type: details
       format_settings:
         label: Relationships
@@ -119,12 +120,12 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 20
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
   field_credit:
-    weight: 18
+    weight: 19
     settings:
       rows: 2
       placeholder: ''
@@ -311,7 +312,7 @@ content:
     type: boolean_checkbox
     region: content
   field_issn:
-    weight: 13
+    weight: 14
     settings:
       size: 60
       placeholder: ''
@@ -319,7 +320,7 @@ content:
     type: string_textfield
     region: content
   field_language:
-    weight: 17
+    weight: 18
     settings:
       format:
         name: name
@@ -410,8 +411,14 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
+  field_marc_frequency:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_oclc:
-    weight: 14
+    weight: 15
     settings:
       size: 60
       placeholder: ''
@@ -426,7 +433,7 @@ content:
     type: address_default
     region: content
   field_previous_identifications:
-    weight: 25
+    weight: 26
     settings:
       size: 60
       placeholder: ''
@@ -451,7 +458,7 @@ content:
     type: image_image
     region: content
   field_serial_relation_pre_ref_dn:
-    weight: 19
+    weight: 20
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -463,14 +470,14 @@ content:
     type: options_select
     region: content
   field_serial_relation_suc_ref_dn:
-    weight: 22
+    weight: 23
     settings: {  }
     third_party_settings:
       conditional_fields: {  }
     type: options_select
     region: content
   field_serial_relation_suc_ref_up:
-    weight: 21
+    weight: 22
     settings: {  }
     third_party_settings:
       conditional_fields: {  }
@@ -483,7 +490,7 @@ content:
     type: options_select
     region: content
   field_serial_relationship_op_suc:
-    weight: 20
+    weight: 21
     settings: {  }
     third_party_settings: {  }
     type: options_select
@@ -498,7 +505,7 @@ content:
     type: string_textfield
     region: content
   field_subject_notes:
-    weight: 12
+    weight: 13
     settings:
       rows: 4
       placeholder: ''
@@ -506,7 +513,7 @@ content:
     type: string_textarea
     region: content
   field_subjects:
-    weight: 11
+    weight: 12
     settings:
       size: 60
       placeholder: ''
@@ -523,7 +530,7 @@ content:
     type: string_textfield
     region: content
   field_supplemental_information:
-    weight: 16
+    weight: 17
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
@@ -547,7 +554,7 @@ content:
     region: content
   path:
     type: path
-    weight: 23
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -555,21 +562,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 21
+    weight: 22
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 24
+    weight: 25
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 22
+    weight: 23
     region: content
     third_party_settings: {  }
   title:
@@ -582,7 +589,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 19
+    weight: 20
     settings:
       match_operator: CONTAINS
       size: 60

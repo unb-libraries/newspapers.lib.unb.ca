@@ -24,6 +24,7 @@ dependencies:
     - field.field.node.publication.field_last_issue_date_type
     - field.field.node.publication.field_last_issue_search_date
     - field.field.node.publication.field_last_issue_sort_date
+    - field.field.node.publication.field_marc_frequency
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_previous_identifications
@@ -208,6 +209,13 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_marc_frequency:
+    weight: 31
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   field_oclc:
     weight: 13

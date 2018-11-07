@@ -1,0 +1,81 @@
+uuid: b4530abf-b5f0-4e3f-93d7-abe38f99c532
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_marc_frequency
+field_name: field_marc_frequency
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 'No determinable frequency'
+      label: 'No determinable frequency (Used when the frequency is known to be intentionally irregular)'
+    -
+      value: Annual
+      label: 'Annual (Issued or updated once a year)'
+    -
+      value: Bimonthly
+      label: 'Bimonthly (Issued or updated every two months. Includes publications whose frequency is 6, 7, or 8 numbers a year)'
+    -
+      value: Semiweekly
+      label: 'Semiweekly (Issued or updated twice a week)'
+    -
+      value: Daily
+      label: 'Daily (Issued or updated once a day. Note: this may include Saturday and Sunday)'
+    -
+      value: Biweekly
+      label: 'Biweekly (Issued or updated every two weeks)'
+    -
+      value: Semiannual
+      label: 'Semiannual (Issued or updated twice a year. Includes publications whose frequency is 2 numbers a year)'
+    -
+      value: Biennial
+      label: 'Biennial (Issued or updated every two years)'
+    -
+      value: Triennial
+      label: 'Triennial (Issued or updated every three years)'
+    -
+      value: 'Three times a week'
+      label: 'Three times a week (Issued or updated Three times a week)'
+    -
+      value: 'Three times a month'
+      label: 'Three times a month (Issued or updated Three times a month)'
+    -
+      value: 'Continuously updated'
+      label: 'Continuously updated'
+    -
+      value: Monthly
+      label: 'Monthly (Includes publications whose frequency is 9, 10, 11, or 12 numbers a year)'
+    -
+      value: Quarterly
+      label: 'Quarterly (Issued or updated every three months. Includes publications whose frequency is 4 numbers a year)'
+    -
+      value: Semimonthly
+      label: 'Semimonthly (Issued or updated twice a month)'
+    -
+      value: 'Three times a year'
+      label: 'Three times a year (Issued or updated Three times a year)'
+    -
+      value: Unknown
+      label: 'Unknown (Current frequency of the item is unknown)'
+    -
+      value: Weekly
+      label: 'Weekly (Issued or updated once a week)'
+    -
+      value: Other
+      label: 'Other (The frequency of the item cannot be defined by any of the values above)'
+    -
+      value: 'Frequency varies'
+      label: 'Frequency varies'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
