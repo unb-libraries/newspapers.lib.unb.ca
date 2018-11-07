@@ -141,13 +141,9 @@
                 <dt>{{ publication_date_label }}:</dt>
                 <dd>{{ publication_date_value }}</dd>
 
-                {% if content.field_frequency|field_value %}
-                        <dt>{{ content.field_frequency|field_label }}:</dt>
-                        <dd>{{ content.field_frequency|field_value }}</dd>
-                        {% if content.field_frequency_notes|field_value %}
-                            <dt>{{ content.field_frequency_notes|field_label }}:</dt>
-                            <dd>{{ content.field_frequency_notes|field_value }}</dd>
-                        {% endif %}
+                {% if frequency_value %}
+                    <dt>{{ frequency_label }}:</dt>
+                    <dd>{{ frequency_value }}</dd>
                 {% endif %}
 
                 {% if earlier_titles_up %}
