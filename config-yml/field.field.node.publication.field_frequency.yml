@@ -9,8 +9,8 @@ id: node.publication.field_frequency
 field_name: field_frequency
 entity_type: node
 bundle: publication
-label: Frequency
-description: "How often the paper was published."
+label: 'Legacy Frequency'
+description: 'Migrated value provided for informational purposes only and cannot be edited. <i>Please use the <b>Frequency</b> field below</i>.'
 required: false
 translatable: false
 default_value: {  }
