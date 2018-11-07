@@ -238,6 +238,10 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_title_notes
+  holdings:
+    label: Holdings
+    property_path: holdings
+    type: string
   locality:
     label: 'Place of Publication » The locality (i.e. city).'
     datasource_id: 'entity:node'
