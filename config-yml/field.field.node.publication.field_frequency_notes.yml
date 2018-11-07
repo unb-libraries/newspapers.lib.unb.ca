@@ -10,7 +10,7 @@ field_name: field_frequency_notes
 entity_type: node
 bundle: publication
 label: 'Frequency Notes'
-description: 'Displays beside the frequency of publication value'
+description: "Used in the event of a former publication frequency of a continuing resource. <code>Frequency varies</code> is used in conjunction with the former frequency:<br>\r\n<b>Weekly, July 1885- ; Frequency varies, 1890-</b>"
 required: false
 translatable: false
 default_value: {  }
