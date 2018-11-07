@@ -266,33 +266,12 @@ content:
     type: string_textfield
     region: content
   field_frequency_notes:
-    weight: 10
+    weight: 11
     settings:
       size: 60
       placeholder: ''
     third_party_settings:
-      conditional_fields:
-        ba3c6eb6-17bd-4e09-8a68-b2b38bdfe7c7:
-          dependee: field_frequency
-          settings:
-            state: visible
-            condition: value
-            grouping: AND
-            values_set: 1
-            value: ''
-            values: {  }
-            value_form:
-              -
-                value: Varies
-            effect: fade
-            effect_options:
-              fade:
-                speed: '300'
-              slide:
-                speed: '400'
-            selector: ''
-          entity_type: node
-          bundle: publication
+      conditional_fields: {  }
     type: string_textfield
     region: content
   field_geographic_coverage:
