@@ -57,6 +57,15 @@ class IndexAdditionalTitleInfo extends ProcessorPluginBase {
         'processor_id' => $this->getPluginId(),
       ];
       $properties['years_published'] = new ProcessorProperty($definition);
+
+      $definition = [
+        'label' => $this->t('Holdings'),
+        'description' => $this->t('List of UNB Library Holdings available for this publication.'),
+        'type' => 'string',
+        'is_list' => TRUE,
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['holdings'] = new ProcessorProperty($definition);
     }
 
     return $properties;
@@ -79,6 +88,19 @@ class IndexAdditionalTitleInfo extends ProcessorPluginBase {
             $pub_end_year = $node->get('field_last_issue_search_date')->date->format('Y');
             for ($year = $pub_start_year; $year <= $pub_end_year; $year++) {
               $field->addValue($year);
+            }
+          }
+        }
+
+        // Holdings.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'holdings');
+        $node_id = $node->id();
+        $holdings = _newspapers_core_get_publication_holdings($node_id);
+        if ($holdings) {
+          foreach ($fields as $field) {
+            foreach ($holdings as $type => $type_holdings) {
+              $field->addValue($type);
             }
           }
         }
