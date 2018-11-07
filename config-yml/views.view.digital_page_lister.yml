@@ -765,9 +765,9 @@ display:
           set_precision: false
           precision: 0
           decimal: .
-          separator: ','
+          separator: ''
           format_plural: false
-          format_plural_string: !!binary MQNAY291bnQ=
+          format_plural_string: !!binary Aw==
           prefix: ''
           suffix: ''
           link_to_item: false
@@ -827,7 +827,7 @@ display:
           set_precision: false
           precision: 0
           decimal: .
-          separator: ','
+          separator: ''
           format_plural: false
           format_plural_string: !!binary Aw==
           prefix: ''
@@ -889,7 +889,7 @@ display:
           set_precision: false
           precision: 0
           decimal: .
-          separator: ','
+          separator: ''
           format_plural: false
           format_plural_string: !!binary Aw==
           prefix: ''
@@ -1367,9 +1367,9 @@ display:
           set_precision: false
           precision: 0
           decimal: .
-          separator: ','
+          separator: ''
           format_plural: false
-          format_plural_string: !!binary MQNAY291bnQ=
+          format_plural_string: !!binary Aw==
           prefix: ''
           suffix: ''
           link_to_item: false
@@ -1429,7 +1429,7 @@ display:
           set_precision: false
           precision: 0
           decimal: .
-          separator: ','
+          separator: ''
           format_plural: false
           format_plural_string: !!binary Aw==
           prefix: ''
@@ -1491,7 +1491,7 @@ display:
           set_precision: false
           precision: 0
           decimal: .
-          separator: ','
+          separator: ''
           format_plural: false
           format_plural_string: !!binary Aw==
           prefix: ''
