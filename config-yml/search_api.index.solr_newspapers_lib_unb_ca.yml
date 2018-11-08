@@ -247,6 +247,7 @@ field_settings:
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:locality'
     type: solr_text_ngram
+    boost: !!float 5
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
