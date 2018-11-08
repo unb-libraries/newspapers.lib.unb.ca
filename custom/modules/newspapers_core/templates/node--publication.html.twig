@@ -247,70 +247,62 @@
             <div class="title-holdings">
                 <h2 class="well well-sm">{% trans %}UNB Libraries' Holdings{% endtrans %}</h2>
                 {% if holding|length > 0 %}
-                    <dl class="holding-type">
-                    {% if holding.digital|length > 0 %}
-                    <dt>{% trans %}Digital Versions{% endtrans %}:</dt>
-                    <dd>{% for item in holding.digital %}
-                        <dl class="holding-item">
-                            {% for field in item %}
-                                {% if field.value %}
-                                    <dt>{{ field.label }}:</dt>
-                                    <dd>{{ field.value }}</dd>
-                                {% endif %}
-                            {% endfor %}
+
+                    {% if holding.online|length > 0 %}
+                        <dl class="holding-type">
+                            <dt>{% trans %}Online{% endtrans %}:</dt>
+                            <dd>
+                                {% for item in holding.online %}
+                                    <dl class="holding-item">
+                                        {% for field in item %}
+                                            {% if field.value %}
+                                                <dt>{{ field.label }}:</dt>
+                                                <dd>{{ field.value|raw }}</dd>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </dl>
+                                {% endfor %}
+                            </dd>
                         </dl>
-                    {% endfor %}
-                    </dd>
                     {% endif %}
 
+
                     {% if holding.microfilm|length > 0 %}
-                    <dt>{% trans %}Microfilm{% endtrans %}:</dt>
-                    <dd>
-                        {% for item in holding.microfilm %}
-                            <dl class="holding-item">
-                                {% for field in item %}
-                                    {% if field.value %}
-                                        <dt>{{ field.label }}:</dt>
-                                        <dd>{{ field.value|raw }}</dd>
-                                    {% endif %}
+                        <dl class="holding-type">
+                            <dt>{% trans %}Microfilm{% endtrans %}:</dt>
+                            <dd>
+                                {% for item in holding.microfilm %}
+                                    <dl class="holding-item">
+                                        {% for field in item %}
+                                            {% if field.value %}
+                                                <dt>{{ field.label }}:</dt>
+                                                <dd>{{ field.value|raw }}</dd>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </dl>
                                 {% endfor %}
-                            </dl>
-                        {% endfor %}
-                     </dd>
+                            </dd>
+                        </dl>
                     {% endif %}
 
                     {% if holding.print|length > 0 %}
-                        <dt>{% trans %}Print{% endtrans %}:</dt>
-                        <dd>
-                            {% for item in holding.print %}
-                                <dl class="holding-item">
-                                    {% for field in item %}
-                                        {% if field.value %}
-                                            <dt>{{ field.label }}:</dt>
-                                            <dd>{{ field.value|raw }}</dd>
-                                        {% endif %}
-                                    {% endfor %}
-                                </dl>
-                            {% endfor %}
-                        </dd>
+                        <dl class="holding-type">
+                            <dt>{% trans %}Print{% endtrans %}:</dt>
+                            <dd>
+                                {% for item in holding.print %}
+                                    <dl class="holding-item">
+                                        {% for field in item %}
+                                            {% if field.value %}
+                                                <dt>{{ field.label }}:</dt>
+                                                <dd>{{ field.value|raw }}</dd>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </dl>
+                                {% endfor %}
+                            </dd>
+                        </dl>
                     {% endif %}
 
-                    {% if holding.online|length > 0 %}
-                        <dt>{% trans %}Online{% endtrans %}:</dt>
-                        <dd>
-                            {% for item in holding.online %}
-                                <dl class="holding-item">
-                                    {% for field in item %}
-                                        {% if field.value %}
-                                            <dt>{{ field.label }}:</dt>
-                                            <dd>{{ field.value|raw }}</dd>
-                                        {% endif %}
-                                    {% endfor %}
-                                </dl>
-                            {% endfor %}
-                        </dd>
-                    {% endif %}
-                    </dl>
                  {% else %}
                     <div class="text-muted">
                         <small><i class="glyphicon glyphicon-info-sign"></i></small>

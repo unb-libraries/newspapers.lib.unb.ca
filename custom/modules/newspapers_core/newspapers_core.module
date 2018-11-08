@@ -428,7 +428,26 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $holdings = _newspapers_core_get_publication_holdings($node->id());
   if ($holdings) {
     foreach ($holdings as $type => $type_holdings) {
-      $variables['holding'][$type] = _newspapers_core_get_holding_details($type, $type_holdings);
+      // Display digital items under online header.
+      if ($type == 'digital') {
+        $type_key = 'online';
+      }
+      else {
+        $type_key = $type;
+      }
+
+      // Check if parent has been initially set.
+      if (empty($variables['holding'][$type_key])) {
+        $variables['holding'][$type_key] = [];
+      }
+
+      // Get the values. Digital should always appear first.
+      if ($type == 'digital') {
+        array_push($variables['holding'][$type_key], _newspapers_core_get_holding_details($type, $type_holdings));
+      }
+      else {
+        $variables['holding'][$type_key][] = _newspapers_core_get_holding_details($type, $type_holdings);
+      }
     }
   }
 
@@ -686,7 +705,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
           ", filed as " . $filed_as;
 
-        $holding_infos['microfilm'] = [
+        $holding_infos = [
           'coverage' => [
             'label' => 'Coverage Statement',
             'value' => $holding->getHoldingCoverage(),
@@ -723,7 +742,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
           $location_call_value = $location;
         }
 
-        $holding_infos['print'] = [
+        $holding_infos = [
           'coverage_statement' => [
             'label' => 'Coverage Statement',
             'value' => $holding->getHoldingCoverage(),
@@ -744,7 +763,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         break;
 
       case 'digital':
-        $holding_infos['digital'] = [
+        $holding_infos = [
           'coverage_statement' => [
             'label' => 'Coverage',
             'value' => Link::fromTextAndUrl(
@@ -769,7 +788,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
         // Uri validation done via Link field.
         if (!empty($uri)) {
           $uri_options = [];
-          $holding_infos['online']['coverage_access'] = [
+          $holding_infos['coverage_access'] = [
             'label' => 'Coverage and Access',
             'value' => Link::fromTextAndUrl(
               $holding->getHoldingCoverage(),
@@ -777,7 +796,7 @@ function _newspapers_core_get_holding_details($type, array $holdings) {
             ),
           ];
         }
-        $holding_infos['online']['notes'] = [
+        $holding_infos['notes'] = [
           'label' => 'Notes',
           'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
         ];
