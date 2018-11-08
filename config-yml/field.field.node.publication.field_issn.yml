@@ -10,7 +10,7 @@ field_name: field_issn
 entity_type: node
 bundle: publication
 label: ISSN
-description: 'Examples: <kbd>0382-7291</kbd>, <kbd>0839-380X</kbd>'
+description: 'Examples: <tt>0382-7291</tt>, <tt>0839-380X</tt>'
 required: false
 translatable: false
 default_value: {  }
