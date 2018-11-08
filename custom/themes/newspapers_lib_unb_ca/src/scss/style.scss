@@ -735,3 +735,9 @@ and (max-width: 991px){
     max-height: 160px;
   }
 }
+@media (min-width: 768px) {
+  /* Fix Bootstrap responsive table button dropdown menus */
+  .table-responsive {
+    overflow-x: visible;
+  }
+}
