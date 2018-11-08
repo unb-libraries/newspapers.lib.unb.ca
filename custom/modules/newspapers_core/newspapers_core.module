@@ -428,25 +428,27 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $holdings = _newspapers_core_get_publication_holdings($node->id());
   if ($holdings) {
     foreach ($holdings as $type => $type_holdings) {
-      // Display digital items under online header.
-      if ($type == 'digital') {
-        $type_key = 'online';
-      }
-      else {
-        $type_key = $type;
-      }
+      foreach ($type_holdings as $type_holding) {
+        // Display digital items under online header.
+        if ($type == 'digital') {
+          $type_key = 'online';
+        }
+        else {
+          $type_key = $type;
+        }
 
-      // Check if parent has been initially set.
-      if (empty($variables['holding'][$type_key])) {
-        $variables['holding'][$type_key] = [];
-      }
+        // Check if parent has been initially set.
+        if (empty($variables['holding'][$type_key])) {
+          $variables['holding'][$type_key] = [];
+        }
 
-      // Get the values. Digital should always appear first.
-      if ($type == 'digital') {
-        array_push($variables['holding'][$type_key], _newspapers_core_get_holding_details($type, $type_holdings));
-      }
-      else {
-        $variables['holding'][$type_key][] = _newspapers_core_get_holding_details($type, $type_holdings);
+        // Get the values. Digital should always appear first.
+        if ($type == 'digital') {
+          array_push($variables['holding'][$type_key], _newspapers_core_get_holding_details($type, $type_holding));
+        }
+        else {
+          $variables['holding'][$type_key][] = _newspapers_core_get_holding_details($type, $type_holding);
+        }
       }
     }
   }
@@ -689,124 +691,121 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
  *
  * @param string $type
  *   The name of the holding type.
- * @param \Drupal\serial_holding\Entity\SerialHolding[] $holdings
+ * @param \Drupal\serial_holding\Entity\SerialHolding $holding
  *   The serial holding object.
  *
  * @return array
  *   Associative array of label/value pairs for template holdings variables.
  */
-function _newspapers_core_get_holding_details($type, array $holdings) {
+function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
   $holding_infos = [];
+  switch ($type) {
+    case 'microfilm':
+      $filed_as = $holding->getHoldingFiledAs();
+      $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
+        ", filed as " . $filed_as;
 
-  foreach ($holdings as $holding) {
-    switch ($type) {
-      case 'microfilm':
-        $filed_as = $holding->getHoldingFiledAs();
-        $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
-          ", filed as " . $filed_as;
+      $holding_infos = [
+        'coverage' => [
+          'label' => 'Coverage Statement',
+          'value' => $holding->getHoldingCoverage(),
+        ],
+        'location' => [
+          'label' => 'Location',
+          'value' => $location_value,
+        ],
 
-        $holding_infos = [
-          'coverage' => [
-            'label' => 'Coverage Statement',
-            'value' => $holding->getHoldingCoverage(),
-          ],
-          'location' => [
-            'label' => 'Location',
-            'value' => $location_value,
-          ],
-
-          'last_received' => [
-            'label' => 'Last Microfilm Received',
-            'value' => $holding->getHoldingLastReceived(),
-          ],
-          'notes' => [
-            'label' => 'Notes',
-            'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
-          ],
-        ];
-        break;
-
-      case 'print':
-        $location = trim($holding->getHoldingLocation());
-        $call_no = trim($holding->getHoldingCallNumber());
-        if (!empty($location) && !empty($call_no)) {
-          $location_call_label = 'Location and Call Number';
-          $location_call_value = $location . " " . $call_no;
-        }
-        elseif (!empty($call_no)) {
-          $location_call_label = 'Call Number';
-          $location_call_value = $call_no;
-        }
-        else {
-          $location_call_label = 'Location';
-          $location_call_value = $location;
-        }
-
-        $holding_infos = [
-          'coverage_statement' => [
-            'label' => 'Coverage Statement',
-            'value' => $holding->getHoldingCoverage(),
-          ],
-          'location_call_no' => [
-            'label' => $location_call_label,
-            'value' => $location_call_value,
-          ],
-          'retention_period' => [
-            'label' => 'Retention Period',
-            'value' => $holding->getHoldingRetentionPeriod(),
-          ],
-          'notes' => [
-            'label' => 'Notes',
-            'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
-          ],
-        ];
-        break;
-
-      case 'digital':
-        $holding_infos = [
-          'coverage_statement' => [
-            'label' => 'Coverage',
-            'value' => Link::fromTextAndUrl(
-              $holding->getHoldingCoverage(),
-              Url::fromRoute(
-                'entity.digital_serial_title.canonical',
-                [
-                  'digital_serial_title' => $holding->get('holding_digital_title')->entity->id(),
-                ]
-              )
-            ),
-          ],
-          'notes' => [
-            'label' => 'Notes',
-            'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
-          ],
-        ];
-        break;
-
-      case 'online':
-        $uri = $holding->getHoldingUri();
-        // Uri validation done via Link field.
-        if (!empty($uri)) {
-          $uri_options = [];
-          $holding_infos['coverage_access'] = [
-            'label' => 'Coverage and Access',
-            'value' => Link::fromTextAndUrl(
-              $holding->getHoldingCoverage(),
-              Url::fromUri($uri, $uri_options)
-            ),
-          ];
-        }
-        $holding_infos['notes'] = [
+        'last_received' => [
+          'label' => 'Last Microfilm Received',
+          'value' => $holding->getHoldingLastReceived(),
+        ],
+        'notes' => [
           'label' => 'Notes',
           'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
-        ];
-        break;
+        ],
+      ];
+      break;
 
-      default:
-        $messenger = \Drupal::messenger();
-        $messenger->addError("Warning: '$type' is not a valid holding type!", FALSE);
-        return FALSE;
-    }
+    case 'print':
+      $location = trim($holding->getHoldingLocation());
+      $call_no = trim($holding->getHoldingCallNumber());
+      if (!empty($location) && !empty($call_no)) {
+        $location_call_label = 'Location and Call Number';
+        $location_call_value = $location . " " . $call_no;
+      }
+      elseif (!empty($call_no)) {
+        $location_call_label = 'Call Number';
+        $location_call_value = $call_no;
+      }
+      else {
+        $location_call_label = 'Location';
+        $location_call_value = $location;
+      }
+
+      $holding_infos = [
+        'coverage_statement' => [
+          'label' => 'Coverage Statement',
+          'value' => $holding->getHoldingCoverage(),
+        ],
+        'location_call_no' => [
+          'label' => $location_call_label,
+          'value' => $location_call_value,
+        ],
+        'retention_period' => [
+          'label' => 'Retention Period',
+          'value' => $holding->getHoldingRetentionPeriod(),
+        ],
+        'notes' => [
+          'label' => 'Notes',
+          'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
+        ],
+      ];
+      break;
+
+    case 'digital':
+      $holding_infos = [
+        'coverage_statement' => [
+          'label' => 'Coverage',
+          'value' => Link::fromTextAndUrl(
+            $holding->getHoldingCoverage(),
+            Url::fromRoute(
+              'entity.digital_serial_title.canonical',
+              [
+                'digital_serial_title' => $holding->get('holding_digital_title')->entity->id(),
+              ]
+            )
+          ),
+        ],
+        'notes' => [
+          'label' => 'Notes',
+          'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
+        ],
+      ];
+      break;
+
+    case 'online':
+      $uri = $holding->getHoldingUri();
+      // Uri validation done via Link field.
+      if (!empty($uri)) {
+        $uri_options = [];
+        $holding_infos['coverage_access'] = [
+          'label' => 'Coverage and Access',
+          'value' => Link::fromTextAndUrl(
+            $holding->getHoldingCoverage(),
+            Url::fromUri($uri, $uri_options)
+          ),
+        ];
+      }
+      $holding_infos['notes'] = [
+        'label' => 'Notes',
+        'value' => _newspapers_core_sanitize_markup($holding->getHoldingNotes()),
+      ];
+      break;
+
+    default:
+      $messenger = \Drupal::messenger();
+      $messenger->addError("Warning: '$type' is not a valid holding type!", FALSE);
+      return FALSE;
   }
 
   return $holding_infos;

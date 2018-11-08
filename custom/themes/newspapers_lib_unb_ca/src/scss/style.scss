@@ -688,6 +688,17 @@ a.back-link::before {
 .holding-item dd {
   margin-bottom: .75em;
 }
+.holding-type dd dl:not(:first-child):before {
+  content: "";
+  background: #eee;
+  position: absolute;
+  left: 1.6em;
+  right: 1.6em;
+  height: 1px;
+}
+.holding-type dd dl:not(:first-child) dt {
+  padding-top: 1em;
+}
 
 /* Front page */
 .message {
