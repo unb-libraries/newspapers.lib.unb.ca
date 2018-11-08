@@ -5,7 +5,7 @@ holding_types:
   Print:
     action: overlay
     collection_name: Newspapers @ UNB Libraries (Print)
-    collection_id: customer.133054.unbnewsdb
+    collection_id: customer.133054.unbnewsprint
     coverage_depth: print
     column_mapping:
       publication_title: getPublicationTitle
@@ -37,7 +37,7 @@ holding_types:
   Microfilm:
     action: overlay
     collection_name: Newspapers @ UNB Libraries (Microfilm)
-    collection_id: customer.133054.unbnewsdb
+    collection_id: customer.133054.unbnewsmic
     coverage_depth: print
     column_mapping:
       publication_title: getPublicationTitle
@@ -69,7 +69,7 @@ holding_types:
   Online:
     action: overlay
     collection_name: Newspapers @ UNB Libraries (Digital)
-    collection_id: customer.133054.unbnewsdb
+    collection_id: customer.133054.unbnewsonline
     coverage_depth: fulltext
     column_mapping:
       publication_title: getPublicationTitle
@@ -101,7 +101,7 @@ holding_types:
   Digital:
     action: overlay
     collection_name: Newspapers @ UNB Libraries (Digital)
-    collection_id: customer.133054.unbnewsdb
+    collection_id: customer.133054.unbnewsdigital
     coverage_depth: fulltext
     column_mapping:
       publication_title: getPublicationTitle
