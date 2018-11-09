@@ -715,6 +715,10 @@ a.back-link::before {
   .filters .form-group {
     max-width: 35%;
   }
+  .responsive-enabled>tbody>tr>td {
+    overflow: paged-y;
+    overflow: -webkit-paged-y;
+  }
 }
 @media (max-width: 600px) {
   .image-placeholder {
