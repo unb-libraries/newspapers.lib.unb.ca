@@ -99,8 +99,25 @@ class IndexAdditionalTitleInfo extends ProcessorPluginBase {
         $holdings = _newspapers_core_get_publication_holdings($node_id);
         if ($holdings) {
           foreach ($fields as $field) {
+            // Only show online holding item once.
+            $online = FALSE;
             foreach ($holdings as $type => $type_holdings) {
-              $field->addValue($type);
+              if ($type == 'digital') {
+                if (!$online) {
+                  // Digital title holdings display as online.
+                  $field->addValue('online');
+                  $online = TRUE;
+                }
+              }
+              elseif ($type == 'online') {
+                if (!$online) {
+                  $field->addValue($type);
+                  $online = TRUE;
+                }
+              }
+              else {
+                $field->addValue($type);
+              }
             }
           }
         }
