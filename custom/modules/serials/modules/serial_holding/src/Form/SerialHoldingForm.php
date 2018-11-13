@@ -150,6 +150,12 @@ class SerialHoldingForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
+    // Do not validate cancelled holding forms.
+    $user_input = $form_state->getUserInput();
+    if ($user_input['op'] == "Cancel") {
+      return FALSE;
+    }
+
     parent::validateForm($form, $form_state);
     $values = $form_state->getValues();
     $holding_start_date = $values['holding_start_date'][0]['value'];
