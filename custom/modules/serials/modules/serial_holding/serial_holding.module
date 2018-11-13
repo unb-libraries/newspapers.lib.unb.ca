@@ -80,3 +80,32 @@ function serial_holding_entity_delete(EntityInterface $entity) {
     }
   }
 }
+
+/**
+ * Cancel changes and return to the 'Manage holdings' tab.
+ *
+ * @param array $form
+ *   The form element.
+ * @param Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ *
+ * @return string
+ *   The redirect route for the form.
+ */
+function _serial_holding_cancel_redirect_callback(array &$form, FormStateInterface &$form_state) {
+  $current_route = \Drupal::routeMatch()->getRouteName();
+
+  switch ($current_route) {
+    case 'serial_holding.add_holding':
+      // Manually set redirect url when Add Serial Holding form is cancelled.
+      $build_info = $form_state->getBuildInfo();
+      $nid = $build_info['args'][0];
+      $route_params = [
+        'node' => $nid,
+      ];
+      $form_state->setRedirect('serial_holding.manage_serial_holdings', $route_params);
+
+      return $form_state;
+  }
+
+}
