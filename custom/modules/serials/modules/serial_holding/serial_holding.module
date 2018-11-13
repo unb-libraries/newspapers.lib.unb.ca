@@ -36,6 +36,16 @@ function serial_holding_form_alter(&$form, FormStateInterface $form_state, $form
     case 'serial_holding_add_form':
     case 'serial_holding_edit_form':
       $form['#attached']['library'][] = 'serial_holding/serial-holding-form';
+      $form['actions']['submit_cancel'] = [
+        '#type' => 'submit',
+        '#weight' => 5,
+        '#value' => t('Cancel'),
+        '#submit' => ['_serial_holding_cancel_redirect_callback'],
+        '#limit_validation_errors' => [],
+        '#attributes' => [
+          'class' => ['btn-warning'],
+        ],
+      ];
       break;
   }
 }
