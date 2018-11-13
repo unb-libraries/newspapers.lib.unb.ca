@@ -53,7 +53,9 @@ class SerialHoldingListBuilder extends EntityListBuilder {
 
     $build['add_holdings_button'] = [
       '#type' => 'link',
-      '#title' => t('Add New Holding'),
+      '#title' => [
+        '#markup' => '<small class="glyphicon glyphicon-plus-sign"></small>' . t('Add New Holding'),
+      ],
       '#url' => Url::fromRoute(
         'serial_holding.add_holding',
         [
@@ -61,7 +63,7 @@ class SerialHoldingListBuilder extends EntityListBuilder {
         ]
       ),
       '#attributes' => [
-        'class' => ['button'],
+        'class' => ['btn btn-primary icon-before'],
       ],
     ];
 
