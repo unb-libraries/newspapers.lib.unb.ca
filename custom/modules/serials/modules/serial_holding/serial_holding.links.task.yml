@@ -4,11 +4,6 @@ serial_holding.settings_tab:
   title: 'Settings'
   base_route: serial_holding.settings
 
-entity.serial_holding.canonical:
-  route_name: entity.serial_holding.canonical
-  base_route: entity.serial_holding.canonical
-  title: 'View'
-
 entity.serial_holding.edit_form:
   route_name: entity.serial_holding.edit_form
   base_route: entity.serial_holding.canonical
