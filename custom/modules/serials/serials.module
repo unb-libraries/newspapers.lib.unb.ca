@@ -36,4 +36,10 @@ function serials_entity_presave(EntityInterface $entity) {
       break;
   }
 
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function serials_serial_holding_delete(EntityInterface $entity) {
+  // Flush cache so deleted serial holding isn't displayed in twig template immediately after deletion.
+  drupal_flush_all_caches();
 }
