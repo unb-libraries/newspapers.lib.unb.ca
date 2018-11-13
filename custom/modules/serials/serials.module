@@ -27,19 +27,15 @@ function serials_help($route_name, RouteMatchInterface $route_match) {
 /**
  * Implements hook_entity_presave().
  */
-function serials_entity_presave(EntityInterface $entity) {
-  $type = $entity->getEntityType()->id();
-  switch ($type) {
-    case 'serial_holding':
-      // Flush cache so twig template variables refreshed after holding edits.
-      drupal_flush_all_caches();
-      break;
-  }
+function serials_serial_holding_presave(EntityInterface $entity) {
+  // Flush cache so template variables refreshed after serial holding edits.
+  drupal_flush_all_caches();
+}
 
 /**
  * Implements hook_ENTITY_TYPE_delete().
  */
 function serials_serial_holding_delete(EntityInterface $entity) {
-  // Flush cache so deleted serial holding isn't displayed in twig template immediately after deletion.
+  // Flush cache so serial holding removed from display right after deletion.
   drupal_flush_all_caches();
 }
