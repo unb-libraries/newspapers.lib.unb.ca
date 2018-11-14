@@ -24,6 +24,7 @@ module:
   digital_serial_title: 0
   dynamic_page_cache: 0
   editor: 0
+  externalauth: 0
   facets: 0
   facets_range_widget: 0
   field: 0
@@ -36,6 +37,8 @@ module:
   image: 0
   language: 0
   languagefield: 0
+  ldap_servers: 0
+  ldap_user: 0
   link: 0
   menu_ui: 0
   newspapers_core: 0
