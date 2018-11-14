@@ -48,9 +48,6 @@ class SerialPageListBuilder extends EntityListBuilder {
       ->condition('parent_issue', $issue)
       ->sort('page_sort');
 
-    $query = \Drupal::entityQuery('serial_holding')
-      ->condition('parent_title', $this->id());
-
     // Only add the pager if a limit is specified.
     if ($this->limit) {
       $query->pager($this->limit);
