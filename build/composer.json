@@ -65,7 +65,7 @@
         }
     },
     "license": "MIT",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "name": "unb-libraries/newspapers.lib.unb.ca-drupal8",
     "repositories": [
         {
