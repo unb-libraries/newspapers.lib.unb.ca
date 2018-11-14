@@ -212,6 +212,9 @@ select[multiple="multiple"] + .form-control {
 }
 
 /* Facets overrides */
+.facet-item label {
+  text-transform: capitalize;
+}
 .block-facets h3 {
   background: $heading-bg;
   font-size: 18px;

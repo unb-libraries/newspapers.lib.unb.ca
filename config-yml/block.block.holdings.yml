@@ -1,0 +1,29 @@
+uuid: ae7618a8-177a-4cea-80ec-683f913256e4
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.holdings
+  module:
+    - facets
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: holdings
+theme: newspapers_lib_unb_ca
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:holdings'
+settings:
+  id: 'facet_block:holdings'
+  label: Holdings
+  provider: facets
+  label_display: '0'
+  block_id: holdings
+visibility:
+  request_path:
+    id: request_path
+    pages: '/search*'
+    negate: false
+    context_mapping: {  }
