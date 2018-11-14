@@ -22,6 +22,8 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
   public function applies(RouteMatchInterface $route_match) {
     $route = $route_match->getRouteName();
     $applies = [
+      'entity.digital_serial_page.edit_form',
+      'entity.digital_serial_page.delete_form',
       'digital_serial_page.manage_pages',
       'digital_serial_page.issue_add_page',
       'digital_serial_page.issue_view_page',
@@ -38,7 +40,13 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
 
     // Load title object.
     $title_eid = $route_match->getParameter('digital_serial_title');
-    if (!is_object($title_eid)) {
+    if ($route == 'entity.digital_serial_page.edit_form' || $route == 'entity.digital_serial_page.delete_form') {
+      $page = $route_match->getParameter('digital_serial_page');
+      $issue = $page->getParentIssue();
+      $title = $issue->getParentTitle();
+      $parent_title = $title->getParentPublication();
+    }
+    elseif (!is_object($title_eid)) {
       $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_title');
       $title = $storage->load($title_eid);
       $parent_title = $title->get('parent_title')->entity;
@@ -50,7 +58,10 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
 
     // Load issue object.
     $issue_eid = $route_match->getParameter('digital_serial_issue');
-    if (!is_object($issue_eid)) {
+    if ($route == 'entity.digital_serial_page.edit_form' || $route == 'entity.digital_serial_page.delete_form') {
+      // Pass.
+    }
+    elseif (!is_object($issue_eid)) {
       $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_issue');
       $issue = $storage->load($issue_eid);
     }
@@ -111,10 +122,33 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
       );
     }
 
-    if ($route == 'digital_serial_page.issue_add_page') {
+    if ($route == 'entity.digital_serial_page.edit_form' || $route == 'entity.digital_serial_page.delete_form') {
       $breadcrumb->addLink(
         Link::createFromRoute(
-          $this->t('Add Page'),
+          $this->t('Page @page_no', ['@page_no' => $page->getPageNo()]),
+          'digital_serial_page.issue_view_page',
+          [
+            'digital_serial_title' => $title->id(),
+            'digital_serial_issue' => $issue->id(),
+            'digital_serial_page' => $page->id(),
+          ]
+        )
+      );
+    }
+
+    if ($route == 'entity.digital_serial_page.edit_form') {
+      $breadcrumb->addLink(
+        Link::createFromRoute(
+          $this->t('Edit'),
+          '<nolink>'
+        )
+      );
+    }
+
+    if ($route == 'entity.digital_serial_page.delete_form') {
+      $breadcrumb->addLink(
+        Link::createFromRoute(
+          $this->t('Delete'),
           '<nolink>'
         )
       );

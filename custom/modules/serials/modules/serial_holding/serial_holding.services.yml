@@ -3,3 +3,7 @@ services:
     class: Drupal\serial_holding\Routing\EditHoldingRouteSubscriber
     tags:
     - { name: event_subscriber }
+  serial_holding.breadcrumb:
+    class: Drupal\serial_holding\SerialHoldingBreadcrumbBuilder
+    tags:
+    - { name: breadcrumb_builder, priority: 100 }
