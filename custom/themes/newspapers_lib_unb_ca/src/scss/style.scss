@@ -549,10 +549,8 @@ a.btn-add::before {
   font-size: smaller;
 }
 .search-results .views-field-field-sort-title span:first-of-type::before {
-  content: '(';
-}
-.search-results .views-field-field-sort-title span:last-of-type::after {
-  content: ')';
+  content: 'Available: ';
+  margin-left: .5em;
 }
 .search-results table a {
   display: block;
