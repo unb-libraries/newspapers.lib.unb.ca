@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_first_issue_search_date
-    - field.storage.node.field_language
     - field.storage.node.field_last_issue_search_date
     - field.storage.node.field_place_of_publication
     - field.storage.node.field_sort_title
@@ -12,7 +11,6 @@ dependencies:
   module:
     - address
     - datetime
-    - languagefield
     - search_api
     - user
 id: search
@@ -828,7 +826,6 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_first_issue_search_date'
-        - 'config:field.storage.node.field_language'
         - 'config:field.storage.node.field_last_issue_search_date'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
@@ -856,7 +853,6 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_first_issue_search_date'
-        - 'config:field.storage.node.field_language'
         - 'config:field.storage.node.field_last_issue_search_date'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
