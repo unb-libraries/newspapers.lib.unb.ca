@@ -14,7 +14,6 @@ permissions:
   - 'add serial issue entities'
   - 'add serial page entities'
   - 'administer serial issue entities'
-  - 'administer serial page entities'
   - 'create publication content'
   - 'create terms in editor'
   - 'create terms in family'
