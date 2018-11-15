@@ -4,8 +4,8 @@ serial_holding.manage_serial_holdings:
     _entity_list: 'serial_holding'
     _title_callback: '\Drupal\serial_holding\Entity\Controller\SerialHoldingListTitleBuilder::getTitle'
   requirements:
-    _permission: 'view content'
     _custom_access: '\Drupal\serial_holding\Entity\Controller\CheckSerialTypeController::checkType'
+    _permission: 'add serial holding entities'
 
 serial_holding.add_holding:
   path: '/node/{node}/holding/add'
