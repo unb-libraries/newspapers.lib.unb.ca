@@ -23,6 +23,7 @@ class SerialManageHoldingsBreadcrumbBuilder implements BreadcrumbBuilderInterfac
     $route = $route_match->getRouteName();
     $applies = [
       'serial_holding.manage_serial_holdings',
+      'serial_holding.add_holding',
     ];
     return in_array($route, $applies);
   }
