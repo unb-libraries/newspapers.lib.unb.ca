@@ -31,3 +31,7 @@ services:
     class: Drupal\instance_initial_content\Event\PageMigrateEvent
     tags:
       - { name: event_subscriber }
+  instance_initial_content.2_digital_title_migrate_subscriber:
+    class: Drupal\instance_initial_content\Event\DigitalTitleMigrateEvent
+    tags:
+      - { name: event_subscriber }
