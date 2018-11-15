@@ -38,7 +38,7 @@ class SerialManageHoldingsBreadcrumbBuilder implements BreadcrumbBuilderInterfac
     // Set breadcrumb.
     $breadcrumb = new Breadcrumb();
 
-    // Set links;
+    // Set links.
     $links = [
       Link::fromTextAndUrl(
         $this->t('UNB Libraries'),
