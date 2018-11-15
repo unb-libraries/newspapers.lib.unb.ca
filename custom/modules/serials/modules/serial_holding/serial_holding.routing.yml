@@ -13,4 +13,4 @@ serial_holding.add_holding:
     _entity_form: serial_holding.add
     _title: 'Add Serial Holding'
   requirements:
-    _permission: 'view content'
+    _permission: 'add serial holding entities'
