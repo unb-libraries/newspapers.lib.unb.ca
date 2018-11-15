@@ -5,4 +5,4 @@ digital_serial_title.digital_issues:
     _controller: '\Drupal\digital_serial_title\Controller\NewspaperPublicationDigitalTabRedirect::triageRequest'
   requirements:
     _custom_access: '\Drupal\digital_serial_title\Controller\NewspaperPublicationCheckController::checkAccess'
-    _permission: 'edit digital serial title entities'
+    _permission: 'administer digital serial title entities'
