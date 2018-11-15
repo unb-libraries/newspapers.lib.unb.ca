@@ -37,6 +37,7 @@ module:
   image: 0
   language: 0
   languagefield: 0
+  ldap_authentication: 0
   ldap_servers: 0
   ldap_user: 0
   link: 0
