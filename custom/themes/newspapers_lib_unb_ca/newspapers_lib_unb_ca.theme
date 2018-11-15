@@ -12,6 +12,10 @@ function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
   // Modules cannot alter entity titles in breadcrumbs, so we process here.
   $route_name = \Drupal::routeMatch()->getRouteName();
 
+  if ($route_name == 'serial_holding.manage_serial_holdings') {
+    $variables['breadcrumb'][3]['text'] = t('Holdings');
+  }
+
   if ($route_name == 'entity.digital_serial_title.canonical') {
     $variables['breadcrumb'][3]['text'] = t('Digital Issues');
   }
