@@ -7,3 +7,7 @@ services:
     class: Drupal\serial_holding\SerialHoldingBreadcrumbBuilder
     tags:
     - { name: breadcrumb_builder, priority: 100 }
+  serial_holding.manage_breadcrumb:
+    class: Drupal\serial_holding\SerialManageHoldingsBreadcrumbBuilder
+    tags:
+    - { name: breadcrumb_builder, priority: 100 }
