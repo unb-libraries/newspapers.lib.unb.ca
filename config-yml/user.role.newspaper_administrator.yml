@@ -13,7 +13,6 @@ permissions:
   - 'add serial holding entities'
   - 'add serial issue entities'
   - 'add serial page entities'
-  - 'administer digital serial title entities'
   - 'administer serial issue entities'
   - 'administer serial page entities'
   - 'create publication content'
