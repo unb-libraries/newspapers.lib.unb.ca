@@ -13,3 +13,8 @@ services:
     class: Drupal\newspapers_core\SearchViewsBreadcrumbBuilder
     tags:
     - { name: breadcrumb_builder, priority: 100 }
+
+  newspapers_core.administrative_breadcrumbs:
+    class: Drupal\newspapers_core\AdministrativeBreadcrumbBuilder
+    tags:
+    - { name: breadcrumb_builder, priority: 100 }
