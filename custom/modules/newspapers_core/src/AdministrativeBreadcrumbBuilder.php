@@ -26,7 +26,7 @@ class AdministrativeBreadcrumbBuilder implements BreadcrumbBuilderInterface {
     $paths = [
       'entity.user.',
       'node.add',
-      'system.',
+      'system.admin_content',
     ];
 
     foreach ($paths as $path) {
@@ -43,6 +43,7 @@ class AdministrativeBreadcrumbBuilder implements BreadcrumbBuilderInterface {
    */
   public function build(RouteMatchInterface $route_match) {
     $breadcrumb = new Breadcrumb();
+    $breadcrumb->addCacheContexts(["url"]);
 
     $breadcrumb->addLink(
       Link::fromTextAndUrl(
