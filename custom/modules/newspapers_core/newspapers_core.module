@@ -16,6 +16,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\serial_holding\Entity\SerialHolding;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Implements hook_cron().
@@ -501,6 +502,18 @@ function newspapers_core_preprocess_views_exposed_form(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_views_view_field().
+ */
+function newspapers_core_preprocess_views_view_field(&$variables) {
+  $field = $variables['field'];
+  if ($field->field == 'field_last_issue_search_date_sort') {
+    if ($variables['field']->getValue($variables['row']) == date('Y-m-d')) {
+      $variables['output'] = t('Ongoing');
+    }
+  }
+}
+
+/**
  * Implements hook_theme().
  */
 function newspapers_core_theme() {
@@ -510,6 +523,16 @@ function newspapers_core_theme() {
       'base hook' => 'node',
     ],
   ];
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function newspapers_core_user_login() {
+  // Redirect to front page after login.
+  $url = Url::fromRoute('<front>', [], []);
+  $response = new RedirectResponse($url->toString());
+  $response->send();
 }
 
 /**
@@ -1090,16 +1113,4 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
     }
   }
 
-}
-
-/**
- * Implements hook_preprocess_views_view_field().
- */
-function newspapers_core_preprocess_views_view_field(&$variables) {
-  $field = $variables['field'];
-  if ($field->field == 'field_last_issue_search_date_sort') {
-    if ($variables['field']->getValue($variables['row']) == date('Y-m-d')) {
-      $variables['output'] = t('Ongoing');
-    }
-  }
 }
