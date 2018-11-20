@@ -436,23 +436,23 @@ a.btn-add::before {
 }
 
 // Broad title history.
-.title-history .file-icon {
+.title-details .file-icon {
   display: none;
 }
-.title-history .file,
+.title-details .file,
 .no-borders .file-link {
   font-size: inherit;
   width: auto;
 }
-.title-history .file-size {
+.title-details .file-size {
   color: $text-muted;
   padding-left: .5em;
   text-align: left;
 }
-.title-history .file-size::before {
+.title-details .file-size::before {
   content: "(";
 }
-.title-history .file-size::after {
+.title-details .file-size::after {
   content: ")";
 }
 .history-list {
@@ -476,7 +476,7 @@ a.btn-add::before {
 
 /* Helper classes */
 .no-borders,
-.title-history .file>span {
+.title-details .file>span {
   border: none;
 }
 .image-placeholder {
@@ -642,6 +642,7 @@ th[class*="-frequency"] a:before {
 .toggle-wrapper label:hover {
   color: $link-color-hover;
 }
+
 .toggle-wrapper input:hover {
   cursor: pointer;
 }
