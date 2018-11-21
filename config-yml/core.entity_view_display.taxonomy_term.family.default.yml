@@ -22,7 +22,7 @@ content:
     third_party_settings: {  }
   field_supplemental_information:
     weight: 1
-    label: above
+    label: hidden
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
