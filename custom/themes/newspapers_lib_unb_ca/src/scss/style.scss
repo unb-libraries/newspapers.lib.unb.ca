@@ -523,6 +523,21 @@ a.btn-add::before {
 .text-muted {
   color: $text-muted;
 }
+/* Menu local action xs button override */
+.local-actions a.btn-xs {
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: inherit;
+  margin-bottom: .75em;
+  padding: 6px 12px;
+}
+/* Menu local action 'add' button icon */
+.local-actions a[href="/node/add"]::before {
+  content: "\2b";
+  font-family: "Glyphicons Halflings";
+  font-size: smaller;
+  margin-right: .25em;
+}
 /* jQuery UI Bridge overrides */
 .modal.in .modal-dialog {
   top: 25%;
