@@ -140,6 +140,16 @@ function newspapers_core_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
+ * Implements menu_local_tasks_alter().
+ */
+function newspapers_core_menu_local_tasks_alter(&$data, $route_name) {
+  // Using LDAP: remove the Reset password tab on user login page.
+  if (in_array($route_name, ['user.login']) && !empty($data['tabs'][0]['user.pass'])) {
+    unset($data['tabs'][0]['user.pass']);
+  }
+}
+
+/**
  * Implements hook_ENTITY_TYPE_presave().
  */
 function newspapers_core_node_presave(EntityInterface $node) {
