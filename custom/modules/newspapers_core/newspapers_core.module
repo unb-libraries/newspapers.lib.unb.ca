@@ -120,7 +120,18 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
       $form['#attached']['library'][] = 'newspapers_core/tab-search';
       break;
   }
+}
 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function newspapers_core_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  switch ($form['#id']) {
+    case 'views-exposed-form-content-page-1':
+      // Remove Language filter options from Manage Content Overview page.
+      $form['langcode']['#type'] = 'hidden';
+      break;
+  }
 }
 
 /**
@@ -134,8 +145,6 @@ function newspapers_core_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Newspaper Core Functions') . '</p>';
       return $output;
-
-    default:
   }
 }
 
