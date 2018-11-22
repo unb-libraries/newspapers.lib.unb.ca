@@ -116,7 +116,7 @@
         "cweagans/composer-patches": "1.6.3",
         "drupal-composer/drupal-scaffold": "~2.2.0",
         "drupal/address": "1.4",
-        "drupal/bootstrap": "3.14",
+        "drupal/bootstrap": "3.15",
         "drupal/chosen": "2.6",
         "drupal/conditional_fields": "1.0-alpha4",
         "drupal/config_update": "1.5",
