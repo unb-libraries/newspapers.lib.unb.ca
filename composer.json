@@ -8,16 +8,6 @@
       "*": "dist"
     }
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/unb-libraries/dockworker.git"
-    },
-    {
-        "type": "git",
-        "url": "https://github.com/unb-libraries/unb_lib_theme.git"
-    }
-  ],
   "require": {
     "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x"
   },
