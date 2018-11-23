@@ -523,6 +523,24 @@ a.btn-add::before {
 .text-muted {
   color: $text-muted;
 }
+/* User account icons, incl. Export holdings */
+.menu a[href="/export/holdings"]::before,
+.menu a[href="/user"]::before,
+.menu a[href="/user/logout"]::before {
+  font-family: "Glyphicons Halflings";
+  font-size: smaller;
+  margin-right: .25em;
+}
+.menu a[href="/export/holdings"]::before {
+  content: "\e170";
+}
+.menu a[href="/user"]::before {
+  content:"\e008";
+}
+.menu a[href="/user/logout"]::before {
+  content:"\e163";
+}
+
 /* Menu local action xs button override */
 .local-actions a.btn-xs {
   border-radius: 4px;
