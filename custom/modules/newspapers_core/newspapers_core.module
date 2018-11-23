@@ -743,7 +743,7 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
 function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
   $holding_infos = [];
   switch ($type) {
-    case 'microfilm':
+    case 'microform':
       $filed_as = $holding->getHoldingFiledAs();
       $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
         ", filed as " . $filed_as;
@@ -759,7 +759,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
         ],
 
         'last_received' => [
-          'label' => 'Last Microfilm Received',
+          'label' => 'Last Microform Received',
           'value' => $holding->getHoldingLastReceived(),
         ],
         'notes' => [
