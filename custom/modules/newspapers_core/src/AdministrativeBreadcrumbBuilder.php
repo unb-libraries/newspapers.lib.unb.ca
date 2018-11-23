@@ -27,6 +27,7 @@ class AdministrativeBreadcrumbBuilder implements BreadcrumbBuilderInterface {
       'entity.user.',
       'node.add',
       'system.admin_content',
+      'newspapers_core.export_holdings',
     ];
 
     foreach ($paths as $path) {
