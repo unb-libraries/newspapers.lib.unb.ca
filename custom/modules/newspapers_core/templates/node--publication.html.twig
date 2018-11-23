@@ -266,11 +266,11 @@
                         </dl>
                     {% endif %}
 
-                    {% if holding.microfilm|length > 0 %}
+                    {% if holding.microform|length > 0 %}
                         <dl class="holding-type">
-                            <dt>{% trans %}Microfilm{% endtrans %}:</dt>
+                            <dt>{% trans %}Microform{% endtrans %}:</dt>
                             <dd>
-                                {% for item in holding.microfilm %}
+                                {% for item in holding.microform %}
                                     <dl class="holding-item">
                                         {% for field in item %}
                                             {% if field.value %}
