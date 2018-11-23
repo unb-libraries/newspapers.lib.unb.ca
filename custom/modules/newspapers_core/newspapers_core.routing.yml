@@ -6,7 +6,7 @@ newspapers_core.home:
   requirements:
     _permission: 'access content'
 
-newspapers_core.export:
+newspapers_core.export_holdings:
   path: '/export/holdings'
   defaults:
     _controller: '\Drupal\newspapers_core\Controller\ExportHoldingsController::exportHoldings'
