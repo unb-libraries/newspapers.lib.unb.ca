@@ -5,3 +5,11 @@ newspapers_core.home:
     _form: '\Drupal\newspapers_core\Form\HomePageForm'
   requirements:
     _permission: 'access content'
+
+newspapers_core.export:
+  path: '/export/holdings'
+  defaults:
+    _controller: '\Drupal\newspapers_core\Controller\ExportHoldingsController::exportHoldings'
+    _title: 'Export Holdings'
+  requirements:
+    _permission: 'view serial holding exports'
