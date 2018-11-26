@@ -176,6 +176,11 @@
                 <hr />
                 {% endif %}
 
+                {% if content.field_publisher|field_value %}
+                    <dt>{{ content.field_publisher|field_label }}:</dt>
+                    <dd>{{ content.field_publisher|field_value}}</dd>
+                {% endif %}
+
                 {% if editor_values %}
                     <dt>{{ editor_label }}:</dt>
                     <dd>
@@ -185,11 +190,6 @@
                             {% endfor %}
                         </ul>
                     </dd>
-                {% endif %}
-
-                {% if content.field_publisher|field_value %}
-                    <dt>{{ content.field_publisher|field_label }}:</dt>
-                    <dd>{{ content.field_publisher|field_value}}</dd>
                 {% endif %}
 
                 {% if content.field_description|field_value %}
