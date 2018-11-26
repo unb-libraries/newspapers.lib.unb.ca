@@ -92,7 +92,7 @@ class HomePageForm extends FormBase {
       '#markup' => "<div class=\"message well\"><p>Newspapers &commat; UNB Libraries provides researchers with 
         unified access to UNB Libraries&apos; current and historical newspaper collections in all formats, from New
         Brunswick and across North America. Search and discover
-        <a href=\"/print-titles\">print</a>, microfilm, and selected digital newspaper
+        <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
         titles (including New Brunswick Historical Newspapers Online collection) available from UNB Libraries.</p>
         <p>Fulltext Search is available for titles included in
         <a href=\"/digital-titles\">New Brunswick Historical Newspapers Online</a>.

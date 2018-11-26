@@ -69,7 +69,7 @@ function serial_holding_update_8103() {
  * Rename Microfilm holding type to Microform.
  */
 function serial_holding_update_8104() {
-  $physical_holding_terms = \Drupal::entityTypeManager()
+  $microfilm_holding_terms = \Drupal::entityTypeManager()
     ->getStorage('taxonomy_term')
     ->loadByProperties(
       [
@@ -78,7 +78,7 @@ function serial_holding_update_8104() {
       ]
     );
 
-  foreach ($physical_holding_terms as $term) {
+  foreach ($microfilm_holding_terms as $term) {
     $term->setName('Microform');
     $term->save();
   }
