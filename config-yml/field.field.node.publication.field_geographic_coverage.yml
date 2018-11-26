@@ -10,7 +10,7 @@ field_name: field_geographic_coverage
 entity_type: node
 bundle: publication
 label: 'Geographic Coverage'
-description: '<b>Example:</b> <tt>Chatham (and later Richibucto)</tt>'
+description: "<b>Example:</b> <tt>Chatham (and later Richibucto)</tt><br>\r\n<b>Note:</b> To delete a geographic coverage item, completely erase its field value."
 required: false
 translatable: false
 default_value: {  }

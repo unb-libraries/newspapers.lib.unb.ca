@@ -11,7 +11,7 @@ field_name: field_publisher
 entity_type: node
 bundle: publication
 label: Publisher
-description: "<b>Example:</b> <tt>This Week Publications Ltd.</tt><br>\r\n<i>Suggested values may pop up as you type</i>"
+description: "<b>Example:</b> <tt>This Week Publications Ltd.</tt><br>\r\n<b>Note:</b> To delete a publisher, completely erase its field value.<br>\r\n<b>Note 2:</b> Publisher terms may not end in round brackets - use square brackets.<br>\r\n<i>Suggested values may pop up as you type</i>"
 required: false
 translatable: false
 default_value: {  }

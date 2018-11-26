@@ -12,7 +12,7 @@ field_name: field_sample_image
 entity_type: node
 bundle: publication
 label: 'Sample Image'
-description: '<b>Example:</b>: Front page of the publication.'
+description: '<b>Example:</b> Front page of the publication.'
 required: false
 translatable: false
 default_value: {  }
