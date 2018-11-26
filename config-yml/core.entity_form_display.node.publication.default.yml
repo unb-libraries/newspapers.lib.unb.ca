@@ -320,7 +320,7 @@ content:
     type: string_textfield
     region: content
   field_language:
-    weight: 18
+    weight: 17
     settings:
       format:
         name: name
@@ -432,14 +432,6 @@ content:
     third_party_settings: {  }
     type: address_default
     region: content
-  field_previous_identifications:
-    weight: 26
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_publisher:
     weight: 7
     settings:
@@ -530,7 +522,7 @@ content:
     type: string_textfield
     region: content
   field_supplemental_information:
-    weight: 17
+    weight: 18
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
@@ -602,4 +594,5 @@ hidden:
   field_first_issue_sort_date: true
   field_last_issue_search_date: true
   field_last_issue_sort_date: true
+  field_previous_identifications: true
   langcode: true
