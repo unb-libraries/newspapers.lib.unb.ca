@@ -106,9 +106,17 @@
                     <dd>{{ content.field_subtitle|field_value }}</dd>
                 {% endif %}
 
+                <dt>{{ publication_date_label }}:</dt>
+                <dd>{{ publication_date_value }}</dd>
+
                 {% if content.field_place_of_publication|field_value %}
                     <dt>{{ content.field_place_of_publication|field_label }}:</dt>
                     <dd>{{ content.field_place_of_publication|field_value }}</dd>
+                {% endif %}
+
+                {% if frequency_value %}
+                    <dt>{{ frequency_label }}:</dt>
+                    <dd>{{ frequency_value }}</dd>
                 {% endif %}
 
                 {% if content.field_geographic_coverage|field_value %}
@@ -120,30 +128,6 @@
                             {% endfor %}
                         </ul>
                     </dd>
-                {% endif %}
-
-                {% if editor_values %}
-                    <dt>{{ editor_label }}:</dt>
-                    <dd>
-                        <ul class="list-unstyled">
-                            {% for item in editor_values %}
-                            <li>{{ item }}</li>
-                            {% endfor %}
-                        </ul>
-                    </dd>
-                {% endif %}
-
-                {% if content.field_publisher|field_value %}
-                    <dt>{{ content.field_publisher|field_label }}:</dt>
-                    <dd>{{ content.field_publisher|field_value}}</dd>
-                {% endif %}
-
-                <dt>{{ publication_date_label }}:</dt>
-                <dd>{{ publication_date_value }}</dd>
-
-                {% if frequency_value %}
-                    <dt>{{ frequency_label }}:</dt>
-                    <dd>{{ frequency_value }}</dd>
                 {% endif %}
 
                 {% if earlier_titles_up %}
@@ -171,11 +155,6 @@
                     <dd>{{ content.field_title_notes|field_value }}</dd>
                 {% endif %}
 
-                {% if content.field_supplemental_information|field_value %}
-                    <dt>{{ content.field_supplemental_information|field_label }}:</dt>
-                    <dd class="no-borders">{{ content.field_supplemental_information|field_value }}</dd>
-                {% endif %}
-
                 {% if family %}
                 <hr />
                 <div class="title-history">
@@ -195,6 +174,22 @@
                     {% endif %}
                 </div>
                 <hr />
+                {% endif %}
+
+                {% if editor_values %}
+                    <dt>{{ editor_label }}:</dt>
+                    <dd>
+                        <ul class="list-unstyled">
+                            {% for item in editor_values %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </dd>
+                {% endif %}
+
+                {% if content.field_publisher|field_value %}
+                    <dt>{{ content.field_publisher|field_label }}:</dt>
+                    <dd>{{ content.field_publisher|field_value}}</dd>
                 {% endif %}
 
                 {% if content.field_description|field_value %}
@@ -237,6 +232,11 @@
                             {% endfor %}
                         </ul>
                     </dd>
+                {% endif %}
+
+                {% if content.field_supplemental_information|field_value %}
+                    <dt>{{ content.field_supplemental_information|field_label }}:</dt>
+                    <dd class="no-borders">{{ content.field_supplemental_information|field_value }}</dd>
                 {% endif %}
 
                 </dl>
