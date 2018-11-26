@@ -721,7 +721,7 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
   }
 
   if ($first_date_txt == $none_txt && $last_date_txt == $none_txt) {
-    return $none_txt;
+    return 'Dates ' . $none_txt;
   }
   else {
     return $first_date_txt . " - " . $last_date_txt;
