@@ -361,7 +361,7 @@ p {
   margin: auto .5em;
 }
 
-/* Fix overrides.min.css / unb-lib.css conflict */
+/* Fix overrides.min.css & unb-lib.css conflict */
 a.disabled {
   color: $text-muted;
 }
@@ -380,6 +380,7 @@ a.disabled {
 .select-wrapper select,
 input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
   line-height: normal;
+  height: inherit;
 }
 .panel-default > .panel-heading {
   color: $unb-lib-panel-heading;
