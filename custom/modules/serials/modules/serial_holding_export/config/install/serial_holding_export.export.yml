@@ -34,9 +34,9 @@ holding_types:
       oclc_linkscheme: ~
       oclc_number: getPublicationOclcNumber
       ACTION: getAction
-  Microfilm:
+  Microform:
     action: overlay
-    collection_name: Newspapers @ UNB Libraries (Microfilm)
+    collection_name: Newspapers @ UNB Libraries (Microform)
     collection_id: customer.133054.unbnewsmic
     coverage_depth: print
     column_mapping:
