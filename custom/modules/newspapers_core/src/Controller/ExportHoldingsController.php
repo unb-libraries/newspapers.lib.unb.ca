@@ -18,8 +18,8 @@ class ExportHoldingsController extends ControllerBase {
   public function exportHoldings() {
     $element = [
       '#markup' => '<dl>
-      <dt>Microfilm</dt>
-      <dd><a href="/serials/holdings/export/Microfilm">https://newspapers.lib.unb.ca/serials/holdings/export/Microfilm</a></dd>
+      <dt>Microform</dt>
+      <dd><a href="/serials/holdings/export/Microform">https://newspapers.lib.unb.ca/serials/holdings/export/Microform</a></dd>
       <dt>Print</dt>
       <dd><a href="/serials/holdings/export/Print">https://newspapers.lib.unb.ca/serials/holdings/export/Print</a></dd>
       <dt>Digital</dt>

@@ -1,6 +1,6 @@
 newspapers_core.export:
   title: 'Export Holdings'
-  description: 'Menu item for Export Holdings route'
+  description: 'Export serial holdings by type to open XML spreadsheet format'
   menu_name: account
   route_name: newspapers_core.export_holdings
   weight: -50

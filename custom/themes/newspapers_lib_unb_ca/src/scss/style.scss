@@ -524,18 +524,22 @@ a.btn-add::before {
   color: $text-muted;
 }
 /* User account icons, incl. Export holdings */
-.menu a[href="/export/holdings"]::before,
+.menu a[href="/serials/holdings/export"]::before,
 .menu a[href="/user"]::before,
+.menu a[href="/user/login"]::before,
 .menu a[href="/user/logout"]::before {
   font-family: "Glyphicons Halflings";
   font-size: smaller;
   margin-right: .25em;
 }
-.menu a[href="/export/holdings"]::before {
+.menu a[href="/serials/holdings/export"]::before {
   content: "\e170";
 }
 .menu a[href="/user"]::before {
   content:"\e008";
+}
+.menu a[href="/user/login"]::before {
+  content: "\e161";
 }
 .menu a[href="/user/logout"]::before {
   content:"\e163";
