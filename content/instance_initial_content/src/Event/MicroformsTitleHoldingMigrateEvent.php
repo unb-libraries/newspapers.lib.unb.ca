@@ -36,7 +36,7 @@ class MicroformsTitleHoldingMigrateEvent implements EventSubscriberInterface {
     // Only act on rows for this migration.
     if ($migration_id == self::MIGRATION_ID) {
       // Pass.
-      $microfilm_holding_type_id = TaxonomyHelper::getHoldingTermId('Microfilm');
+      $microfilm_holding_type_id = TaxonomyHelper::getHoldingTermId('Microform');
       $row->setSourceProperty('microfilm_holding_type_id', $microfilm_holding_type_id);
 
       // Parent publication_id.
