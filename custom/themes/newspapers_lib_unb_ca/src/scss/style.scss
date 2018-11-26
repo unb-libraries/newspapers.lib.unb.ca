@@ -523,6 +523,21 @@ a.btn-add::before {
 .text-muted {
   color: $text-muted;
 }
+/* Managed file form table */
+.draggable .tabledrag-handle {
+  float:left;
+  margin: 0 0 0 -10px;
+}
+.draggable .form-managed-file {
+  float: left;
+  width: 90%;
+}
+.draggable .select-wrapper,
+.draggable button {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
 /* User account icons, incl. Export holdings */
 .menu a[href="/serials/holdings/export"]::before,
 .menu a[href="/user"]::before,
