@@ -19,6 +19,7 @@ dependencies:
     - field.storage.node.field_first_issue_search_date
     - field.storage.node.field_frequency
     - field.storage.node.field_frequency_notes
+    - field.storage.node.field_geographic_coverage
     - field.storage.node.field_issn
     - field.storage.node.field_last_issue_search_date
     - field.storage.node.field_oclc
@@ -27,8 +28,8 @@ dependencies:
     - field.storage.node.field_subject_notes
     - field.storage.node.field_subjects
     - field.storage.node.field_title_notes
-    - field.storage.node.field_last_issue_approx_date
     - field.storage.node.field_first_issue_approx_date
+    - field.storage.node.field_last_issue_approx_date
     - search_api.server.solr_newspapers_lib_unb_ca
 third_party_settings:
   search_api_solr:
@@ -158,6 +159,14 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_frequency_notes
+  field_geographic_coverage:
+    label: 'Geographic Coverage'
+    datasource_id: 'entity:node'
+    property_path: field_geographic_coverage
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_geographic_coverage
   field_issn:
     label: ISSN
     datasource_id: 'entity:node'
