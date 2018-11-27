@@ -111,7 +111,7 @@
         "drupal/config_update": "1.5",
         "drupal/core": "8.6.3",
         "drupal/externalauth": "1.1",
-        "drupal/facets": "1.1",
+        "drupal/facets": "1.2",
         "drupal/features": "3.8",
         "drupal/field_group": "3.0-beta1",
         "drupal/google_analytics": "2.3",
