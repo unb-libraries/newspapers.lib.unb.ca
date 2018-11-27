@@ -125,18 +125,24 @@ function updateSucceedingLabel() {
     jQuery('.form-item-field-serial-relation-suc-ref-dn .description').text($downDescription);
 }
 
-jQuery(document).ready(function () {
-    /**
-     * Adjust Precedings / Succeedings select label text.
-     */
-    firstIssueDateRange();
-    lastIssueDateRange();
-    updatePrecedingLabel();
-    updateSucceedingLabel();
+(function($, Drupal) {
+    'use strict';
 
-    jQuery('#edit-field-first-issue-date-type').change(firstIssueDateRange);
-    jQuery('#edit-field-last-issue-date-type').change(lastIssueDateRange);
-    jQuery('#edit-field-serial-relationship-op-pre').change(updatePrecedingLabel);
-    jQuery('#edit-field-serial-relationship-op-suc').change(updateSucceedingLabel);
-});
+    Drupal.behaviors.inputPublicationDate = {
+        attach: function (context, settings) {
+            /**
+             * Adjust Date component + Preceding/Succeeding label text.
+             */
+            firstIssueDateRange();
+            lastIssueDateRange();
+            updatePrecedingLabel();
+            updateSucceedingLabel();
+
+            $('#edit-field-first-issue-date-type').change(firstIssueDateRange);
+            $('#edit-field-last-issue-date-type').change(lastIssueDateRange);
+            $('#edit-field-serial-relationship-op-pre').change(updatePrecedingLabel);
+            $('#edit-field-serial-relationship-op-suc').change(updateSucceedingLabel);
+        }
+    };
+})(jQuery, Drupal);
 
