@@ -15,6 +15,7 @@ function firstIssueDateRange() {
     } else {
         jQuery("#edit-field-first-issue-date-0 .panel-title").text("First Issue Date");
         jQuery("#edit-field-first-issue-date-0 label:first-child").text("Date");
+        jQuery("#edit-field-first-issue-date-0 label").addClass("form-required");
         /**
          * Clear the end date widget when Approximate is NOT selected.
          */
@@ -45,6 +46,7 @@ function lastIssueDateRange() {
     } else {
         jQuery("#edit-field-last-issue-date-0 .panel-title").text("Last Issue Date");
         jQuery("#edit-field-last-issue-date-0 label:first-child").text("Date");
+        jQuery("#edit-field-last-issue-date-0 label").addClass("form-required");
         /**
          * Clear the start date widget when Exact is NOT selected.
          */
