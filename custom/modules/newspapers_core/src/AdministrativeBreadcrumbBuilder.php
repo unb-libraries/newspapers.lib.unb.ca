@@ -28,6 +28,7 @@ class AdministrativeBreadcrumbBuilder implements BreadcrumbBuilderInterface {
       'node.add',
       'system.admin_content',
       'newspapers_core.export_holdings',
+      'system.404',
     ];
 
     foreach ($paths as $path) {
