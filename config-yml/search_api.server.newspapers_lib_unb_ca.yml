@@ -27,3 +27,4 @@ backend_config:
   skip_schema_check: false
   domain: generic
   site_hash: false
+  server_prefix: ''
