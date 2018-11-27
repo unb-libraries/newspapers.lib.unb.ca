@@ -88,7 +88,7 @@ function updatePrecedingLabel() {
         default:
             $upLabel = 'N/A';
     }
-    jQuery('label[for="edit-field-serial-relation-pre-ref-up"]').text($upLabel);
+    jQuery('label[for="edit-field-serial-relation-pre-ref-up"]').addClass("form-required").text($upLabel);
     jQuery('.form-item-field-serial-relation-pre-ref-up .description').text($upDescription);
 }
 
@@ -119,9 +119,9 @@ function updateSucceedingLabel() {
         default:
             $upLabel = $downLabel = $upDescription = $downDescription = 'N/A';
     }
-    jQuery('label[for="edit-field-serial-relation-suc-ref-up"]').text($upLabel);
+    jQuery('label[for="edit-field-serial-relation-suc-ref-up"]').addClass("form-required").text($upLabel);
     jQuery('.form-item-field-serial-relation-suc-ref-up .description').text($upDescription);
-    jQuery('label[for="edit-field-serial-relation-suc-ref-dn"]').text($downLabel);
+    jQuery('label[for="edit-field-serial-relation-suc-ref-dn"]').addClass("form-required").text($downLabel);
     jQuery('.form-item-field-serial-relation-suc-ref-dn .description').text($downDescription);
 }
 
