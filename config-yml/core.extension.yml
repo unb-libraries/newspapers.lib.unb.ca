@@ -18,6 +18,7 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
+  devel: 0
   digital_serial: 0
   digital_serial_issue: 0
   digital_serial_page: 0
@@ -32,6 +33,7 @@ module:
   field_ui: 0
   file: 0
   filter: 0
+  google_analytics: 0
   help: 0
   history: 0
   image: 0
@@ -42,6 +44,10 @@ module:
   ldap_user: 0
   link: 0
   menu_ui: 0
+  migrate: 0
+  migrate_plus: 0
+  migrate_source_csv: 0
+  migrate_tools: 0
   newspapers_core: 0
   node: 0
   options: 0
