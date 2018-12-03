@@ -5,6 +5,7 @@ dependencies:
   module:
     - search_api_solr
     - digital_serial_page
+    - digital_serial_issue
     - search_api
   config:
     - search_api.server.newspapers_lib_unb_ca
@@ -18,6 +19,26 @@ name: pages.newspapers.lib.unb.ca
 description: ''
 read_only: false
 field_settings:
+  issue_date:
+    label: 'Parent Issue » Serial issue » Publication Date'
+    datasource_id: 'entity:digital_serial_page'
+    property_path: 'parent_issue:entity:issue_date'
+    type: date
+    dependencies:
+      module:
+        - digital_serial_page
+        - digital_serial_issue
+        - digital_serial_issue
+  issue_title:
+    label: 'Parent Issue » Serial issue » Printed Title'
+    datasource_id: 'entity:digital_serial_page'
+    property_path: 'parent_issue:entity:issue_title'
+    type: string
+    dependencies:
+      module:
+        - digital_serial_page
+        - digital_serial_issue
+        - digital_serial_issue
   page_ocr:
     label: 'Page OCR'
     datasource_id: 'entity:digital_serial_page'

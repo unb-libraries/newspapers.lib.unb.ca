@@ -1,0 +1,15 @@
+uuid: 1b612d7e-c0dd-4db3-8994-d4d43d7c698c
+langcode: en
+status: true
+dependencies: {  }
+name: browse_archives
+label: 'Browse Archives (150x240)'
+effects:
+  cb054f0c-ba6d-410a-ad60-69ae6bc97e5e:
+    uuid: cb054f0c-ba6d-410a-ad60-69ae6bc97e5e
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 150
+      height: 240
+      anchor: center-top

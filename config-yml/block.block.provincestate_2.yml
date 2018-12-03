@@ -1,29 +1,29 @@
-uuid: 6b999f04-1cc8-42ff-806d-db27f8388b7d
+uuid: 33ad594e-ee2f-435b-abe1-2960aed8d14a
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.publication_title
+    - facets.facet.archives_province_state
   module:
     - facets
     - system
   theme:
     - newspapers_lib_unb_ca
-id: publicationtitle
+id: provincestate_2
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -10
+weight: -8
 provider: null
-plugin: 'facet_block:publication_title'
+plugin: 'facet_block:archives_province_state'
 settings:
-  id: 'facet_block:publication_title'
-  label: 'Publication Title'
+  id: 'facet_block:archives_province_state'
+  label: Province/State
   provider: facets
   label_display: '0'
-  block_id: publicationtitle
+  block_id: provincestate_2
 visibility:
   request_path:
     id: request_path
-    pages: '/page-search*'
+    pages: '/page-archives*'
     negate: false
     context_mapping: {  }

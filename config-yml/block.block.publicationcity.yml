@@ -1,29 +1,29 @@
-uuid: 6b999f04-1cc8-42ff-806d-db27f8388b7d
+uuid: 6e04f95e-5057-462f-95e6-6e44432e0705
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.publication_title
+    - facets.facet.publication_city
   module:
     - facets
     - system
   theme:
     - newspapers_lib_unb_ca
-id: publicationtitle
+id: publicationcity
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -10
+weight: -7
 provider: null
-plugin: 'facet_block:publication_title'
+plugin: 'facet_block:publication_city'
 settings:
-  id: 'facet_block:publication_title'
-  label: 'Publication Title'
+  id: 'facet_block:publication_city'
+  label: 'Publication City'
   provider: facets
   label_display: '0'
-  block_id: publicationtitle
+  block_id: publicationcity
 visibility:
   request_path:
     id: request_path
-    pages: '/page-search*'
+    pages: '/page-archives*'
     negate: false
     context_mapping: {  }

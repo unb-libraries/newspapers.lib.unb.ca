@@ -1,29 +1,29 @@
-uuid: 6b999f04-1cc8-42ff-806d-db27f8388b7d
+uuid: dcd9ca2d-e77f-4319-a9ae-3c78ba6ea43e
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.publication_title
+    - facets.facet.publication_year_facet
   module:
     - facets
     - system
   theme:
     - newspapers_lib_unb_ca
-id: publicationtitle
+id: publicationyear_2
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -10
+weight: -5
 provider: null
-plugin: 'facet_block:publication_title'
+plugin: 'facet_block:publication_year_facet'
 settings:
-  id: 'facet_block:publication_title'
-  label: 'Publication Title'
+  id: 'facet_block:publication_year_facet'
+  label: 'Publication Year'
   provider: facets
   label_display: '0'
-  block_id: publicationtitle
+  block_id: publicationyear_2
 visibility:
   request_path:
     id: request_path
-    pages: '/page-search*'
+    pages: '/page-archives*'
     negate: false
     context_mapping: {  }
