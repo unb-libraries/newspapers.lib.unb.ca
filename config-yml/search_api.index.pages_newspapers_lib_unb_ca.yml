@@ -33,7 +33,7 @@ field_settings:
     label: 'Parent Issue » Serial issue » Printed Title'
     datasource_id: 'entity:digital_serial_page'
     property_path: 'parent_issue:entity:issue_title'
-    type: string
+    type: integer
     dependencies:
       module:
         - digital_serial_page
@@ -49,6 +49,14 @@ field_settings:
         - digital_serial_page
   page_sort:
     label: 'Page Sort'
+    datasource_id: 'entity:digital_serial_page'
+    property_path: page_sort
+    type: string
+    dependencies:
+      module:
+        - digital_serial_page
+  page_sort_filter:
+    label: 'Page Sort Filter'
     datasource_id: 'entity:digital_serial_page'
     property_path: page_sort
     type: string
@@ -79,6 +87,10 @@ field_settings:
     label: 'Parent Issue Date'
     property_path: parent_issue_date
     type: date
+  parent_issue_decade:
+    label: 'Parent Issue Decade'
+    property_path: parent_issue_decade
+    type: string
   parent_issue_issue:
     label: 'Parent Issue Issue'
     property_path: parent_issue_issue

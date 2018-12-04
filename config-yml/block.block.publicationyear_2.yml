@@ -1,9 +1,9 @@
-uuid: dcd9ca2d-e77f-4319-a9ae-3c78ba6ea43e
+uuid: 2bcd9527-74b8-4a05-9403-a5ce216cf576
 langcode: en
 status: true
 dependencies:
   config:
-    - facets.facet.publication_year_facet
+    - facets.facet.publication_year_issue
   module:
     - facets
     - system
@@ -12,11 +12,11 @@ dependencies:
 id: publicationyear_2
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: -5
+weight: 2
 provider: null
-plugin: 'facet_block:publication_year_facet'
+plugin: 'facet_block:publication_year_issue'
 settings:
-  id: 'facet_block:publication_year_facet'
+  id: 'facet_block:publication_year_issue'
   label: 'Publication Year'
   provider: facets
   label_display: '0'
@@ -24,6 +24,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: '/page-archives*'
+    pages: '/serials/browse/*'
     negate: false
     context_mapping: {  }

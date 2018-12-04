@@ -1,4 +1,4 @@
-uuid: fb2a8115-c8b6-45c2-b600-00260ad7592a
+uuid: dad8bd9f-0730-43f7-bb64-c63e8e6b278f
 langcode: en
 status: true
 dependencies:
@@ -7,14 +7,14 @@ dependencies:
     - views.view.digital_page_lister
   module:
     - search_api
-id: publication_title_facet
-name: 'Printed Title'
-url_alias: publication_title_facet
+id: publication_decade
+name: 'Publication Decade'
+url_alias: publication_decade
 weight: 0
 min_count: 1
 show_only_one_result: false
-field_identifier: issue_title
-facet_source_id: 'search_api:views_page__digital_page_lister__page_archives'
+field_identifier: parent_issue_decade
+facet_source_id: 'search_api:views_page__digital_page_lister__page_issues'
 widget:
   type: checkbox
   config:
@@ -36,19 +36,13 @@ processor_configs:
     weights:
       sort: 20
     settings:
-      sort: DESC
-  count_widget_order:
-    processor_id: count_widget_order
-    weights:
-      sort: 30
-    settings:
-      sort: DESC
+      sort: ASC
   display_value_widget_order:
     processor_id: display_value_widget_order
     weights:
       sort: 40
     settings:
-      sort: ASC
+      sort: DESC
   url_processor_handler:
     processor_id: url_processor_handler
     weights:

@@ -1,4 +1,4 @@
-uuid: 7cf2b817-64b0-4093-a117-7a4407fabf5e
+uuid: 12e71e52-2159-4ff1-9228-be1c37053db9
 langcode: en
 status: true
 dependencies:
@@ -7,14 +7,14 @@ dependencies:
     - views.view.digital_page_lister
   module:
     - search_api
-id: archives_country
-name: Country
-url_alias: archives_country
+id: publication_year_issue
+name: 'Publication Year'
+url_alias: publication_year_issue
 weight: 0
 min_count: 1
 show_only_one_result: false
-field_identifier: parent_issue_country
-facet_source_id: 'search_api:views_page__digital_page_lister__page_archives'
+field_identifier: parent_issue_year
+facet_source_id: 'search_api:views_page__digital_page_lister__page_issues'
 widget:
   type: checkbox
   config:
@@ -42,7 +42,7 @@ processor_configs:
     weights:
       sort: 40
     settings:
-      sort: ASC
+      sort: DESC
   url_processor_handler:
     processor_id: url_processor_handler
     weights:

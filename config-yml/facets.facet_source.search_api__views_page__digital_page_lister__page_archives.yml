@@ -1,9 +1,0 @@
-uuid: 68513ae8-e980-4ac1-8343-3c9ecc903b9f
-langcode: en
-status: true
-dependencies: {  }
-id: search_api__views_page__digital_page_lister__page_archives
-name: 'search_api:views_page__digital_page_lister__page_archives'
-filter_key: null
-url_processor: query_string
-breadcrumb: {  }
