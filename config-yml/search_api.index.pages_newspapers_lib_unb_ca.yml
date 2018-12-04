@@ -59,7 +59,7 @@ field_settings:
     label: 'Page Sort Filter'
     datasource_id: 'entity:digital_serial_page'
     property_path: page_sort
-    type: string
+    type: integer
     dependencies:
       module:
         - digital_serial_page
