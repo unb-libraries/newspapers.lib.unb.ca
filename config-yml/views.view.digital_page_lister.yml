@@ -2014,7 +2014,7 @@ display:
       pager:
         type: infinite_scroll
         options:
-          items_per_page: 36
+          items_per_page: 24
           offset: 0
           id: 0
           total_pages: null
@@ -2034,7 +2034,7 @@ display:
             automatically_load_content: false
       cache:
         type: none
-      title: 'Browse Archives'
+      title: Issues
       relationships: {  }
       sorts:
         issue_date:
@@ -2116,7 +2116,7 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: true
+          specify_validation: false
           validate:
             type: none
             fail: 'not found'
