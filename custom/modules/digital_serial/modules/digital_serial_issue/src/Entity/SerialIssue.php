@@ -498,6 +498,11 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    */
   public function save() {
     $parent_title = $this->getParentTitle();
+
+    if (empty($this->getIssueTitle())) {
+      $this->setIssueTitle($parent_title->getParentPublication()->getTitle());
+    }
+
     parent::save();
     $parent_title->updateDigitalHoldingRecord();
   }
