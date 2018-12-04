@@ -355,6 +355,9 @@ p {
   -o-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
 }
+.owl-item {
+  margin-top: 1em;
+}
 
 /* High resolution Digital Page pager */
 .pager a.btn {
@@ -476,6 +479,11 @@ a.btn-add::before {
 }
 
 /* Helper classes */
+.center-block img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .no-borders,
 .title-details .file>span {
   border: none;
