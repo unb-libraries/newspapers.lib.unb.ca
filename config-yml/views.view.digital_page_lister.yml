@@ -1145,6 +1145,7 @@ display:
         style: false
         row: false
         arguments: false
+        css_class: false
       fields:
         page_no:
           id: page_no
@@ -2124,6 +2125,7 @@ display:
           break_phrase: false
           not: false
           plugin_id: search_api
+      css_class: browse-issues
     cache_metadata:
       max-age: -1
       contexts:
