@@ -1705,11 +1705,11 @@ display:
             preserve_tags: ''
             html: false
           element_type: ''
-          element_class: img-thumbnail
+          element_class: ''
           element_label_type: ''
           element_label_class: ''
           element_label_colon: false
-          element_wrapper_type: ''
+          element_wrapper_type: '0'
           element_wrapper_class: ''
           element_default_classes: false
           empty: ''
@@ -1776,14 +1776,14 @@ display:
             trim: false
             preserve_tags: ''
             html: false
-          element_type: ''
-          element_class: ''
+          element_type: div
+          element_class: text-center
           element_label_type: ''
           element_label_class: ''
           element_label_colon: false
-          element_wrapper_type: ''
+          element_wrapper_type: '0'
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -2057,8 +2057,8 @@ display:
               field: issue_date_1
               rendered: true
               rendered_strip: false
-          row_class: text-center
-          default_row_class: true
+          row_class: center-block
+          default_row_class: false
           items: '5'
           itemsDesktop: '[1199,4]'
           itemsDesktopSmall: '[979,3]'
