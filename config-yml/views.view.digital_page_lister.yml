@@ -2063,8 +2063,8 @@ display:
           items: '5'
           itemsDesktop: '[1199,4]'
           itemsDesktopSmall: '[979,3]'
-          itemsTablet: '[768,2]'
-          itemsMobile: '[479,1]'
+          itemsTablet: '[768,3]'
+          itemsMobile: '[479,2]'
           singleItem: 0
           itemsScaleUp: 0
           slideSpeed: '500'
@@ -2072,13 +2072,13 @@ display:
           rewindSpeed: '1000'
           autoPlay: 0
           stopOnHover: 1
-          navigation: 1
+          navigation: 0
           prevText: older
           nextText: newer
           rewindNav: 0
           scrollPerPage: 1
-          pagination: 0
-          paginationNumbers: 0
+          pagination: 1
+          paginationNumbers: 1
           responsive: 1
           responsiveRefreshRate: '200'
           mouseDrag: 1

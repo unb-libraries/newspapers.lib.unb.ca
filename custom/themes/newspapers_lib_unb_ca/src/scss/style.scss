@@ -818,3 +818,13 @@ and (max-width: 991px){
     overflow-x: visible;
   }
 }
+@media (max-width: 479px) {
+  /* Stack Owl Carousel Grouping + Image */
+  .owl-carousel .owl-item:first-child {
+    float: none;
+  }
+  .owl-carousel .owl-item h3 {
+    margin-bottom: 0;
+    text-align: center;
+  }
+}
