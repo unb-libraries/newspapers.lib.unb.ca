@@ -358,7 +358,18 @@ p {
 
 /* Browse Issues */
 .browse-issues .owl-item {
+  margin-right: 1em;
   margin-top: 1em;
+}
+/* Stack Owl Carousel Grouping + Image */
+.browse-issues .owl-carousel .owl-item:first-child {
+  float: none;
+  width: 100%!important;
+}
+.browse-issues .owl-carousel .owl-item h3 {
+  border-bottom: 1px solid #6c6a69;
+  margin-bottom: 0;
+  padding-bottom: 2px;
 }
 .browse-issues .owl-item .issue-image {
   width: 150px;
@@ -367,7 +378,7 @@ p {
   background: url(/themes/custom/newspapers_lib_unb_ca/dist/img/loading-150px.gif) no-repeat 50% 50%;
   display: inherit;
   max-width: 100%;
-  height: 240px;
+  min-height: 220px;
 }
 .browse-issues img {
   transition: all .2s ease-in-out;
@@ -827,15 +838,5 @@ and (max-width: 991px){
   .table-responsive {
     margin-bottom: 1em;
     overflow-x: visible;
-  }
-}
-@media (max-width: 479px) {
-  /* Stack Owl Carousel Grouping + Image */
-  .owl-carousel .owl-item:first-child {
-    float: none;
-  }
-  .owl-carousel .owl-item h3 {
-    margin-bottom: 0;
-    text-align: center;
   }
 }

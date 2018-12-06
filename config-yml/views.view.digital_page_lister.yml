@@ -2166,11 +2166,11 @@ display:
               rendered_strip: false
           row_class: center-block
           default_row_class: false
-          items: '5'
-          itemsDesktop: '[1199,4]'
-          itemsDesktopSmall: '[979,3]'
-          itemsTablet: '[768,3]'
-          itemsMobile: '[479,2]'
+          items: '6'
+          itemsDesktop: '[1199,5]'
+          itemsDesktopSmall: '[991,4]'
+          itemsTablet: '[567,3]'
+          itemsMobile: '[414,2]'
           singleItem: 0
           itemsScaleUp: 0
           slideSpeed: '500'
