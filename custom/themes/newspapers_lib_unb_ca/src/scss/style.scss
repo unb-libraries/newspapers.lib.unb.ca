@@ -357,18 +357,22 @@ p {
 }
 
 /* Browse Issues */
-.browse-issues .owl-item {
-  margin-right: 1em;
-  margin-top: 1em;
+.views-infinite-scroll-content-wrapper > div:not(:first-child) {
+  margin-top: 1.5em;
 }
 /* Stack Owl Carousel Grouping + Image */
+.browse-issues .owl-carousel .owl-item {
+  margin-right: 1em;
+  margin-top: .5em;
+}
 .browse-issues .owl-carousel .owl-item:first-child {
   float: none;
+  margin-top: 0;
   width: 100%!important;
 }
 .browse-issues .owl-carousel .owl-item h3 {
   border-bottom: 1px solid #6c6a69;
-  margin-bottom: 0;
+  margin: 0;
   padding-bottom: 2px;
 }
 .browse-issues .owl-item .issue-image {
