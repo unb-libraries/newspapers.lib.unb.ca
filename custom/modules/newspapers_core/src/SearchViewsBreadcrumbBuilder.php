@@ -29,6 +29,7 @@ class SearchViewsBreadcrumbBuilder implements BreadcrumbBuilderInterface {
         'view.search.search_page',
         'view.digital_title_listing.page_listing',
         'view.print_title_listing.page_listing',
+        'view.digital_page_lister.page_issues',
       ]
     );
   }
@@ -39,6 +40,8 @@ class SearchViewsBreadcrumbBuilder implements BreadcrumbBuilderInterface {
   public function build(RouteMatchInterface $route_match) {
     $breadcrumb = new Breadcrumb();
     $breadcrumb->addCacheContexts(["url"]);
+
+    $digital_serial_title_id = $route_match->getParameter('arg_0');
 
     $breadcrumb->addLink(
       Link::fromTextAndUrl(
