@@ -1837,13 +1837,13 @@ display:
           rewindSpeed: '1000'
           autoPlay: 0
           stopOnHover: 1
-          navigation: 0
-          prevText: older
-          nextText: newer
+          navigation: 1
+          prevText: ''
+          nextText: ''
           rewindNav: 0
           scrollPerPage: 1
-          pagination: 1
-          paginationNumbers: 1
+          pagination: 0
+          paginationNumbers: 0
           responsive: 1
           responsiveRefreshRate: '200'
           mouseDrag: 1

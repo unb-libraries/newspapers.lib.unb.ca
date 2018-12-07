@@ -333,9 +333,6 @@ p {
 .owl-theme .owl-controls .owl-page.active span {
   background: $link-color-hover;
 }
-.owl-theme .owl-controls .owl-buttons div {
-  background: $unb-lib-panel-heading;
-}
 .owl-theme .owl-controls .owl-buttons div:first-child::before {
   content: '« ';
 }
@@ -354,6 +351,28 @@ p {
   -webkit-transition: all .2s ease-in-out;
   -o-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
+}
+/* Prev/Next Arrow Carousel Hack */
+.owl-theme .owl-controls {
+  margin-top: 0;
+  position: absolute;
+  top: 42%;
+  width: 100%;
+}
+.owl-theme .owl-controls .owl-buttons div {
+  background: #900;
+  border: 1px solid #fff;
+  padding: 4px 14px;
+  margin: 0 .25em;
+  font-size: 20px;
+  opacity: 0.75;
+  position: absolute;
+}
+.owl-theme .owl-controls .owl-buttons .owl-prev {
+  left: 0;
+}
+.owl-theme .owl-controls .owl-buttons .owl-next {
+  right: 0;
 }
 
 /* Browse Issues */
