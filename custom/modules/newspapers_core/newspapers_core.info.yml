@@ -6,3 +6,4 @@ package: Newspapers
 dependencies:
   - datetime_range
   - conditional_fields
+  - digital_serial
