@@ -38,10 +38,9 @@ class SearchViewsBreadcrumbBuilder implements BreadcrumbBuilderInterface {
    * {@inheritdoc}
    */
   public function build(RouteMatchInterface $route_match) {
+    $route = $route_match->getRouteName();
     $breadcrumb = new Breadcrumb();
     $breadcrumb->addCacheContexts(["url"]);
-
-    $digital_serial_title_id = $route_match->getParameter('arg_0');
 
     $breadcrumb->addLink(
       Link::fromTextAndUrl(
@@ -56,6 +55,22 @@ class SearchViewsBreadcrumbBuilder implements BreadcrumbBuilderInterface {
         '<front>'
       )
     );
+
+    $digital_serial_title_id = $route_match->getParameter('arg_0');
+    if ($route == 'view.digital_page_lister.page_issues' && is_numeric($digital_serial_title_id)) {
+      $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_title');
+      $title = $storage->load($digital_serial_title_id);
+      if (!empty($title)) {
+        $parent_title = $title->get('parent_title')->entity;
+        $breadcrumb->addLink(
+          Link::createFromRoute(
+            $parent_title->getTitle(),
+            'entity.node.canonical',
+            ['node' => $parent_title->id()]
+          )
+        );
+      }
+    }
 
     return $breadcrumb;
   }
