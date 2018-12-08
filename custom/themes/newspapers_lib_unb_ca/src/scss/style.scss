@@ -334,10 +334,10 @@ p {
   background: $link-color-hover;
 }
 .owl-theme .owl-controls .owl-buttons div:first-child::before {
-  content: '« ';
+  content: '«';
 }
 .owl-theme .owl-controls .owl-buttons div:last-child::after {
-  content: ' »';
+  content: '»';
 }
 .owl-theme figure img {
   display: inline-block;
@@ -381,7 +381,7 @@ p {
 }
 /* Stack Owl Carousel Grouping + Image */
 .browse-issues .owl-carousel .owl-item {
-  margin-right: 1em;
+  margin-right: .5em;
   margin-top: .5em;
 }
 .browse-issues .owl-carousel .owl-item:first-child {
