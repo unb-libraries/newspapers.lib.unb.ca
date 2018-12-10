@@ -362,6 +362,7 @@ p {
 .owl-theme .owl-controls .owl-buttons div {
   background: #900;
   border: 1px solid #fff;
+  box-shadow: 0 0 1px 0px white inset, 0 0 1px 0px white;
   padding: 4px 14px;
   margin: 0 .25em;
   font-size: 20px;
@@ -381,7 +382,7 @@ p {
 }
 /* Stack Owl Carousel Grouping + Image */
 .browse-issues .owl-carousel .owl-item {
-  margin-right: .5em;
+  margin-right: .75em;
   margin-top: .5em;
 }
 .browse-issues .owl-carousel .owl-item:first-child {
