@@ -852,6 +852,9 @@ a.back-link::before {
     max-width: 120px;
     max-height: 160px;
   }
+  .tab-content {
+    padding: 2.6em 3em 2em;
+  }
 }
 @media (min-width: 768px)
 and (max-width: 991px){
