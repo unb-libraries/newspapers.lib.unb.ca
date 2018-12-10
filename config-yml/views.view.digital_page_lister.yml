@@ -1780,7 +1780,7 @@ display:
       pager:
         type: infinite_scroll
         options:
-          items_per_page: 24
+          items_per_page: 233
           offset: 0
           id: 0
           total_pages: null
@@ -1796,7 +1796,7 @@ display:
             offset: false
             offset_label: Offset
           views_infinite_scroll:
-            button_text: 'Load More Publications'
+            button_text: 'Load More Issues'
             automatically_load_content: false
       cache:
         type: none
