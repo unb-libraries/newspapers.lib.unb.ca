@@ -42,8 +42,12 @@ class SerialPageViewerForm extends FormBase {
     $prev_text = '« ' . t('Previous');
     $next_text = t('Next') . ' »';
 
-    if ((strpos($referrer, 'search') !== FALSE)) {
-      $back_text = "Back to search results";
+    if (strpos($referrer, 'browse') !== FALSE) {
+      $back_text = t('Back to issue listing');
+      $url = Url::fromUri($referrer);
+    }
+    elseif (strpos($referrer, 'search') !== FALSE) {
+      $back_text = t('Back to search results');
       $url = Url::fromUri($referrer);
     }
     else {
