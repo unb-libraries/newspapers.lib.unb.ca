@@ -1125,7 +1125,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: serials/browse
+      path: serials/browse/%
       exposed_block: false
       display_description: ''
       use_ajax: true
