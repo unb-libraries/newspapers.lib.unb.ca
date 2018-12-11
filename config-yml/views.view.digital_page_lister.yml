@@ -1399,7 +1399,7 @@ display:
             alter_text: false
             text: ''
             make_link: true
-            path: '/serials/{{ parent_digital_title_id }}/issues/{{ parent_digital_issue_id }}/pages/{{ parent_digital_page_id }}'
+            path: '/serials/{{ parent_digital_title_id }}/issues/{{ parent_digital_issue_id }}'
             absolute: false
             external: false
             replace_spaces: false
