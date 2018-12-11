@@ -29,6 +29,16 @@ field_settings:
         - digital_serial_page
         - digital_serial_issue
         - digital_serial_issue
+  issue_edition:
+    label: 'Parent Issue » Serial issue » Edition'
+    datasource_id: 'entity:digital_serial_page'
+    property_path: 'parent_issue:entity:issue_edition'
+    type: string
+    dependencies:
+      module:
+        - digital_serial_page
+        - digital_serial_issue
+        - digital_serial_issue
   issue_title:
     label: 'Parent Issue » Serial issue » Printed Title'
     datasource_id: 'entity:digital_serial_page'
