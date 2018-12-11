@@ -812,10 +812,9 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
           'value' => Link::fromTextAndUrl(
             $holding->getHoldingCoverage(),
             Url::fromRoute(
-              'entity.digital_serial_title.canonical',
-              [
-                'digital_serial_title' => $holding->get('holding_digital_title')->entity->id(),
-              ]
+              'view.digital_page_lister.page_issues',
+              ['arg_0' => $holding->get('holding_digital_title')->entity->id()],
+              []
             )
           ),
         ],
