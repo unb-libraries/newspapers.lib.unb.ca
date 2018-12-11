@@ -1716,7 +1716,7 @@ display:
           group_type: group
           admin_label: ''
           empty: true
-          tokenize: true
+          tokenize: false
           content:
             value: "<div class=\"alert alert-warning fade in\">\r\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No results were found.\r\n</div>"
             format: full_html
