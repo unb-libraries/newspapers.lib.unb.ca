@@ -398,11 +398,18 @@ p {
 .browse-issues .owl-item .issue-image {
   width: 150px;
 }
-.browse-issues .owl-item span:first-child {
+.browse-issues .owl-item .center-block > span {
   background: url(/themes/custom/newspapers_lib_unb_ca/dist/img/loading-150px.gif) no-repeat 50% 50%;
   display: inherit;
   max-width: 100%;
   min-height: 220px;
+}
+.browse-issues .issue-meta {
+  color: $text-muted;
+  line-height: 1em;
+}
+.browse-issues .issue-meta small:not(:last-child) {
+  margin-right: .3em;
 }
 .browse-issues img {
   transition: all .2s ease-in-out;
