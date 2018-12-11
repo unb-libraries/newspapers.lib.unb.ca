@@ -1060,13 +1060,13 @@ display:
           singleItem: 1
           itemsScaleUp: 1
           slideSpeed: '200'
-          paginationSpeed: '800'
+          paginationSpeed: '500'
           rewindSpeed: '1000'
           autoPlay: 0
           stopOnHover: 0
           navigation: 1
-          prevText: prev
-          nextText: next
+          prevText: ''
+          nextText: ''
           rewindNav: 1
           scrollPerPage: 0
           pagination: 0
