@@ -97,8 +97,9 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
     $breadcrumb->addLink(
       Link::createFromRoute(
         t('Digital Issues'),
-        'entity.digital_serial_title.canonical',
-        ['digital_serial_title' => $title->id()]
+        'view.digital_page_lister.page_issues',
+        ['arg_0' => $title->id()],
+        []
       )
     );
 
