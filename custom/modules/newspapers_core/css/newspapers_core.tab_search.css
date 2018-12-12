@@ -20,7 +20,9 @@ form .nav-tabs > li > a {
 }
 .search-form .form-group {
     margin-bottom: 0;
-    padding-bottom: 15px;
+}
+.search-form .form-wrapper {
+    margin-bottom: 1.5em;
 }
 a#tab-fulltext:before {
     font-family: "Glyphicons Halflings";
