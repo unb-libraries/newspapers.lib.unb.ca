@@ -828,7 +828,10 @@ a.back-link::before {
 .message {
   margin-bottom: 2.5em;
 }
-
+.featured h2 {
+  font-size: large;
+  margin-top: 0;
+}
 @media (min-width: 992px) {
   /* Single issue responsive grouping txt fix */
   .owl-carousel .owl-wrapper {
