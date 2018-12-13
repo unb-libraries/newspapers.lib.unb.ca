@@ -87,6 +87,20 @@ class HomePageForm extends FormBase {
     ];
     $fulltext_url->setOptions($fulltext_link_options);
 
+    $form['blurb'] = [
+      '#type' => 'markup',
+      '#markup' => "<div class=\"hidden-xs message well\"><p>Newspapers &commat; UNB Libraries provides researchers with
+        unified access to UNB Libraries&apos; current and historical newspaper collections in all formats, from New
+        Brunswick and across North America. Search and discover
+        <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
+        titles (including New Brunswick Historical Newspapers Online collection) available from UNB Libraries.</p>
+        <p>Fulltext Search is available for titles included in
+        <a href=\"/digital-titles\">New Brunswick Historical Newspapers Online</a>.
+        For more worldwide digital newspaper content, consult
+        <a href=\"https://lib.unb.ca/eresources/index.php?sub=journals&browseNewsColl=y\">UNB Libraries licensed
+        electronic Newspaper collections</a>.</p></div>",
+    ];
+
     $form['nav-tabs'] = [
       '#type' => 'html_tag',
       '#tag' => 'ul',
@@ -190,20 +204,6 @@ class HomePageForm extends FormBase {
         <b>Note:</b>
         Only a limited number of newspapers have been digitized.
         See a full <a href="/digital-titles">listing of digitally available titles</a>.</p>',
-    ];
-
-    $form['blurb'] = [
-      '#type' => 'markup',
-      '#markup' => "<div class=\"message well\"><p>Newspapers &commat; UNB Libraries provides researchers with
-        unified access to UNB Libraries&apos; current and historical newspaper collections in all formats, from New
-        Brunswick and across North America. Search and discover
-        <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
-        titles (including New Brunswick Historical Newspapers Online collection) available from UNB Libraries.</p>
-        <p>Fulltext Search is available for titles included in
-        <a href=\"/digital-titles\">New Brunswick Historical Newspapers Online</a>.
-        For more worldwide digital newspaper content, consult
-        <a href=\"https://lib.unb.ca/eresources/index.php?sub=journals&browseNewsColl=y\">UNB Libraries licensed
-        electronic Newspaper collections</a>.</p></div>",
     ];
 
     return $form;

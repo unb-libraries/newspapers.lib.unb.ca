@@ -3,8 +3,7 @@
 
     Drupal.behaviors.multiSubmit = {
         attach: function (context, settings) {
-            // Autofocus the search input of active tab.
-            $('.search-form input:visible').focus();
+            // Autofocus the search input of clicked tab.
             $('.tab a[data-toggle="tab"]').on('shown.bs.tab', function() {
                 $('.search-form input:visible').focus();
             });
