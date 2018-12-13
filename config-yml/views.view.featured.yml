@@ -67,7 +67,10 @@ display:
       style:
         type: default
       row:
-        type: fields
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: featured
       fields:
         field_sample_image:
           id: field_sample_image
@@ -613,9 +616,9 @@ display:
         - 'config:field.storage.node.field_marc_frequency'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sample_image'
-  block_1:
+  publication:
     display_plugin: block
-    id: block_1
+    id: publication
     display_title: Block
     position: 1
     display_options:
