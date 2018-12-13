@@ -1,0 +1,200 @@
+uuid: c09a5e6d-b9ce-4a2e-a5f9-387023831061
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.featured
+    - field.field.node.publication.field_additional_indexed_text
+    - field.field.node.publication.field_credit
+    - field.field.node.publication.field_description
+    - field.field.node.publication.field_editor
+    - field.field.node.publication.field_family
+    - field.field.node.publication.field_featured
+    - field.field.node.publication.field_first_issue_approx_date
+    - field.field.node.publication.field_first_issue_date
+    - field.field.node.publication.field_first_issue_date_type
+    - field.field.node.publication.field_first_issue_search_date
+    - field.field.node.publication.field_first_issue_sort_date
+    - field.field.node.publication.field_frequency
+    - field.field.node.publication.field_frequency_notes
+    - field.field.node.publication.field_geographic_coverage
+    - field.field.node.publication.field_is_supplementary_title
+    - field.field.node.publication.field_issn
+    - field.field.node.publication.field_language
+    - field.field.node.publication.field_last_issue_approx_date
+    - field.field.node.publication.field_last_issue_date
+    - field.field.node.publication.field_last_issue_date_type
+    - field.field.node.publication.field_last_issue_search_date
+    - field.field.node.publication.field_last_issue_sort_date
+    - field.field.node.publication.field_marc_frequency
+    - field.field.node.publication.field_oclc
+    - field.field.node.publication.field_place_of_publication
+    - field.field.node.publication.field_previous_identifications
+    - field.field.node.publication.field_publisher
+    - field.field.node.publication.field_sample_image
+    - field.field.node.publication.field_serial_relation_pre_ref_dn
+    - field.field.node.publication.field_serial_relation_pre_ref_up
+    - field.field.node.publication.field_serial_relation_suc_ref_dn
+    - field.field.node.publication.field_serial_relation_suc_ref_up
+    - field.field.node.publication.field_serial_relationship_op_pre
+    - field.field.node.publication.field_serial_relationship_op_suc
+    - field.field.node.publication.field_sort_title
+    - field.field.node.publication.field_subject_notes
+    - field.field.node.publication.field_subjects
+    - field.field.node.publication.field_subtitle
+    - field.field.node.publication.field_supplemental_information
+    - field.field.node.publication.field_this_is_part_of_a_family
+    - field.field.node.publication.field_title_notes
+    - image.style.sample_publication_image
+    - node.type.publication
+  module:
+    - address
+    - datetime_range
+    - field_group
+    - image
+    - options
+    - user
+third_party_settings:
+  field_group:
+    group_publication_dates:
+      children:
+        - field_first_issue_date
+        - field_first_issue_approx_date
+        - field_last_issue_date
+        - field_last_issue_approx_date
+      parent_name: ''
+      weight: 3
+      format_type: details
+      format_settings:
+        id: ''
+        classes: ''
+        open: true
+        required_fields: false
+      label: 'Publication Dates'
+      region: content
+id: node.publication.featured
+targetEntityType: node
+bundle: publication
+mode: featured
+content:
+  field_description:
+    weight: 7
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_first_issue_approx_date:
+    weight: 3
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_first_issue_date:
+    weight: 1
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: html_date
+      separator: '-'
+    third_party_settings: {  }
+    type: daterange_default
+    region: content
+  field_first_issue_date_type:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_frequency:
+    weight: 5
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_last_issue_approx_date:
+    weight: 5
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_last_issue_date:
+    weight: 4
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: html_date
+      separator: '-'
+    third_party_settings: {  }
+    type: daterange_default
+    region: content
+  field_last_issue_date_type:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_marc_frequency:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_place_of_publication:
+    weight: 4
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: address_default
+    region: content
+  field_sample_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: sample_publication_image
+      image_link: content
+    third_party_settings: {  }
+    type: image
+    region: content
+hidden:
+  field_additional_indexed_text: true
+  field_credit: true
+  field_editor: true
+  field_family: true
+  field_featured: true
+  field_first_issue_search_date: true
+  field_first_issue_sort_date: true
+  field_frequency_notes: true
+  field_geographic_coverage: true
+  field_is_supplementary_title: true
+  field_issn: true
+  field_language: true
+  field_last_issue_search_date: true
+  field_last_issue_sort_date: true
+  field_oclc: true
+  field_previous_identifications: true
+  field_publisher: true
+  field_serial_relation_pre_ref_dn: true
+  field_serial_relation_pre_ref_up: true
+  field_serial_relation_suc_ref_dn: true
+  field_serial_relation_suc_ref_up: true
+  field_serial_relationship_op_pre: true
+  field_serial_relationship_op_suc: true
+  field_sort_title: true
+  field_subject_notes: true
+  field_subjects: true
+  field_subtitle: true
+  field_supplemental_information: true
+  field_this_is_part_of_a_family: true
+  field_title_notes: true
+  langcode: true
+  links: true
