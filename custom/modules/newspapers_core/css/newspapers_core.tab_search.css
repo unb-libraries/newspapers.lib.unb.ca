@@ -26,13 +26,13 @@ form .nav-tabs > li > a {
 }
 a#tab-fulltext:before {
     font-family: "Glyphicons Halflings";
-    content: "\e055";
+    content: "\e224";
     font-size: small;
     padding-right: 5px;
 }
 a#tab-title:before {
     font-family: "Glyphicons Halflings";
-    content: "\e056";
+    content: "\e032";
     font-size: small;
     padding-right: 4px;
 }
