@@ -1,0 +1,30 @@
+uuid: 794ee9e8-d318-49b9-830f-c9567759842b
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.featured
+  module:
+    - system
+    - views
+  theme:
+    - newspapers_lib_unb_ca
+id: views_block__featured_publication
+theme: newspapers_lib_unb_ca
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:featured-publication'
+settings:
+  id: 'views_block:featured-publication'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }
