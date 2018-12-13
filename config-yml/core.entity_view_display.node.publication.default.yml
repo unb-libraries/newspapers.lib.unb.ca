@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.publication.field_description
     - field.field.node.publication.field_editor
     - field.field.node.publication.field_family
+    - field.field.node.publication.field_featured
     - field.field.node.publication.field_first_issue_approx_date
     - field.field.node.publication.field_first_issue_date
     - field.field.node.publication.field_first_issue_date_type
@@ -359,6 +360,7 @@ content:
 hidden:
   field_additional_indexed_text: true
   field_credit: true
+  field_featured: true
   field_first_issue_sort_date: true
   field_language: true
   field_last_issue_sort_date: true

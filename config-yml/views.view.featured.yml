@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.featured
     - field.storage.node.field_first_issue_date
     - field.storage.node.field_frequency
     - field.storage.node.field_last_issue_date
