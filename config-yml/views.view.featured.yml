@@ -539,18 +539,15 @@ display:
           entity_type: node
           entity_field: type
           plugin_id: bundle
-        field_sample_image_target_id:
-          id: field_sample_image_target_id
-          table: node__field_sample_image
-          field: field_sample_image_target_id
+        field_featured_value:
+          id: field_featured_value
+          table: node__field_featured
+          field: field_featured_value
           relationship: none
           group_type: group
           admin_label: ''
-          operator: 'not empty'
-          value:
-            min: ''
-            max: ''
-            value: ''
+          operator: '='
+          value: '1'
           group: 1
           exposed: false
           expose:
@@ -565,9 +562,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-            placeholder: ''
-            min_placeholder: ''
-            max_placeholder: ''
           is_grouped: false
           group_info:
             label: ''
@@ -580,7 +574,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          plugin_id: numeric
+          plugin_id: boolean
       sorts:
         random:
           id: random
