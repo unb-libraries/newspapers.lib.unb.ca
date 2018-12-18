@@ -1,0 +1,15 @@
+uuid: 32b83292-1f74-4ab7-953d-202f9c4d91f9
+langcode: en
+status: true
+dependencies: {  }
+name: this_day_in_history
+label: 'This day in history (568px)'
+effects:
+  52108061-2d71-4e9f-85cc-616e5921eb2d:
+    uuid: 52108061-2d71-4e9f-85cc-616e5921eb2d
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 580
+      height: 230
+      anchor: center-top
