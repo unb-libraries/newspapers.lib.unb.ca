@@ -832,6 +832,10 @@ a.back-link::before {
   font-size: large;
   margin-top: 0;
 }
+.featured .title {
+  font-size: 1.05em;
+}
+
 @media (min-width: 992px) {
   /* Single issue responsive grouping txt fix */
   .owl-carousel .owl-wrapper {
