@@ -53,9 +53,62 @@ display:
           offset: 0
       style:
         type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: false
       row:
         type: fields
       fields:
+        nothing:
+          id: nothing
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: true
+            text: '<h2 class="title">This Day in New Brunswick History</h2>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+          plugin_id: custom
         page_image:
           id: page_image
           table: search_api_datasource_pages_newspapers_lib_unb_ca_entity_digital_serial_page
@@ -130,20 +183,33 @@ display:
           plugin_id: search_api_field
       filters: {  }
       sorts: {  }
-      title: 'This Day in New Brunswick History'
+      title: ''
       header: {  }
       footer: {  }
-      empty: {  }
-      relationships: {  }
-      arguments:
-        parent_digital_title_id:
-          id: parent_digital_title_id
-          table: search_api_index_pages_newspapers_lib_unb_ca
-          field: parent_digital_title_id
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
           relationship: none
           group_type: group
           admin_label: ''
-          default_action: ignore
+          empty: true
+          tokenize: false
+          content:
+            value: "<h2 class=\"title\">This Day in New Brunswick History</h2>\r\n<p><span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No digital issues were found from this day in history.\r\n</p>"
+            format: full_html
+          plugin_id: text
+      relationships: {  }
+      arguments:
+        parent_digital_page_id:
+          id: parent_digital_page_id
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: parent_digital_page_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          default_action: empty
           exception:
             value: all
             title_enable: false
@@ -168,7 +234,7 @@ display:
           not: false
           plugin_id: search_api
       display_extenders: {  }
-      css_class: 'col-xs-12 col-md-6  well'
+      css_class: well
     cache_metadata:
       max-age: -1
       contexts:
