@@ -66,6 +66,10 @@ display:
           offset: 0
       style:
         type: default
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
       row:
         type: 'entity:node'
         options:
@@ -595,7 +599,7 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
-      css_class: featured
+      css_class: well
     cache_metadata:
       max-age: 0
       contexts:
