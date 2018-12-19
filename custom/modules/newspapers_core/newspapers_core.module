@@ -475,23 +475,26 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     }
   }
 
-  $referer = \Drupal::request()->server->get('HTTP_REFERER');
-  if ((strpos($referer, 'search') !== FALSE)) {
-    $link_text = t("Back to search results");
-    $back_link = Url::fromUri($referer);
-    $link_options = [
-      'attributes' => [
-        'class' => [
-          'back-results',
+  $view_mode = $variables['view_mode'];
+  if ($view_mode != 'featured') {
+    $referer = \Drupal::request()->server->get('HTTP_REFERER');
+    if ((strpos($referer, 'search') !== FALSE)) {
+      $link_text = t("Back to search results");
+      $back_link = Url::fromUri($referer);
+      $link_options = [
+        'attributes' => [
+          'class' => [
+            'back-results',
+          ],
         ],
-      ],
-    ];
-    $back_link->setOptions($link_options);
-    $link = Link::fromTextAndUrl($link_text, $back_link);
-    $variables['back_link'] = $link->toRenderable();
-  }
-  else {
-    $variables['back_link'] = NULL;
+      ];
+      $back_link->setOptions($link_options);
+      $link = Link::fromTextAndUrl($link_text, $back_link);
+      $variables['back_link'] = $link->toRenderable();
+    }
+    else {
+      $variables['back_link'] = NULL;
+    }
   }
 
 }
