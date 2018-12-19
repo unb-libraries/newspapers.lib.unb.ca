@@ -75,7 +75,7 @@
 {% endif %}
 
 {% if view_mode == 'featured' %}
-<div class="featured-publication col-xs-12 col-md-6 well">
+<div class="featured-publication">
     <div class="col-xs-4 pull-left">
     {% if content.field_sample_image|field_value %}
         {{ content.field_sample_image }}
@@ -83,7 +83,7 @@
         <img class="no-borders image-placeholder" src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
     {% endif %}
     </div>
-    <div class="details col-xs-offset-4">
+    <div class="col-xs-offset-4">
         <h2>Featured Publication</h2>
         <div class="title"><strong>{{ label }}</strong></div>
         {% if content.field_place_of_publication|field_value %}

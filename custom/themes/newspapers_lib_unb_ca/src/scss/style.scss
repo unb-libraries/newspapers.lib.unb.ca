@@ -828,18 +828,35 @@ a.back-link::before {
 .message {
   margin-bottom: 2.5em;
 }
-.featured h2 {
+.path-frontpage .details h2 {
   font-size: large;
   margin-top: 0;
 }
-.featured .title {
+.path-frontpage section.details .well {
+  min-height: 295px;
+}
+.path-frontpage .details .title {
   font-size: 1.05em;
 }
-
+.featured-publication .col-xs-4 {
+  padding-left: 0;
+}
+@media (max-width: 991px) {
+.path-frontpage section {
+  padding-left: 0;
+  padding-right: 0;
+}
+}
 @media (min-width: 992px) {
   /* Single issue responsive grouping txt fix */
   .owl-carousel .owl-wrapper {
     min-width: 870px!important;
+  }
+  .path-frontpage section.col-md-6:first-of-type {
+    padding-left: 0;
+  }
+  .path-frontpage section.col-md-6:last-of-type {
+    padding-right: 0;
   }
 }
 @media (max-width: 767px) {
@@ -884,5 +901,15 @@ and (max-width: 991px){
   .table-responsive {
     margin-bottom: 1em;
     overflow-x: visible;
+  }
+}
+@media (max-width: 600px) {
+  .path-frontpage section.details .well {
+    min-height: 240px;
+  }
+}
+@media (max-width: 414px) {
+  .path-frontpage section.details .well {
+    min-height: 200px;
   }
 }
