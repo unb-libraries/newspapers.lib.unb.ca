@@ -35,5 +35,15 @@ function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
   if ($route_name == 'newspapers_core.home') {
     $variables['breadcrumb'][1]['text'] = t('Newspapers');
   }
+}
 
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function newspapers_lib_unb_ca_page_attachments_alter(&$page){
+  $path = $current_path = \Drupal::service('path.current')->getPath();
+  if(substr($path,0,15) === '/serials/browse') {
+    // Add ajax throbber fix to Digital page lister > Issue browse.
+    $page['#attached']['library'][] = 'newspapers_lib_unb_ca/views_infinite_scroll_fix';
+  }
 }
