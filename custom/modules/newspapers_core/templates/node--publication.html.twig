@@ -75,7 +75,7 @@
 {% endif %}
 
 {% if view_mode == 'featured' %}
-<div class="featured-publication">
+<div {{ attributes.addClass("featured-publication") }}>
     <div class="col-xs-4 pull-left">
     {% if content.field_sample_image|field_value %}
         {{ content.field_sample_image }}
