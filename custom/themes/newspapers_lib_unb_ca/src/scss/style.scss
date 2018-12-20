@@ -413,8 +413,8 @@ p {
 .browse-issues img {
   transition: all .2s ease-in-out;
 }
-.browse-issues a:focus img,
-.browse-issues a:hover img {
+.browse-issues a:focus img.img-responsive,
+.browse-issues a:hover img.img-responsive {
   box-shadow: 0 0 6px 3px rgba(0, 0, 0, .25);
 }
 
