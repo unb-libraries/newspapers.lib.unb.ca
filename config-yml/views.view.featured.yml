@@ -595,7 +595,20 @@ display:
       title: 'Featured Publication'
       header: {  }
       footer: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: "<h2 class=\"title\">Featured Publication</h2>\r\n<p><span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No publications  are currently featured.\r\n</p>"
+            format: full_html
+          plugin_id: text
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
