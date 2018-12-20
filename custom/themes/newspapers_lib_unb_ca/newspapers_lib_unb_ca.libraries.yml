@@ -2,3 +2,9 @@ newspapers_styles:
   css:
     theme:
       dist/css/style.css: {}
+
+views_infinite_scroll_fix:
+  js:
+    dist/js/newspapers_core.digital_lister.js: {}
+  dependencies:
+    - core/jquery
