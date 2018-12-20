@@ -5,7 +5,7 @@
         attach: function (context, settings) {
             // Ajax throbber with Views Infinite Scrolling fix.
             $('.pager__item a.button').click(function () {
-                $('span', this).removeClass('hidden').addClass('show');
+                $('span', this).toggleClass('hide');
             });
         },
     };
