@@ -10,7 +10,7 @@ field_name: field_featured
 entity_type: node
 bundle: publication
 label: Featured
-description: "Select to add to the front page pool of featured publications.<br />\r\n<b>Note:</b> Best to feature items that have a <i>Sample Image</i> and <i>exact</i> publication dates."
+description: "Select to add to the front page pool of featured publications.<br />\r\n<b>Note:</b> Publications <b>must</b> contain a <i>Sample Image</i> (above) to be featured on the front page."
 required: false
 translatable: false
 default_value:
