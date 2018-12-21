@@ -4,7 +4,7 @@
     Drupal.behaviors.ajaxLoader = {
         attach: function (context, settings) {
             // Ajax throbber with Views Infinite Scrolling fix.
-            $('.pager__item a.button').click(function () {
+            $('.pager__item a.button').one('click', function () {
                 $('span', this).toggleClass('hide');
             });
 
