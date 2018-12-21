@@ -3,8 +3,8 @@ newspapers_styles:
     theme:
       dist/css/style.css: {}
 
-views_infinite_scroll_fix:
+ajax_loading:
   js:
-    dist/js/newspapers_core.digital_lister.js: {}
+    dist/js/newspapers_core.ajax_loading.js: {}
   dependencies:
     - core/jquery
