@@ -1044,6 +1044,18 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
   $first_date_label = t("date");
   $last_date_label = t("date");
   $family_element = 'field_family';
+  $sample_img_element = 'field_sample_image';
+
+  // Check that sample image exists (i.e. fids) if Featured checkbox enabled.
+  $featured = $form_state->getValue(['field_featured'], '0')['value'];
+  $sample_image = $form_state->getValue([$sample_img_element], '0');
+  $sample_image_fids = $sample_image[0]['fids'];
+  if (!empty($featured) && empty($sample_image_fids)) {
+    $form_state->setErrorByName(
+      $sample_img_element,
+      t("The <em><b>Sample Image</em> field is required when the <em><b>Featured</b></em> option is enabled below.")
+    );
+  }
 
   if ($form_state->getValue(['field_first_issue_date_type', '0'])['value'] == 'exact') {
     if (is_null($first_issue_date['0']['value'])) {
