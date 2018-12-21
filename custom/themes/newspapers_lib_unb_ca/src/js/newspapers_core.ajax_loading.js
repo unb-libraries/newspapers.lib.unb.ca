@@ -4,13 +4,14 @@
     Drupal.behaviors.ajaxLoader = {
         attach: function (context, settings) {
             // Ajax throbber with Views Infinite Scrolling fix.
-            $('.pager__item a.button').one('click', function () {
+            $('.pager__item a.button').off('click').on('click', function () {
                 $('span', this).toggleClass('hide');
             });
 
-            // Ajax throbber for facet items.
-            $('.facets-widget-checkbox .facet-item').one('click', function () {
-                $('img', this).toggleClass('hide');
+            $('.facets-widget-checkbox .facet-item').off('click').on('click', function(e) {
+                if (e.originalEvent !== undefined) {
+                    $('img', this).toggleClass('hide');
+                }
             });
         },
     };
