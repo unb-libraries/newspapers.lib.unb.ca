@@ -29,13 +29,15 @@ class HomePageForm extends FormBase {
     // Configure appropriate active tab/pane classes.
     $user_input = $form_state->getUserInput();
     $op = isset($user_input['op']) ? $user_input['op'] : NULL;
+    $about_tab_class = " visible-xs";
     if ($op == 'Search FullText') {
-      $title_tab_class = $title_pane_class = NULL;
+      $title_tab_class = $title_pane_class = $about_pane_class = NULL;
+
       $fulltext_tab_class = " active";
       $fulltext_pane_class = "active in";
     }
     else {
-      $fulltext_tab_class = $fulltext_pane_class = NULL;
+      $fulltext_tab_class = $fulltext_pane_class = $about_pane_class = NULL;
       $title_tab_class = " active";
       $title_pane_class = "active in";
     }
@@ -87,9 +89,30 @@ class HomePageForm extends FormBase {
     ];
     $fulltext_url->setOptions($fulltext_link_options);
 
-    $form['blurb'] = [
-      '#type' => 'markup',
-      '#markup' => "<div class=\"hidden-xs message well\"><p>Newspapers &commat; UNB Libraries provides researchers with
+    $about_url = Url::fromUri("internal:/");
+    $about_link_options = [
+      'attributes' => [
+        'id' => [
+          'tab-about',
+        ],
+        'role' => [
+          'tab',
+        ],
+        'data-toggle' => [
+          'tab',
+        ],
+        'aria-selected' => [
+          'true',
+        ],
+        'tabindex' => [
+          '-2',
+        ],
+      ],
+      'fragment' => 'about',
+    ];
+    $about_url->setOptions($about_link_options);
+
+    $blurb = "<p>Newspapers &commat; UNB Libraries provides researchers with
         unified access to UNB Libraries&apos; current and historical newspaper collections in all formats, from New
         Brunswick and across North America. Search and discover
         <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
@@ -98,8 +121,11 @@ class HomePageForm extends FormBase {
         <a href=\"/digital-titles\">New Brunswick Historical Newspapers Online</a>.
         For more worldwide digital newspaper content, consult
         <a href=\"https://lib.unb.ca/eresources/index.php?sub=journals&browseNewsColl=y\" class=\"external\">
-        UNB Libraries licensed electronic Newspaper collections</a>.</p>
-        </div>",
+        UNB Libraries licensed electronic Newspaper collections</a>.</p>";
+
+    $form['blurb'] = [
+      '#type' => 'markup',
+      '#markup' => "<div class=\"hidden-xs message well\">" . $blurb . "</div>",
     ];
 
     $form['nav-tabs'] = [
@@ -121,6 +147,10 @@ class HomePageForm extends FormBase {
     ];
     $form['nav-tabs']['fulltext'] = [
       '#markup' => '<li class="tab' . $fulltext_tab_class . '">' . Link::fromTextAndUrl($this->t('Fulltext Search'), $fulltext_url)
+        ->toString() . '</li>',
+    ];
+    $form['nav-tabs']['about'] = [
+      '#markup' => '<li class="tab' . $about_tab_class . '">' . Link::fromTextAndUrl($this->t('About'), $about_url)
         ->toString() . '</li>',
     ];
 
@@ -205,6 +235,30 @@ class HomePageForm extends FormBase {
         <b>Note:</b>
         Only a limited number of newspapers have been digitized.
         See a full listing of <a href="/digital-titles">digitally available titles</a>.</p>',
+    ];
+
+    $form['tab-content']['about'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'clearfix',
+          'tab-pane',
+          $about_pane_class,
+        ],
+        'id' => [
+          'about',
+        ],
+        'aria-labelledby' => [
+          'tab-about',
+        ],
+      ],
+    ];
+    $form['tab-content']['about']['wrapper'] = [
+      '#type' => 'container',
+    ];
+    $form['tab-content']['about']['wrapper']['blurb'] = [
+      '#type' => 'markup',
+      '#markup' => $blurb,
     ];
 
     return $form;

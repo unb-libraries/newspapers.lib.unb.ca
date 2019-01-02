@@ -36,6 +36,12 @@ a#tab-title:before {
     font-size: small;
     padding-right: 4px;
 }
+a#tab-about:before {
+    font-family: "Glyphicons Halflings";
+    content: "\e086";
+    font-size: small;
+    padding-right: 4px;
+}
 .tab-pane div.form-item,
 .tab-pane div.description {
     width: 75%;
