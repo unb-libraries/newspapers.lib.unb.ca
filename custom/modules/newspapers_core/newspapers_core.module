@@ -547,7 +547,7 @@ function newspapers_core_theme() {
     ],
     'block__this_day_in_nb_history' => [
       'variables' => [
-        'history_issue_id' => NULL
+        'history_issue_id' => NULL,
       ],
     ],
   ];
