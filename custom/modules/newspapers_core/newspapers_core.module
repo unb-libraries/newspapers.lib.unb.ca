@@ -545,6 +545,11 @@ function newspapers_core_theme() {
       'template' => 'node--publication',
       'base hook' => 'node',
     ],
+    'block__this_day_in_nb_history' => [
+      'variables' => [
+        'history_issue_id' => NULL
+      ],
+    ],
   ];
 }
 
