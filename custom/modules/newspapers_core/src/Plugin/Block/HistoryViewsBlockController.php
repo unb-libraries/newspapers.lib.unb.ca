@@ -41,4 +41,12 @@ class HistoryViewsBlockController extends BlockBase {
     ];
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() {
+    // Disable caching for this block.
+    return 0;
+  }
+
 }
