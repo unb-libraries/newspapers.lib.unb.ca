@@ -306,7 +306,19 @@ display:
           entity_type: digital_serial_page
           plugin_id: search_api_field
       filters: {  }
-      sorts: {  }
+      sorts:
+        page_sort:
+          id: page_sort
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: page_sort
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          plugin_id: search_api
       title: ''
       header: {  }
       footer: {  }
@@ -326,10 +338,10 @@ display:
           plugin_id: text
       relationships: {  }
       arguments:
-        parent_digital_page_id:
-          id: parent_digital_page_id
+        parent_digital_issue_id:
+          id: parent_digital_issue_id
           table: search_api_index_pages_newspapers_lib_unb_ca
-          field: parent_digital_page_id
+          field: parent_digital_issue_id
           relationship: none
           group_type: group
           admin_label: ''
@@ -367,9 +379,9 @@ display:
         - url
         - user.permissions
       tags: {  }
-  today_in_history:
+  today:
     display_plugin: block
-    id: today_in_history
+    id: today
     display_title: Block
     position: 1
     display_options:
