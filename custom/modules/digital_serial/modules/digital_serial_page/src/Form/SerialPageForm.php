@@ -63,6 +63,9 @@ class SerialPageForm extends ContentEntityForm {
     $entity = &$this->entity;
     $this->saveAndReportSaveAction($form, $form_state, $entity);
 
+    // Clear cache after save so page added in UI immediately shows in displays.
+    drupal_flush_all_caches();
+
     // Redirect back to serial page list.
     $form_state->setRedirect(
       'digital_serial_page.manage_pages',
