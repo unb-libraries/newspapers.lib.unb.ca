@@ -123,7 +123,7 @@
         "drupal/restui": "1.15",
         "drupal/search_api": "1.11",
         "drupal/search_api_autocomplete": "1.1",
-        "drupal/search_api_solr": "2.3",
+        "drupal/search_api_solr": "2.4",
         "drupal/token": "1.5",
         "drupal/twig_field_value": "1.1",
         "drupal/twig_tweak": "2.1",
