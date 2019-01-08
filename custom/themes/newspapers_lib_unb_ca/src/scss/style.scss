@@ -833,7 +833,7 @@ a.back-link::before {
   margin-top: 0;
 }
 .path-frontpage section.details .well {
-  min-height: 260px;
+  min-height: 295px;
 }
 .path-frontpage .details .title {
   font-size: 1.05em;
@@ -842,10 +842,10 @@ a.back-link::before {
   padding-left: 0;
 }
 @media (max-width: 991px) {
-.path-frontpage section section {
-  padding-left: 0;
-  padding-right: 0;
-}
+  .path-frontpage section section {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 @media (min-width: 992px) {
   /* Single issue responsive grouping txt fix */
