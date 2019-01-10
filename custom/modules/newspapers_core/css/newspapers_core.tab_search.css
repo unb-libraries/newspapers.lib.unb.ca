@@ -8,6 +8,9 @@ form .nav-tabs > li.active > a:focus {
     border-color: #333;
     border-bottom: none;
 }
+form {
+    margin-bottom: 2.5em;
+}
 form .nav-tabs > li > a {
     border:none;
 }
