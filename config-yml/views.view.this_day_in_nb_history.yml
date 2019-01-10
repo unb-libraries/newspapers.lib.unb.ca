@@ -71,7 +71,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '<h2 class="title">This Day in New Brunswick History</h2>'
+            text: '<h2>This Day in New Brunswick History</h2>'
             make_link: false
             path: ''
             absolute: false
