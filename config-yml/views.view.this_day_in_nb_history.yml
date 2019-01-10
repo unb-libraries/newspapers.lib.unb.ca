@@ -333,7 +333,7 @@ display:
           empty: true
           tokenize: false
           content:
-            value: "<h2 class=\"title\">This Day in New Brunswick History</h2>\r\n<p><span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No digital issues were found from this day in history.\r\n</p>"
+            value: "<h2>This Day in New Brunswick History</h2>\r\n<p><span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No digital issues were found from this day in history.\r\n</p>"
             format: full_html
           plugin_id: text
       relationships: {  }
