@@ -3,6 +3,7 @@
 namespace Drupal\newspapers_core\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 /**
  * Defines This Day in History issue id.
@@ -28,8 +29,9 @@ class HistoryViewsBlockController extends BlockBase {
    */
 
   public function build() {
-    date_default_timezone_set('America/Halifax');
-    $history_date = date('m') . '-' . date('d');
+    $date = new DrupalDateTime();
+    $date->setTimezone(timezone_open(drupal_get_user_timezone()));
+    $history_date = $date->format('m-d');
 
     $query = \Drupal::entityQuery('digital_serial_issue')
       ->condition('issue_date', $history_date, 'ENDS_WITH');
