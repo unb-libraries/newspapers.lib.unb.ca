@@ -2,13 +2,6 @@
 
 <main>
     {% if metadata|length > 0 %}
-    <header>
-        <dl>
-            <dt>Descriptor</dt>
-            <dd>Value</dd>
-        </dl>
-    </header>
-
     <section class="digital-serial-page-meta col-sm-8">
         <dl class="clearfix">
             {% for label,value in metadata %}
