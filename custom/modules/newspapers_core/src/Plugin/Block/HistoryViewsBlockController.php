@@ -28,6 +28,7 @@ class HistoryViewsBlockController extends BlockBase {
    */
 
   public function build() {
+    date_default_timezone_set('America/Halifax');
     $history_date = date('m') . '-' . date('d');
 
     $query = \Drupal::entityQuery('digital_serial_issue')
