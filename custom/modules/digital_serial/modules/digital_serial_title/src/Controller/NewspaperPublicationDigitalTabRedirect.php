@@ -31,7 +31,7 @@ class NewspaperPublicationDigitalTabRedirect extends ControllerBase {
     if (!empty($nids)) {
       $nid_values = array_values($nids);
       $serial_title_id = array_pop($nid_values);
-      return $this->redirect('entity.digital_serial_title.canonical', ['digital_serial_title' => $serial_title_id]);
+      return $this->redirect('digital_serial_issue.title_issues', ['digital_serial_title' => $serial_title_id]);
     }
 
     return $this->formBuilder()->getForm('Drupal\digital_serial_title\Form\PublicationDigitalTitleAddForm', $node->id());
