@@ -81,9 +81,6 @@ class HomePageForm extends FormBase {
         'aria-selected' => [
           'false',
         ],
-        'tabindex' => [
-          '-1',
-        ],
       ],
       'fragment' => 'fulltext',
     ];
@@ -102,11 +99,9 @@ class HomePageForm extends FormBase {
           'tab',
         ],
         'aria-selected' => [
-          'true',
+          'false',
         ],
-        'tabindex' => [
-          '-2',
-        ],
+
       ],
       'fragment' => 'about',
     ];

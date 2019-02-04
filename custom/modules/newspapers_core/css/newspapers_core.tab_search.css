@@ -72,3 +72,15 @@ a#tab-about:before {
         margin-button: 2em;
     }
 }
+@media (max-width: 414px) {
+    form .nav > li > a {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+}
+@media (max-width: 320px) {
+    form .nav > li > a {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+}
