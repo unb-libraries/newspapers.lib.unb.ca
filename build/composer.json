@@ -45,9 +45,6 @@
             "drupal/address": {
                 "Integrate Address with Search API": "https://www.drupal.org/files/issues/2018-06-07/address-search-api-full-name-properties-2812659-37.patch"
             },
-            "drupal/conditional_fields": {
-                "Conditional fields Uninitialized string offset": "https://www.drupal.org/files/issues/conditional_fields-uninitialized_string_offset_in_conditional_fields_evaluate_dependency-2834358-11.patch"
-            },
             "drupal/core": {
                 "Extend Daterange functionality": "https://www.drupal.org/files/issues/2794481-50.patch",
                 "HTML5 validation issue": "https://www.drupal.org/files/issues/2018-07-13/1797438-145.patch",
