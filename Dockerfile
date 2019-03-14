@@ -16,7 +16,7 @@ ENV DRUPAL_SITE_UUID NULL
 
 # Add scripts, remove delete upstream drupal build.
 COPY ./scripts/container /scripts
-RUN /scripts/DeployUpstreamContainerScripts.sh && \
+RUN curl -sSL https://raw.githubusercontent.com/unb-libraries/CargoDock/master/container/drupal/deploy.sh | sh && \
   /scripts/deleteUpstreamTree.sh
 
 # Add LDAP, Mail Sending, rsyslog
