@@ -1105,7 +1105,7 @@ display:
             label: ''
           plugin_id: search_api
       display_description: ''
-      css_class: ''
+      css_class: image-link-shadow
       pager:
         type: none
         options:
