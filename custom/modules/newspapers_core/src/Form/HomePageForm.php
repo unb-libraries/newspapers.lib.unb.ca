@@ -228,8 +228,9 @@ class HomePageForm extends FormBase {
       '#markup' => '<p class="alert alert-info fade in">
         <span class="glyphicon glyphicon glyphicon-ok-circle"></span>
         <b>Note:</b>
-        Only a limited number of newspapers have been digitized.
-        See a full listing of <a href="/digital-titles">digitally available titles</a>.</p>',
+        Only a limited number of newspapers have been digitized to date and new content will be added on a
+        continuing basis. See a current listing of <a href="/digital-titles">digitally available titles and coverage
+        dates</a>.</p>',
     ];
 
     $form['tab-content']['about'] = [
