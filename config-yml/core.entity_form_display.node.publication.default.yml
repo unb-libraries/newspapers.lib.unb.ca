@@ -108,9 +108,9 @@ third_party_settings:
       format_type: details
       format_settings:
         label: Relationships
+        open: true
         id: ''
         classes: ''
-        open: false
         required_fields: false
       label: Relationships
       region: content
