@@ -116,7 +116,7 @@
                 <h2 class="well well-sm">{% trans %}Details{% endtrans %}</h2>
                 <dl{{ attributes.addClass("title-image") }}>
                 {% if content.field_sample_image|field_value %}
-                    <figure>
+                    <figure class="image-link-shadow">
                         {{ content.field_sample_image }}
                         <figcaption class="sr-only">
                             Sample image of <i>{{ label }}</i>
