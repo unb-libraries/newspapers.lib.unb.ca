@@ -432,7 +432,7 @@ display:
           not: false
           plugin_id: search_api
       display_extenders: {  }
-      css_class: well
+      css_class: 'image-link-shadow well'
     cache_metadata:
       max-age: -1
       contexts:

@@ -612,7 +612,7 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
-      css_class: well
+      css_class: 'image-link-shadow well'
     cache_metadata:
       max-age: 0
       contexts:

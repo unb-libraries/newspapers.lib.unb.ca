@@ -1960,7 +1960,7 @@ display:
           break_phrase: false
           not: false
           plugin_id: search_api
-      css_class: browse-issues
+      css_class: 'browse-issues image-link-shadow'
     cache_metadata:
       max-age: -1
       contexts:
