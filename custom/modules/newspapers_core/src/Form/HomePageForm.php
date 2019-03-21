@@ -109,7 +109,7 @@ class HomePageForm extends FormBase {
 
     $blurb = "<p>Newspapers &commat; UNB Libraries provides researchers with
         unified access to UNB Libraries&apos; current and historical newspaper collections in all formats, from New
-        Brunswick and across North America. Search and discover
+        Brunswick and across the world. Search and discover
         <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
         titles (including New Brunswick Historical Newspapers Online collection) available from UNB Libraries.</p>
         <p>Fulltext Search is available for titles included in
