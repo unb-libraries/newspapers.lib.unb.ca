@@ -12,9 +12,9 @@ figcaption .glyphicon {
   margin-right: .25em;
   top: 3px;
 }
-a:not(.btn):not(.cd-top):focus,
-a:not(.btn):not(.cd-top):hover,
-a:not(.btn):not(.cd-top):active {
+a:not(.btn):not(.button):not(.cd-top):focus,
+a:not(.btn):not(.button):not(.cd-top):hover,
+a:not(.btn):not(.button):not(.cd-top):active {
   border-bottom-style: none;
   text-decoration: underline;
 }
@@ -418,8 +418,8 @@ p {
 .image-link-shadow a img {
   transition: box-shadow .25s ease-out;
 }
-.image-link-shadow a:focus img,
-.image-link-shadow a:hover img {
+.image-link-shadow a:not(.button):focus img,
+.image-link-shadow a:not(.button):hover img {
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, .25);
 }
 
