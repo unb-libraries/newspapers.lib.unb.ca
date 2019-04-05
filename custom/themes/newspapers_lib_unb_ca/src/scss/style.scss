@@ -108,11 +108,10 @@ dl .inline-list {
 
 #edit-reset:before {
   font-family: "Glyphicons Halflings";
-  content: "\e031";
+  content: "\e014";
   color: #777;
-  font-size: smaller;
   margin-right: 0.25em;
-  vertical-align: text-bottom;
+  vertical-align: top;
 }
 
 #edit-delete:before {
