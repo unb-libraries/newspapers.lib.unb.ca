@@ -89,14 +89,14 @@
             "package": {
                 "dist": {
                     "type": "zip",
-                    "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/v1.11.3.zip"
+                    "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/v1.11.4.zip"
                 },
                 "name": "simeydotme/jquery-ui-slider-pips",
                 "require": {
                     "composer/installers": "^1.2.0"
                 },
                 "type": "drupal-library",
-                "version": "1.11.3"
+                "version": "1.11.4"
             },
             "type": "package"
         }
