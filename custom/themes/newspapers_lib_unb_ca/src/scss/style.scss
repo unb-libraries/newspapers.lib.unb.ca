@@ -12,6 +12,9 @@ figcaption .glyphicon {
   margin-right: .25em;
   top: 3px;
 }
+.well a {
+  color: $link-color;
+}
 a:not(.btn):not(.button):not(.cd-top):focus,
 a:not(.btn):not(.button):not(.cd-top):hover,
 a:not(.btn):not(.button):not(.cd-top):active {
