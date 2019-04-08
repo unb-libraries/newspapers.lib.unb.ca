@@ -27,22 +27,21 @@ form .nav-tabs > li > a {
 .search-form .form-wrapper {
     margin-bottom: 1.5em;
 }
-a#tab-fulltext:before {
+.tab a:before {
+    display: inline-block;
     font-family: "Glyphicons Halflings";
-    content: "\e224";
     font-size: small;
+}
+a#tab-fulltext:before {
+    content: "\e224";
     padding-right: 5px;
 }
 a#tab-title:before {
-    font-family: "Glyphicons Halflings";
     content: "\e032";
-    font-size: small;
     padding-right: 4px;
 }
 a#tab-about:before {
-    font-family: "Glyphicons Halflings";
     content: "\e086";
-    font-size: small;
     padding-right: 4px;
 }
 .tab-pane div.form-item,
