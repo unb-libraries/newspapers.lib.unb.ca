@@ -20,7 +20,7 @@ RUN curl -sSL https://raw.githubusercontent.com/unb-libraries/CargoDock/master/c
   /scripts/deleteUpstreamTree.sh
 
 # Add LDAP, Mail Sending, rsyslog
-RUN apk --no-cache add rsyslog postfix php7-ldap php7-xmlreader php7-zip && \
+RUN apk --no-cache add rsyslog postfix php7-ldap php7-xmlreader php7-zip php7-redis && \
   touch /var/log/nginx/access.log && touch /var/log/nginx/error.log && \
   mkdir -p /var/spool/rsyslog; chgrp adm /var/spool/rsyslog; chmod g+w /var/spool/rsyslog && \
   echo "TLS_REQCERT never" > /etc/openldap/ldap.conf

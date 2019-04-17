@@ -12,6 +12,16 @@ services:
     networks:
     - newspapers.lib.unb.ca
 
+  drupal-redis-lib-unb-ca:
+    image: redis:5-alpine
+    restart: always
+    expose:
+      - "6379"
+    networks:
+      - newspapers.lib.unb.ca
+    env_file:
+      - ./env/redis.env
+
   drupal-solr-lib-unb-ca:
     image: unblibraries/solr-drupal:7.x
     expose:

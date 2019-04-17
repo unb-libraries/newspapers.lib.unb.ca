@@ -41,6 +41,9 @@ dependencies:
   - views
   - views_ui
 
+  # Other.
+  - redis
+
 themes:
   - seven
   - bartik
