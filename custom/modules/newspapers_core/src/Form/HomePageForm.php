@@ -2,10 +2,11 @@
 
 namespace Drupal\newspapers_core\Form;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Link;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 
 /**
@@ -255,6 +256,12 @@ class HomePageForm extends FormBase {
     $form['tab-content']['about']['wrapper']['blurb'] = [
       '#type' => 'markup',
       '#markup' => $blurb,
+    ];
+
+    $form['#cache'] = [
+      'keys' => ['newspapers_frontpage'],
+      'contexts' => ['url'],
+      'max-age' => Cache::PERMANENT,
     ];
 
     return $form;
