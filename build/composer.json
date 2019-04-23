@@ -114,7 +114,7 @@
         "drupal/field_group": "3.0-beta1",
         "drupal/google_analytics": "2.4",
         "drupal/languagefield": "1.5",
-        "drupal/ldap": "3.0-beta5",
+        "drupal/ldap": "3.0-beta6",
         "drupal/material_admin": "1.0-alpha6",
         "drupal/owlcarousel": "1.0-alpha3",
         "drupal/pathauto": "1.4",
