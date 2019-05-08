@@ -49,7 +49,6 @@
                 "Extend Daterange functionality": "https://www.drupal.org/files/issues/2794481-50.patch",
                 "HTML5 validation issue": "https://www.drupal.org/files/issues/2018-07-13/1797438-145.patch",
                 "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch",
-                "To display exposed filter block titles": "https://www.drupal.org/files/issues/2720101-38.patch",
                 "Exposed filter values available as tokens": "https://www.drupal.org/files/issues/2018-05-14/make_exposed_filter-2761273-13.patch"
             },
             "drupal/elasticsearch_connector": {
