@@ -102,7 +102,7 @@
     ],
     "require": {
         "drupal/address": "1.6",
-        "drupal/bootstrap": "3.x-dev#d77a8213b9ae7099e6fcdb1c9cb1fa2f4939ac06",
+        "drupal/bootstrap": "3.19",
         "drupal/chosen": "2.7",
         "drupal/conditional_fields": "1.0-alpha5",
         "drupal/config_update": "1.5",
