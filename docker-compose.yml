@@ -1,7 +1,7 @@
 version: '3.6'
 
 services:
-  mysql:
+  drupal-mysql-lib-unb-ca:
     image: mysql:5.7
     restart: always
     command: mysqld --skip-name-resolve --max_allowed_packet=64M
@@ -51,7 +51,7 @@ services:
     restart: always
     container_name: newspapers.lib.unb.ca
     depends_on:
-      - mysql
+      - drupal-mysql-lib-unb-ca
       - drupal-solr-lib-unb-ca
     expose:
       - "80"

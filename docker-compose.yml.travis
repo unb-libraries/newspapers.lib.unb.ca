@@ -1,7 +1,7 @@
 version: '3.6'
 
 services:
-  mysql:
+  drupal-mysql-lib-unb-ca:
     image: mysql:5.7
     restart: always
     command: mysqld --skip-name-resolve --max_allowed_packet=64M
@@ -25,20 +25,20 @@ services:
   drupal-solr-lib-unb-ca:
     image: unblibraries/solr-drupal:7.x
     expose:
-    - "8983"
+      - "8983"
     networks:
-    - newspapers.lib.unb.ca
+      - newspapers.lib.unb.ca
     entrypoint:
-    - docker-entrypoint-multiple.sh
-    - newspapers.lib.unb.ca:/solr-conf
-    - pages.newspapers.lib.unb.ca:/solr-conf
+      - docker-entrypoint-multiple.sh
+      - newspapers.lib.unb.ca:/solr-conf
+      - pages.newspapers.lib.unb.ca:/solr-conf
 
   newspapers.lib.unb.ca:
     image: newspapers.lib.unb.ca:latest
     restart: always
     container_name: newspapers.lib.unb.ca
     depends_on:
-      - mysql
+      - drupal-mysql-lib-unb-ca
       - drupal-solr-lib-unb-ca
     expose:
       - "80"
