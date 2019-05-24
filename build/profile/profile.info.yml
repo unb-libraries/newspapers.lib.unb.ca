@@ -13,36 +13,75 @@ dependencies:
   - dynamic_page_cache
 
   # Standard Install Items.
-  - history
+  - block_content
   - breakpoint
   - ckeditor
   - color
-  - config
   - comment
-  - contextual
+  - config
   - contact
-  - menu_link_content
+  - contextual
   - datetime
-  - block_content
-  - quickedit
+  - dblog
   - editor
+  - field_ui
+  - file
   - help
+  - history
   - image
+  - menu_link_content
   - menu_ui
   - options
   - path
-  - taxonomy
-  - dblog
-  - search
-  - toolbar
-  - field_ui
-  - file
+  - quickedit
   - rdf
+  - search
+  - taxonomy
+  - toolbar
   - views
   - views_ui
 
   # newspapers.lib.unb.ca.
+  - address
+  - automated_cron
+  - basic_auth
+  - chosen
+  - chosen_lib
+  - conditional_fields
+  - ctools
+  - datetime_range
+  - digital_serial
+  - digital_serial_issue
+  - digital_serial_page
+  - digital_serial_title
+  - externalauth
+  - facets
+  - facets_range_widget
+  - field_group
+  - google_analytics
+  - language
+  - languagefield
+  - ldap_authentication
+  - ldap_servers
+  - ldap_user
+  - newspapers_core
+  - owlcarousel
+  - pathauto
   - redis
+  - rest
+  - search_api
+  - search_api_autocomplete
+  - search_api_db
+  - search_api_solr
+  - serial_holding
+  - serial_holding_export
+  - serialization
+  - serials
+  - token
+  - tour
+  - twig_field_value
+  - twig_tweak
+  - views_infinite_scroll
 
 themes:
   - seven
