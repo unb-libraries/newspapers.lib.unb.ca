@@ -1,6 +1,8 @@
 <?php
-/*
-Include local dev-only settings here.
-*/
 
-include_once DRUPAL_ROOT . '/sites/example.settings.local.php';
+/**
+ * @file
+ * Include local-dev-environment-only settings here.
+ */
+
+require_once DRUPAL_ROOT . '/sites/example.settings.local.php';

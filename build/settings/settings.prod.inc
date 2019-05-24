@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Include prod-only settings here.
+ * Include prod-environment-only settings here.
  */
 
 $settings['config_readonly'] = TRUE;
