@@ -33,6 +33,16 @@ services:
     - newspapers.lib.unb.ca:/solr-conf
     - pages.newspapers.lib.unb.ca:/solr-conf
 
+  mailhog:
+    image: mailhog/mailhog
+    expose:
+      - "1025"
+      - "8025"
+    ports:
+      - "4095:8025"
+    networks:
+      - newspapers.lib.unb.ca
+
   newspapers.lib.unb.ca:
     build:
       context: .

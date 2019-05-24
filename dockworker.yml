@@ -4,6 +4,7 @@ dockworker:
     project_prefix: NBNP
     name: newspapers.lib.unb.ca
     upstream_image:
+      - mailhog/mailhog
       - mysql:5.7
       - redis:5-alpine
       - unblibraries/drupal:8.x-1.x
