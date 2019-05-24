@@ -13,11 +13,7 @@ if (isset($_SERVER['APPLICATION_ENV'])) {
   }
 }
 
+// Redis.
+$settings['cache_prefix']['default'] = 'newspapers_';
 $conf['chq_redis_cache_enabled'] = TRUE;
-if (isset($conf['chq_redis_cache_enabled']) && $conf['chq_redis_cache_enabled']) {
-  $settings['cache']['default'] = 'cache.backend.redis';
-  $settings['redis.connection']['interface'] = 'PhpRedis';
-  $settings['redis.connection']['host'] = 'drupal-redis-lib-unb-ca';
-  $settings['redis.connection']['port'] = '6379';
-  $conf['cache_class_cache'] = 'Redis_Cache';
-}
+require_once dirname(__FILE__) . "/settings.redis.inc";

@@ -41,7 +41,7 @@ dependencies:
   - views
   - views_ui
 
-  # Other.
+  # newspapers.lib.unb.ca.
   - redis
 
 themes:
