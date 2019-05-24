@@ -5,5 +5,4 @@ dependencies: {  }
 name: Editor
 vid: editor
 description: 'The publication''s editor'
-hierarchy: 0
 weight: 0

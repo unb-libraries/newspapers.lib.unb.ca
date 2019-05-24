@@ -1,8 +1,8 @@
+uuid: c9e2c067-2e62-4410-bf85-dc30aec4bd4a
 langcode: en
 status: true
 dependencies: {  }
 name: 'Serial Holding Types'
 vid: serial_holding_types
 description: 'Types of holdings.'
-hierarchy: 0
 weight: 0

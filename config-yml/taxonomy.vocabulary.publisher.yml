@@ -5,5 +5,4 @@ dependencies: {  }
 name: Publisher
 vid: publisher
 description: 'Publishing organization'
-hierarchy: 0
 weight: 0

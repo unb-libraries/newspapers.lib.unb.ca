@@ -4,132 +4,132 @@ status: true
 holding_types:
   Print:
     action: overlay
-    collection_name: Newspapers @ UNB Libraries (Print)
+    collection_name: 'Newspapers @ UNB Libraries (Print)'
     collection_id: customer.133054.unbnewsprint
     coverage_depth: print
     column_mapping:
       publication_title: getPublicationTitle
       print_identifier: getPublicationIssn
-      online_identifier: ~
+      online_identifier: null
       date_first_issue_online: getHoldingStartDate
-      num_first_vol_online: ~
-      num_first_issue_online: ~
+      num_first_vol_online: null
+      num_first_issue_online: null
       date_last_issue_online: getHoldingEndDate
-      num_last_vol_online: ~
-      num_last_issue_online: ~
+      num_last_vol_online: null
+      num_last_issue_online: null
       title_url: getPublicationUrl
-      first_author: ~
-      title_id: ~
-      embargo_info: ~
+      first_author: null
+      title_id: null
+      embargo_info: null
       coverage_depth: getCoverageDepth
       coverage_notes: getCoverageNotes
       publisher_name: getPublicationPublisher
       location: getHoldingLocation
-      title_notes: ~
-      staff_notes: ~
-      vendor_id: ~
+      title_notes: null
+      staff_notes: null
+      vendor_id: null
       oclc_collection_name: getOclcCollectionName
       oclc_collection_id: getOclcCollectionId
-      oclc_entry_id: ~
-      oclc_linkscheme: ~
+      oclc_entry_id: null
+      oclc_linkscheme: null
       oclc_number: getPublicationOclcNumber
       ACTION: getAction
   Microform:
     action: overlay
-    collection_name: Newspapers @ UNB Libraries (Microform)
+    collection_name: 'Newspapers @ UNB Libraries (Microform)'
     collection_id: customer.133054.unbnewsmic
     coverage_depth: print
     column_mapping:
       publication_title: getPublicationTitle
       print_identifier: getPublicationIssn
-      online_identifier: ~
+      online_identifier: null
       date_first_issue_online: getHoldingStartDate
-      num_first_vol_online: ~
-      num_first_issue_online: ~
-      date_last_issue_online:  getHoldingEndDate
-      num_last_vol_online: ~
-      num_last_issue_online: ~
+      num_first_vol_online: null
+      num_first_issue_online: null
+      date_last_issue_online: getHoldingEndDate
+      num_last_vol_online: null
+      num_last_issue_online: null
       title_url: getPublicationUrl
-      first_author: ~
-      title_id: ~
-      embargo_info: ~
+      first_author: null
+      title_id: null
+      embargo_info: null
       coverage_depth: getCoverageDepth
       coverage_notes: getCoverageNotes
       publisher_name: getPublicationPublisher
       location: getHoldingLocation
-      title_notes: ~
-      staff_notes: ~
-      vendor_id: ~
+      title_notes: null
+      staff_notes: null
+      vendor_id: null
       oclc_collection_name: getOclcCollectionName
       oclc_collection_id: getOclcCollectionId
-      oclc_entry_id: ~
-      oclc_linkscheme: ~
+      oclc_entry_id: null
+      oclc_linkscheme: null
       oclc_number: getPublicationOclcNumber
       ACTION: getAction
   Online:
     action: overlay
-    collection_name: Newspapers @ UNB Libraries (Digital)
+    collection_name: 'Newspapers @ UNB Libraries (Digital)'
     collection_id: customer.133054.unbnewsonline
     coverage_depth: fulltext
     column_mapping:
       publication_title: getPublicationTitle
       print_identifier: getPublicationIssn
-      online_identifier: ~
+      online_identifier: null
       date_first_issue_online: getHoldingStartDate
-      num_first_vol_online: ~
-      num_first_issue_online: ~
+      num_first_vol_online: null
+      num_first_issue_online: null
       date_last_issue_online: getHoldingEndDate
-      num_last_vol_online: ~
-      num_last_issue_online: ~
+      num_last_vol_online: null
+      num_last_issue_online: null
       title_url: getPublicationUrl
-      first_author: ~
-      title_id: ~
-      embargo_info: ~
+      first_author: null
+      title_id: null
+      embargo_info: null
       coverage_depth: getCoverageDepth
       coverage_notes: getCoverageNotes
       publisher_name: getPublicationPublisher
       location: getHoldingLocation
-      title_notes: ~
-      staff_notes: ~
-      vendor_id: ~
+      title_notes: null
+      staff_notes: null
+      vendor_id: null
       oclc_collection_name: getOclcCollectionName
       oclc_collection_id: getOclcCollectionId
-      oclc_entry_id: ~
-      oclc_linkscheme: ~
+      oclc_entry_id: null
+      oclc_linkscheme: null
       oclc_number: getPublicationOclcNumber
       ACTION: getAction
   Digital:
     action: overlay
-    collection_name: Newspapers @ UNB Libraries (Digital)
+    collection_name: 'Newspapers @ UNB Libraries (Digital)'
     collection_id: customer.133054.unbnewsdigital
     coverage_depth: fulltext
     column_mapping:
       publication_title: getPublicationTitle
       print_identifier: getPublicationIssn
-      online_identifier: ~
+      online_identifier: null
       date_first_issue_online: getHoldingStartDate
-      num_first_vol_online: ~
-      num_first_issue_online: ~
+      num_first_vol_online: null
+      num_first_issue_online: null
       date_last_issue_online: getHoldingEndDate
-      num_last_vol_online: ~
-      num_last_issue_online: ~
+      num_last_vol_online: null
+      num_last_issue_online: null
       title_url: getPublicationUrl
-      first_author: ~
-      title_id: ~
-      embargo_info: ~
+      first_author: null
+      title_id: null
+      embargo_info: null
       coverage_depth: getCoverageDepth
       coverage_notes: getCoverageNotes
       publisher_name: getPublicationPublisher
       location: getHoldingLocation
-      title_notes: ~
-      staff_notes: ~
-      vendor_id: ~
+      title_notes: null
+      staff_notes: null
+      vendor_id: null
       oclc_collection_name: getOclcCollectionName
       oclc_collection_id: getOclcCollectionId
-      oclc_entry_id: ~
-      oclc_linkscheme: ~
+      oclc_entry_id: null
+      oclc_linkscheme: null
       oclc_number: getPublicationOclcNumber
       ACTION: getAction
 dependencies:
   module:
-  - serial_holding_export
+    - serial_holding_export
