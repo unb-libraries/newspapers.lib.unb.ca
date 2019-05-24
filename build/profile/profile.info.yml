@@ -1,6 +1,6 @@
-name: newspapers_lib_unb_ca Profile
+name: PROFILE_SLUG Profile
 type: profile
-description: 'Install newspapers_lib_unb_ca.'
+description: 'Install PROFILE_SLUG.'
 version: 8.x-1.0
 core: 8.x
 

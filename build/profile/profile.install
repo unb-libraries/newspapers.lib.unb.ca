@@ -2,17 +2,17 @@
 
 /**
  * @file
- * Install, update and uninstall for the default docker installation profile.
+ * Install, update and uninstall for the PROFILE_SLUG  profile.
  */
 
 /**
  * Implements hook_install().
  *
- * Perform actions to set up the site for this profile.
+ * Perform actions to set up the site for PROFILE_SLUG .
  *
  * @see system_install()
  */
-function newspapers_lib_unb_ca_install() {
+function PROFILE_SLUG_install() {
   // Set our default theme
   \Drupal::configFactory()
   ->getEditable('system.theme')

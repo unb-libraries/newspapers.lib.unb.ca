@@ -8,7 +8,7 @@ php:
 
 cache:
   directories:
-        - $HOME/.composer/cache
+    - $HOME/.composer/cache
 
 git:
   depth: 1
@@ -19,31 +19,23 @@ env:
     - AMAZON_ECR_REGION=us-east-1
     - DEPLOY_BRANCHES=dev,prod
     - DEPLOYMENT_FINISHED_MARKER=99_report_as_complete
-    - DOCKER_UPSTREAM_IMAGE=unblibraries/drupal:alpine-nginx-php7-8.x-composer
+    - DOCKER_UPSTREAM_IMAGE=unblibraries/drupal:8.x-1.x
     - OLD_IMAGES_TO_KEEP=2
     - SERVICE_DEPLOY_PORT=80
     - SERVICE_TEST_UP_PATH=/user
 
 before_install:
-  - git clone git://github.com/unb-libraries/CargoDock.git CargoDock
-  - CargoDock/travis/installDockerCompose.sh
-  - CargoDock/aws/installAuthAws.sh
-  - cp docker-compose.yml.travis docker-compose.yml
-  - CargoDock/travis/setDockerComposeEnv.sh
+  - curl -sSL https://raw.githubusercontent.com/unb-libraries/CargoDock/drupal-8.x-1.x/travis/deploy.sh | sh
+  - CargoDock/travis/beforeInstall.sh
 
 before_script:
-  - CargoDock/travis/buildInstanceTheme.sh
-  - CargoDock/travis/buildInstanceForTesting.sh
-  - CargoDock/travis/waitForDeploy.sh
-  - CargoDock/travis/checkStartupForErrors.sh
+  - CargoDock/travis/beforeScript.sh
 
 script:
   - CargoDock/travis/testInstance.sh
 
 after_success:
-  - CargoDock/travis/buildImagePushToRepo.sh
-  - CargoDock/travis/cleanupOldImages.sh
-  - CargoDock/travis/triggerKubeDeploy.sh
+  - CargoDock/travis/afterSuccess.sh
 
 notifications:
   slack:
