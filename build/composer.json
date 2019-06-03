@@ -106,7 +106,7 @@
         "drupal/chosen": "2.7",
         "drupal/conditional_fields": "1.0-alpha5",
         "drupal/config_update": "1.5",
-        "drupal/core": "8.7.1",
+        "drupal/core": "8.7.2",
         "drupal/externalauth": "1.1",
         "drupal/facets": "1.4",
         "drupal/features": "3.8",
