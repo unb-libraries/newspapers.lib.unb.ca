@@ -23,7 +23,7 @@ services:
       - ./env/redis.env
 
   drupal-solr-lib-unb-ca:
-    image: unblibraries/solr-drupal:7.x
+    image: unblibraries/solr-drupal:8.x-3.x
     expose:
       - "8983"
     networks:

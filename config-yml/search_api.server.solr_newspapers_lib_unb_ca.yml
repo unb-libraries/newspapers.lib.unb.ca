@@ -13,8 +13,8 @@ backend_config:
   connector_config:
     scheme: http
     host: drupal-solr-lib-unb-ca
-    port: '8983'
-    path: /solr
+    port: 8983
+    path: /
     core: newspapers.lib.unb.ca
     timeout: 5
     index_timeout: 5
@@ -28,3 +28,5 @@ backend_config:
   domain: generic
   site_hash: false
   server_prefix: ''
+  optimize: false
+  disabled_field_types: {  }
