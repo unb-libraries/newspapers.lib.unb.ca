@@ -53,7 +53,7 @@ field_settings:
     label: 'Page OCR'
     datasource_id: 'entity:digital_serial_page'
     property_path: page_ocr
-    type: solr_text_ngram
+    type: text
     dependencies:
       module:
         - digital_serial_page
@@ -61,7 +61,7 @@ field_settings:
     label: 'Page Sort'
     datasource_id: 'entity:digital_serial_page'
     property_path: page_sort
-    type: string
+    type: integer
     dependencies:
       module:
         - digital_serial_page
