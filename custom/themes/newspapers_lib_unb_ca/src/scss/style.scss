@@ -700,8 +700,13 @@ a.btn-add::before {
 .table > thead:first-child > tr:first-child > th {
   border-top: 2px solid #ddd;
 }
+/* Table head padding fix until sort restored */
 .search-results thead > tr > th {
-  padding: 0;
+  padding: .5em;
+  white-space: nowrap;
+}
+.search-results time {
+  white-space: nowrap;
 }
 th[class*="-sort"] a,
 th[class*="-date"] a,
@@ -919,4 +924,7 @@ and (max-width: 991px){
   .path-frontpage section.details .well {
     min-height: 200px;
   }
+}
+div.alert-dismissible {
+  transition: all .3s ease-out;
 }
