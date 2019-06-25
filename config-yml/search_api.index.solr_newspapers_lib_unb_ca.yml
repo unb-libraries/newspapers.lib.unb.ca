@@ -77,7 +77,7 @@ field_settings:
     label: 'Place of Publication » The full name of the country subdivision (i.e. province).'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:administrative_area_name'
-    type: solr_text_ngram
+    type: text
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
@@ -93,7 +93,7 @@ field_settings:
     label: 'Place of Publication » The full name of the country.'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:country_name'
-    type: solr_text_ngram
+    type: text
     dependencies:
       config:
         - field.storage.node.field_place_of_publication
@@ -287,7 +287,7 @@ field_settings:
     label: 'Place of Publication » The locality (i.e. city).'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:locality'
-    type: solr_text_ngram
+    type: text
     boost: !!float 5
     dependencies:
       config:
@@ -340,7 +340,7 @@ field_settings:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: solr_text_ngram
+    type: text
     boost: !!float 8
     dependencies:
       module:
