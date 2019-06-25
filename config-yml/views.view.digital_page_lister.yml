@@ -606,18 +606,6 @@ display:
           expose:
             label: ''
           plugin_id: search_api
-        parent_publication_title:
-          id: parent_publication_title
-          table: search_api_index_pages_newspapers_lib_unb_ca
-          field: parent_publication_title
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: search_api
       title: 'Search Issue Pages'
       header:
         result:
