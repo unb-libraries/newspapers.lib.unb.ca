@@ -61,6 +61,8 @@ services:
       - newspapers.lib.unb.ca
     env_file:
       - ./env/drupal.env
+    environment:
+      - DRUPAL_IMPORT_CONTENT=TRUE
     volumes:
       - ./config-yml:/app/configuration
       - ./content:/app/content
