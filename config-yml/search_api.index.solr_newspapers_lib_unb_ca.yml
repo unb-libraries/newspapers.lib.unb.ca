@@ -28,14 +28,46 @@ dependencies:
     - field.storage.node.field_subject_notes
     - field.storage.node.field_subjects
     - field.storage.node.field_title_notes
-    - field.storage.node.field_first_issue_approx_date
     - field.storage.node.field_last_issue_approx_date
+    - field.storage.node.field_first_issue_approx_date
     - search_api.server.solr_newspapers_lib_unb_ca
 third_party_settings:
   search_api_solr:
     finalize: false
     commit_before_finalize: false
     commit_after_finalize: false
+    multilingual:
+      limit_to_content_language: false
+      include_language_independent: true
+    highlighter:
+      maxAnalyzedChars: 51200
+      fragmenter: gap
+      regex:
+        slop: 0.5
+        pattern: blank
+        maxAnalyzedChars: 10000
+      usePhraseHighlighter: true
+      highlightMultiTerm: true
+      preserveMulti: false
+      highlight:
+        mergeContiguous: false
+        requireFieldMatch: false
+        snippets: 3
+        fragsize: 0
+    mlt:
+      mintf: 1
+      mindf: 1
+      maxdf: 0
+      maxdfpct: 0
+      minwl: 0
+      maxwl: 0
+      maxqt: 100
+      maxntp: 2000
+      boost: false
+      interestingTerms: none
+    advanced:
+      index_prefix: ''
+      collection: ''
 id: solr_newspapers_lib_unb_ca
 name: newspapers.lib.unb.ca
 description: ''
