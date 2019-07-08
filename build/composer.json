@@ -125,7 +125,7 @@
         "drupal/token": "1.5",
         "drupal/twig_field_value": "1.2",
         "drupal/twig_tweak": "2.3",
-        "drupal/views_infinite_scroll": "1.5",
+        "drupal/views_infinite_scroll": "1.6",
         "harvesthq/chosen": "~1.8",
         "nodespark/des-connector": "5.x-dev",
         "phpoffice/phpspreadsheet": "^1.5.0",
