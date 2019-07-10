@@ -19,14 +19,17 @@ backend_config:
     timeout: 5
     index_timeout: 5
     optimize_timeout: 10
+    finalize_timeout: 30
     commit_within: 1000
-    solr_version: '7'
+    solr_version: '8'
     http_method: AUTO
+    jmx: false
+    solr_install_dir: /opt/solr
+  disabled_field_types: {  }
   retrieve_data: false
   highlight_data: false
   skip_schema_check: true
-  domain: generic
-  site_hash: false
   server_prefix: ''
+  domain: generic
   optimize: false
-  disabled_field_types: {  }
+  site_hash: false
