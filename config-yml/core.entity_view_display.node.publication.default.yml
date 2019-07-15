@@ -366,3 +366,4 @@ hidden:
   field_last_issue_sort_date: true
   field_sort_title: true
   langcode: true
+  search_api_excerpt: true

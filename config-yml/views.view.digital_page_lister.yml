@@ -2674,11 +2674,6 @@ display:
           empty: false
           content: "<h2 class=\"alert alert-success fade in\">\r\n    <span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span>\r\n    Displaying @start - @end of @total results\r\n</h2>"
           plugin_id: result
-        area:
-          id: area
-          table: views
-          field: area
-          plugin_id: text
       empty:
         area:
           id: area

@@ -100,3 +100,4 @@ hidden:
   field_this_is_part_of_a_family: true
   field_title_notes: true
   langcode: true
+  search_api_excerpt: true

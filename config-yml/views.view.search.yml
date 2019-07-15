@@ -104,7 +104,7 @@ display:
               empty_column: false
               responsive: ''
             field_sort_title:
-              sortable: false
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
@@ -116,21 +116,21 @@ display:
               empty_column: false
               responsive: ''
             sort_locality:
-              sortable: false
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             field_first_issue_search_date_sort:
-              sortable: false
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
             field_last_issue_search_date_sort:
-              sortable: false
+              sortable: true
               default_sort_order: desc
               align: ''
               separator: ''

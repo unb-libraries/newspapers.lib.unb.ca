@@ -684,7 +684,7 @@ a.btn-add::before {
   display: inline;
   font-size: smaller;
 }
-.search-results .views-field-field-sort-title span:first-of-type::before {
+.search-results tbody .views-field-field-sort-title span:first-of-type::before {
   content: 'Available: ';
   margin-left: .5em;
 }
