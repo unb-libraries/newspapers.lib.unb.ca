@@ -8,19 +8,14 @@
       "email": "libsupport@unb.ca"
     }
   ],
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "config": {
     "preferred-install": {
       "*": "dist"
     }
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/unb-libraries/drupal-behat-testing-libraries.git"
-    }
-  ],
   "require": {
-    "unb-libraries/drupal-behat-testing-libraries": "^8.0.0"
+    "unb-libraries/drupal-behat-testing-libraries": "^8.0.5"
   }
 }
