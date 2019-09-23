@@ -130,6 +130,7 @@
         "nodespark/des-connector": "5.x-dev",
         "phpoffice/phpspreadsheet": "^1.5.0",
         "simeydotme/jquery-ui-slider-pips": "~1.11",
+        "symfony/event-dispatcher": "4.3.4 as 3.4.99",
         "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x",
         "unb-libraries/drupal-builder": "^8.0.0"
     },
