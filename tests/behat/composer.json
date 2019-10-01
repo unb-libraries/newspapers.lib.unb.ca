@@ -16,6 +16,6 @@
     }
   },
   "require": {
-    "unb-libraries/drupal-behat-testing-libraries": "^8.0.5"
+    "unb-libraries/drupal-behat-testing-libraries": "^8.0.6"
   }
 }
