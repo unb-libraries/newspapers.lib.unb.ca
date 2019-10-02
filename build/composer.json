@@ -122,7 +122,7 @@
         "drupal/restui": "1.15",
         "drupal/search_api": "1.14",
         "drupal/search_api_autocomplete": "1.2",
-        "drupal/search_api_solr": "3.6",
+        "drupal/search_api_solr": "3.4",
         "drupal/token": "1.5",
         "drupal/twig_field_value": "1.2",
         "drupal/twig_tweak": "2.4",
@@ -131,7 +131,6 @@
         "nodespark/des-connector": "5.x-dev",
         "phpoffice/phpspreadsheet": "^1.5.0",
         "simeydotme/jquery-ui-slider-pips": "~1.11",
-        "symfony/event-dispatcher": "4.3.4 as 3.4.99",
         "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x",
         "unb-libraries/drupal-builder": "^8.0.0"
     },
