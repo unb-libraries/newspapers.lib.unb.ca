@@ -12,7 +12,7 @@
     "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x"
   },
   "require-dev": {
-    "unb-libraries/dockworker-drupal": "^2.1.0"
+    "unb-libraries/dockworker-drupal": "^2.1.11"
   },
   "scripts": {
     "post-update-cmd": [
