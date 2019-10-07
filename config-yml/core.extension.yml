@@ -1,10 +1,12 @@
 module:
   address: 0
+  alert_scheduler_client: 0
   automated_cron: 0
   basic_auth: 0
   block: 0
   block_content: 0
   breakpoint: 0
+  calendar_hours_client: 0
   chosen: 0
   chosen_lib: 0
   ckeditor: 0

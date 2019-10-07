@@ -1,0 +1,2 @@
+base_url: 'https://intranet.lib.unb.ca/api/alerts/'
+refresh_interval: 60000
