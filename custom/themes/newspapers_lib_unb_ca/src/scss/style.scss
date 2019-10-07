@@ -21,6 +21,9 @@ a:not(.btn):not(.button):not(.cd-top):active {
   border-bottom-style: none;
   text-decoration: underline;
 }
+#image-hours a:hover {
+  text-decoration: none;
+}
 .pagination a:focus,
 .pagination a:hover,
 .pagination a:active {
