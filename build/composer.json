@@ -112,7 +112,7 @@
         "drupal/features": "3.8",
         "drupal/field_group": "3.0-rc1",
         "drupal/google_analytics": "2.4",
-        "drupal/health_check": "1.1",
+        "drupal/health_check": "1.2",
         "drupal/languagefield": "1.5",
         "drupal/ldap": "3.0-beta7",
         "drupal/material_admin": "1.0-alpha6",
