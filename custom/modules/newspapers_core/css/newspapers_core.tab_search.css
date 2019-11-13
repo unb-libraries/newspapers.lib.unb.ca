@@ -58,7 +58,7 @@ a#tab-about:before {
     width: 25%;
 }
 .tab-pane div.form-type-textfield + span button {
-    margin-top: 27px;
+    margin-top: 2.5rem;
 }
 
 @media (max-width: 990px) {
