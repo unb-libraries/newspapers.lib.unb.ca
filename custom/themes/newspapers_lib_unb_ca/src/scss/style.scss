@@ -369,7 +369,7 @@ p {
   background: #d82e3b;
   border: 1px solid #fff;
   box-shadow: 0 0 1px 0px white inset, 0 0 1px 0px white;
-  padding: 4px 14px;
+  padding: 5px 14px;
   margin: 0 .4em;
   font-size: 20px;
   opacity: 0.7;
@@ -383,7 +383,8 @@ p {
 }
 
 /* Browse Issues */
-.views-infinite-scroll-content-wrapper > div:not(:first-child) {
+.views-infinite-scroll-content-wrapper > div:not(:first-child),
+.browse-issues .view-content > div:not(:first-child) {
   margin-top: 1.5em;
 }
 /* Stack Owl Carousel Grouping + Image */
@@ -426,6 +427,27 @@ p {
 .image-link-shadow a:not(.button):focus img,
 .image-link-shadow a:not(.button):hover img {
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, .25);
+}
+
+/* Digital Issue Browse pager */
+nav[role="navigation"]{
+  .pager {
+    margin-left: auto;
+    margin-right: auto;
+
+    .next,
+    .previous {
+      display: inline-block;
+
+      a {
+        &:focus,
+        &:hover {
+          border-bottom-style: solid;
+          text-decoration: none;
+        }
+      }
+    }
+  }
 }
 
 /* High resolution Digital Page pager */
