@@ -1,0 +1,107 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: drupal
+    appMajor: "8"
+    instance: newspapers.lib.unb.ca
+    tier: frontend
+    uri: dev-newspapers.lib.unb.ca
+    vcsOwner: unb-libraries
+    vcsRepository: newspapers.lib.unb.ca
+    vcsRef: dev
+  name: newspapers-lib-unb-ca
+  namespace: dev
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: drupal
+        appMajor: "8"
+        instance: newspapers.lib.unb.ca
+        tier: frontend
+        uri: dev-newspapers.lib.unb.ca
+        vcsOwner: unb-libraries
+        vcsRepository: newspapers.lib.unb.ca
+        vcsRef: dev
+    spec:
+      containers:
+        -
+          name: newspapers-lib-unb-ca
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 65
+            timeoutSeconds: 3
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 130
+            timeoutSeconds: 3
+            periodSeconds: 15
+          env:
+            -
+              name: DEPLOY_ENV
+              value: dev
+            -
+              name: MYSQL_HOSTNAME
+              value: drupal-mysql-lib-unb-ca
+            -
+              name: MYSQL_PORT
+              value: "3306"
+            -
+              name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: root-password
+            -
+              name: LOGZIO_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: logzio
+                  key: secret-key
+            -
+              name: NR_INSTALL_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: newrelic
+                  key: install-key
+            -
+              name: NGINX_LOG_FILE
+              value: "/var/log/nginx/access.log"
+            -
+              name: NGINX_ERROR_LOG_FILE
+              value: "/var/log/nginx/error.log"
+            -
+              name: PHP_FPM_ERROR_LOG
+              value: "/var/log/nginx/error.log"
+          image: "||DEPLOYMENTIMAGE||"
+          imagePullPolicy: Always
+          ports:
+            -
+              containerPort: 80
+          volumeMounts:
+            -
+              mountPath: /app/html/sites/default
+              name: drupal-persistent-storage
+      priorityClassName: dev-med-priority-services
+      imagePullSecrets:
+        -
+          name: docker-hub-auth
+      restartPolicy: Always
+      volumes:
+        -
+          name: drupal-persistent-storage
+          persistentVolumeClaim:
+            claimName: newspapers-lib-unb-ca
