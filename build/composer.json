@@ -110,7 +110,7 @@
         "drupal/externalauth": "1.2",
         "drupal/facets": "1.4",
         "drupal/features": "3.8",
-        "drupal/field_group": "3.0-rc1",
+        "drupal/field_group": "3.0-rc2",
         "drupal/google_analytics": "2.4",
         "drupal/health_check": "1.2",
         "drupal/languagefield": "1.5",
