@@ -17,7 +17,6 @@ description: 'Listing of all publications associated with a ''Digital'' Serial H
 tag: ''
 base_table: digital_serial_title
 base_field: id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -405,6 +404,8 @@ display:
               administrator: '0'
               newspaper_administrator: '0'
             placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

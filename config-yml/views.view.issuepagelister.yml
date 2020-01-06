@@ -16,7 +16,6 @@ description: ''
 tag: ''
 base_table: digital_serial_page
 base_field: id
-core: 8.x
 display:
   default:
     display_plugin: default
