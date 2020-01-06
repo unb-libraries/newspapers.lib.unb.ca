@@ -123,7 +123,7 @@
         "drupal/search_api": "1.15",
         "drupal/search_api_autocomplete": "1.2",
         "drupal/search_api_solr": "3.7",
-        "drupal/token": "1.5",
+        "drupal/token": "1.6",
         "drupal/twig_field_value": "1.2",
         "drupal/twig_tweak": "2.4",
         "drupal/views_infinite_scroll": "1.6",
