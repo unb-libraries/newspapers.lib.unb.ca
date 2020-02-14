@@ -18,6 +18,7 @@ script:
   - vendor/bin/dockworker local:build-test
   - vendor/unb-libraries/dockworker/scripts/kubectl/init.sh
   - vendor/bin/dockworker image:deploy $TRAVIS_BRANCH
+  - vendor/bin/dockworker deployment:logs:check $TRAVIS_BRANCH
 
 notifications:
   slack:
