@@ -115,7 +115,6 @@
         "drupal/health_check": "1.2",
         "drupal/languagefield": "1.5",
         "drupal/ldap": "3.0-beta7",
-        "drupal/material_admin": "1.0-alpha6",
         "drupal/owlcarousel": "1.0-alpha3",
         "drupal/pathauto": "1.6",
         "drupal/redis": "1.4",
