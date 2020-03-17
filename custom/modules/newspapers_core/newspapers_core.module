@@ -23,13 +23,25 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * Implements hook_cron().
  */
 function newspapers_core_cron() {
-  // Update the ongoing dates for publications every 3 hours.
+  if (_newspapers_core_ongoing_publication_dates_needs_update()) {
+    update_ongoing_publication_dates();
+    \Drupal::state()->set('newspapers_core.last_ongoing_run', time());
+  }
+}
+
+/**
+ * Determine if the ongoing newspaper ranges needs an update.
+ *
+ * @return bool
+ *   TRUE if the ongoing newspaper ranges needs an update. FALSE otherwise.
+ */
+function _newspapers_core_ongoing_publication_dates_needs_update() {
   $last_ongoing_run = \Drupal::state()->get('newspapers_core.last_ongoing_run', 0);
   $time_now = time();
-  if (($time_now - $last_ongoing_run) > 10800) {
-    update_ongoing_publication_dates();
-    \Drupal::state()->set('newspapers_core.last_ongoing_run', $time_now);
-  }
+  $current_hour = date('H', $time_now);
+  return ($time_now - $last_ongoing_run) > 10800 &&
+    $current_hour >= 1 &&
+    $current_hour <= 3;
 }
 
 /**
