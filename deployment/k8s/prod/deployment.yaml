@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -13,6 +13,9 @@ metadata:
   name: newspapers-lib-unb-ca
   namespace: prod
 spec:
+  selector:
+    matchLabels:
+      uri: newspapers.lib.unb.ca
   replicas: 2
   revisionHistoryLimit: 2
   strategy:
