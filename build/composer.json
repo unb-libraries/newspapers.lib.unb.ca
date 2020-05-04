@@ -117,7 +117,7 @@
         "drupal/ldap": "3.0-beta7",
         "drupal/noreqnewpass": "1.1",
         "drupal/owlcarousel": "1.0-alpha3",
-        "drupal/pathauto": "1.7",
+        "drupal/pathauto": "1.8",
         "drupal/redis": "1.4",
         "drupal/restui": "1.15",
         "drupal/search_api": "1.16",
