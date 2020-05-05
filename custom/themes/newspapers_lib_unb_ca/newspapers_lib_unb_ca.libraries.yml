@@ -1,6 +1,6 @@
 newspapers_styles:
   css:
-    theme:
+    base:
       dist/css/style.css: {}
 
 ajax_loading:
