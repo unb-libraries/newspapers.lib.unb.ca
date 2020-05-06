@@ -119,19 +119,21 @@
       float: right
     }
   }
-}
-.affix {
-  #defaultmenu {
-    .dropdown a.dropdown-toggle:focus,
-    .dropdown a.dropdown-toggle:hover {
-      background: inherit !important;
-      border-color: $white;
-      color: $white;
-    }
 
-    .open a.dropdown-toggle:focus,
-    .open a.dropdown-toggle:hover {
-      color: $black;
+  &.affix {
+    #defaultmenu .navbar-nav {
+      .dropdown a.dropdown-toggle:focus,
+      .dropdown a.dropdown-toggle:hover {
+        background: inherit!important;
+        border-bottom-color: $white;
+        color: $white;
+      }
+
+      li.open > a.dropdown-toggle,
+      li.open > a.dropdown-toggle:focus {
+        border-bottom-color: $white;
+        color: $black;
+      }
     }
   }
 }
@@ -175,6 +177,11 @@
       }
     }
   }
+}
+
+/* Remove unb-lib nav bottom border */
+.navbar.fhmm.affix-top {
+  border-bottom: none;
 }
 
 /* Hours toggle fix */

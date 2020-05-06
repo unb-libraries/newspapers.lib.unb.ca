@@ -457,6 +457,9 @@ nav[role="navigation"]{
 }
 
 /* Fix overrides.min.css & unb-lib.css conflict */
+.icon-unb {
+  margin-top: 0;
+}
 a.disabled {
   color: $text-muted;
 }
