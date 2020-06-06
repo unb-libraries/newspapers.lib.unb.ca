@@ -9,7 +9,7 @@ dockworker:
       - mysql:5.7
       - redis:5-alpine
       - unblibraries/dockworker-drupal:latest
-      - unblibraries/solr-drupal:8.x-3.x
+      - unblibraries/solr-drupal:8.x-4.x
   deployment:
     environments:
       - dev
