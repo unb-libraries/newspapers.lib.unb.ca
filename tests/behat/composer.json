@@ -16,7 +16,6 @@
     }
   },
   "require": {
-    "symfony/event-dispatcher": "4.3.4 as 3.4.35",
     "unb-libraries/drupal-behat-testing-libraries": "^8.0.6"
   }
 }
