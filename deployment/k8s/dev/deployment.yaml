@@ -35,6 +35,8 @@ spec:
         vcsRepository: newspapers.lib.unb.ca
         vcsRef: dev
     spec:
+      nodeSelector:
+        deployenv: dev
       containers:
         -
           name: newspapers-lib-unb-ca
