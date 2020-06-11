@@ -65,9 +65,8 @@ services:
       - DRUPAL_IMPORT_CONTENT=TRUE
     volumes:
       - ./config-yml:/app/configuration
-      - ./content:/app/content
-      - ./custom/modules:/app/modules/custom
-      - ./custom/themes:/app/themes/custom
+      - ./custom/modules:/app/html/modules/custom
+      - ./custom/themes:/app/html/themes/custom
       - ./tests:/app/tests
 
 networks:

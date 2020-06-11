@@ -1,4 +1,4 @@
-FROM unblibraries/dockworker-drupal:latest
+FROM unblibraries/drupal:dockworker-2.x
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 ENV DRUPAL_SITE_ID newspapers
@@ -23,19 +23,17 @@ ARG COMPOSER_DEPLOY_DEV=no-dev
 ENV DRUPAL_BASE_PROFILE minimal
 ENV DRUPAL_BUILD_TMPROOT ${TMP_DRUPAL_BUILD_DIR}/webroot
 
-COPY ./build/ ${TMP_DRUPAL_BUILD_DIR}
+COPY ./build /build
 RUN /scripts/build.sh ${COMPOSER_DEPLOY_DEV} ${DRUPAL_BASE_PROFILE}
 
 # Deploy repo assets.
+COPY ./config-yml ${DRUPAL_CONFIGURATION_DIR}
+COPY ./custom/themes ${DRUPAL_ROOT}/themes/custom
+COPY ./custom/modules ${DRUPAL_ROOT}/modules/custom
 COPY ./tests/ ${DRUPAL_TESTING_ROOT}/
-COPY ./config-yml ${TMP_DRUPAL_BUILD_DIR}/config-yml
-COPY ./custom/themes ${TMP_DRUPAL_BUILD_DIR}/custom_themes
-COPY ./custom/modules ${TMP_DRUPAL_BUILD_DIR}/custom_modules
 
 # Universal environment variables.
 ENV DEPLOY_ENV prod
-ENV DRUPAL_DEPLOY_CONFIGURATION TRUE
-ENV DRUPAL_CONFIGURATION_EXPORT_SKIP devel
 
 # Metadata
 ARG BUILD_DATE

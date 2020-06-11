@@ -2,13 +2,13 @@ dockworker:
   version: '3.0'
   application:
     name: newspapers.lib.unb.ca
-    finish_marker: '99_z_notify_user_URI'
+    finish_marker: '99_zz_notify_user_URI'
     project_prefix: NBNP
     upstream_images:
       - mailhog/mailhog
       - mysql:5.7
       - redis:5-alpine
-      - unblibraries/dockworker-drupal:latest
+      - unblibraries/drupal:dockworker-2.x
       - unblibraries/solr-drupal:8.x-4.x
   deployment:
     environments:
