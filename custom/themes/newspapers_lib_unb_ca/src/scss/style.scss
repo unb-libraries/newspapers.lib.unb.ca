@@ -240,6 +240,17 @@ select[multiple="multiple"] + .form-control {
   text-decoration: underline;
   z-index: 1;
 }
+.ui-slider-pips {
+  .ui-slider-label {
+    color: $text-muted;
+  }
+  .ui-slider-pip-selected-1,
+  .ui-slider-pip-selected-2 {
+    .ui-slider-label {
+      color: $link-color;
+    }
+  }
+}
 .facets-widget-checkbox ul {
   padding-left: .5em;
 }
