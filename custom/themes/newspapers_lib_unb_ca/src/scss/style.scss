@@ -260,9 +260,12 @@ select[multiple="multiple"] + .form-control {
 .facet-item label {
   font-weight: normal;
 }
+.facet-item__value {
+  vertical-align: middle;
+}
 .facet-item__count {
   color: $text-muted;
-  font-size: .9em;
+  font-size: .93em;
 }
 input[type="checkbox"].facets-checkbox {
   height: 1.55em;
