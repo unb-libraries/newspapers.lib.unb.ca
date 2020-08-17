@@ -103,7 +103,7 @@
     "require": {
         "drupal/address": "1.8",
         "drupal/bootstrap": "3.23",
-        "drupal/chosen": "2.9",
+        "drupal/chosen": "2.10",
         "drupal/conditional_fields": "1.0-alpha9",
         "drupal/config_update": "1.5",
         "drupal/core": "8.9.3",
