@@ -1,4 +1,4 @@
-FROM unblibraries/drupal:dockworker-2.x
+FROM unblibraries/drupal:8.x-3.x-unblib
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 # Install additional OS packages.
@@ -6,6 +6,7 @@ ENV ADDITIONAL_OS_PACKAGES rsyslog postfix php7-ldap php7-xmlreader php7-zip php
 ENV DRUPAL_SITE_ID newspapers
 ENV DRUPAL_SITE_URI newspapers.lib.unb.ca
 ENV DRUPAL_SITE_UUID 655af73f-dc1a-48f1-84a1-3da88d2d1ad4
+DRUPAL_CHOWN_PUBLIC_FILES_STARTUP FALSE
 
 # Build application.
 COPY ./build /build
