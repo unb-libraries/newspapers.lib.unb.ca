@@ -1,4 +1,4 @@
-FROM unblibraries/drupal:dockworker-2.x
+FROM unblibraries/drupal:drupal:8.x-3.x-unblib
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 # Install additional OS packages.
