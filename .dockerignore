@@ -3,8 +3,6 @@
 
 # Allow files and folders with a pattern starting with !
 !Dockerfile
-!scripts
-!package-conf
 !custom
 !build
 !config-yml
