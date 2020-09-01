@@ -5,11 +5,7 @@ dockworker:
     finish_marker: '99_zz_notify_user_URI'
     project_prefix: NBNP
     upstream_images:
-      - mailhog/mailhog
-      - mysql:5.7
-      - redis:5-alpine
-      - unblibraries/drupal:dockworker-2.x
-      - unblibraries/solr-drupal:8.x-4.x
+      - unblibraries/drupal:8.x-2.x-slim-unblib
   deployment:
     environments:
       - dev

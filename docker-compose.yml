@@ -8,9 +8,9 @@ services:
     env_file:
       - ./env/mysql.env
     expose:
-     - "3306"
+      - "3306"
     networks:
-    - newspapers.lib.unb.ca
+      - newspapers.lib.unb.ca
 
   drupal-redis-lib-unb-ca:
     image: redis:5-alpine
@@ -24,14 +24,16 @@ services:
 
   drupal-solr-lib-unb-ca:
     image: unblibraries/solr-drupal:8.x-4.x
+    env_file:
+      - ./env/solr.env
     expose:
-    - "8983"
+      - "8983"
     networks:
-    - newspapers.lib.unb.ca
+      - newspapers.lib.unb.ca
     entrypoint:
-    - docker-entrypoint-multiple.sh
-    - newspapers.lib.unb.ca:/solr-conf
-    - pages.newspapers.lib.unb.ca:/solr-conf
+      - docker-entrypoint-multiple.sh
+      - newspapers.lib.unb.ca:/solr-conf
+      - pages.newspapers.lib.unb.ca:/solr-conf
 
   mailhog:
     image: mailhog/mailhog
@@ -46,8 +48,6 @@ services:
   newspapers.lib.unb.ca:
     build:
       context: .
-      args:
-        - COMPOSER_DEPLOY_DEV=dev
     restart: always
     container_name: newspapers.lib.unb.ca
     depends_on:
@@ -64,6 +64,7 @@ services:
     environment:
       - DRUPAL_IMPORT_CONTENT=TRUE
     volumes:
+      - /app/html/sites/default
       - ./config-yml:/app/configuration
       - ./custom/modules:/app/html/modules/custom
       - ./custom/themes:/app/html/themes/custom
