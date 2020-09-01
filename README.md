@@ -1,4 +1,4 @@
-![newspapers.lib.unb.ca screenshot](https://github.com/unb-libraries/newspapers.lib.unb.ca/raw/prod/screenshot.png "newspapers.lib.unb.ca screenshot")
+![newspapers.lib.unb.ca screenshot](https://github.com/unb-libraries/newspapers.lib.unb.ca/raw/prod/.dockworker/screenshot.png "newspapers.lib.unb.ca screenshot")
 # [newspapers.lib.unb.ca](https://newspapers.lib.unb.ca/) : Instance Repository
 [![Build Status](https://travis-ci.com/unb-libraries/newspapers.lib.unb.ca.svg?branch=prod)](https://travis-ci.com/unb-libraries/newspapers.lib.unb.ca) [![GitHub license](https://img.shields.io/github/license/unb-libraries/newspapers.lib.unb.ca)](https://github.com/unb-libraries/newspapers.lib.unb.ca/blob/dev/LICENSE) ![GitHub repo size](https://img.shields.io/github/repo-size/unb-libraries/newspapers.lib.unb.ca)
 
