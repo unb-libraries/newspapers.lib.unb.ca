@@ -8,8 +8,7 @@
       "email": "libsupport@unb.ca"
     }
   ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
+  "minimum-stability": "stable",
   "config": {
     "preferred-install": {
       "*": "dist"
