@@ -125,7 +125,7 @@
         "drupal/search_api_solr": "4.1.6",
         "drupal/token": "1.7",
         "drupal/twig_field_value": "1.2",
-        "drupal/twig_tweak": "2.7",
+        "drupal/twig_tweak": "2.8",
         "drupal/views_infinite_scroll": "1.7",
         "harvesthq/chosen": "~1.8",
         "nodespark/des-connector": "5.x-dev",
