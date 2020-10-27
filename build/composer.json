@@ -120,7 +120,7 @@
         "drupal/pathauto": "1.8",
         "drupal/redis": "1.4",
         "drupal/restui": "1.15",
-        "drupal/search_api": "1.17",
+        "drupal/search_api": "1.18",
         "drupal/search_api_autocomplete": "1.4",
         "drupal/search_api_solr": "4.1.6",
         "drupal/token": "1.7",
