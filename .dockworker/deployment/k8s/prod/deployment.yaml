@@ -76,21 +76,6 @@ spec:
                 secretKeyRef:
                   name: newrelic
                   key: install-key
-            -
-              name: LOGZIO_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: logzio
-                  key: secret-key
-            -
-              name: NGINX_LOG_FILE
-              value: "/var/log/nginx/access.log"
-            -
-              name: NGINX_ERROR_LOG_FILE
-              value: "/var/log/nginx/error.log"
-            -
-              name: PHP_FPM_ERROR_LOG
-              value: "/var/log/nginx/error.log"
           image: "||DEPLOYMENTIMAGE||"
           imagePullPolicy: Always
           ports:

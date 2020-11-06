@@ -19,6 +19,7 @@ script:
   - vendor/unb-libraries/dockworker/scripts/kubectl/init.sh
   - vendor/bin/dockworker image:deploy $TRAVIS_BRANCH
   - vendor/bin/dockworker deployment:logs:check $TRAVIS_BRANCH
+  - vendor/unb-libraries/dockworker/scripts/travis/notifyNewRelicDeployment.sh
 
 notifications:
   slack:
