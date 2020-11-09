@@ -101,7 +101,7 @@
         }
     ],
     "require": {
-        "drupal/address": "1.8",
+        "drupal/address": "1.9",
         "drupal/bootstrap": "3.23",
         "drupal/chosen": "2.10",
         "drupal/conditional_fields": "1.0-alpha9",
