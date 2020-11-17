@@ -30,6 +30,14 @@ digital_serial_page.issue_view_page:
       digital_serial_page:
         type: entity:digital_serial_page
 
+digital_serial_page.issue_download_page:
+  path: '/serials_pages/download/{digital_serial_issue}/{page_no}/download'
+  defaults:
+    _controller: '\Drupal\digital_serial_page\Controller\DownloadPageImageFileController::servePageEntityFile'
+    _title: 'Download Image File'
+  requirements:
+    _permission: 'view published serial page entities'
+
 digital_serial_page.title_edit_page:
   path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages/{digital_serial_page}/edit'
   defaults:
