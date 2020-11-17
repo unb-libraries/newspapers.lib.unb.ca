@@ -3,8 +3,10 @@
 namespace Drupal\digital_serial_page\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\system\fileDownloadController;
+use Drupal\system\FileDownloadController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -33,8 +35,15 @@ class DownloadPageImageFileController extends ControllerBase {
       $page = $storage->load($page_id);
       $image = $page->getPageImage();
       $uri = $image->getFileUri();
-      $request = new Request(array('file' => $uri));
-      return fileDownloadController::download($request, 'public');
+      $absolute_path = \Drupal::service('file_system')->realpath($uri);
+
+      $file_content = file_get_contents($absolute_path);
+      $file_name = $image->getFileName();
+
+      $response = new Response($file_content);
+      $response->headers->set('Content-Type', $image->getMimeType());
+      $response->headers->set('Content-Disposition', "attachment; filename=\"$file_name\"");
+      return $response;
     }
     throw new NotFoundHttpException();
   }
