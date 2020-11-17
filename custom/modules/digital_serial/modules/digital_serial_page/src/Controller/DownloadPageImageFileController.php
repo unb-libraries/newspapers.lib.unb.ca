@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\digital_serial\Controller;
+namespace Drupal\digital_serial_page\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\system\fileDownloadController;
