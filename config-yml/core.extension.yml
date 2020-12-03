@@ -59,7 +59,6 @@ module:
   rest: 0
   search_api: 0
   search_api_autocomplete: 0
-  search_api_db: 0
   search_api_solr: 0
   serial_holding_export: 0
   serialization: 0
