@@ -33,7 +33,7 @@ class SerialManageHoldingsBreadcrumbBuilder implements BreadcrumbBuilderInterfac
    */
   public function build(RouteMatchInterface $route_match) {
     $nid = $route_match->getParameter('node');
-    $node = node_load($nid);
+    $node =  \Drupal\node\Entity\Node::load($nid);
     $node_title = $node->getTitle();
 
     // Set breadcrumb.
