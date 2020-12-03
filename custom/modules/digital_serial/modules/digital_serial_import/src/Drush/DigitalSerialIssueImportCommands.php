@@ -3,6 +3,7 @@
 namespace Drupal\digital_serial_import\Drush;
 
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\Entity\File;
 use Drupal\digital_serial_issue\Entity\SerialIssue;
 use Drupal\digital_serial_page\Entity\SerialPage;
@@ -172,8 +173,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
     $file_basename = basename($source);
     $file_destination = "$destination://$file_basename";
     if (file_exists($source)) {
-      $file_uri = file_unmanaged_copy($source, $file_destination,
-        FILE_EXISTS_REPLACE);
+      $file_uri = \Drupal::service('file_system')->copy($source, $file_destination, FileSystemInterface::EXISTS_REPLACE);
       $file = File::Create([
         'uri' => $file_uri,
       ]);
