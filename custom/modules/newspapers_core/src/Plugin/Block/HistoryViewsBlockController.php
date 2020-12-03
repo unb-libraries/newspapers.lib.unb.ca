@@ -30,7 +30,7 @@ class HistoryViewsBlockController extends BlockBase {
 
   public function build() {
     $date = new DrupalDateTime();
-    $date->setTimezone(timezone_open(drupal_get_user_timezone()));
+    $date->setTimezone(timezone_open(date_default_timezone_get()));
     $history_date = $date->format('m-d');
 
     $query = \Drupal::entityQuery('digital_serial_issue')
