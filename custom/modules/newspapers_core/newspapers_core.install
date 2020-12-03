@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\Core\File\FileSystemInterface;
+
 /*
  * Implements hook_install().
  */
@@ -14,8 +16,7 @@ function newspapers_core_install() {
   ];
   // Create the file directories and ensure they're writable.
   foreach($directories as $directory) {
-    $directory = file_default_scheme() . "://$directory";
-    $mode = isset($GLOBALS['install_state']['mode']) ? $GLOBALS['install_state']['mode'] : NULL;
-    file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS, $mode);
+    $directory = \Drupal::config('system.file')->get('default_scheme') . "://$directory";
+    \Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
   }
 }
