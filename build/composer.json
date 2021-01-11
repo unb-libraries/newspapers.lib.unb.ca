@@ -104,7 +104,7 @@
         "drupal/address": "1.9",
         "drupal/bootstrap": "3.23",
         "drupal/chosen": "2.10",
-        "drupal/conditional_fields": "1.0-alpha9",
+        "drupal/conditional_fields": "1.0-alpha10",
         "drupal/config_update": "1.5",
         "drupal/core": "8.9.12",
         "drupal/externalauth": "1.3",
