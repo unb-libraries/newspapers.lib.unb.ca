@@ -15,6 +15,7 @@ before_install:
 
 script:
   - set -e
+  - echo "$DOCKER_CLOUD_USER_PASS" | docker login --username "$DOCKER_CLOUD_USER_NAME" --password-stdin
   - vendor/bin/dockworker local:build-test
   - vendor/unb-libraries/dockworker/scripts/kubectl/init.sh
   - vendor/bin/dockworker image:deploy $TRAVIS_BRANCH
