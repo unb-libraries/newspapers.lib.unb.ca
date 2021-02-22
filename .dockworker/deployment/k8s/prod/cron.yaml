@@ -44,7 +44,7 @@ spec:
           priorityClassName: cron-priority-services
           imagePullSecrets:
             -
-              name: docker-hub-auth
+              name: github-container-registry-auth
           restartPolicy: Never
           volumes:
             -

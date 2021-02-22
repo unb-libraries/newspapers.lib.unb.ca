@@ -5,7 +5,7 @@ dockworker:
     finish_marker: '99_zz_notify_user_URI'
     project_prefix: NBNP
     upstream_images:
-      - unblibraries/drupal:8.x-3.x-unblib
+      - ghcr.io/unb-libraries/drupal:8.x-3.x-unblib
   deployment:
     environments:
       - dev
