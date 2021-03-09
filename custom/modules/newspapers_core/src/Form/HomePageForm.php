@@ -218,6 +218,7 @@ class HomePageForm extends FormBase {
       '#type' => 'submit',
       '#value' => $this->t('Search FullText'),
       '#field_prefix' => '<span class="input-group-btn">',
+      '#field_suffix' => '</span>',
       '#attributes' => [
         'class' => [
           'btn-danger',
