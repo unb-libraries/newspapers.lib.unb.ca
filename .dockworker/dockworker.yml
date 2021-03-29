@@ -6,6 +6,7 @@ dockworker:
     project_prefix: NBNP
     upstream_images:
       - ghcr.io/unb-libraries/drupal:8.x-3.x-unblib
+    uuid: 3095
   deployment:
     environments:
       - dev
