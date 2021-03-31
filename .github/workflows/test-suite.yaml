@@ -225,15 +225,6 @@ jobs:
       -
         name: Start container and check logs for errors
         run: vendor/bin/dockworker local:start --no-tail-logs --only-start --force-recreate
-      -
-        name: Export installed settings.php
-        run: docker cp --archive $CI_REPOSITORY_NAME:/app/html/sites/default/settings.php /tmp/settings.php
-      -
-        name: Upload Drupal Settings
-        uses: actions/upload-artifact@v2
-        with:
-          name: drupal-settings-file
-          path: /tmp/settings.php
 
   behat-tests:
     name: Behat Tests
@@ -285,37 +276,6 @@ jobs:
       -
         name: Install dockworker
         run: composer install --prefer-dist --no-progress --no-suggest
-      -
-        name: Decrypt database
-        run: gpg --quiet --batch --yes --decrypt --passphrase="$CONTENT_DECRYPTION_KEY" --output /tmp/db.sql.gz ./data/content/db.sql.gz.gpg
-        env:
-          CONTENT_DECRYPTION_KEY: ${{ secrets.CONTENT_DECRYPTION_KEY }}
-      -
-        name: Decrypt files
-        run: gpg --quiet --batch --yes --decrypt --passphrase="$CONTENT_DECRYPTION_KEY" --output /tmp/files.tar.gz ./data/content/files.tar.gz.gpg
-        env:
-          CONTENT_DECRYPTION_KEY: ${{ secrets.CONTENT_DECRYPTION_KEY }}
-      -
-        name: Extract database
-        run: rm -rf /tmp/db.sql && gunzip /tmp/db.sql.gz
-      -
-        name: Extract files
-        run: rm -rf /tmp/default && tar xvzpf /tmp/files.tar.gz -C /tmp
-      -
-        name: Download installed drupal settings.php
-        uses: actions/download-artifact@v2
-        with:
-          name: drupal-settings-file
-          path: /tmp/app/html/sites/default/
-      -
-        name: Remove generic Drupal volume from docker-compose
-        run: docker run --rm --env "GITHUB_REPOSITORY_NAME=$CI_REPOSITORY_NAME" -v "${PWD}":/workdir mikefarah/yq:3.3.4 yq delete --inplace docker-compose.yml "services[$CI_REPOSITORY_NAME].volumes(.==/app/html/sites/default)"
-      -
-        name: Add content to Drupal files dir
-        run: docker run --rm --env "GITHUB_REPOSITORY_NAME=$CI_REPOSITORY_NAME" -v "${PWD}":/workdir mikefarah/yq:3.3.4 yq write --inplace docker-compose.yml "services[$CI_REPOSITORY_NAME].volumes[+]" "/tmp/app/html/sites/default:/app/html/sites/default"
-      -
-        name: Add content import to mysql startup script
-        run: docker run --rm -v "${PWD}":/workdir mikefarah/yq:3.3.4 yq write --inplace docker-compose.yml "services.drupal-mysql-lib-unb-ca.volumes[+]" "/tmp/db.sql:/docker-entrypoint-initdb.d/db.sql"
       -
         name: Start container and check logs
         run: vendor/bin/dockworker local:start --no-tail-logs --only-start --force-recreate
