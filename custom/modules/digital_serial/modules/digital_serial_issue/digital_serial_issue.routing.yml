@@ -56,3 +56,11 @@ digital_serial_issue.title_edit_issue:
      _title: 'Edit Metadata'
   requirements:
     _permission: 'edit serial page entities'
+
+digital_serial_issue.issue_search:
+  path: '/serials-issue-search/{title_id}/{issue_year}/{issue_month}/{issue_day}/{issue_volume}/{issue_issue}'
+  defaults:
+    _controller: '\Drupal\digital_serial_title\Controller\DigitalSerialIssueSearchController::getMatchingIssues'
+    _title: 'Issue Search Results'
+  requirements:
+    _permission: 'view published serial issue entities'
