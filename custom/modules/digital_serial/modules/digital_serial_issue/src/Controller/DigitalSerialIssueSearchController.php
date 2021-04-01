@@ -10,15 +10,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class DigitalSerialIssueSearchController {
 
+  const NULL_STRING_PLACEHOLDER = 'LULL';
+
   /**
    * Get issues matching data.
    */
   public function getMatchingIssues($title_id, $issue_year, $issue_month, $issue_day, $issue_volume, $issue_issue) {
     $date_obj = DrupalDateTime::createFromArray(
       [
-        'year' => $issue_year,
-        'month' => $issue_month,
-        'day' => $issue_day,
+        'year' => $this->deNullifyString($issue_year),
+        'month' => $this->deNullifyString($issue_month),
+        'day' => $this->deNullifyString($issue_day),
       ]
     );
     $formatted_date = $date_obj->format('Y-m-d');
@@ -26,8 +28,8 @@ class DigitalSerialIssueSearchController {
     $query = \Drupal::entityQuery('digital_serial_issue')
       ->condition('parent_title', $title_id)
       ->condition('issue_date', $formatted_date)
-      ->condition('issue_vol', $issue_volume)
-      ->condition('issue_issue', $issue_issue);
+      ->condition('issue_vol', $this->deNullifyString($issue_volume))
+      ->condition('issue_issue', $this->deNullifyString($issue_issue));
     $issue_ids = $query->execute();
 
     return new JsonResponse(
@@ -37,6 +39,22 @@ class DigitalSerialIssueSearchController {
         'status' => 200,
       ]
     );
+  }
+
+  /**
+   * Remove the null string placeholder from a string and replace it with NULL.
+   *
+   * @param string $data
+   *   The string to modify.
+   *
+   * @return string
+   *   The string without the null string placeholder.
+   */
+  private function deNullifyString($data) {
+    if ($data == self::NULL_STRING_PLACEHOLDER) {
+      return NULL;
+    }
+    return $data;
   }
 
 }
