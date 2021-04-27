@@ -9,6 +9,7 @@ jobs:
     name: Notify Slack of Testing Start
     runs-on: ubuntu-latest
     steps:
+      - uses: FranzDiebold/github-env-vars-action@v2.1.0
       - uses: 8398a7/action-slack@v3
         with:
           status: custom
@@ -17,7 +18,7 @@ jobs:
             {
               attachments: [{
                 color: 'warning',
-                text: `${process.env.AS_REPO} Build Started :shipit: (${process.env.AS_ACTION})\n${process.env.AS_COMMIT} ${process.env.AS_MESSAGE}\n${process.env.AS_AUTHOR}`,
+                text: `${process.env.AS_REPO} ${process.env.CI_REF_NAME} - Build Started :shipit: (${process.env.AS_ACTION})\n${process.env.AS_COMMIT} ${process.env.AS_MESSAGE}\n${process.env.AS_AUTHOR}`,
               }]
             }
         env:
@@ -414,6 +415,7 @@ jobs:
     needs: [deploy-live]
     if: always()
     steps:
+      - uses: FranzDiebold/github-env-vars-action@v2.1.0
       - uses: technote-space/workflow-conclusion-action@v2
       - name: Set environment variables
         run: |
@@ -431,7 +433,7 @@ jobs:
             {
               attachments: [{
                 color: '${{ env.WORKFLOW_CONCLUSION }}' === 'success' ? 'good' : '${{ env.WORKFLOW_CONCLUSION }}' === 'failure' ? 'danger' : 'warning',
-                text: `${process.env.AS_REPO} ${{ env.WORKFLOW_CONCLUSION }} ${{ env.DEPLOY_EMOJI }} (${process.env.AS_ACTION})\n${process.env.AS_COMMIT} ${process.env.AS_MESSAGE}\n${process.env.AS_AUTHOR}`,
+                text: `${process.env.AS_REPO} ${process.env.CI_REF_NAME} - ${{ env.WORKFLOW_CONCLUSION }} ${{ env.DEPLOY_EMOJI }} (${process.env.AS_ACTION})\n${process.env.AS_COMMIT} ${process.env.AS_MESSAGE}\n${process.env.AS_AUTHOR}`,
               }]
             }
         env:
