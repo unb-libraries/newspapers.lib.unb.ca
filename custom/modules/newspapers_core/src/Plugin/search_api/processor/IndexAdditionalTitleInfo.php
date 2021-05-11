@@ -2,9 +2,6 @@
 
 namespace Drupal\newspapers_core\Plugin\search_api\processor;
 
-use DateInterval;
-use DatePeriod;
-use DateTime;
 use Drupal\node\NodeInterface;
 use Drupal\search_api\Datasource\DatasourceInterface;
 use Drupal\search_api\IndexInterface;

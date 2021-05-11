@@ -2,12 +2,6 @@
 
 namespace Drupal\digital_serial_page;
 
-use DOMDocument;
-use DOMElement;
-use DOMNodeList;
-use DOMXPath;
-use InvalidArgumentException;
-
 /**
  * Serial Page HOCR parsing. Used to generate OpenSeadragon overlays.
  *
@@ -43,11 +37,11 @@ class SerialPageHocr {
    */
   public function __construct($hocr) {
     if (empty($hocr)) {
-      throw new InvalidArgumentException('Attempted to instantiate the HOCR class without a valid HOCR file.');
+      throw new \InvalidArgumentException('Attempted to instantiate the HOCR class without a valid HOCR file.');
     }
-    $this->doc = new DOMDocument('1.0', 'UTF-8');
+    $this->doc = new \DOMDocument('1.0', 'UTF-8');
     $this->doc->loadHTML($hocr);
-    $this->xpath = new DOMXPath($this->doc);
+    $this->xpath = new \DOMXPath($this->doc);
     $this->xpath->registerNamespace("php", "http://php.net/xpath");
     $this->xpath->registerPhpFunctions();
   }
@@ -179,7 +173,7 @@ class SerialPageHocr {
    *
    * @see HOCR::getClassProperties()
    */
-  protected function getProperties(DOMNodeList $nodes) {
+  protected function getProperties(\DOMNodeList $nodes) {
     $results = [];
     foreach ($nodes as $node) {
       $results[] = $this->getClassNodeProperties($node);
@@ -207,7 +201,7 @@ class SerialPageHocr {
    *     - bottom: The bottom most point of the element in pixels.
    *   - ppageno: The number of the page if the class is 'ocr_page'.
    */
-  protected function getClassNodeProperties(DOMElement $element) {
+  protected function getClassNodeProperties(\DOMElement $element) {
     $bbox = NULL;
     if ($element->hasAttribute('title')) {
       $matches = [];
@@ -320,7 +314,7 @@ class SerialPageHocr {
         return $this->xpath->query($query);
       }
     }
-    return new DOMNodeList();
+    return new \DOMNodeList();
   }
 
   /**

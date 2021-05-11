@@ -8,6 +8,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
 
 /**
  * Breadcrumb builder for manage holdings.
@@ -33,7 +34,7 @@ class SerialManageHoldingsBreadcrumbBuilder implements BreadcrumbBuilderInterfac
    */
   public function build(RouteMatchInterface $route_match) {
     $nid = $route_match->getParameter('node');
-    $node =  \Drupal\node\Entity\Node::load($nid);
+    $node = Node::load($nid);
     $node_title = $node->getTitle();
 
     // Set breadcrumb.

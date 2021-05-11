@@ -13,6 +13,11 @@ use Drupal\serial_holding\TaxonomyHelper;
  */
 class SerialHoldingForm extends ContentEntityForm {
 
+  /**
+   * The parent EID.
+   *
+   * @var int
+   */
   protected $parentEid;
 
   /**
@@ -201,7 +206,7 @@ class SerialHoldingForm extends ContentEntityForm {
       ]
     );
 
-    return parent::submitForm($form, $form_state);;
+    return parent::submitForm($form, $form_state);
   }
 
 }

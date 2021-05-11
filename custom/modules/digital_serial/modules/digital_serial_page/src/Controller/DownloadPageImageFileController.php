@@ -23,6 +23,7 @@ class DownloadPageImageFileController extends ControllerBase {
    *   The page number to download.
    *
    * @return mixed
+   *   The digital serial page response.
    */
   public function servePageEntityFile($digital_serial_issue = NULL, $page_no = NULL) {
     $query = \Drupal::entityQuery('digital_serial_page')

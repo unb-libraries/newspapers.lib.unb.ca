@@ -18,7 +18,7 @@ class SerialPageDeleteForm extends ContentEntityDeleteForm {
    *
    * If the delete command is canceled, return to the issue list.
    */
-  public function getCancelURL() {
+  public function getCancelUrl() {
     $entity = $this->getEntity();
     $issue = $entity->getParentIssue();
     $title = $issue->getParentTitle();

@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile -- drush commands are wild.
 
 namespace Drupal\digital_serial_import\Drush;
 
@@ -82,6 +83,8 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
    * @param string $image_extension
    *   The file extension to consider as an image. All files with this extension
    *   will be considered pages. Defaults to tif.
+   * @param string[] $options
+   *   The options passed to the command.
    *
    * @option issue-timestamp
    *   Whether or not the second parameter should come first in the result.

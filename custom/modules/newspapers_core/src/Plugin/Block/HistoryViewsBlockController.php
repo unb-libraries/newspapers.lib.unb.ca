@@ -14,6 +14,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
  * )
  */
 class HistoryViewsBlockController extends BlockBase {
+
   /**
    * Builds and returns the renderable array for this block plugin.
    *
@@ -27,7 +28,6 @@ class HistoryViewsBlockController extends BlockBase {
    *
    * @see \Drupal\block\BlockViewBuilder
    */
-
   public function build() {
     $date = new DrupalDateTime();
     $date->setTimezone(timezone_open(date_default_timezone_get()));
