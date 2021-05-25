@@ -2116,7 +2116,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: ' Vol. {{ parent_issue_volume }}'
+            text: 'Vol. {{ parent_issue_volume }}'
             make_link: false
             path: ''
             absolute: false
@@ -2344,6 +2344,77 @@ display:
           multi_separator: ', '
           format_plural_values: {  }
           plugin_id: search_api_numeric
+        issue_date:
+          id: issue_date
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: issue_date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: datetime_default
+          settings:
+            timezone_override: ''
+            format_type: html_date
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+          plugin_id: search_api_field
         parent_publication_title:
           id: parent_publication_title
           table: search_api_index_pages_newspapers_lib_unb_ca
@@ -2355,7 +2426,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{ parent_publication_title }}:{{ parent_issue_volume }}{{ parent_issue_issue }}{{ page_no }}'
+            text: '{{ parent_publication_title }}: {{ issue_date }} ({{ parent_issue_volume }}{{ parent_issue_issue }})'
             make_link: true
             path: '/serials/{{ parent_digital_title_id }}/issues/{{ parent_digital_issue_id }}/pages/{{ parent_digital_page_id }}?highlight={{ filters.search_api_fulltext }}'
             absolute: false
