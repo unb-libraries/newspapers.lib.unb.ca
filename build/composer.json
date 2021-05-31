@@ -116,7 +116,7 @@
         "drupal/languagefield": "1.6",
         "drupal/ldap": "3.0-beta7",
         "drupal/noreqnewpass": "1.2",
-        "drupal/owlcarousel": "1.0-alpha3",
+        "drupal/owlcarousel": "1.0-beta1",
         "drupal/pathauto": "1.8",
         "drupal/redis": "1.5",
         "drupal/restui": "1.15",
