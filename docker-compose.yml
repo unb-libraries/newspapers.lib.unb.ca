@@ -24,6 +24,7 @@ services:
 
   drupal-solr-lib-unb-ca:
     image: ghcr.io/unb-libraries/solr-drupal:8.x-4.x
+    restart: always
     env_file:
       - ./env/solr.env
     expose:
@@ -37,6 +38,7 @@ services:
 
   mailhog:
     image: mailhog/mailhog
+    restart: always
     expose:
       - "1025"
       - "8025"
