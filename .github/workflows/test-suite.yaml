@@ -377,11 +377,14 @@ jobs:
         name: Install dockworker
         run: composer install --prefer-dist --no-progress --no-suggest
       -
-        name: Deploy, check deployment logs for errors
+        name: Deploy image to cluster
         run: vendor/bin/dockworker image:deploy $CI_REF_NAME --use-tag $BUILD_IMAGE_TAG
         env:
           GH_CONTAINER_REGISTRY_TOKEN: ${{secrets.GH_CONTAINER_REGISTRY_TOKEN}}
           GH_CONTAINER_REGISTRY_USER: ${{secrets.GH_CONTAINER_REGISTRY_USER}}
+      -
+        name: Check container startup logs for errors
+        run: vendor/bin/dockworker deployment:logs:check $CI_REF_NAME
       -
         name: Write out deployment logs
         run: vendor/bin/dockworker deployment:logs $CI_REF_NAME
