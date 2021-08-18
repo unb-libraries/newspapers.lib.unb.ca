@@ -227,70 +227,10 @@ jobs:
         name: Start container and check logs for errors
         run: vendor/bin/dockworker local:start --no-tail-logs --only-start --force-recreate
 
-  behat-tests:
-    name: Behat Tests
-    runs-on: ubuntu-latest
-    needs: [start-install-application, update-docker-compose]
-    steps:
-      - uses: FranzDiebold/github-env-vars-action@v2.1.0
-      - uses: actions/checkout@v2
-      -
-        name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          coverage: none
-          tools: composer:v2
-          extensions: curl,dom,gd,mbstring,posix,yaml,zip
-      -
-        name: Set Composer Cache Directory
-        id: composer-set-cache-dir
-        run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
-      -
-        name: Cache Composer Cache Dir
-        uses: actions/cache@v2
-        id: composercachecache
-        with:
-          path: ${{ steps.composer-set-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-composer-dockworker-drupal-${{ hashFiles('**/composer.json') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-dockworker-drupal-${{ hashFiles('**/composer.json') }}
-            ${{ runner.os }}-composer-dockworker-drupal-
-            ${{ runner.os }}-composer-dockworker-
-            ${{ runner.os }}-composer-
-      -
-        name: Download docker-compose.yml from artifact server
-        uses: actions/download-artifact@v2
-        with:
-          name: docker-compose
-          path: ./
-      -
-        name: Login to GHCR
-        run: echo $GH_CONTAINER_REGISTRY_TOKEN | docker login ghcr.io -u $GH_CONTAINER_REGISTRY_USER --password-stdin
-        env:
-          GH_CONTAINER_REGISTRY_TOKEN: ${{secrets.GH_CONTAINER_REGISTRY_TOKEN}}
-          GH_CONTAINER_REGISTRY_USER: ${{secrets.GH_CONTAINER_REGISTRY_USER}}
-      -
-        name: Pull Required Docker Images
-        run: docker-compose pull --parallel --quiet
-      -
-        name: Install dockworker
-        run: composer install --prefer-dist --no-progress --no-suggest
-      -
-        name: Start container and check logs
-        run: vendor/bin/dockworker local:start --no-tail-logs --only-start --force-recreate
-      -
-        name: Dump logs
-        run: docker-compose logs
-      -
-        name: Run behat tests
-        run: vendor/bin/dockworker tests:behat
-
   push-branch-tag-image-repository:
     name: Push Branch Tag to Repository
     runs-on: ubuntu-latest
-    needs: [behat-tests]
+    needs: [start-install-application]
     if:
       contains('
       refs/heads/dev
