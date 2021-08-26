@@ -329,6 +329,38 @@ jobs:
         name: Write out deployment logs
         run: vendor/bin/dockworker deployment:logs $CI_REF_NAME
 
+  live-deploy-logs:
+    name: Live Deployment Logs
+    runs-on: ubuntu-latest
+    needs: [deploy-live]
+    if: always() && (needs.deploy-live.result == 'success' || needs.deploy-live.result == 'failure')
+    steps:
+      - uses: FranzDiebold/github-env-vars-action@v2.1.0
+      - uses: actions/checkout@v2
+      -
+        name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          coverage: none
+          tools: composer:v2
+          extensions: curl,dom,gd,mbstring,posix,yaml,zip
+      - uses: azure/setup-kubectl@v1
+        with:
+          version: 'v1.18.0'
+        id: install-kubectl
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+        id: setcontext-kubectl
+      -
+        name: Install dockworker
+        run: composer install --prefer-dist --no-progress --no-suggest
+      -
+        name: Write out deployment logs
+        run: vendor/bin/dockworker deployment:logs $CI_REF_NAME
+
   newrelic-marker:
     name: Set Newrelic Marker
     runs-on: ubuntu-latest
