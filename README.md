@@ -15,6 +15,7 @@ In your local development environment, several 'one time' dependency installatio
 * [PHP7](https://php.org/)
 * PHP Extensions : php-curl php-dom php-gd php-mbstring php-posix php-yaml php-zip
 * [composer](https://getcomposer.org/)
+* [yq](https://github.com/mikefarah/yq): Installation steps [are located here](https://github.com/mikefarah/yq#install).
 * [docker](https://www.docker.com): Installation steps [are located here](https://docs.docker.com/install/).
 * [docker-compose](https://docs.docker.com/compose/): Installation steps [are located here](https://docs.docker.com/compose/install/).
 
