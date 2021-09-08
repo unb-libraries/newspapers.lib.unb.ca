@@ -9,15 +9,8 @@ This repository contains the assets used to test, build, and deploy the [newspap
 ## Deploy this Application Yourself!
 Local deployment, development and testing of newspapers.lib.unb.ca is easy, as we leverage [dockworker](https://github.com/unb-libraries/dockworker), our unified framework of [Robo](https://robo.li/) commands that streamline local development of our application on Linux or OSX.
 
-### Step 1: Install Dockworker Dependencies
-In your local development environment, several 'one time' dependency installations are required to deploy all applications with dockworker. Some or all of these may already be installed in your environment.
-
-* [PHP7](https://php.org/)
-* PHP Extensions : php-curl php-dom php-gd php-mbstring php-posix php-yaml php-zip
-* [composer](https://getcomposer.org/)
-* [yq](https://github.com/mikefarah/yq): Installation steps [are located here](https://github.com/mikefarah/yq#install).
-* [docker](https://www.docker.com): Installation steps [are located here](https://docs.docker.com/install/).
-* [docker-compose](https://docs.docker.com/compose/): Installation steps [are located here](https://docs.docker.com/compose/install/).
+### Step 1: Install Dockworker's Dependencies
+In your local development environment, a minimal number of 'one time' dependencies are required to deploy applications with dockworker. Some or all of these may already be installed in your environment; see the list of dependencies and installation instructions [here](https://github.com/unb-libraries/dockworker/blob/4.x/docs/prerequisites.md).
 
 ### Step 2: Deploy
 With all dependencies installed, you are ready to deploy any of our applications locally and and begin development:
