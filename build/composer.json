@@ -138,7 +138,8 @@
         "unb-libraries/calendar_hours": "dev-8.x-1.x",
         "unb-libraries/alert_scheduler": "dev-8.x-1.x",
         "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x",
-        "unb-libraries/drupal-builder": "^8.0.0"
+        "unb-libraries/drupal-builder": "^8.0.0",
+        "unb-libraries/saml_features": "dev-8.x-1.x"
     },
     "require-dev": {
         "unb-libraries/drupal-development-libraries": "^8.0.0"
