@@ -57,6 +57,9 @@
             },
             "drupal/facets": {
                 "Fix Views AJAX Facets": "https://www.drupal.org/files/issues/2018-09-25/ajax_facet_block_views_context-2986981-13.patch"
+            },
+            "drupal/samlauth": {
+                "Ignore Role Restrictions": "/build/patches/samlauth_rolematch.patch"
             }
         }
     },
@@ -120,6 +123,7 @@
         "drupal/pathauto": "1.8",
         "drupal/redis": "1.5",
         "drupal/restui": "1.15",
+        "drupal/samlauth": "3.3",
         "drupal/search_api": "1.20",
         "drupal/search_api_autocomplete": "1.5",
         "drupal/search_api_solr": "4.2.1",
