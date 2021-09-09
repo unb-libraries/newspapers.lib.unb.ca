@@ -9,10 +9,10 @@
     }
   },
   "require": {
-    "unb-libraries/unb_lib_theme": "dev-8.x-bootstrap-3.x"
+    "unb-libraries/unb_lib_theme": "dev-9.x-bootstrap-3.x"
   },
   "require-dev": {
-    "unb-libraries/dockworker-drupal": "~4"
+    "unb-libraries/dockworker-drupal": "^4"
   },
   "scripts": {
     "post-update-cmd": [

@@ -2,6 +2,7 @@ name: Newspapers Core
 type: module
 description: Newspaper Core Functions
 core: 8.x
+core_version_requirement: ^8 || ^9
 package: Newspapers
 dependencies:
   - datetime_range

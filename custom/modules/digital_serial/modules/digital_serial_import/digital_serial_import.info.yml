@@ -2,4 +2,5 @@ name: digital_serial_import
 type: module
 description: Digital Serial Import Tools
 core: 8.x
+core_version_requirement: ^8 || ^9
 package: Serials

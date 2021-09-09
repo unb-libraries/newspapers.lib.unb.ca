@@ -1,5 +1,5 @@
 dockworker:
-  version: '3.0'
+  version: '4'
   application:
     name: newspapers.lib.unb.ca
     finish_marker: '99_zz_notify_user_URI'
@@ -11,6 +11,8 @@ dockworker:
     environments:
       - dev
       - prod
+  drupal:
+    major: 9
   github:
     repo: newspapers.lib.unb.ca
     owner: unb-libraries
