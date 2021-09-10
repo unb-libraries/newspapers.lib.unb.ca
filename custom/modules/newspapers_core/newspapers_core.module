@@ -875,8 +875,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
  */
 function _newspapers_core_get_publication_holdings($nid) {
   $holding_section = [];
-  $query = Drupal::service('entity.query')
-    ->get('serial_holding')
+  $query = Drupal::service('entity_type.manager')->getStorage('serial_holding')->getQuery()
     ->condition('parent_title', $nid);
   $entity_ids = $query->execute();
 
