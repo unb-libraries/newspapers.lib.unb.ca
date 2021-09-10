@@ -616,7 +616,11 @@ display:
           group_type: group
           admin_label: ''
           empty: false
-          content: "<div class=\"alert alert-success fade in\">\n    <span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span>\n    Displaying @start - @end of @total results\n</div>"
+          content: |-
+            <div class="alert alert-success fade in">
+                <span class="glyphicon glyphicon glyphicon-ok-circle"></span>
+                Displaying @start - @end of @total results
+            </div>
           plugin_id: result
       footer: {  }
       empty:
@@ -630,7 +634,11 @@ display:
           empty: true
           tokenize: false
           content:
-            value: "<div class=\"alert alert-warning fade in\">\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n    No results were found.\n</div>"
+            value: |-
+              <div class="alert alert-warning fade in">
+                  <span class="glyphicon glyphicon-exclamation-sign"></span>
+                  No results were found.
+              </div>
             format: full_html
           plugin_id: text
       relationships:

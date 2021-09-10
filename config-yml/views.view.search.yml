@@ -721,7 +721,11 @@ display:
           empty: true
           tokenize: true
           content:
-            value: "<div class=\"alert alert-warning fade in\">\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n    No results were found.\n</div>"
+            value: |-
+              <div class="alert alert-warning fade in">
+                  <span class="glyphicon glyphicon-exclamation-sign"></span>
+                  No results were found.
+              </div>
             format: full_html
           plugin_id: text
       relationships: {  }

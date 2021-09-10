@@ -54,7 +54,6 @@ module:
   rdf: 0
   redis: 0
   rest: 0
-  saml_features: 11
   samlauth: 0
   search_api: 0
   search_api_autocomplete: 0
@@ -77,6 +76,7 @@ module:
   menu_link_content: 1
   pathauto: 1
   views: 10
+  saml_features: 11
   serial_holding: 100
   minimal: 1000
 theme:
