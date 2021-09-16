@@ -556,16 +556,6 @@ function newspapers_core_theme() {
 }
 
 /**
- * Implements hook_user_login().
- */
-function newspapers_core_user_login() {
-  // Redirect to front page after login.
-  $url = Url::fromRoute('<front>', [], []);
-  $response = new RedirectResponse($url->toString());
-  $response->send();
-}
-
-/**
  * Nullify all fields of a given array.
  *
  * @param \Drupal\node\Entity\Node $node
