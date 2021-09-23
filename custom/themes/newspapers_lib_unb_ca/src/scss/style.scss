@@ -1,5 +1,6 @@
 // UNB Lib theme + bootstrap assets.
-@import '../../../../../vendor/unb-libraries/unb_lib_theme/assets/stylesheets/unblib';
+//@import '../../../../../vendor/unb-libraries/unb_lib_theme/assets/stylesheets/unblib';
+@import '../../../../../vendor/unb-libraries/unb_lib_theme/src/scss/style.scss';
 
 // Subtheme local variables.
 @import 'local-variables';
@@ -15,9 +16,9 @@ figcaption .glyphicon {
 .well a {
   color: $link-color;
 }
-a:not(.btn):not(.button):not(.cd-top):focus,
-a:not(.btn):not(.button):not(.cd-top):hover,
-a:not(.btn):not(.button):not(.cd-top):active {
+a:not(.btn):not(.button):not(.cd-top):not(.nav-link):focus,
+a:not(.btn):not(.button):not(.cd-top):not(.nav-link):hover,
+a:not(.btn):not(.button):not(.cd-top):not(.nav-link):active {
   border-bottom-style: none;
   text-decoration: underline;
 }
