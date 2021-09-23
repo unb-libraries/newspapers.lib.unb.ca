@@ -30,54 +30,65 @@ class HomePageForm extends FormBase {
     // Configure appropriate active tab/pane classes.
     $user_input = $form_state->getUserInput();
     $op = isset($user_input['op']) ? $user_input['op'] : NULL;
-    $about_tab_class = " visible-xs";
+    $about_tab_class = " d-sm-none";
     if ($op == 'Search FullText') {
       $title_tab_class = $title_pane_class = $about_pane_class = NULL;
 
-      $fulltext_tab_class = " active";
-      $fulltext_pane_class = "active in";
+      $fulltext_tab_class = "";
+      $fulltext_pane_class = "";
     }
     else {
       $fulltext_tab_class = $fulltext_pane_class = $about_pane_class = NULL;
-      $title_tab_class = " active";
-      $title_pane_class = "active in";
+      $title_tab_class = "active";
+      $title_pane_class = "show active";
     }
 
     $form = [];
-    $title_url = Url::fromUri("internal:/");
+    $title_url = Url::fromUri("internal:");
     $title_link_options = [
       'attributes' => [
         'id' => [
           'tab-title',
         ],
-        'role' => [
-          'tab',
+        'class' => [
+          'nav-link',
+          'active',
         ],
         'data-toggle' => [
           'tab',
         ],
+        'role' => [
+          'tab',
+        ],
+        'aria-controls' => [
+          'title',
+        ],
         'aria-selected' => [
           'true',
         ],
-        'tabindex' => [
-          '0',
-        ],
+
       ],
       'fragment' => 'title',
     ];
     $title_url->setOptions($title_link_options);
 
-    $fulltext_url = Url::fromUri("internal:/");
+    $fulltext_url = Url::fromUri("internal:");
     $fulltext_link_options = [
       'attributes' => [
         'id' => [
           'tab-fulltext',
+        ],
+        'class' => [
+          'nav-link',
         ],
         'role' => [
           'tab',
         ],
         'data-toggle' => [
           'tab',
+        ],
+        'aria-controls' => [
+          'fulltext',
         ],
         'aria-selected' => [
           'false',
@@ -87,17 +98,23 @@ class HomePageForm extends FormBase {
     ];
     $fulltext_url->setOptions($fulltext_link_options);
 
-    $about_url = Url::fromUri("internal:/");
+    $about_url = Url::fromUri("internal:");
     $about_link_options = [
       'attributes' => [
         'id' => [
           'tab-about',
+        ],
+        'class' => [
+          'nav-link',
         ],
         'role' => [
           'tab',
         ],
         'data-toggle' => [
           'tab',
+        ],
+        'aria-controls' => [
+          'about',
         ],
         'aria-selected' => [
           'false',
@@ -113,7 +130,7 @@ class HomePageForm extends FormBase {
         Brunswick and across the world. Search and discover
         <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
         titles (including New Brunswick Historical Newspapers Online collection) available from UNB Libraries.</p>
-        <p>Fulltext Search is available for titles included in
+        <p class=\"mb-0\">Fulltext Search is available for titles included in
         <a href=\"/digital-titles\">New Brunswick Historical Newspapers Online</a>.
         For more worldwide digital newspaper content, consult
         <a href=\"https://lib.unb.ca/eresources/index.php?sub=journals&browseNewsColl=y\" class=\"external\">
@@ -121,7 +138,7 @@ class HomePageForm extends FormBase {
 
     $form['blurb'] = [
       '#type' => 'markup',
-      '#markup' => "<div class=\"hidden-xs message well\">" . $blurb . "</div>",
+      '#markup' => "<div class=\"d-none d-sm-block alert bg-unb-light border mb-4\">" . $blurb . "</div>",
     ];
 
     $form['nav-tabs'] = [
@@ -138,24 +155,28 @@ class HomePageForm extends FormBase {
       ],
     ];
     $form['nav-tabs']['title'] = [
-      '#markup' => '<li class="tab' . $title_tab_class . '">' . Link::fromTextAndUrl($this->t('Title Search'), $title_url)
+      '#markup' => '<li class="nav-item" role="presentation">' . Link::fromTextAndUrl($this->t('Title Search'), $title_url)
         ->toString() . '</li>',
     ];
     $form['nav-tabs']['fulltext'] = [
-      '#markup' => '<li class="tab' . $fulltext_tab_class . '">' . Link::fromTextAndUrl($this->t('Fulltext Search'), $fulltext_url)
+      '#markup' => '<li class="nav-item" role="presentation">' . Link::fromTextAndUrl($this->t('Fulltext Search'), $fulltext_url)
         ->toString() . '</li>',
     ];
     $form['nav-tabs']['about'] = [
-      '#markup' => '<li class="tab' . $about_tab_class . '">' . Link::fromTextAndUrl($this->t('About'), $about_url)
+      '#markup' => '<li class="nav-item' . $about_tab_class . '" role="presentation">' . Link::fromTextAndUrl($this->t('About'), $about_url)
         ->toString() . '</li>',
     ];
 
     $form['tab-content'] = [
       '#type' => 'container',
       '#attributes' => [
+        'id' => [
+          'search-wrapper',
+        ],
         'class' => [
           'tab-content',
-          'search-form',
+          'border',
+          'p-4',
         ],
       ],
     ];
@@ -164,10 +185,14 @@ class HomePageForm extends FormBase {
       '#attributes' => [
         'class' => [
           'tab-pane',
+          'fade',
           $title_pane_class,
         ],
         'id' => [
           'title',
+        ],
+        'role' => [
+          'tabpanel',
         ],
         'aria-labelledby' => [
           'tab-title',
@@ -179,72 +204,74 @@ class HomePageForm extends FormBase {
       '#title' => $this->t('Search for Newspaper Titles'),
       '#description' => $this->t('Search by title, location, publisher, notes, description or combination, i.e. Moncton 1932'),
     ];
-
-    $form['tab-content']['title']['submit_title'] = [
+    $form['tab-content']['title']['actions'] = [
+      '#type' => 'actions',
+    ];
+    $form['tab-content']['title']['actions']['submit_title'] = [
       '#type' => 'submit',
       '#value' => $this->t('Search/Browse Titles'),
-      '#field_prefix' => '<span class="input-group-btn">',
     ];
+
     $form['tab-content']['fulltext'] = [
       '#type' => 'container',
       '#attributes' => [
         'class' => [
-          'clearfix',
           'tab-pane',
+          'fade',
           $fulltext_pane_class,
         ],
         'id' => [
           'fulltext',
+        ],
+        'role' => [
+          'tabpanel',
         ],
         'aria-labelledby' => [
           'tab-fulltext',
         ],
       ],
     ];
-    $form['tab-content']['fulltext']['wrapper'] = [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' => [
-          'clearfix',
-        ],
-      ],
-    ];
-    $form['tab-content']['fulltext']['wrapper']['input_fulltext'] = [
+
+    $form['tab-content']['fulltext']['search']['input_fulltext'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search the fulltext of digitized newspapers'),
       '#description' => $this->t('Search for keywords within the fulltext content of newspapers.'),
     ];
-    $form['tab-content']['fulltext']['wrapper']['submit_fulltext'] = [
+    $form['tab-content']['fulltext']['search']['actions'] = [
+      '#type' => 'actions',
+    ];
+    $form['tab-content']['fulltext']['search']['actions']['submit_fulltext'] = [
       '#type' => 'submit',
       '#value' => $this->t('Search FullText'),
-      '#field_prefix' => '<span class="input-group-btn">',
-      '#field_suffix' => '</span>',
       '#attributes' => [
         'class' => [
-          'btn-danger',
+          'btn-unb-red',
         ],
       ],
     ];
     $form['tab-content']['fulltext']['notes'] = [
       '#type' => 'markup',
-      '#markup' => '<p class="alert alert-info fade in">
-        <span class="glyphicon glyphicon glyphicon-ok-circle"></span>
+      '#markup' => '<div class="alert alert-info media mt-4 mb-0">
         <b>Note:</b>
+        <p class="media-body mb-0 ml-1">
         Only a limited number of newspapers have been digitized to date and new content will be added on a
         continuing basis. See a current listing of <a href="/digital-titles">digitally available titles and coverage
-        dates</a>.</p>',
+        dates</a>.</p></div>',
     ];
 
     $form['tab-content']['about'] = [
       '#type' => 'container',
       '#attributes' => [
         'class' => [
-          'clearfix',
           'tab-pane',
+          'fade',
           $about_pane_class,
         ],
         'id' => [
           'about',
+        ],
+        'role' => [
+          'tabpanel',
         ],
         'aria-labelledby' => [
           'tab-about',
