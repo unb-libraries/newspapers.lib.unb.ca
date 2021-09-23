@@ -21,46 +21,59 @@ form .nav-tabs > li > a {
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
 }
-.search-form .form-group {
+#search-wrapper .form-group {
     margin-bottom: 0;
 }
 .search-form .form-wrapper {
     margin-bottom: 1.5em;
 }
-.tab a:before {
+.nav-tabs a:before {
     display: inline-block;
-    font-family: "Glyphicons Halflings";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 700;
     font-size: small;
-}
-a#tab-fulltext:before {
-    content: "\e224";
-    padding-right: 5px;
+    opacity: .8;
+    padding-right: 4px;
+    vertical-align: text-bottom;
 }
 a#tab-title:before {
-    content: "\e032";
-    padding-right: 4px;
+    content: "\f022";
+}
+a#tab-fulltext:before {
+    content: "\f0c5";
 }
 a#tab-about:before {
-    content: "\e086";
-    padding-right: 4px;
+    content: "\f05a";
+}
+#search-wrapper>.active {
+    display: flex;
+    flex-wrap: wrap;
 }
 .tab-pane div.form-item,
 .tab-pane div.description {
     width: 75%;
-    float:left;
 }
-.tab-pane > div input {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    height: 34px!important; /* unb-lib.css override */
+div[data-drupal-selector="edit-actions"]  {
+    margin-top: 1.8rem;
 }
-.tab-pane div.form-type-textfield + span {
-    width: 25%;
+div[data-drupal-selector="edit-actions"]  input {
+    height: inherit;
+    line-height: normal;
 }
-.tab-pane div.form-type-textfield + span button {
-    margin-top: 2.5rem;
+div[data-drupal-selector="edit-actions"] .btn-unb-red:hover {
+    color: #fff!important;
 }
 
+@media (min-width: 768px) {
+    .tab-pane input[type="text"] {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+    }
+    .tab-pane div[data-drupal-selector="edit-actions"]  input {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+}
 @media (max-width: 990px) {
     .tab-pane div.form-item, .tab-pane div.description {
         width: 100%;
