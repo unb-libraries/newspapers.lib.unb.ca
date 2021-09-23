@@ -1,0 +1,29 @@
+uuid: ee13a778-2db1-49a7-8c95-6961b2cfffd9
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.publication_decade
+  module:
+    - facets
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_publicationdecade
+theme: bootstrap_barrio
+region: sidebar_first
+weight: 1
+provider: null
+plugin: 'facet_block:publication_decade'
+settings:
+  id: 'facet_block:publication_decade'
+  label: 'Publication Decade'
+  provider: facets
+  label_display: '0'
+  block_id: publicationdecade
+visibility:
+  request_path:
+    id: request_path
+    pages: '/serials/browse/*'
+    negate: false
+    context_mapping: {  }

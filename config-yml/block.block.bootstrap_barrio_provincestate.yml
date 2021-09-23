@@ -1,0 +1,29 @@
+uuid: 56dafdab-6b37-4802-b5c6-726ee7df8650
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.province_state
+  module:
+    - facets
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_provincestate
+theme: bootstrap_barrio
+region: sidebar_first
+weight: -6
+provider: null
+plugin: 'facet_block:province_state'
+settings:
+  id: 'facet_block:province_state'
+  label: Province/State
+  provider: facets
+  label_display: '0'
+  block_id: provincestate
+visibility:
+  request_path:
+    id: request_path
+    pages: /search
+    negate: false
+    context_mapping: {  }

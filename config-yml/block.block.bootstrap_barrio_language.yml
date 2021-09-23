@@ -1,0 +1,29 @@
+uuid: 0189e47e-6531-4634-a2ad-3c082a2434fa
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.language
+  module:
+    - facets
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_language
+theme: bootstrap_barrio
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:language'
+settings:
+  id: 'facet_block:language'
+  label: Language
+  provider: facets
+  label_display: '0'
+  block_id: language
+visibility:
+  request_path:
+    id: request_path
+    pages: '/search*'
+    negate: false
+    context_mapping: {  }

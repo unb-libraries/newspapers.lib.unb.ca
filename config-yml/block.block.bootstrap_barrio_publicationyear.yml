@@ -1,0 +1,29 @@
+uuid: 04decacf-8b82-45c5-855b-93cf9c458601
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.publication_year
+  module:
+    - facets
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_publicationyear
+theme: bootstrap_barrio
+region: sidebar_first
+weight: -9
+provider: null
+plugin: 'facet_block:publication_year'
+settings:
+  id: 'facet_block:publication_year'
+  label: 'Publication Year'
+  provider: facets
+  label_display: '0'
+  block_id: publicationyear
+visibility:
+  request_path:
+    id: request_path
+    pages: '/page-search*'
+    negate: false
+    context_mapping: {  }

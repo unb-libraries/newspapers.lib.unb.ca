@@ -1,0 +1,26 @@
+uuid: 0249b57c-99f1-4e58-b915-839eeda4ac23
+langcode: en
+status: true
+dependencies:
+  module:
+    - newspapers_core
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_thisdayinnewbrunswickhistory
+theme: bootstrap_barrio
+region: content
+weight: 0
+provider: null
+plugin: this_day_in_n_b_history
+settings:
+  id: this_day_in_n_b_history
+  label: 'This Day in New Brunswick History'
+  provider: newspapers_core
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

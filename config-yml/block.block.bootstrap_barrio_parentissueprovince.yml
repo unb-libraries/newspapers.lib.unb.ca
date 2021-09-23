@@ -1,0 +1,29 @@
+uuid: 3b13e158-cfaf-4690-ba74-70e01ad7ff07
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.parent_issue_province
+  module:
+    - facets
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_parentissueprovince
+theme: bootstrap_barrio
+region: sidebar_first
+weight: -3
+provider: null
+plugin: 'facet_block:parent_issue_province'
+settings:
+  id: 'facet_block:parent_issue_province'
+  label: 'Parent Issue Province'
+  provider: facets
+  label_display: '0'
+  block_id: parentissueprovince
+visibility:
+  request_path:
+    id: request_path
+    pages: '/page-search*'
+    negate: false
+    context_mapping: {  }

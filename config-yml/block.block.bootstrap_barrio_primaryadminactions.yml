@@ -1,0 +1,18 @@
+uuid: 78807cf0-e686-445b-9a88-a496b660b528
+langcode: en
+status: true
+dependencies:
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_primaryadminactions
+theme: bootstrap_barrio
+region: content
+weight: -7
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

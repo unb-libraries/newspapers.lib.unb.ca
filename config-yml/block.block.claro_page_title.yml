@@ -1,15 +1,15 @@
-uuid: f52cb8ff-d404-4d52-8f2a-19057aa54d2a
+uuid: b5a12803-e256-4beb-bfcb-983ec9f762e9
 langcode: en
 status: true
 dependencies:
   theme:
-    - bootstrap
+    - claro
 _core:
-  default_config_hash: 1TQP4b3ZnlzvIH9bj6cpCz_SyUHdJjLQkZnHpikjjhw
-id: bootstrap_page_title
-theme: bootstrap
+  default_config_hash: gfXKmThltk6eewwrjAEaxVPxzPEVHV1UfNjjOUQ5A7g
+id: claro_page_title
+theme: claro
 region: header
-weight: 0
+weight: -30
 provider: null
 plugin: page_title_block
 settings:

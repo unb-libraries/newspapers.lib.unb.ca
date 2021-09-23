@@ -1,17 +1,17 @@
-uuid: 9db6ac65-4a4d-4c4a-ad44-fe2604653269
+uuid: ac206f82-0fbd-4ca2-9753-5035d6f78845
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - claro
 _core:
-  default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
-id: bootstrap_messages
-theme: bootstrap
-region: header
-weight: -50
+  default_config_hash: iIy-YIc9d9s1isAtTIKWDBKd6kd2r6LxoYz_-hkLJco
+id: claro_messages
+theme: claro
+region: highlighted
+weight: 0
 provider: null
 plugin: system_messages_block
 settings:

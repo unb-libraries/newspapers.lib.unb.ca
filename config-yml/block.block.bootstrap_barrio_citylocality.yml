@@ -1,0 +1,29 @@
+uuid: ef349bc9-67ae-4a5e-bdf4-97ab1159f6ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.city_locality
+  module:
+    - facets
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_citylocality
+theme: bootstrap_barrio
+region: sidebar_first
+weight: -5
+provider: null
+plugin: 'facet_block:city_locality'
+settings:
+  id: 'facet_block:city_locality'
+  label: City/Locality
+  provider: facets
+  label_display: '0'
+  block_id: citylocality
+visibility:
+  request_path:
+    id: request_path
+    pages: /search
+    negate: false
+    context_mapping: {  }

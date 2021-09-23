@@ -1,0 +1,29 @@
+uuid: 6362553f-5118-40ef-8c7b-c9f6ff66dc92
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.publication_year_issue
+  module:
+    - facets
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_publicationyear_2
+theme: bootstrap_barrio
+region: sidebar_first
+weight: 2
+provider: null
+plugin: 'facet_block:publication_year_issue'
+settings:
+  id: 'facet_block:publication_year_issue'
+  label: 'Publication Year'
+  provider: facets
+  label_display: '0'
+  block_id: publicationyear_2
+visibility:
+  request_path:
+    id: request_path
+    pages: '/serials/browse/*'
+    negate: false
+    context_mapping: {  }

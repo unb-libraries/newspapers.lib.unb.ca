@@ -1,0 +1,29 @@
+uuid: c70debc4-a630-45cf-a407-77e1ebe39999
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.digital_page_lister
+  module:
+    - system
+    - views
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_exposedformdigital_page_listerpage_search
+theme: bootstrap_barrio
+region: content
+weight: -4
+provider: null
+plugin: 'views_exposed_filter_block:digital_page_lister-page_search'
+settings:
+  id: 'views_exposed_filter_block:digital_page_lister-page_search'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: '/page-search*'
+    negate: false
+    context_mapping: {  }

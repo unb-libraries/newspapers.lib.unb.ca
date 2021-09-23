@@ -1,15 +1,17 @@
-uuid: 1dbf8a22-1d2c-48fe-b5b1-80d3f8b7830d
+uuid: 55504897-b2a5-43f0-860b-7a8960476350
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - newspapers_lib_unb_ca
-id: mainpagecontent
-theme: newspapers_lib_unb_ca
+    - claro
+_core:
+  default_config_hash: QTwkfDaGeBUk6aerktJBDXso4fCsqLTQOuWKXE1xMPU
+id: claro_content
+theme: claro
 region: content
-weight: -3
+weight: 0
 provider: null
 plugin: system_main_block
 settings:
