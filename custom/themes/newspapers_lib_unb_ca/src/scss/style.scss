@@ -1,9 +1,4 @@
-// UNB Lib theme + bootstrap assets.
-//@import '../../../../../vendor/unb-libraries/unb_lib_theme/assets/stylesheets/unblib';
-@import '../../../../../vendor/unb-libraries/unb_lib_theme/src/scss/style.scss';
-
-// Subtheme local variables.
-@import 'local-variables';
+@import "import";
 
 /* Element style tweaks */
 figcaption {
@@ -217,109 +212,6 @@ select[multiple="multiple"] + .form-control {
   content: "\e003";
 }
 
-/* Facets overrides */
-.facet-item label {
-  text-transform: capitalize;
-}
-.block-facets h3 {
-  background: $heading-bg;
-  font-size: 18px;
-  padding: 6px;
-}
-.block-facets h3 {
-  margin-top: .25em;
-}
-.facet-slider {
-  margin: 3em 1em 0 1.15em;
-}
-.block-facet--range-slider {
-  padding-bottom: 1.35em;
-}
-.ui-slider-pip-first .ui-slider-label:hover,
-.ui-slider-pip-last .ui-slider-label:hover {
-  text-decoration: underline;
-  z-index: 1;
-}
-.ui-slider-pips {
-  .ui-slider-label {
-    color: $text-muted;
-  }
-  .ui-slider-pip-selected-1,
-  .ui-slider-pip-selected-2 {
-    .ui-slider-label {
-      color: $link-color;
-    }
-  }
-}
-.facets-widget-checkbox ul {
-  padding-left: .5em;
-}
-.facet-item {
-  list-style: none;
-}
-.facet-item label {
-  font-weight: normal;
-}
-.facet-item__value {
-  vertical-align: middle;
-}
-.facet-item__count {
-  color: $text-muted;
-  font-size: .93em;
-}
-input[type="checkbox"].facets-checkbox {
-  height: 1.55em;
-  margin-right: .3em;
-  margin-top: 0;
-}
-ul.js-facets-checkbox-links + a::before {
-  font-family: "Glyphicons Halflings";
-  content: "\e114";
-  display: inline-block;
-  font-size: small;
-  margin: 0 4px 0 1px;
-  vertical-align: text-bottom;
-}
-ul.js-facets-checkbox-links + a.open::before {
-  content: "\e113";
-}
-.facet-item input {
-  float:left;
-}
-.facet-item label {
-  margin-left: 18px;
-}
-.facet-item input,
-.facet-item label {
-  display: block;
-}
-.facet-item:hover,
-.facet-item:hover input,
-.facet-item:hover label,
-label.checkbox-toggle:hover {
-  cursor: pointer;
-}
-.facet-item input:focus,
-.facet-item input:hover,
-.facet-item:hover .facet-item__value {
-  color: $link-color-hover;
-  text-decoration: underline;
-}
-.facets-widget-checkbox {
-  margin-bottom: 1em;
-}
-.facets-soft-limit-link {
-  display: block;
-  margin-left: .5em;
-}
-/* Slider facet override */
-.item-list__range_slider {
-  display: contents;
-}
-.item-list__range_slider li {
-  list-style-type: none;
-}
-
 // Elements.
 dd {
   margin-bottom: .75em;
@@ -477,18 +369,7 @@ nav[role="navigation"]{
 a.disabled {
   color: $text-muted;
 }
-.breadcrumb li:first-of-type a {
-  font-size: 0;
-}
-.breadcrumb li:first-of-type a::after {
-  top: -16px;
-}
-.user-logged-in .breadcrumb {
-  display: block;
-}
-.tab-content {
-  border-top: 1px solid #333;
-}
+
 .select-wrapper select,
 input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
   line-height: normal;
@@ -743,48 +624,16 @@ a.btn-add::before {
 .table > thead:first-child > tr:first-child > th {
   border-top: 2px solid #ddd;
 }
-/* Table head padding fix until sort restored */
-.search-results thead > tr > th {
-  padding: .5em;
-  white-space: nowrap;
-}
+
 .search-results time {
   white-space: nowrap;
 }
-th[class*="-sort"] a,
-th[class*="-date"] a,
-th[class*="-locality"] a,
-th[class*="-retention"] a,
-th[class*="-frequency"] a,
-th#view-nothing-table-column,
+
 .search-results thead > tr > th.views-field-issue-title {
   padding: .5em;
   white-space: nowrap;
 }
-th[class*="-sort"] a:focus,
-th[class*="-date"] a:focus,
-th[class*="-sort"] a:hover,
-th[class*="-date"] a:hover,
-th[class*="-locality"] a:focus,
-th[class*="-locality"] a:hover,
-th[class*="-retention"] a:focus,
-th[class*="-retention"] a:hover,
-th[class*="-frequency"] a:focus,
-th[class*="-frequency"] a:hover {
-  background: #f9f9f9;
-}
-th[class*="-sort"] a::before,
-th[class*="-date"] a::before,
-th[class*="-locality"] a::before,
-th[class*="-retention"] a:before,
-th[class*="-frequency"] a:before {
-  content: "\e150";
-  display: inline-block;
-  font-family: 'Glyphicons Halflings';
-  font-size: x-small;
-  margin-right: 0.3em;
-  white-space: nowrap;
-}
+
 /* Empty search no-results text hack */
 .search-results .results- {
   display: none;

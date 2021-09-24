@@ -1,0 +1,39 @@
+.table-striped {
+  tbody tr:nth-of-type(odd) {
+    background-color: $gray-100;
+  }
+
+  thead {
+    th {
+      &#view-nothing-table-column,
+      a {
+        padding: .25rem;
+        white-space: nowrap;
+      }
+
+      a {
+        &:focus,
+        &:hover {
+          background-color: #3E454C;
+        }
+
+        &::before {
+          content: "\f0dc";
+          display: inline-block;
+          font-family: 'Font Awesome 5 Free';
+          font-weight: 900;
+          margin-right: 0.3em;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+.table-hover {
+  tbody {
+    tr:hover {
+      background-color: $heading-bg;
+    }
+  }
+}
