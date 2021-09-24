@@ -8,8 +8,8 @@ dependencies:
     - newspapers_lib_unb_ca
 id: breadcrumbs
 theme: newspapers_lib_unb_ca
-region: header
-weight: 0
+region: breadcrumb
+weight: -11
 provider: null
 plugin: system_breadcrumb_block
 settings:
