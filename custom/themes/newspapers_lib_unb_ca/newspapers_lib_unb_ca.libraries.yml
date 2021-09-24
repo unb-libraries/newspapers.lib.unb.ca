@@ -8,3 +8,6 @@ ajax_loading:
     dist/js/newspapers_core.ajax_loading.js: {}
   dependencies:
     - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings
