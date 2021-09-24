@@ -1,21 +1,21 @@
-(function($) {
+(function ($, Drupal, DrupalSettings) {
     'use strict';
 
     Drupal.behaviors.multiSubmit = {
         attach: function (context, settings) {
             // Autofocus the search input of clicked tab.
-            $('.tab a[data-toggle="tab"]').on('shown.bs.tab', function() {
-                $('.search-form input:visible').focus();
+            $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function() {
+                $('#newspapers-core-homepage input[type="text"]:visible').focus();
             });
 
             // Simuate click function when user presses enter key.
-            $("input").on("keypress", function (e) {
+            $('input[type="text"]').on('keypress', function (e) {
                 if (e.keyCode == 13) {
-                    $(".search-form button[type=submit]:visible").focus();
-                    $(".search-form button[type=submit]:visible").click();
+                    $('#newspapers-core-homepage input[type=submit]:visible').focus();
+                    $('#newspapers-core-homepage input[type=submit]:visible').click();
                     return false;
                 }
             });
         },
     };
-})(jQuery);
+})(jQuery, Drupal, drupalSettings);
