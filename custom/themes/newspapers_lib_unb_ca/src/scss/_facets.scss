@@ -1,0 +1,96 @@
+.facets-widget-range_slider,
+.facets-widget-checkbox {
+  h3 {
+    background: $heading-bg;
+    padding: .4rem .35rem;
+  }
+}
+
+.facets-widget-checkbox {
+  ul {
+    display: flex;
+    flex-direction: column;
+    padding-left: .35rem;
+  }
+
+  .facet-item {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: .35rem;
+
+    input[type="checkbox"],
+    label {
+      display: inline-block;
+      float: none;
+
+      .facet-item__count {
+        color: $gray-600;
+        font-size: .85rem;
+      }
+    }
+
+    input[type="checkbox"] {
+      margin-right: .35rem;
+      transform: scale(1.2);
+    }
+  }
+}
+
+.facet-slider {
+  margin: 3em 1em 0 1.15em;
+}
+.block-facet--range-slider {
+  padding-bottom: 1.35em;
+}
+.ui-slider-pip-first .ui-slider-label:hover,
+.ui-slider-pip-last .ui-slider-label:hover {
+  text-decoration: underline;
+  z-index: 1;
+}
+.ui-slider-pips {
+  .ui-slider-label {
+    color: $text-muted;
+  }
+  .ui-slider-pip-selected-1,
+  .ui-slider-pip-selected-2 {
+    .ui-slider-label {
+      color: $link-color;
+    }
+  }
+}
+
+ul.js-facets-checkbox-links + a::before {
+  font-family: "Glyphicons Halflings";
+  content: "\e114";
+  display: inline-block;
+  font-size: small;
+  margin: 0 4px 0 1px;
+  vertical-align: text-bottom;
+}
+ul.js-facets-checkbox-links + a.open::before {
+  content: "\e113";
+}
+.facet-item:hover,
+.facet-item:hover input,
+.facet-item:hover label,
+label.checkbox-toggle:hover {
+  cursor: pointer;
+}
+.facet-item input:focus,
+.facet-item input:hover,
+.facet-item:hover .facet-item__value {
+  color: $link-color-hover;
+  text-decoration: underline;
+}
+
+.facets-soft-limit-link {
+  display: block;
+  margin-left: .5em;
+}
+/* Slider facet override */
+.item-list__range_slider {
+  display: contents;
+}
+.item-list__range_slider li {
+  list-style-type: none;
+}
