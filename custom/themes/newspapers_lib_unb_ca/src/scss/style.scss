@@ -11,18 +11,14 @@ figcaption .glyphicon {
   margin-right: .25em;
   top: 3px;
 }
-.well a {
-  color: $link-color;
-}
+
 a:not(.btn):not(.button):not(.cd-top):not(.nav-link):focus,
 a:not(.btn):not(.button):not(.cd-top):not(.nav-link):hover,
 a:not(.btn):not(.button):not(.cd-top):not(.nav-link):active {
   border-bottom-style: none;
   text-decoration: underline;
 }
-#image-hours a:hover {
-  text-decoration: none;
-}
+
 .pagination a:focus,
 .pagination a:hover,
 .pagination a:active {
