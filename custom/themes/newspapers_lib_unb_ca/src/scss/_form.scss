@@ -1,0 +1,12 @@
+.views-exposed-form {
+  .form-actions {
+    display: flex;
+    align-self: flex-end;
+
+    input {
+      &:first-child {
+        margin-right: .5rem;
+      }
+    }
+  }
+}
