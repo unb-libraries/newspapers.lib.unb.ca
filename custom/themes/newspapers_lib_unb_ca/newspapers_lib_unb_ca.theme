@@ -9,32 +9,51 @@
  * Implements hook_preprocess_breadcrumb().
  */
 function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
+  $route_match = \Drupal::routeMatch();
+
   // Modules cannot alter entity titles in breadcrumbs, so we process here.
-  $route_name = \Drupal::routeMatch()->getRouteName();
+  $route_name = $route_match->getRouteName();
 
-  if ($route_name == 'serial_holding.manage_serial_holdings') {
-    $variables['breadcrumb'][3]['text'] = t('Holdings');
+  switch ($route_name) {
+    case 'serial_holding.manage_serial_holdings':
+      $variables['breadcrumb'][3]['text'] = t('Holdings');
+      break;
+
+    case 'entity.digital_serial_title.canonical':
+      $variables['breadcrumb'][3]['text'] = t('Digital Issues');
+      break;
+
+    case 'digital_serial_issue.title_view_issue':
+      $variables['breadcrumb'][4]['text'] = trim(
+        explode(':', $variables['breadcrumb'][4]['text'])[1]
+      );
+      break;
+
+    case 'digital_serial_page.issue_view_page':
+      $variables['breadcrumb'][5]['text'] = trim(
+        explode('-', $variables['breadcrumb'][5]['text']->render())[3]
+      );
+      break;
+
+    case 'newspapers_core.home':
+      // Override 'Newspapers @ UNB Libraries'
+      $variables['breadcrumb'][1]['text'] = t('Newspapers');
+      break;
+
+    default:
+      // Append active page title to $variables['breadcrumb']
+      $request = \Drupal::request();
+      $page_title = \Drupal::service('title_resolver')
+        ->getTitle($request, $route_match
+        ->getRouteObject());
+
+      if (!empty($page_title)) {
+        $variables['breadcrumb'][] = [
+          'text' => $page_title,
+        ];
+      }
   }
 
-  if ($route_name == 'entity.digital_serial_title.canonical') {
-    $variables['breadcrumb'][3]['text'] = t('Digital Issues');
-  }
-
-  if ($route_name == 'digital_serial_issue.title_view_issue') {
-    $variables['breadcrumb'][4]['text'] = trim(
-      explode(':', $variables['breadcrumb'][4]['text'])[1]
-    );
-  }
-
-  if ($route_name == 'digital_serial_page.issue_view_page') {
-    $variables['breadcrumb'][5]['text'] = trim(
-      explode('-', $variables['breadcrumb'][5]['text']->render())[3]
-    );
-  }
-
-  if ($route_name == 'newspapers_core.home') {
-    $variables['breadcrumb'][1]['text'] = t('Newspapers');
-  }
 }
 
 /**
