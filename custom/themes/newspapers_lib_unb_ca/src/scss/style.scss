@@ -687,11 +687,11 @@ a.btn-add::before {
 /* High Resolution Image back link */
 a.back-results::before,
 a.back-link::before {
-  font-family: "Glyphicons Halflings";
-  content:"\e251";
+  font-family: "Font Awesome 5 Free";
+  content:"\f0d9";
   color: $text-muted;
   display: inline-block;
-  font-size: smaller;
+  font-weight: 900;
   margin-right: 0.25em;
   vertical-align: text-bottom;
 }

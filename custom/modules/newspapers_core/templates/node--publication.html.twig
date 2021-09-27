@@ -113,7 +113,7 @@
             {{ title_suffix }}
 
             <div class="title-details">
-                <h2 class="well well-sm">{% trans %}Details{% endtrans %}</h2>
+                <h2 class="bg-unb-light border p-2">{% trans %}Details{% endtrans %}</h2>
                 <dl{{ attributes.addClass("title-image") }}>
                 {% if content.field_sample_image|field_value %}
                     <figure class="image-link-shadow">
@@ -272,7 +272,7 @@
 
         <aside class="col-sm-4 publication">
             <div class="title-holdings">
-                <h2 class="well well-sm">{% trans %}UNB Libraries' Holdings{% endtrans %}</h2>
+                <h2 class="bg-unb-light border p-2">{% trans %}UNB Libraries' Holdings{% endtrans %}</h2>
                 {% if holding|length > 0 %}
 
                     {% if holding.online|length > 0 %}
