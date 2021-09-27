@@ -370,8 +370,7 @@ a.disabled {
   color: $text-muted;
 }
 
-.select-wrapper select,
-input:not([type=button]):not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=date]) {
+.select-wrapper select {
   line-height: normal;
   height: inherit;
 }
