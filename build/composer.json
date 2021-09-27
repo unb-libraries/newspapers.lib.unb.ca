@@ -158,7 +158,7 @@
         "drupal/token": "1.9",
         "drupal/twig_field_value": "2.0.0",
         "drupal/twig_tweak": "2.9",
-        "drupal/views_infinite_scroll": "1.8",
+        "drupal/views_infinite_scroll": "1.9",
         "fortawesome/font-awesome": "5.15.4",
         "furf/jquery-ui-touch-punch": "dev-master",
         "harvesthq/chosen": "~1.8",
