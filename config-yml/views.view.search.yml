@@ -707,7 +707,7 @@ display:
           group_type: group
           admin_label: ''
           empty: false
-          content: "<h2 class=\"alert alert-success fade in\">\r\n    <span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span>\r\n    Displaying @start - @end of @total results\r\n</h2>"
+          content: '<h2 class="alert alert-success"><i class="fas fa-check-circle fa-sm mr-1"></i>Displaying @start - @end of @total results</h2>'
           plugin_id: result
       footer: {  }
       empty:
@@ -721,11 +721,7 @@ display:
           empty: true
           tokenize: true
           content:
-            value: |-
-              <div class="alert alert-warning fade in">
-                  <span class="glyphicon glyphicon-exclamation-sign"></span>
-                  No results were found.
-              </div>
+            value: "<div class=\"alert alert-warning\">\r\n    <i class=\"fas fa-exclamation-circle\"></i>\r\n    No results were found.\r\n</div>"
             format: full_html
           plugin_id: text
       relationships: {  }
@@ -744,12 +740,14 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
         - user.permissions
       tags:
         - 'config:field.storage.node.field_first_issue_search_date'
         - 'config:field.storage.node.field_last_issue_search_date'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
+        - 'config:search_api.index.solr_newspapers_lib_unb_ca'
   search_page:
     display_plugin: page
     id: search_page
@@ -771,9 +769,11 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
         - user.permissions
       tags:
         - 'config:field.storage.node.field_first_issue_search_date'
         - 'config:field.storage.node.field_last_issue_search_date'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
+        - 'config:search_api.index.solr_newspapers_lib_unb_ca'
