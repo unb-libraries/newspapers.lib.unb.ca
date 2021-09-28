@@ -9,7 +9,7 @@ form .nav-tabs > li.active > a:focus {
     border-bottom: none;
 }
 form {
-    margin-bottom: 2.5em;
+    margin-bottom: 1.5rem;
 }
 form .nav-tabs > li > a {
     border:none;
@@ -62,7 +62,17 @@ div[data-drupal-selector="edit-actions"] input {
 div[data-drupal-selector="edit-actions"] .btn-unb-red:hover {
     color: #fff!important;
 }
-
+#footer-top h2 {
+    color: #333;
+}
+#footer-top > div {
+    width: 100%;
+}
+@media (min-width: 982px) {
+    #footer-top > div {
+        width: 50%;
+    }
+}
 @media (min-width: 768px) {
     .tab-pane input[type="text"] {
         border-bottom-right-radius: 0;
