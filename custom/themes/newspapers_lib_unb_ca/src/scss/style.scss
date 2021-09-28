@@ -82,25 +82,6 @@ dl .inline-list {
   content: " and ";
 }
 
-// Improve autocomplete.
-.ui-autocomplete li:first-child:before {
-  border-bottom: 1px solid $text-muted;
-  color: $text-muted;
-  content: 'Suggested matches';
-  display: block;
-  font-weight: bold;
-  letter-spacing: 1px;
-  margin-bottom: .5em;
-  padding: .5em 0;
-}
-.ui-autocomplete {
-  background: #f5faff;
-}
-.ui-autocomplete li,
-.ui-autocomplete li a {
-  display: block;
-}
-
 .main-container {
   margin-top: 1em;
   padding-left: 2px;

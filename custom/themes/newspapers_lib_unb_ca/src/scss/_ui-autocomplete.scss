@@ -1,0 +1,27 @@
+.ui-autocomplete {
+  background: #f5faff;
+
+  li {
+    display: block;
+
+    &:first-child:before {
+      border-bottom: 1px solid $text-muted;
+      color: $text-muted;
+      content: 'Suggested matches';
+      display: block;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: .5em;
+      padding: .5em .25rem;
+    }
+
+    a {
+      display: block;
+
+      &:focus,
+      &:hover {
+        text-decoration: none!important;
+      }
+    }
+  }
+}
