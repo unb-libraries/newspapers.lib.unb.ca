@@ -11,8 +11,8 @@ dependencies:
     - newspapers_lib_unb_ca
 id: views_block__featured_publication
 theme: newspapers_lib_unb_ca
-region: content
-weight: 0
+region: footer_top_first
+weight: -11
 provider: null
 plugin: 'views_block:featured-publication'
 settings:
