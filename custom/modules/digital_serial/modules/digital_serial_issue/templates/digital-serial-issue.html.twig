@@ -1,8 +1,8 @@
 <!-- Add you custom twig html here -->
 
-<main>
+<main class="row">
     {% if metadata|length > 0 %}
-    <section class="digital-serial-page-meta col-sm-8">
+    <section class="digital-serial-page-meta col-sm-8 float-left">
         <dl class="clearfix">
             {% for label,value in metadata %}
                 <dt>{{ label }}</dt>
@@ -11,7 +11,7 @@
         </dl>
     </section>
 
-    <aside class="digital-serial-page-preview col-sm-4">
+    <aside class="digital-serial-page-preview col-sm-4 float-row">
         {{ page_list }}
     </aside>
     {% endif %}
