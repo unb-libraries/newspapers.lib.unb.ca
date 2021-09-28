@@ -447,23 +447,29 @@ a.btn-add::before {
 .title-details .file-size::after {
   content: ")";
 }
-.history-list {
-  margin: 1em auto;
-}
-.history-list span {
-  margin-left: .25em;
-}
-.history-list .current-title {
-  list-style-type: none;
-}
-.history-list .current-title::before {
-  color: $checkmark;
-  content:"\e013";
-  float: left;
-  font-family: 'Glyphicons Halflings';
-  font-size: x-small;
-  margin-left: -1.75em;
-  margin-top: .25em;
+.item-list {
+  .history-list {
+    list-style-type: disc;
+    margin: 1em;
+
+    span {
+      margin-left: .25em;
+    }
+
+    .current-title {
+      list-style-type: none;
+
+      &::before {
+        color: $checkmark;
+        content: "\f00c";
+        float: left;
+        font-family: 'Font Awesome 5 Free';
+        font-size: x-small;
+        margin-left: -1.75em;
+        margin-top: .25em;
+      }
+    }
+  }
 }
 
 /* Helper classes */
