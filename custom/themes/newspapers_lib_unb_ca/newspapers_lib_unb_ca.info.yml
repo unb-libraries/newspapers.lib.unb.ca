@@ -20,6 +20,6 @@ regions:
   content: 'Content'
   sidebar_first: 'Primary'
   sidebar_second: 'Secondary'
+  footer_top_first: 'Footer top first'
+  footer_top_second: 'Footer top second'
   footer: 'Footer'
-  page_top: 'Page top'
-  page_bottom: 'Page bottom'

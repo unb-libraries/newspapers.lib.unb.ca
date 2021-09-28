@@ -1,0 +1,25 @@
+{% extends "@unb_lib_theme/page.html.twig" %}
+
+{% block footer_top_first %}
+   {% if page.footer_top_first or page.footer_top_second %}
+   <div id="footer-top" class="d-flex flex-column flex-lg-row container justify-content-between mb-4">
+   {% endif %}
+
+   {% if page.footer_top_first %}
+   <div class="bg-unb-light border mb-4 mr-0 mr-lg-2 p-3">
+      {{ page.footer_top_first }}
+   </div>
+   {% endif %}
+{% endblock %}
+
+{% block footer_top_second %}
+   {% if page.footer_top_second %}
+   <div class="bg-unb-light border mb-4 ml-0 ml-lg-2 p-3">
+       {{ page.footer_top_second }}
+   </div>
+   {% endif %}
+
+   {% if page.footer_top_first or page.footer_top_second %}
+   </div>
+   {% endif %}
+{% endblock %}

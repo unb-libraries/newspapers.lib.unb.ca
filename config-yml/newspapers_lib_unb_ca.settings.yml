@@ -92,3 +92,7 @@ bootstrap_barrio_system_messages: ''
 bootstrap_barrio_table_style: table-striped
 bootstrap_barrio_table_hover: 1
 bootstrap_barrio_table_head: thead-dark
+bootstrap_barrio_region_clean_footer_top_first: 0
+bootstrap_barrio_region_class_footer_top_first: row
+bootstrap_barrio_region_clean_footer_top_second: 0
+bootstrap_barrio_region_class_footer_top_second: row
