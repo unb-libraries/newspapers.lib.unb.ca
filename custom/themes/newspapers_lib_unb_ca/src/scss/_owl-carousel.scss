@@ -1,0 +1,100 @@
+.owl-theme {
+  .owl-controls {
+    // Prev/Next Arrow Carousel Hack
+    margin-top: 0;
+    position: absolute;
+    top: 45%;
+    width: 100%;
+
+    .owl-buttons {
+      div {
+        background: #d82e3b;
+        border: 1px solid #fff;
+        box-shadow: 0 0 1px 0px white inset, 0 0 1px 0px white;
+        padding: 5px 14px;
+        margin: 0 .4em;
+        font-size: 20px;
+        opacity: 0.7;
+        position: absolute;
+
+        &:first-child::before {
+          content: '«';
+        }
+
+        &:last-child::after {
+          content: '»';
+        }
+      }
+
+      .owl-prev {
+        left: 0;
+      }
+      .owl-next {
+        right: 0;
+      }
+    }
+
+    .owl-page.active span {
+      background: $link-color-hover;
+    }
+  }
+
+  figure img {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+}
+
+// Stack Owl Carousel Grouping + Image
+.browse-issues {
+  img {
+    transition: all .2s ease-in-out;
+  }
+
+  .issue-meta {
+    color: $text-muted;
+    line-height: 1em;
+
+    small:not(:last-child) {
+      margin-right: .3em;
+    }
+  }
+
+  .owl-carousel {
+    .owl-item {
+      margin-right: .35em;
+      margin-top: .5em;
+
+      &:first-child {
+        float: none;
+        margin-top: 0;
+        width: 100% !important;
+      }
+
+      h3 {
+        border-bottom: 1px solid #6c6a69;
+        margin: 0;
+        padding-bottom: 2px;
+      }
+
+      .center-block > span {
+        background: url(/themes/custom/newspapers_lib_unb_ca/dist/img/loading-150px.gif) no-repeat 50% 50%;
+        display: inherit;
+        max-width: 100%;
+        min-height: 220px;
+      }
+
+      .issue-image {
+        width: 150px;
+      }
+    }
+  }
+}

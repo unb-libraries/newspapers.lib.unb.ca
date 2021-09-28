@@ -223,91 +223,14 @@ p {
   width: 60%;
 }
 
-/* Owl Carousel overrides */
-.owl-theme .owl-controls .owl-page.active span {
-  background: $link-color-hover;
-}
-.owl-theme .owl-controls .owl-buttons div:first-child::before {
-  content: '«';
-}
-.owl-theme .owl-controls .owl-buttons div:last-child::after {
-  content: '»';
-}
-.owl-theme figure img {
-  display: inline-block;
-  max-width: 100%;
-  height: auto;
-  line-height: 1.42857143;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  -webkit-transition: all .2s ease-in-out;
-  -o-transition: all .2s ease-in-out;
-  transition: all .2s ease-in-out;
-}
-/* Prev/Next Arrow Carousel Hack */
-.owl-theme .owl-controls {
-  margin-top: 0;
-  position: absolute;
-  top: 42%;
-  width: 100%;
-}
-.owl-theme .owl-controls .owl-buttons div {
-  background: #d82e3b;
-  border: 1px solid #fff;
-  box-shadow: 0 0 1px 0px white inset, 0 0 1px 0px white;
-  padding: 5px 14px;
-  margin: 0 .4em;
-  font-size: 20px;
-  opacity: 0.7;
-  position: absolute;
-}
-.owl-theme .owl-controls .owl-buttons .owl-prev {
-  left: 0;
-}
-.owl-theme .owl-controls .owl-buttons .owl-next {
-  right: 0;
-}
+
 
 /* Browse Issues */
 .views-infinite-scroll-content-wrapper > div:not(:first-child),
 .browse-issues .view-content > div:not(:first-child) {
-  margin-top: 1.5em;
+  margin: 2rem 0;
 }
-/* Stack Owl Carousel Grouping + Image */
-.browse-issues .owl-carousel .owl-item {
-  margin-right: .35em;
-  margin-top: .5em;
-}
-.browse-issues .owl-carousel .owl-item:first-child {
-  float: none;
-  margin-top: 0;
-  width: 100%!important;
-}
-.browse-issues .owl-carousel .owl-item h3 {
-  border-bottom: 1px solid #6c6a69;
-  margin: 0;
-  padding-bottom: 2px;
-}
-.browse-issues .owl-item .issue-image {
-  width: 150px;
-}
-.browse-issues .owl-item .center-block > span {
-  background: url(/themes/custom/newspapers_lib_unb_ca/dist/img/loading-150px.gif) no-repeat 50% 50%;
-  display: inherit;
-  max-width: 100%;
-  min-height: 220px;
-}
-.browse-issues .issue-meta {
-  color: $text-muted;
-  line-height: 1em;
-}
-.browse-issues .issue-meta small:not(:last-child) {
-  margin-right: .3em;
-}
-.browse-issues img {
-  transition: all .2s ease-in-out;
-}
+
 .image-link-shadow a img {
   transition: box-shadow .25s ease-out;
 }
