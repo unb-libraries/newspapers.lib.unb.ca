@@ -431,7 +431,7 @@ display:
           not: false
           plugin_id: search_api
       display_extenders: {  }
-      css_class: 'image-link-shadow well'
+      css_class: image-link-shadow
     cache_metadata:
       max-age: -1
       contexts:
@@ -439,7 +439,8 @@ display:
         - 'languages:language_interface'
         - url
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:search_api.index.pages_newspapers_lib_unb_ca'
   today:
     display_plugin: block
     id: today
@@ -454,4 +455,5 @@ display:
         - 'languages:language_interface'
         - url
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:search_api.index.pages_newspapers_lib_unb_ca'

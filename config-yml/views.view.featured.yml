@@ -618,7 +618,7 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
-      css_class: 'image-link-shadow well'
+      css_class: image-link-shadow
     cache_metadata:
       max-age: 0
       contexts:

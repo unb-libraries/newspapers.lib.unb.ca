@@ -734,15 +734,11 @@ a.back-link::before {
   font-size: large;
   margin-top: 0;
 }
-.path-frontpage section.details .well {
-  min-height: 295px;
-}
+
 .path-frontpage .details .title {
   font-size: 1.05em;
 }
-.featured-publication .col-xs-4 {
-  padding-left: 0;
-}
+
 @media (max-width: 991px) {
   .path-frontpage section section {
     padding-left: 0;
@@ -805,16 +801,7 @@ and (max-width: 991px){
     overflow-x: visible;
   }
 }
-@media (max-width: 600px) {
-  .path-frontpage section.details .well {
-    min-height: 240px;
-  }
-}
-@media (max-width: 414px) {
-  .path-frontpage section.details .well {
-    min-height: 200px;
-  }
-}
+
 div.alert-dismissible {
   transition: all .3s ease-out;
 }
