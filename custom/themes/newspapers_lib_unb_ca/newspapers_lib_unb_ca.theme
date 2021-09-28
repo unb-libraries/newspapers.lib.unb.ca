@@ -9,10 +9,21 @@
  * Implements hook_preprocess_breadcrumb().
  */
 function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
+  $request = \Drupal::request();
   $route_match = \Drupal::routeMatch();
 
   // Modules cannot alter entity titles in breadcrumbs, so we process here.
   $route_name = $route_match->getRouteName();
+
+  // Append active page title to $variables['breadcrumb']
+  $page_title = \Drupal::service('title_resolver')
+    ->getTitle($request, $route_match
+      ->getRouteObject());
+  if (!empty($page_title)) {
+    $variables['breadcrumb'][] = [
+      'text' => $page_title,
+    ];
+  }
 
   switch ($route_name) {
     case 'serial_holding.manage_serial_holdings':
@@ -27,6 +38,7 @@ function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
       $variables['breadcrumb'][4]['text'] = trim(
         explode(':', $variables['breadcrumb'][4]['text'])[1]
       );
+
       break;
 
     case 'digital_serial_page.issue_view_page':
@@ -39,19 +51,6 @@ function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
       // Override 'Newspapers @ UNB Libraries'
       $variables['breadcrumb'][1]['text'] = t('Newspapers');
       break;
-
-    default:
-      // Append active page title to $variables['breadcrumb']
-      $request = \Drupal::request();
-      $page_title = \Drupal::service('title_resolver')
-        ->getTitle($request, $route_match
-        ->getRouteObject());
-
-      if (!empty($page_title)) {
-        $variables['breadcrumb'][] = [
-          'text' => $page_title,
-        ];
-      }
   }
 
 }
