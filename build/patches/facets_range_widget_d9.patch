@@ -1,0 +1,32 @@
+diff --git a/modules/facets_range_widget/facets_range_widget.info.yml b/modules/facets_range_widget/facets_range_widget.info.yml
+index f4bf7a0..6df5aa0 100644
+--- a/modules/facets_range_widget/facets_range_widget.info.yml
++++ b/modules/facets_range_widget/facets_range_widget.info.yml
+@@ -5,6 +5,8 @@ core_version_requirement: ^8.8 || ^9
+ package: Search
+ dependencies:
+   - facets:facets
++  - jquery_ui_slider:jquery_ui_slider
++  - jquery_ui_touch_punch:jquery_ui_touch_punch
+ test_dependencies:
+   - search_api:search_api
+   - facets:facets
+diff --git a/modules/facets_range_widget/facets_range_widget.libraries.yml b/modules/facets_range_widget/facets_range_widget.libraries.yml
+index b647f24..d78e013 100644
+--- a/modules/facets_range_widget/facets_range_widget.libraries.yml
++++ b/modules/facets_range_widget/facets_range_widget.libraries.yml
+@@ -12,7 +12,7 @@ jquery.ui.slider.pips:
+       /libraries/jquery-ui-slider-pips/dist/jquery-ui-slider-pips.min.css: { minified: true }
+   dependencies:
+     - core/jquery.ui.slider
+-
++    - jquery_ui_slider/slider
+ slider:
+   version: VERSION
+   js:
+@@ -25,4 +25,4 @@ slider:
+     - core/drupalSettings
+     - core/jquery.once
+     - facets_range_widget/jquery.ui.slider.pips
+-    - core/jquery.ui.touch-punch
++    - jquery_ui_touch_punch/touch-punch

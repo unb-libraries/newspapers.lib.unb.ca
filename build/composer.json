@@ -56,7 +56,8 @@
                 "Cannot parse content access": "https://www.drupal.org/files/issues/2018-06-07/elasticsearch_connector-convert_boolean_fields-2978005-2.patch"
             },
             "drupal/facets": {
-                "Fix Views AJAX Facets": "https://www.drupal.org/files/issues/2018-09-25/ajax_facet_block_views_context-2986981-13.patch"
+                "Fix Views AJAX Facets": "https://www.drupal.org/files/issues/2018-09-25/ajax_facet_block_views_context-2986981-13.patch",
+                "Fix D9 Facets Range Widget": "/build/patches/facets_range_widget_d9.patch"
             },
             "drupal/samlauth": {
                 "Ignore Role Restrictions": "/build/patches/samlauth_rolematch.patch"
