@@ -1,21 +1,31 @@
-nav {
-  .pagination {
-    margin-top: 1.5rem;
-    justify-content: center;
+.pager,
+.pagination {
+  margin-top: 1rem;
 
-    span.page-link {
-      color: $black;
+  a.btn.disabled {
+    border-color: $gray-300;
+    border-width: 1px;
+  }
+}
 
-      &:hover {
-        background: none;
-        color: inherit;
-      }
+.pager {
+  text-align: center;
+}
+.pagination {
+  justify-content: center;
+
+  span.page-link {
+    color: $black;
+
+    &:hover {
+      background: none;
+      color: inherit;
     }
+  }
 
-    a.page-link {
-      &:hover {
-        border-style: solid!important;
-      }
+  a.page-link {
+    &:hover {
+      border-style: solid!important;
     }
   }
 }
