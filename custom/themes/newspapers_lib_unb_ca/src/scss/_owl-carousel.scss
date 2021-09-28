@@ -98,3 +98,10 @@
     }
   }
 }
+
+@media (min-width: 992px) {
+  // Single issue responsive grouping txt fix
+  .owl-carousel .owl-wrapper {
+    min-width: 870px !important;
+  }
+}

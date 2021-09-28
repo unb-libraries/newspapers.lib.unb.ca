@@ -645,28 +645,6 @@ a.back-link::before {
   margin-top: 0;
 }
 
-.path-frontpage .details .title {
-  font-size: 1.05em;
-}
-
-@media (max-width: 991px) {
-  .path-frontpage section section {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-@media (min-width: 992px) {
-  /* Single issue responsive grouping txt fix */
-  .owl-carousel .owl-wrapper {
-    min-width: 870px!important;
-  }
-  .path-frontpage section.col-md-6:first-of-type {
-    padding-left: 0;
-  }
-  .path-frontpage section.col-md-6:last-of-type {
-    padding-right: 0;
-  }
-}
 @media (max-width: 767px) {
   .no-gutters > aside {
     padding-left: 0;
@@ -705,7 +683,7 @@ and (max-width: 991px){
   }
 }
 @media (min-width: 768px) {
-  /* Fix Bootstrap responsive table button dropdown menus */
+  // Fix Bootstrap responsive table button dropdown menus
   .table-responsive {
     margin-bottom: 1em;
     overflow-x: visible;
