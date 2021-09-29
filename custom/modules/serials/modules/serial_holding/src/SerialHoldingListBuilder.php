@@ -39,7 +39,7 @@ class SerialHoldingListBuilder extends EntityListBuilder {
 
     $title = [
       "#type" => "processed_text",
-      "#text" => t("Holdings"),
+      "#text" => $this->t("Holdings"),
       "#format" => "full_html",
       "#langcode" => "en",
     ];
@@ -54,7 +54,7 @@ class SerialHoldingListBuilder extends EntityListBuilder {
     $build['add_holdings_button'] = [
       '#type' => 'link',
       '#title' => [
-        '#markup' => '<span class="fas fa-paperclip fa-sm"></span>' . t('Add New Holding'),
+        '#markup' => '<span class="fas fa-paperclip fa-sm mr-1"></span>' . $this->t('Add New Holding'),
       ],
       '#url' => Url::fromRoute(
         'serial_holding.add_holding',
