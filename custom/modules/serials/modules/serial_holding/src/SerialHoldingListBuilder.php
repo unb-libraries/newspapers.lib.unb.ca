@@ -63,7 +63,7 @@ class SerialHoldingListBuilder extends EntityListBuilder {
         ]
       ),
       '#attributes' => [
-        'class' => ['btn btn-success my-2'],
+        'class' => ['btn btn-primary my-2'],
       ],
     ];
 

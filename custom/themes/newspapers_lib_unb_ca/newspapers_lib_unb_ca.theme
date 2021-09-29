@@ -17,17 +17,21 @@ function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
 
   // Append active page title to $variables['breadcrumb']
   $page_title = \Drupal::service('title_resolver')
-    ->getTitle($request, $route_match
-      ->getRouteObject());
+    ->getTitle($request, $route_match->getRouteObject());
   if (!empty($page_title)) {
     $variables['breadcrumb'][] = [
       'text' => $page_title,
     ];
+    $variables['#cache']['contexts'][] = 'url';
   }
 
   switch ($route_name) {
     case 'serial_holding.manage_serial_holdings':
       $variables['breadcrumb'][3]['text'] = t('Holdings');
+      break;
+
+    case 'digital_serial_title.digital_issues':
+      $variables['breadcrumb'][2]['text'] = t('Digital Issues');
       break;
 
     case 'entity.digital_serial_title.canonical':
