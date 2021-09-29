@@ -10,3 +10,9 @@
     }
   }
 }
+
+.js input.form-autocomplete,
+.js input.form-autocomplete.ui-autocomplete-loading {
+  background-position: 99% center;
+  padding-right: 1.2rem;
+}
