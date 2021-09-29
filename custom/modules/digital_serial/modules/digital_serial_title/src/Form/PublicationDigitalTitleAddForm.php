@@ -39,7 +39,7 @@ class PublicationDigitalTitleAddForm extends FormBase {
 
     $title = [
       "#type" => "processed_text",
-      "#text" => t("Digital Issues"),
+      "#text" => $this->t("Digital Issues"),
       "#format" => "full_html",
       "#langcode" => "en",
     ];
@@ -49,7 +49,7 @@ class PublicationDigitalTitleAddForm extends FormBase {
     $form['issue_list']['title']['#suffix'] = '</h2>';
 
     $form['issue_list']['no_issues'] = [
-      '#markup' => t('This title has not been set up to archive digital issues. To do so, click "Create Digital Title" below.'),
+      '#markup' => $this->t('This title has not been set up to archive digital issues. To do so, click "Create Digital Title" below.'),
       '#prefix' => '<p>',
       '#suffix' => '</p>',
     ];
@@ -59,7 +59,7 @@ class PublicationDigitalTitleAddForm extends FormBase {
     ];
     $form['issue_list']['actions']['create'] = [
       '#type' => 'submit',
-      '#value' => t('Create Digital Title'),
+      '#value' => $this->t('Create Digital Title'),
       '#submit' => [
         [$this, 'createDigitalTitle'],
       ],
