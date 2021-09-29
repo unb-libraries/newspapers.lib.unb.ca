@@ -7,10 +7,6 @@ h1 {
 figcaption {
   margin-bottom: 1em;
 }
-figcaption .glyphicon {
-  margin-right: .25em;
-  top: 3px;
-}
 
 a:not(.btn):not(.button):not(.cd-top):not(.nav-link):focus,
 a:not(.btn):not(.button):not(.cd-top):not(.nav-link):hover,
@@ -87,63 +83,6 @@ dl .inline-list {
   padding-left: 2px;
   padding-right: 2px;
 }
-
-#edit-reset:before {
-  font-family: "Glyphicons Halflings";
-  content: "\e014";
-  color: #777;
-  margin-right: 0.25em;
-  vertical-align: top;
-}
-
-#edit-delete:before {
-  font-family: "Glyphicons Halflings";
-  content:"\e020";
-  color: #777;
-  display: inline-block;
-  font-size: smaller;
-  margin-right: 0.25em;
-  vertical-align: text-bottom;
-}
-#edit-cancel:before {
-  font-family: "Glyphicons Halflings";
-  content:"\e014";
-  color: #777;
-  display: inline-block;
-  font-size: smaller;
-  margin-right: 0.25em;
-  vertical-align: text-bottom;
-}
-
-div[class*="ref-up"] label:before,
-div[class*="ref-dn"] label:before {
-  font-family: "Glyphicons Halflings";
-  content: "\e027";
-  color: #5cb85c;
-  margin-right: 2px;
-  vertical-align: middle;
-}
-div[class*="ref-up"] label:before {
-  content: "\e027";
-}
-div[class*="ref-dn"] label:before {
-  content:"\e026";
-}
-div[class*="ref-up"] .chosen-container,
-div[class*="ref-up"] .description,
-div[class*="ref-dn"] .chosen-container,
-div[class*="ref-dn"] .description {
-  margin-left: 19px;
-}
-
-li.search-field:before {
-  font-family: "Glyphicons Halflings";
-  content: "\e003";
-  color: $text-muted;
-  display: inline-block;
-  padding: .5em 0;
-}
-
 .publication h2 {
   color: #aa0404;
   font-weight: bold;
@@ -161,21 +100,6 @@ li.search-field:before {
 .publication .panel-body dl:last-child {
   margin-bottom: 0;
 }
-.panel-title > a:before {
-  float: right !important;
-  font-family: "Glyphicons Halflings";
-  content: "\e113";
-  padding-right: 5px;
-}
-.panel-title > a.collapsed:before {
-  float: right !important;
-  content: "\e114";
-}
-.panel-title > a:hover,
-.panel-title > a:active,
-.panel-title > a:focus  {
-  text-decoration:none;
-}
 
 /* Chosen overrides */
 select[multiple="multiple"] + .form-control {
@@ -185,10 +109,6 @@ select[multiple="multiple"] + .form-control {
 }
 .chosen-container-multi .chosen-choices li.search-choice {
   margin-top: 6px;
-}
-.chosen-container-multi .chosen-choices li.search-field input[type="text"]:before {
-  font-family: "Glyphicons Halflings";
-  content: "\e003";
 }
 
 // Elements.
@@ -307,13 +227,6 @@ a.btn-add:active {
   background-color: #e6e6e6;
   border: 1px solid #adadad;
   text-decoration: none;
-}
-a.btn-add::before {
-  font-family: "Glyphicons Halflings";
-  content: "\e081";
-  color: #5cb85c;
-  margin-right: .33em;
-  vertical-align: top;
 }
 
 .messages--info {
@@ -449,28 +362,6 @@ a.btn-add::before {
   margin-top: 5px;
 }
 
-/* User account icons, incl. Export holdings */
-.menu a[href="/serials/holdings/export"]::before,
-.menu a[href="/user"]::before,
-.menu a[href="/user/login"]::before,
-.menu a[href="/user/logout"]::before {
-  font-family: "Glyphicons Halflings";
-  font-size: smaller;
-  margin-right: .25em;
-}
-.menu a[href="/serials/holdings/export"]::before {
-  content: "\e170";
-}
-.menu a[href="/user"]::before {
-  content:"\e008";
-}
-.menu a[href="/user/login"]::before {
-  content: "\e161";
-}
-.menu a[href="/user/logout"]::before {
-  content:"\e163";
-}
-
 /* Menu local action xs button override */
 .local-actions a.btn-xs {
   border-radius: 4px;
@@ -479,13 +370,7 @@ a.btn-add::before {
   margin-bottom: .75em;
   padding: 6px 12px;
 }
-/* Menu local action 'add' button icon */
-.local-actions a[href="/node/add"]::before {
-  content: "\2b";
-  font-family: "Glyphicons Halflings";
-  font-size: smaller;
-  margin-right: .25em;
-}
+
 /* jQuery UI Bridge overrides */
 .modal.in .modal-dialog {
   top: 25%;
@@ -522,9 +407,7 @@ a.btn-add::before {
 .search-results table a {
   display: block;
 }
-.search-results .glyphicon {
-  font-size: smaller;
-}
+
 .search-results .views-row {
   margin-bottom: 1.5em;
 }
