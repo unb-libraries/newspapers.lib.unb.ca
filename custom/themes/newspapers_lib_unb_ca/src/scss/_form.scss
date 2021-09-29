@@ -11,8 +11,14 @@
   }
 }
 
+// Autocomplete throbber: prevent overlapping with user input
 .js input.form-autocomplete,
 .js input.form-autocomplete.ui-autocomplete-loading {
   background-position: 99% center;
   padding-right: 1.2rem;
+}
+
+// Override for Barrio applying "form-control" on submit buttons
+input[type="submit"].form-control {
+  width: inherit;
 }
