@@ -54,7 +54,10 @@ class PublicationDigitalTitleAddForm extends FormBase {
       '#suffix' => '</p>',
     ];
 
-    $form['issue_list']['create'] = [
+    $form['issue_list']['actions'] = [
+      '#type' => 'actions',
+    ];
+    $form['issue_list']['actions']['create'] = [
       '#type' => 'submit',
       '#value' => t('Create Digital Title'),
       '#submit' => [
