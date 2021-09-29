@@ -23,5 +23,9 @@ ol.breadcrumb {
   a[href="/"] {
     right: auto;
     width: auto;
+
+    &:after {
+      content: '';
+    }
   }
 }
