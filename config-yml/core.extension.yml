@@ -39,6 +39,7 @@ module:
   help: 0
   history: 0
   image: 0
+  jquery_scrollup: 0
   jquery_ui: 0
   jquery_ui_slider: 0
   jquery_ui_touch_punch: 0
