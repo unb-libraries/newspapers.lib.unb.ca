@@ -80,17 +80,29 @@ dl .inline-list {
   padding-right: 2px;
 }
 
-.publication figure {
-  margin-bottom: 1em;
-}
-.publication .panel-title a {
-  display: block;
-}
-.publication .panel-body {
-  padding-bottom: 0;
-}
-.publication .panel-body dl:last-child {
-  margin-bottom: 0;
+.publication {
+  figure {
+    margin-bottom: 1em;
+  }
+
+  h2 {
+    color: #aa0404;
+    font-family: 'ProximaNovaA-SemiBold','Century Gothic',AppleGothic,Arial,sans-serif;
+    font-size: 1.1rem;
+    font-weight: normal;
+  }
+
+  publication .panel-title a {
+    display: block;
+  }
+
+  .panel-body {
+    padding-bottom: 0;
+
+    dl:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 /* Chosen overrides */
@@ -238,13 +250,6 @@ a.btn-add:active {
   figure {
     float: right;
     margin-left: 1em;
-  }
-
-  h2 {
-    color: #aa0404;
-    font-family: 'ProximaNovaA-SemiBold','Century Gothic',AppleGothic,Arial,sans-serif;
-    font-size: 1.1rem;
-    font-weight: normal;
   }
 
   .file-icon {
