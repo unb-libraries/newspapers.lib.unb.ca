@@ -463,7 +463,7 @@ display:
           plugin_id: standard
       arguments: {  }
       display_extenders: {  }
-      css_class: search-results
+      css_class: 'search-results digital-titles'
       use_ajax: true
     cache_metadata:
       max-age: -1

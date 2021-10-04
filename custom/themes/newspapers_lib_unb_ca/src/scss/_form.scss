@@ -11,6 +11,18 @@
   }
 }
 
+// Digital Title Listing view | submit button alignment
+.digital-titles {
+  .views-exposed-form {
+    .form-row {
+      .form-actions[data-drupal-selector="edit-actions"] {
+        align-self: flex-start;
+        margin-top: 1.7rem;
+      }
+    }
+  }
+}
+
 // Autocomplete throbber: prevent overlapping with user input
 .js input.form-autocomplete,
 .js input.form-autocomplete.ui-autocomplete-loading {
