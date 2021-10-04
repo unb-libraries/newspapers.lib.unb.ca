@@ -64,6 +64,8 @@ div[data-drupal-selector="edit-actions"] .btn-unb-red:hover {
 }
 #footer-top h2 {
     color: #333;
+    font-family: 'ProximaNovaA-SemiBold','Century Gothic',AppleGothic,Arial,sans-serif;
+    font-weight: normal;
 }
 #footer-top > div {
     width: 100%;

@@ -30,10 +30,6 @@ ins {
 .help-block {
   font-size: .9em;
 }
-.title-details figure {
-  float: right;
-  margin-left: 1em;
-}
 .tabledrag-handle:hover {
   border: none;
 }
@@ -83,11 +79,7 @@ dl .inline-list {
   padding-left: 2px;
   padding-right: 2px;
 }
-.publication h2 {
-  color: #aa0404;
-  font-weight: bold;
-  margin-top: 0;
-}
+
 .publication figure {
   margin-bottom: 1em;
 }
@@ -141,8 +133,6 @@ p {
 .digital-serial-page-meta dd {
   width: 60%;
 }
-
-
 
 /* Browse Issues */
 .views-infinite-scroll-content-wrapper > div:not(:first-child),
@@ -244,25 +234,43 @@ a.btn-add:active {
 }
 
 // Broad title history.
-.title-details .file-icon {
-  display: none;
+.title-details {
+  figure {
+    float: right;
+    margin-left: 1em;
+  }
+
+  h2 {
+    color: #aa0404;
+    font-family: 'ProximaNovaA-SemiBold','Century Gothic',AppleGothic,Arial,sans-serif;
+    font-size: 1.1rem;
+    font-weight: normal;
+  }
+
+  .file-icon {
+    display: none;
+  }
+
+  .file-size {
+    color: $text-muted;
+    padding-left: .5em;
+    text-align: left;
+
+    &::before {
+      content: "(";
+    }
+
+    &::after {
+      content: ")";
+    }
+  }
 }
 .title-details .file,
 .no-borders .file-link {
   font-size: inherit;
   width: auto;
 }
-.title-details .file-size {
-  color: $text-muted;
-  padding-left: .5em;
-  text-align: left;
-}
-.title-details .file-size::before {
-  content: "(";
-}
-.title-details .file-size::after {
-  content: ")";
-}
+
 .item-list {
   .history-list {
     list-style-type: disc;
