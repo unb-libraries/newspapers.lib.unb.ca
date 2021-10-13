@@ -68,6 +68,7 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
     case 'node_publication_form':
     case 'node_publication_edit_form':
       $form['#attached']['library'][] = 'newspapers_core/pubform';
+      $form['#attached']['library'][] = 'newspapers_core/claro-overrides';
       array_unshift($form['#validate'], "_newspapers_core_validate_handler");
 
       $form['actions']['submit_cancel'] = [

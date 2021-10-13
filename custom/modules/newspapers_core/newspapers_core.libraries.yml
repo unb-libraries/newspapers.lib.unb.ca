@@ -1,3 +1,8 @@
+claro-overrides:
+  css:
+    theme:
+      css/claro-admin-overrides.css: {}
+
 pubform:
   css:
     theme:

@@ -1,0 +1,6 @@
+.field-multiple-table thead th,
+.claro-details > .claro-details__summary,
+.claro-details > .claro-details__summary:focus,
+.claro-details > .claro-details__summary:hover {
+    background: #edfdf6;
+}
