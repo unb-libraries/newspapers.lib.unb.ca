@@ -3,10 +3,15 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_sort_title
     - search_api.index.solr_newspapers_lib_unb_ca
   module:
+    - csv_serialization
+    - rest
     - search_api
+    - serialization
     - user
+    - views_data_export
 id: search_reports
 label: 'Search Reports'
 module: views
@@ -44,17 +49,15 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: full
+        type: mini
         options:
-          items_per_page: 50
+          items_per_page: 2000
           offset: 0
           id: 0
           total_pages: null
           tags:
-            previous: ‹‹
-            next: ››
-            first: '« First'
-            last: 'Last »'
+            previous: '‹ Previous'
+            next: 'Next ›'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -63,7 +66,6 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          quantity: 9
       style:
         type: table
         options:
@@ -77,22 +79,14 @@ display:
           description: ''
           columns:
             field_sort_title: field_sort_title
-            title: title
             locality: locality
             administrative_area_name: administrative_area_name
             country_name: country_name
             holdings_fulltext: holdings_fulltext
           info:
             field_sort_title:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            title:
               sortable: true
-              default_sort_order: asc
+              default_sort_order: desc
               align: ''
               separator: ''
               empty_column: false
@@ -125,19 +119,19 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-          default: title
+          default: '-1'
           empty_table: false
       row:
         type: fields
       fields:
-        title:
-          id: title
+        field_sort_title:
+          id: field_sort_title
           table: search_api_index_solr_newspapers_lib_unb_ca
-          field: title
+          field: field_sort_title
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Publication Title'
+          label: 'Title (sort)'
           exclude: false
           alter:
             alter_text: false
@@ -472,7 +466,7 @@ display:
             operator_list: {  }
             identifier: query
             required: false
-            remember: false
+            remember: true
             multiple: false
             remember_roles:
               authenticated: authenticated
@@ -505,14 +499,14 @@ display:
             - title
           plugin_id: search_api_fulltext
       sorts:
-        search_api_relevance:
-          id: search_api_relevance
+        field_sort_title:
+          id: field_sort_title
           table: search_api_index_solr_newspapers_lib_unb_ca
-          field: search_api_relevance
+          field: field_sort_title
           relationship: none
           group_type: group
           admin_label: ''
-          order: DESC
+          order: ASC
           exposed: false
           expose:
             label: ''
@@ -563,6 +557,56 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_sort_title'
+        - 'config:search_api.index.solr_newspapers_lib_unb_ca'
+  data_export_1:
+    display_plugin: data_export
+    id: data_export_1
+    display_title: 'Data export'
+    position: 2
+    display_options:
+      display_extenders: {  }
+      path: admin/reports/csv
+      filename: nbnp-titles.csv
+      automatic_download: false
+      store_in_public_file_directory: null
+      redirect_to_display: none
+      custom_redirect_path: false
+      include_query_params: false
+      displays:
+        search_page: search_page
+        default: '0'
+      export_limit: 2000
+      pager:
+        type: some
+        options:
+          items_per_page: 2000
+          offset: 0
+      style:
+        type: data_export
+        options:
+          formats:
+            csv: csv
+          csv_settings:
+            delimiter: ','
+            enclosure: '"'
+            escape_char: \
+            strip_tags: true
+            trim: true
+            encoding: utf8
+            utf8_bom: '0'
+            use_serializer_encode_only: false
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - request_format
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_sort_title'
         - 'config:search_api.index.solr_newspapers_lib_unb_ca'
   search_page:
     display_plugin: page
@@ -576,8 +620,19 @@ display:
         type: none
       defaults:
         cache: false
+        exposed_form: false
       display_description: ''
       exposed_block: false
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Go
+          reset_button: true
+          reset_button_label: Clear
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: false
+          sort_asc_label: Asc
+          sort_desc_label: Desc
     cache_metadata:
       max-age: -1
       contexts:
@@ -588,4 +643,5 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_sort_title'
         - 'config:search_api.index.solr_newspapers_lib_unb_ca'

@@ -16,6 +16,7 @@ module:
   config: 0
   contact: 0
   contextual: 0
+  csv_serialization: 0
   ctools: 0
   datetime: 0
   datetime_range: 0
@@ -76,6 +77,7 @@ module:
   twig_tweak: 0
   update: 0
   user: 0
+  views_data_export: 0
   views_infinite_scroll: 0
   views_ui: 0
   menu_link_content: 1
