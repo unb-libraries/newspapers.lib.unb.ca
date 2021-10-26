@@ -74,7 +74,7 @@ description: ''
 read_only: false
 field_settings:
   administrative_area_name:
-    label: 'Place of Publication » The full name of the country subdivision (i.e. province).'
+    label: 'Province (Fulltext)'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:administrative_area_name'
     type: text
@@ -90,7 +90,7 @@ field_settings:
       config:
         - field.storage.node.field_place_of_publication
   country_name:
-    label: 'Place of Publication » The full name of the country.'
+    label: 'Country (Fulltext)'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:country_name'
     type: text
@@ -115,7 +115,6 @@ field_settings:
         - field.storage.node.field_editor
       module:
         - taxonomy
-        - taxonomy
   family_name:
     label: 'Family Name » Taxonomy term » Name'
     datasource_id: 'entity:node'
@@ -125,7 +124,6 @@ field_settings:
       config:
         - field.storage.node.field_family
       module:
-        - taxonomy
         - taxonomy
   field_additional_indexed_text:
     label: 'Additional indexed text'
@@ -283,8 +281,12 @@ field_settings:
     label: Holdings
     property_path: holdings
     type: string
+  holdings_fulltext:
+    label: 'Holdings (Fulltext)'
+    property_path: holdings
+    type: text
   locality:
-    label: 'Place of Publication » The locality (i.e. city).'
+    label: 'City (Fulltext)'
     datasource_id: 'entity:node'
     property_path: 'field_place_of_publication:locality'
     type: text
@@ -317,7 +319,6 @@ field_settings:
         - field.storage.node.field_publisher
       module:
         - taxonomy
-        - taxonomy
   sort_locality:
     label: 'Sortable locality (i.e. city).'
     datasource_id: 'entity:node'
@@ -337,7 +338,7 @@ field_settings:
       module:
         - node
   title:
-    label: Title
+    label: 'Title (Fulltext)'
     datasource_id: 'entity:node'
     property_path: title
     type: text
@@ -390,6 +391,7 @@ processor_settings:
     weights:
       postprocess_query: 0
   index_parent_title_info: {  }
+  language_with_fallback: {  }
   rendered_item: {  }
   solr_date_range:
     weights:
