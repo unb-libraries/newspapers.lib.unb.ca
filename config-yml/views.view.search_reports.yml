@@ -24,7 +24,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access content'
+          perm: 'administer nodes'
       cache:
         type: tag
         options: {  }
@@ -495,7 +495,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          parse_mode: fuzzy_terms
+          parse_mode: terms
           min_length: 2
           fields:
             - administrative_area_name
@@ -567,7 +567,7 @@ display:
   search_page:
     display_plugin: page
     id: search_page
-    display_title: 'Search Page'
+    display_title: 'Reports Page'
     position: 1
     display_options:
       display_extenders: {  }
