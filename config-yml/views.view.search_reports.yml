@@ -131,7 +131,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Title (sort)'
+          label: 'Publication Title'
           exclude: false
           alter:
             alter_text: false
@@ -511,7 +511,7 @@ display:
           expose:
             label: ''
           plugin_id: search_api
-      title: 'Newspaper Title Report'
+      title: 'Newspaper Titles Report'
       header:
         result:
           id: result
@@ -559,14 +559,51 @@ display:
       tags:
         - 'config:field.storage.node.field_sort_title'
         - 'config:search_api.index.solr_newspapers_lib_unb_ca'
-  data_export_1:
+  page_titles:
+    display_plugin: page
+    id: page_titles
+    display_title: 'Reports Page'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: admin/reports/titles
+      cache:
+        type: none
+      defaults:
+        cache: false
+        exposed_form: false
+      display_description: ''
+      exposed_block: false
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Go
+          reset_button: true
+          reset_button_label: Clear
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: false
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_sort_title'
+        - 'config:search_api.index.solr_newspapers_lib_unb_ca'
+  page_titles_data_export_csv:
     display_plugin: data_export
-    id: data_export_1
+    id: page_titles_data_export_csv
     display_title: 'Data export'
     position: 2
     display_options:
       display_extenders: {  }
-      path: admin/reports/csv
+      path: admin/reports/titles/csv
       filename: nbnp-titles.csv
       automatic_download: false
       store_in_public_file_directory: null
@@ -574,7 +611,7 @@ display:
       custom_redirect_path: false
       include_query_params: false
       displays:
-        search_page: search_page
+        page_titles: page_titles
         default: '0'
       export_limit: 2000
       pager:
@@ -603,43 +640,6 @@ display:
         - 'languages:language_interface'
         - request_format
         - url
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:field.storage.node.field_sort_title'
-        - 'config:search_api.index.solr_newspapers_lib_unb_ca'
-  search_page:
-    display_plugin: page
-    id: search_page
-    display_title: 'Reports Page'
-    position: 1
-    display_options:
-      display_extenders: {  }
-      path: admin/reports
-      cache:
-        type: none
-      defaults:
-        cache: false
-        exposed_form: false
-      display_description: ''
-      exposed_block: false
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Go
-          reset_button: true
-          reset_button_label: Clear
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: false
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags:

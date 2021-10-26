@@ -4,3 +4,9 @@ newspapers_core.export:
   menu_name: account
   route_name: newspapers_core.export_holdings
   weight: -50
+newspapers_core.titles_csv:
+  title: 'Publication Titles Report'
+  parent: system.admin_reports
+  description: 'Filterable list of publications that may be exported to CSV (via footer button).'
+  route_name: view.search_reports.page_titles
+  weight: 1
