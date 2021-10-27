@@ -17,6 +17,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\serial_holding\Entity\SerialHolding;
+use Drupal\views\ViewExecutable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -554,6 +555,15 @@ function newspapers_core_theme() {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function newspapers_core_views_pre_render(ViewExecutable $view) {
+  if (isset($view) && ($view->storage->id() == 'search_reports')) {
+    $view->element['#attached']['library'][] = 'newspapers_core/claro-overrides';
+  }
 }
 
 /**

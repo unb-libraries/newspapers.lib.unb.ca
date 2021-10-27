@@ -572,6 +572,7 @@ display:
       defaults:
         cache: false
         exposed_form: false
+        use_ajax: false
       display_description: ''
       exposed_block: false
       exposed_form:
@@ -584,6 +585,7 @@ display:
           expose_sort_order: false
           sort_asc_label: Asc
           sort_desc_label: Desc
+      use_ajax: true
     cache_metadata:
       max-age: -1
       contexts:

@@ -8,3 +8,4 @@ dependencies:
   - datetime_range
   - conditional_fields
   - digital_serial
+  - views_data_export

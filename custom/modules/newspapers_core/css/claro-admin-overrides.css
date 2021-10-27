@@ -4,3 +4,9 @@
 .claro-details > .claro-details__summary:hover {
     background: #edfdf6;
 }
+
+.feed-icons .views-data-export-feed .feed-icon {
+    background-size: cover;
+    width: 72px;
+    height: 28px;
+}
