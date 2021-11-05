@@ -28,6 +28,7 @@ permissions:
   - 'edit serial page entities'
   - 'edit terms in publisher'
   - 'use text format full_html'
+  - 'view any unpublished publication content'
   - 'view own unpublished content'
   - 'view published serial holding entities'
   - 'view unpublished digital serial title entities'
