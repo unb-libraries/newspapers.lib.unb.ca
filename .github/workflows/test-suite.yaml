@@ -303,6 +303,37 @@ jobs:
         name: Check container startup logs for errors
         run: vendor/bin/dockworker deployment:logs:check $CI_REF_NAME
 
+  execute-check-cron:
+    name: Execute, Check Cron Logs
+    runs-on: ubuntu-latest
+    needs: [check-live-deployment]
+    steps:
+      - uses: FranzDiebold/github-env-vars-action@v2.1.0
+      - uses: actions/checkout@v2
+      -
+        name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          coverage: none
+          tools: composer:v2
+          extensions: curl,dom,gd,mbstring,posix,yaml,zip
+      - uses: azure/setup-kubectl@v1
+        with:
+          version: 'v1.18.0'
+        id: install-kubectl
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+        id: setcontext-kubectl
+      -
+        name: Install dockworker
+        run: composer install --prefer-dist --no-progress
+      -
+        name: Execute cron and check for errors
+        run: vendor/bin/dockworker deployment:cron:exec:check $CI_REF_NAME --write-successful-logs
+
   newrelic-marker:
     name: Set Newrelic Marker
     runs-on: ubuntu-latest
@@ -329,7 +360,7 @@ jobs:
   slack-results:
     name: Notify Slack of Build Results
     runs-on: ubuntu-latest
-    needs: [check-live-deployment]
+    needs: [execute-check-cron]
     if: always()
     steps:
       - uses: FranzDiebold/github-env-vars-action@v2.1.0
