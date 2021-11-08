@@ -31,6 +31,7 @@ permissions:
   - 'view any unpublished publication content'
   - 'view own unpublished content'
   - 'view published serial holding entities'
+  - 'view the administration theme'
   - 'view unpublished digital serial title entities'
   - 'view unpublished serial holding entities'
   - 'view unpublished serial issue entities'
