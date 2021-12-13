@@ -153,7 +153,7 @@
         "drupal/conditional_fields": "4.0.0-alpha1",
         "drupal/core": "9.3.0",
         "drupal/externalauth": "1.4",
-        "drupal/facets": "1.8",
+        "drupal/facets": "2.0.0",
         "drupal/field_group": "3.2",
         "drupal/fontawesome": "2.19",
         "drupal/google_analytics": "2.5",
