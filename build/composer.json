@@ -167,7 +167,7 @@
         "drupal/owlcarousel": "1.0-beta1",
         "drupal/pathauto": "1.8",
         "drupal/redis": "1.5",
-        "drupal/samlauth": "3.3",
+        "drupal/samlauth": "3.4",
         "drupal/search_api": "1.21",
         "drupal/search_api_autocomplete": "1.5",
         "drupal/search_api_solr": "4.2.3",
