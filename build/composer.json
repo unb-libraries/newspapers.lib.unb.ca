@@ -169,7 +169,7 @@
         "drupal/redis": "1.5",
         "drupal/samlauth": "3.4",
         "drupal/search_api": "1.22",
-        "drupal/search_api_autocomplete": "1.5",
+        "drupal/search_api_autocomplete": "1.6",
         "drupal/search_api_solr": "4.2.3",
         "drupal/token": "1.10",
         "drupal/twig_field_value": "2.0.0",
