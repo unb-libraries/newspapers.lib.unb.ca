@@ -151,7 +151,7 @@
         "drupal/bootstrap_barrio": "5.1.6",
         "drupal/chosen": "3.0.1",
         "drupal/conditional_fields": "4.0.0-alpha1",
-        "drupal/core": "9.3.2",
+        "drupal/core": "9.3.3",
         "drupal/externalauth": "1.4",
         "drupal/facets": "2.0.0",
         "drupal/field_group": "3.2",
