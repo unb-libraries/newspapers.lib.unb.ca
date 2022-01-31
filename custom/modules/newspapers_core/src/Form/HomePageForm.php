@@ -29,7 +29,7 @@ class HomePageForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     // Configure appropriate active tab/pane classes.
     $user_input = $form_state->getUserInput();
-    $op = isset($user_input['op']) ? $user_input['op'] : NULL;
+    $op = $user_input['op'] ?? NULL;
     $about_tab_class = " d-sm-none";
     if ($op == 'Search FullText') {
       $title_tab_class = $title_pane_class = $about_pane_class = NULL;
