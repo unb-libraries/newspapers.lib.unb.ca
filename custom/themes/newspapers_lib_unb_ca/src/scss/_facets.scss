@@ -81,6 +81,7 @@ label.checkbox-toggle:hover {
   cursor: pointer;
 }
 .facet-item input:focus,
+.facet-item input:focus + label .facet-item__value,
 .facet-item input:hover,
 .facet-item:hover .facet-item__value {
   color: $link-color-hover;
