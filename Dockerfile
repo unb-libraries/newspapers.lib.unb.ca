@@ -1,4 +1,4 @@
-FROM ghcr.io/unb-libraries/drupal:9.x-1.x-unblib
+FROM ghcr.io/unb-libraries/drupal:9.x-2.x-unblib
 MAINTAINER UNB Libraries <libsupport@unb.ca>
 
 # Install additional OS packages.
