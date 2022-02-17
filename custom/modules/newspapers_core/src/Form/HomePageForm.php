@@ -32,14 +32,11 @@ class HomePageForm extends FormBase {
     $op = $user_input['op'] ?? NULL;
     $about_tab_class = " d-sm-none";
     if ($op == 'Search FullText') {
-      $title_tab_class = $title_pane_class = $about_pane_class = NULL;
-
-      $fulltext_tab_class = "";
+      $title_pane_class = $about_pane_class = NULL;
       $fulltext_pane_class = "";
     }
     else {
-      $fulltext_tab_class = $fulltext_pane_class = $about_pane_class = NULL;
-      $title_tab_class = "active";
+      $fulltext_pane_class = $about_pane_class = NULL;
       $title_pane_class = "show active";
     }
 
