@@ -11,9 +11,16 @@
     ]
   },
   "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "cweagans/composer-patches": true,
+      "drupal/core-composer-scaffold": true
+    },
+    "discard-changes": true,
     "preferred-install": {
       "*": "dist"
-    }
+    },
+    "sort-packages": true
   },
   "conflict": {
     "drupal/drupal": "*"

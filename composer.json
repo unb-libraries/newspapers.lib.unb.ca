@@ -9,8 +9,9 @@
   },
   "description": "Scaffold and provision local development for newspapers.lib.unb.ca",
   "license": "MIT",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "name": "unb-libraries/newspapers.lib.unb.ca",
+  "prefer-stable": true,
   "require": {
     "unb-libraries/unb_lib_theme": "dev-8.x-4.x"
   },
