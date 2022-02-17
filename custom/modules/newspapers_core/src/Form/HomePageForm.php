@@ -10,7 +10,10 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 
 /**
- * HomePageForm object.
+ * Front page search form.
+ *
+ * Provides tabbed Search Form for searching newspaper title metadata or
+ * content within scanned pages.
  */
 class HomePageForm extends FormBase {
 
