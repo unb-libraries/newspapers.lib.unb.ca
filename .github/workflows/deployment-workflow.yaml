@@ -5,8 +5,8 @@ on:
   pull_request:
 
 jobs:
-  d9:
-    uses: unb-libraries/dockworker-drupal/.github/workflows/deployment-workflow.yaml@4.x
+  drupal:
+    uses: unb-libraries/dockworker-drupal/.github/workflows/deployment-workflow.yaml@5.x
     secrets:
       GH_CONTAINER_REGISTRY_TOKEN: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
       GH_CONTAINER_REGISTRY_USER: ${{ secrets.GH_CONTAINER_REGISTRY_USER }}
