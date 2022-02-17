@@ -138,7 +138,7 @@ class HomePageForm extends FormBase {
 
     $form['blurb'] = [
       '#type' => 'markup',
-      '#markup' => "<div class=\"d-none d-sm-block alert bg-unb-light border mb-4\">" . $blurb . "</div>",
+      '#markup' => "<div class=\"d-none d-sm-block bg-unb-light border mb-4 p-3 rounded\">" . $blurb . "</div>",
     ];
 
     $form['nav-tabs'] = [
