@@ -391,13 +391,26 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          empty: true
-          tokenize: false
-          content:
-            value: "<h2>This Day in New Brunswick History</h2>\r\n<p><span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No digital issues were found from this day in history.\r\n</p>"
-            format: full_html
           plugin_id: text
-      relationships: {  }
+          empty: true
+          content:
+            value: "<h2>This Day in New Brunswick History</h2>\r\n<p><span class=\"fas fa-exclamation-circle\"></span>\r\n    No digital issues were found from this day in history.\r\n</p>"
+            format: full_html
+          tokenize: false
+      sorts:
+        page_sort_filter:
+          id: page_sort_filter
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: page_sort_filter
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: page_sort_filter
+          exposed: false
       arguments:
         parent_digital_issue_id:
           id: parent_digital_issue_id

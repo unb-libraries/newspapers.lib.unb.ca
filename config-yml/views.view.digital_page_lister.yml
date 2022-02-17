@@ -1865,10 +1865,32 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+      exposed_form:
+        type: basic
+        options:
+          submit_button: 'Apply Filters'
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       cache:
         type: none
-      title: 'Digital Issues'
-      relationships: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: "<div class=\"alert alert-warning\">\r\n    <i class=\"fas fa-exclamation-circle\"></i>\r\n    No results were found.\r\n</div>"
+            format: full_html
+          tokenize: false
       sorts:
         issue_date:
           id: issue_date
@@ -2735,7 +2757,7 @@ display:
           element_wrapper_type: '0'
           element_wrapper_class: ''
           element_default_classes: false
-          empty: "<span class=\"no-result\"><i class=\"glyphicon glyphicon-exclamation-sign\"></i>\r\nSearch excerpt not available.</span>"
+          empty: "<span class=\"no-result\"><i class=\"fas fa-exclamation-circle\"></i>\r\nSearch excerpt not available.</span>"
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
@@ -2743,18 +2765,41 @@ display:
           use_highlighting: false
           multi_type: separator
           multi_separator: ', '
-          plugin_id: search_api
-      header:
-        result:
-          id: result
-          table: views
-          field: result
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: false
-          content: '<h2 class="alert alert-success"><i class="fas fa-check-circle fa-sm mr-1"></i>Displaying @start - @end of @total results</h2>'
-          plugin_id: result
+      pager:
+        type: full
+        options:
+          offset: 0
+          items_per_page: 10
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      exposed_form:
+        type: input_required
+        options:
+          submit_button: 'Search Fulltext'
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: "<div class=\"alert alert-info\">\r\n  <span class=\"fas fa-question-circle\"></span> Enter 1 or more keyword terms to filter the result list.\r\n</div>"
+          text_input_required_format: full_html
+      cache:
+        type: none
       empty:
         area:
           id: area
@@ -2814,48 +2859,39 @@ display:
           parse_mode: direct
           min_length: null
           fields: {  }
-          plugin_id: search_api_fulltext
       filter_groups:
         operator: AND
         groups:
           1: AND
-      exposed_form:
-        type: input_required
-        options:
-          submit_button: 'Search Fulltext'
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-          text_input_required: "<div class=\"alert alert-info fade in\">\r\n  <span class=\"glyphicon glyphicon-question-sign\"></span> Enter 1 or more keyword terms to filter the result list.\r\n</div>"
-          text_input_required_format: full_html
-      pager:
-        type: full
-        options:
-          items_per_page: 10
-          offset: 0
-          id: 0
-          total_pages: null
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« First'
-            last: 'Last »'
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
-      cache:
-        type: none
-      title: 'Search Fulltext in Pages'
+      defaults:
+        empty: false
+        cache: false
+        title: false
+        use_ajax: false
+        pager: false
+        exposed_form: false
+        relationships: false
+        fields: false
+        filters: false
+        filter_groups: false
+        header: false
       relationships: {  }
+      use_ajax: false
+      display_description: ''
+      header:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<h2 class="alert alert-success"><i class="fas fa-check-circle fa-sm mr-1"></i>Displaying @start - @end of @total results</h2>'
+      exposed_block: true
+      display_extenders: {  }
+      path: page-search
     cache_metadata:
       max-age: -1
       contexts:

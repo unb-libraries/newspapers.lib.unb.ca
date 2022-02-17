@@ -448,7 +448,7 @@ display:
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
-          empty: '<small class="text-muted"><i class="glyphicon glyphicon-warning-sign"></i> Undefined</small>'
+          empty: '<small class="text-muted"><i class="fas fa-exclamation-triangle"></i> Undefined</small>'
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
@@ -501,7 +501,7 @@ display:
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
-          empty: '<small class="text-muted"><i class="glyphicon glyphicon-question-sign"></i> Unknown</small>'
+          empty: '<small class="text-muted"><i class="fas fa-question-circle"></i> Unknown</small>'
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
@@ -572,7 +572,7 @@ display:
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
-          empty: '<small class="text-muted"><i class="glyphicon glyphicon-question-sign"></i> Unknown</small>'
+          empty: '<small class="text-muted"><i class="fas fa-question-circle"></i> Unknown</small>'
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
@@ -598,7 +598,73 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
-          plugin_id: search_api_field
+      pager:
+        type: full
+        options:
+          offset: 0
+          items_per_page: 25
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      exposed_form:
+        type: basic
+        options:
+          submit_button: 'Browse/Search Titles'
+          reset_button: true
+          reset_button_label: Clear
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+        options: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: "<div class=\"alert alert-warning\">\r\n    <i class=\"fas fa-exclamation-circle\"></i>\r\n    No results were found.\r\n</div>"
+            format: full_html
+          tokenize: true
+      sorts:
+        search_api_relevance:
+          id: search_api_relevance
+          table: search_api_index_solr_newspapers_lib_unb_ca
+          field: search_api_relevance
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: search_api_relevance
+          exposed: false
+      arguments: {  }
       filters:
         status:
           id: status
@@ -706,33 +772,11 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: result
           empty: false
           content: '<h2 class="alert alert-success"><i class="fas fa-check-circle fa-sm mr-1"></i>Displaying @start - @end of @total results</h2>'
-          plugin_id: result
       footer: {  }
-      empty:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: true
-          tokenize: true
-          content:
-            value: "<div class=\"alert alert-warning\">\r\n    <i class=\"fas fa-exclamation-circle\"></i>\r\n    No results were found.\r\n</div>"
-            format: full_html
-          plugin_id: text
-      relationships: {  }
-      arguments: {  }
       display_extenders: {  }
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-      css_class: search-results
-      use_ajax: false
     cache_metadata:
       max-age: -1
       contexts:

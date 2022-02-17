@@ -1303,75 +1303,11 @@ display:
         - user.permissions
       tags: {  }
   view_title_issues_block:
-    display_plugin: block
     id: view_title_issues_block
     display_title: 'View Title Issues'
+    display_plugin: block
     position: 2
     display_options:
-      display_extenders: {  }
-      display_description: ''
-      arguments:
-        parent_title:
-          id: parent_title
-          table: digital_serial_issue
-          field: parent_title
-          relationship: none
-          group_type: group
-          admin_label: ''
-          default_action: empty
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: false
-          title: ''
-          default_argument_type: fixed
-          default_argument_options:
-            argument: ''
-          default_argument_skip_url: false
-          summary_options:
-            base_path: ''
-            count: true
-            items_per_page: 25
-            override: false
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: true
-          validate:
-            type: none
-            fail: empty
-          validate_options: {  }
-          break_phrase: false
-          not: false
-          entity_type: digital_serial_issue
-          entity_field: parent_title
-          plugin_id: numeric
-      defaults:
-        arguments: false
-        empty: false
-        title: false
-        fields: false
-        access: false
-        header: false
-        relationships: false
-        filters: false
-        filter_groups: false
-      empty:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: true
-          tokenize: false
-          content:
-            value: "<div class=\"alert alert-warning fade in\">\r\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No issues have been found.\r\n</div>"
-            format: full_html
-          plugin_id: text
       enabled: true
       title: ''
       fields:
@@ -2184,13 +2120,46 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: digital_serial_issue
-          entity_field: issue_issue
-          plugin_id: string
       filter_groups:
         operator: AND
         groups:
           1: AND
+      defaults:
+        empty: false
+        access: false
+        title: false
+        relationships: false
+        fields: false
+        arguments: false
+        filters: false
+        filter_groups: false
+        header: false
+      relationships:
+        parent_title:
+          id: parent_title
+          table: digital_serial_issue
+          field: parent_title
+          relationship: none
+          group_type: group
+          admin_label: 'Digital Serial Title'
+          entity_type: digital_serial_issue
+          entity_field: parent_title
+          plugin_id: standard
+          required: false
+      display_description: ''
+      header:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: "<h2 class=\"alert alert-success\">\r\n    <span class=\"fas fa-check-circle\"></span>\r\n    Displaying @start - @end\r\n</h2>"
+      display_extenders: {  }
+      block_description: ''
     cache_metadata:
       max-age: -1
       contexts:
