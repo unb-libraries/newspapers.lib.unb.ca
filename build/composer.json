@@ -1,212 +1,212 @@
 {
-    "authors": [
-        {
-            "name": "UNB Libraries libsupport@unb.ca",
-            "role": "Creator"
-        }
+  "authors": [
+    {
+      "name": "UNB Libraries libsupport@unb.ca",
+      "role": "Creator"
+    }
+  ],
+  "autoload": {
+    "classmap": [
+      "scripts/composer/ScriptHandler.php"
+    ]
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    }
+  },
+  "conflict": {
+    "drupal/drupal": "*"
+  },
+  "description": "Drupal 8 component of newspapers.lib.unb.ca",
+  "extra": {
+    "enable-patching": true,
+    "installer-paths": {
+      "core": [
+        "type:drupal-core"
+      ],
+      "drush/contrib/{$name}": [
+        "type:drupal-drush"
+      ],
+      "libraries/{$name}": [
+        "type:drupal-library"
+      ],
+      "modules/contrib/{$name}": [
+        "type:drupal-module"
+      ],
+      "profiles/contrib/{$name}": [
+        "type:drupal-profile"
+      ],
+      "themes/contrib/{$name}": [
+        "type:drupal-theme"
+      ]
+    },
+    "patches": {
+      "drupal/address": {
+        "Integrate Address with Search API": "https://www.drupal.org/files/issues/2018-06-07/address-search-api-full-name-properties-2812659-37.patch"
+      },
+      "drupal/core": {
+        "Exposed filter values available as tokens": "https://www.drupal.org/files/issues/2018-05-14/make_exposed_filter-2761273-13.patch",
+        "Extend Daterange functionality": "https://www.drupal.org/files/issues/2794481-50.patch",
+        "HTML5 validation issue": "https://www.drupal.org/files/issues/2018-07-13/1797438-145.patch",
+        "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch"
+      },
+      "drupal/elasticsearch_connector": {
+        "Cannot combine elasticsearch with other backends": "https://www.drupal.org/files/issues/elasticsearch_connector-fix-serialize-closure-error-2904033-9.patch",
+        "Cannot parse content access": "https://www.drupal.org/files/issues/2018-06-07/elasticsearch_connector-convert_boolean_fields-2978005-2.patch"
+      },
+      "drupal/facets": {
+        "Fix D9 Facets Range Widget": "/build/patches/facets_range_widget_d9.patch",
+        "Fix Views AJAX Facets": "https://www.drupal.org/files/issues/2018-09-25/ajax_facet_block_views_context-2986981-13.patch"
+      },
+      "drupal/samlauth": {
+        "Ignore Role Restrictions": "/build/patches/samlauth_rolematch.patch"
+      }
+    }
+  },
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "name": "unb-libraries/newspapers.lib.unb.ca",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    },
+    {
+      "package": {
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip"
+        },
+        "name": "harvesthq/chosen",
+        "require": {
+          "composer/installers": "^1.2.0"
+        },
+        "type": "drupal-library",
+        "version": "1.8.7"
+      },
+      "type": "package"
+    },
+    {
+      "package": {
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/FortAwesome/Font-Awesome/archive/refs/tags/5.15.4.zip"
+        },
+        "extra": {
+          "installer-name": "fontawesome"
+        },
+        "name": "fortawesome/font-awesome",
+        "type": "drupal-library",
+        "version": "5.15.4"
+      },
+      "type": "package"
+    },
+    {
+      "package": {
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/furf/jquery-ui-touch-punch/archive/refs/heads/master.zip"
+        },
+        "name": "furf/jquery-ui-touch-punch",
+        "type": "drupal-library",
+        "version": "dev-master"
+      },
+      "type": "package"
+    },
+    {
+      "package": {
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/v1.11.4.zip"
+        },
+        "name": "simeydotme/jquery-ui-slider-pips",
+        "require": {
+          "composer/installers": "^1.2.0"
+        },
+        "type": "drupal-library",
+        "version": "1.11.4"
+      },
+      "type": "package"
+    },
+    {
+      "package": {
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/markgoodyear/scrollup/archive/refs/heads/master.zip"
+        },
+        "extra": {
+          "installer-name": "scrollup"
+        },
+        "name": "markgoodyear/scrollup",
+        "type": "drupal-library",
+        "version": "dev-master"
+      },
+      "type": "package"
+    }
+  ],
+  "require": {
+    "drupal/address": "1.10",
+    "drupal/bootstrap_barrio": "5.1.6",
+    "drupal/chosen": "3.0.1",
+    "drupal/conditional_fields": "4.0.0-alpha1",
+    "drupal/core": "9.3.6",
+    "drupal/externalauth": "1.4",
+    "drupal/facets": "2.0.1",
+    "drupal/field_group": "3.2",
+    "drupal/fontawesome": "2.19",
+    "drupal/google_analytics": "2.5",
+    "drupal/health_check": "1.3",
+    "drupal/jquery_scrollup": "1.0",
+    "drupal/jquery_ui": "1.4",
+    "drupal/jquery_ui_slider": "1.1",
+    "drupal/jquery_ui_touch_punch": "1.0.0",
+    "drupal/languagefield": "1.7",
+    "drupal/noreqnewpass": "1.2",
+    "drupal/owlcarousel": "1.0-beta1",
+    "drupal/pathauto": "1.9",
+    "drupal/redis": "1.5",
+    "drupal/samlauth": "3.4",
+    "drupal/search_api": "1.23",
+    "drupal/search_api_autocomplete": "1.6",
+    "drupal/search_api_solr": "4.2.7",
+    "drupal/token": "1.10",
+    "drupal/twig_field_value": "2.0.0",
+    "drupal/twig_tweak": "2.9",
+    "drupal/view_unpublished": "1.0",
+    "drupal/views_data_export": "1.1",
+    "drupal/views_infinite_scroll": "1.9",
+    "fortawesome/font-awesome": "5.15.4",
+    "furf/jquery-ui-touch-punch": "dev-master",
+    "harvesthq/chosen": "~1.8",
+    "markgoodyear/scrollup": "dev-master",
+    "nodespark/des-connector": "5.x-dev",
+    "phpoffice/phpspreadsheet": "^1.5.0",
+    "simeydotme/jquery-ui-slider-pips": "~1.11",
+    "unb-libraries/alert_scheduler": "dev-8.x-1.x",
+    "unb-libraries/calendar_hours": "dev-9.x-1.x",
+    "unb-libraries/drupal-builder": "^9",
+    "unb-libraries/saml_features": "dev-9.x-1.x",
+    "unb-libraries/unb_lib_theme": "dev-8.x-4.x"
+  },
+  "require-dev": {
+    "unb-libraries/drupal-development-libraries": "^9"
+  },
+  "scripts": {
+    "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+    "post-install-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
     ],
-    "autoload": {
-        "classmap": [
-            "scripts/composer/ScriptHandler.php"
-        ]
-    },
-    "config": {
-        "preferred-install": {
-            "*": "dist"
-        }
-    },
-    "conflict": {
-        "drupal/drupal": "*"
-    },
-    "description": "Drupal 8 component of newspapers.lib.unb.ca",
-    "extra": {
-        "enable-patching": true,
-        "installer-paths": {
-            "core": [
-                "type:drupal-core"
-            ],
-            "drush/contrib/{$name}": [
-                "type:drupal-drush"
-            ],
-            "libraries/{$name}": [
-                "type:drupal-library"
-            ],
-            "modules/contrib/{$name}": [
-                "type:drupal-module"
-            ],
-            "profiles/contrib/{$name}": [
-                "type:drupal-profile"
-            ],
-            "themes/contrib/{$name}": [
-                "type:drupal-theme"
-            ]
-        },
-        "patches": {
-            "drupal/address": {
-                "Integrate Address with Search API": "https://www.drupal.org/files/issues/2018-06-07/address-search-api-full-name-properties-2812659-37.patch"
-            },
-            "drupal/core": {
-                "Extend Daterange functionality": "https://www.drupal.org/files/issues/2794481-50.patch",
-                "HTML5 validation issue": "https://www.drupal.org/files/issues/2018-07-13/1797438-145.patch",
-                "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch",
-                "Exposed filter values available as tokens": "https://www.drupal.org/files/issues/2018-05-14/make_exposed_filter-2761273-13.patch"
-            },
-            "drupal/elasticsearch_connector": {
-                "Cannot combine elasticsearch with other backends": "https://www.drupal.org/files/issues/elasticsearch_connector-fix-serialize-closure-error-2904033-9.patch",
-                "Cannot parse content access": "https://www.drupal.org/files/issues/2018-06-07/elasticsearch_connector-convert_boolean_fields-2978005-2.patch"
-            },
-            "drupal/facets": {
-                "Fix Views AJAX Facets": "https://www.drupal.org/files/issues/2018-09-25/ajax_facet_block_views_context-2986981-13.patch",
-                "Fix D9 Facets Range Widget": "/build/patches/facets_range_widget_d9.patch"
-            },
-            "drupal/samlauth": {
-                "Ignore Role Restrictions": "/build/patches/samlauth_rolematch.patch"
-            }
-        }
-    },
-    "license": "MIT",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "name": "unb-libraries/newspapers.lib.unb.ca",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "package",
-            "package": {
-                "dist": {
-                    "type": "zip",
-                    "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip"
-                },
-                "name": "harvesthq/chosen",
-                "require": {
-                    "composer/installers": "^1.2.0"
-                },
-                "type": "drupal-library",
-                "version": "1.8.7"
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "fortawesome/font-awesome",
-                "version": "5.15.4",
-                "type": "drupal-library",
-                "dist": {
-                    "type": "zip",
-                    "url": "https://github.com/FortAwesome/Font-Awesome/archive/refs/tags/5.15.4.zip"
-                },
-                "extra": {
-                    "installer-name": "fontawesome"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "furf/jquery-ui-touch-punch",
-                "version": "dev-master",
-                "type": "drupal-library",
-                "dist": {
-                    "type": "zip",
-                    "url": "https://github.com/furf/jquery-ui-touch-punch/archive/refs/heads/master.zip"
-                }
-            }
-        },
-        {
-            "package": {
-                "dist": {
-                    "type": "zip",
-                    "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/v1.11.4.zip"
-                },
-                "name": "simeydotme/jquery-ui-slider-pips",
-                "require": {
-                    "composer/installers": "^1.2.0"
-                },
-                "type": "drupal-library",
-                "version": "1.11.4"
-            },
-            "type": "package"
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "markgoodyear/scrollup",
-                "version": "dev-master",
-                "type": "drupal-library",
-                "dist": {
-                    "type": "zip",
-                    "url": "https://github.com/markgoodyear/scrollup/archive/refs/heads/master.zip"
-                },
-                "extra": {
-                    "installer-name": "scrollup"
-                }
-            }
-        }
+    "post-update-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
     ],
-    "require": {
-        "drupal/address": "1.10",
-        "drupal/bootstrap_barrio": "5.1.6",
-        "drupal/chosen": "3.0.1",
-        "drupal/conditional_fields": "4.0.0-alpha1",
-        "drupal/core": "9.3.6",
-        "drupal/externalauth": "1.4",
-        "drupal/facets": "2.0.1",
-        "drupal/field_group": "3.2",
-        "drupal/fontawesome": "2.19",
-        "drupal/google_analytics": "2.5",
-        "drupal/health_check": "1.3",
-        "drupal/jquery_scrollup": "1.0",
-        "drupal/jquery_ui": "1.4",
-        "drupal/jquery_ui_slider": "1.1",
-        "drupal/jquery_ui_touch_punch": "1.0.0",
-        "drupal/languagefield": "1.7",
-        "drupal/noreqnewpass": "1.2",
-        "drupal/owlcarousel": "1.0-beta1",
-        "drupal/pathauto": "1.9",
-        "drupal/redis": "1.5",
-        "drupal/samlauth": "3.4",
-        "drupal/search_api": "1.23",
-        "drupal/search_api_autocomplete": "1.6",
-        "drupal/search_api_solr": "4.2.7",
-        "drupal/token": "1.10",
-        "drupal/twig_field_value": "2.0.0",
-        "drupal/twig_tweak": "2.9",
-        "drupal/views_data_export": "1.1",
-        "drupal/views_infinite_scroll": "1.9",
-        "drupal/view_unpublished": "1.0",
-        "fortawesome/font-awesome": "5.15.4",
-        "furf/jquery-ui-touch-punch": "dev-master",
-        "harvesthq/chosen": "~1.8",
-        "markgoodyear/scrollup": "dev-master",
-        "nodespark/des-connector": "5.x-dev",
-        "phpoffice/phpspreadsheet": "^1.5.0",
-        "simeydotme/jquery-ui-slider-pips": "~1.11",
-        "unb-libraries/alert_scheduler": "dev-8.x-1.x",
-        "unb-libraries/calendar_hours": "dev-9.x-1.x",
-        "unb-libraries/drupal-builder": "^9",
-        "unb-libraries/saml_features": "dev-9.x-1.x",
-        "unb-libraries/unb_lib_theme": "dev-8.x-4.x"
-    },
-    "require-dev": {
-        "unb-libraries/drupal-development-libraries": "^9"
-    },
-    "scripts": {
-        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-        "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "pre-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "pre-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ]
-    },
-    "type": "project"
+    "pre-install-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+    ],
+    "pre-update-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+    ]
+  },
+  "type": "project"
 }

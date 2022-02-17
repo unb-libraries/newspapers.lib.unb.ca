@@ -1,16 +1,16 @@
 {
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "preferred-install": {
+      "*": "dist"
+    }
+  },
+  "description": "Scaffold and provision local development for newspapers.lib.unb.ca",
   "license": "MIT",
   "minimum-stability": "stable",
   "name": "unb-libraries/newspapers.lib.unb.ca",
-  "description": "Scaffold and provision local development for newspapers.lib.unb.ca",
-  "config": {
-    "preferred-install": {
-      "*": "dist"
-    },
-    "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
-  },
   "require": {
     "unb-libraries/unb_lib_theme": "dev-8.x-4.x"
   },
