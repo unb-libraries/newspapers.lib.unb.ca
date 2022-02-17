@@ -18,12 +18,12 @@ plugin: 'facet_block:city_town'
 settings:
   id: 'facet_block:city_town'
   label: City/Town
-  provider: facets
   label_display: '0'
+  provider: facets
   block_id: citytown
 visibility:
   request_path:
     id: request_path
-    pages: '/page-search*'
     negate: false
     context_mapping: {  }
+    pages: '/page-search*'

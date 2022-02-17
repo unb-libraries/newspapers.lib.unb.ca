@@ -18,12 +18,12 @@ plugin: 'facet_block:province_state'
 settings:
   id: 'facet_block:province_state'
   label: Province/State
-  provider: facets
   label_display: '0'
+  provider: facets
   block_id: provincestate
 visibility:
   request_path:
     id: request_path
-    pages: /search
     negate: false
     context_mapping: {  }
+    pages: /search

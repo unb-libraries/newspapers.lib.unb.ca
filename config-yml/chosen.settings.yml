@@ -1,3 +1,5 @@
+_core:
+  default_config_hash: JUHKHJeHl1bWXY41HMIcDR-VmAWvJ4OJycDubCkIeDU
 minimum_single: 7
 minimum_multiple: 0
 disable_search_threshold: 0
@@ -6,9 +8,6 @@ jquery_selector: "select:visible,select#edit-field-serial-relation-suc-ref-dn,se
 search_contains: false
 disable_search: false
 allow_single_deselect: false
-placeholder_text_multiple: 'Choose your option(s)'
-placeholder_text_single: 'Choose an option'
-no_results_text: 'No results match'
 disabled_themes:
   bartik: '0'
   seven: '0'
@@ -16,5 +15,6 @@ disabled_themes:
   unb_lib_theme: '0'
   newspapers_lib_unb_ca: '0'
 chosen_include: 2
-_core:
-  default_config_hash: JUHKHJeHl1bWXY41HMIcDR-VmAWvJ4OJycDubCkIeDU
+placeholder_text_multiple: 'Choose your option(s)'
+placeholder_text_single: 'Choose an option'
+no_results_text: 'No results match'

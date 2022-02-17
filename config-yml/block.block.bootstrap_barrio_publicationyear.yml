@@ -18,12 +18,12 @@ plugin: 'facet_block:publication_year'
 settings:
   id: 'facet_block:publication_year'
   label: 'Publication Year'
-  provider: facets
   label_display: '0'
+  provider: facets
   block_id: publicationyear
 visibility:
   request_path:
     id: request_path
-    pages: '/page-search*'
     negate: false
     context_mapping: {  }
+    pages: '/page-search*'

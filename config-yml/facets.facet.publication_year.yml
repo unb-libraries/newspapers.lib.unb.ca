@@ -9,12 +9,21 @@ dependencies:
     - search_api
 id: publication_year
 name: 'Publication Date'
-url_alias: publication_year
 weight: 0
 min_count: 1
-show_only_one_result: true
-field_identifier: parent_issue_year
+url_alias: publication_year
 facet_source_id: 'search_api:views_page__digital_page_lister__page_search'
+field_identifier: parent_issue_year
+query_operator: or
+hard_limit: 0
+exclude: false
+use_hierarchy: false
+keep_hierarchy_parents_active: false
+hierarchy:
+  type: taxonomy
+  config: {  }
+expand_hierarchy: false
+enable_parent_when_child_gets_disabled: true
 widget:
   type: range_slider
   config:
@@ -26,14 +35,11 @@ widget:
     max_type: search_result
     max_value: !!float 10
     step: !!float 1
-query_operator: or
-use_hierarchy: false
-keep_hierarchy_parents_active: false
-expand_hierarchy: false
-enable_parent_when_child_gets_disabled: true
-hard_limit: 0
-exclude: false
+empty_behavior:
+  behavior: none
 only_visible_when_facet_source_is_visible: true
+show_only_one_result: true
+show_title: true
 processor_configs:
   display_value_widget_order:
     processor_id: display_value_widget_order
@@ -54,6 +60,3 @@ processor_configs:
       pre_query: 50
       build: 15
     settings: {  }
-empty_behavior:
-  behavior: none
-show_title: true

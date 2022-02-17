@@ -16,11 +16,11 @@ plugin: this_day_in_n_b_history
 settings:
   id: this_day_in_n_b_history
   label: 'This Day in New Brunswick History'
-  provider: newspapers_core
   label_display: '0'
+  provider: newspapers_core
 visibility:
   request_path:
     id: request_path
-    pages: '<front>'
     negate: false
     context_mapping: {  }
+    pages: '<front>'

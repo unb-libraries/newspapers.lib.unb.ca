@@ -18,12 +18,12 @@ plugin: 'facet_block:holdings'
 settings:
   id: 'facet_block:holdings'
   label: Holdings
-  provider: facets
   label_display: '0'
+  provider: facets
   block_id: holdings
 visibility:
   request_path:
     id: request_path
-    pages: '/search*'
     negate: false
     context_mapping: {  }
+    pages: '/search*'

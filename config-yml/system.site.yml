@@ -1,3 +1,6 @@
+_core:
+  default_config_hash: AyT9s8OUcclfALRE_imByOMgtZ19eOlqdF6zI3p7yqo
+langcode: en
 uuid: 655af73f-dc1a-48f1-84a1-3da88d2d1ad4
 name: 'NB Newspapers'
 mail: admin@example.com
@@ -8,8 +11,5 @@ page:
   front: /home
 admin_compact_mode: false
 weight_select_max: 100
-langcode: en
 default_langcode: en
-_core:
-  default_config_hash: AyT9s8OUcclfALRE_imByOMgtZ19eOlqdF6zI3p7yqo
 mail_notification: ''

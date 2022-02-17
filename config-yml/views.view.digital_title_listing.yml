@@ -19,122 +19,12 @@ base_table: digital_serial_title
 base_field: id
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: perm
-        options:
-          perm: 'access content'
-      cache:
-        type: tag
-        options: {  }
-      query:
-        type: views_query
-        options:
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
-          query_comment: ''
-          query_tags: {  }
-      exposed_form:
-        type: basic
-        options:
-          submit_button: 'Apply Filter'
-          reset_button: true
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: full
-        options:
-          items_per_page: 25
-          offset: 0
-          id: 0
-          total_pages: null
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« First'
-            last: 'Last »'
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            parent_title: parent_title
-            field_sort_title: field_sort_title
-            field_place_of_publication: field_place_of_publication
-            field_place_of_publication_locality: field_place_of_publication_locality
-            field_first_issue_sort_date: field_first_issue_sort_date
-            field_last_issue_sort_date: field_last_issue_sort_date
-          info:
-            parent_title:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_sort_title:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_place_of_publication:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_place_of_publication_locality:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_first_issue_sort_date:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_last_issue_sort_date:
-              sortable: true
-              default_sort_order: desc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: field_sort_title
-          empty_table: false
-      row:
-        type: fields
+      title: 'Digitally Available Titles'
       fields:
         parent_title:
           id: parent_title
@@ -143,6 +33,9 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: digital_serial_title
+          entity_field: parent_title
+          plugin_id: field
           label: Title
           exclude: true
           alter:
@@ -198,9 +91,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          entity_type: digital_serial_title
-          entity_field: parent_title
-          plugin_id: field
         field_sort_title:
           id: field_sort_title
           table: node__field_sort_title
@@ -208,6 +98,7 @@ display:
           relationship: parent_title
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: Title
           exclude: false
           alter:
@@ -263,7 +154,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_place_of_publication:
           id: field_place_of_publication
           table: node__field_place_of_publication
@@ -271,6 +161,7 @@ display:
           relationship: parent_title
           group_type: group
           admin_label: ''
+          plugin_id: field
           label: 'Place of Publication'
           exclude: true
           alter:
@@ -325,7 +216,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          plugin_id: field
         field_place_of_publication_locality:
           id: field_place_of_publication_locality
           table: node__field_place_of_publication
@@ -333,6 +223,7 @@ display:
           relationship: parent_title
           group_type: group
           admin_label: ''
+          plugin_id: subdivision
           label: 'Place of Publication'
           exclude: false
           alter:
@@ -437,6 +328,9 @@ display:
           relationship: parent_title
           group_type: group
           admin_label: ''
+          entity_type: node
+          entity_field: title
+          plugin_id: string
           operator: allwords
           value: ''
           group: 1
@@ -444,9 +338,11 @@ display:
           expose:
             operator_id: title_op
             label: Title
-            description: 'Enter 1 or more title terms'
+            description: ''
             use_operator: false
             operator: title_op
+            operator_limit_selection: false
+            operator_list: {  }
             identifier: title
             required: false
             remember: false
@@ -456,9 +352,8 @@ display:
               anonymous: '0'
               administrator: '0'
               newspaper_administrator: '0'
-            placeholder: ''
-            operator_limit_selection: false
-            operator_list: {  }
+              serial_ho: '0'
+            placeholder: 'Enter 1 or more title terms'
           is_grouped: false
           group_info:
             label: ''
@@ -471,37 +366,79 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          entity_type: node
-          entity_field: title
-          plugin_id: string
-      sorts: {  }
-      title: 'Digitally Available Titles'
-      header:
-        result:
-          id: result
-          table: views
-          field: result
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: false
-          content: "<h2 class=\"alert alert-success fade in\">\r\n    <span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span>\r\n    Displaying @start - @end of @total results\r\n</h2>"
-          plugin_id: result
-      footer: {  }
-      empty:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: true
-          tokenize: false
-          content:
-            value: "<div class=\"alert alert-warning fade in\">\r\n    <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\r\n    No results were found.\r\n</div>"
-            format: full_html
-          plugin_id: text
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          columns:
+            parent_title: parent_title
+            field_sort_title: field_sort_title
+            field_place_of_publication: field_place_of_publication
+            field_place_of_publication_locality: field_place_of_publication_locality
+            field_first_issue_sort_date: field_first_issue_sort_date
+            field_last_issue_sort_date: field_last_issue_sort_date
+          default: field_sort_title
+          info:
+            parent_title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_sort_title:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_place_of_publication:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_place_of_publication_locality:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_first_issue_sort_date:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_last_issue_sort_date:
+              sortable: true
+              default_sort_order: desc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      row:
+        type: fields
+      query:
+        type: views_query
+        options:
+          query_comment: ''
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_tags: {  }
       relationships:
         parent_title:
           id: parent_title
@@ -541,14 +478,14 @@ display:
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
   page_listing:
-    display_plugin: page
     id: page_listing
     display_title: 'Digital titles'
+    display_plugin: page
     position: 1
     display_options:
+      display_description: ''
       display_extenders: {  }
       path: digital-titles
-      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:

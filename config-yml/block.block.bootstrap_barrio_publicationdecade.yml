@@ -18,12 +18,12 @@ plugin: 'facet_block:publication_decade'
 settings:
   id: 'facet_block:publication_decade'
   label: 'Publication Decade'
-  provider: facets
   label_display: '0'
+  provider: facets
   block_id: publicationdecade
 visibility:
   request_path:
     id: request_path
-    pages: '/serials/browse/*'
     negate: false
     context_mapping: {  }
+    pages: '/serials/browse/*'

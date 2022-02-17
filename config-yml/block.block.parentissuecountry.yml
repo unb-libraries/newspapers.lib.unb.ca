@@ -18,12 +18,12 @@ plugin: 'facet_block:parent_issue_country'
 settings:
   id: 'facet_block:parent_issue_country'
   label: 'Parent Issue Country'
-  provider: facets
   label_display: '0'
+  provider: facets
   block_id: parentissuecountry
 visibility:
   request_path:
     id: request_path
-    pages: '/page-search*'
     negate: false
     context_mapping: {  }
+    pages: '/page-search*'

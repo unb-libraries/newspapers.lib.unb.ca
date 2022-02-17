@@ -62,108 +62,108 @@ third_party_settings:
         - field_first_issue_approx_date
         - field_last_issue_date
         - field_last_issue_approx_date
+      label: 'Publication Dates'
       parent_name: ''
+      region: content
       weight: 3
       format_type: details
       format_settings:
-        id: ''
         classes: ''
+        id: ''
         open: true
         required_fields: false
-      label: 'Publication Dates'
-      region: content
 id: node.publication.featured
 targetEntityType: node
 bundle: publication
 mode: featured
 content:
   field_description:
-    weight: 7
+    type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
+    weight: 7
     region: content
   field_first_issue_approx_date:
-    weight: 3
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 3
     region: content
   field_first_issue_date:
-    weight: 1
+    type: daterange_default
     label: above
     settings:
       timezone_override: ''
       format_type: html_date
       separator: '-'
     third_party_settings: {  }
-    type: daterange_default
+    weight: 1
     region: content
   field_first_issue_date_type:
-    weight: 1
+    type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: list_default
+    weight: 1
     region: content
   field_frequency:
-    weight: 5
+    type: string
     label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 5
     region: content
   field_last_issue_approx_date:
-    weight: 5
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 5
     region: content
   field_last_issue_date:
-    weight: 4
+    type: daterange_default
     label: above
     settings:
       timezone_override: ''
       format_type: html_date
       separator: '-'
     third_party_settings: {  }
-    type: daterange_default
+    weight: 4
     region: content
   field_last_issue_date_type:
-    weight: 2
+    type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: list_default
+    weight: 2
     region: content
   field_marc_frequency:
-    weight: 6
+    type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: list_default
+    weight: 6
     region: content
   field_place_of_publication:
-    weight: 4
+    type: address_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: address_default
+    weight: 4
     region: content
   field_sample_image:
-    weight: 0
+    type: image
     label: hidden
     settings:
-      image_style: sample_publication_image
       image_link: content
+      image_style: sample_publication_image
     third_party_settings: {  }
-    type: image
+    weight: 0
     region: content
 hidden:
   field_additional_indexed_text: true

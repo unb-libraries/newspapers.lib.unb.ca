@@ -18,12 +18,12 @@ plugin: 'facet_block:language'
 settings:
   id: 'facet_block:language'
   label: Language
-  provider: facets
   label_display: '0'
+  provider: facets
   block_id: language
 visibility:
   request_path:
     id: request_path
-    pages: '/search*'
     negate: false
     context_mapping: {  }
+    pages: '/search*'

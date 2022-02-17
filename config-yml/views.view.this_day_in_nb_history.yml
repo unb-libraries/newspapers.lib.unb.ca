@@ -18,46 +18,12 @@ base_table: search_api_index_pages_newspapers_lib_unb_ca
 base_field: search_api_id
 display:
   default:
-    display_plugin: default
     id: default
     display_title: Master
+    display_plugin: default
     position: 0
     display_options:
-      access:
-        type: perm
-        options:
-          perm: 'access content'
-      cache:
-        type: tag
-        options: {  }
-      query:
-        type: views_query
-        options:
-          bypass_access: false
-          skip_access: false
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      pager:
-        type: some
-        options:
-          items_per_page: 1
-          offset: 0
-      style:
-        type: default
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: false
-      row:
-        type: fields
+      title: ''
       fields:
         nothing:
           id: nothing
@@ -66,6 +32,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: custom
           label: ''
           exclude: false
           alter:
@@ -107,7 +74,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
-          plugin_id: custom
         parent_digital_title_id:
           id: parent_digital_title_id
           table: search_api_index_pages_newspapers_lib_unb_ca
@@ -115,6 +81,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api_numeric
           label: ''
           exclude: true
           alter:
@@ -169,7 +136,6 @@ display:
           multi_type: separator
           multi_separator: ', '
           format_plural_values: {  }
-          plugin_id: search_api_numeric
         parent_digital_issue_id:
           id: parent_digital_issue_id
           table: search_api_index_pages_newspapers_lib_unb_ca
@@ -177,6 +143,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api_numeric
           label: ''
           exclude: true
           alter:
@@ -231,7 +198,6 @@ display:
           multi_type: separator
           multi_separator: ', '
           format_plural_values: {  }
-          plugin_id: search_api_numeric
         parent_digital_page_id:
           id: parent_digital_page_id
           table: search_api_index_pages_newspapers_lib_unb_ca
@@ -239,6 +205,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api_numeric
           label: ''
           exclude: true
           alter:
@@ -293,7 +260,6 @@ display:
           multi_type: separator
           multi_separator: ', '
           format_plural_values: {  }
-          plugin_id: search_api_numeric
         page_image:
           id: page_image
           table: search_api_datasource_pages_newspapers_lib_unb_ca_entity_digital_serial_page
@@ -301,6 +267,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          entity_type: digital_serial_page
+          plugin_id: search_api_field
           label: ''
           exclude: false
           alter:
@@ -345,8 +313,8 @@ display:
           click_sort_column: target_id
           type: image
           settings:
-            image_style: this_day_in_history
             image_link: ''
+            image_style: this_day_in_history
           group_column: ''
           group_columns: {  }
           group_rows: true
@@ -364,25 +332,28 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
-          entity_type: digital_serial_page
-          plugin_id: search_api_field
-      filters: {  }
-      sorts:
-        page_sort_filter:
-          id: page_sort_filter
-          table: search_api_index_pages_newspapers_lib_unb_ca
-          field: page_sort_filter
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: search_api
-      title: ''
-      header: {  }
-      footer: {  }
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 1
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+        options: {  }
       empty:
         area:
           id: area
@@ -419,6 +390,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
+          plugin_id: search_api
           default_action: empty
           exception:
             value: all
@@ -442,9 +414,25 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: search_api
-      display_extenders: {  }
+      filters: {  }
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: false
+      row:
+        type: fields
+      query:
+        type: views_query
+        options:
+          bypass_access: false
+          skip_access: false
+      relationships: {  }
       css_class: image-link-shadow
+      header: {  }
+      footer: {  }
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
@@ -455,9 +443,9 @@ display:
       tags:
         - 'config:search_api.index.pages_newspapers_lib_unb_ca'
   today:
-    display_plugin: block
     id: today
     display_title: Block
+    display_plugin: block
     position: 1
     display_options:
       display_extenders: {  }

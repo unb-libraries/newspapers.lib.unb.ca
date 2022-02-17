@@ -18,12 +18,12 @@ plugin: 'facet_block:parent_issue_province'
 settings:
   id: 'facet_block:parent_issue_province'
   label: 'Parent Issue Province'
-  provider: facets
   label_display: '0'
+  provider: facets
   block_id: parentissueprovince
 visibility:
   request_path:
     id: request_path
-    pages: '/page-search*'
     negate: false
     context_mapping: {  }
+    pages: '/page-search*'

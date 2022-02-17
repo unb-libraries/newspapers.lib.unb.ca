@@ -18,12 +18,12 @@ plugin: 'facet_block:publication_title'
 settings:
   id: 'facet_block:publication_title'
   label: 'Publication Title'
-  provider: facets
   label_display: '0'
+  provider: facets
   block_id: publicationtitle
 visibility:
   request_path:
     id: request_path
-    pages: '/page-search*'
     negate: false
     context_mapping: {  }
+    pages: '/page-search*'
