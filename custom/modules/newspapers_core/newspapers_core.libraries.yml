@@ -10,7 +10,8 @@ pubform:
   js:
     js/pub-form.js: {}
   dependencies:
-     - core/jquery
+    - core/drupal
+    - jquery_ui_datepicker/datepicker
 
 tab-search:
   css:
