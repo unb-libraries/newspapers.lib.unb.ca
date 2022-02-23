@@ -39,7 +39,7 @@ function lastIssueDateRange() {
      */
     if (jQuery("#edit-field-last-issue-date-type").val() == 'approximate') {
         jQuery("#edit-field-last-issue-date-0 legend .fieldset__label").text("Last Issue Date Range");
-        jQuery("#edit-field-last-issue-date-0 .form-datetime-wrapper:first-child .form-item__label").text("Approximate start date");
+        jQuery("#edit-field-last-issue-date-0 .form-datetime-wrapper:first-child .form-item__label").addClass("form-required").text("Approximate start date");
         jQuery("#edit-field-last-issue-date-0 .form-datetime-wrapper:nth-child(2) .form-item__label").addClass("form-required").text("Approximate end date");
         jQuery("#edit-field-last-issue-date-0 .form-datetime-wrapper:nth-child(2)").slideDown(300);
         jQuery("#edit-field-last-issue-date-0 .fieldset__description").slideDown(300);
