@@ -1069,7 +1069,7 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
     );
   }
 
-  if (isset($form_state->getValue(['field_last_issue_date_type', '0'])['value'])) {
+  if (null !== $form_state->getValue(['field_first_issue_date_type', '0'])) {
     if ($form_state->getValue(['field_first_issue_date_type', '0'])['value'] == 'exact') {
       if (is_null($first_issue_date['0']['value'])) {
         $form_state->setErrorByName(
@@ -1097,7 +1097,7 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
     }
   }
 
-  if (isset($form_state->getValue(['field_last_issue_date_type', '0'])['value'])) {
+  if (null !== $form_state->getValue(['field_last_issue_date_type', '0'])) {
     if ($form_state->getValue(['field_last_issue_date_type', '0'])['value'] == 'exact') {
       $last_date_label = t("start date");
 
