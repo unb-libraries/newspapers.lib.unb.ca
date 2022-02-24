@@ -1,7 +1,26 @@
 uuid: a0ed6834-8f12-466d-86a6-240a38f91b51
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.full_html
+    - node.type.page
+    - node.type.publication
+    - taxonomy.vocabulary.editor
+    - taxonomy.vocabulary.family
+    - taxonomy.vocabulary.publisher
+  module:
+    - digital_serial_issue
+    - digital_serial_page
+    - digital_serial_title
+    - filter
+    - node
+    - override_node_options
+    - serial_holding
+    - system
+    - taxonomy
+    - toolbar
+    - view_unpublished
 id: newspaper_administrator
 label: 'Newspaper Administrator'
 weight: 3
@@ -27,6 +46,7 @@ permissions:
   - 'edit serial issue entities'
   - 'edit serial page entities'
   - 'edit terms in publisher'
+  - 'override publication published option'
   - 'use text format full_html'
   - 'view any unpublished publication content'
   - 'view own unpublished content'

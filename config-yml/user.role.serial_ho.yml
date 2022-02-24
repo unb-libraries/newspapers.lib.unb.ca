@@ -1,7 +1,10 @@
 uuid: 7b7358ae-3538-4ea1-9c20-b51b77a7b6b4
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - serial_holding_export
+    - system
 id: serial_ho
 label: 'Newspaper Holdings Exporter'
 weight: 4
