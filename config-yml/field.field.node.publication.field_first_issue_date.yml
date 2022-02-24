@@ -12,7 +12,7 @@ field_name: field_first_issue_date
 entity_type: node
 bundle: publication
 label: 'First Issue Date Range'
-description: "<b>Note:</b> Approximate dates require a date <i>range</i> - enter the start and end of the range described by the <i>verbatim</i> date.<br>\r\n<b>Example:</b> the year <i>2010</i> would be entered using <kbd>2010/01/01</kbd> as the <i>start</i> and <kbd>2010/12/31</kbd> as the <i>end</i> date."
+description: "<b>Note:</b> Approximate dates require a date <i>range</i> - enter the <i>start</i> and <i>end</i> of the range as described by the <i>verbatim</i> date.<br>\r\n<b>Example:</b> A <i>verbatim</i> date of <kbd>1785?</kbd> would be entered using <kbd>01/01/1785</kbd> as the <i>start</i> date and <kbd>31/12/1785</kbd> as the <i>end</i> date."
 required: false
 translatable: false
 default_value: {  }
