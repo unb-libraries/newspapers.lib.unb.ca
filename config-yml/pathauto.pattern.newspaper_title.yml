@@ -11,12 +11,12 @@ pattern: '/newspaper/[node:title]'
 selection_criteria:
   f6240a5e-4001-4e74-b1f9-7b2926f9d7e4:
     id: node_type
-    bundles:
-      publication: publication
     negate: false
+    uuid: f6240a5e-4001-4e74-b1f9-7b2926f9d7e4
     context_mapping:
       node: node
-    uuid: f6240a5e-4001-4e74-b1f9-7b2926f9d7e4
+    bundles:
+      publication: publication
 selection_logic: and
 weight: -5
 relationships: {  }

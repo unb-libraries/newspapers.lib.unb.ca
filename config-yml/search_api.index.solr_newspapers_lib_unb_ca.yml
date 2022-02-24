@@ -2,12 +2,6 @@ uuid: 75415d02-c6c5-4a5d-90ed-a314a7d33fe5
 langcode: en
 status: true
 dependencies:
-  module:
-    - search_api_solr
-    - taxonomy
-    - node
-    - search_api
-    - newspapers_core
   config:
     - field.storage.node.field_additional_indexed_text
     - field.storage.node.field_description
@@ -31,24 +25,27 @@ dependencies:
     - field.storage.node.field_last_issue_approx_date
     - field.storage.node.field_first_issue_approx_date
     - search_api.server.solr_newspapers_lib_unb_ca
+  module:
+    - search_api_solr
+    - taxonomy
+    - node
+    - search_api
+    - newspapers_core
 third_party_settings:
   search_api_solr:
     finalize: false
     commit_before_finalize: false
     commit_after_finalize: false
-    multilingual:
-      limit_to_content_language: false
-      include_language_independent: true
     highlighter:
       maxAnalyzedChars: 51200
       fragmenter: gap
+      usePhraseHighlighter: true
+      highlightMultiTerm: true
+      preserveMulti: false
       regex:
         slop: 0.5
         pattern: blank
         maxAnalyzedChars: 10000
-      usePhraseHighlighter: true
-      highlightMultiTerm: true
-      preserveMulti: false
       highlight:
         mergeContiguous: false
         requireFieldMatch: false
@@ -68,6 +65,9 @@ third_party_settings:
     advanced:
       index_prefix: ''
       collection: ''
+    multilingual:
+      limit_to_content_language: false
+      include_language_independent: true
 id: solr_newspapers_lib_unb_ca
 name: newspapers.lib.unb.ca
 description: ''
@@ -381,15 +381,15 @@ processor_settings:
     weights:
       preprocess_query: -30
   highlight:
-    highlight: always
-    highlight_partial: true
+    weights:
+      postprocess_query: 0
+    prefix: '<strong>'
+    suffix: '</strong>'
     excerpt: true
     excerpt_length: 256
     exclude_fields: {  }
-    prefix: '<strong>'
-    suffix: '</strong>'
-    weights:
-      postprocess_query: 0
+    highlight: always
+    highlight_partial: true
   index_parent_title_info: {  }
   language_with_fallback: {  }
   rendered_item: {  }
@@ -400,6 +400,6 @@ tracker_settings:
   default:
     indexing_order: fifo
 options:
-  index_directly: true
   cron_limit: 50
+  index_directly: true
 server: solr_newspapers_lib_unb_ca
