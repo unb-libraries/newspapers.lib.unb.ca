@@ -9,8 +9,8 @@ id: node.publication.field_last_issue_approx_date
 field_name: field_last_issue_approx_date
 entity_type: node
 bundle: publication
-label: 'Verbatim date'
-description: "Enter the <b>last</b> issue date <i>as provided</i> - this value displays <b>in place of</b> the approximate date range.<br>\r\n<b>Example:</b> <tt>1995 or 1996</tt>\r\n"
+label: 'Last Issue Verbatim Date'
+description: "Enter the last issue date <b>as provided</b> - this text will be used as the <b>end</b> of the date range for the <i>Dates of publication</i> field display.<br>\r\n<b>Example:</b> <tt>1995 or 1996</tt>\r\n"
 required: false
 translatable: false
 default_value: {  }
