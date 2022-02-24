@@ -60,18 +60,17 @@ third_party_settings:
     group_date_of_publication:
       children:
         - field_first_issue_date_type
-        - field_first_issue_date
         - field_first_issue_approx_date
+        - field_first_issue_date
         - field_last_issue_date_type
-        - field_last_issue_date
         - field_last_issue_approx_date
+        - field_last_issue_date
       label: 'Date of Publication'
       region: content
       parent_name: ''
       weight: 3
       format_type: details
       format_settings:
-        label: 'Date of Publication'
         classes: ''
         id: ''
         open: true
@@ -90,7 +89,6 @@ third_party_settings:
       weight: 2
       format_type: details
       format_settings:
-        label: 'Title Details'
         classes: ''
         id: ''
         open: false
@@ -109,7 +107,6 @@ third_party_settings:
       weight: 9
       format_type: details
       format_settings:
-        label: Relationships
         classes: ''
         id: ''
         open: true
@@ -191,7 +188,7 @@ content:
     third_party_settings: {  }
   field_first_issue_approx_date:
     type: string_textfield
-    weight: 39
+    weight: 38
     region: content
     settings:
       size: 60
@@ -238,7 +235,7 @@ content:
             selector: ''
   field_first_issue_date:
     type: daterange_default
-    weight: 38
+    weight: 39
     region: content
     settings: {  }
     third_party_settings:
@@ -339,7 +336,7 @@ content:
     third_party_settings: {  }
   field_last_issue_approx_date:
     type: string_textfield
-    weight: 43
+    weight: 41
     region: content
     settings:
       size: 60
@@ -417,7 +414,7 @@ content:
                 value: exact
   field_last_issue_date_type:
     type: options_select
-    weight: 41
+    weight: 40
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -439,8 +436,7 @@ content:
     type: address_default
     weight: 4
     region: content
-    settings:
-      default_country: ''
+    settings: {  }
     third_party_settings: {  }
   field_publisher:
     type: entity_reference_autocomplete
