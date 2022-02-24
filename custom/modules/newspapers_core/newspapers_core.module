@@ -331,7 +331,7 @@ function newspapers_core_entity_presave(EntityInterface $entity) {
 function newspapers_core_preprocess_node__publication(&$variables) {
   $node = $variables['elements']['#node'];
 
-  $variables['publication_date_label'] = t("Dates of publication");
+  $variables['publication_date_label'] = t("Dates of Publication");
   $variables['publication_date_value'] = _newspapers_core_get_daterange($node, TRUE);
 
   $language_label = $node
