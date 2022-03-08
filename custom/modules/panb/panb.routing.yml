@@ -1,0 +1,7 @@
+panb.home:
+  path: '/panb_yaml'
+  defaults:
+    _controller: '\Drupal\panb\Controller\PanbController::getInfo'
+    _title: 'PANB YAML Parsing Test'
+  requirements:
+    _permission: 'access content'
