@@ -1,0 +1,8 @@
+uuid: 0e7b0af6-1bbf-42b6-b960-45c668c39df9
+langcode: en
+status: true
+dependencies: {  }
+name: Institution
+vid: institution
+description: 'PANB Institution Vocabulary Import Tool'
+weight: 0

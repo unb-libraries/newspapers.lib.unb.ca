@@ -1,0 +1,6 @@
+name: panb_institution_import
+type: module
+description: PANB Institution Vocabulary Import Tool
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: PANB

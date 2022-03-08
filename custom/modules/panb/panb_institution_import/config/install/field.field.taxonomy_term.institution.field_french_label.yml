@@ -1,0 +1,19 @@
+uuid: 78bb838d-2107-4cdd-8574-961be4de11e0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_french_label
+    - taxonomy.vocabulary.institution
+id: taxonomy_term.institution.field_french_label
+field_name: field_french_label
+entity_type: taxonomy_term
+bundle: institution
+label: 'French label'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
