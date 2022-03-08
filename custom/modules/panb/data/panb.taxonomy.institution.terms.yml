@@ -138,30 +138,31 @@ institution:
   -
     name: York Regional Library, Florenceville (Andrew & Laura McCain Library)
     french_label: York Regional Library, Florenceville (Andrew & Laura McCain Library)
+    panb_code: NBFLYR
   -
     name: York Regional Library, Fredericton
     french_label: York Regional Library, Fredericton
-    panb_code: NBFLYR
+    panb_code: NBFYR
   -
     name: York Regional Library, Hartland (Dr. Walter Chestnut Public Library)
     french_label: York Regional Library, Hartland (Dr. Walter Chestnut Public Library)
-    panb_code: NBFYR
+    panb_code: NBHLYR
   -
     name: York Regional Library, Oromocto
     french_label: York Regional Library, Oromocto
-    panb_code: NBHLYR
+    panb_code: NBOYR
   -
     name: York Regional Library, Perth-Andover
     french_label: York Regional Library, Perth-Andover
-    panb_code: NBOYR
+    panb_code: NBPAYR
   -
     name: York Regional Library, Plaster Rock
     french_label: York Regional Library, Plaster Rock
-    panb_code: NBPAYR
+    panb_code: NBPRYR
   -
     name: York-Sunbury Historical Society, Fredericton
     french_label: York-Sunbury Historical Society, Fredericton
-    panb_code: NBPRYR
+    panb_code: NBFY
   -
     name: Library of Congress
     french_label: Library of Congress
