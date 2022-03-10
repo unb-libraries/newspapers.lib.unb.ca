@@ -1,9 +1,10 @@
-uuid: eb6f912a-ebb1-401f-84a2-a1adf2b39713
+uuid: 9d21aea3-388d-4451-82df-f7d2106c62cd
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.taxonomy_term.institution.field_french_label
+    - field.field.taxonomy_term.institution.field_panb_code
     - taxonomy.vocabulary.institution
   module:
     - text
@@ -19,14 +20,8 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  field_french_label:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 1
-    region: content
 hidden:
+  field_french_label: true
+  field_panb_code: true
   langcode: true
   search_api_excerpt: true

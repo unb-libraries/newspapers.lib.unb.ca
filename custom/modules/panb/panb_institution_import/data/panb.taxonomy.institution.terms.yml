@@ -1,0 +1,237 @@
+institution:
+  -
+    name: Acadia University, Wolfville, Nova Scotia
+    field_french_label: Acadia University, Wolfville, Nova Scotia
+    field_panb_code: NSWA
+  -
+    name: Albert-Westmorland-Kent Regional Library
+    field_french_label: Albert-Westmorland-Kent Regional Library
+    field_panb_code: NBMOW
+  -
+    name: Albert County Historical Society
+    field_french_label: Albert County Historical Society
+    field_panb_code: NBACH
+  -
+    name: Albert County Historical Society Inc., Hopewell Cape
+    field_french_label: Albert County Historical Society Inc., Hopewell Cape
+    field_panb_code: NBHCA
+  -
+    name: Bibliothèque régionale du Haut-Saint-Jean, Edmundston
+    field_french_label: Bibliothèque régionale du Haut-Saint-Jean, Edmundston
+    field_panb_code: NBEBR
+  -
+    name: Canadian Library Association, Ottawa, Ontario
+    field_french_label: Canadian Library Association, Ottawa, Ontario
+    field_panb_code: CLA
+  -
+    name: Carleton County Historical Society Inc., Upper Woodstock
+    field_french_label: Carleton County Historical Society Inc., Upper Woodstock
+    field_panb_code: NBUWH
+  -
+    name: Centre d'Études acadiennes, Université de Moncton (Acadian studies centre)
+    field_french_label: Centre d'Études acadiennes, Université de Moncton
+    field_panb_code: NBMOUA
+  -
+    name: Centre universitaire de Shippagan (Université de Moncton, Shippagan Campus)
+    field_french_label: Centre universitaire de Shippagan
+    field_panb_code: NBSCU
+  -
+    name: "Centre universitaire Saint-Louis-Maillet: Student library, Université de Moncton, Edmundston"
+    field_french_label: "Centre universitaire Sint-Louis-Maillet:  Bibliothèque des élèves, Université de Moncton, Edmundston"
+    field_panb_code: NBESLM
+  -
+    name: Chaleur Regional Library
+    field_french_label: Bibliothèque régionale Chaleur
+    field_panb_code: NBCAC
+  -
+    name: Charlotte County Archives
+    field_french_label: Charlotte County Archives
+    field_panb_code: NBCCA
+  -
+    name: Charlotte County Historical Society Inc., St. Andrews
+    field_french_label: Charlotte County Historical Society Inc., St. Andrews
+    field_panb_code: NBACCH
+  -
+    name: Gerrish House Society, Grand Harbour, Grand Manan Island
+    field_french_label: Gerrish House Society, Grand Harbour, Grand Manan Island
+    field_panb_code: NBGG
+  -
+    name: Grand Falls Historical Society
+    field_french_label: Grand Falls Historical Society
+    field_panb_code: NBGFH
+  -
+    name: Grand Falls Museum
+    field_french_label: Grand Falls Museum
+    field_panb_code: NBGFM
+  -
+    name: Historical Society Nicolas-Denys, Caraquet
+    field_french_label: Société historique Nicolas-Denys, Caraquet
+    field_panb_code: NBCH
+  -
+    name: Kings County Historical Society
+    field_french_label: Kings County Historical Society
+    field_panb_code: NBKCH
+  -
+    name: Kings County Historical Society, Sussex
+    field_french_label: Kings County Historical Society, Sussex
+    field_panb_code: NBSUH
+  -
+    name: Legislative Library
+    field_french_label: Bibliothèque de l'Assemblée législative
+    field_panb_code: NBFL
+  -
+    name: Moncton Civic Museum
+    field_french_label: Moncton Civic Museum
+    field_panb_code: NBMOM
+  -
+    name: Mount Allison University, Ralph Pickard Bell Library
+    field_french_label: Mount Allison University, Ralph Pickard Bell Library
+    field_panb_code: NBSAM
+  -
+    name: National Library, Ottawa
+    field_french_label: National Library, Ottawa
+    field_panb_code: OONL
+  -
+    name: National Archives, Ottawa
+    field_french_label: National Archives, Ottawa
+    field_panb_code: OOA
+  -
+    name: New Brunswick Library Service, Fredericton
+    field_french_label: Service des bibliothèques du Nouveau-Brunswick, Fredericton
+    field_panb_code: NBFC
+  -
+    name: New Brunswick Museum, Saint John
+    field_french_label: New Brunswick Museum, Saint John
+    field_panb_code: NBSM
+  -
+    name: Nova Scotia Provincial Archives, Halifax, Nova Scotia
+    field_french_label: Nova Scotia Provincial Archives, Halifax, Nova Scotia
+    field_panb_code: PANS
+  -
+    name: Old Manse Library, Newcastle
+    field_french_label: Old Manse Library, Newcastle
+    field_panb_code: NBN
+  -
+    name: Provincial Archives of New Brunswick
+    field_french_label: Archives provinciales du Nouveau-Brunswick
+    field_panb_code: NBFA
+  -
+    name: Saint John Regional Library
+    field_french_label: Saint John Regional Library
+    field_panb_code: NBS
+  -
+    name: Université de Moncton
+    field_french_label: Université de Moncton
+    field_panb_code: NBMOU
+  -
+    name: University of New Brunswick, Fredericton
+    field_french_label: University of New Brunswick, Fredericton
+    field_panb_code: NBFU
+  -
+    name: York Regional Library, Chatham
+    field_french_label: York Regional Library, Chatham
+    field_panb_code: NBCYR
+  -
+    name: York Regional Library, Chipman
+    field_french_label: York Regional Library, Chipman
+    field_panb_code: NBCPYR
+  -
+    name: York Regional Library, Florenceville (Andrew & Laura McCain Library)
+    field_french_label: York Regional Library, Florenceville (Andrew & Laura McCain Library)
+    field_panb_code: NBFLYR
+  -
+    name: York Regional Library, Fredericton
+    field_french_label: York Regional Library, Fredericton
+    field_panb_code: NBFYR
+  -
+    name: York Regional Library, Hartland (Dr. Walter Chestnut Public Library)
+    field_french_label: York Regional Library, Hartland (Dr. Walter Chestnut Public Library)
+    field_panb_code: NBHLYR
+  -
+    name: York Regional Library, Oromocto
+    field_french_label: York Regional Library, Oromocto
+    field_panb_code: NBOYR
+  -
+    name: York Regional Library, Perth-Andover
+    field_french_label: York Regional Library, Perth-Andover
+    field_panb_code: NBPAYR
+  -
+    name: York Regional Library, Plaster Rock
+    field_french_label: York Regional Library, Plaster Rock
+    field_panb_code: NBPRYR
+  -
+    name: York-Sunbury Historical Society, Fredericton
+    field_french_label: York-Sunbury Historical Society, Fredericton
+    field_panb_code: NBFY
+  -
+    name: Library of Congress
+    field_french_label: Library of Congress
+    field_panb_code: LC
+  -
+    name: Canadian Society of Microfilm
+    field_french_label: Société canadienne du microfilm
+    field_panb_code: CSM
+  -
+    name: Harvard University Library
+    field_french_label: Harvard University Library
+    field_panb_code: HUL
+  -
+    name: Archives des Religieuses Notre-Dame du Sacré-Coeur
+    field_french_label: Archives des Religieuses Notre-Dame du Sacré-Coeur
+    field_panb_code: ANDSC
+  -
+    name: Société Canadienne du Microfilm Inc.
+    field_french_label: Société Canadienne du Microfilm Inc.
+    field_panb_code: SCM
+  -
+    name: Moncton Pubishing Co.
+    field_french_label: Moncton Pubishing Co.
+    field_panb_code: NBMP
+  -
+    name: Kodak Canada
+    field_french_label: Kodak Canada
+    field_panb_code: KODAK
+  -
+    name: Acadia University
+    field_french_label: Acadia University
+    field_panb_code: NBAU
+  -
+    name: Commonwealth Microfilm Products
+    field_french_label: Commonwealth Microfilm Products
+    field_panb_code: CMP
+  -
+    name: Roman Catholic Diocese of Saint John
+    field_french_label: Roman Catholic Diocese of Saint John
+    field_panb_code: RCDSJ
+  -
+    name: Ontario Community Newspaper Association
+    field_french_label: Ontario Community Newspaper Association
+    field_panb_code: OCNA
+  -
+    name: Technical University of Nova Scotia
+    field_french_label: Technical University of Nova Scotia
+    field_panb_code: TUNS
+  -
+    name: Bell & Howell
+    field_french_label: Bell & Howell
+    field_panb_code: BH
+  -
+    name: New Brunswick Community College, Bathurst Campus, Library
+    field_french_label: Collège communautaire du Nouveau-Brunswick, Campus de Bathurst, Bibliothèque
+    field_panb_code: NBBCC
+  -
+    name: New Brunswick Community College, Saint John Campus
+    field_french_label: Collège communautaire du Nouveau-Brunswick, Campus Saint John
+    field_panb_code: NBCC
+  -
+    name: Campbellton Centennial Public Library
+    field_french_label: Bibliothèque du centenaire de Campbellton
+    field_panb_code: NBCA
+  -
+    name: University of New Brunswick, Ward Chipman Librarym, Saint John
+    field_french_label: University of New Brunswick, Ward Chipman Librarym, Saint John
+    field_panb_code: NBSU
+  -
+    name: Université Laval, general library, QC
+    field_french_label: Université Laval, Bibliothèque générale, QC
+    field_panb_code: QQLA

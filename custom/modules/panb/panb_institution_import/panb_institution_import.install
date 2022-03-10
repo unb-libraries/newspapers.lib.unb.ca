@@ -5,12 +5,16 @@
  * Contains install functions for panb_institution_import.
  */
 
-use Drupal\panb\panb_institution_import\TaxonomyHelper;
+use Drupal\panb\TaxonomyHelper;
 
 /**
  * Implements hook_install().
  */
 function panb_institution_import_install() {
   module_set_weight('panb_institution_import', 2);
-  TaxonomyHelper::addDefaultInstitutionTerms();
+  $vocabulary = 'institution';
+  $yaml_file = drupal_get_path('module', 'panb_institution_import') .
+    '/data/' . 'panb.taxonomy.institution.terms.yml';
+
+  TaxonomyHelper::addTermsFromYaml($vocabulary, $yaml_file);
 }

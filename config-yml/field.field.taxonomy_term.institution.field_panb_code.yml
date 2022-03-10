@@ -1,15 +1,15 @@
-uuid: 78bb838d-2107-4cdd-8574-961be4de11e0
+uuid: 72437609-c717-458b-b029-092137ff8c47
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.taxonomy_term.field_french_label
+    - field.storage.taxonomy_term.field_panb_code
     - taxonomy.vocabulary.institution
-id: taxonomy_term.institution.field_french_label
-field_name: field_french_label
+id: taxonomy_term.institution.field_panb_code
+field_name: field_panb_code
 entity_type: taxonomy_term
 bundle: institution
-label: 'French label'
+label: 'PANB Code'
 description: ''
 required: false
 translatable: false

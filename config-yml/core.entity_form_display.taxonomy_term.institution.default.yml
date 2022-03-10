@@ -1,29 +1,29 @@
-uuid: 9e957963-b254-4154-a0c4-6875fccc3f7a
+uuid: 1370d752-d983-4f7f-a8a3-4687a490a8e2
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.taxonomy_term.institution.field_french_label
+    - field.field.taxonomy_term.institution.field_panb_code
     - taxonomy.vocabulary.institution
   module:
     - path
-    - text
 id: taxonomy_term.institution.default
 targetEntityType: taxonomy_term
 bundle: institution
 mode: default
 content:
-  description:
-    type: text_textarea
-    weight: 2
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
   field_french_label:
     type: string_textfield
     weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_panb_code:
+    type: string_textfield
+    weight: 2
     region: content
     settings:
       size: 60
@@ -57,4 +57,5 @@ content:
     settings:
       display_label: true
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  description: true

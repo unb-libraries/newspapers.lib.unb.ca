@@ -1,5 +1,5 @@
 name: PANB
-description: PANB Test Module (visit /panb_yaml).
+description: PANB Support Module
 package: UNB Libraries
 type: module
 core: 8.x

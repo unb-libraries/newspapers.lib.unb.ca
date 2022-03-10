@@ -1,15 +1,15 @@
-uuid: 073be612-52eb-4bf2-b523-4738842369d1
+uuid: e6ba42ec-816f-4cab-b982-687627a090e2
 langcode: en
 status: true
 dependencies:
   module:
     - taxonomy
-id: taxonomy_term.field_french_label
-field_name: field_french_label
+id: taxonomy_term.field_panb_code
+field_name: field_panb_code
 entity_type: taxonomy_term
 type: string
 settings:
-  max_length: 255
+  max_length: 6
   case_sensitive: false
   is_ascii: false
 module: core
