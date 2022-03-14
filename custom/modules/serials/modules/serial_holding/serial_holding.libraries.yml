@@ -1,4 +1,7 @@
 serial-holding-form:
+  css:
+    theme:
+      css/serial-holding-form.css: {}
   js:
     js/serial-holding-form.js: {}
   dependencies:
