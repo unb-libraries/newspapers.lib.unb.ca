@@ -397,6 +397,35 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         ]
       );
 
+    $fields['institution'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Institution'))
+      ->setDescription(t('Select the Institution .'))
+      ->setRequired(TRUE)
+      ->setSettings(
+        [
+          'target_type' => 'taxonomy_term',
+          'handler' => 'default:taxonomy_term',
+          'handler_settings' => [
+            'target_bundles' => [
+              'institution' => 'institution',
+            ],
+          ],
+        ]
+      )
+      ->setDisplayOptions(
+        'form',
+        [
+          'type' => 'options_select',
+        ]
+      )
+      ->setDisplayOptions(
+        'view',
+        [
+          'label' => 'above',
+          'type' => 'number',
+        ]
+      );
+
     $fields['parent_title'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Parent Title'))
       ->setSettings(
