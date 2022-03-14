@@ -6,8 +6,6 @@ dependencies:
     - field.field.taxonomy_term.institution.field_french_label
     - field.field.taxonomy_term.institution.field_panb_code
     - taxonomy.vocabulary.institution
-  module:
-    - path
 id: taxonomy_term.institution.default
 targetEntityType: taxonomy_term
 bundle: institution
@@ -44,18 +42,13 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  path:
-    type: path
-    weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 5
+    weight: 4
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
 hidden:
   description: true
+  path: true
