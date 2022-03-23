@@ -235,3 +235,7 @@ institution:
     name: Université Laval, general library, QC
     french_label: Université Laval, Bibliothèque générale, QC
     panb_code: QQLA
+  -
+    name: University of New Brunswick
+    french_label:
+    panb_code:
