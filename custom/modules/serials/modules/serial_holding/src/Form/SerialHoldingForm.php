@@ -34,9 +34,12 @@ class SerialHoldingForm extends ContentEntityForm {
       $this->parentEid = $entity->getParentTitle()->id();
     }
 
-    // Hide digital option if not already digital.
+    // Institution | taxonomy term | Name reserved for Digital Holdings (see JIRA NBNP-318).
+    $digital_inst_label = "University of New Brunswick";
+
     $is_digital_holding = FALSE;
     $digital_key = array_search("Digital", $form['holding_type']['widget']['#options']);
+    $digital_inst_key = array_search($digital_inst_label, $form['holding_institution']['widget']['#options'], TRUE);
     if (
       !empty($form['holding_type']['widget']['#default_value'][0]) &&
       $form['holding_type']['widget']['#default_value'][0] == $digital_key
@@ -44,10 +47,20 @@ class SerialHoldingForm extends ContentEntityForm {
       $is_digital_holding = TRUE;
     }
     if (!$is_digital_holding) {
+      // Hide digital-related select options if holding type isn't digital.
       unset($form['holding_type']['widget']['#options'][$digital_key]);
+      unset($form['holding_institution']['widget']['#options'][$digital_inst_key]);
     }
     else {
-      $form['holding_type']['widget']['#options'] = array_intersect([$digital_key => 'Digital'], $form['holding_type']['widget']['#options']);
+      // Restrict select options to ONLY digital-related when holding type is digital.
+      $form['holding_type']['widget']['#options'] = array_intersect(
+        [$digital_key => 'Digital'],
+        $form['holding_type']['widget']['#options']
+      );
+      $form['holding_institution']['widget']['#options'] = array_intersect(
+        [$digital_inst_key => $digital_inst_label],
+        $form['holding_institution']['widget']['#options']
+      );
     }
 
     if ($is_digital_holding) {
