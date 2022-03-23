@@ -397,7 +397,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         ]
       );
 
-    $fields['institution'] = BaseFieldDefinition::create('entity_reference')
+    $fields['holding_institution'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Institution'))
       ->setDescription(t('Institution options are automatically filtered as you type.'))
       ->setSettings([
@@ -409,13 +409,15 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
           ],
         ],
       ])
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => -95,
-      ])
+      ->setRequired(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number',
+        'weight' => 1,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'options_select',
+        'weight' => -95,
       ]);
 
     $fields['parent_title'] = BaseFieldDefinition::create('entity_reference')
