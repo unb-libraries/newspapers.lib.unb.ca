@@ -124,7 +124,7 @@ institution:
     field_french_label: Université de Moncton
     field_panb_code: NBMOU
   -
-    name: University of New Brunswick, Fredericton
+    name: University of New Brunswick, UNB Libraries, Fredericton
     field_french_label: University of New Brunswick, Fredericton
     field_panb_code: NBFU
   -
@@ -228,10 +228,14 @@ institution:
     field_french_label: Bibliothèque du centenaire de Campbellton
     field_panb_code: NBCA
   -
-    name: University of New Brunswick, Ward Chipman Librarym, Saint John
+    name: University of New Brunswick, UNB Libraries, Saint John
     field_french_label: University of New Brunswick, Ward Chipman Librarym, Saint John
     field_panb_code: NBSU
   -
     name: Université Laval, general library, QC
     field_french_label: Université Laval, Bibliothèque générale, QC
     field_panb_code: QQLA
+  -
+    name: University of New Brunswick Libraries
+    field_french_label:
+    field_panb_code:
