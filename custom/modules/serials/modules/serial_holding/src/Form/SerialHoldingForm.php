@@ -35,7 +35,7 @@ class SerialHoldingForm extends ContentEntityForm {
     }
 
     // Institution | taxonomy term | Name reserved for Digital Holdings (see JIRA NBNP-318).
-    $digital_inst_label = "University of New Brunswick";
+    $digital_inst_label = "University of New Brunswick Libraries";
 
     $is_digital_holding = FALSE;
     $digital_key = array_search("Digital", $form['holding_type']['widget']['#options']);
