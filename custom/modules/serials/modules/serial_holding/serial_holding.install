@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\serial_holding\Entity\SerialHolding;
+
 /**
  * @file
  * Contains install and update functions for serial_holding.
@@ -82,4 +84,47 @@ function serial_holding_update_8104() {
     $term->setName('Microform');
     $term->save();
   }
+}
+
+/**
+ * Add Serial Holding Institution field.
+ */
+function serial_holding_update_8105() {
+  $database = \Drupal::database();
+  $transaction = $database->startTransaction('add_holding_institution_field');
+  try {
+    addInstitutionField_8105();
+  }
+  catch (\Exception $e) {
+    $transaction->rollBack();
+    $error = 'An error occurred while trying to install the "holding_institution" field. The field was not added: ' .
+      $e->getMessage() . "\n\n" .
+      $e->getTraceAsString();
+    \Drupal::logger('db')->error($error);
+    throw new UpdateException($error);
+  }
+}
+
+/**
+ * Install a new 'holding_institution' field for 'serial_holding' entity (re: update 8105).
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function addInstitutionField_8105() {
+  $entity_id = 'serial_holding';
+  $name = 'holding_institution';
+
+  $field_storage = \Drupal::entityTypeManager()->getStorage($entity_id);
+  $entity_type_id = $field_storage->getEntityTypeId();
+  $base_field_definitions = SerialHolding::baseFieldDefinitions($field_storage->getEntityType());
+  $storage_definition = $base_field_definitions[$name];
+  $definition_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $definition_manager->installFieldStorageDefinition(
+    $name,
+    $entity_type_id,
+    $entity_id,
+    $storage_definition
+  );
 }
