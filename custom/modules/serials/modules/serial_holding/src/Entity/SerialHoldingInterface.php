@@ -316,4 +316,12 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function hasEndDateEmbargo();
 
+  /**
+   * Get the Institution Term Name.
+   *
+   * @return \Drupal\taxonomy\TermInterface
+   *   The referenced Institution entity.
+   */
+  public function getInstitution();
+
 }
