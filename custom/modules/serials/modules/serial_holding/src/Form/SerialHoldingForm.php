@@ -216,6 +216,15 @@ class SerialHoldingForm extends ContentEntityForm {
         $this->t("The 'URI' field cannot be empty for 'Online' holding type.")
       );
     }
+
+    // At least 1 Microform Type option required for Microform holding type.
+    $microform_type = $form_state->getValue("holding_microform_type");
+    if ($holding_target_id == 2 && empty($microform_type)) {
+      $form_state->setErrorByName(
+        'holding_microform_type',
+        $this->t("At least one 'Microform type' must be selected for holdings of type 'Microform'.")
+      );
+    }
   }
 
   /**
