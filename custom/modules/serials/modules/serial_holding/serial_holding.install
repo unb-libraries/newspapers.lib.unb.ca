@@ -109,6 +109,28 @@ function serial_holding_update_8105() {
 }
 
 /**
+ * Add Serial Holding Microform Type field.
+ */
+function serial_holding_update_8106() {
+  $database = \Drupal::database();
+  $transaction = $database->startTransaction('add_holding_microform_type_field');
+
+  $entity_id = 'serial_holding';
+  $field_name = 'holding_microform_type';
+  try {
+    addEntityField($entity_id, $field_name);
+  }
+  catch (\Exception $e) {
+    $transaction->rollBack();
+    $error = "An error occurred while trying to install the $field_name field. The field was not added: " .
+      $e->getMessage() . "\n\n" .
+      $e->getTraceAsString();
+    \Drupal::logger('db')->error($error);
+    throw new UpdateException($error);
+  }
+}
+
+/**
  * Install a given field for given entity.
  *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
