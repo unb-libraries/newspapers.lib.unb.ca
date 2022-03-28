@@ -34,7 +34,7 @@ class SerialHoldingForm extends ContentEntityForm {
       $this->parentEid = $entity->getParentTitle()->id();
     }
 
-    // Institution | taxonomy term | Name reserved for Digital Holdings (see JIRA NBNP-318).
+    // Institution|taxonomy term|Name reserved for Digital Holdings (JIRA NBNP-318).
     $digital_inst_label = "University of New Brunswick Libraries";
 
     $is_digital_holding = FALSE;
@@ -81,6 +81,19 @@ class SerialHoldingForm extends ContentEntityForm {
     $microfilm_id = TaxonomyHelper::getHoldingTermId('Microform');
     $online_id = TaxonomyHelper::getHoldingTermId('Online');
     $digital_id = TaxonomyHelper::getHoldingTermId('Digital');
+
+    $form['holding_microform_type']['#states'] = [
+      'visible' => [
+        'select[name="holding_type"]' => [
+          ['value' => $microfilm_id],
+        ],
+      ],
+      'required' => [
+        'select[name="holding_type"]' => [
+          ['value' => $microfilm_id],
+        ],
+      ],
+    ];
 
     // If we have term types 'Print' or 'Microfilm', set up states.
     if ($physical_id != 0 || $microfilm_id != 0) {
