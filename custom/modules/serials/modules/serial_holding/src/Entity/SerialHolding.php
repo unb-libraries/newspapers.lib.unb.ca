@@ -404,6 +404,23 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         ]
       );
 
+    $fields['holding_microform_type'] = BaseFieldDefinition::create('list_string')
+      ->setLabel(t('Microform Type'))
+      ->setDescription(t('Select 1 or more Microform types.'))
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setSettings([
+        'allowed_values' => [
+          'neg' => 'negative archival master',
+          'pos' => 'positive copy',
+        ],
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'options_buttons',
+        'weight' => -99,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['holding_institution'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Institution'))
       ->setDescription(t('Institution options are automatically filtered as you type.'))
