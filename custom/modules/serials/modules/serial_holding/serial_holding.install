@@ -92,12 +92,15 @@ function serial_holding_update_8104() {
 function serial_holding_update_8105() {
   $database = \Drupal::database();
   $transaction = $database->startTransaction('add_holding_institution_field');
+
+  $entity_id = 'serial_holding';
+  $field_name = 'holding_institution';
   try {
-    addInstitutionField_8105();
+    addEntityField($entity_id, $field_name);
   }
   catch (\Exception $e) {
     $transaction->rollBack();
-    $error = 'An error occurred while trying to install the "holding_institution" field. The field was not added: ' .
+    $error = "An error occurred while trying to install the $field_name field. The field was not added: " .
       $e->getMessage() . "\n\n" .
       $e->getTraceAsString();
     \Drupal::logger('db')->error($error);
@@ -106,15 +109,12 @@ function serial_holding_update_8105() {
 }
 
 /**
- * Install a new 'holding_institution' field for 'serial_holding' entity (re: update 8105).
+ * Install a given field for given entity.
  *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
  * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
  */
-function addInstitutionField_8105() {
-  $entity_id = 'serial_holding';
-  $name = 'holding_institution';
-
+function addEntityField($entity_id, $name) {
   $field_storage = \Drupal::entityTypeManager()->getStorage($entity_id);
   $entity_type_id = $field_storage->getEntityTypeId();
   $base_field_definitions = SerialHolding::baseFieldDefinitions($field_storage->getEntityType());
