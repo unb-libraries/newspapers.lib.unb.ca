@@ -40,3 +40,21 @@ input[type="submit"].form-control {
     font-size: 1rem;
     font-weight: bold;
 }
+div[required="required"] > fieldset {
+  legend span.js-form-required {
+    &:after {
+      background-image: none;
+      color: $unb-red;
+      content: '(required)';
+      font-size: .925rem;
+      vertical-align: baseline;
+    }
+  }
+
+  .custom-checkbox,
+  .custom-radio {
+    input.error + label {
+      color: $unb-red;
+    }
+  }
+}
