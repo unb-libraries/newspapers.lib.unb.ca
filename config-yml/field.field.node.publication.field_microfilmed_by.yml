@@ -1,0 +1,29 @@
+uuid: 86ff318c-ebec-42b2-9ec4-7b2be56058ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_microfilmed_by
+    - node.type.publication
+    - taxonomy.vocabulary.institution
+id: node.publication.field_microfilmed_by
+field_name: field_microfilmed_by
+entity_type: node
+bundle: publication
+label: 'Microfilmed By'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      institution: institution
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
