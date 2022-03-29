@@ -58,3 +58,14 @@ div[required="required"] > fieldset {
     }
   }
 }
+// Fix Barrio form-required + BS4 custom control checkbox.
+.custom-checkbox {
+  label.form-required {
+    &:after {
+      background-size: 9px;
+      margin: 4px;
+      width: 9px;
+      height: 8px;
+    }
+  }
+}
