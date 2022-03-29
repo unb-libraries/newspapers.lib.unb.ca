@@ -26,6 +26,7 @@ dependencies:
     - field.field.node.publication.field_last_issue_search_date
     - field.field.node.publication.field_last_issue_sort_date
     - field.field.node.publication.field_marc_frequency
+    - field.field.node.publication.field_microfilmed_by
     - field.field.node.publication.field_oclc
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_previous_identifications
@@ -83,7 +84,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 14
+    weight: 15
     region: content
   field_editor:
     type: entity_reference_label
@@ -99,7 +100,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 16
+    weight: 17
     region: content
   field_first_issue_approx_date:
     type: string
@@ -124,7 +125,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 20
+    weight: 21
     region: content
   field_first_issue_search_date:
     type: datetime_default
@@ -133,7 +134,7 @@ content:
       timezone_override: ''
       format_type: medium
     third_party_settings: {  }
-    weight: 29
+    weight: 30
     region: content
   field_frequency:
     type: string
@@ -167,7 +168,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 18
+    weight: 19
     region: content
   field_issn:
     type: string
@@ -200,7 +201,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 19
+    weight: 20
     region: content
   field_last_issue_search_date:
     type: datetime_default
@@ -209,14 +210,22 @@ content:
       timezone_override: ''
       format_type: medium
     third_party_settings: {  }
-    weight: 30
+    weight: 31
     region: content
   field_marc_frequency:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 31
+    weight: 32
+    region: content
+  field_microfilmed_by:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 14
     region: content
   field_oclc:
     type: string
@@ -239,7 +248,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 28
+    weight: 29
     region: content
   field_publisher:
     type: entity_reference_label
@@ -256,7 +265,7 @@ content:
       image_link: file
       image_style: sample_publication_image
     third_party_settings: {  }
-    weight: 27
+    weight: 28
     region: content
   field_serial_relation_pre_ref_dn:
     type: entity_reference_label
@@ -264,7 +273,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 24
+    weight: 25
     region: content
   field_serial_relation_pre_ref_up:
     type: entity_reference_label
@@ -272,7 +281,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 23
+    weight: 24
     region: content
   field_serial_relation_suc_ref_dn:
     type: entity_reference_label
@@ -280,7 +289,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 26
+    weight: 27
     region: content
   field_serial_relation_suc_ref_up:
     type: entity_reference_label
@@ -288,21 +297,21 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 25
+    weight: 26
     region: content
   field_serial_relationship_op_pre:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 21
+    weight: 22
     region: content
   field_serial_relationship_op_suc:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 22
+    weight: 23
     region: content
   field_subject_notes:
     type: basic_string
@@ -343,7 +352,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 17
+    weight: 18
     region: content
   field_title_notes:
     type: basic_string
@@ -355,7 +364,7 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 15
+    weight: 16
     region: content
 hidden:
   field_additional_indexed_text: true
