@@ -250,6 +250,17 @@
                     <dd>{{ content.field_issn|field_value }}</dd>
                 {% endif %}
 
+                {% if content.field_microfilmed_by|field_value %}
+                    <dt>{{ content.field_microfilmed_by|field_label }}:</dt>
+                    <dd>
+                        <ul class="list-unstyled">
+                            {% for item in microfilmed_by_values %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </dd>
+                {% endif %}
+
                 {% if language_values %}
                     <dt>{{ language_label }}:</dt>
                     <dd>
