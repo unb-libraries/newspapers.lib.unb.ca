@@ -399,6 +399,18 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     $variables['editor_values'] = $editor_values;
   }
 
+  // Microfilmed by.
+  $microfilmers = $node->get('field_microfilmed_by');
+  $microfilmed_by_values = [];
+  foreach ($microfilmers as $microfilmer) {
+    $microfilmed_by_values[] = $microfilmer
+      ->entity
+      ->getName();
+  }
+  if (!empty($microfilmed_by_values)) {
+    $variables['microfilmed_by_values'] = $microfilmed_by_values;
+  }
+
   // Relationships.
   $preceding = $node
     ->get('field_serial_relationship_op_pre');
