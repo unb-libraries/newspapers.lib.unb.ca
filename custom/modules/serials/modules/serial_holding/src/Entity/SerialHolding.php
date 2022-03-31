@@ -433,7 +433,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
           ],
         ],
       ])
-      ->setRequired(FALSE)
+      ->setRequired(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'number',
