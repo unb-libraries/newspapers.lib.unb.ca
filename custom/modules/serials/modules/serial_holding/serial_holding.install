@@ -131,6 +131,61 @@ function serial_holding_update_8106() {
 }
 
 /**
+ * Implements hook_update_N().
+ *
+ * Process all serial holdings with Holding type=Microform,
+ * Set Microform Type=pos if empty.
+ */
+function serial_holding_update_8107(&$sandbox) {
+  // Initialize variables during first pass through.
+  if (!isset($sandbox['total'])) {
+    // Get the 'Microform' term from Serial Holding Types vocabulary.
+    $microform_term_array = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties(
+      [
+        'vid' => 'serial_holding_types',
+        'name' => 'Microform',
+      ]
+    );
+    $microform_term = reset($microform_term_array);
+
+    // Get sandbox variables.
+    $sandbox['current'] = 0;
+    $sandbox['microform_tid'] = $microform_term->id();
+    $sandbox['total'] = \Drupal::entityQuery('serial_holding')
+      ->condition('holding_type', $sandbox['microform_tid'], '=')
+      ->count()
+      ->execute();
+  }
+  $batch_size = 25;
+
+  // Process the next batch of entities.
+  $tids = \Drupal::entityQuery('serial_holding')
+    ->condition('holding_type', $sandbox['microform_tid'], '=')
+    ->range($sandbox['current'], $batch_size)
+    ->execute();
+  foreach ($tids as $tid) {
+    $entity = \Drupal::entityTypeManager()
+      ->getStorage('serial_holding')
+      ->load($tid);
+    if (empty($entity->holding_microform_type->getValue())) {
+      // Only update Microform type field to 'pos' if FieldItemList value is empty.
+      $entity->holding_microform_type->setValue('pos');
+      $entity->save();
+    }
+    unset($entity);
+    $sandbox['current']++;
+  }
+
+  if ($sandbox['total'] == 0) {
+    $sandbox['#finished'] = 1;
+  } else {
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  }
+}
+
+/**
  * Install a given field for given entity.
  *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
