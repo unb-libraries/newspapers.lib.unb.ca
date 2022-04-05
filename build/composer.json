@@ -63,7 +63,6 @@
         "Cannot parse content access": "https://www.drupal.org/files/issues/2018-06-07/elasticsearch_connector-convert_boolean_fields-2978005-2.patch"
       },
       "drupal/facets": {
-        "Fix D9 Facets Range Widget": "/build/patches/facets_range_widget_d9.patch",
         "Fix Views AJAX Facets": "https://www.drupal.org/files/issues/2018-09-25/ajax_facet_block_views_context-2986981-13.patch"
       },
       "drupal/samlauth": {
@@ -160,7 +159,7 @@
     "drupal/conditional_fields": "4.0.0-alpha1",
     "drupal/core": "9.3.9",
     "drupal/externalauth": "1.4",
-    "drupal/facets": "2.0.1",
+    "drupal/facets": "2.0.2",
     "drupal/field_group": "3.2",
     "drupal/fontawesome": "2.22",
     "drupal/google_analytics": "2.5",
