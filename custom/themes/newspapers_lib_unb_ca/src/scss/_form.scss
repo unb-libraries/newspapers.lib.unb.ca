@@ -47,6 +47,7 @@ div[required="required"] > fieldset {
       color: $unb-red;
       content: '(required)';
       font-size: .925rem;
+      font-weight: normal;
       vertical-align: baseline;
     }
   }
@@ -59,13 +60,21 @@ div[required="required"] > fieldset {
   }
 }
 // Fix Barrio form-required + BS4 custom control checkbox.
-.custom-checkbox {
+.custom-checkbox,
+.custom-radio {
   label.form-required {
     &:after {
       background-size: 9px;
       margin: 4px;
       width: 9px;
       height: 8px;
+    }
+  }
+}
+.custom-radio {
+  label.form-required {
+    &:after {
+      margin: 4px 3px;
     }
   }
 }
