@@ -74,7 +74,8 @@ div[required="required"] > fieldset {
 .custom-radio {
   label.form-required {
     &:after {
-      margin: 4px 3px;
+      background-size: 10px;
+      width: 8px;
     }
   }
 }
