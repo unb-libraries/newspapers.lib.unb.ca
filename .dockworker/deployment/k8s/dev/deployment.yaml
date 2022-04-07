@@ -54,6 +54,12 @@ spec:
             initialDelaySeconds: 100
             timeoutSeconds: 3
             periodSeconds: 15
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 80
+            failureThreshold: 30
+            periodSeconds: 10
           env:
             -
               name: DEPLOY_ENV
