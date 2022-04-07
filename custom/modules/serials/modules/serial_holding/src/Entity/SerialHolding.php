@@ -306,6 +306,13 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function getMicroformType() {
+    return $this->get('holding_microform_type')->getString();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function setHoldingNotes($notes) {
     $this->set('holding_notes', $notes);
     return $this;

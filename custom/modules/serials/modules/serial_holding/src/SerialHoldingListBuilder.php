@@ -87,10 +87,16 @@ class SerialHoldingListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     $inst_term = $entity->getInstitution();
     $inst_term_name = $inst_term ? $inst_term->getName() : $this->t('None selected');
+    $holding_type = $entity->getHoldingType()->getName();
+    if ($holding_type == 'Microform') {
+      $holding_type .= $entity->getMicroformType()
+        ? " (" . $entity->getMicroformType() . ")"
+        : " (" . $this->t("Undefined") . ")";
+    }
 
     /* @var $entity \Drupal\serial_holding\Entity\SerialHolding */
     $row['id'] = $entity->id();
-    $row['type'] = $entity->getHoldingType()->getName();
+    $row['type'] = $holding_type;
     $row['institution'] = $inst_term_name;
     $row['coverage'] = Link::createFromRoute(
       $entity->getHoldingCoverage(),

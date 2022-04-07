@@ -324,4 +324,12 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function getInstitution();
 
+  /**
+   * Get the Microform Type Name.
+   *
+   * @return string
+   *   The selected boolean Microform type name.
+   */
+  public function getMicroformType();
+
 }
