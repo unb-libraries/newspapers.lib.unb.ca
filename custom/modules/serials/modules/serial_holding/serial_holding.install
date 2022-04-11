@@ -230,6 +230,90 @@ function serial_holding_update_8109() {
 }
 
 /**
+ * Implements hook_update_N().
+ *
+ * Process all serial holdings with Holding type=Microform,
+ * Set Microform Type=pos if empty.
+ */
+function serial_holding_update_8110() {
+  // Reran hook_update_8107() via shell to restore "pos" values.
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Set default serial holding Institution values for types
+ * Microform, Print, & Digital.
+ */
+function serial_holding_update_8111(&$sandbox) {
+  // Initialize variables during first pass through.
+  if (!isset($sandbox['total'])) {
+    // Get the 2 'Institution' terms to assign from the vocabulary.
+    $institution_unblib_fr_term_array = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties(
+        [
+          'vid' => 'institution',
+          'name' => 'University of New Brunswick, UNB Libraries, Fredericton',
+        ]
+      );
+    $institution_unblib_fr_term = reset($institution_unblib_fr_term_array);
+    $institution_unblib_term_array = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->loadByProperties(
+        [
+          'vid' => 'institution',
+          'name' => 'University of New Brunswick Libraries',
+        ]
+      );
+    $institution_unblib_term = reset($institution_unblib_term_array);
+
+    // Get sandbox variables.
+    $sandbox['current'] = 0;
+    $sandbox['institution_unblibfr_tid'] = $institution_unblib_fr_term->id();
+    $sandbox['institution_unblib_tid'] = $institution_unblib_term->id();
+    $sandbox['total'] = \Drupal::entityQuery('serial_holding')
+      ->count()
+      ->execute();
+  }
+  $batch_size = 25;
+
+  // Process the next batch of entities.
+  $tids = \Drupal::entityQuery('serial_holding')
+    ->range($sandbox['current'], $batch_size)
+    ->execute();
+  foreach ($tids as $tid) {
+    $entity = \Drupal::entityTypeManager()
+      ->getStorage('serial_holding')
+      ->load($tid);
+    switch ($entity->getHoldingType()->getName()) {
+      case 'Microform':
+      case 'Print':
+        $entity
+          ->holding_institution
+          ->setValue($sandbox['institution_unblibfr_tid']);
+        $entity->save();
+        break;
+
+      case 'Digital':
+        $entity
+          ->holding_institution
+          ->setValue($sandbox['institution_unblib_tid']);
+        $entity->save();
+        break;
+    }
+    unset($entity);
+    $sandbox['current']++;
+  }
+
+  if ($sandbox['total'] == 0) {
+    $sandbox['#finished'] = 1;
+  } else {
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  }
+}
+
+/**
  * Install a given field for given entity.
  *
  * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
