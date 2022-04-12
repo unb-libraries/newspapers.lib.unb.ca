@@ -573,6 +573,10 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    /* Missing Holdings field uses Allowed Formats contrib/Third Party Settings */
+    /* Therefore configured via repo's field.field.serial_holding and */
+    /* core.entity_form_display.serial_holding config YAML */
+
     $fields['holding_location'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Location'))
       ->setDescription(t('Enter the location. Ex: ENG-STACKS or HIL-STORN'))

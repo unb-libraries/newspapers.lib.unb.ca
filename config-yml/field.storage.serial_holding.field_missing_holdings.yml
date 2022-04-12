@@ -1,0 +1,19 @@
+uuid: 54a7f74a-ce56-42d4-ac83-930be5bfd224
+langcode: en
+status: true
+dependencies:
+  module:
+    - serial_holding
+    - text
+id: serial_holding.field_missing_holdings
+field_name: field_missing_holdings
+entity_type: serial_holding
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,26 @@
+uuid: ce895625-1218-495c-99af-bcd5f5ef358e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.serial_holding.field_missing_holdings
+  module:
+    - allowed_formats
+    - serial_holding
+    - text
+third_party_settings:
+  allowed_formats:
+    allowed_formats:
+      - basic_html
+id: serial_holding.serial_holding.field_missing_holdings
+field_name: field_missing_holdings
+entity_type: serial_holding
+bundle: serial_holding
+label: 'Missing Holdings'
+description: 'Use when coverage statement not sufficient for extensive missing holdings. Do not duplicate content between fields.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
