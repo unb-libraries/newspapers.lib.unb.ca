@@ -154,6 +154,7 @@
   ],
   "require": {
     "drupal/address": "1.10",
+    "drupal/allowed_formats": "1.5",
     "drupal/bootstrap_barrio": "5.1.6",
     "drupal/chosen": "3.0.2",
     "drupal/conditional_fields": "4.0.0-alpha1",
