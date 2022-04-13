@@ -45,7 +45,7 @@ content:
     type: daterange_default
     weight: 3
     region: content
-    settings: { }
+    settings: {  }
     third_party_settings: {  }
   holding_end_date_embargo:
     type: string_textfield
@@ -109,7 +109,7 @@ content:
     type: daterange_default
     weight: 1
     region: content
-    settings: { }
+    settings: {  }
     third_party_settings: {  }
   holding_start_date_embargo:
     type: string_textfield
@@ -134,5 +134,4 @@ content:
     settings:
       include_locked: true
     third_party_settings: {  }
-hidden:
-
+hidden: null
