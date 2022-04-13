@@ -424,7 +424,6 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ])
       ->setDisplayOptions('form', [
         'type' => 'options_buttons',
-        'weight' => -99,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
