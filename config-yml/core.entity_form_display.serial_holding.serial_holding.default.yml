@@ -5,7 +5,7 @@ dependencies:
   config:
     - field.field.serial_holding.serial_holding.field_missing_holdings
   module:
-    - datetime
+    - datetime_range
     - link
     - serial_holding
     - text
@@ -42,13 +42,10 @@ content:
       placeholder: ''
     third_party_settings: {  }
   holding_end_date:
-    type: datetime_datelist
+    type: daterange_default
     weight: 3
     region: content
-    settings:
-      increment: 15
-      date_order: YMD
-      time_type: '24'
+    settings: { }
     third_party_settings: {  }
   holding_end_date_embargo:
     type: string_textfield
@@ -106,13 +103,10 @@ content:
       placeholder: ''
     third_party_settings: {  }
   holding_start_date:
-    type: datetime_datelist
+    type: daterange_default
     weight: 1
     region: content
-    settings:
-      increment: 15
-      date_order: YMD
-      time_type: '24'
+    settings: { }
     third_party_settings: {  }
   holding_start_date_embargo:
     type: string_textfield
@@ -138,4 +132,4 @@ content:
       include_locked: true
     third_party_settings: {  }
 hidden:
-  holding_missing: true
+
