@@ -1,6 +1,5 @@
 (function ($, Drupal) {
-
-// Fix core's required handling (https://www.drupal.org/project/drupal/issues/2855139).
+    // Fix core's required handling (https://www.drupal.org/project/drupal/issues/2855139).
     $(document).bind('state:required', function (e) {
         if (e.trigger) {
             var fields = $(e.target).find('input, select, textarea, fieldset');
@@ -24,4 +23,12 @@
         }
     });
 
+    // Add jQuery sliding effect for 'visible-slide' state.
+    $(document).bind('state:visible-slide', function(e) {
+        if (e.trigger) {
+            var effect = e.value ? 'slideDown' : 'slideUp';
+            var duration = 300;
+            $(e.target).closest('.js-form-item, .js-form-submit, .js-form-wrapper')[effect ](duration);
+        }
+    });
 })(jQuery, Drupal);

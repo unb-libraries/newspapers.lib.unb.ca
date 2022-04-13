@@ -52,7 +52,7 @@ class SerialHoldingForm extends ContentEntityForm {
       unset($form['holding_institution']['widget']['#options'][$digital_inst_key]);
     }
     else {
-      // Restrict select options to ONLY digital-related when holding type is digital.
+      // Restrict select options to ONLY digital-related if holding type=digital.
       $form['holding_type']['widget']['#options'] = array_intersect(
         [$digital_key => 'Digital'],
         $form['holding_type']['widget']['#options']
@@ -83,7 +83,7 @@ class SerialHoldingForm extends ContentEntityForm {
     $digital_id = TaxonomyHelper::getHoldingTermId('Digital');
 
     $form['holding_microform_type']['#states'] = [
-      'visible' => [
+      'visible-slide' => [
         'select[name="holding_type"]' => [
           ['value' => $microfilm_id],
         ],
@@ -98,7 +98,7 @@ class SerialHoldingForm extends ContentEntityForm {
     // If we have term types 'Print' or 'Microfilm', set up states.
     if ($physical_id != 0 || $microfilm_id != 0) {
       $form['holding_location']['#states'] = [
-        'visible' => [
+        'visible-slide' => [
           'select[name="holding_type"]' => [
             ['value' => $physical_id],
             ['value' => $microfilm_id],
@@ -106,7 +106,7 @@ class SerialHoldingForm extends ContentEntityForm {
         ],
       ];
       $form['holding_call_no']['#states'] = [
-        'visible' => [
+        'visible-slide' => [
           'select[name="holding_type"]' => [
             ['value' => $physical_id],
             ['value' => $microfilm_id],
@@ -123,7 +123,7 @@ class SerialHoldingForm extends ContentEntityForm {
     // If we have term types 'Print', set up states.
     if ($physical_id != 0) {
       $form['holding_retention']['#states'] = [
-        'visible' => [
+        'visible-slide' => [
           'select[name="holding_type"]' => [
             ['value' => $physical_id],
           ],
@@ -138,14 +138,14 @@ class SerialHoldingForm extends ContentEntityForm {
     // If we have term types 'Microfilm', set up states.
     if ($microfilm_id != 0) {
       $form['holding_filed_as']['#states'] = [
-        'visible' => [
+        'visible-slide' => [
           'select[name="holding_type"]' => [
             ['value' => $microfilm_id],
           ],
         ],
       ];
       $form['holding_last_rec']['#states'] = [
-        'visible' => [
+        'visible-slide' => [
           'select[name="holding_type"]' => [
             ['value' => $microfilm_id],
           ],
@@ -161,7 +161,7 @@ class SerialHoldingForm extends ContentEntityForm {
     // If we have term types 'Online', set up states.
     if ($online_id != 0) {
       $form['holding_uri']['#states'] = [
-        'visible' => [
+        'visible-slide' => [
           'select[name="holding_type"]' => [
             ['value' => $online_id],
           ],
