@@ -74,6 +74,8 @@ class SerialHoldingForm extends ContentEntityForm {
       // Hide the embargo fields.
       hide($form['holding_start_date_embargo']);
       hide($form['holding_end_date_embargo']);
+      // Also hide Missing coverage textarea field.
+      hide($form['field_missing_holdings']);
     }
 
     // Get term ids for the holding types.
