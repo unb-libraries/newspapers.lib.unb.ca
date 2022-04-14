@@ -772,16 +772,25 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
         ", filed as " . $filed_as;
 
+      $missing = $holding
+        ->get('field_missing_holdings')
+        ->getValue();
+      if ($missing) {
+        $missing = $missing[0]['value'];
+      }
       $holding_infos = [
         'coverage' => [
           'label' => 'Coverage Statement',
           'value' => $holding->getHoldingCoverage(),
         ],
+        'missing' => [
+          'label' => 'Missing Coverage',
+          'value' => $missing,
+        ],
         'location' => [
           'label' => 'Location',
           'value' => $location_value,
         ],
-
         'last_received' => [
           'label' => 'Last Microform Received',
           'value' => $holding->getHoldingLastReceived(),
@@ -809,10 +818,20 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
         $location_call_value = $location;
       }
 
+      $missing = $holding
+        ->get('field_missing_holdings')
+        ->getValue();
+      if ($missing) {
+        $missing = $missing[0]['value'];
+      }
       $holding_infos = [
         'coverage_statement' => [
           'label' => 'Coverage Statement',
           'value' => $holding->getHoldingCoverage(),
+        ],
+        'missing' => [
+          'label' => 'Missing Coverage',
+          'value' => $missing,
         ],
         'location_call_no' => [
           'label' => $location_call_label,
