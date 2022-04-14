@@ -218,11 +218,11 @@ class SerialHoldingForm extends ContentEntityForm {
     }
 
     // At least 1 Microform Type option required for Microform holding type.
-    $microform_type = $form_state->getValue("holding_microform_type");
+    $microform_type = $form_state->getValue("holding_microform_type")[0]["value"];
     if ($holding_target_id == 2 && empty($microform_type)) {
       $form_state->setErrorByName(
         'holding_microform_type',
-        $this->t("At least one 'Microform type' must be selected for holdings of type 'Microform'.")
+        $this->t("A 'Microform Type' must be selected for holdings of type 'Microform'.")
       );
     }
   }
