@@ -46,6 +46,9 @@ function serial_holding_form_alter(&$form, FormStateInterface $form_state, $form
           'class' => ['btn-warning'],
         ],
       ];
+      // Hide the Microform Type field 'none' radio option, i.e. 'N/A'.
+      unset($form['holding_microform_type']['widget']['#options']['_none']);
+
       break;
   }
 }

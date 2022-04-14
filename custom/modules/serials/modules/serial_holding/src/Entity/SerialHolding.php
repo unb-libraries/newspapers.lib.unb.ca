@@ -415,7 +415,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
       ->setLabel(t('Microform Type'))
       ->setDescription(t('Select a microform type option.'))
       ->setCardinality(1)
-      ->setRequired(TRUE)
+      ->setRequired(FALSE)
       ->setSettings([
         'allowed_values' => [
           'neg' => 'negative archival master',
