@@ -766,18 +766,19 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
  */
 function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
   $holding_infos = [];
+  $missing_value = $holding
+    ->get('field_missing_holdings')
+    ->getValue();
+  if ($missing_value) {
+    $missing_value = $missing_value[0]['value'];
+  }
+
   switch ($type) {
     case 'microform':
       $filed_as = $holding->getHoldingFiledAs();
       $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
         ", filed as " . $filed_as;
 
-      $missing = $holding
-        ->get('field_missing_holdings')
-        ->getValue();
-      if ($missing) {
-        $missing = $missing[0]['value'];
-      }
       $holding_infos = [
         'coverage' => [
           'label' => 'Coverage Statement',
@@ -785,7 +786,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
         ],
         'missing' => [
           'label' => 'Missing Coverage',
-          'value' => $missing,
+          'value' => $missing_value,
         ],
         'location' => [
           'label' => 'Location',
@@ -818,12 +819,6 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
         $location_call_value = $location;
       }
 
-      $missing = $holding
-        ->get('field_missing_holdings')
-        ->getValue();
-      if ($missing) {
-        $missing = $missing[0]['value'];
-      }
       $holding_infos = [
         'coverage_statement' => [
           'label' => 'Coverage Statement',
@@ -831,7 +826,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
         ],
         'missing' => [
           'label' => 'Missing Coverage',
-          'value' => $missing,
+          'value' => $missing_value,
         ],
         'location_call_no' => [
           'label' => $location_call_label,
