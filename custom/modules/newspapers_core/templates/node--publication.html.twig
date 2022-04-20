@@ -203,9 +203,15 @@
                 <hr />
                 {% endif %}
 
-                {% if content.field_publisher|field_value %}
-                    <dt>{{ content.field_publisher|field_label }}:</dt>
-                    <dd>{{ content.field_publisher|field_value}}</dd>
+                {% if publisher_values %}
+                    <dt>{{ publisher_label }}:</dt>
+                    <dd>
+                        <ul class="list-unstyled">
+                            {% for item in publisher_values %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </dd>
                 {% endif %}
 
                 {% if editor_values %}
