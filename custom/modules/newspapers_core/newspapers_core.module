@@ -382,6 +382,23 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     }
   }
 
+  // Publishers.
+  $publisher_label = $node
+    ->field_publisher
+    ->getFieldDefinition()
+    ->getLabel();
+  $publishers = $node->get('field_publisher');
+  $publisher_values = [];
+  foreach ($publishers as $publisher) {
+    $publisher_values[] = $publisher
+      ->entity
+      ->getName();
+  }
+  if (!empty($publisher_values)) {
+    $variables['publisher_label'] = count($publisher_values) < 2 ? $publisher_label : $publisher_label . 's';
+    $variables['publisher_values'] = $publisher_values;
+  }
+
   // Editors.
   $editor_label = $node
     ->field_editor
