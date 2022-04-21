@@ -350,9 +350,16 @@ class HomePageForm extends FormBase {
         $query .= "&f%5B0%5D=province_state%3ANew%20Brunswick";
       }
 
-      $form_state->setRedirectUrl(
-        Url::fromUri("internal:/search?query=$query")
-      );
+      if (empty($query)) {
+        $form_state->setRedirectUrl(
+          Url::fromUri("internal:/search")
+        );
+      }
+      else {
+        $form_state->setRedirectUrl(
+          Url::fromUri("internal:/search?query=$query")
+        );
+      }
     }
 
   }
