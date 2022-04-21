@@ -18,7 +18,7 @@ class HomePageTitleController {
    *   The title of the homepage.
    */
   public function getTitle() {
-    return $this->t('Newspapers @ UNB Libraries');
+    return $this->t('New Brunswick Historical Newspapers Project');
   }
 
 }
