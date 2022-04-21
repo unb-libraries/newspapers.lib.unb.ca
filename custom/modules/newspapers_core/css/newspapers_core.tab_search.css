@@ -62,6 +62,11 @@ div[data-drupal-selector="edit-actions"] input {
 div[data-drupal-selector="edit-actions"] .btn-unb-red:hover {
     color: #fff!important;
 }
+#edit-search-scope .custom-checkbox .custom-control-label::before,
+#edit-search-scope .custom-checkbox .custom-control-label::after {
+    left: -1.33rem;
+}
+
 #footer-top h2 {
     color: #333;
     font-family: 'ProximaNovaA-SemiBold','Century Gothic',AppleGothic,Arial,sans-serif;
