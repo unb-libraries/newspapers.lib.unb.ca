@@ -130,8 +130,8 @@ class HomePageForm extends FormBase {
         Brunswick and across the world. Search and discover
         <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
         titles (including New Brunswick Historical Newspapers Online collection) available from UNB Libraries.</p>
-        <p class=\"mb-0\">Fulltext Search is available for titles included in
-        <a href=\"/digital-titles\">New Brunswick Historical Newspapers Online</a>.
+        <p class=\"mb-0\">Fulltext searching is available for our growing list of
+        <a href=\"/digital-titles\">digitized titles</a>.
         For more worldwide digital newspaper content, consult
         <a href=\"https://lib.unb.ca/eresources/index.php?sub=journals&browseNewsColl=y\" class=\"external\">
         UNB Libraries licensed electronic Newspaper collections</a>.</p>";
