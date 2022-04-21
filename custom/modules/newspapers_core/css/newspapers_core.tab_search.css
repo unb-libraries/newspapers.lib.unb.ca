@@ -65,6 +65,7 @@ div[data-drupal-selector="edit-actions"] .btn-unb-red:hover {
 #edit-search-scope .custom-checkbox .custom-control-label::before,
 #edit-search-scope .custom-checkbox .custom-control-label::after {
     left: -1.33rem;
+    top: .15rem;
 }
 
 #footer-top h2 {
