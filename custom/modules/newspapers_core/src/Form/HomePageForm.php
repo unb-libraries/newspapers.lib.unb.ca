@@ -125,7 +125,7 @@ class HomePageForm extends FormBase {
     ];
     $about_url->setOptions($about_link_options);
 
-    $blurb = "<p>Newspapers &commat; UNB Libraries provides researchers with
+    $blurb = "<p>New Brunswick Historical Newspapers Project provides researchers with
         unified access to UNB Libraries&apos; current and historical newspaper collections in all formats, from New
         Brunswick and across the world. Search and discover
         <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
