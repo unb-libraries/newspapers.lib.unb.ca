@@ -343,6 +343,13 @@ class HomePageForm extends FormBase {
     }
     elseif ($op === 'Search/Browse Titles') {
       $query = $this->getQueryFromValue($input_title);
+      $unlimited_search = $form_state->getValue('unlimited_region') ?? NULL;
+      if (!$unlimited_search) {
+        // Append encoded query argument to enable Province/State facet for N.B.
+        // &f[0]=province_state:New Brunswick.
+        $query .= "&f%5B0%5D=province_state%3ANew%20Brunswick";
+      }
+
       $form_state->setRedirectUrl(
         Url::fromUri("internal:/search?query=$query")
       );
