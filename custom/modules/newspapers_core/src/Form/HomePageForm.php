@@ -211,6 +211,21 @@ class HomePageForm extends FormBase {
       '#type' => 'submit',
       '#value' => $this->t('Search/Browse Titles'),
     ];
+    $form['tab-content']['title']['search-scope'] = [
+      '#type' => 'container',
+      '#weight' => 100,
+      '#attributes' => [
+        'class' => [
+          'w-100',
+          'mt-4',
+        ],
+      ],
+    ];
+    $form['tab-content']['title']['search-scope']['unlimited_region'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Include newspapers outside of New Brunswick'),
+      '#default_value' => FALSE,
+    ];
 
     $form['tab-content']['fulltext'] = [
       '#type' => 'container',
