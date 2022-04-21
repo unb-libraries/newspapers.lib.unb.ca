@@ -11,7 +11,7 @@ field_name: field_microfilmed_by
 entity_type: node
 bundle: publication
 label: 'Microfilmed By'
-description: ''
+description: 'Options are automatically filtered as you type <i>(multiple values supported)</i>.'
 required: false
 translatable: false
 default_value: {  }
