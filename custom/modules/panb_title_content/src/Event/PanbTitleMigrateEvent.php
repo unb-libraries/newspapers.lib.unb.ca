@@ -55,7 +55,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   }
 
   /**
-   * Constructs / sets the title's credit data for a publication migration.
+   * Constructs/sets the title's credit data for a publication migration.
    *
    * @param \Drupal\migrate\Row $row
    *   The current row (from CSV) being migrated.
@@ -89,7 +89,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   }
 
   /**
-   * Constructs / sets the title's description data for a publication migration.
+   * Constructs/sets the title's description data for a publication migration.
    *
    * @param \Drupal\migrate\Row $row
    *   The current row (from CSV) being migrated.
@@ -118,7 +118,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   }
 
   /**
-   * Constructs / sets the title's frequency data for a publication migration.
+   * Constructs/sets the title's frequency data for a publication migration.
    *
    * The mappings provided are determined from the unique values in the NBNP
    * list at time of migration.
@@ -157,7 +157,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   }
 
   /**
-   * Constructs / sets the title's publisher data for a publication migration.
+   * Constructs/sets the title's publisher data for a publication migration.
    *
    * @param \Drupal\migrate\Row $row
    *   The current row (from CSV) being migrated.
@@ -322,7 +322,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   }
 
   /**
-   * Constructs / sets the title's date data for a publication migration.
+   * Constructs/sets the title's date data for a publication migration.
    *
    * @param \Drupal\migrate\Row $row
    *   The current row (from CSV) being migrated.
