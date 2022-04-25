@@ -18,6 +18,7 @@ process:
     plugin: default_value
     default_value: unpublished
   title: 'Title'
+  field_panb_id: 'ID'
   field_language:
     plugin: default_value
     default_value: ''
