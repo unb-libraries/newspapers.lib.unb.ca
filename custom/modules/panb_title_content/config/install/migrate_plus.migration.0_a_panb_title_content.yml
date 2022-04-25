@@ -1,0 +1,108 @@
+id: 0_a_panb_title_content
+label: Title content provided by PANB for newspapers.
+
+migration_tags:
+  - CSV
+
+source:
+  plugin: csv
+  path: '/app/html/modules/custom/panb_title_content/data/csv/0_a_PANB-Newspaper-Directory-titles-adjusted.csv'
+  ids:
+    - 'ID'
+
+process:
+  type:
+    plugin: default_value
+    default_value: publication
+  status:
+    plugin: default_value
+    default_value: unpublished
+  title: 'Title'
+  field_language:
+    plugin: default_value
+    default_value: ''
+  field_place_of_publication/langcode:
+    plugin: default_value
+    default_value: ''
+  field_place_of_publication/country_code:
+    plugin: default_value
+    default_value: CA
+  field_place_of_publication/administrative_area:
+    plugin: default_value
+    default_value: NB
+  field_place_of_publication/locality: 'Place'
+  field_credit: credit_processed
+  field_description: description_processed
+  field_marc_frequency: frequency_processed
+  field_publisher: publishers
+  field_first_issue_date_type: first_issue_date_type
+  field_first_issue_approx_date: first_issue_verbatim_date
+  field_first_issue_date/value:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: first_issue_date_range
+      message: 'Skipping first issue date range start, empty date provided.'
+    -
+      plugin: explode
+      source: first_issue_date_range
+      delimiter: '|'
+    -
+      plugin: extract
+      index:
+        - '0'
+  field_first_issue_date/end_value:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: first_issue_date_range
+      message: 'Skipping first issue date range end, empty date provided.'
+    -
+      plugin: explode
+      source: first_issue_date_range
+      delimiter: '|'
+    -
+      plugin: extract
+      index:
+        - '1'
+  field_last_issue_date_type: last_issue_date_type
+  field_last_issue_approx_date: last_issue_verbatim_date
+  field_last_issue_date/value:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: last_issue_date_range
+      message: 'Skipping last issue date range start, empty date provided.'
+    -
+      plugin: explode
+      source: last_issue_date_range
+      delimiter: '|'
+    -
+      plugin: extract
+      index:
+        - '0'
+  field_last_issue_date/end_value:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: last_issue_date_range
+      message: 'Skipping last issue date range end, empty date provided.'
+    -
+      plugin: explode
+      source: last_issue_date_range
+      delimiter: '|'
+    -
+      plugin: extract
+      index:
+        - '1'
+  field_microfilmed_by: microfilmed_by_institutions
+
+destination:
+  plugin: entity:node
+
+dependencies:
+  module:
+    - panb_title_content
+  enforced:
+    module:
+      - panb_title_content

@@ -1,0 +1,5 @@
+services:
+  panb_title_content.0_a_panb_title_content_subscriber:
+    class: Drupal\panb_title_content\Event\PanbTitleMigrateEvent
+    tags:
+      - { name: event_subscriber }
