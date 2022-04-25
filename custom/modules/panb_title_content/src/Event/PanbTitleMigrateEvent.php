@@ -21,13 +21,13 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   const SRC_FULL_TITLE_RECORD_ID_COLUMN = '0';
   const SRC_FULL_TITLE_RECORD_ISFRENCH_COLUMN = '23';
   const SRC_MICROFILMED_BY_FILE = '/app/html/modules/custom/panb_title_content/data/csv/z_panb_microfilmed_by.csv';
-  const SRC_MICROFILMED_BY_PANB_ID_COLUMN = '1';
   const SRC_MICROFILMED_BY_INSTITUTION_CODE_COLUMN = '2';
+  const SRC_MICROFILMED_BY_PANB_ID_COLUMN = '1';
   const SRC_PUBLISHER_FILE = '/app/html/modules/custom/panb_title_content/data/csv/z_panb_publishers.csv';
   const SRC_PUBLISHER_ID_COLUMN = '0';
   const SRC_PUBLISHER_JUNCTION_FILE = '/app/html/modules/custom/panb_title_content/data/csv/z_panb_publisher_junction.csv';
-  const SRC_PUBLISHER_JUNCTION_PUBLISHER_ID_COLUMN = '1';
   const SRC_PUBLISHER_JUNCTION_PANB_ID_COLUMN = '2';
+  const SRC_PUBLISHER_JUNCTION_PUBLISHER_ID_COLUMN = '1';
 
   /**
    * {@inheritdoc}
