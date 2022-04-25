@@ -17,9 +17,17 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class PanbTitleMigrateEvent implements EventSubscriberInterface {
 
   const MIGRATION_ID = '0_a_panb_title_content';
+  const SRC_FULL_TITLE_RECORD_FILE = '/app/html/modules/custom/panb_title_content/data/csv/z_panb_full_title_metadata.csv';
+  const SRC_FULL_TITLE_RECORD_ID_COLUMN = '0';
+  const SRC_FULL_TITLE_RECORD_ISFRENCH_COLUMN = '23';
   const SRC_MICROFILMED_BY_FILE = '/app/html/modules/custom/panb_title_content/data/csv/z_panb_microfilmed_by.csv';
+  const SRC_MICROFILMED_BY_PANB_ID_COLUMN = '1';
+  const SRC_MICROFILMED_BY_INSTITUTION_CODE_COLUMN = '2';
   const SRC_PUBLISHER_FILE = '/app/html/modules/custom/panb_title_content/data/csv/z_panb_publishers.csv';
+  const SRC_PUBLISHER_ID_COLUMN = '0';
   const SRC_PUBLISHER_JUNCTION_FILE = '/app/html/modules/custom/panb_title_content/data/csv/z_panb_publisher_junction.csv';
+  const SRC_PUBLISHER_JUNCTION_PUBLISHER_ID_COLUMN = '1';
+  const SRC_PUBLISHER_JUNCTION_PANB_ID_COLUMN = '2';
 
   /**
    * {@inheritdoc}
@@ -47,6 +55,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     if ($migration_id == self::MIGRATION_ID) {
       $this->setCreditField($row);
       $this->setDescriptionField($row);
+      $this->setLanguageField($row);
       $this->setFrequencyField($row);
       $this->setPublisherField($row);
       $this->setMicroFilmedByField($row);
@@ -193,6 +202,54 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   }
 
   /**
+   * Constructs/sets the title's language data for a publication migration.
+   *
+   * @param \Drupal\migrate\Row $row
+   *   The current row (from CSV) being migrated.
+   *
+   * @throws \Exception
+   */
+  protected function setLanguageField(Row $row) : void {
+    $panb_id = trim($row->getSourceProperty('ID'));
+    if (!empty($panb_id)) {
+      $row->setSourceProperty(
+        'language_processed',
+        $this->getLanguageValueFromId($panb_id)
+      );
+    }
+  }
+
+  /**
+   * Determines a title's language code from data provided by PANB.
+   *
+   * The language value depends on a bool column 'isfrench', with the
+   * presumption that anything else is english.
+   *
+   * @param string $panb_id
+   *   The unique PAND id identifying the publication.
+   *
+   * @return string
+   *   The ISO 639-1 language code of the title's content.
+   */
+  protected function getLanguageValueFromId(string $panb_id) : string {
+    $full_title_metadata = array_map(
+      'str_getcsv',
+      file(self::SRC_FULL_TITLE_RECORD_FILE)
+    );
+
+    foreach ($full_title_metadata as $title_metadata) {
+      if ($title_metadata[self::SRC_FULL_TITLE_RECORD_ID_COLUMN] == $panb_id) {
+        if ($title_metadata[self::SRC_FULL_TITLE_RECORD_ISFRENCH_COLUMN] == 'True') {
+          return 'fr';
+        }
+        else {
+          return 'en';
+        }
+      }
+    }
+  }
+
+  /**
    * Determines a title's publisher names from data provided by PANB.
    *
    * The publisher names are determined by parsing an exported relational table
@@ -216,14 +273,20 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     $found_publisher_ids = [];
     $publishers = [];
     foreach ($publisher_junction_csv as $junction_item) {
-      if (isset($junction_item[2]) && $junction_item[2] == $panb_id) {
-        $found_publisher_ids[] = $junction_item[1];
+      if (
+        isset($junction_item[self::SRC_PUBLISHER_JUNCTION_PANB_ID_COLUMN]) &&
+        $junction_item[self::SRC_PUBLISHER_JUNCTION_PANB_ID_COLUMN] == $panb_id
+      ) {
+        $found_publisher_ids[] = $junction_item[self::SRC_PUBLISHER_JUNCTION_PUBLISHER_ID_COLUMN];
       }
     }
     foreach ($found_publisher_ids as $publisher_id) {
       foreach ($publisher_csv as $publisher_data) {
-        if (isset($publisher_data[0]) && $publisher_data[0] == $publisher_id) {
-          $publishers[] = $publisher_data[1];
+        if (
+          isset($publisher_data[self::SRC_PUBLISHER_ID_COLUMN]) &&
+          $publisher_data[self::SRC_PUBLISHER_ID_COLUMN] == $publisher_id
+        ) {
+          $publishers[] = $publisher_data[self::SRC_PUBLISHER_JUNCTION_PUBLISHER_ID_COLUMN];
         }
       }
     }
@@ -295,9 +358,15 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     );
     $microfilmed_by = [];
     foreach ($microfilmed_by_csv as $microfilmed_by_statement) {
-      if ($microfilmed_by_statement[1] == $panb_id) {
-        if (!empty($microfilmed_by_statement[2])) {
-          $microfilmed_by[] = $microfilmed_by_statement[2];
+      if (
+        $microfilmed_by_statement[self::SRC_MICROFILMED_BY_PANB_ID_COLUMN] == $panb_id
+      ) {
+        if (
+          !empty(
+            $microfilmed_by_statement[self::SRC_MICROFILMED_BY_INSTITUTION_CODE_COLUMN]
+          )
+        ) {
+          $microfilmed_by[] = $microfilmed_by_statement[self::SRC_MICROFILMED_BY_INSTITUTION_CODE_COLUMN];
         }
       }
     }
