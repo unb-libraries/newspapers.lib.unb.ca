@@ -28,6 +28,7 @@ dependencies:
     - field.field.node.publication.field_marc_frequency
     - field.field.node.publication.field_microfilmed_by
     - field.field.node.publication.field_oclc
+    - field.field.node.publication.field_panb_id
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_previous_identifications
     - field.field.node.publication.field_publisher
@@ -234,6 +235,14 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 13
+    region: content
+  field_panb_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 33
     region: content
   field_place_of_publication:
     type: address_default

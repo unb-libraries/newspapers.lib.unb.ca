@@ -86,6 +86,9 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
       // Prevent original migrated frequency field editing.
       $form['field_frequency']['#disabled'] = 'disabled';
 
+    // Prevent PANB migrated ID field editing.
+    $form['field_panb_id']['#disabled'] = 'disabled';
+
       $form['field_serial_relation_pre_ref_up']['#states'] = [
         'visible' => [
           [

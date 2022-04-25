@@ -29,6 +29,7 @@ dependencies:
     - field.field.node.publication.field_marc_frequency
     - field.field.node.publication.field_microfilmed_by
     - field.field.node.publication.field_oclc
+    - field.field.node.publication.field_panb_id
     - field.field.node.publication.field_place_of_publication
     - field.field.node.publication.field_previous_identifications
     - field.field.node.publication.field_publisher
@@ -89,6 +90,7 @@ hidden:
   field_marc_frequency: true
   field_microfilmed_by: true
   field_oclc: true
+  field_panb_id: true
   field_place_of_publication: true
   field_previous_identifications: true
   field_province_state: true
