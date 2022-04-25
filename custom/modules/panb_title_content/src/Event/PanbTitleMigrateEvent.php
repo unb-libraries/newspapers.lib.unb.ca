@@ -185,7 +185,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
           'name',
           'publisher'
         );
-        if (!empty($publisher_tid)) {
+        if (!empty($publisher_tids)) {
           $term = Term::load(reset($publisher_tids));
         }
         else {
@@ -311,9 +311,9 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     string $field,
     string $vocabulary
   ) : array {
-    $query = \Drupal::entityQuery('taxonomy_term');
-    $query->condition('vid', $vocabulary);
-    $query->condition($field, $value);
+    $query = \Drupal::entityQuery('taxonomy_term')
+      ->condition('vid', $vocabulary)
+      ->condition($field, $value);
 
     return $query->execute();
   }
