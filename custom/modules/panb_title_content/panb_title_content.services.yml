@@ -3,3 +3,7 @@ services:
     class: Drupal\panb_title_content\Event\PanbTitleMigrateEvent
     tags:
       - { name: event_subscriber }
+  panb_title_content.1_b_panb_title_relationships:
+    class: Drupal\panb_title_content\Event\PanbTitleRelationshipsEvent
+    tags:
+      - { name: event_subscriber }

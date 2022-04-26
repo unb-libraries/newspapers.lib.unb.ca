@@ -1,0 +1,24 @@
+id: 1_b_panb_title_relationships
+label: Title relationship builder for PANB content. MUST be run after 0_a_panb_title_content.
+
+migration_tags:
+  - CSV
+
+source:
+  plugin: csv
+  path: '/app/html/modules/custom/panb_title_content/data/csv/0_a_PANB-Newspaper-Directory-titles-adjusted.csv'
+  ids:
+    - 'ID'
+
+process:
+  title: 'Title'
+
+destination:
+  plugin: noop
+
+dependencies:
+  module:
+    - panb_title_content
+  enforced:
+    module:
+      - panb_title_content
