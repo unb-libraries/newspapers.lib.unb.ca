@@ -30,6 +30,13 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   const SRC_PUBLISHER_JUNCTION_PUBLISHER_ID_COLUMN = '1';
 
   /**
+   * The current row.
+   *
+   * @var \Drupal\migrate\Row
+   */
+  protected Row $curRow;
+
+  /**
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
@@ -47,48 +54,45 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
    * @throws \Exception
    */
   public function onPrepareRow(MigratePrepareRowEvent $event) : void {
-    $row = $event->getRow();
     $migration = $event->getMigration();
     $migration_id = $migration->id();
 
     // Only act on rows for this migration.
     if ($migration_id == self::MIGRATION_ID) {
-      $this->setCreditField($row);
-      $this->setDescriptionField($row);
-      $this->setLanguageField($row);
-      $this->setFrequencyField($row);
-      $this->setPublisherField($row);
-      $this->setMicroFilmedByField($row);
-      $this->setDatesFields($row);
+      $this->curRow = $event->getRow();
+      $this->setCreditField();
+      $this->setDescriptionField();
+      $this->setLanguageField();
+      $this->setFrequencyField();
+      $this->setPublisherField();
+      $this->setMicroFilmedByField();
+      $this->setDatesFields();
     }
   }
 
   /**
    * Constructs/sets the title's credit data for a publication migration.
    *
-   * @param \Drupal\migrate\Row $row
-   *   The current row (from CSV) being migrated.
-   *
    * @throws \Exception
    */
-  protected function setCreditField(Row $row) : void {
+  protected function setCreditField() : void {
     $credit_lines = [];
 
     // PANB id.
-    $panb_id = trim($row->getSourceProperty('ID'));
+    $panb_id = trim($this->curRow->getSourceProperty('ID'));
     if (!empty($panb_id)) {
       $credit_lines[] = "Imported from PANB Newspaper Directory: Key = $panb_id";
     }
 
     // Harper.
-    $harper_number = trim($row->getSourceProperty('Harper #'));
+    $harper_number = trim($this->curRow->getSourceProperty('Harper #'));
     if (!empty($harper_number)) {
       $credit_lines[] = "Harper #: $harper_number";
     }
 
     // Write out.
     if (!empty($credit_lines)) {
-      $row->setSourceProperty(
+      $this->curRow->setSourceProperty(
         'credit_processed',
         implode("\n",
           $credit_lines
@@ -100,23 +104,20 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   /**
    * Constructs/sets the title's description data for a publication migration.
    *
-   * @param \Drupal\migrate\Row $row
-   *   The current row (from CSV) being migrated.
-   *
    * @throws \Exception
    */
-  protected function setDescriptionField(Row $row) : void {
+  protected function setDescriptionField() : void {
     $description_lines = [];
-    $note_content = trim($row->getSourceProperty('Note'));
+    $note_content = trim($this->curRow->getSourceProperty('Note'));
     if (!empty($note_content)) {
       $description_lines[] = $note_content;
     }
-    $dates_questionable = trim($row->getSourceProperty('Dates Questionable'));
+    $dates_questionable = trim($this->curRow->getSourceProperty('Dates Questionable'));
     if (!empty($dates_questionable) && trim($dates_questionable) == 'Yes') {
       $description_lines[] = 'Dates Questionable.';
     }
     if (!empty($description_lines)) {
-      $row->setSourceProperty(
+      $this->curRow->setSourceProperty(
         'description_processed',
         implode(
           "\n",
@@ -132,12 +133,9 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
    * The mappings provided are determined from the unique values in the NBNP
    * list at time of migration.
    *
-   * @param \Drupal\migrate\Row $row
-   *   The current row (from CSV) being migrated.
-   *
    * @throws \Exception
    */
-  protected function setFrequencyField(Row $row) : void {
+  protected function setFrequencyField() : void {
     $map_fields = [
       '2/monthly' => 'Semimonthly',
       '2/weekly' => 'Semiweekly',
@@ -152,7 +150,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
       'varies' => 'Frequency varies',
       'weekly' => 'Weekly',
     ];
-    $interval_content = trim($row->getSourceProperty('Interval'));
+    $interval_content = trim($this->curRow->getSourceProperty('Interval'));
     $map_key = '';
     if (!empty($interval_content)) {
       if (array_key_exists($interval_content, $map_fields)) {
@@ -162,19 +160,16 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     if (empty($map_key)) {
       $map_key = 'unknown';
     }
-    $row->setSourceProperty('frequency_processed', $map_fields[$map_key]);
+    $this->curRow->setSourceProperty('frequency_processed', $map_fields[$map_key]);
   }
 
   /**
    * Constructs/sets the title's publisher data for a publication migration.
    *
-   * @param \Drupal\migrate\Row $row
-   *   The current row (from CSV) being migrated.
-   *
    * @throws \Exception
    */
-  protected function setPublisherField(Row $row) : void {
-    $panb_id = trim($row->getSourceProperty('ID'));
+  protected function setPublisherField() : void {
+    $panb_id = trim($this->curRow->getSourceProperty('ID'));
     $raw_publisher_names = $this->getRawNewspaperPublisherNames($panb_id);
     $publishers = [];
 
@@ -198,21 +193,18 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
         $publishers[] = $term->id();
       }
     }
-    $row->setSourceProperty('publishers', $publishers);
+    $this->curRow->setSourceProperty('publishers', $publishers);
   }
 
   /**
    * Constructs/sets the title's language data for a publication migration.
    *
-   * @param \Drupal\migrate\Row $row
-   *   The current row (from CSV) being migrated.
-   *
    * @throws \Exception
    */
-  protected function setLanguageField(Row $row) : void {
-    $panb_id = trim($row->getSourceProperty('ID'));
+  protected function setLanguageField() : void {
+    $panb_id = trim($this->curRow->getSourceProperty('ID'));
     if (!empty($panb_id)) {
-      $row->setSourceProperty(
+      $this->curRow->setSourceProperty(
         'language_processed',
         $this->getLanguageValueFromId($panb_id)
       );
@@ -247,6 +239,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
         }
       }
     }
+    return '';
   }
 
   /**
@@ -321,13 +314,10 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   /**
    * Constructs/sets the title's 'microfilmed by' for a publication migration.
    *
-   * @param \Drupal\migrate\Row $row
-   *   The current row (from CSV) being migrated.
-   *
    * @throws \Exception
    */
-  protected function setMicroFilmedByField(Row $row) : void {
-    $panb_id = trim($row->getSourceProperty('ID'));
+  protected function setMicroFilmedByField() : void {
+    $panb_id = trim($this->curRow->getSourceProperty('ID'));
     $institution_values = [];
     $microfilmed_by_codes = $this->getMicrofilmedByCode($panb_id);
     foreach ($microfilmed_by_codes as $microfilmed_by_code) {
@@ -335,7 +325,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
       $institution_values = array_merge($institution_values, $tids);
     }
     if (!empty($institution_values)) {
-      $row->setSourceProperty(
+      $this->curRow->setSourceProperty(
         'microfilmed_by_institutions',
         $institution_values
       );
@@ -393,18 +383,15 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   /**
    * Constructs/sets the title's date data for a publication migration.
    *
-   * @param \Drupal\migrate\Row $row
-   *   The current row (from CSV) being migrated.
-   *
    * @throws \Exception
    */
-  protected function setDatesFields(Row $row) : void {
-    $title_start_day = trim($row->getSourceProperty('Start Day'));
-    $title_start_month = trim($row->getSourceProperty('Start Month'));
-    $title_start_year = trim($row->getSourceProperty('Start Year'));
-    $title_end_day = trim($row->getSourceProperty('End Day'));
-    $title_end_month = trim($row->getSourceProperty('End Month'));
-    $title_end_year = trim($row->getSourceProperty('End Year'));
+  protected function setDatesFields() : void {
+    $title_start_day = trim($this->curRow->getSourceProperty('Start Day'));
+    $title_start_month = trim($this->curRow->getSourceProperty('Start Month'));
+    $title_start_year = trim($this->curRow->getSourceProperty('Start Year'));
+    $title_end_day = trim($this->curRow->getSourceProperty('End Day'));
+    $title_end_month = trim($this->curRow->getSourceProperty('End Month'));
+    $title_end_year = trim($this->curRow->getSourceProperty('End Year'));
 
     // We cannot approximate a date without the year value.
     if (!empty($title_start_year)) {
@@ -414,15 +401,15 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
         $title_start_day
       );
       if (!empty($start_date_data)) {
-        $row->setSourceProperty(
+        $this->curRow->setSourceProperty(
           'first_issue_date_type',
           $start_date_data['date_type']
         );
-        $row->setSourceProperty(
+        $this->curRow->setSourceProperty(
           'first_issue_date_range',
           $start_date_data['date_range']
         );
-        $row->setSourceProperty(
+        $this->curRow->setSourceProperty(
           'first_issue_verbatim_date',
           $start_date_data['verbatim_date']
         );
@@ -436,7 +423,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
       empty($title_end_day) &&
       !empty($start_date_data['date_type'])
     ) {
-      $row->setSourceProperty('last_issue_date_type', 'ongoing');
+      $this->curRow->setSourceProperty('last_issue_date_type', 'ongoing');
     }
     elseif (!empty($title_end_year)) {
       $end_date_data = $this->getDateFieldData(
@@ -445,15 +432,15 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
         $title_end_day
       );
       if (!empty($end_date_data)) {
-        $row->setSourceProperty(
+        $this->curRow->setSourceProperty(
           'last_issue_date_type',
           $end_date_data['date_type']
         );
-        $row->setSourceProperty(
+        $this->curRow->setSourceProperty(
           'last_issue_date_range',
           $end_date_data['date_range']
         );
-        $row->setSourceProperty(
+        $this->curRow->setSourceProperty(
           'last_issue_verbatim_date',
           $end_date_data['verbatim_date']
         );
