@@ -242,7 +242,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     }
     $dates_questionable = trim($this->curRow->getSourceProperty('Dates Questionable'));
     if (!empty($dates_questionable) && trim($dates_questionable) == 'Yes') {
-      $description_lines[] = 'Dates Questionable.';
+      $description_lines[] = 'Dates are questionable.';
     }
     if (!empty($description_lines)) {
       $this->curRow->setSourceProperty(
