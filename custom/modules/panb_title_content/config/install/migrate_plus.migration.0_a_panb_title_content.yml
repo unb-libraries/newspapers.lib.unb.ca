@@ -17,7 +17,8 @@ process:
   status:
     plugin: default_value
     default_value: unpublished
-  title: 'Title'
+  title: title_processed
+  field_sort_title: sort_title_processed
   field_panb_id: 'ID'
   field_language: language_processed
   field_place_of_publication/langcode:

@@ -60,6 +60,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     // Only act on rows for this migration.
     if ($migration_id == self::MIGRATION_ID) {
       $this->curRow = $event->getRow();
+      $this->setTitleField();
       $this->setCreditField();
       $this->setDescriptionField();
       $this->setLanguageField();
@@ -68,6 +69,74 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
       $this->setMicroFilmedByField();
       $this->setDatesFields();
     }
+  }
+
+  /**
+   * Constructs/sets the publication's title data for a publication migration.
+   *
+   * @throws \Exception
+   */
+  protected function setTitleField() : void {
+    $cur_title = trim($this->curRow->getSourceProperty('Title'));
+    $clean_quote_title = self::deMsQuotifyString($cur_title);
+    $this->curRow->setSourceProperty('title_processed', $clean_quote_title);
+    $this->curRow->setSourceProperty(
+      'sort_title_processed',
+      self::generateSortTitle($clean_quote_title)
+    );
+  }
+
+  /**
+   * Strips any 'magic' quotes added by MS Word from a string.
+   *
+   * @param string $value
+   *   The string to strip of MS quotes.
+   *
+   * @return array|string|string[]
+   *   The result.
+   */
+  protected static function deMsQuotifyString(string $value) {
+    $quote_search = [
+      chr(145),
+      chr(146),
+      chr(147),
+      chr(148),
+      chr(151),
+    ];
+    $quote_replace = [
+      "'",
+      "'",
+      '"',
+      '"',
+      '-',
+    ];
+    return str_replace($quote_search, $quote_replace, $value);
+  }
+
+  /**
+   * Constructs a 'sort title' for a publication titles.
+   *
+   * @param string $value
+   *   The string to generate a sort title for.
+   *
+   * @return string
+   *   The sort title value.
+   */
+  protected static function generateSortTitle($value) : string {
+    $stop_words = [
+      'the',
+      'le',
+      'la',
+      'l\'',
+    ];
+    foreach ($stop_words as $stop_word) {
+      $value = preg_replace(
+        "/^{$stop_word}/i",
+        '',
+        $value
+      );
+    }
+    return trim($value);
   }
 
   /**
