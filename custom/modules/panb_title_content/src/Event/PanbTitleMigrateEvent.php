@@ -31,11 +31,25 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   const SRC_PUBLISHER_JUNCTION_PUBLISHER_ID_COLUMN = '1';
 
   /**
+   * The current row's PANB ID.
+   *
+   * @var string
+   */
+  protected string $curPanbId;
+
+  /**
    * The current row.
    *
    * @var \Drupal\migrate\Row
    */
   protected Row $curRow;
+
+  /**
+   * The current row's full title metadata array.
+   *
+   * @var array
+   */
+  protected array $curFullTitleMetadata;
 
   /**
    * {@inheritdoc}
@@ -61,6 +75,8 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     // Only act on rows for this migration.
     if ($migration_id == self::MIGRATION_ID) {
       $this->curRow = $event->getRow();
+      $this->curPanbId = trim($this->curRow->getSourceProperty('ID'));
+      $this->setFullTitleMetadata();
       $this->setTitleField();
       $this->setCreditField();
       $this->setDescriptionField();
@@ -73,24 +89,44 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   }
 
   /**
-   * Determines a title's Harpers number from data provided by PANB.
-   *
-   * @param string $panb_id
-   *   The unique PAND id identifying the publication.
-   *
-   * @return string
-   *   The Harpers number, if it exists.
+   * Sets the full title metadata values for this row.
    */
-  protected static function getHarpersNumberFromId(string $panb_id) : string {
+  protected function setFullTitleMetadata() {
+    $this->curFullTitleMetadata = [];
     $full_title_metadata = array_map(
       'str_getcsv',
       file(self::SRC_FULL_TITLE_RECORD_FILE)
     );
 
     foreach ($full_title_metadata as $title_metadata) {
-      if ($title_metadata[self::SRC_FULL_TITLE_RECORD_ID_COLUMN] == $panb_id) {
-        return trim($title_metadata[self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN]);
+      if ($title_metadata[self::SRC_FULL_TITLE_RECORD_ID_COLUMN] == $this->curPanbId) {
+        $this->curFullTitleMetadata = $title_metadata;
       }
+    }
+  }
+
+  /**
+   * Determines a title's Harpers number from data provided by PANB.
+   *
+   * @return string
+   *   The Harpers number, if it exists.
+   */
+  protected function getCurHarpersNumber() : string {
+    return $this->getFullMetadataColumnValue(self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN);
+  }
+
+  /**
+   * Returns a value of the current title's full metadata by column.
+   *
+   * @param string $column_id
+   *   The column ID to return the value from.
+   *
+   * @return string
+   *   The value of the column.
+   */
+  protected function getFullMetadataColumnValue(string $column_id) : string {
+    if (!empty($this->curFullTitleMetadata[$column_id])) {
+      return trim($this->curFullTitleMetadata[$column_id]);
     }
     return '';
   }
@@ -172,13 +208,12 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     $credit_lines = [];
 
     // PANB id.
-    $panb_id = trim($this->curRow->getSourceProperty('ID'));
-    if (!empty($panb_id)) {
-      $credit_lines[] = "Imported from PANB Newspaper Directory: Key = $panb_id";
+    if (!empty($this->curPanbId)) {
+      $credit_lines[] = "Imported from PANB Newspaper Directory: Key = $this->curPanbId";
     }
 
     // Harper.
-    $harper_number = self::getHarpersNumberFromId($panb_id);
+    $harper_number = $this->getCurHarpersNumber();
     if (!empty($harper_number)) {
       $credit_lines[] = "Harper #: $harper_number";
     }
@@ -262,8 +297,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
    * @throws \Exception
    */
   protected function setPublisherField() : void {
-    $panb_id = trim($this->curRow->getSourceProperty('ID'));
-    $raw_publisher_names = $this->getRawNewspaperPublisherNames($panb_id);
+    $raw_publisher_names = $this->getRawNewspaperPublisherNames();
     $publishers = [];
 
     foreach ($raw_publisher_names as $raw_publisher_name) {
@@ -295,11 +329,10 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
    * @throws \Exception
    */
   protected function setLanguageField() : void {
-    $panb_id = trim($this->curRow->getSourceProperty('ID'));
-    if (!empty($panb_id)) {
+    if (!empty($this->curPanbId)) {
       $this->curRow->setSourceProperty(
         'language_processed',
-        $this->getLanguageValueFromId($panb_id)
+        $this->getLanguageValue()
       );
     }
   }
@@ -310,29 +343,15 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
    * The language value depends on a bool column 'isfrench', with the
    * presumption that anything else is english.
    *
-   * @param string $panb_id
-   *   The unique PAND id identifying the publication.
-   *
    * @return string
    *   The ISO 639-1 language code of the title's content.
    */
-  protected function getLanguageValueFromId(string $panb_id) : string {
-    $full_title_metadata = array_map(
-      'str_getcsv',
-      file(self::SRC_FULL_TITLE_RECORD_FILE)
-    );
-
-    foreach ($full_title_metadata as $title_metadata) {
-      if ($title_metadata[self::SRC_FULL_TITLE_RECORD_ID_COLUMN] == $panb_id) {
-        if ($title_metadata[self::SRC_FULL_TITLE_RECORD_ISFRENCH_COLUMN] == 'True') {
-          return 'fr';
-        }
-        else {
-          return 'en';
-        }
-      }
+  protected function getLanguageValue() : string {
+    $lang_value = $this->getFullMetadataColumnValue(self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN);
+    if ($lang_value) {
+      return 'fr';
     }
-    return '';
+    return 'en';
   }
 
   /**
@@ -341,13 +360,10 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
    * The publisher names are determined by parsing an exported relational table
    * cross-referenced with an exported publisher identification. See CSV files.
    *
-   * @param string $panb_id
-   *   The unique PAND id identifying the publication.
-   *
    * @return array
    *   An array of publisher names. Empty if no publishers are found for the ID.
    */
-  protected function getRawNewspaperPublisherNames(string $panb_id) : array {
+  protected function getRawNewspaperPublisherNames() : array {
     $publisher_csv = array_map(
       'str_getcsv',
       file(self::SRC_PUBLISHER_FILE)
@@ -361,7 +377,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     foreach ($publisher_junction_csv as $junction_item) {
       if (
         isset($junction_item[self::SRC_PUBLISHER_JUNCTION_PANB_ID_COLUMN]) &&
-        $junction_item[self::SRC_PUBLISHER_JUNCTION_PANB_ID_COLUMN] == $panb_id
+        $junction_item[self::SRC_PUBLISHER_JUNCTION_PANB_ID_COLUMN] == $this->curPanbId
       ) {
         $found_publisher_ids[] = $junction_item[self::SRC_PUBLISHER_JUNCTION_PUBLISHER_ID_COLUMN];
       }
@@ -410,9 +426,8 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
    * @throws \Exception
    */
   protected function setMicroFilmedByField() : void {
-    $panb_id = trim($this->curRow->getSourceProperty('ID'));
     $institution_values = [];
-    $microfilmed_by_codes = $this->getMicrofilmedByCode($panb_id);
+    $microfilmed_by_codes = $this->getMicrofilmedBy();
     foreach ($microfilmed_by_codes as $microfilmed_by_code) {
       $tids = $this->getInstitutionTermIdsByPanbCode($microfilmed_by_code);
       $institution_values = array_merge($institution_values, $tids);
@@ -428,13 +443,10 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   /**
    * Determines a title's 'microfilmed-by' institution code from PANB data.
    *
-   * @param string $panb_id
-   *   The unique PAND id identifying the publication.
-   *
    * @return array
    *   The matching PANB institution codes.
    */
-  protected function getMicrofilmedByCode(string $panb_id) : array {
+  protected function getMicrofilmedBy() : array {
     $microfilmed_by_csv = array_map(
       'str_getcsv',
       file(self::SRC_MICROFILMED_BY_FILE)
@@ -442,7 +454,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     $microfilmed_by = [];
     foreach ($microfilmed_by_csv as $microfilmed_by_statement) {
       if (
-        $microfilmed_by_statement[self::SRC_MICROFILMED_BY_PANB_ID_COLUMN] == $panb_id
+        $microfilmed_by_statement[self::SRC_MICROFILMED_BY_PANB_ID_COLUMN] == $this->curPanbId
       ) {
         if (
           !empty(
