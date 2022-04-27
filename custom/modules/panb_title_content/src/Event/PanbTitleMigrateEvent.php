@@ -106,32 +106,6 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   }
 
   /**
-   * Determines a title's Harpers number from data provided by PANB.
-   *
-   * @return string
-   *   The Harpers number, if it exists.
-   */
-  protected function getCurHarpersNumber() : string {
-    return $this->getFullMetadataColumnValue(self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN);
-  }
-
-  /**
-   * Returns a value of the current title's full metadata by column.
-   *
-   * @param string $column_id
-   *   The column ID to return the value from.
-   *
-   * @return string
-   *   The value of the column.
-   */
-  protected function getFullMetadataColumnValue(string $column_id) : string {
-    if (!empty($this->curFullTitleMetadata[$column_id])) {
-      return trim($this->curFullTitleMetadata[$column_id]);
-    }
-    return '';
-  }
-
-  /**
    * Constructs/sets the publication's title data for a publication migration.
    *
    * @throws \Exception
@@ -230,6 +204,32 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   }
 
   /**
+   * Determines a title's Harpers number from data provided by PANB.
+   *
+   * @return string
+   *   The Harpers number, if it exists.
+   */
+  protected function getCurHarpersNumber() : string {
+    return $this->getFullMetadataColumnValue(self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN);
+  }
+
+  /**
+   * Returns a value of the current title's full metadata by column.
+   *
+   * @param string $column_id
+   *   The column ID to return the value from.
+   *
+   * @return string
+   *   The value of the column.
+   */
+  protected function getFullMetadataColumnValue(string $column_id) : string {
+    if (!empty($this->curFullTitleMetadata[$column_id])) {
+      return trim($this->curFullTitleMetadata[$column_id]);
+    }
+    return '';
+  }
+
+  /**
    * Constructs/sets the title's description data for a publication migration.
    *
    * @throws \Exception
@@ -253,6 +253,37 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
         )
       );
     }
+  }
+
+  /**
+   * Constructs/sets the title's language data for a publication migration.
+   *
+   * @throws \Exception
+   */
+  protected function setLanguageField() : void {
+    if (!empty($this->curPanbId)) {
+      $this->curRow->setSourceProperty(
+        'language_processed',
+        $this->getLanguageValue()
+      );
+    }
+  }
+
+  /**
+   * Determines a title's language code from data provided by PANB.
+   *
+   * The language value depends on a bool column 'isfrench', with the
+   * presumption that anything else is english.
+   *
+   * @return string
+   *   The ISO 639-1 language code of the title's content.
+   */
+  protected function getLanguageValue() : string {
+    $lang_value = $this->getFullMetadataColumnValue(self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN);
+    if ($lang_value) {
+      return 'fr';
+    }
+    return 'en';
   }
 
   /**
@@ -321,37 +352,6 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
       }
     }
     $this->curRow->setSourceProperty('publishers', $publishers);
-  }
-
-  /**
-   * Constructs/sets the title's language data for a publication migration.
-   *
-   * @throws \Exception
-   */
-  protected function setLanguageField() : void {
-    if (!empty($this->curPanbId)) {
-      $this->curRow->setSourceProperty(
-        'language_processed',
-        $this->getLanguageValue()
-      );
-    }
-  }
-
-  /**
-   * Determines a title's language code from data provided by PANB.
-   *
-   * The language value depends on a bool column 'isfrench', with the
-   * presumption that anything else is english.
-   *
-   * @return string
-   *   The ISO 639-1 language code of the title's content.
-   */
-  protected function getLanguageValue() : string {
-    $lang_value = $this->getFullMetadataColumnValue(self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN);
-    if ($lang_value) {
-      return 'fr';
-    }
-    return 'en';
   }
 
   /**
