@@ -20,6 +20,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   const SRC_FULL_TITLE_RECORD_FILE = '/app/html/modules/custom/panb_title_content/data/csv/z_panb_full_title_metadata.csv';
   const SRC_FULL_TITLE_RECORD_ID_COLUMN = '0';
   const SRC_FULL_TITLE_RECORD_ISFRENCH_COLUMN = '23';
+  const SRC_FULL_TITLE_RECORD_HARPERS_COLUMN = '19';
   const SRC_MICROFILMED_BY_FILE = '/app/html/modules/custom/panb_title_content/data/csv/z_panb_microfilmed_by.csv';
   const SRC_MICROFILMED_BY_INSTITUTION_CODE_COLUMN = '2';
   const SRC_MICROFILMED_BY_PANB_ID_COLUMN = '1';
@@ -69,6 +70,29 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
       $this->setMicroFilmedByField();
       $this->setDatesFields();
     }
+  }
+
+  /**
+   * Determines a title's Harpers number from data provided by PANB.
+   *
+   * @param string $panb_id
+   *   The unique PAND id identifying the publication.
+   *
+   * @return string
+   *   The Harpers number, if it exists.
+   */
+  protected static function getHarpersNumberFromId(string $panb_id) : string {
+    $full_title_metadata = array_map(
+      'str_getcsv',
+      file(self::SRC_FULL_TITLE_RECORD_FILE)
+    );
+
+    foreach ($full_title_metadata as $title_metadata) {
+      if ($title_metadata[self::SRC_FULL_TITLE_RECORD_ID_COLUMN] == $panb_id) {
+        return trim($title_metadata[self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN]);
+      }
+    }
+    return '';
   }
 
   /**
@@ -154,7 +178,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     }
 
     // Harper.
-    $harper_number = trim($this->curRow->getSourceProperty('Harper #'));
+    $harper_number = self::getHarpersNumberFromId($panb_id);
     if (!empty($harper_number)) {
       $credit_lines[] = "Harper #: $harper_number";
     }
