@@ -280,7 +280,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
    */
   protected function getLanguageValue() : string {
     $lang_value = $this->getFullMetadataColumnValue(self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN);
-    if ($lang_value) {
+    if ($lang_value == 'True') {
       return 'fr';
     }
     return 'en';
