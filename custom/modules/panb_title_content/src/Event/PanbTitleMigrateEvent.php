@@ -485,16 +485,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
       }
     }
 
-    // Special case : No data in end date, with values in start date -> ongoing.
-    if (
-      empty($title_end_year) &&
-      empty($title_end_month) &&
-      empty($title_end_day) &&
-      !empty($start_date_data['date_type'])
-    ) {
-      $this->curRow->setSourceProperty('last_issue_date_type', 'ongoing');
-    }
-    elseif (!empty($title_end_year)) {
+    if (!empty($title_end_year)) {
       $end_date_data = $this->getDateFieldData(
         $title_end_year,
         $title_end_month,
