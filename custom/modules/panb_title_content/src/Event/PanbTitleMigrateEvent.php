@@ -279,7 +279,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
    *   The ISO 639-1 language code of the title's content.
    */
   protected function getLanguageValue() : string {
-    $lang_value = $this->getFullMetadataColumnValue(self::SRC_FULL_TITLE_RECORD_HARPERS_COLUMN);
+    $lang_value = $this->getFullMetadataColumnValue(self::SRC_FULL_TITLE_RECORD_ISFRENCH_COLUMN);
     if ($lang_value == 'True') {
       return 'fr';
     }
