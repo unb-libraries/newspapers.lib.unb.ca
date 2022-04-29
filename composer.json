@@ -17,7 +17,7 @@
   },
   "require-dev": {
     "twbs/bootstrap": "~4.5.3",
-    "unb-libraries/dockworker-drupal": "^4"
+    "unb-libraries/dockworker-drupal": "^5"
   },
   "scripts": {
     "post-update-cmd": [

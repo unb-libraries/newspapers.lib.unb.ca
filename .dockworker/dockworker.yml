@@ -1,5 +1,5 @@
 dockworker:
-  version: '4'
+  version: '5'
   application:
     name: newspapers.lib.unb.ca
     finish_marker: '99_zz_notify_user_URI'
