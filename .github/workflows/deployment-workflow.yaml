@@ -1,8 +1,9 @@
 name: newspapers.lib.unb.ca
 
 on:
-  push:
   pull_request:
+  push:
+  workflow_dispatch:
 
 jobs:
   drupal:
