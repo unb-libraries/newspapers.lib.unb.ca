@@ -1,7 +1,7 @@
 services:
   drupal-mysql-lib-unb-ca:
     image: mysql:5.7
-    restart: always
+    restart: unless-stopped
     command: mysqld --skip-name-resolve --max_allowed_packet=64M
     env_file:
       - ./env/mysql.env
@@ -9,20 +9,18 @@ services:
       - "3306"
     networks:
       - newspapers.lib.unb.ca
-
   drupal-redis-lib-unb-ca:
     image: redis:5-alpine
-    restart: always
+    restart: unless-stopped
     expose:
       - "6379"
     networks:
       - newspapers.lib.unb.ca
     env_file:
       - ./env/redis.env
-
   drupal-solr-lib-unb-ca:
     image: ghcr.io/unb-libraries/solr-drupal:8.x-4.x
-    restart: always
+    restart: unless-stopped
     env_file:
       - ./env/solr.env
     expose:
@@ -33,10 +31,9 @@ services:
       - docker-entrypoint-multiple.sh
       - newspapers.lib.unb.ca:/solr-conf
       - pages.newspapers.lib.unb.ca:/solr-conf
-
   mailhog:
     image: mailhog/mailhog
-    restart: always
+    restart: unless-stopped
     expose:
       - "1025"
       - "8025"
@@ -44,11 +41,10 @@ services:
       - "4095:8025"
     networks:
       - newspapers.lib.unb.ca
-
   newspapers.lib.unb.ca:
     build:
       context: .
-    restart: always
+    restart: unless-stopped
     container_name: newspapers.lib.unb.ca
     depends_on:
       - drupal-mysql-lib-unb-ca
@@ -69,7 +65,6 @@ services:
       - ./custom/modules:/app/html/modules/custom
       - ./custom/themes:/app/html/themes/custom
       - ./tests:/app/tests
-
 networks:
   newspapers.lib.unb.ca:
     name: newspapers.lib.unb.ca
