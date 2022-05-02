@@ -11,7 +11,7 @@ dependencies:
     - taxonomy
     - user
 id: microfilmed_report
-label: 'Microfilmed Report'
+label: 'Report: Microfilmed by'
 module: views
 description: ''
 tag: ''
@@ -24,7 +24,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Microfilmed Report'
+      title: 'Report: Microfilmed by'
       fields:
         title:
           id: title
@@ -97,7 +97,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: field
-          label: 'Microfilmed by (Institution)'
+          label: 'Microfilmed by Institution'
           exclude: false
           alter:
             alter_text: false
@@ -158,7 +158,7 @@ display:
           field: name
           relationship: field_microfilmed_by
           group_type: group
-          admin_label: ''
+          admin_label: 'Required relationship for tax term filtering'
           entity_type: taxonomy_term
           entity_field: name
           plugin_id: term_name
@@ -356,7 +356,7 @@ display:
           exposed: true
           expose:
             operator_id: combine_op
-            label: 'Filter by Intitution'
+            label: 'Filter by Institution name'
             description: 'Enter 1 or more terms, partial words supported'
             use_operator: false
             operator: combine_op
@@ -506,14 +506,23 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_microfilmed_by'
-  page_1:
-    id: page_1
+  institutions:
+    id: institutions
     display_title: Page
     display_plugin: page
     position: 1
     display_options:
       display_extenders: {  }
-      path: admin/microfilmed
+      path: admin/content/microfilmed_by
+      menu:
+        type: tab
+        title: 'Microfilmed by'
+        description: 'Custom report for finding Microfilmed by publication values'
+        weight: 5
+        expanded: false
+        menu_name: admin
+        parent: ''
+        context: '0'
     cache_metadata:
       max-age: -1
       contexts:
