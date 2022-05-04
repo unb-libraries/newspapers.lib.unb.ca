@@ -193,21 +193,21 @@ display:
             label: ''
             field_identifier: ''
           exposed: false
+        field_sort_title_value:
+          id: field_sort_title_value
+          table: node__field_sort_title
+          field: field_sort_title_value
+          relationship: reverse__node__field_microfilmed_by
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
       arguments: {  }
       filters:
-        status:
-          id: status
-          table: taxonomy_term_field_data
-          field: status
-          entity_type: taxonomy_term
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
         vid:
           id: vid
           table: taxonomy_term_field_data
