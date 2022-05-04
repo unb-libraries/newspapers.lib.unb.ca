@@ -571,6 +571,17 @@ display:
           plugin_id: standard
           required: true
       show_admin_links: false
+      header:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: "<div role=\"contentinfo\" aria-labelledby=\"message-status-title\" class=\"messages-list__item messages messages--status\">\r\n                  <div class=\"messages__header\">\r\n                      <h2 id=\"message-status-title\" class=\"messages__title\">\r\n              Displaying @start - @end of @total\r\n            </h2>\r\n                  </div>\r\n      </div>\r\n"
       display_extenders: {  }
     cache_metadata:
       max-age: 0
