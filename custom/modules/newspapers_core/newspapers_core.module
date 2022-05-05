@@ -798,8 +798,20 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       $filed_as = $holding->getHoldingFiledAs();
       $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
         ", filed as " . $filed_as;
+      // Get microform values for use in the bracketed suffix display component.
+      $microform_type_labels = [
+        'pos' => 'positive copy',
+        'neg' => 'negative archival master',
+      ];
+      $microform_type_suffix = $holding->getMicroformType() == 'pos'
+        ? " (" . $microform_type_labels['pos'] . ")"
+        : " (" . $microform_type_labels['neg'] . ")";
 
       $holding_infos = [
+        'institution' => [
+          'label' => 'Institution',
+          'value' => $holding->getInstitution()->getName() . $microform_type_suffix,
+        ],
         'coverage' => [
           'label' => 'Coverage Statement',
           'value' => $holding->getHoldingCoverage(),
