@@ -80,6 +80,9 @@ ul.js-facets-checkbox-links + a.open::before {
 label.checkbox-toggle:hover {
   cursor: pointer;
 }
+.facet-item__value {
+  color: $link-color;
+}
 .facet-item input:focus,
 .facet-item input:focus + label .facet-item__value,
 .facet-item input:hover,
