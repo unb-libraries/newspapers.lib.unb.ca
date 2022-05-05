@@ -93,10 +93,41 @@ class SerialHoldingListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('ID');
-    $header['type'] = $this->t('Holding Type');
-    $header['institution'] = $this->t('Institution');
-    $header['coverage'] = $this->t('Coverage');
+    $header = [
+      'id'  => [
+        'data' => $this
+          ->t('ID'),
+        'class' => [
+          RESPONSIVE_PRIORITY_LOW,
+        ],
+      ],
+      'type' => [
+        'data' => $this
+          ->t('Holding Type'),
+        'field' => 'holding_type.entity.name',
+        'specifier' => 'holding_type.entity.name',
+        'sort' => 'asc',
+        'class' => [
+          RESPONSIVE_PRIORITY_LOW,
+        ],
+      ],
+      'institution' => [
+        'data' => $this
+          ->t('Institution'),
+        'field' => 'holding_institution.entity.name',
+        'specifier' => 'holding_institution.entity.name',
+        'class' => [
+          RESPONSIVE_PRIORITY_MEDIUM,
+        ],
+      ],
+      'coverage' => [
+        'data' => $this
+          ->t('Coverage'),
+        'class' => [
+          RESPONSIVE_PRIORITY_MEDIUM,
+        ],
+      ],
+    ];
     return $header + parent::buildHeader();
   }
 
@@ -105,7 +136,7 @@ class SerialHoldingListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $inst_term = $entity->getInstitution();
-    $inst_term_name = $inst_term ? $inst_term->getName() : $this->t('None selected');
+    $inst_term_name = $inst_term ? $inst_term->getName() : $this->t('[None specified]');
     $holding_type = $entity->getHoldingType()->getName();
     if ($holding_type == 'Microform') {
       $holding_type .= $entity->getMicroformType()
