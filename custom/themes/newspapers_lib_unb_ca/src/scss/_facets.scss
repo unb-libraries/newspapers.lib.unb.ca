@@ -82,6 +82,7 @@ label.checkbox-toggle:hover {
 }
 .facet-item__value {
   color: $link-color;
+  text-transform: capitalize;
 }
 .facet-item input:focus,
 .facet-item input:focus + label .facet-item__value,
