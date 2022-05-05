@@ -19,16 +19,24 @@ class SerialHoldingListBuilder extends EntityListBuilder {
    */
   public function load() {
     $title = \Drupal::routeMatch()->getParameters()->get('node');
-    $query = $this->getStorage()->getQuery()
+    $entity_query = $this
+      ->getStorage()
+      ->getQuery()
       ->condition('parent_title', $title);
+
+    $header = $this->buildHeader();
 
     // Only add the pager if a limit is specified.
     if ($this->limit) {
-      $query->pager($this->limit);
+      $entity_query->pager($this->limit);
     }
 
-    $entity_ids = $query->execute();
-    return $this->storage->loadMultiple($entity_ids);
+    // Make the table sortable.
+    $entity_query->tableSort($header);
+
+    $uids = $entity_query->execute();
+
+    return $this->storage->loadMultiple($uids);
   }
 
   /**
