@@ -292,53 +292,49 @@
             <div class="title-holdings">
                 <h2 class="bg-unb-light border p-2">{% trans %}Holdings{% endtrans %}</h2>
                 {% if holding|length > 0 %}
-
                     {% if holding.online|length > 0 %}
-                        <dl class="holding-type">
-                            <dt>{% trans %}Online{% endtrans %}:</dt>
-                            <dd>
-                                {% for item in holding.online %}
-                                    <dl class="holding-item">
-                                        {% for field in item %}
-                                            {% if field.value %}
-                                                {% if field.label == missing_coverage_label %}
-                                                    {# Coverage Statement is required+lighter weight so this should display below it #}
-                                                    <dd>
-                                                        <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#missingMicroform{{ count }}">
-                                                            <span class="fas fa-tasks mr-1"></span>{{ missing_coverage_label }}
-                                                        </button>
-                                                        <div class="modal fade" id="missingMicroform{{ count }}" tabindex="-1" aria-labelledby="microform{{ count }}ModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-xl">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <div class="modal-title h3" id="microform{{ count }}ModalLabel">{{ field.label }}</div>
-                                                                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                                                                            <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        {{ field.value|raw }}
-                                                                    </div>
+                        <div class="holding-group">
+                            <h3>{% trans %}Online{% endtrans %}:</h3>
+                            {% for item in holding.online %}
+                                <dl class="holding-item">
+                                    {% for field in item %}
+                                        {% if field.value %}
+                                            {% if field.label == missing_coverage_label %}
+                                                {# Coverage Statement is required+lighter weight so this should display below it #}
+                                                <dd>
+                                                    <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#missingMicroform{{ count }}">
+                                                        <span class="fas fa-tasks mr-1"></span>{{ missing_coverage_label }}
+                                                    </button>
+                                                    <div class="modal fade" id="missingMicroform{{ count }}" tabindex="-1" aria-labelledby="microform{{ count }}ModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-xl">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <div class="modal-title h3" id="microform{{ count }}ModalLabel">{{ field.label }}</div>
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                                                        <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    {{ field.value|raw }}
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </dd>
-                                                {% else %}
-                                                    <dt>{{ field.label }}:</dt>
-                                                    <dd>{{ field.value|raw }}</dd>
-                                                {% endif %}
+                                                    </div>
+                                                </dd>
+                                            {% else %}
+                                                <dt>{{ field.label }}:</dt>
+                                                <dd>{{ field.value|raw }}</dd>
                                             {% endif %}
-                                        {% endfor %}
-                                    </dl>
-                                {% endfor %}
-                            </dd>
-                        </dl>
+                                        {% endif %}
+                                    {% endfor %}
+                                </dl>
+                            {% endfor %}
+                        </div>
                     {% endif %}
 
                     {% if holding.microform|length > 0 %}
-                        <dl class="holding-type">
-                            <dt>{% trans %}Microform{% endtrans %}:</dt>
-                            <dd>
+                        <div class="holding-type">
+                            <h3>{% trans %}Microform{% endtrans %}:</h3>
                             {% for item in holding.microform %}
                                 {% set count = ( count | default(0) ) + 1 %}
                                 <dl class="holding-item">
@@ -374,51 +370,48 @@
                                     {% endfor %}
                                 </dl>
                             {% endfor %}
-                            </dd>
-                        </dl>
+                        </div>
                     {% endif %}
 
                     {% if holding.print|length > 0 %}
-                        <dl class="holding-type">
-                            <dt>{% trans %}Print{% endtrans %}:</dt>
-                            <dd>
-                                {% for item in holding.print %}
-                                    {% set count = ( count | default(0) ) + 1 %}
-                                    <dl class="holding-item">
-                                        {% for field in item %}
-                                            {% if field.value %}
-                                                {% if field.label == missing_coverage_label %}
-                                                    {# Coverage Statement is required+lighter weight so this should display below it #}
-                                                    <dd>
-                                                        <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#missingPrint{{ count }}">
-                                                            <span class="fas fa-tasks mr-1"></span>{{ missing_coverage_label }}
-                                                        </button>
-                                                        <div class="modal fade" id="missingPrint{{ count }}" tabindex="-1" aria-labelledby="print{{ count }}ModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-xl">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <div class="modal-title h3" id="print{{ count }}ModalLabel">Missing Coverage</div>
-                                                                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                                                                            <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        {{ field.value|raw }}
-                                                                    </div>
+                        <div class="holding-type">
+                            <h3>{% trans %}Print{% endtrans %}:</h3>
+                            {% for item in holding.print %}
+                                {% set count = ( count | default(0) ) + 1 %}
+                                <dl class="holding-item">
+                                    {% for field in item %}
+                                        {% if field.value %}
+                                            {% if field.label == missing_coverage_label %}
+                                                {# Coverage Statement is required+lighter weight so this should display below it #}
+                                                <dd>
+                                                    <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#missingPrint{{ count }}">
+                                                        <span class="fas fa-tasks mr-1"></span>{{ missing_coverage_label }}
+                                                    </button>
+                                                    <div class="modal fade" id="missingPrint{{ count }}" tabindex="-1" aria-labelledby="print{{ count }}ModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-xl">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <div class="modal-title h3" id="print{{ count }}ModalLabel">Missing Coverage</div>
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                                                        <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    {{ field.value|raw }}
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </dd>
-                                                {% else %}
-                                                    <dt>{{ field.label }}:</dt>
-                                                    <dd>{{ field.value|raw }}</dd>
-                                                {% endif %}
+                                                    </div>
+                                                </dd>
+                                            {% else %}
+                                                <dt>{{ field.label }}:</dt>
+                                                <dd>{{ field.value|raw }}</dd>
                                             {% endif %}
-                                        {% endfor %}
-                                    </dl>
-                                {% endfor %}
-                            </dd>
-                        </dl>
+                                        {% endif %}
+                                    {% endfor %}
+                                </dl>
+                            {% endfor %}
+                        </div>
                     {% endif %}
 
                  {% else %}
