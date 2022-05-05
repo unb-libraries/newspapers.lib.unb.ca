@@ -55,25 +55,36 @@ class SerialHoldingListBuilder extends EntityListBuilder {
     $build['title'] = $title;
     $build['title']['#prefix'] = '<h2 class="issue-list-title">';
     $build['title']['#suffix'] = '</h2>';
-    $build['title']['#weight'] = -100;
+    $build['title']['#weight'] = -55;
 
-    $build['table']['#empty'] = 'No holdings have been added to this title yet.';
-
-    $build['add_holdings_button'] = [
+    $build['add_holdings_button'] =
+    [
       '#type' => 'link',
-      '#title' => [
+      '#title' =>
+      [
         '#markup' => '<span class="fas fa-paperclip fa-sm mr-1"></span>' . $this->t('Add New Holding'),
       ],
       '#url' => Url::fromRoute(
         'serial_holding.add_holding',
         [
-          'node' => \Drupal::routeMatch()->getParameters()->get('node'),
+          'node' => \Drupal::routeMatch()
+            ->getParameters()
+            ->get('node'),
         ]
       ),
-      '#attributes' => [
-        'class' => ['btn btn-primary my-2'],
+      '#attributes' =>
+      [
+        'class' =>
+          [
+            'btn',
+            'btn-primary',
+            'mb-4',
+          ],
       ],
+      '#weight' => -60,
     ];
+
+    $build['table']['#empty'] = 'No holdings have been added to this title yet.';
 
     return $build;
   }
