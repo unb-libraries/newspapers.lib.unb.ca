@@ -500,34 +500,46 @@ a.back-link::before {
 }
 
 /* Holdings */
-.holding-type dt {
-  border-bottom: 2px solid #e5e5e5;
-  font-size: 18px;
-  font-weight: normal;
-  margin-bottom: .5em;
-}
-.holding-item dt {
-  border-bottom: none;
-  font-size: initial;
-  font-weight: bold;
-  margin-bottom: 0;
-}
-.holding-type dd {
-  margin-bottom: 1.5em;
-}
-.holding-item dd {
-  margin-bottom: .75em;
-}
-.holding-type dd dl:not(:first-child):before {
-  content: "";
-  background: #eee;
-  position: absolute;
-  left: 1.6em;
-  right: 1.6em;
-  height: 1px;
-}
-.holding-type dd dl:not(:first-child) dt {
-  padding-top: 1em;
+.title-holdings {
+  h3 {
+    border-bottom: 2px solid #e5e5e5;
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 0.5em;
+  }
+
+  .holding-type {
+    &:not(:last-child) {
+      margin-bottom: 1.5rem;
+    }
+
+    .holding-item {
+      &:not(:first-of-type) {
+        &:before {
+          content: "";
+          background: #eee;
+          position: absolute;
+          left: 1.6em;
+          right: 1.6em;
+          height: 1px;
+        }
+
+        dt:first-child {
+          padding-top: 1rem;
+        }
+      }
+
+      dt {
+        border-bottom: none;
+        font-size: initial;
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+
+      dd {
+      }
+    }
+  }
 }
 
 /* Front page */
