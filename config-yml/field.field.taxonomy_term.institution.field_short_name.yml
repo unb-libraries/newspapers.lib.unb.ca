@@ -10,7 +10,7 @@ field_name: field_short_name
 entity_type: taxonomy_term
 bundle: institution
 label: 'Short Name'
-description: 'This value will be prioritized for the public display value for holdings.'
+description: 'This value will take precedence for the public display name.'
 required: false
 translatable: false
 default_value: {  }
