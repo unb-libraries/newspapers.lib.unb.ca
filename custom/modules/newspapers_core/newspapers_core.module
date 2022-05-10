@@ -801,7 +801,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       // Get microform values for use in the bracketed suffix display component.
       $microform_type_labels = [
         'pos' => 'positive copy',
-        'neg' => 'negative archival master',
+        'neg' => 'negative master',
       ];
       $microform_type_suffix = $holding->getMicroformType() == 'pos'
         ? " (" . $microform_type_labels['pos'] . ")"
