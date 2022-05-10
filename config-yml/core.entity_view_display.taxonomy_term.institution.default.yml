@@ -7,30 +7,15 @@ dependencies:
     - field.field.taxonomy_term.institution.field_panb_code
     - field.field.taxonomy_term.institution.field_short_name
     - taxonomy.vocabulary.institution
-  module:
-    - text
 id: taxonomy_term.institution.default
 targetEntityType: taxonomy_term
 bundle: institution
 mode: default
-content:
-  description:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
-    region: content
-  field_short_name:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 1
-    region: content
+content: {  }
 hidden:
+  description: true
   field_french_label: true
   field_panb_code: true
+  field_short_name: true
   langcode: true
   search_api_excerpt: true
