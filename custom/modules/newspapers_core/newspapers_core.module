@@ -793,7 +793,8 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
     $missing_value = $missing_value[0]['value'];
   }
 
-  $inst_short_name = is_null($holding->getInstitution())
+  // Get Institution short name iff required entity reference is set.
+  $inst_short_name = empty($holding->getInstitution())
     ? NULL
     : $holding
         ->getInstitution()
@@ -805,7 +806,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       $filed_as = $holding->getHoldingFiledAs();
       $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
         ", filed as " . $filed_as;
-      // Prioritize Institution short name.
+      // Get referenced Institution name, prioritizing the short name if it exists.
       $inst_name =  empty($inst_short_name) ? $holding->getInstitution()->getName() : $inst_short_name;
       // Get microform values for use in the bracketed suffix display component.
       $microform_type_labels = [
