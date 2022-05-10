@@ -786,10 +786,6 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
  */
 function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
   $holding_infos = [];
-  $inst_short_name = $holding
-    ->getInstitution()
-    ->get('field_short_name')
-    ->getString();
   $missing_value = $holding
     ->get('field_missing_holdings')
     ->getValue();
@@ -797,13 +793,20 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
     $missing_value = $missing_value[0]['value'];
   }
 
+  $inst_short_name = is_null($holding->getInstitution())
+    ? NULL
+    : $holding
+        ->getInstitution()
+        ->get('field_short_name')
+        ->getString();
+
   switch ($type) {
     case 'microform':
       $filed_as = $holding->getHoldingFiledAs();
       $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
         ", filed as " . $filed_as;
       // Prioritize Institution short name.
-      $inst_name =  $inst_short_name ?? $holding->getInstitution()->getName();
+      $inst_name =  empty($inst_short_name) ? $holding->getInstitution()->getName() : $inst_short_name;
       // Get microform values for use in the bracketed suffix display component.
       $microform_type_labels = [
         'pos' => 'public copy',
