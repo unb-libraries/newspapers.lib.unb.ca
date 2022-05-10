@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.taxonomy_term.institution.field_french_label
     - field.field.taxonomy_term.institution.field_panb_code
+    - field.field.taxonomy_term.institution.field_short_name
     - taxonomy.vocabulary.institution
   module:
     - text
@@ -15,7 +16,7 @@ mode: default
 content:
   description:
     type: text_textarea
-    weight: 3
+    weight: 1
     region: content
     settings:
       rows: 5
@@ -23,7 +24,7 @@ content:
     third_party_settings: {  }
   field_french_label:
     type: string_textfield
-    weight: 1
+    weight: 2
     region: content
     settings:
       size: 60
@@ -31,7 +32,15 @@ content:
     third_party_settings: {  }
   field_panb_code:
     type: string_textfield
-    weight: 2
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_short_name:
+    type: string_textfield
+    weight: 6
     region: content
     settings:
       size: 60

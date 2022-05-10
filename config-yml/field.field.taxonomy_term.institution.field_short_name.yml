@@ -1,0 +1,19 @@
+uuid: ef349711-5a99-4685-82a1-e470f8ab61c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_short_name
+    - taxonomy.vocabulary.institution
+id: taxonomy_term.institution.field_short_name
+field_name: field_short_name
+entity_type: taxonomy_term
+bundle: institution
+label: 'Short Name'
+description: 'This value will be prioritized for the public display value for holdings.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
