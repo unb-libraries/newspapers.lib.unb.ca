@@ -105,7 +105,7 @@ class PublicationDigitalTitleAddForm extends FormBase {
     $digital_id = TaxonomyHelper::getHoldingTermId('Digital');
     $entity_values = [
       'holding_type' => $digital_id,
-      'holding_coverage' => 'Digital Issues at UNB Libraries',
+      'holding_coverage' => 'Access digitized content online',
       'user_id' => \Drupal::currentUser()->id(),
       'status' => 1,
       'parent_title' => $this->parentEid,
