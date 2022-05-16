@@ -13,6 +13,14 @@ pubform:
     - core/drupal
     - jquery_ui_datepicker/datepicker
 
+holding-display:
+  js:
+    js/newspapers_core.holdings.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+
 tab-search:
   css:
     theme:
