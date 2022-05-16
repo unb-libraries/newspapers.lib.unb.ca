@@ -501,41 +501,61 @@ a.back-link::before {
 
 /* Holdings */
 .title-holdings {
+  button {
+    &:focus,
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   h3 {
     border-bottom: 2px solid #e5e5e5;
     font-size: 18px;
     margin-bottom: 0.5em;
   }
 
-  .holding-type {
+  .holding-group {
     &:not(:last-child) {
       margin-bottom: 1.5rem;
     }
 
-    .holding-item {
-      &:not(:first-of-type) {
-        &:before {
-          content: "";
-          background: #eee;
-          position: absolute;
-          left: 1.6em;
-          right: 1.6em;
-          height: 1px;
+    ul.holding-type {
+      list-style-type: disc;
+      margin-bottom: 0;
+      padding-inline-start: 1.15rem;
+
+      li {
+        margin: 0;
+
+        &:after {
+          content: "\2002";
+          font-size: 1rem;
         }
 
-        dt:first-child {
-          padding-top: 1rem;
+        div > p:last-child {
+          margin-bottom: 0;
         }
       }
+    }
 
-      dt {
-        border-bottom: none;
-        font-size: initial;
-        font-weight: bold;
-        margin-bottom: 0;
+    [data-toggle="collapse"] {
+      font-size: .85rem;
+
+      &:before {
+        font-family: "Font Awesome 5 Free";
+        font-size: smaller;
+        display: inline-block;
+        font-weight: 900;
+        margin: 0 .25rem;
+        vertical-align: text-bottom;
       }
 
-      dd {
+      &[aria-expanded="true"]:before {
+        content: "\f068";
+      }
+
+      &[aria-expanded="false"]:before {
+        content: "\f067";
       }
     }
   }
