@@ -1,7 +1,7 @@
 # NBNP Issue Operations
 
 ## 1. Issue Import
-### Importing Issue(s)
+### Opening a Screen
 1. Determine the full path on _MANTICORE_ to parse for issues. Although the tool can import thousands of issues at once, it is recommended to break the import up into smaller groups (such as one year's issues).
    * Example: ```/mnt/nbnp/TheWeeklyChronicle/WC_1824/``` (**include** the trailing slash)
 2. Determine the NBNP title ID that the issues will be attached to.
@@ -12,12 +12,22 @@
    * ```screen -x NBNP```. Two outcomes are possible here:
      1. No error will occur - you will see a screen with previous data or an empty prompt.
      2. ```There is no screen to be attached matching NBNP.``` appears on the screen. This indicates that no session is active, and you must create one via ```screen -S NBNP```
-6. Change to the 'imaging' user's home directory: ```cd /home/imaging```
+5. Change to the 'imaging' user's home directory: ```cd /home/imaging```
+
+### Pre-Auditing The Issue Metadata:
+Often, issues with metadata can be caught BEFORE running the import.
+
+6. Audit the metadata for problems : ```./auditIssueMetadata.sh /mnt/nbnp/TheWeeklyChronicle/WC_1824/```
+    * The first argument is the path to the files to import (as determined in step #1).
+    * If no problems are found with the metadata, a success message will be displayed. If not, an error message, preceeded immediately by the relevant metadata.php file path will detail the problem.
+
+### Running The Issue Import:
+
 7. Run the import : ```./importNbnpIssue.sh /mnt/nbnp/TheWeeklyChronicle/WC_1824/ 48``` 
    * The first argument is the path to the files to import (as determined in step #1).
    * The second argument is the 'parent' issue ID (as determined in step #2)
 8. When presented with a confirmation screen:
-```angular2html
+```
 ================================================================= 
   Directory                                                        
  ================================================================= 
@@ -52,7 +62,7 @@ _It is safe to disconnect from the SSH session at this point, as the process is 
         1. No error will occur - you will see a screen with the import process or a message indicating the import was complete.
         2. ```There is no screen to be attached matching NBNP.``` appears on the screen. This indicates an import was not started or the server has been rebooted since - _screen sessions do not 'survive' reboots_. Contact Jake!
 
-## 2. Issue Validation
+## 2. Imported Issue Validation
 (determine issue data as above)
 1. SSH to _MANTICORE_ as the 'imaging' user
 2. Change to the 'imaging' user's home directory: ```cd /home/imaging```
