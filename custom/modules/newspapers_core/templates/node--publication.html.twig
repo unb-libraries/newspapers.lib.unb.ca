@@ -68,10 +68,13 @@
  * @ingroup themeable
  */
 #}
+{{ attach_library('newspapers_core/holding-display') }}
+{% set holdingSoftLimit = 1 %}
+
 {% if back_link %}
-    <div class="mb-3">
-        {{ back_link }}
-    </div>
+<div class="mb-3">
+    {{ back_link }}
+</div>
 {% endif %}
 
 {% if view_mode == 'featured' %}
