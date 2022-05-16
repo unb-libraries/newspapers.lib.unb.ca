@@ -559,7 +559,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         'text_processing' => 0,
       ])
       ->setDefaultValue('')
-      ->setRequired(TRUE)
+      ->setRequired(FALSE)
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'string',
