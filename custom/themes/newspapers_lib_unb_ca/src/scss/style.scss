@@ -552,7 +552,7 @@ a.back-link::before {
         display: inline-block;
         font-weight: 900;
         margin: 0 .25rem;
-        vertical-align: text-bottom;
+        vertical-align: baseline;
       }
 
       &[aria-expanded="true"]:before {
