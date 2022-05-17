@@ -929,7 +929,9 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
         $inst_name = "[Unknown]";
       }
       // Get referenced Institution name, prioritizing the short name if it exists.
-      $inst_name = empty($holding->getInstitution()) ? 'Unknown' : $holding->getInstitution();
+      $inst_name = empty($holding->getInstitution())
+        ? 'Unknown'
+        : $holding->getInstitution()->getName();
       $inst_name = empty($inst_short_name) ? $inst_name : $inst_short_name;
 
       $uri = $holding->getHoldingUri();
