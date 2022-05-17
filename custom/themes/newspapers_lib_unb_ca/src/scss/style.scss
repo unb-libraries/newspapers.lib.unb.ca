@@ -529,11 +529,15 @@ a.back-link::before {
 
         &:after {
           content: "\2002";
-          font-size: 1rem;
+          font-size: .75rem;
         }
 
-        div > p:last-child {
-          margin-bottom: 0;
+        div > p {
+          margin: .75rem 0;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
         }
       }
     }
