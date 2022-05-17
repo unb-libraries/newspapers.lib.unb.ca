@@ -385,7 +385,7 @@
                         </li>
                     {% endfor %}
                     </ul>
-                    {% if microformCount >= holdingSoftLimit %}
+                    {% if microformCount > holdingSoftLimit %}
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".holding-group-microform .multi-collapse" aria-expanded="false"
                             aria-controls="{% for item in microformCollapsed %}{{ item }}{% endfor %}">Show All
                     </button>
@@ -441,7 +441,7 @@
                         </li>
                     {% endfor %}
                     </ul>
-                    {% if printCount >= holdingSoftLimit %}
+                    {% if printCount > holdingSoftLimit %}
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".holding-group-print .multi-collapse" aria-expanded="false"
                             aria-controls="{% for item in printCollapsed %}{{ item }}{% endfor %}">Show All
                     </button>
