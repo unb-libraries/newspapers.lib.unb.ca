@@ -529,7 +529,8 @@ a.back-link::before {
 
         &:after {
           content: "\2002";
-          font-size: .25rem;
+          display: block;
+          font-size: .5rem;
         }
 
         div > p {
