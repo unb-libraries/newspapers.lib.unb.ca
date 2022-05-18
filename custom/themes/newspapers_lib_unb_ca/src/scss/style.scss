@@ -514,6 +514,7 @@ a.back-link::before {
     &:hover {
       box-shadow: none;
       color: $link-color-hover;
+      cursor : help;
       text-decoration: none;
     }
 
