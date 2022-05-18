@@ -6,11 +6,15 @@
 
     Drupal.behaviors.group_holdings = {
         attach: function (context, settings) {
-             $(document, context)
+            $(document, context)
                  .once('group_holdings')
                  .each( function() {
                     showToggleInit(jQuery);
                  });
+             // Required for BS4.x Tooltips.
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
         },
     };
 })(jQuery, Drupal, drupalSettings);
