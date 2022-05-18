@@ -821,10 +821,14 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
         ],
       ];
       $microform_type_suffix = $holding->getMicroformType() == 'pos'
-        ? ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip" data-placement="top"
-            title="' . $microform_type_suffixes['pos']['tooltip'] . '">(' . $microform_type_suffixes['pos']['label'] . '</button>)'
-        : ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip" data-placement="top"
-            title="' . $microform_type_suffixes['neg']['tooltip'] . '">(' . $microform_type_suffixes['neg']['label'] . '</button>)';
+        ? ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip"
+              data-placement="bottom" title="' . $microform_type_suffixes['pos']['tooltip'] . '">
+              (<span>' . $microform_type_suffixes['pos']['label'] . '</span>)
+            </button>'
+        : ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip"
+              data-placement="bottom" title="' . $microform_type_suffixes['neg']['tooltip'] . '">
+              (<span>' . $microform_type_suffixes['neg']['label'] . '</span>)
+            </button>';
 
       $holding_infos = [
         'institution' => [
