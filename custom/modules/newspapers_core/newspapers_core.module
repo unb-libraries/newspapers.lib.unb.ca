@@ -810,13 +810,20 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       // Get referenced Institution name, prioritizing the short name if it exists.
       $inst_name =  empty($inst_short_name) ? $holding->getInstitution()->getName() : $inst_short_name;
       // Get microform values for use in the bracketed suffix display component.
-      $microform_type_labels = [
-        'pos' => 'public copy',
-        'neg' => 'archival master',
+      $microform_type_suffixes = [
+        'pos' => [
+          'label' => 'public',
+          'tooltip' => 'Available for general use on&#8209;site.',
+        ],
+        'neg' => [
+          'label' => 'preservation',
+          'tooltip' => 'Preservation copies are not accessible to public.',
+        ],
       ];
       $microform_type_suffix = $holding->getMicroformType() == 'pos'
-        ? " (" . $microform_type_labels['pos'] . ")"
-        : " (" . $microform_type_labels['neg'] . ")";
+        ? ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip" data-placement="top"
+            title="' . $microform_type_suffixes['pos']['tooltip'] . '">(' . $microform_type_suffixes['pos']['label'] . '</small>)'
+        : " (" . $microform_type_suffixes['neg']['label'] . ")";
 
       $holding_infos = [
         'institution' => [
