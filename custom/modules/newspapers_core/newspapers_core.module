@@ -822,8 +822,9 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       ];
       $microform_type_suffix = $holding->getMicroformType() == 'pos'
         ? ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip" data-placement="top"
-            title="' . $microform_type_suffixes['pos']['tooltip'] . '">(' . $microform_type_suffixes['pos']['label'] . '</small>)'
-        : " (" . $microform_type_suffixes['neg']['label'] . ")";
+            title="' . $microform_type_suffixes['pos']['tooltip'] . '">(' . $microform_type_suffixes['pos']['label'] . '</button>)'
+        : ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip" data-placement="top"
+            title="' . $microform_type_suffixes['neg']['tooltip'] . '">(' . $microform_type_suffixes['neg']['label'] . '</button>)';
 
       $holding_infos = [
         'institution' => [
