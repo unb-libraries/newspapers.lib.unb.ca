@@ -497,12 +497,19 @@ a.back-link::before {
   display: inline-block;
   font-weight: 900;
   margin-right: 0.25em;
-  opacity: .75;
 }
 
 /* Holdings */
 .title-holdings {
-  button {
+  button[data-toggle="modal"] {
+    & .fas {
+      opacity: .75;
+    }
+  }
+
+  button[data-toggle="tooltip"] {
+    color: $gray-700;
+
     &:focus,
     &:hover {
       text-decoration: underline;
