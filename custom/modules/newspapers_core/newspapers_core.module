@@ -786,7 +786,6 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
  *   Associative array of label/value pairs for template holdings variables.
  */
 function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
-  $holding_infos = [];
   $missing_value = $holding
     ->get('field_missing_holdings')
     ->getValue();
@@ -794,46 +793,16 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
     $missing_value = $missing_value[0]['value'];
   }
 
-  // Get Institution short name iff required entity reference is set.
-  $inst_short_name = empty($holding->getInstitution())
-    ? NULL
-    : $holding
-        ->getInstitution()
-        ->get('field_short_name')
-        ->getString();
-
   switch ($type) {
     case 'microform':
       $filed_as = $holding->getHoldingFiledAs();
       $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
         ", filed as " . $filed_as;
-      // Get referenced Institution name, prioritizing the short name if it exists.
-      $inst_name =  empty($inst_short_name) ? $holding->getInstitution()->getName() : $inst_short_name;
-      // Get microform values for use in the bracketed suffix display component.
-      $microform_type_suffixes = [
-        'pos' => [
-          'label' => 'public',
-          'tooltip' => 'Available for general use on&#8209;site.',
-        ],
-        'neg' => [
-          'label' => 'preservation',
-          'tooltip' => 'Preservation copies are not accessible to public.',
-        ],
-      ];
-      $microform_type_suffix = $holding->getMicroformType() == 'pos'
-        ? ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip"
-              data-placement="bottom" title="' . $microform_type_suffixes['pos']['tooltip'] . '">
-              (<span>' . $microform_type_suffixes['pos']['label'] . '</span>)
-            </button>'
-        : ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip"
-              data-placement="bottom" title="' . $microform_type_suffixes['neg']['tooltip'] . '">
-              (<span>' . $microform_type_suffixes['neg']['label'] . '</span>)
-            </button>';
 
       $holding_infos = [
         'institution' => [
           'label' => 'Institution',
-          'value' => Markup::create('<strong>' . $inst_name . '</strong>' . $microform_type_suffix),
+          'value' => _newspapers_core_get_rendered_institution($holding, $type),
         ],
         'coverage' => [
           'label' => 'Coverage Statement',
@@ -873,13 +842,11 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
         $location_call_label = 'Location';
         $location_call_value = $location;
       }
-      // Get referenced Institution name, prioritizing the short name if it exists.
-      $inst_name =  empty($inst_short_name) ? $holding->getInstitution()->getName() : $inst_short_name;
 
       $holding_infos = [
         'institution' => [
           'label' => 'Institution',
-          'value' => Markup::create('<strong>' . $inst_name . '</strong>'),
+          'value' => _newspapers_core_get_rendered_institution($holding, $type),
         ],
         'coverage_statement' => [
           'label' => 'Coverage Statement',
@@ -914,6 +881,10 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       $coverage_value = $holding_start_date . ' - ' . $holding_end_date;
 
       $holding_infos = [
+        'institution' => [
+          'label' => 'Institution',
+          'value' => _newspapers_core_get_rendered_institution($holding, $type),
+        ],
         'access' => [
           'label' => 'Access',
           'value' => Link::fromTextAndUrl(
@@ -937,15 +908,6 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       break;
 
     case 'online':
-      if(empty($holding->getInstitution())) {
-        $inst_name = "[Unknown]";
-      }
-      // Get referenced Institution name, prioritizing the short name if it exists.
-      $inst_name = empty($holding->getInstitution())
-        ? 'Unknown'
-        : $holding->getInstitution()->getName();
-      $inst_name = empty($inst_short_name) ? $inst_name : $inst_short_name;
-
       $uri = $holding->getHoldingUri();
       $access_value = NULL;
       // Uri validation done via Link field.
@@ -956,11 +918,10 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
           Url::fromUri($uri, $uri_options)
         );
       }
-
       $holding_infos = [
         'institution' => [
           'label' => 'Institution',
-          'value' => Markup::create('<strong>' . $inst_name . '</strong>'),
+          'value' => _newspapers_core_get_rendered_institution($holding, $type),
         ],
         'access' => [
           'label' => 'Access',
