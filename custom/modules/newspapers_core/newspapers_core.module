@@ -779,13 +779,13 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
  *
  * @param string $type
  *   The name of the holding type.
- * @param \Drupal\serial_holding\Entity\SerialHolding $holding
+ * @param SerialHolding $holding
  *   The serial holding object.
  *
  * @return array
  *   Associative array of label/value pairs for template holdings variables.
  */
-function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
+function _newspapers_core_get_holding_details(string $type, SerialHolding $holding) {
   $missing_value = $holding
     ->get('field_missing_holdings')
     ->getValue();
@@ -802,7 +802,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       $holding_infos = [
         'institution' => [
           'label' => 'Institution',
-          'value' => _newspapers_core_get_rendered_institution($holding, $type),
+          'value' => _newspapers_core_get_rendered_institution($type, $holding),
         ],
         'coverage' => [
           'label' => 'Coverage Statement',
@@ -846,7 +846,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       $holding_infos = [
         'institution' => [
           'label' => 'Institution',
-          'value' => _newspapers_core_get_rendered_institution($holding, $type),
+          'value' => _newspapers_core_get_rendered_institution($type, $holding),
         ],
         'coverage_statement' => [
           'label' => 'Coverage Statement',
@@ -883,7 +883,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       $holding_infos = [
         'institution' => [
           'label' => 'Institution',
-          'value' => _newspapers_core_get_rendered_institution($holding, $type),
+          'value' => _newspapers_core_get_rendered_institution($type, $holding),
         ],
         'access' => [
           'label' => 'Access',
@@ -921,7 +921,7 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
       $holding_infos = [
         'institution' => [
           'label' => 'Institution',
-          'value' => _newspapers_core_get_rendered_institution($holding, $type),
+          'value' => _newspapers_core_get_rendered_institution($type, $holding),
         ],
         'access' => [
           'label' => 'Access',
@@ -962,7 +962,9 @@ function _newspapers_core_get_holding_details($type, SerialHolding $holding) {
  */
 function _newspapers_core_get_publication_holdings($nid) {
   $holding_section = [];
-  $query = Drupal::service('entity_type.manager')->getStorage('serial_holding')->getQuery()
+  $query = Drupal::service('entity_type.manager')
+    ->getStorage('serial_holding')
+    ->getQuery()
     ->condition('parent_title', $nid);
   $entity_ids = $query->execute();
 
@@ -989,13 +991,16 @@ function _newspapers_core_get_publication_holdings($nid) {
 /**
  * Determine the prioritized display name for a holding's Institution.
  *
- * @param \Drupal\serial_holding\Entity\SerialHolding $holding
+ * @param string $type
+ *   The name of the holding type.
+ *
+ * @param SerialHolding $holding
  *   The serial holding object.
  *
  * @return string
  *   The markup safe string for the holding institution template variable.
  */
-function _newspapers_core_get_rendered_institution($holding, $type) {
+function _newspapers_core_get_rendered_institution(string $type, SerialHolding $holding) {
   // Get Institution short name iff required entity reference is set.
   $inst_short_name = empty($holding->getInstitution())
     ? NULL
