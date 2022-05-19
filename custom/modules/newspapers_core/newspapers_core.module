@@ -1026,6 +1026,65 @@ function _newspapers_core_get_publication_holdings($nid) {
 }
 
 /**
+ * Determine the prioritized display name for a holding's Institution.
+ *
+ * @param \Drupal\serial_holding\Entity\SerialHolding $holding
+ *   The serial holding object.
+ *
+ * @return string
+ *   The markup safe string for the holding institution template variable.
+ */
+function _newspapers_core_get_rendered_institution($holding, $type) {
+  // Get Institution short name iff required entity reference is set.
+  $inst_short_name = empty($holding->getInstitution())
+    ? NULL
+    : $holding
+      ->getInstitution()
+      ->get('field_short_name')
+      ->getString();
+
+  // Get referenced Institution name, prioritizing the short name if it exists.
+  $inst_name = empty($holding->getInstitution())
+    ? '[Unknown]'
+    : $holding->getInstitution()->getName();
+  $inst_name = empty($inst_short_name) ? $inst_name : $inst_short_name;
+
+  // Add markup to institution name.
+  $inst_string = '<strong>' . $inst_name . '</strong>';
+
+  switch ($type) {
+    case 'microform':
+      // Get microform values for use in the bracketed suffix display component.
+      $microform_type_suffixes = [
+        'neg' => [
+          'label' => 'preservation',
+          'tooltip' => 'Preservation copies are not accessible to public.',
+        ],
+        'pos' => [
+          'label' => 'public',
+          'tooltip' => 'Available for general use on&#8209;site.',
+        ],
+      ];
+
+      $inst_suffix = $holding->getMicroformType() == 'neg'
+        ? ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip"
+              data-placement="bottom" title="' . $microform_type_suffixes['neg']['tooltip'] . '">
+              (<span>' . $microform_type_suffixes['neg']['label'] . '</span>)
+            </button>'
+        : ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip"
+              data-placement="bottom" title="' . $microform_type_suffixes['pos']['tooltip'] . '">
+              (<span>' . $microform_type_suffixes['pos']['label'] . '</span>)
+            </button>';
+      break;
+
+    default:
+      $inst_suffix = '';
+  }
+
+  return Markup::create($inst_string . $inst_suffix);
+}
+
+/**
  * Determine if a multi-valued field list contains entity references.
  *
  * @param Drupal\Core\Field\EntityReferenceFieldItemList $field_list
