@@ -9,6 +9,8 @@ services:
       - "3306"
     networks:
       - newspapers.lib.unb.ca
+    volumes:
+      - mysql-data:/var/lib/mysql
   drupal-redis-lib-unb-ca:
     image: redis:5-alpine
     restart: unless-stopped
@@ -31,6 +33,8 @@ services:
       - docker-entrypoint-multiple.sh
       - newspapers.lib.unb.ca:/solr-conf
       - pages.newspapers.lib.unb.ca:/solr-conf
+    volumes:
+      - solr-data:/opt/solr/server/solr/mycores
   mailhog:
     image: mailhog/mailhog
     restart: unless-stopped
@@ -60,7 +64,7 @@ services:
     environment:
       - DRUPAL_IMPORT_CONTENT=TRUE
     volumes:
-      - /app/html/sites/default
+      - drupal-data:/app/html/sites/default
       - ./config-yml:/app/configuration
       - ./custom/modules:/app/html/modules/custom
       - ./custom/themes:/app/html/themes/custom
@@ -68,3 +72,7 @@ services:
 networks:
   newspapers.lib.unb.ca:
     name: newspapers.lib.unb.ca
+volumes:
+  drupal-data:
+  mysql-data:
+  solr-data:
