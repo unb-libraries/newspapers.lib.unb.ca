@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - taxonomy.vocabulary.institution
+    - user.role.newspaper_administrator
   module:
     - taxonomy
     - user
@@ -171,23 +172,24 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access site reports'
+          role:
+            newspaper_administrator: newspaper_administrator
       cache:
         type: tag
         options: {  }
       empty: {  }
       sorts:
-        tid:
-          id: tid
+        name:
+          id: name
           table: taxonomy_term_field_data
-          field: tid
+          field: name
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: taxonomy_term
-          entity_field: tid
+          entity_field: name
           plugin_id: standard
           order: ASC
           expose:
@@ -263,7 +265,7 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - user.permissions
+        - user.roles
       tags: {  }
   page_1:
     id: page_1
@@ -278,5 +280,5 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - user.permissions
+        - user.roles
       tags: {  }

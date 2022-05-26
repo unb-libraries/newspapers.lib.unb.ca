@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - node.type.publication
+    - user.role.newspaper_administrator
   module:
     - node
     - user
@@ -168,23 +169,22 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access site reports'
+          role:
+            newspaper_administrator: newspaper_administrator
       cache:
         type: tag
         options: {  }
       empty: {  }
       sorts:
-        nid:
-          id: nid
-          table: node_field_data
-          field: nid
+        field_sort_title_value:
+          id: field_sort_title_value
+          table: node__field_sort_title
+          field: field_sort_title_value
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: nid
           plugin_id: standard
           order: ASC
           expose:
@@ -261,7 +261,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags: {  }
   page_1:
     id: page_1
@@ -277,5 +277,5 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags: {  }
