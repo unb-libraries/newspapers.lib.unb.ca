@@ -117,7 +117,7 @@ EOT;
       $page = \Drupal::entityTypeManager()
         ->getStorage('digital_serial_page')
         ->load($page_result->id);
-      $page->setPageSort('1');
+      $page->setPageSort('0001');
       $page->save();
     }
   }
