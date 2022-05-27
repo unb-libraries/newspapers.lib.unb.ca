@@ -29,6 +29,10 @@ function newspapers_core_cron() {
     update_ongoing_publication_dates();
     \Drupal::state()->set('newspapers_core.last_ongoing_run', time());
   }
+  if (_newspapers_core_page_sort_values_needs_update()) {
+    update_page_sort_no_first_values();
+    \Drupal::state()->set('newspapers_core.last_page_sort_run', time());
+  }
 }
 
 /**
@@ -47,6 +51,24 @@ function _newspapers_core_ongoing_publication_dates_needs_update() {
 }
 
 /**
+ * Determines if the update_page_sort_no_first_values() cron should run.
+ *
+ * @return bool
+ *   TRUE if the ongoing newspaper ranges needs an update. FALSE otherwise.
+ */
+function _newspapers_core_page_sort_values_needs_update() {
+  $last_ongoing_run = \Drupal::state()->get(
+    'newspapers_core.last_page_sort_run',
+    0
+  );
+  $time_now = time();
+  $current_hour = date('H', $time_now);
+  return ($time_now - $last_ongoing_run) > 10800 &&
+    $current_hour >= 2 &&
+    $current_hour <= 4;
+}
+
+/**
  * Update the dates of ongoing publications to reflect today.
  */
 function update_ongoing_publication_dates() {
@@ -59,6 +81,45 @@ function update_ongoing_publication_dates() {
     $node = Node::load($result);
     $node->setNewRevision(FALSE);
     $node->save();
+  }
+}
+
+/**
+ * Updates all digital serial issues that lack a page with sort=1 to have one.
+ */
+function update_page_sort_no_first_values() {
+  $database = \Drupal::database();
+  $issues_query_string = <<<EOT
+SELECT id
+FROM digital_serial_issue
+WHERE digital_serial_issue.id NOT IN (
+  SELECT pages.parent_issue
+  FROM digital_serial_page AS pages
+  WHERE pages.page_sort = 1
+)
+AND digital_serial_issue.id NOT IN (
+  SELECT issue.id
+  FROM digital_serial_issue AS issue
+  WHERE issue.id NOT IN (
+    SELECT issuepages.parent_issue
+    FROM digital_serial_page as issuepages
+  )
+)
+EOT;
+  $issues_query = $database->query($issues_query_string);
+  $issues_results = $issues_query->fetchAll();
+
+  foreach ($issues_results as $issue_result) {
+    $page_query_string = "SELECT id FROM digital_serial_page WHERE parent_issue={$issue_result->id} ORDER BY page_sort LIMIT 1";
+    $page_query = $database->query($page_query_string);
+    $page_results = $page_query->fetchAll();
+    foreach ($page_results as $page_result) {
+      $page = \Drupal::entityTypeManager()
+        ->getStorage('digital_serial_page')
+        ->load($page_result->id);
+      $page->setPageSort('1');
+      $page->save();
+    }
   }
 }
 
