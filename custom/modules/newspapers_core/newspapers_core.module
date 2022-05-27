@@ -124,6 +124,30 @@ EOT;
 }
 
 /**
+ * Deletes all digital serial issues that have no pages.
+ */
+function delete_digital_issues_with_no_pages() {
+  $database = \Drupal::database();
+  $issues_query_string = <<<EOT
+SELECT id
+FROM digital_serial_issue
+WHERE digital_serial_issue.id NOT IN (
+  SELECT pages.parent_issue
+  FROM digital_serial_page AS pages
+)
+EOT;
+  $issues_query = $database->query($issues_query_string);
+  $issues_results = $issues_query->fetchAll();
+
+  foreach ($issues_results as $issue_result) {
+    $page = \Drupal::entityTypeManager()
+      ->getStorage('digital_serial_issue')
+      ->load($issue_result->id);
+    $page->delete();
+  }
+}
+
+/**
  * Implements hook_FORM_alter().
  */
 function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $form_id) {
