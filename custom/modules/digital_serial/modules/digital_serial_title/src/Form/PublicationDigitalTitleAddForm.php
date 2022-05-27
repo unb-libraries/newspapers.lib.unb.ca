@@ -14,6 +14,8 @@ use Drupal\serial_holding\TaxonomyHelper;
  */
 class PublicationDigitalTitleAddForm extends FormBase {
 
+  const UNB_LIBRARIES_INSTITUTION_ID = 654;
+
   /**
    * The parent entity of the digital title.
    *
@@ -110,6 +112,7 @@ class PublicationDigitalTitleAddForm extends FormBase {
       'status' => 1,
       'parent_title' => $this->parentEid,
       'holding_digital_title' => $title->id(),
+      'holding_institution' => self::UNB_LIBRARIES_INSTITUTION_ID,
     ];
     $digital_holding = SerialHolding::create($entity_values);
     $digital_holding->save();
