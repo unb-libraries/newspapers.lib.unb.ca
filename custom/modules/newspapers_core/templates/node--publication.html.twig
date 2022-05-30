@@ -189,7 +189,7 @@
                 <hr />
                 <div class="title-history">
                     <dt>{% trans %}Broad Title History{% endtrans %}:</dt>
-                    <dd class="no-borders">({% trans %}This field includes titles and publication dates of UNB Holdings only{%  endtrans %})<br >
+                    <dd class="no-borders">({% trans %}This includes all related titles and supplements and the publication dates of each{%  endtrans %})<br >
                         {% set supplemental_tid = node.field_family.target_id %}
                         {% if supplemental_tid %}
                             {{ drupal_field('field_supplemental_information', 'taxonomy_term', supplemental_tid) }}
