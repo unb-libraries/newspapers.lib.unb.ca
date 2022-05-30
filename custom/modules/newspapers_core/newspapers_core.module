@@ -959,10 +959,10 @@ function _newspapers_core_get_holding_details(string $type, SerialHolding $holdi
     case 'digital':
       $holding_start_date = empty($holding->getHoldingStartDate())
         ? 'Unknown'
-        : $holding->getHoldingStartDate()->format( 'F jS, Y');
+        : $holding->getHoldingStartDate()->format( 'M j, Y');
       $holding_end_date = empty($holding->getHoldingEndDate())
         ? 'Unknown'
-        : $holding->getHoldingEndDate()->format('F jS, Y');
+        : $holding->getHoldingEndDate()->format('M j, Y');
       $coverage_value = $holding_start_date . ' - ' . $holding_end_date;
 
       $holding_infos = [
