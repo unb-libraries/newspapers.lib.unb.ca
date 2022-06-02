@@ -1051,6 +1051,7 @@ function _newspapers_core_get_holding_details(string $type, SerialHolding $holdi
  */
 function _newspapers_core_get_publication_holdings($nid) {
   $holding_section = [];
+  $holding_types = [];
   $query = Drupal::service('entity_type.manager')
     ->getStorage('serial_holding')
     ->getQuery()
@@ -1070,8 +1071,22 @@ function _newspapers_core_get_publication_holdings($nid) {
 
     if (empty($holding_section[$holding_type])) {
       $holding_section[$holding_type] = [];
+      $holding_types[] = $holding_type;
     }
-    $holding_section[$holding_type][] = $holding;
+
+    $holding_inst_sort_key = empty($holding->getInstitution())
+      ? '[Unknown]'
+      : HTML::cleanCssIdentifier(
+        $holding
+          ->getInstitution()
+          ->getName()
+      );
+    $holding_section[$holding_type][$holding_inst_sort_key] = $holding;
+  }
+
+  // Sort institution key names, alpha ascending, per holding type.
+  foreach ($holding_types as $holding_type) {
+    ksort($holding_section[$holding_type]);
   }
 
   return $holding_section;
