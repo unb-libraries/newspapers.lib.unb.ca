@@ -1131,10 +1131,91 @@ function _newspapers_core_get_rendered_coverage(string $type, SerialHolding $hol
       break;
 
     default:
-      $inst_suffix = '';
+      $suffix = '';
   }
 
-  return Markup::create($inst_string . $inst_suffix);
+  return Markup::create($holding->getHoldingCoverage() . $suffix);
+}
+
+/**
+ * Determine the prioritized display name for a holding's Institution.
+ *
+ * @param string $holding_type
+ *   The name of the holding type.
+ *
+ * @param SerialHolding $holding
+ *   The serial holding object.
+ *
+ * @return string
+ *   The markup safe string for the holding institution template variable.
+ */
+function _newspapers_core_get_rendered_institution(string $holding_type, SerialHolding $holding) {
+  // Get Institution short name iff required entity reference is set.
+  $inst_short_name = empty($holding->getInstitution())
+    ? NULL
+    : $holding
+      ->getInstitution()
+      ->get('field_short_name')
+      ->getString();
+
+  // Get referenced Institution name, prioritizing the short name if it exists.
+  $inst_name = empty($holding->getInstitution())
+    ? '[Unknown]'
+    : $holding->getInstitution()->getName();
+  $inst_name = empty($inst_short_name) ? $inst_name : $inst_short_name;
+
+  // Add markup to institution name.
+  $inst_string = '<strong>' . $inst_name . '</strong>';
+  $inst_clean_name = HTML::cleanCssIdentifier($inst_name);
+
+  switch ($holding_type) {
+    case "microform":
+      $holding_identifier = $holding->getMicroformType() == 'pos'
+        ? $inst_clean_name . '-' . $holding_type . '-pub'
+        : $inst_clean_name . '-' . $holding_type . '-pre';
+      break;
+
+    case "print":
+      $holding_identifier =  $inst_clean_name . '-' . $holding_type;
+      break;
+
+    default:
+      $holding_identifier =  $inst_clean_name . '-default';
+  }
+
+  $inst_description = $holding
+    ->getInstitution()
+    ->get('description');
+
+  if(!$inst_description->IsEmpty()) {
+    $inst_desc_value = $inst_description->getValue();
+    $inst_with_modal = '
+    <button class="btn btn-link p-0" data-target="#Dialog-' . $holding_identifier . '"
+    data-toggle="modal" type="button">' . $inst_string .
+      '<span class="fas fa-address-book fa-sm ml-1" aria-hidden="true"></span>' .
+    '</button>
+    <div id="Dialog-' . $holding_identifier . '" class="modal fade" aria-hidden="true"
+    aria-labelledby="' . 'Label-' . $holding_identifier . '" role="dialog" tabindex="-1">' .
+      '<div class="modal-dialog modal-xl">
+         <div class="modal-content">
+           <div class="modal-header">
+             <div id="Label-' . $holding_identifier . '" class="modal-title h3">Contact Information</div>
+              <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
+                  <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                  <span class="sr-only">Modal</span>
+              </button>
+           </div>
+           <div class="modal-body">' .
+            $inst_desc_value[0]['value'] .
+          '</div>
+         </div>
+       </div>
+    </div>';
+
+    $inst_string = $inst_with_modal;
+  }
+
+  return Markup::create($inst_string);
 }
 
 /**

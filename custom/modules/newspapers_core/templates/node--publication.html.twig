@@ -361,13 +361,15 @@
                                 <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#missingMicroform{{ microformcount }}">
                                     {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
                                 </button>
-                                <div class="modal fade" id="missingMicroform{{ microformcount }}" tabindex="-1" aria-labelledby="microform{{ microformcount }}ModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="missingMicroform{{ microformcount }}" tabindex="-1" role="dialog"
+                                aria-labelledby="microform{{ microformcount }}ModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <div class="modal-title h3" id="microform{{ microformcount }}ModalLabel">{{ field.label }}</div>
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
                                                     <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                                    <span class="sr-only">Modal</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
