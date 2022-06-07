@@ -1159,10 +1159,10 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
       ->getString();
 
   // Get referenced Institution name, prioritizing the short name if it exists.
-  $inst_name = empty($holding->getInstitution())
+  $inst_full_name = empty($holding->getInstitution())
     ? '[Unknown]'
     : $holding->getInstitution()->getName();
-  $inst_name = empty($inst_short_name) ? $inst_name : $inst_short_name;
+  $inst_name = empty($inst_short_name) ? $inst_full_name : $inst_short_name;
 
   // Add markup to institution name.
   $inst_string = '<strong>' . $inst_name . '</strong>';
@@ -1180,14 +1180,15 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
       break;
 
     default:
-      $holding_identifier =  $inst_clean_name . '-default';
+      $holding_identifier = NULL;
   }
 
   $inst_description = $holding
     ->getInstitution()
     ->get('description');
 
-  if(!$inst_description->IsEmpty()) {
+  if(!$inst_description->IsEmpty() &&
+     !empty($holding_identifier)) {
     $inst_desc_value = $inst_description->getValue();
     $inst_with_modal = '
     <button class="btn btn-link p-0" data-target="#Dialog-' . $holding_identifier . '"
@@ -1199,7 +1200,7 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
       '<div class="modal-dialog modal-xl">
          <div class="modal-content">
            <div class="modal-header">
-             <div id="Label-' . $holding_identifier . '" class="modal-title h3">Contact Information</div>
+             <div id="Label-' . $holding_identifier . '" class="modal-title h3">' . $inst_full_name . '</div>
               <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
                   <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
                   <span class="sr-only">Modal</span>
