@@ -104,7 +104,7 @@
     </div>
 </div>
 {% else %}
-<main {{ attributes.addClass("no-gutters") }}>
+<div{{ attributes.addClass("no-gutters") }}>
     <div class="row">
         <section class="publication col-sm-8">
             {{ title_prefix }}
@@ -117,7 +117,6 @@
 
             <div class="title-details">
                 <h2 class="bg-unb-light border p-2">{% trans %}Details{% endtrans %}</h2>
-                <dl{{ attributes.addClass("title-image") }}>
                 {% if content.field_sample_image|field_value %}
                     <figure class="image-link-shadow">
                         {{ content.field_sample_image }}
@@ -132,160 +131,163 @@
                 {% endif %}
 
                 {% if content.field_subtitle|field_value %}
-                    <dt>{% trans %}Subtitle / Tagline{% endtrans %}:</dt>
-                    <dd>{{ content.field_subtitle|field_value }}</dd>
+                    <div>{% trans %}Subtitle / Tagline{% endtrans %}:</div>
+                    <div>{{ content.field_subtitle|field_value }}</div>
                 {% endif %}
 
-                <dt>{{ publication_date_label }}:</dt>
-                <dd>{{ publication_date_value }}</dd>
-
-                {% if content.field_place_of_publication|field_value %}
-                    <dt>{{ content.field_place_of_publication|field_label }}:</dt>
-                    <dd>{{ content.field_place_of_publication|field_value }}</dd>
-                {% endif %}
-
-                {% if frequency_value %}
-                    <dt>{{ frequency_label }}:</dt>
-                    <dd>{{ frequency_value }}</dd>
-                {% endif %}
-
-                {% if content.field_geographic_coverage|field_value %}
-                    <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
-                    <dd>
-                        <ul class="list-unstyled">
-                            {% for key, item in content.field_geographic_coverage if key|first != '#' %}
-                            <li>{{ item }}</li>
-                            {% endfor %}
-                        </ul>
-                    </dd>
-                {% endif %}
-
-                {% if earlier_titles_up %}
-                    {% set count = content.field_serial_relation_pre_ref_up|field_value|length %}
-                    {% if count > 1 %}<dt>{% trans %}Earlier titles{% endtrans %}:</dt>
-                    {% else %}<dt>{% trans %}Earlier title{% endtrans %}:</dt>
+                <dl>
+                    {% if content.publication_date_label|field_value %}
+                        <dt>{{ publication_date_label }}:</dt>
+                        <dd>{{ publication_date_value }}</dd>
                     {% endif %}
-                    <dd>{{ content.field_serial_relationship_op_pre|field_value }} {{ earlier_titles_up }}</dd>
-                {% endif %}
 
-                {% if later_titles_up and later_titles_down %}
-                    <dt>{% trans %}Later title{% endtrans %}:</dt>
-                    <dd>{% trans %}Merged with{% endtrans %} {{ later_titles_up }}
-                        {% trans %}to form{% endtrans %} {{ later_titles_down }}</dd>
-                {% elseif later_titles_down %}
-                    {% set count = content.field_serial_relation_suc_ref_dn|field_value|length %}
-                    {% if count > 1 %}<dt>{% trans %}Later titles{% endtrans %}:</dt>
-                    {% else %}<dt>{% trans %}Later title{% endtrans %}:</dt>
+                    {% if content.field_place_of_publication|field_value %}
+                        <dt>{{ content.field_place_of_publication|field_label }}:</dt>
+                        <dd>{{ content.field_place_of_publication|field_value }}</dd>
                     {% endif %}
-                    <dd>{{ content.field_serial_relationship_op_suc|field_value }} {{ later_titles_down }}</dd>
-                {% endif %}
 
-                {% if content.field_title_notes|field_value %}
-                    <dt>{{ content.field_title_notes|field_label }}:</dt>
-                    <dd>{{ content.field_title_notes|field_value }}</dd>
-                {% endif %}
+                    {% if frequency_value %}
+                        <dt>{{ frequency_label }}:</dt>
+                        <dd>{{ frequency_value }}</dd>
+                    {% endif %}
 
-                {% if family %}
-                <hr />
-                <div class="title-history">
-                    <dt>{% trans %}Broad Title History{% endtrans %}:</dt>
-                    <dd class="no-borders">({% trans %}This includes all related titles and supplements and the publication dates of each{%  endtrans %})<br >
-                        {% set supplemental_tid = node.field_family.target_id %}
-                        {% if supplemental_tid %}
-                            {{ drupal_field('field_supplemental_information', 'taxonomy_term', supplemental_tid) }}
-                        {% endif %}
-                        {{ family }}
-                    </dd>
-                    {% if supplemental_title %}
-                        <dt>{{ supplemental_title_label }}:</dt>
+                    {% if content.field_geographic_coverage|field_value %}
+                        <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
                         <dd>
-                            {{ supplemental_title }}
+                            <ul class="list-unstyled">
+                                {% for key, item in content.field_geographic_coverage if key|first != '#' %}
+                                <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
                         </dd>
                     {% endif %}
-                </div>
-                <hr />
-                {% endif %}
 
-                {% if publisher_values %}
-                    <dt>{{ publisher_label }}:</dt>
+                    {% if earlier_titles_up %}
+                        {% set count = content.field_serial_relation_pre_ref_up|field_value|length %}
+                        {% if count > 1 %}<dt>{% trans %}Earlier titles{% endtrans %}:</dt>
+                        {% else %}<dt>{% trans %}Earlier title{% endtrans %}:</dt>
+                        {% endif %}
+                        <dd>{{ content.field_serial_relationship_op_pre|field_value }} {{ earlier_titles_up }}</dd>
+                    {% endif %}
+
+                    {% if later_titles_up and later_titles_down %}
+                        <dt>{% trans %}Later title{% endtrans %}:</dt>
+                        <dd>{% trans %}Merged with{% endtrans %} {{ later_titles_up }}
+                            {% trans %}to form{% endtrans %} {{ later_titles_down }}</dd>
+                    {% elseif later_titles_down %}
+                        {% set count = content.field_serial_relation_suc_ref_dn|field_value|length %}
+                        {% if count > 1 %}<dt>{% trans %}Later titles{% endtrans %}:</dt>
+                        {% else %}<dt>{% trans %}Later title{% endtrans %}:</dt>
+                        {% endif %}
+                        <dd>{{ content.field_serial_relationship_op_suc|field_value }} {{ later_titles_down }}</dd>
+                    {% endif %}
+
+                    {% if content.field_title_notes|field_value %}
+                        <dt>{{ content.field_title_notes|field_label }}:</dt>
+                        <dd>{{ content.field_title_notes|field_value }}</dd>
+                    {% endif %}
+
+                    {% if family %}
+                        <dt class="title-history">
+                            <hr />
+                            {% trans %}Broad Title History{% endtrans %}:
+                        </dt>
+                        <dd class="no-borders">({% trans %}This includes all related titles and supplements and the publication dates of each{%  endtrans %})<br >
+                            {% set supplemental_tid = node.field_family.target_id %}
+                            {% if supplemental_tid %}
+                                {{ drupal_field('field_supplemental_information', 'taxonomy_term', supplemental_tid) }}
+                            {% endif %}
+                            {{ family }}
+                        </dd>
+
+                        {% if supplemental_title %}
+                            <dt>{{ supplemental_title_label }}:</dt>
+                            <dd>
+                                {{ supplemental_title }}
+                            </dd>
+                        {% endif %}
+                        <dd><hr /></dd>
+                    {% endif %}
+
+                    {% if publisher_values %}
+                        <dt>{{ publisher_label }}:</dt>
+                        <dd>
+                            <ul class="list-unstyled">
+                                {% for item in publisher_values %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </dd>
+                    {% endif %}
+
+                    {% if editor_values %}
+                        <dt>{{ editor_label }}:</dt>
+                        <dd>
+                            <ul class="list-unstyled">
+                                {% for item in editor_values %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </dd>
+                    {% endif %}
+
+                    {% if content.field_description|field_value %}
+                        <dt>{{ content.field_description|field_label }}</dt>
+                        <dd>{{ content.field_description|field_value }}</dd>
+                    {% endif %}
+
+                    {% if content.field_subjects|field_value %}
+                    <dt>{{ content.field_subjects|field_label }}:</dt>
                     <dd>
                         <ul class="list-unstyled">
-                            {% for item in publisher_values %}
-                                <li>{{ item }}</li>
-                            {% endfor %}
-                        </ul>
-                    </dd>
-                {% endif %}
-
-                {% if editor_values %}
-                    <dt>{{ editor_label }}:</dt>
-                    <dd>
-                        <ul class="list-unstyled">
-                            {% for item in editor_values %}
-                                <li>{{ item }}</li>
-                            {% endfor %}
-                        </ul>
-                    </dd>
-                {% endif %}
-
-                {% if content.field_description|field_value %}
-                    <dt>{{ content.field_description|field_label }}</dt>
-                    <dd>{{ content.field_description|field_value }}</dd>
-                {% endif %}
-
-                {% if content.field_subjects|field_value %}
-                <dt>{{ content.field_subjects|field_label }}:</dt>
-                <dd>
-                    <ul class="list-unstyled">
-                        {% for key, item in content.field_subjects if key|first != '#' %}
-                        <li>{{ item }}</li>
-                        {% endfor %}
-                    </ul>
-                </dd>
-                {% endif %}
-
-                {% if content.field_subject_notes|field_value %}
-                    <dt>{{ content.field_subject_notes|field_label }}:</dt>
-                    <dd>{{ content.field_subject_notes|field_value }}</dd>
-                {% endif %}
-
-                {% if content.field_oclc|field_value %}
-                    <dt>{{ content.field_oclc|field_label }}:</dt>
-                    <dd>{{ content.field_oclc|field_value }}</dd>
-                {% endif %}
-
-                {% if content.field_issn|field_value %}
-                    <dt>{{ content.field_issn|field_label }}:</dt>
-                    <dd>{{ content.field_issn|field_value }}</dd>
-                {% endif %}
-
-                {% if content.field_microfilmed_by|field_value %}
-                    <dt>{{ content.field_microfilmed_by|field_label }}:</dt>
-                    <dd>
-                        <ul class="list-unstyled">
-                            {% for item in microfilmed_by_values %}
-                                <li>{{ item }}</li>
-                            {% endfor %}
-                        </ul>
-                    </dd>
-                {% endif %}
-
-                {% if language_values %}
-                    <dt>{{ language_label }}:</dt>
-                    <dd>
-                        <ul class="list-unstyled">
-                            {% for item in language_values %}
+                            {% for key, item in content.field_subjects if key|first != '#' %}
                             <li>{{ item }}</li>
                             {% endfor %}
                         </ul>
                     </dd>
-                {% endif %}
+                    {% endif %}
 
-                {% if content.field_supplemental_information|field_value %}
-                    <dt>{{ content.field_supplemental_information|field_label }}:</dt>
-                    <dd class="no-borders">{{ content.field_supplemental_information|field_value }}</dd>
-                {% endif %}
+                    {% if content.field_subject_notes|field_value %}
+                        <dt>{{ content.field_subject_notes|field_label }}:</dt>
+                        <dd>{{ content.field_subject_notes|field_value }}</dd>
+                    {% endif %}
 
+                    {% if content.field_oclc|field_value %}
+                        <dt>{{ content.field_oclc|field_label }}:</dt>
+                        <dd>{{ content.field_oclc|field_value }}</dd>
+                    {% endif %}
+
+                    {% if content.field_issn|field_value %}
+                        <dt>{{ content.field_issn|field_label }}:</dt>
+                        <dd>{{ content.field_issn|field_value }}</dd>
+                    {% endif %}
+
+                    {% if content.field_microfilmed_by|field_value %}
+                        <dt>{{ content.field_microfilmed_by|field_label }}:</dt>
+                        <dd>
+                            <ul class="list-unstyled">
+                                {% for item in microfilmed_by_values %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </dd>
+                    {% endif %}
+
+                    {% if language_values %}
+                        <dt>{{ language_label }}:</dt>
+                        <dd>
+                            <ul class="list-unstyled">
+                                {% for item in language_values %}
+                                <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </dd>
+                    {% endif %}
+
+                    {% if content.field_supplemental_information|field_value %}
+                        <dt>{{ content.field_supplemental_information|field_label }}:</dt>
+                        <dd class="no-borders">{{ content.field_supplemental_information|field_value }}</dd>
+                    {% endif %}
                 </dl>
             </div>
         </section>
@@ -459,5 +461,5 @@
             </div>
         </aside>
     </div>
-</main>
+</div>
 {% endif %}
