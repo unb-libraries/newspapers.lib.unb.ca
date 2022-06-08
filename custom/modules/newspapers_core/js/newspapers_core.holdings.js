@@ -35,7 +35,6 @@ function showToggleInit($) {
         $(target)
             .click(function () {
                 let showLabel = this.innerText;
-                alert(showLabel);
                 if (showLabel.includes(showMoreLabel)) {
                     this.innerHTML = showLessLabel;
                 } else {
