@@ -72,394 +72,417 @@
 {% set holdingSoftLimit = 5 %}
 
 {% if back_link %}
-<div class="mb-3">
+  <div class="mb-3">
     {{ back_link }}
-</div>
+  </div>
 {% endif %}
 
 {% if view_mode == 'featured' %}
-<div {{ attributes.addClass("featured-publication d-flex") }}>
+  <div{{ attributes.addClass("featured-publication d-flex") }}>
     <div class="mr-2">
-    {% if content.field_sample_image|field_value %}
+      {% if content.field_sample_image|field_value %}
         {{ content.field_sample_image }}
-    {% else %}
-        <img class="no-borders image-placeholder" src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
-    {% endif %}
+      {% else %}
+        <img class="no-borders image-placeholder"
+        src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
+      {% endif %}
     </div>
     <div>
-        <h2>Featured Publication</h2>
-        <div class="title"><strong><a href="{{ url }}">{{ label }}</a></strong></div>
-        {% if content.field_place_of_publication|field_value %}
-            <div class="date">{{ publication_date_value }}</div>
-        {% endif %}
-        {% if content.field_place_of_publication|field_value %}
-            <div class="place">{{ content.field_place_of_publication|field_value }}</div>
-        {% endif %}
-        {% if frequency_value %}
-            <div class="frequency">{{ frequency_value }}</div>
-        {% endif %}
-        {% if content.field_description|field_value %}
-            <div class="description">{{ content.field_description|field_value }}</div>
-        {% endif %}
+      <h2>Featured Publication</h2>
+      <div class="title"><strong><a href="{{ url }}">{{ label }}</a></strong></div>
+      {% if content.field_place_of_publication|field_value %}
+        <div class="date">{{ publication_date_value }}</div>
+      {% endif %}
+      {% if content.field_place_of_publication|field_value %}
+        <div class="place">{{ content.field_place_of_publication|field_value }}</div>
+      {% endif %}
+      {% if frequency_value %}
+        <div class="frequency">{{ frequency_value }}</div>
+      {% endif %}
+      {% if content.field_description|field_value %}
+        <div class="description">{{ content.field_description|field_value }}</div>
+      {% endif %}
     </div>
-</div>
+  </div>
 {% else %}
-<div{{ attributes.addClass("no-gutters") }}>
+  <div{{ attributes.addClass("no-gutters") }}>
     <div class="row">
-        <section class="publication col-sm-8">
-            {{ title_prefix }}
-            {% if not page %}
-                <h2{{ title_attributes }}>
-                    <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-                </h2>
+      <section class="publication col-sm-8">
+        {{ title_prefix }}
+        {% if not page %}
+          <h2{{ title_attributes }}>
+            <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+          </h2>
+        {% endif %}
+        {{ title_suffix }}
+
+        <div class="title-details">
+          <h2 class="bg-unb-light border p-2">{% trans %}Details{% endtrans %}</h2>
+          {% if content.field_sample_image|field_value %}
+            <figure class="image-link-shadow">
+              {{ content.field_sample_image }}
+              <figcaption class="sr-only">
+                Sample image of <i>{{ label }}</i>
+              </figcaption>
+            </figure>
+          {% else %}
+            <figure>
+              <img class="no-borders image-placeholder"
+              src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
+            </figure>
+          {% endif %}
+
+          {% if content.field_subtitle|field_value %}
+            <div>{% trans %}Subtitle / Tagline{% endtrans %}:</div>
+            <div>{{ content.field_subtitle|field_value }}</div>
+          {% endif %}
+
+          <dl>
+            {% if content.publication_date_label|field_value %}
+              <dt>{{ publication_date_label }}:</dt>
+              <dd>{{ publication_date_value }}</dd>
             {% endif %}
-            {{ title_suffix }}
 
-            <div class="title-details">
-                <h2 class="bg-unb-light border p-2">{% trans %}Details{% endtrans %}</h2>
-                {% if content.field_sample_image|field_value %}
-                    <figure class="image-link-shadow">
-                        {{ content.field_sample_image }}
-                        <figcaption class="sr-only">
-                            Sample image of <i>{{ label }}</i>
-                        </figcaption>
-                    </figure>
-                {% else %}
-                    <figure>
-                        <img class="no-borders image-placeholder" src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
-                    </figure>
+            {% if content.field_place_of_publication|field_value %}
+              <dt>{{ content.field_place_of_publication|field_label }}:</dt>
+              <dd>{{ content.field_place_of_publication|field_value }}</dd>
+            {% endif %}
+
+            {% if frequency_value %}
+              <dt>{{ frequency_label }}:</dt>
+              <dd>{{ frequency_value }}</dd>
+            {% endif %}
+
+            {% if content.field_geographic_coverage|field_value %}
+              <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
+              <dd>
+                <ul class="list-unstyled">
+                  {% for key, item in content.field_geographic_coverage if key|first != '#' %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            {% endif %}
+
+            {% if earlier_titles_up %}
+              {% set count = content.field_serial_relation_pre_ref_up|field_value|length %}
+              {% if count > 1 %}<dt>{% trans %}Earlier titles{% endtrans %}:</dt>
+              {% else %}<dt>{% trans %}Earlier title{% endtrans %}:</dt>
+              {% endif %}
+              <dd>{{ content.field_serial_relationship_op_pre|field_value }} {{ earlier_titles_up }}</dd>
+            {% endif %}
+
+            {% if later_titles_up and later_titles_down %}
+              <dt>{% trans %}Later title{% endtrans %}:</dt>
+              <dd>{% trans %}Merged with{% endtrans %} {{ later_titles_up }}
+                  {% trans %}to form{% endtrans %} {{ later_titles_down }}</dd>
+            {% elseif later_titles_down %}
+              {% set count = content.field_serial_relation_suc_ref_dn|field_value|length %}
+              {% if count > 1 %}<dt>{% trans %}Later titles{% endtrans %}:</dt>
+              {% else %}<dt>{% trans %}Later title{% endtrans %}:</dt>
+              {% endif %}
+              <dd>{{ content.field_serial_relationship_op_suc|field_value }} {{ later_titles_down }}</dd>
+            {% endif %}
+
+            {% if content.field_title_notes|field_value %}
+              <dt>{{ content.field_title_notes|field_label }}:</dt>
+              <dd>{{ content.field_title_notes|field_value }}</dd>
+            {% endif %}
+
+            {% if family %}
+              <dt class="title-history">
+                <hr />
+                {% trans %}Broad Title History{% endtrans %}:
+              </dt>
+              <dd class="no-borders">({% trans %}This includes all related titles and supplements and
+                the publication dates of each{%  endtrans %})
+                <br >
+                {% set supplemental_tid = node.field_family.target_id %}
+                {% if supplemental_tid %}
+                  {{ drupal_field('field_supplemental_information', 'taxonomy_term', supplemental_tid) }}
                 {% endif %}
+                {{ family }}
+              </dd>
 
-                {% if content.field_subtitle|field_value %}
-                    <div>{% trans %}Subtitle / Tagline{% endtrans %}:</div>
-                    <div>{{ content.field_subtitle|field_value }}</div>
-                {% endif %}
+              {% if supplemental_title %}
+                <dt>{{ supplemental_title_label }}:</dt>
+                <dd>
+                  {{ supplemental_title }}
+                </dd>
+              {% endif %}
+              <dd><hr /></dd>
+            {% endif %}
 
-                <dl>
-                    {% if content.publication_date_label|field_value %}
-                        <dt>{{ publication_date_label }}:</dt>
-                        <dd>{{ publication_date_value }}</dd>
-                    {% endif %}
+            {% if publisher_values %}
+              <dt>{{ publisher_label }}:</dt>
+              <dd>
+                <ul class="list-unstyled">
+                  {% for item in publisher_values %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            {% endif %}
 
-                    {% if content.field_place_of_publication|field_value %}
-                        <dt>{{ content.field_place_of_publication|field_label }}:</dt>
-                        <dd>{{ content.field_place_of_publication|field_value }}</dd>
-                    {% endif %}
+            {% if editor_values %}
+              <dt>{{ editor_label }}:</dt>
+              <dd>
+                <ul class="list-unstyled">
+                  {% for item in editor_values %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            {% endif %}
 
-                    {% if frequency_value %}
-                        <dt>{{ frequency_label }}:</dt>
-                        <dd>{{ frequency_value }}</dd>
-                    {% endif %}
+            {% if content.field_description|field_value %}
+              <dt>{{ content.field_description|field_label }}</dt>
+              <dd>{{ content.field_description|field_value }}</dd>
+            {% endif %}
 
-                    {% if content.field_geographic_coverage|field_value %}
-                        <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
-                        <dd>
-                            <ul class="list-unstyled">
-                                {% for key, item in content.field_geographic_coverage if key|first != '#' %}
-                                <li>{{ item }}</li>
-                                {% endfor %}
-                            </ul>
-                        </dd>
-                    {% endif %}
+            {% if content.field_subjects|field_value %}
+              <dt>{{ content.field_subjects|field_label }}:</dt>
+              <dd>
+                <ul class="list-unstyled">
+                  {% for key, item in content.field_subjects if key|first != '#' %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            {% endif %}
 
-                    {% if earlier_titles_up %}
-                        {% set count = content.field_serial_relation_pre_ref_up|field_value|length %}
-                        {% if count > 1 %}<dt>{% trans %}Earlier titles{% endtrans %}:</dt>
-                        {% else %}<dt>{% trans %}Earlier title{% endtrans %}:</dt>
-                        {% endif %}
-                        <dd>{{ content.field_serial_relationship_op_pre|field_value }} {{ earlier_titles_up }}</dd>
-                    {% endif %}
+            {% if content.field_subject_notes|field_value %}
+              <dt>{{ content.field_subject_notes|field_label }}:</dt>
+              <dd>{{ content.field_subject_notes|field_value }}</dd>
+            {% endif %}
 
-                    {% if later_titles_up and later_titles_down %}
-                        <dt>{% trans %}Later title{% endtrans %}:</dt>
-                        <dd>{% trans %}Merged with{% endtrans %} {{ later_titles_up }}
-                            {% trans %}to form{% endtrans %} {{ later_titles_down }}</dd>
-                    {% elseif later_titles_down %}
-                        {% set count = content.field_serial_relation_suc_ref_dn|field_value|length %}
-                        {% if count > 1 %}<dt>{% trans %}Later titles{% endtrans %}:</dt>
-                        {% else %}<dt>{% trans %}Later title{% endtrans %}:</dt>
-                        {% endif %}
-                        <dd>{{ content.field_serial_relationship_op_suc|field_value }} {{ later_titles_down }}</dd>
-                    {% endif %}
+            {% if content.field_oclc|field_value %}
+              <dt>{{ content.field_oclc|field_label }}:</dt>
+              <dd>{{ content.field_oclc|field_value }}</dd>
+            {% endif %}
 
-                    {% if content.field_title_notes|field_value %}
-                        <dt>{{ content.field_title_notes|field_label }}:</dt>
-                        <dd>{{ content.field_title_notes|field_value }}</dd>
-                    {% endif %}
+            {% if content.field_issn|field_value %}
+              <dt>{{ content.field_issn|field_label }}:</dt>
+              <dd>{{ content.field_issn|field_value }}</dd>
+            {% endif %}
 
-                    {% if family %}
-                        <dt class="title-history">
-                            <hr />
-                            {% trans %}Broad Title History{% endtrans %}:
-                        </dt>
-                        <dd class="no-borders">({% trans %}This includes all related titles and supplements and the publication dates of each{%  endtrans %})<br >
-                            {% set supplemental_tid = node.field_family.target_id %}
-                            {% if supplemental_tid %}
-                                {{ drupal_field('field_supplemental_information', 'taxonomy_term', supplemental_tid) }}
-                            {% endif %}
-                            {{ family }}
-                        </dd>
+            {% if content.field_microfilmed_by|field_value %}
+              <dt>{{ content.field_microfilmed_by|field_label }}:</dt>
+              <dd>
+                <ul class="list-unstyled">
+                  {% for item in microfilmed_by_values %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            {% endif %}
 
-                        {% if supplemental_title %}
-                            <dt>{{ supplemental_title_label }}:</dt>
-                            <dd>
-                                {{ supplemental_title }}
-                            </dd>
-                        {% endif %}
-                        <dd><hr /></dd>
-                    {% endif %}
+            {% if language_values %}
+              <dt>{{ language_label }}:</dt>
+              <dd>
+                <ul class="list-unstyled">
+                  {% for item in language_values %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            {% endif %}
 
-                    {% if publisher_values %}
-                        <dt>{{ publisher_label }}:</dt>
-                        <dd>
-                            <ul class="list-unstyled">
-                                {% for item in publisher_values %}
-                                    <li>{{ item }}</li>
-                                {% endfor %}
-                            </ul>
-                        </dd>
-                    {% endif %}
+            {% if content.field_supplemental_information|field_value %}
+              <dt>{{ content.field_supplemental_information|field_label }}:</dt>
+              <dd class="no-borders">{{ content.field_supplemental_information|field_value }}</dd>
+            {% endif %}
+          </dl>
+        </div>
+      </section>
 
-                    {% if editor_values %}
-                        <dt>{{ editor_label }}:</dt>
-                        <dd>
-                            <ul class="list-unstyled">
-                                {% for item in editor_values %}
-                                    <li>{{ item }}</li>
-                                {% endfor %}
-                            </ul>
-                        </dd>
-                    {% endif %}
-
-                    {% if content.field_description|field_value %}
-                        <dt>{{ content.field_description|field_label }}</dt>
-                        <dd>{{ content.field_description|field_value }}</dd>
-                    {% endif %}
-
-                    {% if content.field_subjects|field_value %}
-                    <dt>{{ content.field_subjects|field_label }}:</dt>
-                    <dd>
-                        <ul class="list-unstyled">
-                            {% for key, item in content.field_subjects if key|first != '#' %}
-                            <li>{{ item }}</li>
-                            {% endfor %}
-                        </ul>
-                    </dd>
-                    {% endif %}
-
-                    {% if content.field_subject_notes|field_value %}
-                        <dt>{{ content.field_subject_notes|field_label }}:</dt>
-                        <dd>{{ content.field_subject_notes|field_value }}</dd>
-                    {% endif %}
-
-                    {% if content.field_oclc|field_value %}
-                        <dt>{{ content.field_oclc|field_label }}:</dt>
-                        <dd>{{ content.field_oclc|field_value }}</dd>
-                    {% endif %}
-
-                    {% if content.field_issn|field_value %}
-                        <dt>{{ content.field_issn|field_label }}:</dt>
-                        <dd>{{ content.field_issn|field_value }}</dd>
-                    {% endif %}
-
-                    {% if content.field_microfilmed_by|field_value %}
-                        <dt>{{ content.field_microfilmed_by|field_label }}:</dt>
-                        <dd>
-                            <ul class="list-unstyled">
-                                {% for item in microfilmed_by_values %}
-                                    <li>{{ item }}</li>
-                                {% endfor %}
-                            </ul>
-                        </dd>
-                    {% endif %}
-
-                    {% if language_values %}
-                        <dt>{{ language_label }}:</dt>
-                        <dd>
-                            <ul class="list-unstyled">
-                                {% for item in language_values %}
-                                <li>{{ item }}</li>
-                                {% endfor %}
-                            </ul>
-                        </dd>
-                    {% endif %}
-
-                    {% if content.field_supplemental_information|field_value %}
-                        <dt>{{ content.field_supplemental_information|field_label }}:</dt>
-                        <dd class="no-borders">{{ content.field_supplemental_information|field_value }}</dd>
-                    {% endif %}
-                </dl>
-            </div>
-        </section>
-
-        <aside class="col-sm-4 publication">
-            {% set missing_coverage_label = 'Missing Coverage' %}
-            <div class="title-holdings">
-                <h2 class="bg-unb-light border p-2">{% trans %}Holdings{% endtrans %}</h2>
-                {% if holding|length > 0 %}
-                {% if holding.online|length > 0 %}
-                <div class="holding-group">
-                    <h3>{% trans %}Online{% endtrans %}:</h3>
-                    <ul class="holding-type">
-                     {% for item in holding.online %}
-                        {% set onlinecount = ( onlinecount | default(0) ) + 1 %}
-                        <li class="holding-item">
-                        {% for field in item %}
+      <aside class="col-sm-4 publication">
+        {% set missing_coverage_label = 'Missing Coverage' %}
+        <div class="title-holdings">
+          <h2 class="bg-unb-light border p-2">{% trans %}Holdings{% endtrans %}</h2>
+          {% if holding|length > 0 %}
+            <pre>Found at least one: {{ holding.length }}</pre>
+            {% if holding.online|length > 0 %}
+              <div class="holding-group">
+                <h3>{% trans %}Online{% endtrans %}:</h3>
+                <ul class="holding-type">
+                  {% for item in holding.online %}
+                    {% set onlinecount = ( onlinecount | default(0) ) + 1 %}
+                    <li class="holding-item">
+                      {% for field in item %}
                         {% if field.value %}
-                        {% if field.label == missing_coverage_label %}
+                          {% if field.label == missing_coverage_label %}
                             {# Coverage Statement is required+lighter weight so this should display below it #}
                             <div>
-                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#missingOnline{{ onlinecount }}">
-                                    {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
-                                </button>
-                                <div class="modal fade" id="missingOnline{{ onlinecount }}" tabindex="-1" aria-labelledby="online{{ onlinecount }}ModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <div class="modal-title h3" id="online{{ onlinecount }}ModalLabel">{{ field.label }}</div>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                                                    <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                {{ field.value|raw }}
-                                            </div>
-                                        </div>
+                              <button class="btn btn-link p-0"
+                              data-target="#missingOnline{{ onlinecount }}" data-toggle="modal" type="button">
+                               {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
+                              </button>
+                              <div id="missingOnline{{ onlinecount }}" class="modal fade"
+                              aria-hidden="true" aria-labelledby="online{{ onlinecount }}ModalLabel" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <div id="online{{ onlinecount }}ModalLabel" class="modal-title h3">
+                                        {{ field.label }}
+                                      </div>
+                                      <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
+                                        <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                        <span class="sr-only">Modal</span>
+                                      </button>
                                     </div>
+                                    <div class="modal-body">
+                                      {{ field.value|raw }}
+                                    </div>
+                                  </div>
                                 </div>
+                              </div>
                             </div>
-                        {% else %}
+                          {% else %}
                             <div>{{ field.value|raw }}</div>
+                          {% endif %}
                         {% endif %}
-                        {% endif %}
-                        {% endfor %}
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
+                      {% endfor %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
 
-                {% if holding.microform|length > 0 %}
-                <div class="holding-group holding-group-microform">
-                    {% set microformClasses = ['holding-item'] %}
-                    {% set microformCollapsed = [] %}
-                    {% set microformCount = 0 %}
-                    <h3>{% trans %}Microform{% endtrans %}:</h3>
-                    <ul class="holding-type">
-                    {% for item in holding.microform %}
-                        {% set microformCount = microformCount + 1 %}
-                        {% if microformCount == holdingSoftLimit + 1 %}
-                            {% set microformClasses = microformClasses|merge(['collapse', 'multi-collapse']) %}
-                        {% endif %}
-                        {% if microformCount > holdingSoftLimit %}
-                            {% set microformCollapsed = microformCollapsed|merge(["microformCount#{microformCount}"]) %}
-                        {% endif %}
-                        <li class="{{ microformClasses|join(' ') }}" id="microformHolding{{ microformCount }}">
-                        {% for field in item %}
-                        {% if field.value %}
-                        {% if field.label == missing_coverage_label %}
-                            {# Coverage Statement is required+lighter weight so this should display below it #}
-                            <div>
-                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#missingMicroform{{ microformcount }}">
-                                    {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
-                                </button>
-                                <div class="modal fade" id="missingMicroform{{ microformcount }}" tabindex="-1" role="dialog"
-                                aria-labelledby="microform{{ microformcount }}ModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <div class="modal-title h3" id="microform{{ microformcount }}ModalLabel">{{ field.label }}</div>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                                                    <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
-                                                    <span class="sr-only">Modal</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                {{ field.value|raw }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div>{{ field.value|raw }}</div>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
-                        </li>
-                    {% endfor %}
-                    </ul>
+            {% if holding.microform|length > 0 %}
+              <div class="holding-group holding-group-microform">
+                {% set microformClasses = ['holding-item'] %}
+                {% set microformCollapsed = [] %}
+                {% set microformCount = 0 %}
+                <h3>{% trans %}Microform{% endtrans %}:</h3>
+                <ul class="holding-type">
+                  {% for item in holding.microform %}
+                    {% set microformCount = microformCount + 1 %}
+                    {% if microformCount == holdingSoftLimit + 1 %}
+                      {% set microformClasses = microformClasses|merge(['collapse', 'multi-collapse']) %}
+                    {% endif %}
                     {% if microformCount > holdingSoftLimit %}
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".holding-group-microform .multi-collapse" aria-expanded="false"
-                            aria-controls="{% for item in microformCollapsed %}{{ item }}{% endfor %}">Show All
-                    </button>
+                      {% set microformCollapsed = microformCollapsed|merge(["microformCount#{microformCount}"]) %}
                     {% endif %}
-                </div>
-                {% endif %}
-
-                {% if holding.print|length > 0 %}
-                <div class="holding-group holding-group-print">
-                    {% set printClasses = ['holding-item'] %}
-                    {% set printCollapsed = [] %}
-                    {% set printCount = 0 %}
-                    <h3>{% trans %}Print{% endtrans %}:</h3>
-                    <ul class="holding-type">
-                    {% for item in holding.print %}
-                        {% set printCount = printCount + 1 %}
-                        {% if printCount == holdingSoftLimit + 1 %}
-                            {% set printClasses = printClasses|merge(['collapse', 'multi-collapse']) %}
-                        {% endif %}
-                        {% if printCount > holdingSoftLimit %}
-                            {% set printCollapsed = printCollapsed|merge(["printCount#{printCount}"]) %}
-                        {% endif %}
-                        <li class="{{ printClasses|join(' ') }}" id="printHolding{{ printCount }}">
-                        {% for field in item %}
+                    <li id="microformHolding{{ microformCount }}" class="{{ microformClasses|join(' ') }}">
+                      {% for field in item %}
                         {% if field.value %}
-                        {% if field.label == missing_coverage_label %}
+                          {% if field.label == missing_coverage_label %}
                             {# Coverage Statement is required+lighter weight so this should display below it #}
                             <div>
-                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#missingPrint{{ printCount }}">
-                                    {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
-                                </button>
-                                <div class="modal fade" id="missingPrint{{ printCount }}" tabindex="-1" aria-labelledby="print{{ printCount }}ModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <div class="modal-title h3" id="print{{ printCount }}ModalLabel">{{ field.label }}</div>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                                                    <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                {{ field.value|raw }}
-                                            </div>
-                                        </div>
+                              <button class="btn btn-link p-0 text-left"
+                              data-target="#missingMicroform{{ microformcount }}" data-toggle="modal" type="button">
+                                {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
+                              </button>
+                              <div id="missingMicroform{{ microformcount }}" class="modal fade" aria-hidden="true"
+                              aria-labelledby="microform{{ microformcount }}ModalLabel" role="dialog" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <div id="microform{{ microformcount }}ModalLabel" class="modal-title h3">
+                                        {{ field.label }}
+                                      </div>
+                                      <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
+                                        <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                        <span class="sr-only">Modal</span>
+                                      </button>
                                     </div>
+                                    <div class="modal-body">
+                                      {{ field.value|raw }}
+                                    </div>
+                                  </div>
                                 </div>
+                              </div>
                             </div>
-                        {% else %}
+                          {% else %}
                             <div>{{ field.value|raw }}</div>
+                          {% endif %}
                         {% endif %}
-                        {% endif %}
-                        {% endfor %}
-                        </li>
-                    {% endfor %}
-                    </ul>
-                    {% if printCount > holdingSoftLimit %}
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".holding-group-print .multi-collapse" aria-expanded="false"
-                            aria-controls="{% for item in printCollapsed %}{{ item }}{% endfor %}">Show All
-                    </button>
+                      {% endfor %}
+                    </li>
+                  {% endfor %}
+                </ul>
+                {% if microformCount > holdingSoftLimit %}
+                  <button class="btn btn-link"
+                  aria-controls="{% for item in microformCollapsed %}{{ item }}{% endfor %}" aria-expanded="false"
+                  data-target=".holding-group-microform .multi-collapse" data-toggle="collapse" type="button">
+                    Show All
+                    <span class="sr-only">Microform Holdings</span>
+                  </button>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            {% if holding.print|length > 0 %}
+              <div class="holding-group holding-group-print">
+                {% set printClasses = ['holding-item'] %}
+                {% set printCollapsed = [] %}
+                {% set printCount = 0 %}
+                <h3>{% trans %}Print{% endtrans %}:</h3>
+                <ul class="holding-type">
+                  {% for item in holding.print %}
+                    {% set printCount = printCount + 1 %}
+                    {% if printCount == holdingSoftLimit + 1 %}
+                      {% set printClasses = printClasses|merge(['collapse', 'multi-collapse']) %}
                     {% endif %}
-                </div>
-               {% endif %}
-               {% else %}
-                   <div class="text-muted">
-                       <small><i class="glyphicon glyphicon-info-sign"></i></small>
-                        {% trans %}No holdings found. Consult staff.{% endtrans %}
-                   </div>
-               {% endif %}
+                    {% if printCount > holdingSoftLimit %}
+                      {% set printCollapsed = printCollapsed|merge(["printCount#{printCount}"]) %}
+                    {% endif %}
+                    <li id="printHolding{{ printCount }}" class="{{ printClasses|join(' ') }}">
+                      {% for field in item %}
+                        {% if field.value %}
+                          {% if field.label == missing_coverage_label %}
+                            {# Coverage Statement is required+lighter weight so this should display below it #}
+                            <div>
+                              <button class="btn btn-link p-0 text-left"
+                              data-target="#missingPrint{{ printCount }}" data-toggle="modal" type="button">
+                                {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
+                              </button>
+                              <div id="missingPrint{{ printCount }}" class="modal fade"
+                              aria-labelledby="print{{ printCount }}ModalLabel" aria-hidden="true" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <div id="print{{ printCount }}ModalLabel" class="modal-title h3">
+                                        {{ field.label }}
+                                      </div>
+                                      <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
+                                        <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      {{ field.value|raw }}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          {% else %}
+                            <div>{{ field.value|raw }}</div>
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    </li>
+                  {% endfor %}
+                </ul>
+                {% if printCount > holdingSoftLimit %}
+                  <button class="btn btn-link"
+                  aria-controls="{% for item in printCollapsed %}{{ item }}{% endfor %}" aria-expanded="false"
+                  data-target=".holding-group-print .multi-collapse" data-toggle="collapse" type="button">
+                    Show All
+                    <span class="sr-only">Print Holdings</span>
+                  </button>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% else %}
+            <div>
+              <span class="fas fa-info-circle text-muted" aria-hidden="true"></span>
+              {% trans %}No holdings found. Consult staff.{% endtrans %}
             </div>
-        </aside>
+          {% endif %}
+        </div>
+      </aside>
     </div>
-</div>
+  </div>
 {% endif %}
