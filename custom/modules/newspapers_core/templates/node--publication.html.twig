@@ -301,7 +301,6 @@
         <div class="title-holdings">
           <h2 class="bg-unb-light border p-2">{% trans %}Holdings{% endtrans %}</h2>
           {% if holding|length > 0 %}
-            <pre>Found at least one: {{ holding.length }}</pre>
             {% if holding.online|length > 0 %}
               <div class="holding-group">
                 <h3>{% trans %}Online{% endtrans %}:</h3>
