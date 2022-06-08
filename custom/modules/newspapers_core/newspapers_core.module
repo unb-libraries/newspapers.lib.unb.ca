@@ -1120,14 +1120,14 @@ function _newspapers_core_get_rendered_coverage(string $type, SerialHolding $hol
       ];
 
       $suffix = $holding->getMicroformType() == 'neg'
-        ? ' ]<button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip"
-              data-placement="bottom" title="' . $microform_type_suffixes['neg']['tooltip'] . '">
-              (<span>' . $microform_type_suffixes['neg']['label'] . '</span>)
-            </button>'
-        : ' <button type="button" class="btn btn-link btn-sm p-0" data-toggle="tooltip"
-              data-placement="bottom" title="' . $microform_type_suffixes['pos']['tooltip'] . '">
-              (<span>' . $microform_type_suffixes['pos']['label'] . '</span>)
-            </button>';
+        ? ' <button class="btn btn-link btn-sm p-0" data-placement="bottom" data-toggle="tooltip"
+            title="' . $microform_type_suffixes['neg']['tooltip'] . '" type="button" >
+             (<span>' . $microform_type_suffixes['neg']['label'] . '</span>)
+           </button>'
+        : ' <button class="btn btn-link btn-sm p-0" data-placement="bottom" data-toggle="tooltip"
+            title="' . $microform_type_suffixes['pos']['tooltip'] . '" type="button">
+             (<span>' . $microform_type_suffixes['pos']['label'] . '</span>)
+           </button>';
       break;
 
     default:
@@ -1191,28 +1191,27 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
      !empty($holding_identifier)) {
     $inst_desc_value = $inst_description->getValue();
     $inst_with_modal = '
-    <button class="btn btn-link p-0" data-target="#Dialog-' . $holding_identifier . '"
-    data-toggle="modal" type="button">' . $inst_string .
-      '<span class="fas fa-address-book fa-sm ml-1" aria-hidden="true"></span>' .
+    <button class="btn btn-link p-0 text-left" data-target="#Dialog-' . $holding_identifier . '"
+    data-toggle="modal" type="button">' .
+      $inst_string . '<span class="fas fa-address-book fa-sm ml-1" aria-hidden="true"></span>' .
     '</button>
     <div id="Dialog-' . $holding_identifier . '" class="modal fade" aria-hidden="true"
     aria-labelledby="' . 'Label-' . $holding_identifier . '" role="dialog" tabindex="-1">' .
       '<div class="modal-dialog modal-xl">
-         <div class="modal-content">
-           <div class="modal-header">
-             <div id="Label-' . $holding_identifier . '" class="modal-title h3">' . $inst_full_name . '</div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <div id="Label-' . $holding_identifier . '" class="modal-title h3">' . $inst_full_name . '</div>
               <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                  <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
-                  <span class="sr-only">Modal</span>
+                <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                <span class="sr-only">Modal</span>
               </button>
-           </div>
-           <div class="modal-body">' .
+            </div>
+          <div class="modal-body">' .
             $inst_desc_value[0]['value'] .
           '</div>
-         </div>
-       </div>
+        </div>
+      </div>
     </div>';
-
     $inst_string = $inst_with_modal;
   }
 
