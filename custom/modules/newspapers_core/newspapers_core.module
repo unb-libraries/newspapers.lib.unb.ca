@@ -973,7 +973,7 @@ function _newspapers_core_get_holding_details(string $type, SerialHolding $holdi
         'access' => [
           'label' => 'Access',
           'value' => Link::fromTextAndUrl(
-            'Access digitized content online',
+            'Access digitized content',
             Url::fromRoute(
               'view.digital_page_lister.page_issues',
               ['arg_0' => $holding->get('holding_digital_title')->entity->id()],
