@@ -2,6 +2,10 @@
 ol.breadcrumb {
   font-size: 1rem;
 
+  li {
+    height: 1.5rem;
+  }
+
   a[href="https://lib.unb.ca"] {
     display: inline-block;
     height: 1rem;
