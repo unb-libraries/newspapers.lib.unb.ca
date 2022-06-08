@@ -1,4 +1,4 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: weekly-backup-newspapers-lib-unb-ca
@@ -70,7 +70,7 @@ spec:
               persistentVolumeClaim:
                 claimName: backup-newspapers-lib-unb-ca
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: monthly-backup-newspapers-lib-unb-ca
