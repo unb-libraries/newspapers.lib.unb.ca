@@ -156,7 +156,7 @@
     "drupal/address": "1.10",
     "drupal/allowed_formats": "1.5",
     "drupal/bootstrap_barrio": "5.1.6",
-    "drupal/chosen": "3.0.2",
+    "drupal/chosen": "3.0.3",
     "drupal/conditional_fields": "4.0.0-alpha1",
     "drupal/core": "9.3.16",
     "drupal/externalauth": "1.4",
