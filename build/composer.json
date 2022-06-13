@@ -169,7 +169,7 @@
     "drupal/jquery_ui": "1.4",
     "drupal/jquery_ui_datepicker": "1.2",
     "drupal/jquery_ui_slider": "1.1",
-    "drupal/jquery_ui_touch_punch": "1.0.0",
+    "drupal/jquery_ui_touch_punch": "1.0.1",
     "drupal/languagefield": "1.7",
     "drupal/noreqnewpass": "1.2",
     "drupal/override_node_options": "2.6",
