@@ -1081,6 +1081,19 @@ function _newspapers_core_get_publication_holdings($nid) {
           ->getInstitution()
           ->getName()
       );
+    if ($holding_type == 'microform') {
+      // Want negative microform holdings sorted above positive ones.
+      $holding_microfrom_type = empty($holding->getMicroformType())
+        ? 'unknown'
+        : $holding->getMicroformType();
+      $holding_inst_sort_key .= '-' . $holding_microfrom_type;
+    }
+    // Append holding id to permit multiple holdings per institution.
+    $holding_inst_sort_key .= '-' .
+      $holding
+        ->id
+        ->getString();
+
     $holding_section[$holding_type][$holding_inst_sort_key] = $holding;
   }
 
