@@ -174,8 +174,9 @@
 
             {% if later_titles_up and later_titles_down %}
               <dt>{% trans %}Later title{% endtrans %}:</dt>
-              <dd>{% trans %}Merged with{% endtrans %} {{ later_titles_up }}
-                  {% trans %}to form{% endtrans %} {{ later_titles_down }}</dd>
+              <dd>{% trans %}Merged with{% endtrans %}
+                {{ later_titles_up }}{% trans %}to form{% endtrans %}
+                {{ later_titles_down }}</dd>
             {% elseif later_titles_down %}
               {% set count = content.field_serial_relation_suc_ref_dn|field_value|length %}
               {% if count > 1 %}<dt>{% trans %}Later titles{% endtrans %}:</dt>
