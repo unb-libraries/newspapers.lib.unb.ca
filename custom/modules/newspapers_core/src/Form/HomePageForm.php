@@ -223,7 +223,7 @@ class HomePageForm extends FormBase {
     ];
     $form['tab-content']['title']['search-scope']['unlimited_region'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Include newspapers outside of New Brunswick'),
+      '#title' => $this->t('Include newspapers <strong>published</strong> outside of New Brunswick'),
       '#default_value' => FALSE,
     ];
 
