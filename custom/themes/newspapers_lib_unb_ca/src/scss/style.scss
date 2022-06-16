@@ -294,12 +294,11 @@ a.btn-add:active {
 
       &::before {
         color: $checkmark;
-        content: "\f00c";
+        content: "\f061";
         float: left;
         font-family: 'Font Awesome 5 Free';
-        font-size: x-small;
-        margin-left: -1.75em;
-        margin-top: .25em;
+        margin-left: -1.25rem;
+        margin-top: 1px;
       }
     }
   }
