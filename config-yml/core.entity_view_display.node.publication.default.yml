@@ -273,6 +273,8 @@ content:
     settings:
       image_link: file
       image_style: sample_publication_image
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 28
     region: content

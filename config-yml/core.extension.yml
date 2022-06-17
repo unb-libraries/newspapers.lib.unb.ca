@@ -52,6 +52,7 @@ module:
   languagefield: 0
   link: 0
   menu_ui: 0
+  mysql: 0
   newspapers_core: 0
   node: 0
   noreqnewpass: 0
