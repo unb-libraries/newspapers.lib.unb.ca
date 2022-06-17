@@ -1171,13 +1171,19 @@ function _newspapers_core_get_rendered_coverage(string $type, SerialHolding $hol
  */
 function _newspapers_core_get_rendered_institution(string $holding_type, SerialHolding $holding) {
   // Get Institution short name iff required entity reference is set.
-  $inst_short_name = empty($holding->getInstitution())
-    ? NULL
-    : $holding
+  if (empty($holding->getInstitution()) || empty(
+    $holding
+      ->getInstitution()
+      ->hasField('field_short_name')
+    )
+  ) {
+      $inst_short_name = NULL;
+  } else {
+    $inst_short_name = $holding
       ->getInstitution()
       ->get('field_short_name')
       ->getString();
-
+  }
   // Get referenced Institution name, prioritizing the short name if it exists.
   $inst_full_name = empty($holding->getInstitution())
     ? '[Unknown]'
