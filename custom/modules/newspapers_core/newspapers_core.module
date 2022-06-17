@@ -429,10 +429,11 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     ->getLabel();
   $languages = $node->get('field_language');
   $language_values = [];
+
   foreach ($languages as $language) {
     $lang_code = $language->getString();
-    $language_values[] = \Drupal::LanguageManager()
-      ->getStandardLanguageList()[$lang_code][0];
+    $possible_options = $language->getPossibleOptions();
+    $language_values[] = $possible_options[$lang_code];
   }
   if (!empty($language_values)) {
     $variables['language_label'] = count($language_values) < 2 ? $language_label : $language_label . 's';

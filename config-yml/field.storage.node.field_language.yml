@@ -12,8 +12,8 @@ type: language_field
 settings:
   language_range:
     11: '11'
+    12: '12'
     1: 0
-    12: 0
     2: 0
     site_default: 0
     und: 0
@@ -23,7 +23,9 @@ settings:
     zh-hans: zh-hans
     en: en
     fr: fr
+    micmac: micmac
     ru: ru
+    wolast: wolast
   excluded_languages: {  }
   groups: ''
   maxlength: 12
