@@ -855,7 +855,7 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
     return 'Dates ' . $none_txt;
   }
   else {
-    return $first_date_txt . Html::decodeEntities("&nbsp;&mdash;") . ' ' . $last_date_txt;
+    return $first_date_txt . Html::decodeEntities("&nbsp;") . '- ' . $last_date_txt;
   }
 
 }
