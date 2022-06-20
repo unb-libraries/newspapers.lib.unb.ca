@@ -809,7 +809,7 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
       break;
 
     case "exact":
-      $first_date_txt = date("F j, Y", strtotime($first_date_range));
+      $first_date_txt = date("M j, Y", strtotime($first_date_range));
       break;
 
     case "approximate":
@@ -836,7 +836,7 @@ function _newspapers_core_get_daterange(Node $node, bool $append_frequency = FAL
       break;
 
     case "exact":
-      $last_date_txt = date("F j, Y", strtotime($last_date_range));
+      $last_date_txt = date("M j, Y", strtotime($last_date_range));
       break;
 
     case "approximate":
