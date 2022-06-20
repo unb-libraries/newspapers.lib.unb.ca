@@ -51,7 +51,9 @@ module:
   language: 0
   languagefield: 0
   link: 0
+  menu_link_content: 1
   menu_ui: 0
+  minimal: 1000
   mysql: 0
   newspapers_core: 0
   node: 0
@@ -62,14 +64,17 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
+  pathauto: 1
   quickedit: 0
   rdf: 0
   redis: 0
   rest: 0
+  saml_features: 11
   samlauth: 0
   search_api: 0
   search_api_autocomplete: 0
   search_api_solr: 0
+  serial_holding: 100
   serial_holding_export: 0
   serialization: 0
   serials: 0
@@ -84,15 +89,10 @@ module:
   update: 0
   user: 0
   view_unpublished: 0
+  views: 10
   views_data_export: 0
   views_infinite_scroll: 0
   views_ui: 0
-  menu_link_content: 1
-  pathauto: 1
-  views: 10
-  saml_features: 11
-  serial_holding: 100
-  minimal: 1000
 theme:
   stable: 0
   classy: 0
