@@ -9,6 +9,8 @@ jobs:
   drupal:
     uses: unb-libraries/dockworker-drupal/.github/workflows/deployment-workflow.yaml@5.x
     secrets:
+      DOCKER_CLOUD_ACCESS_TOKEN: ${{ secrets.DOCKER_CLOUD_ACCESS_TOKEN }}
+      DOCKER_CLOUD_USER_NAME: ${{ secrets.DOCKER_CLOUD_USER_NAME }}
       GH_CONTAINER_REGISTRY_TOKEN: ${{ secrets.GH_CONTAINER_REGISTRY_TOKEN }}
       GH_CONTAINER_REGISTRY_USER: ${{ secrets.GH_CONTAINER_REGISTRY_USER }}
       KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
