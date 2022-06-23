@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: drupal
-    appMajor: "8"
+    appMajor: "9"
     instance: newspapers.lib.unb.ca
     tier: frontend
     uri: dev-newspapers.lib.unb.ca
@@ -27,7 +27,7 @@ spec:
     metadata:
       labels:
         app: drupal
-        appMajor: "8"
+        appMajor: "9"
         instance: newspapers.lib.unb.ca
         tier: frontend
         uri: dev-newspapers.lib.unb.ca
