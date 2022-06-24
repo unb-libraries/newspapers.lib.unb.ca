@@ -6,6 +6,9 @@
 
 This repository contains the assets used to test, build, and deploy the [newspapers.lib.unb.ca](https://newspapers.lib.unb.ca) Drupal application. This repository extends the [unb-libraries/docker-drupal](https://github.com/unb-libraries/docker-drupal) base image, which deploys nginx and php-fpm in the service container.
 
+## Documentation
+Documentation for this project is available [in the documentation folder](./documentation/README.md "Project Documentation").
+
 ## Deploy this Application Yourself!
 Local deployment, development and testing of newspapers.lib.unb.ca is easy, as we leverage [dockworker](https://github.com/unb-libraries/dockworker), our unified framework of [Robo](https://robo.li/) commands that streamline local development of our application on Linux or OSX.
 

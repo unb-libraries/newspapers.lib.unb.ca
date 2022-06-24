@@ -1,6 +1,6 @@
-# NBNP Issue Operations
+#  NBNP Bulk Issue Operations
 
-## 1. Issue Import
+## 1. Bulk Issue Imports
 ### Opening a Screen
 1. Determine the full path on _MANTICORE_ to parse for issues. Although the tool can import thousands of issues at once, it is recommended to break the import up into smaller groups (such as one year's issues).
    * Example: ```/mnt/nbnp/TheWeeklyChronicle/WC_1824/``` (**include** the trailing slash)
@@ -62,7 +62,7 @@ _It is safe to disconnect from the SSH session at this point, as the process is 
         1. No error will occur - you will see a screen with the import process or a message indicating the import was complete.
         2. ```There is no screen to be attached matching NBNP.``` appears on the screen. This indicates an import was not started or the server has been rebooted since - _screen sessions do not 'survive' reboots_. Contact Jake!
 
-## 2. Imported Issue Validation
+## Bulk Imported Issue Validation
 (determine issue data as above)
 1. SSH to _MANTICORE_ as the 'imaging' user
 2. Change to the 'imaging' user's home directory: ```cd /home/imaging```
