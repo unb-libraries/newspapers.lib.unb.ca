@@ -197,7 +197,7 @@
     "unb-libraries/calendar_hours": "dev-9.x-1.x",
     "unb-libraries/drupal-builder": "^9",
     "unb-libraries/saml_features": "dev-9.x-1.x",
-    "unb-libraries/unb_lib_theme": "dev-8.x-4.x"
+    "unb-libraries/unb_lib_theme": "dev-9.x-4.x"
   },
   "require-dev": {
     "unb-libraries/drupal-development-libraries": "^9"
