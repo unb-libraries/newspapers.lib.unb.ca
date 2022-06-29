@@ -1210,11 +1210,14 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
       $holding_identifier = NULL;
   }
 
-  $inst_description = $holding
-    ->getInstitution()
-    ->get('description');
-
-  if(!$inst_description->IsEmpty() &&
+  if (empty($holding->getInstitution())) {
+    $inst_description = NULL;
+  } else {
+    $inst_description = $holding
+      ->getInstitution()
+      ->get('description');
+  }
+  if(!empty($inst_description) &&
      !empty($holding_identifier)) {
     $inst_desc_value = $inst_description->getValue();
     $inst_with_modal = '
