@@ -107,7 +107,7 @@
 {% else %}
   <div{{ attributes.addClass("no-gutters") }}>
     <div class="row">
-      <section class="publication col-sm-8">
+      <section class="publication col-lg-8 mb-4">
         {{ title_prefix }}
         {% if not page %}
           <h2{{ title_attributes }}>
@@ -297,7 +297,7 @@
         </div>
       </section>
 
-      <aside class="col-sm-4 publication">
+      <aside class="col-lg-4 mb-4 publication">
         {% set missing_coverage_label = 'Missing Coverage' %}
         <div class="title-holdings">
           <h2 class="bg-unb-light border p-2">{% trans %}Holdings{% endtrans %}</h2>
