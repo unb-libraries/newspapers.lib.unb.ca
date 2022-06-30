@@ -476,11 +476,28 @@
               </div>
             {% endif %}
           {% else %}
-            <div>
-              <span class="fas fa-info-circle text-muted" aria-hidden="true"></span>
-              {% trans %}No holdings found. Consult staff.{% endtrans %}
-            </div>
+            <p><span class="fas fa-info-circle text-muted" aria-hidden="true"></span>
+              There are currently <strong>no verified holdings</strong> for this publication.
+            </p>
           {% endif %}
+          <div class="card text-small">
+            <div class="card-body">
+              <p class="card-text">A collaborative project between
+                <abbr title="University of New Brunswick">UNB</abbr>,
+                <abbr title="Provincial Archives of New Brunswick">PANB</abbr> and
+                <abbr title="Council of Archives New Brunswick">CANB</abbr>
+                is currently underway to verify all New Brunswick newspaper holdings.
+                This project, while comprehensive, is not anticipated to be completed until sometime in 2023.
+              </p>
+            </div>
+            {% if archives_link is defined and archives_link is not null %}
+              <div class="card-footer">
+                <p class="card-text">
+                  View {{ archives_link }} for this title. These holdings are not verified and may be out of date.
+                </p>
+              </div>
+            {% endif %}
+          </div>
         </div>
       </aside>
     </div>

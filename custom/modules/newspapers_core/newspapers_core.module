@@ -597,6 +597,28 @@ function newspapers_core_preprocess_node__publication(&$variables) {
       }
     }
   }
+  // Archives website link for extended 'no holdings' text re: titles with PANB title id.
+  $panb_title_id = $node->get('field_panb_id');
+  $panb_value = $panb_title_id->getValue() ?? NULL;
+  if (!empty($panb_value)) {
+    // Get PANB Title ID field value (plain text) from FieldItemList::getString().
+    $panb_key = $panb_title_id->getString();
+
+    $uri = "https://archives.gnb.ca/ResearchTools/NewspaperDirectory/Directory.aspx?culture=en-CA&Key=" . $panb_key;
+    $options = [
+      'attributes' => [
+        'class' => [
+          'link-external',
+        ],
+      ],
+    ];
+    $url = Url::fromUri($uri);
+    $url->setOptions($options);
+    $text = t("holdings listed on the PANB Newspaper Directory");
+    $link = Link::fromTextAndUrl($text, $url);
+
+    $variables['archives_link'] = $link->toRenderable();
+  }
 
   $view_mode = $variables['view_mode'];
   if ($view_mode != 'featured') {
@@ -1202,16 +1224,16 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
       ->get('field_short_name')
       ->getString();
   }
+
   // Get referenced Institution name, prioritizing the short name if it exists.
   $inst_full_name = empty($holding->getInstitution())
-    ? '[Unknown]'
+    ? 'Unknown'
     : $holding->getInstitution()->getName();
   $inst_name = empty($inst_short_name) ? $inst_full_name : $inst_short_name;
 
   // Add markup to institution name.
   $inst_string = '<strong>' . $inst_name . '</strong>';
   $inst_clean_name = HTML::cleanCssIdentifier($inst_name);
-
   switch ($holding_type) {
     case "microform":
       $holding_identifier = $holding->getMicroformType() == 'pos'
