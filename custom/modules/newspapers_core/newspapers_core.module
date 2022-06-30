@@ -1070,6 +1070,23 @@ function _newspapers_core_get_publication_holdings($nid) {
         ->getName()
     );
 
+    if ($holding_type === 'digital') {
+      $dst_query = \Drupal::entityQuery('digital_serial_title')
+        ->condition('status', 1)
+        ->condition('parent_title', $nid);
+      $dst_result = $dst_query->execute();
+      // Note: there should be a maximum of ONE digital serial title.
+      $dst_id = reset($dst_result);
+      $dsi_query = \Drupal::entityQuery('digital_serial_issue')
+        ->condition('status', 1)
+        ->condition('parent_title', $dst_id);
+      $dsi_ids = $dsi_query->execute();
+      // Exclude holding if no digital serial issues found for current digital serial title.
+      if (empty($dsi_ids)) {
+        continue;
+      }
+    }
+
     if (empty($holding_section[$holding_type])) {
       $holding_section[$holding_type] = [];
       $holding_types[] = $holding_type;
