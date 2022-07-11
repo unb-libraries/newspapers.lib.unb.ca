@@ -50,14 +50,25 @@ dependencies:
     - field.field.node.publication.field_title_notes
     - node.type.publication
   module:
+    - text
     - user
 id: node.publication.teaser
 targetEntityType: node
 bundle: publication
 mode: teaser
 content:
+  field_description_extended:
+    type: text_trimmed
+    label: above
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 28
+    region: content
   links:
-    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
     region: content
 hidden:
   field_abbreviated_title: true
@@ -65,7 +76,6 @@ hidden:
   field_city_town: true
   field_credit: true
   field_description: true
-  field_description_extended: true
   field_editor: true
   field_family: true
   field_featured: true

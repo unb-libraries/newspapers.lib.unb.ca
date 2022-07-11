@@ -80,13 +80,6 @@ targetEntityType: node
 bundle: publication
 mode: featured
 content:
-  field_description:
-    type: basic_string
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 7
-    region: content
   field_first_issue_approx_date:
     type: string
     label: above
@@ -173,6 +166,7 @@ content:
 hidden:
   field_additional_indexed_text: true
   field_credit: true
+  field_description: true
   field_description_extended: true
   field_editor: true
   field_family: true
