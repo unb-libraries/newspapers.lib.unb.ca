@@ -1,0 +1,26 @@
+uuid: 3ea63901-8501-46f9-805c-d9d7dab8246b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_description_extended
+    - node.type.publication
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    allowed_formats:
+      - basic_html
+id: node.publication.field_description_extended
+field_name: field_description_extended
+entity_type: node
+bundle: publication
+label: Description
+description: 'Broad description or abstract for the paper'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

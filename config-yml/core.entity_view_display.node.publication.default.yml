@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.publication.field_additional_indexed_text
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_description
+    - field.field.node.publication.field_description_extended
     - field.field.node.publication.field_editor
     - field.field.node.publication.field_family
     - field.field.node.publication.field_featured
@@ -56,6 +57,7 @@ dependencies:
     - file
     - image
     - options
+    - text
     - user
 third_party_settings:
   field_group:
@@ -87,6 +89,13 @@ content:
     third_party_settings: {  }
     weight: 15
     region: content
+  field_description_extended:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 16
+    region: content
   field_editor:
     type: entity_reference_label
     label: above
@@ -101,7 +110,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 17
+    weight: 18
     region: content
   field_first_issue_approx_date:
     type: string
@@ -126,7 +135,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 21
+    weight: 22
     region: content
   field_first_issue_search_date:
     type: datetime_default
@@ -135,7 +144,7 @@ content:
       timezone_override: ''
       format_type: medium
     third_party_settings: {  }
-    weight: 30
+    weight: 31
     region: content
   field_frequency:
     type: string
@@ -169,7 +178,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 19
+    weight: 20
     region: content
   field_issn:
     type: string
@@ -202,7 +211,7 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 20
+    weight: 21
     region: content
   field_last_issue_search_date:
     type: datetime_default
@@ -211,14 +220,14 @@ content:
       timezone_override: ''
       format_type: medium
     third_party_settings: {  }
-    weight: 31
+    weight: 32
     region: content
   field_marc_frequency:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 32
+    weight: 33
     region: content
   field_microfilmed_by:
     type: entity_reference_label
@@ -242,7 +251,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 33
+    weight: 34
     region: content
   field_place_of_publication:
     type: address_default
@@ -257,7 +266,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 29
+    weight: 30
     region: content
   field_publisher:
     type: entity_reference_label
@@ -276,7 +285,7 @@ content:
       image_loading:
         attribute: lazy
     third_party_settings: {  }
-    weight: 28
+    weight: 29
     region: content
   field_serial_relation_pre_ref_dn:
     type: entity_reference_label
@@ -284,7 +293,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 25
+    weight: 26
     region: content
   field_serial_relation_pre_ref_up:
     type: entity_reference_label
@@ -292,7 +301,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 24
+    weight: 25
     region: content
   field_serial_relation_suc_ref_dn:
     type: entity_reference_label
@@ -300,7 +309,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 27
+    weight: 28
     region: content
   field_serial_relation_suc_ref_up:
     type: entity_reference_label
@@ -308,21 +317,21 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 26
+    weight: 27
     region: content
   field_serial_relationship_op_pre:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 22
+    weight: 23
     region: content
   field_serial_relationship_op_suc:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 23
+    weight: 24
     region: content
   field_subject_notes:
     type: basic_string
@@ -363,7 +372,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 18
+    weight: 19
     region: content
   field_title_notes:
     type: basic_string
@@ -375,7 +384,7 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 17
     region: content
 hidden:
   field_additional_indexed_text: true
