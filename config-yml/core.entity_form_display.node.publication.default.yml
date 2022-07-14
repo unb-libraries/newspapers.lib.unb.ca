@@ -139,13 +139,13 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 24
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
   field_credit:
     type: string_textarea
-    weight: 22
+    weight: 21
     region: content
     settings:
       rows: 2
@@ -217,7 +217,7 @@ content:
             selector: ''
   field_featured:
     type: boolean_checkbox
-    weight: 21
+    weight: 28
     region: content
     settings:
       display_label: true
@@ -476,7 +476,7 @@ content:
     third_party_settings: {  }
   field_panb_id:
     type: string_textfield
-    weight: 29
+    weight: 27
     region: content
     settings:
       size: 60
@@ -603,27 +603,27 @@ content:
       conditional_fields: {  }
   path:
     type: path
-    weight: 27
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 25
+    weight: 24
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 28
+    weight: 29
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 26
+    weight: 25
     region: content
     settings:
       display_label: true
@@ -638,7 +638,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 23
+    weight: 22
     region: content
     settings:
       match_operator: CONTAINS
