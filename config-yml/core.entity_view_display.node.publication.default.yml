@@ -6,7 +6,8 @@ dependencies:
     - field.field.node.publication.field_additional_indexed_text
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_description
-    - field.field.node.publication.field_description_extended
+    - field.field.node.publication.field_description_file
+    - field.field.node.publication.field_description_html
     - field.field.node.publication.field_editor
     - field.field.node.publication.field_family
     - field.field.node.publication.field_featured
@@ -57,6 +58,7 @@ dependencies:
     - file
     - image
     - options
+    - text
     - user
 third_party_settings:
   field_group:
@@ -87,6 +89,21 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 15
+    region: content
+  field_description_file:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 34
+    region: content
+  field_description_html:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 36
     region: content
   field_editor:
     type: entity_reference_label
@@ -381,7 +398,6 @@ content:
 hidden:
   field_additional_indexed_text: true
   field_credit: true
-  field_description_extended: true
   field_featured: true
   field_first_issue_sort_date: true
   field_language: true

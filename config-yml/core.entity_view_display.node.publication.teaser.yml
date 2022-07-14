@@ -7,7 +7,8 @@ dependencies:
     - field.field.node.publication.field_additional_indexed_text
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_description
-    - field.field.node.publication.field_description_extended
+    - field.field.node.publication.field_description_file
+    - field.field.node.publication.field_description_html
     - field.field.node.publication.field_editor
     - field.field.node.publication.field_family
     - field.field.node.publication.field_featured
@@ -50,25 +51,14 @@ dependencies:
     - field.field.node.publication.field_title_notes
     - node.type.publication
   module:
-    - text
     - user
 id: node.publication.teaser
 targetEntityType: node
 bundle: publication
 mode: teaser
 content:
-  field_description_extended:
-    type: text_trimmed
-    label: above
-    settings:
-      trim_length: 600
-    third_party_settings: {  }
-    weight: 28
-    region: content
   links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
+    weight: 100
     region: content
 hidden:
   field_abbreviated_title: true
@@ -76,6 +66,8 @@ hidden:
   field_city_town: true
   field_credit: true
   field_description: true
+  field_description_file: true
+  field_description_html: true
   field_editor: true
   field_family: true
   field_featured: true

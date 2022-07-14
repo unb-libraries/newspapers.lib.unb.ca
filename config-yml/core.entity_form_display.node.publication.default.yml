@@ -6,7 +6,8 @@ dependencies:
     - field.field.node.publication.field_additional_indexed_text
     - field.field.node.publication.field_credit
     - field.field.node.publication.field_description
-    - field.field.node.publication.field_description_extended
+    - field.field.node.publication.field_description_file
+    - field.field.node.publication.field_description_html
     - field.field.node.publication.field_editor
     - field.field.node.publication.field_family
     - field.field.node.publication.field_featured
@@ -58,6 +59,7 @@ dependencies:
     - image
     - languagefield
     - path
+    - text
 third_party_settings:
   field_group:
     group_date_of_publication:
@@ -114,6 +116,22 @@ third_party_settings:
         id: ''
         open: true
         required_fields: false
+    group_description:
+      children:
+        - field_description_html
+        - field_description_file
+      label: Description
+      region: content
+      parent_name: ''
+      weight: 12
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
 id: node.publication.default
 targetEntityType: node
 bundle: publication
@@ -121,13 +139,13 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 23
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
   field_credit:
     type: string_textarea
-    weight: 21
+    weight: 22
     region: content
     settings:
       rows: 2
@@ -135,7 +153,22 @@ content:
     third_party_settings: {  }
   field_description:
     type: string_textarea
-    weight: 12
+    weight: 13
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_description_file:
+    type: file_generic
+    weight: 44
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_description_html:
+    type: text_textarea
+    weight: 43
     region: content
     settings:
       rows: 5
@@ -184,7 +217,7 @@ content:
             selector: ''
   field_featured:
     type: boolean_checkbox
-    weight: 20
+    weight: 21
     region: content
     settings:
       display_label: true
@@ -323,7 +356,7 @@ content:
             selector: ''
   field_issn:
     type: string_textfield
-    weight: 16
+    weight: 17
     region: content
     settings:
       size: 60
@@ -331,7 +364,7 @@ content:
     third_party_settings: {  }
   field_language:
     type: languagefield_select
-    weight: 18
+    weight: 19
     region: content
     settings:
       format:
@@ -429,13 +462,13 @@ content:
     third_party_settings: {  }
   field_microfilmed_by:
     type: options_select
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   field_oclc:
     type: string_textfield
-    weight: 15
+    weight: 16
     region: content
     settings:
       size: 60
@@ -443,7 +476,7 @@ content:
     third_party_settings: {  }
   field_panb_id:
     type: string_textfield
-    weight: 28
+    weight: 29
     region: content
     settings:
       size: 60
@@ -475,7 +508,7 @@ content:
     third_party_settings: {  }
   field_serial_relation_pre_ref_dn:
     type: options_select
-    weight: 20
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -494,7 +527,7 @@ content:
       conditional_fields: {  }
   field_serial_relation_suc_ref_up:
     type: options_select
-    weight: 22
+    weight: 21
     region: content
     settings: {  }
     third_party_settings:
@@ -507,7 +540,7 @@ content:
     third_party_settings: {  }
   field_serial_relationship_op_suc:
     type: options_select
-    weight: 21
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -522,7 +555,7 @@ content:
       conditional_fields: {  }
   field_subject_notes:
     type: string_textarea
-    weight: 14
+    weight: 15
     region: content
     settings:
       rows: 4
@@ -530,7 +563,7 @@ content:
     third_party_settings: {  }
   field_subjects:
     type: string_textfield
-    weight: 13
+    weight: 14
     region: content
     settings:
       size: 60
@@ -547,7 +580,7 @@ content:
       conditional_fields: {  }
   field_supplemental_information:
     type: file_generic
-    weight: 19
+    weight: 20
     region: content
     settings:
       progress_indicator: throbber
@@ -570,27 +603,27 @@ content:
       conditional_fields: {  }
   path:
     type: path
-    weight: 26
+    weight: 27
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 24
+    weight: 25
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 27
+    weight: 28
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 25
+    weight: 26
     region: content
     settings:
       display_label: true
@@ -605,7 +638,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 22
+    weight: 23
     region: content
     settings:
       match_operator: CONTAINS
@@ -615,7 +648,6 @@ content:
     third_party_settings: {  }
 hidden:
   field_additional_indexed_text: true
-  field_description_extended: true
   field_first_issue_search_date: true
   field_first_issue_sort_date: true
   field_last_issue_search_date: true
