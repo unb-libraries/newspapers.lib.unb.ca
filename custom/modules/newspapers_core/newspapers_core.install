@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\node\Entity\Node;
 
 /*
  * Implements hook_install().
@@ -18,5 +19,52 @@ function newspapers_core_install() {
   foreach($directories as $directory) {
     $directory = \Drupal::config('system.file')->get('default_scheme') . "://$directory";
     \Drupal::service('file_system')->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Process all publication nodes,
+ * Migrate plain text from description to description_html field.
+ */
+function newspapers_core_update_8101(&$sandbox) {
+  // Initialize variables during first pass through.
+  if (!isset($sandbox['total'])) {
+    $nids = \Drupal::entityQuery('node')
+      ->condition('type', 'publication')
+      ->exists('field_description')
+      ->execute();
+    // Set sandbox variables.
+    $sandbox['total'] = count($nids);
+    $sandbox['current'] = 0;
+  }
+  $batch_size = 25;
+
+  // Process next batch of publication nodes.
+  $nids = \Drupal::entityQuery('node')
+    ->condition('type', 'publication')
+    ->exists('field_description')
+    ->range($sandbox['current'], $batch_size)
+    ->execute();
+  if (empty($nids)) {
+    $sandbox['#finished'] = 1;
+    return;
+  }
+
+  // Operate on this group of publications.
+  foreach ($nids as $nid) {
+    $publication = Node::load($nid);
+    $publication->field_description_html->value = $publication->field_description->value;
+    $publication->save();
+    $sandbox['current']++;
+  }
+  unset($nids);
+
+  // Check if we are finished.
+  if ($sandbox['current'] >= $sandbox['total']) {
+    $sandbox['#finished'] = 1;
+  } else {
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
   }
 }
