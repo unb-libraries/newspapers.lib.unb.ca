@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - filter.format.description_html
     - filter.format.full_html
     - node.type.page
     - node.type.publication
@@ -48,6 +49,7 @@ permissions:
   - 'edit terms in publisher'
   - 'override publication published option'
   - 'revert publication revisions'
+  - 'use text format description_html'
   - 'use text format full_html'
   - 'view any unpublished publication content'
   - 'view own unpublished content'
