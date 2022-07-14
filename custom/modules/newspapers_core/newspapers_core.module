@@ -172,6 +172,9 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
       // Prevent original migrated frequency field editing.
       $form['field_frequency']['#disabled'] = TRUE;
 
+      // Prevent original description field editing.
+      $form['field_description']['#disabled'] = TRUE;
+
       // NBNP-377: Prevent PANB migrated ID field editing if already contains value.
       $form['field_panb_id']['#disabled'] = !empty($form_state
         ->getFormObject()
