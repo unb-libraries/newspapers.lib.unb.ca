@@ -531,7 +531,7 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: tag
+        type: none
         options: {  }
       empty:
         area:
@@ -654,7 +654,7 @@ display:
           separator: ''
           hide_empty: false
       query:
-        type: views_query
+        type: search_api_query
         options:
           bypass_access: false
           skip_access: false

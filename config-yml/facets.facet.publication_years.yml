@@ -11,6 +11,8 @@ id: publication_years
 name: 'Publication Year'
 weight: 0
 min_count: 1
+missing: false
+missing_label: others
 url_alias: publication_years
 facet_source_id: 'search_api:views_page__search__search_page'
 field_identifier: years_published

@@ -524,7 +524,7 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: tag
+        type: none
         options: {  }
       empty:
         area:
@@ -660,6 +660,7 @@ display:
             sort_locality: sort_locality
             field_first_issue_search_date_sort: field_first_issue_search_date_sort
             field_last_issue_search_date_sort: field_last_issue_search_date_sort
+            holdings_1: holdings_1
           default: '-1'
           info:
             title:
@@ -707,6 +708,13 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
+            holdings_1:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
           override: true
           sticky: false
           summary: ''
@@ -716,7 +724,7 @@ display:
       row:
         type: fields
       query:
-        type: views_query
+        type: search_api_query
         options:
           bypass_access: false
           skip_access: false

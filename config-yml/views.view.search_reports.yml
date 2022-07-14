@@ -343,7 +343,7 @@ display:
         options:
           perm: 'administer nodes'
       cache:
-        type: tag
+        type: none
         options: {  }
       empty:
         area:
@@ -528,7 +528,7 @@ display:
       row:
         type: fields
       query:
-        type: views_query
+        type: search_api_query
         options:
           bypass_access: false
           skip_access: false

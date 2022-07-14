@@ -11,6 +11,8 @@ id: parent_issue_country
 name: Country
 weight: 0
 min_count: 1
+missing: false
+missing_label: others
 url_alias: parent_issue_country
 facet_source_id: 'search_api:views_page__digital_page_lister__page_search'
 field_identifier: parent_issue_country

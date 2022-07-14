@@ -11,6 +11,8 @@ id: city_locality
 name: City/Locality
 weight: 0
 min_count: 1
+missing: false
+missing_label: others
 url_alias: city_locality
 facet_source_id: 'search_api:views_page__search__search_page'
 field_identifier: locality_facet
