@@ -1,0 +1,27 @@
+uuid: 1a58dadd-59bc-4c4b-b0cc-d14d8c74fe98
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_description_file
+    - node.type.publication
+  module:
+    - file
+id: node.publication.field_description_file
+field_name: field_description_file
+entity_type: node
+bundle: publication
+label: 'File Attachment'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: media/documents
+  file_extensions: 'csv doc docx pdf ppt pptx rtf txt xls xlsx zip'
+  max_filesize: ''
+  description_field: true
+field_type: file

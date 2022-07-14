@@ -1,9 +1,9 @@
-uuid: 3ea63901-8501-46f9-805c-d9d7dab8246b
+uuid: 87184887-c60b-4d63-8850-b5eaa4fef919
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_description_extended
+    - field.storage.node.field_description_html
     - node.type.publication
   module:
     - allowed_formats
@@ -11,13 +11,13 @@ dependencies:
 third_party_settings:
   allowed_formats:
     allowed_formats:
-      - basic_html
-id: node.publication.field_description_extended
-field_name: field_description_extended
+      - description_html
+id: node.publication.field_description_html
+field_name: field_description_html
 entity_type: node
 bundle: publication
-label: Description
-description: 'Broad description or abstract for the paper'
+label: 'Broad description or abstract for the paper'
+description: ''
 required: false
 translatable: false
 default_value: {  }
