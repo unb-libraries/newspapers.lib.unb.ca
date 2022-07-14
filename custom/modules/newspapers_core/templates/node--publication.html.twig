@@ -99,7 +99,9 @@
       {% if frequency_value %}
         <div class="frequency">{{ frequency_value }}</div>
       {% endif %}
-      {% if content.field_description|field_value %}
+      {% if content.field_description_html|field_value %}
+        <div class="description">{{ content.field_description_html|field_value }}</div>
+      {% elseif content.field_description|field_value %}
         <div class="description">{{ content.field_description|field_value }}</div>
       {% endif %}
     </div>
@@ -137,7 +139,7 @@
             <div>{{ content.field_subtitle|field_value }}</div>
           {% endif %}
 
-          <dl>
+          <dd>
             {% if publication_date_value %}
               <dt>{{ publication_date_label }}:</dt>
               <dd>{{ publication_date_value }}</dd>
@@ -236,7 +238,17 @@
               </dd>
             {% endif %}
 
-            {% if content.field_description|field_value %}
+            {% if content.field_description_html|field_value or content.field_description_media_file|field_value %}
+              <dt>{% trans %}Description{% endtrans %}:</dt>
+              <dd>
+                {% if content.field_description_html|field_value %}
+                  <div class="description-html">{{ content.field_description_html|field_value }}</div>
+                {% endif %}
+                {% if content.field_description_file|field_value %}
+                  <div class="description-files">{{ content.field_description_file|field_value }}</div>
+                {% endif %}
+              </dd>
+            {% elseif content.field_description|field_value %}
               <dt>{{ content.field_description|field_label }}:</dt>
               <dd>{{ content.field_description|field_value }}</dd>
             {% endif %}
@@ -293,6 +305,11 @@
               <dt>{{ content.field_supplemental_information|field_label }}:</dt>
               <dd class="no-borders">{{ content.field_supplemental_information|field_value }}</dd>
             {% endif %}
+
+          {% if content.field_description_media_file|field_value %}
+            <dt>{{ content.field_description_media_file|field_label }}:</dt>
+            <dd>{{ content.field_description_media_file|field_value }}</dd>
+          {% endif %}
           </dl>
         </div>
       </section>
