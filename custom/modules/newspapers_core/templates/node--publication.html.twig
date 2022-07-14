@@ -90,7 +90,7 @@
     <div>
       <h2>Featured Publication</h2>
       <div class="title"><strong><a href="{{ url }}">{{ label }}</a></strong></div>
-      {% if content.field_place_of_publication|field_value %}
+      {% if publication_date_value %}
         <div class="date">{{ publication_date_value }}</div>
       {% endif %}
       {% if content.field_place_of_publication|field_value %}
