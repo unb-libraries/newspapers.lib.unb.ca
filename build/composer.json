@@ -174,7 +174,7 @@
     "drupal/pathauto": "1.10",
     "drupal/redis": "1.5",
     "drupal/samlauth": "3.6",
-    "drupal/search_api": "1.23",
+    "drupal/search_api": "1.24",
     "drupal/search_api_autocomplete": "1.6",
     "drupal/search_api_solr": "4.2.7",
     "drupal/token": "1.10",
