@@ -238,7 +238,7 @@
               </dd>
             {% endif %}
 
-            {% if content.field_description_html|field_value or content.field_description_media_file|field_value %}
+            {% if content.field_description_html|field_value or content.field_description_file|field_value %}
               <dt>{% trans %}Description{% endtrans %}:</dt>
               <dd>
                 {% if content.field_description_html|field_value %}
@@ -305,11 +305,6 @@
               <dt>{{ content.field_supplemental_information|field_label }}:</dt>
               <dd class="no-borders">{{ content.field_supplemental_information|field_value }}</dd>
             {% endif %}
-
-          {% if content.field_description_media_file|field_value %}
-            <dt>{{ content.field_description_media_file|field_label }}:</dt>
-            <dd>{{ content.field_description_media_file|field_value }}</dd>
-          {% endif %}
           </dl>
         </div>
       </section>
