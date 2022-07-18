@@ -55,6 +55,9 @@ ins {
 .description {
   color: $text-muted;
 }
+.description-html p:last-child {
+  margin-bottom: 0;
+}
 dl .inline-list {
   display: inline;
   padding-left: 0;
