@@ -140,24 +140,16 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 23
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
   field_credit:
     type: string_textarea
-    weight: 21
+    weight: 20
     region: content
     settings:
       rows: 2
-      placeholder: ''
-    third_party_settings: {  }
-  field_description:
-    type: string_textarea
-    weight: 13
-    region: content
-    settings:
-      rows: 5
       placeholder: ''
     third_party_settings: {  }
   field_description_file:
@@ -221,7 +213,7 @@ content:
             selector: ''
   field_featured:
     type: boolean_checkbox
-    weight: 28
+    weight: 27
     region: content
     settings:
       display_label: true
@@ -360,7 +352,7 @@ content:
             selector: ''
   field_issn:
     type: string_textfield
-    weight: 17
+    weight: 16
     region: content
     settings:
       size: 60
@@ -368,7 +360,7 @@ content:
     third_party_settings: {  }
   field_language:
     type: languagefield_select
-    weight: 19
+    weight: 18
     region: content
     settings:
       format:
@@ -466,13 +458,13 @@ content:
     third_party_settings: {  }
   field_microfilmed_by:
     type: options_select
-    weight: 18
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
   field_oclc:
     type: string_textfield
-    weight: 16
+    weight: 15
     region: content
     settings:
       size: 60
@@ -480,7 +472,7 @@ content:
     third_party_settings: {  }
   field_panb_id:
     type: string_textfield
-    weight: 27
+    weight: 26
     region: content
     settings:
       size: 60
@@ -559,7 +551,7 @@ content:
       conditional_fields: {  }
   field_subject_notes:
     type: string_textarea
-    weight: 15
+    weight: 14
     region: content
     settings:
       rows: 4
@@ -567,7 +559,7 @@ content:
     third_party_settings: {  }
   field_subjects:
     type: string_textfield
-    weight: 14
+    weight: 13
     region: content
     settings:
       size: 60
@@ -584,7 +576,7 @@ content:
       conditional_fields: {  }
   field_supplemental_information:
     type: file_generic
-    weight: 20
+    weight: 19
     region: content
     settings:
       progress_indicator: throbber
@@ -607,27 +599,27 @@ content:
       conditional_fields: {  }
   path:
     type: path
-    weight: 26
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 24
+    weight: 23
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 29
+    weight: 28
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 25
+    weight: 24
     region: content
     settings:
       display_label: true
@@ -642,7 +634,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 22
+    weight: 21
     region: content
     settings:
       match_operator: CONTAINS
@@ -652,6 +644,7 @@ content:
     third_party_settings: {  }
 hidden:
   field_additional_indexed_text: true
+  field_description: true
   field_first_issue_search_date: true
   field_first_issue_sort_date: true
   field_last_issue_search_date: true
