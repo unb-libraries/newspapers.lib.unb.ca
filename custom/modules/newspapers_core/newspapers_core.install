@@ -28,7 +28,7 @@ function newspapers_core_install() {
  * Process all publication nodes,
  * Migrate plain text from description to description_html field.
  */
-function newspapers_core_update_8101(&$sandbox) {
+function newspapers_core_update_9101(&$sandbox) {
   // Initialize variables during first pass through.
   if (!isset($sandbox['total'])) {
     $nids = \Drupal::entityQuery('node')
