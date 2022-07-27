@@ -1,0 +1,456 @@
+<?php
+
+/**
+ * @file
+ * Contains publication_holdings_bulk_import.module.
+ */
+
+use Drupal\Core\Link;
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Get migration destinations for a specific migration ID.
+ *
+ * @param string $id
+ *   The migration ID.
+ *
+ * @return object
+ *   The db query objects.
+ */
+function _publication_holdings_bulk_import_get_migration_destinations($id) {
+  $table_name = "migrate_map_$id";
+  return \Drupal\core\Database\Database::getConnection()->query("SELECT destid1 FROM $table_name", [
+    ':migrate_id' => $table_name,
+  ]);
+}
+
+/**
+ * Get the Holdings coded migrations.
+ *
+ * @param string $migration_id
+ *   The migration ID to match.
+ * @param string $prefix
+ *   The migration prefix to filter on.
+ *
+ * @return array
+ *   An array of migration objects, keyed by migration ID.
+ */
+function _publication_holdings_bulk_import_get_migrations($migration_id = NULL, $prefix = 'publication_holdings_') {
+  $manager = \Drupal::service('plugin.manager.migration');
+  $plugins = $manager->createInstances([]);
+  $matched_migrations = [];
+
+  // Get the requested migrations.
+  foreach ($plugins as $id => $migration) {
+    if (substr($id, 0, strlen($prefix)) === $prefix) {
+      if (
+        (!empty($migration_id) && $migration_id == $id) ||
+        empty($migration_id)
+      ) {
+        $matched_migrations[$id] = $migration;
+      }
+    }
+  }
+
+  return $matched_migrations;
+}
+
+/**
+ * Get the form elements for a list of migrations.
+ *
+ * @param string $migration_id
+ *   The migration ID to match.
+ * @param string $prefix
+ *   The migration prefix to filter on.
+ *
+ * @return array
+ *   A form API render array of the migration details.
+ */
+function _publication_holdings_bulk_import_get_migration_table($migration_id = NULL, $prefix = 'publication_holdings_') {
+  $previous_migrations = _publication_holdings_bulk_import_get_migrations($migration_id, $prefix);
+
+  if (!empty($previous_migrations)) {
+    // Construct header.
+    $header = [
+      t('ID'),
+      t('Status'),
+      t('Total'),
+      t('Imported'),
+      t('Errored'),
+      t('Date'),
+    ];
+    // Build the rows.
+    $rows = [];
+    foreach ($previous_migrations as $migration) {
+      $map = $migration->getIdMap();
+
+      $imported = $map->importedCount();
+      $source_plugin = $migration->getSourcePlugin();
+      $migrate_last_imported_store = \Drupal::keyValue('migrate_last_imported');
+      $last_imported = $migrate_last_imported_store->get($migration->id(), FALSE);
+
+      $source_rows = $source_plugin->count();
+      if ($source_rows == -1) {
+        $source_rows = t('N/A');
+        $unprocessed = t('N/A');
+      }
+      else {
+        $unprocessed = $source_rows - $map->processedCount();
+      }
+
+      $imported_date = 'Never';
+      if ($last_imported != 0) {
+        $imported_date = date("Y-m-d H:i:s", (int) substr($last_imported, 0, 10));
+      }
+
+      $rows[] = [
+        'data' => [
+          Link::createFromRoute($migration->id(), 'publication_holdings_bulk_import.view', ['migration_id' => $migration->id()]),
+          $migration->getStatusLabel(),
+          $source_rows,
+          $imported,
+          $unprocessed,
+          $imported_date,
+        ],
+      ];
+    }
+    $form['history_table'] = [
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+    ];
+    $form['pager'] = [
+      '#type' => 'pager',
+    ];
+  }
+  else {
+    $form['none_found'] = [
+      '#markup' => t('No imports have been performed yet.'),
+    ];
+  }
+  return $form;
+}
+
+/**
+ * Get the list of import formats.
+ *
+ * @TODO This would be much cleaner as configuration.
+ *
+ * @return array
+ *   An array of formats available to the user with details.
+ */
+function _publication_holdings_bulk_import_get_import_formats() {
+  return [
+    [
+      'id' => 'publication_holdings_import_standard',
+      'description' => 'Standard, All Columns',
+      'columns' => [
+
+        [
+          'name' => 'ID',
+          'validate' => [],
+        ],
+
+        [
+          'name' => 'Institution ID *',
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_term_reference',
+              'args' => [
+                'vid' => 'institution',
+              ],
+              'error' => t('is not a valid institution ID.'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Newspaper ID *',
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_node',
+              'args' => [
+                'bundle' => 'publication',
+              ],
+              'error' => t('is not a valid holding newspaper ID'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Title *',
+          'validate' => [],
+        ],
+
+        [
+          'name' => 'Type (Microform or Print) *',
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_list',
+              'args' => [
+                'valid_items' => [
+                  'Microform',
+                  'Print',
+                ],
+              ],
+              'error' => t('is not a valid holding type. Valid types: Microform, Print'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Microform Type (neg or pos) *',
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_list',
+              'args' => [
+                'valid_items' => [
+                  'neg',
+                  'pos',
+                ],
+              ],
+              'error' => t('is not a valid microform type. Valid types: neg,pos'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Holding Start Date *',
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_date',
+              'args' => [],
+              'error' => t('is not a valid holding start date. Valid format: YYYY-MM-DD'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Holding End Date *',
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_date',
+              'args' => [],
+              'error' => t('is not a valid holding end date. Valid format: YYYY-MM-DD'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Holding Coverage Statement *',
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_string_length',
+              'args' => [
+                'length' => '512',
+              ],
+              'error' => t('is not a valid holding coverage statement. Maximum characters: 512'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Missing Holdings',
+          'required' => FALSE,
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_string_length',
+              'args' => [
+                'length' => '2048',
+              ],
+              'error' => t('is not a valid missing holdings statement. Maximum characters: 2048'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Location',
+          'required' => FALSE,
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_string_length',
+              'args' => [
+                'length' => '256',
+              ],
+              'error' => t('is not a valid location statement. Maximum characters: 256'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Call Number',
+          'required' => FALSE,
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_string_length',
+              'args' => [
+                'length' => '256',
+              ],
+              'error' => t('is not a valid call number statement. Maximum characters: 256'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Filed As',
+          'required' => FALSE,
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_string_length',
+              'args' => [
+                'length' => '256',
+              ],
+              'error' => t('is not a valid filed-as statement. Maximum characters: 256'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Retention Period',
+          'required' => FALSE,
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_string_length',
+              'args' => [
+                'length' => '256',
+              ],
+              'error' => t('is not a valid retention period statement. Maximum characters: 256'),
+            ],
+          ],
+        ],
+
+        [
+          'name' => 'Notes (public display)',
+          'required' => FALSE,
+          'validate' => [
+            [
+              'function' => '_publication_holdings_validate_string_length',
+              'args' => [
+                'length' => '2048',
+              ],
+              'error' => t('is not a valid notes statement. Maximum characters: 2048'),
+            ],
+          ],
+        ],
+
+      ],
+    ],
+  ];
+}
+
+/**
+ * Get an import format.
+ *
+ * @param string $format_id
+ *   The format ID to return.
+ *
+ * @return array
+ *   An import format array with details.
+ */
+function _publication_holdings_bulk_import_get_import_format($format_id): array {
+  foreach (_publication_holdings_bulk_import_get_import_formats() as $format) {
+    if ($format['id'] == $format_id) {
+      return $format;
+    }
+  }
+  return [];
+}
+
+/**
+ * Validate data to determine if this is an existing taxonomy term.
+ *
+ * @param string $tid
+ *   The tid.
+ * @param int $vid
+ *   The vocabulary ID to filter on.
+ *
+ * @return bool
+ *   TRUE if $data is a term in the $vid vocabulary. FALSE otherwise.
+ */
+function _publication_holdings_validate_term_reference($tid, $vid): bool {
+  $term = Term::load(trim($tid));
+  if (!empty($term) && $term->bundle() == $vid) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Validate data to determine if this is an existing node.
+ *
+ * @param string $nid
+ *   The nid.
+ * @param int $bundle
+ *   The node type.
+ *
+ * @return bool
+ *   TRUE if $data is a node of type $bundle. FALSE otherwise.
+ */
+function _publication_holdings_validate_node($nid, $bundle): bool {
+  $nids = \Drupal::entityQuery('node')
+    ->condition('nid', $nid)
+    ->condition('type', $bundle)
+    ->execute();
+  if (!empty($nids)) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Validate a string to a maximum length.
+ *
+ * @param string $data
+ *   The string to validate.
+ * @param int $length
+ *   The maximum length.
+ *
+ * @return bool
+ *   TRUE if the string is less than $length.
+ */
+function _publication_holdings_validate_string_length($data, $length): bool {
+  if (strlen($data) <= $length) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Validate a string against a list of acceptable values.
+ *
+ * @TODO This may be replaced with in_array, I think.
+ *
+ * @param string $data
+ *   The string to validate.
+ * @param string[] $length
+ *   The valid items.
+ *
+ * @return bool
+ *   TRUE if the item is in the valid list.
+ */
+function _publication_holdings_validate_list($data, $valid_items): bool {
+  if (in_array($data, $valid_items)) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Validate a holding date.
+ *
+ * @param string $data
+ *   The string to validate.
+ *
+ * @return bool
+ *   TRUE if the item is a valid date of the format YYYY-MM-DD.
+ */
+function _publication_holdings_validate_date($data): bool {
+  $date_values = explode('-', $data);
+  if (
+    count($date_values) == 3 &&
+    checkdate($date_values[1], $date_values[2], $date_values[0])
+  ) {
+    return TRUE;
+  }
+  return FALSE;
+}

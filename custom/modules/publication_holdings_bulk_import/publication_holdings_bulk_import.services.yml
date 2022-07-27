@@ -1,0 +1,5 @@
+services:
+  publication_holdings_bulk_import.migrate_subscriber:
+    class: Drupal\publication_holdings_bulk_import\Event\MigrateEvent
+    tags:
+      - { name: event_subscriber }

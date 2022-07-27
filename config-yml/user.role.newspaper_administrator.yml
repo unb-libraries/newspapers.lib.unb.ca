@@ -17,6 +17,7 @@ dependencies:
     - filter
     - node
     - override_node_options
+    - publication_holdings_bulk_import
     - serial_holding
     - system
     - taxonomy
@@ -35,6 +36,7 @@ permissions:
   - 'add serial page entities'
   - 'administer digital serial title entities'
   - 'administer serial issue entities'
+  - 'bulk import publication holdings'
   - 'create publication content'
   - 'create terms in editor'
   - 'create terms in family'

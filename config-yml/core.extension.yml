@@ -52,6 +52,10 @@ module:
   languagefield: 0
   link: 0
   menu_ui: 0
+  migrate: 0
+  migrate_plus: 0
+  migrate_source_csv: 0
+  migrate_tools: 0
   mysql: 0
   newspapers_core: 0
   node: 0
@@ -62,6 +66,7 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
+  publication_holdings_bulk_import: 0
   quickedit: 0
   rdf: 0
   redis: 0

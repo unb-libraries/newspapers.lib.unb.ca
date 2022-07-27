@@ -1,0 +1,31 @@
+# The source data is in CSV files, so we use the 'csv' source plugin.
+id: publication_holdings_bulk_import_standard_HOLDINGIMPORTID
+label: Holdings Sample Import from HOLDINGIMPORTDATE
+
+migration_tags:
+  - CSV
+  - Holdings
+
+source:
+  plugin: csv
+  path: 'HOLDINGIMPORTFILEPATH'
+  ids:
+    - 'ID'
+
+destination:
+  plugin: entity:serial_holding
+
+process:
+  field_holding_institution: 'Institution ID *'
+  parent_title: 'Newspaper ID *'
+  holding_type: 'holding_type_processed' # NEEDS PREPROCESS
+  holding_microform_type: 'microform_type_processed' # NEEDS PREPROCESS
+  holding_start_date: 'Holding Start Date *'
+  holding_end_date: 'Holding End Date *'
+  holding_coverage: 'Holding Coverage Statement *'
+  field_missing_holdings: 'Missing Holdings'
+  holding_location: 'Location'
+  holding_call_no: 'Call Number'
+  holding_filed_as: 'Filed As'
+  holding_retention: 'Retention Period'
+  holding_notes: 'Notes (public display)'

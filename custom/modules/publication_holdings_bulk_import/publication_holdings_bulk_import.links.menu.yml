@@ -1,0 +1,6 @@
+publication_holdings_bulk_import.admin.import:
+  title: 'Bulk Import Holdings'
+  parent: 'system.admin'
+  description: 'Bulk Import Publication Holdings.'
+  route_name: publication_holdings_bulk_import.import
+  weight: 10

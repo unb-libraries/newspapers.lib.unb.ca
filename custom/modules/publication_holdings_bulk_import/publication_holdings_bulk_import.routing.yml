@@ -1,0 +1,23 @@
+publication_holdings_bulk_import.import:
+  path: '/bulk_import_holdings'
+  defaults:
+    _form: 'Drupal\publication_holdings_bulk_import\Form\PublicationHoldingsBulkImportForm'
+    _title: 'Bulk Import Publication Holdings'
+  requirements:
+    _permission: 'bulk import publication holdings'
+
+publication_holdings_bulk_import.view:
+  path: '/bulk_import_holdings/{migration_id}'
+  defaults:
+    _form: 'Drupal\publication_holdings_bulk_import\Form\PublicationHoldingsBulkMigrationView'
+    _title: 'Bulk Import Details'
+  requirements:
+    _permission: 'bulk import publication holdings'
+
+publication_holdings_bulk_import.format.template:
+  path: '/bulk_import_holdings/format/{format_id}'
+  defaults:
+    _controller: '\Drupal\publication_holdings_bulk_import\Controller\DownloadCSVTemplateController::serveFile'
+    _title: 'Download CSV Template File'
+  requirements:
+    _permission: 'bulk import publication holdings'

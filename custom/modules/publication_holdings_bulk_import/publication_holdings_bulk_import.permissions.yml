@@ -1,0 +1,3 @@
+bulk import publication holdings:
+  title: 'bulk import publication holdings'
+  description: '<i>Bulk import publication holdings via CSV.</i>'
