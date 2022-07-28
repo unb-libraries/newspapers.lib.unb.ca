@@ -1,2 +1,2 @@
 ID,Institution ID *,Newspaper ID *,Title *,Type (Microform or Print) *,Microform Type (neg or pos) *,Holding Start Date *,Holding End Date *,Holding Coverage Statement *,Missing Holdings,Location,Call Number,Filed As,Retention Period,Notes (public display)
-1,626,115,Captial Free Press,Print,pos,1949-10-13,1956-12-27,"Oct 13, 1949 - Dec 27, 1956",<b>Sample missing text<b>,Sample location,Sample callnumber,Sample filedas,Sample retention period,<b>These are sample notes<b> where some words are bold.
+1,626,115,Captial Free Press,Microform,neg,1949-10-13,1956-12-27,"Oct 13, 1949 - Dec 27, 1956",<b>Sample missing text<b>,Sample location,Sample callnumber,Sample filedas,Sample retention period,<b>These are sample notes<b> where some words are bold.
