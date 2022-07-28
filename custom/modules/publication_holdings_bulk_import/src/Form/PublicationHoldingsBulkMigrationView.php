@@ -5,6 +5,7 @@ namespace Drupal\publication_holdings_bulk_import\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 
 /**
@@ -71,7 +72,10 @@ class PublicationHoldingsBulkMigrationView extends FormBase {
               !empty($holding->getHoldingStartDate()) ? $holding->getHoldingStartDate()->format('Y-m-d') : 'Unknown',
               !empty($holding->getHoldingEndDate()) ? $holding->getHoldingEndDate()->format('Y-m-d') : 'Unknown',
               !empty($holding->getInstitution()) ? $holding->getInstitution()->label() : 'Unknown',
-              Link::createFromRoute('link', 'entity.serial_holding.canonical', ['serial_holding' => $target->destid1]),
+              Link::fromTextAndUrl(
+                t('Link'),
+                Url::fromUri("internal:/admin/structure/serial_holding/$target->destid1/edit")
+              )->toString()
             ],
           ];
         }
