@@ -130,13 +130,6 @@ class PublicationHoldingsCsvMigration {
     $migration = \Drupal::service('plugin.manager.migration')->createInstance($migration_id);
     $executable = new MigrateExecutable($migration, new MigrateMessage(), ['limit' => $item_limit]);
     $executable->import();
-
-    $context['message'] = t(
-      '[NID#@nid] Imported specimen.',
-      [
-        '@nid' => 777,
-      ]
-    );
   }
 
 }

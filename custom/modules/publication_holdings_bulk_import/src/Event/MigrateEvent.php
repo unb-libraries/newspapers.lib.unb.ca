@@ -14,7 +14,10 @@ use Drupal\migrate\Row;
  */
 class MigrateEvent implements EventSubscriberInterface {
 
-  const MULTIPLE_VALUE_DELIMITER = '|';
+  const HOLDING_TYPE_ID_MAP = [
+    'Print' => 1,
+    'Microform' => 2,
+  ];
 
   /**
    * {@inheritdoc}
@@ -34,11 +37,28 @@ class MigrateEvent implements EventSubscriberInterface {
     $row = $event->getRow();
     $migration = $event->getMigration();
     $id = $migration->id();
-    $query = 'publication_holdings_bulk_import_standard';
+    $query = 'publication_holdings_import_standard_';
 
     // Only act on rows for this migration.
     if (substr($id, 0, strlen($query)) === $query) {
-      // Pass.
+      $holding_type_string = trim($row->getSourceProperty('Type (Microform or Print) *'));
+      if (
+        !empty($holding_type_string) &&
+        array_key_exists($holding_type_string, self::HOLDING_TYPE_ID_MAP)
+      ) {
+        $row->setSourceProperty(
+          'holding_type_processed',
+          self::HOLDING_TYPE_ID_MAP[$holding_type_string]
+        );
+        $microform_type_string = trim($row->getSourceProperty('Microform Type (neg or pos) *'));
+        if ($holding_type_string == 'Microform' && !empty($microform_type_string)) {
+          $row->setSourceProperty(
+            'microform_type_processed',
+            $microform_type_string
+          );
+        }
+      }
+
     }
   }
 

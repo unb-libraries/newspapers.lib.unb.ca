@@ -37,52 +37,62 @@ class PublicationHoldingsBulkMigrationView extends FormBase {
       ),
     ];
     $form['import_details']['table'] = _publication_holdings_bulk_import_get_migration_table($migration_id);
-
     $migrate_targets = _publication_holdings_bulk_import_get_migration_destinations($migration_id);
+
     if (!empty($migrate_targets)) {
       // Construct header.
       $header = [
         t('Row'),
-        t('Accession ID'),
-        t('Scientific Name'),
-        t('Collectors'),
-        t('Date Collected'),
+        t('Parent Publication'),
+        t('Type'),
+        t('Start'),
+        t('End'),
+        t('Institution'),
+        t('Holding'),
       ];
       // Build the rows.
       $rows = [];
 
       foreach ($migrate_targets as $target) {
         if (!empty($target->destid1)) {
-          $node = Node::load($target->destid1);
-          $collectors = _herbarium_specimen_get_collector_list($node);
+          $holding = \Drupal::entityTypeManager()->getStorage('serial_holding')->load($target->destid1);
+          $publication = $holding->getParentTitle();
+          $type = !empty($holding->getHoldingType()) ? $holding->getHoldingType()->label() : 'Unknown';
+          if ($type == 'Microform') {
+            $microform_type = !empty($holding->getMicroformType()) ? $holding->getMicroformType() : 'Unknown';
+            $type = "$type ($microform_type)";
+          }
+
           $rows[] = [
             'data' => [
               count($rows) + 1,
-              $node->get('field_dwc_record_number')->value,
-              Link::createFromRoute($node->getTitle(), 'entity.node.canonical', ['node' => $target->destid1]),
-              render($collectors),
-              $node->get('field_dwc_eventdate')->value,
+              Link::createFromRoute($publication->label(), 'entity.node.canonical', ['node' => $publication->id()]),
+              $type,
+              !empty($holding->getHoldingStartDate()) ? $holding->getHoldingStartDate()->format('Y-m-d') : 'Unknown',
+              !empty($holding->getHoldingEndDate()) ? $holding->getHoldingEndDate()->format('Y-m-d') : 'Unknown',
+              !empty($holding->getInstitution()) ? $holding->getInstitution()->label() : 'Unknown',
+              Link::createFromRoute('link', 'entity.serial_holding.canonical', ['serial_holding' => $target->destid1]),
             ],
           ];
         }
       }
 
-      $form['import_details']['specimen_list'] = [
+      $form['import_details']['holding_list'] = [
         '#type' => 'fieldset',
       ];
 
-      $form['import_details']['specimen_list']['header'] = [
+      $form['import_details']['holding_list']['header'] = [
         '#markup' => t(
-          '<h2><em>Specimens Imported:</em></h2>'
+          '<h2><em>Holdings Imported:</em></h2>'
         ),
       ];
 
-      $form['import_details']['specimen_list']['message_table'] = [
+      $form['import_details']['holding_list']['message_table'] = [
         '#theme' => 'table',
         '#header' => $header,
         '#rows' => $rows,
       ];
-      $form['import_details']['specimen_list']['pager'] = [
+      $form['import_details']['holding_list']['pager'] = [
         '#type' => 'pager',
       ];
 

@@ -190,6 +190,7 @@
     "furf/jquery-ui-touch-punch": "dev-master",
     "harvesthq/chosen": "~1.8",
     "markgoodyear/scrollup": "dev-master",
+    "neitanod/forceutf8": "^2",
     "nodespark/des-connector": "5.x-dev",
     "phpoffice/phpspreadsheet": "^1.5.0",
     "simeydotme/jquery-ui-slider-pips": "~1.11",

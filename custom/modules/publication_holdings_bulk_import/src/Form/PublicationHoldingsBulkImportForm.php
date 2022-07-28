@@ -39,7 +39,7 @@ class PublicationHoldingsBulkImportForm extends FormBase {
     ];
     $form['upload_import']['message'] = [
       '#markup' => t(
-        '<p style="margin:10px;">This interface provides a bulk publication holding format. By uploading a CSV file in the specified format, you may create multiple publication holdings at once. For a sample CSV file matching the required format, click the \'Download a blank template for this format\' link below.</p>'
+        '<p style="margin:10px;">This interface provides a method to create multiple publication holdings by uploading a CSV file in the specified format. For an empty CSV file matching the required format, please click the \'Download an empty CSV template for this format\' link below. <b>Please note that, in the CSV file, the column titles must remain unchanged.</b></p>'
       ),
     ];
 
@@ -91,13 +91,13 @@ class PublicationHoldingsBulkImportForm extends FormBase {
 
     $form['import_history']['header'] = [
       '#markup' => t(
-        '<h2><em>Previous Bulk Imports</em></h2>'
+        '<h2><em>Import History</em></h2>'
       ),
     ];
 
     $form['import_history']['message'] = [
       '#markup' => t(
-        '<p style="margin:10px;">Below is a listing of previous bulk imports performed within the last 30 days. After 30 days, the imports will be presumed to be complete and the reference to them will be removed from this display.</p>'
+        '<p style="margin:10px;">Below, you will find a listing of previous bulk imports performed since the last server restart. After the next server restart, references to them will be removed from this display.</p>'
       ),
     ];
 
@@ -114,21 +114,23 @@ class PublicationHoldingsBulkImportForm extends FormBase {
 
     if (empty($user_input['_triggering_element_value']) || $user_input['_triggering_element_value'] != 'Remove') {
       ini_set("auto_detect_line_endings", '1');
-      $file = File::Load($form_state->getValue('import_file')[0]);
-      if (!empty($file)) {
-        $file_path = \Drupal::service('file_system')->realpath($file->getFileUri());
-        $format_id = $form_state->getValue('import_format');
+      if (!empty($form_state->getValue('import_file')[0])) {
+        $file = File::Load($form_state->getValue('import_file')[0]);
+        if (!empty($file)) {
+          $file_path = \Drupal::service('file_system')->realpath($file->getFileUri());
+          $format_id = $form_state->getValue('import_format');
 
-        if (
-          $this->validateImportFormat($form_state, $format_id) &&
-          $this->validateCsvStructure($form, $form_state, $file_path,
-            $format_id) &&
-          $this->validateRowData($form, $form_state, $file_path, $format_id) &&
-          $this->validateData($form, $form_state, $file_path, $format_id)
+          if (
+            $this->validateImportFormat($form_state, $format_id) &&
+            $this->validateCsvStructure($form, $form_state, $file_path,
+              $format_id) &&
+            $this->validateRowData($form, $form_state, $file_path, $format_id) &&
+            $this->validateData($form, $form_state, $file_path, $format_id)
 
-        ) {
-          // No errors found. Do nothing, process all validations sequentially.
-        };
+          ) {
+            // No errors found. Do nothing, process all validations sequentially.
+          };
+        }
       }
     }
   }
@@ -395,7 +397,7 @@ class PublicationHoldingsBulkImportForm extends FormBase {
    */
   public static function generateTemplateDownloadLink($format_id) {
     return Link::fromTextAndUrl(
-      t('Download a blank template for this format'),
+      t('Download an empty CSV template for this format'),
       Url::fromUri("internal:/bulk_import_holdings/format/$format_id")
     )->toString();
   }

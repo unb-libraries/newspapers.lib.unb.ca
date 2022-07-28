@@ -16,10 +16,10 @@ destination:
   plugin: entity:serial_holding
 
 process:
-  field_holding_institution: 'Institution ID *'
+  holding_institution: 'Institution ID *'
   parent_title: 'Newspaper ID *'
-  holding_type: 'holding_type_processed' # NEEDS PREPROCESS
-  holding_microform_type: 'microform_type_processed' # NEEDS PREPROCESS
+  holding_type: 'holding_type_processed'
+  holding_microform_type: 'microform_type_processed'
   holding_start_date: 'Holding Start Date *'
   holding_end_date: 'Holding End Date *'
   holding_coverage: 'Holding Coverage Statement *'
