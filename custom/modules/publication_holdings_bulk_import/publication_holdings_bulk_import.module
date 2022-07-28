@@ -445,6 +445,12 @@ function _publication_holdings_validate_list($data, $valid_items): bool {
  *   TRUE if the item is a valid date of the format YYYY-MM-DD.
  */
 function _publication_holdings_validate_date($data): bool {
+  // First, make sure that the format is matched.
+  if(!preg_match('/\d{4}-\d{2}-\d{2}/',$data)){
+    return FALSE;
+  }
+
+  // Then, verify this is an actual date.
   $date_values = explode('-', $data);
   if (
     count($date_values) == 3 &&

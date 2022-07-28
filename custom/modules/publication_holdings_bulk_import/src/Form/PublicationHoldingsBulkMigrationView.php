@@ -42,7 +42,7 @@ class PublicationHoldingsBulkMigrationView extends FormBase {
     if (!empty($migrate_targets)) {
       // Construct header.
       $header = [
-        t('Row'),
+        t('ID'),
         t('Parent Publication'),
         t('Type'),
         t('Start'),
