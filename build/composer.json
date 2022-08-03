@@ -23,7 +23,8 @@
     "sort-packages": true
   },
   "conflict": {
-    "drupal/drupal": "*"
+    "drupal/drupal": "*",
+    "drupal/ctools": "^4.0.1"
   },
   "description": "Drupal 8 component of newspapers.lib.unb.ca",
   "extra": {
