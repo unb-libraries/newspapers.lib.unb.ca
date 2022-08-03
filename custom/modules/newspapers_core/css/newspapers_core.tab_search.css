@@ -54,7 +54,7 @@ a#tab-about:before {
     width: 75%;
 }
 div[data-drupal-selector="edit-actions"] {
-    margin-top: 1.85rem;
+    margin-top: 1.875rem;
 }
 div[data-drupal-selector="edit-actions"] input {
     line-height: normal;
