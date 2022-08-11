@@ -1554,6 +1554,30 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
   }
 }
 
+function _newspapers_core_move_issue_to_title($issue_id, $target_title_id, $skip_holdings_update = FALSE) {
+  $issue_entity_type = 'digital_serial_issue';
+  $issue_storage = \Drupal::entityTypeManager()->getStorage($issue_entity_type);
+  $issue_entity = $issue_storage->load($issue_id);
+  $source_title_entity = $issue_entity->getParentTitle();
+
+  $title_entity_type = 'digital_serial_title';
+  $target_title_storage = \Drupal::entityTypeManager()->getStorage($title_entity_type);
+  $target_title_entity = $target_title_storage->load($target_title_id);
+
+  if (!empty($target_title_entity)) {
+    $issue_entity->setParentTitle($target_title_entity);
+    _newspapers_core_reindex_issues([$issue_entity->id()]);
+    if (!$skip_holdings_update) {
+      _newspapers_core_update_holding_records(
+        [
+          $source_title_entity->id(),
+          $target_title_entity->id()
+        ]
+      );
+    }
+  }
+}
+
 function _newspapers_core_update_holding_records(array $ids) {
   $title_entity_type = 'digital_serial_title';
   $storage = \Drupal::entityTypeManager()->getStorage($title_entity_type);
