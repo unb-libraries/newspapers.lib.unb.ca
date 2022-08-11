@@ -1555,6 +1555,36 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
 }
 
 /**
+ * Move multiple digital_serial_issues to a new title based on a query.
+ *
+ * @param string $query_string
+ *   A MySQL query that returns only a single column of digital_serial_issue
+ *   entity IDs.
+ */
+function _newspapers_core_query_issues_to_title($query_string, $target_title_id) {
+  $database = \Drupal::database();
+  $query = $database->query($query_string);
+  $eids = $query->fetchCol();
+  if (!empty($eids)) {
+    _newspapers_core_move_issues_to_title($eids, $target_title_id);
+  }
+}
+
+/**
+ * Moves multiple digital_serial_issue entities to a new digital_serial_title.
+ *
+ * @param array $issue_ids
+ *   The entity IDs of the digital_serial_issue to move.
+ * @param $target_title_id
+ *   The entity ID of the digital_serial_title to move the issue to.
+ */
+function _newspapers_core_move_issues_to_title(array $issue_ids, $target_title_id) {
+  foreach ($issue_ids as $issue_id) {
+    _newspapers_core_move_issue_to_title($issue_id, $target_title_id);
+  }
+}
+
+/**
  * Moves a digital_serial_issue entity to a new digital_serial_title.
  *
  * This is (essentially) a wrapper for $issue->setParentTitle() that
