@@ -21,6 +21,14 @@ UPDATE digital_serial_issue SET parent_title=105 WHERE parent_title=48
 UPDATE digital_serial_issue SET parent_title=108 WHERE id=198
 ```
 
+### Move MULTIPLE Digital Issues From a Digital Title To a Different Digital Title Based On A Date Range
+```
+UPDATE digital_serial_issue
+SET parent_title=109
+WHERE parent_title=62 AND
+(STR_TO_DATE(issue_date, '%Y-%m-%d') BETWEEN '1904-09-31 23:59:59' AND '1905-02-06 23:59:59');
+```
+
 ### Link A Digital Title To a Different Publication
 
 ```
