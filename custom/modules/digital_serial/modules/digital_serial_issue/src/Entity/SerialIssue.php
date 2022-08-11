@@ -2,12 +2,13 @@
 
 namespace Drupal\digital_serial_issue\Entity;
 
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\digital_serial_title\Entity\SerialTitleInterface;
+use Drupal\search_api\Plugin\search_api\datasource\ContentEntity;
 use Drupal\user\UserInterface;
 
 /**
