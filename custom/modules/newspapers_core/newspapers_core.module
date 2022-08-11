@@ -1555,11 +1555,25 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
 }
 
 /**
+ * Move multiple all digital_serial_issues from one title to a new title.
+ *
+ * @param $source_title_id
+ *   The entity ID of the digital_serial_title to move the issue from.
+ * @param $target_title_id
+ *   The entity ID of the digital_serial_title to move the issue to.
+ */
+function _newspapers_core_move_all_title_issues($source_title_id, $target_title_id) {
+  _newspapers_core_query_issues_to_title("SELECT id FROM digital_serial_issue WHERE parent_title=$source_title_id", $target_title_id);
+}
+
+/**
  * Move multiple digital_serial_issues to a new title based on a query.
  *
  * @param string $query_string
  *   A MySQL query that returns only a single column of digital_serial_issue
  *   entity IDs.
+ * @param $target_title_id
+ *   The entity ID of the digital_serial_title to move the issue to.
  */
 function _newspapers_core_query_issues_to_title($query_string, $target_title_id) {
   $database = \Drupal::database();
