@@ -1554,7 +1554,22 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
   }
 }
 
-function _newspapers_core_move_issue_to_title($issue_id, $target_title_id, $skip_holdings_update = FALSE) {
+/**
+ * Moves a digital_serial_issue entity to a new digital_serial_title.
+ *
+ * This is (essentially) a wrapper for $issue->setParentTitle() that
+ * additionally considers and updates the issue:
+ *   - Data in the pages solr index
+ *   - Digital Holdings Record in the parent publication
+ *
+ * @param $issue_id
+ *   The entity ID of the digital_serial_issue to move.
+ * @param $target_title_id
+ *   The entity ID of the digital_serial_title to move the issue to.
+ * @param bool $skip_holdings_update
+ *   TRUE if a Digital 'Holdings' update should be skipped after the move.
+ */
+function _newspapers_core_move_issue_to_title($issue_id, $target_title_id, bool $skip_holdings_update = FALSE) {
   $issue_entity_type = 'digital_serial_issue';
   $issue_storage = \Drupal::entityTypeManager()->getStorage($issue_entity_type);
   $issue_entity = $issue_storage->load($issue_id);
@@ -1578,6 +1593,12 @@ function _newspapers_core_move_issue_to_title($issue_id, $target_title_id, $skip
   }
 }
 
+/**
+ * Updates the 'Digital' holding record related to a digital_serial_title.
+ *
+ * @param array $ids
+ *   An array of digital_serial_title entity IDs to update.
+ */
 function _newspapers_core_update_holding_records(array $ids) {
   $title_entity_type = 'digital_serial_title';
   $storage = \Drupal::entityTypeManager()->getStorage($title_entity_type);
@@ -1588,6 +1609,12 @@ function _newspapers_core_update_holding_records(array $ids) {
   }
 }
 
+/**
+ * Reindex digital_serial_issues in solr.
+ *
+ * @param array $ids
+ *   An array of digital_serial_issue entity IDs to reindex.
+ */
 function _newspapers_core_reindex_issues(array $ids) {
   $issue_entity_type = 'digital_serial_issue';
   $storage = \Drupal::entityTypeManager()->getStorage($issue_entity_type);
@@ -1598,6 +1625,13 @@ function _newspapers_core_reindex_issues(array $ids) {
   }
 }
 
+/**
+ * Reindex digital_serial_issues in solr based on IDs returned from a query.
+ *
+ * @param string $query_string
+ *   A MySQL query that returns only a single column of digital_serial_issue
+ *   entity IDs.
+ */
 function _newspapers_core_reindex_issues_query($query_string) {
   $database = \Drupal::database();
   $query = $database->query($query_string);
