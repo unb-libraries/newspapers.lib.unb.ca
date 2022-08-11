@@ -23,7 +23,7 @@ drush eval '_newspapers_core_move_issue_to_title(198, 108)'
 
 ### Move MULTIPLE Digital Issues From a Digital Title To a Different Digital Title Based On A Date Range
 ```
-drush eval "_newspapers_core_query_issues_to_title(\"SELECT id FROM digital_serial_issue WHERE parent_title=62 AND (STR_TO_DATE(issue_date, '%Y-%m-%d') BETWEEN '1904-09-31 23:59:59' AND '1905-02-06 23:59:59')\", 108)'
+drush eval "_newspapers_core_query_issues_to_title(\"SELECT id FROM digital_serial_issue WHERE parent_title=62 AND (STR_TO_DATE(issue_date, '%Y-%m-%d') BETWEEN '1904-09-31 23:59:59' AND '1905-02-06 23:59:59')\", 108)'"
 ```
 
 ### Link A Digital Title To a Different Publication
@@ -36,5 +36,5 @@ UPDATE serial_holding SET parent_title=1468 WHERE parent_title=272 AND holding_c
 The above IDs are publication IDs, obtain the old and new digital_serial_title IDs and run: 
 
 ```
-drush eval '_newspapers_core_update_holding_records([45])'
+drush eval '_newspapers_core_update_holding_records([45, 106])'
 ```
