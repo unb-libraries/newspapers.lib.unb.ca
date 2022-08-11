@@ -1594,6 +1594,19 @@ function _newspapers_core_move_issue_to_title($issue_id, $target_title_id, bool 
 }
 
 /**
+ * Updates the 'Digital' holdings record and reindexes a digital_serial_title.
+ *
+ * @param array $ids
+ *   An array of digital_serial_title entity IDs to update.
+ */
+function _newspapers_core_update_holdings_reindex_solr(array $ids) {
+  if (!empty($ids)) {
+    _newspapers_core_update_holding_records($ids);
+    _newspapers_core_reindex_title_issues($ids);
+  }
+}
+
+/**
  * Updates the 'Digital' holding record related to a digital_serial_title.
  *
  * @param array $ids
@@ -1606,6 +1619,24 @@ function _newspapers_core_update_holding_records(array $ids) {
 
   foreach ($entity_list as $entity) {
     $entity->updateDigitalHoldingRecord();
+  }
+}
+
+/**
+ * Reindex all of a title's digital_serial_issues in solr.
+ *
+ * @param array $ids
+ *   An array of digital_serial_title entity IDs to reindex.
+ */
+function _newspapers_core_reindex_title_issues(array $ids) {
+  $database = \Drupal::database();
+  if (!empty($ids)) {
+    $title_list = implode(',',$ids);
+    $query = $database->query("SELECT id from digital_serial_issue WHERE parent_title IN ($title_list)");
+    $eids = $query->fetchCol();
+    if (!empty($eids)) {
+      _newspapers_core_reindex_issues($eids);
+    }
   }
 }
 
