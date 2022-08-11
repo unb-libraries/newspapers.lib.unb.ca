@@ -42,13 +42,6 @@ Important : all changes to pages or holdings will not be reflected in the site u
 ```
 <?php
 
-use Drupal\search_api\Plugin\search_api\datasource\ContentEntity;
-
-$issue_entity_type = 'digital_serial_issue';
-$page_entity_type = 'digital_serial_page';
-
-$storage = \Drupal::entityTypeManager()->getStorage($issue_entity_type);
-
 $query_string = <<<EOT
 SELECT id from digital_serial_issue
 WHERE parent_title=109 AND
@@ -56,12 +49,5 @@ WHERE parent_title=109 AND
 LIMIT 5;
 EOT;
 
-$database = \Drupal::database();
-$query = $database->query($query_string);
-$eids = $query->fetchCol();
-$entity_list = $storage->loadMultiple($eids);
-
-foreach ($entity_list as $entity_id => $entity) {
-  $entity->reIndexInSolr();
-}
+_newspapers_core_reindex_issues_query($query_string);
 ```
