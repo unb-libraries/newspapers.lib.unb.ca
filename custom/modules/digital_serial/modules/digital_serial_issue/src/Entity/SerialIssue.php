@@ -511,15 +511,45 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    * Delete the child pages that belong to this issue.
    */
   private function deleteChildPages() {
-    $query = \Drupal::entityQuery('digital_serial_page')
-      ->condition('parent_issue', $this->id());
-    $page_ids = $query->execute();
-
+    $page_ids = $this->getChildPageIds();
     foreach ($page_ids as $page_id) {
       $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_page');
       $page = $storage->load($page_id);
       $page->delete();
     }
+  }
+
+  /**
+   * Reindexes this issue in solr.
+   */
+  private function reIndexInSolr() {
+    $page_ids = $this->getChildPageIds();
+    if (!empty($page_ids)) {
+      $page_list = array_values($page_ids);
+      $first_entity_id = array_shift($page_list);
+      $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_page');
+      $first_page_entity = $storage->load($first_entity_id);
+      $index_list = ContentEntity::getIndexesForEntity($first_page_entity);
+      $language_page_ids = array_map(function($val) { return $val . ':en'; }, $page_ids);
+
+      if (!empty($page_entities)) {
+        foreach ($index_list as $index) {
+          $index->trackItemsUpdated("entity:digital_serial_page", $language_page_ids);
+        }
+      }
+    }
+  }
+
+  /**
+   * Gets this issue's child page entity IDs.
+   *
+   * @return int[]
+   *   An array of the issue'sa child pages.
+   */
+  private function getChildPageIds() {
+    $query = \Drupal::entityQuery('digital_serial_page')
+      ->condition('parent_issue', $this->id());
+    return $query->execute();
   }
 
 }
