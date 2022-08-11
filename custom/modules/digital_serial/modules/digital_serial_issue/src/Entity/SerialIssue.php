@@ -523,7 +523,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * Reindexes this issue in solr.
    */
-  private function reIndexInSolr() {
+  public function reIndexInSolr() {
     $page_ids = $this->getChildPageIds();
     if (!empty($page_ids)) {
       $page_list = array_values($page_ids);
@@ -532,8 +532,8 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       $first_page_entity = $storage->load($first_entity_id);
       $index_list = ContentEntity::getIndexesForEntity($first_page_entity);
       $language_page_ids = array_map(function($val) { return $val . ':en'; }, $page_ids);
-
-      if (!empty($page_entities)) {
+      $page_entities = $storage->loadMultiple($page_list);
+      if (!empty($page_entities) && !empty($index_list)) {
         foreach ($index_list as $index) {
           $index->trackItemsUpdated("entity:digital_serial_page", $language_page_ids);
         }
@@ -547,7 +547,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    * @return int[]
    *   An array of the issue'sa child pages.
    */
-  private function getChildPageIds() {
+  public function getChildPageIds() {
     $query = \Drupal::entityQuery('digital_serial_page')
       ->condition('parent_issue', $this->id());
     return $query->execute();
