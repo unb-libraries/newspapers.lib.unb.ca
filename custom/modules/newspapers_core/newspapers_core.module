@@ -1554,6 +1554,16 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
   }
 }
 
+function _newspapers_core_update_holding_records(array $ids) {
+  $title_entity_type = 'digital_serial_title';
+  $storage = \Drupal::entityTypeManager()->getStorage($title_entity_type);
+  $entity_list = $storage->loadMultiple($ids);
+
+  foreach ($entity_list as $entity) {
+    $entity->updateDigitalHoldingRecord();
+  }
+}
+
 function _newspapers_core_reindex_issues(array $ids) {
   $issue_entity_type = 'digital_serial_issue';
   $storage = \Drupal::entityTypeManager()->getStorage($issue_entity_type);
