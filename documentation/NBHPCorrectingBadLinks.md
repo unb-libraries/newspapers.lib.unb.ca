@@ -44,16 +44,24 @@ Important : all changes to pages or holdings will not be reflected in the site u
 
 use Drupal\search_api\Plugin\search_api\datasource\ContentEntity;
 
-$entity_type = 'digital_serial_page';
-$eid = '198';
+$issue_entity_type = 'digital_serial_issue';
+$page_entity_type = 'digital_serial_page';
 
-$storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+$storage = \Drupal::entityTypeManager()->getStorage($issue_entity_type);
 
-$entity_list = $storage->loadMultiple([$eid]);
+$query_string = <<<EOT
+SELECT id from digital_serial_issue
+WHERE parent_title=109 AND
+(STR_TO_DATE(issue_date, '%Y-%m-%d') BETWEEN '1904-09-31 23:59:59' AND '1905-02-06 23:59:59')
+LIMIT 5;
+EOT;
+
+$database = \Drupal::database();
+$query = $database->query($query_string);
+$eids = $query->fetchCol();
+$entity_list = $storage->loadMultiple($eids);
+
 foreach ($entity_list as $entity_id => $entity) {
-    $index_list = ContentEntity::getIndexesForEntity($entity);
-    foreach ($index_list as $index) {
-        $index->trackItemsUpdated("entity:$entity_type", [$entity_id]);
-    }
+  $entity->reIndexInSolr();
 }
 ```
