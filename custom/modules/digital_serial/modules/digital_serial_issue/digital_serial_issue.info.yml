@@ -9,3 +9,4 @@ type: module
 dependencies:
   - digital_serial
   - digital_serial_title
+  - newspapers_core

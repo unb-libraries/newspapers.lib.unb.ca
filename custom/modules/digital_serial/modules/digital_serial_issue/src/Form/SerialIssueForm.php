@@ -72,6 +72,11 @@ class SerialIssueForm extends ContentEntityForm {
         );
     }
 
+    // Update solr/holdings statements.
+    // @TODO This needs to reference entity methods, not depend on external.
+    _newspapers_core_reindex_issues([$entity->id()]);
+    _newspapers_core_update_holding_records([$this->parentEid]);
+
     $form_state->setRedirect(
       'digital_serial_issue.title_view_issue',
       [
