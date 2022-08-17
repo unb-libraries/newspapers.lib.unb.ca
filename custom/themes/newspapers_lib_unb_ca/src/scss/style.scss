@@ -657,3 +657,15 @@ and (max-width: 991px){
 div.alert-dismissible {
   transition: all .3s ease-out;
 }
+
+.holding-group .btn-link {
+  margin-left: 3px;
+}
+div.modal {
+  background: rgb(0 0 0 / 75%);
+
+  .modal-title {
+    color: inherit;
+    font-size: larger;
+  }
+}
