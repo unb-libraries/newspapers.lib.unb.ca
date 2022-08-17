@@ -531,7 +531,11 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_page');
       $first_page_entity = $storage->load($first_entity_id);
       $index_list = ContentEntity::getIndexesForEntity($first_page_entity);
-      $language_page_ids = array_map(function($val) { return $val . ':en'; }, $page_ids);
+      $language_page_ids = array_map(
+        function ($val) {
+          return $val . ':en';
+        },
+      $page_ids);
       $page_entities = $storage->loadMultiple($page_list);
       if (!empty($page_entities) && !empty($index_list)) {
         foreach ($index_list as $index) {
