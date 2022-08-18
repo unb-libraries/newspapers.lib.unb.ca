@@ -1267,10 +1267,9 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
       ->value;
   }
   if(!empty($inst_description) && !empty($holding_identifier)) {
-    $inst_string .= '<button class="btn btn-link p-0 text-left"
+    $inst_string .= ' (<button class="btn btn-link p-0 text-left"
       data-target="#Dialog-' . $holding_identifier . '" data-toggle="modal" type="button">' .
-      '<span class="fas fa-question-circle fa-sm px-1" aria-hidden="true"></span>
-      <span class="sr-only">Open contact details dialog</span></button>
+      '<span class="fas fa-question-circle fa-sm mr-1" aria-hidden="true"></span><small>info</small></button>)
       <div id="Dialog-' . $holding_identifier . '" class="modal fade" aria-hidden="true"
       aria-labelledby="' . 'Label-' . $holding_identifier . '" role="dialog" tabindex="-1">' .
         '<div class="modal-dialog modal-xl">
