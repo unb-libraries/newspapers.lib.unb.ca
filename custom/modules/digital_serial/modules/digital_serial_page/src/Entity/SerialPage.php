@@ -403,6 +403,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     if (!empty($page_image)) {
       $page_image->delete();
     }
+    _newspapers_core_delete_image_dzi($this->id());
     parent::delete();
   }
 
