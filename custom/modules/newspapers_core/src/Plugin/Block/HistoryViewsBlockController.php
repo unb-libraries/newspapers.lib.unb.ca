@@ -33,14 +33,30 @@ class HistoryViewsBlockController extends BlockBase {
     $date->setTimezone(timezone_open(date_default_timezone_get()));
     $history_date = $date->format('m-d');
 
-    $query = \Drupal::entityQuery('digital_serial_issue')
-      ->condition('issue_date', $history_date, 'ENDS_WITH');
-    $issue_results = $query->execute();
-    $issue_id = (empty($issue_results)) ? NULL : array_rand($issue_results, 1);
+    $history_issue_results = \Drupal::entityQuery('digital_serial_issue')
+      ->condition('issue_date', $history_date, 'ENDS_WITH')
+      ->execute();
+
+    $serial_issue_id = NULL;
+    while (count($history_issue_results) > 0) {
+      $selected_issue_id = array_rand($history_issue_results, 1);
+
+      $history_page_results = \Drupal::entityQuery('digital_serial_page')
+        ->condition('parent_issue', $selected_issue_id)
+        ->execute();
+
+      if ($history_page_results) {
+        $serial_issue_id = $selected_issue_id;
+        break;
+      }
+      else {
+        unset($history_issue_results[$selected_issue_id]);
+      }
+    }
 
     return [
       '#theme' => 'block__this_day_in_nb_history',
-      '#history_issue_id' => $issue_id,
+      '#history_issue_id' => $serial_issue_id,
     ];
   }
 
