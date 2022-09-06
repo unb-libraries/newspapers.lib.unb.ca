@@ -407,4 +407,12 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     parent::delete();
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function save() {
+    _newspapers_core_delete_image_dzi($this->id());
+    parent::save();
+  }
+
 }
