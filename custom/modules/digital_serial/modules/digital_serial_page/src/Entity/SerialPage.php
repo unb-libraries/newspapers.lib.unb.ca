@@ -396,6 +396,22 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   }
 
   /**
+   * Gets the absolute paths for the page's image.
+   *
+   * @return string
+   *   The absolute paths for the page's image
+   */
+  public function getAbsolutePageImagePath() {
+    $page_image = $this->getPageImage();
+    if (!empty($page_image)) {
+      $uri = $page_image->getFileUri();
+      $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager')->getViaUri($uri);
+      return $stream_wrapper_manager->realpath();
+    }
+    return '';
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function delete() {

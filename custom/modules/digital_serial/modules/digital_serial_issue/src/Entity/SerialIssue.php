@@ -557,4 +557,26 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
     return $query->execute();
   }
 
+  /**
+   * Gets the absolute paths for all page images belonging to this issue.
+   *
+   * @return string[]
+   *   An array of paths for all the issue's page images
+   */
+  public function getChildPageImagePaths() {
+    $paths = [];
+    $page_ids = $this->getChildPageIds();
+    foreach ($page_ids as $page_id) {
+      $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_page');
+      $page = $storage->load($page_id);
+      if (!empty($page)) {
+        $page_path = $page->getAbsolutePageImagePath();
+        if (!empty($page_path)) {
+          $paths[] = $page_path;
+        }
+      }
+    }
+    return $paths;
+  }
+
 }
