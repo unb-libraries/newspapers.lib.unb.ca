@@ -24,15 +24,21 @@ trait DziTilerTrait {
   /**
    * Generates DZI tiles for files.
    *
+   * @param int $threads
+   *   The number of threads to attempt to spawn when generating tiles. A value
+   *   of 0 causes the multi-threader to automatically determine a useful value.
    * @param string[] $files
    *   The array of files to generate the tiles for.
    *
    * @throws \Exception
    */
-  public function generateDziFiles(array $files) {
+  public function generateDziFiles(int $threads, array $files) {
     shell_exec("docker pull $this->imagemagickImage");
     foreach ($files as $file_to_process) {
       $this->setAddCommandToQueue($this->getDziTileCommand($file_to_process));
+    }
+    if ($threads != 0) {
+      $this->setThreads($threads);
     }
     $this->setRunProcessQueue('Generate DZI files');
   }

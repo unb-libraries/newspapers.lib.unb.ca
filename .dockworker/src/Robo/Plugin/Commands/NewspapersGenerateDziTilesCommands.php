@@ -114,6 +114,7 @@ class NewspapersGenerateDziTilesCommands extends DockworkerDeploymentCommands {
     string $env,
     array $options = [
       'regenerate-existing' => FALSE,
+      'threads' => 0,
     ]
   ) {
     $this->issueSourceIds[] = $issue_id;
@@ -124,7 +125,7 @@ class NewspapersGenerateDziTilesCommands extends DockworkerDeploymentCommands {
     if (!empty($this->localSourceFiles)) {
       $num_operations = count($this->localSourceFiles);
       $this->io()->title("Generating DZI tiles for $num_operations files");
-      $this->generateDziFiles($this->localSourceFiles);
+      $this->generateDziFiles($options['threads'], $this->localSourceFiles);
     }
     else {
       $message = 'No files to generate DZI tiles for!';
