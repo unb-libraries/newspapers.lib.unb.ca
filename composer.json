@@ -19,6 +19,11 @@
     "twbs/bootstrap": "~4.6.1",
     "unb-libraries/dockworker-drupal": "^5"
   },
+  "autoload": {
+    "psr-4": {
+      "Dockworker\\": ".dockworker/src"
+    }
+  },
   "scripts": {
     "post-update-cmd": [
       "vendor/bin/dockworker dockworker:git:setup-hooks"
