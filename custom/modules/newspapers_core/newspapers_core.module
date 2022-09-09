@@ -1671,16 +1671,55 @@ function _newspapers_core_update_holding_records(array $ids) {
  *   An array of digital_serial_title entity IDs to reindex.
  */
 function _newspapers_core_reindex_title_issues(array $ids) {
-  $database = \Drupal::database();
   if (!empty($ids)) {
-    $title_list = implode(',',$ids);
-    $query = $database->query("SELECT id from digital_serial_issue WHERE parent_title IN ($title_list)");
-    $eids = $query->fetchCol();
+    $eids = _newspapers_core_get_titles_issues($ids);
     if (!empty($eids)) {
       _newspapers_core_reindex_issues($eids);
     }
   }
 }
+
+/**
+ * Retrieve the IDs of all digital_serial_issues from one or more titles.
+ *
+ * @param array $ids
+ *   An array of digital_serial_title entity IDs to retrieve issues for.
+ */
+function _newspapers_core_get_titles_issues(array $ids) {
+  $issues = [];
+  $database = \Drupal::database();
+  if (!empty($ids)) {
+    $title_list = implode(',',$ids);
+    $query = $database->query("SELECT id from digital_serial_issue WHERE parent_title IN ($title_list)");
+    $eids = $query->fetchCol();
+    $issues = array_merge($issues, $eids);
+  }
+  return $issues;
+}
+
+/**
+ * Lists all the digital serial issues from one or more titles.
+ *
+ * @param array $ids
+ *   An array of digital_serial_title entity IDs to retrieve issues for.
+ */
+function _newspapers_core_list_title_issues(array $ids) {
+  print implode(
+    "\n",
+    _newspapers_core_get_titles_issues($ids),
+  );
+}
+
+/**
+ * Displays the number of digital serial issues from one or more titles.
+ *
+ * @param array $ids
+ *   An array of digital_serial_title entity IDs to retrieve issues for.
+ */
+function _newspapers_core_title_issues_count(array $ids) {
+  print count(_newspapers_core_get_titles_issues($ids));
+}
+
 /**
  * Lists all the page image paths from digital serial issues.
  *
