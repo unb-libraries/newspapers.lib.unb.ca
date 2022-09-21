@@ -187,6 +187,7 @@
     "drupal/view_unpublished": "1.0",
     "drupal/views_data_export": "1.1",
     "drupal/views_infinite_scroll": "1.9",
+    "drupal/webform": "6.1.3",
     "fortawesome/font-awesome": "5.15.4",
     "furf/jquery-ui-touch-punch": "dev-master",
     "harvesthq/chosen": "~1.8",
