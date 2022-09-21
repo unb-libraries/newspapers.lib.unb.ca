@@ -307,6 +307,13 @@
             {% endif %}
           </dl>
         </div>
+        {% if display_report_link %}
+        <div class="pub-report">
+          <a class="boeder border-secondary btn btn-sm text-secondary" href="{{ report_url }}"><span class="fas fa-envelope"></span>
+            Report additional information or errors
+          </a>
+        </div>
+        {% endif %}
       </section>
 
       <aside class="col-lg-4 mb-4 publication">
