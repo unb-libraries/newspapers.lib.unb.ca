@@ -1,4 +1,4 @@
-uuid: 0e0613ba-5593-405c-a755-c026b6ebb74d
+uuid: 8750ef4b-1e7c-446c-8e19-0cf8a0cb7f25
 langcode: en
 status: open
 dependencies: {  }
@@ -8,7 +8,7 @@ close: null
 uid: 1
 template: false
 archive: false
-id: report_additional_info_errors
+id: report_additional_info_errs
 title: 'Report additional information or errors'
 description: ''
 category: ''
@@ -66,8 +66,8 @@ settings:
   ajax_effect: ''
   ajax_speed: null
   page: true
-  page_submit_path: /report-info-errors
-  page_confirm_path: /report-info-errros
+  page_submit_path: ''
+  page_confirm_path: ''
   page_theme_name: ''
   form_title: source_entity_webform
   form_submit_once: false

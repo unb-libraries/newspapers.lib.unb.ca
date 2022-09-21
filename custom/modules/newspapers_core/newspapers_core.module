@@ -630,7 +630,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   // Report additional information or errors button.
   $webform_report = \Drupal::entityTypeManager()
     ->getStorage('webform')
-    ->load('report_additional_info_errors');
+    ->load('report_additional_info_errs');
   if ($webform_report != NULL && \Drupal::currentUser()->id() == 1) {
     // Note: temporarily limited to root user.
     $variables['display_report_link'] = TRUE;
