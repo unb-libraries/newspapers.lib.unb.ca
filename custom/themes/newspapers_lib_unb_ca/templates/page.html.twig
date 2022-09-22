@@ -22,4 +22,10 @@
    {% if page.footer_top_first or page.footer_top_second %}
    </div>
    {% endif %}
+
+   {% if page.footer %}
+     <div id="footer-middle" class="container">
+       <div class="hr py-4">{{ page.footer }}</div>
+     </div>
+   {% endif %}
 {% endblock %}
