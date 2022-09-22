@@ -609,6 +609,17 @@ a.back-link::before {
   margin-top: 0;
 }
 
+/* Footer w/ partnerships */
+#footer-middle {
+  .hr {
+    border-top: 1px solid #dee2e6;
+  }
+
+  h2 {
+    color: $black;
+  }
+}
+
 @media (max-width: 767px) {
   .no-gutters > aside {
     padding-left: 0;
