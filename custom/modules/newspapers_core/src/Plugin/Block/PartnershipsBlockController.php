@@ -37,7 +37,7 @@ class PartnershipsBlockController extends BlockBase {
    */
   protected function getValue() {
     $html = '
-    <div class="d-flex flex-column flex-sm-row mx-5 mx-sm-0 mx-xl-5">
+    <div class="d-flex flex-column flex-sm-row image-link-shadow mx-5 mx-sm-0 mx-xl-5">
       <div class="mx-5 mx-sm-0 mx-xl-5 mb-3 mb-sm-0">
         <a href="https://lib.unb.ca"><img src="/themes/custom/newspapers_lib_unb_ca/src/img/unb_libraries_logo.png"
         alt="UNB Libraries"/></a>
