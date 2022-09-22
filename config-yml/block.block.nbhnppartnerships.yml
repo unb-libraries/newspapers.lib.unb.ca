@@ -1,0 +1,25 @@
+uuid: acde051a-23ec-4111-a8f1-b12e11f61e96
+langcode: en
+status: true
+dependencies:
+  module:
+    - newspapers_core
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: nbhnppartnerships
+theme: newspapers_lib_unb_ca
+region: footer
+weight: 0
+provider: null
+plugin: nbhnp_partnerships
+settings:
+  id: nbhnp_partnerships
+  label: 'NBHNP Partnerships'
+  label_display: visible
+  provider: newspapers_core
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'
