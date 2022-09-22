@@ -43,7 +43,7 @@ class PartnershipsBlockController extends BlockBase {
         alt="UNB Libraries"/></a>
       </div>
       <div class="mx-5 my-3 my-sm-0">
-        <a href="https://archives.gnb.ca/Archives/"><img src="/themes/custom/newspapers_lib_unb_ca/src/img/gnb_logo.png"
+        <a href="https://archives.gnb.ca/Archives"><img src="/themes/custom/newspapers_lib_unb_ca/src/img/gnb_logo.png"
         alt="Government of New Brunswick, Canada|Gouvernement du Nouveau-Brunswick, Canada"/></a>
       </div>
       <div class="mx-5 my-3 my-sm-0">
