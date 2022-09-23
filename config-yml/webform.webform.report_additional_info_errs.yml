@@ -57,6 +57,9 @@ elements: |-
       class:
         - message-privacy
     '#markup': '<div class="alert alert-info" role="alert"><strong>Privacy: </strong>UNB Libraries will only use the comments you send to improve our website and services. We are not storing any personal information.</div>'
+  pid:
+    '#type': hidden
+    '#title': 'Publication Node ID'
 css: ''
 javascript: ''
 settings:
