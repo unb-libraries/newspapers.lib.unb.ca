@@ -133,7 +133,7 @@ class HomePageForm extends FormBase {
         <p class=\"mb-0\">Fulltext searching is available for our growing list of
         <a href=\"/digital-titles\">digitized titles</a>.
         For more worldwide digital newspaper content, consult
-        <a href=\"https://lib.unb.ca/eresources/index.php?sub=journals&browseNewsColl=y\" class=\"external\">
+        <a href=\"https://lib.unb.ca/eresources/collections/newspapers\" class=\"external\">
         UNB Libraries licensed electronic Newspaper collections</a>.</p>";
 
     $form['blurb'] = [
