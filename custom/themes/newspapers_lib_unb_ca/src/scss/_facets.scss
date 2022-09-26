@@ -19,12 +19,13 @@
   .facet-item {
     display: flex;
     flex-wrap: nowrap;
-    margin-bottom: .35rem;
+    margin-bottom: .65rem;
 
     input[type="checkbox"],
     label {
       display: inline-block;
       float: none;
+      line-height: initial;
 
       .facet-item__count {
         color: $gray-600;
@@ -34,8 +35,7 @@
 
     input[type="checkbox"] {
       margin-right: .35rem;
-      margin-top: 2px;
-      transform: scale(1.2);
+      transform: scale(1.25);
     }
   }
 }
