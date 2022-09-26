@@ -159,7 +159,7 @@
     "drupal/core": "9.4.6",
     "drupal/externalauth": "1.4",
     "drupal/facets": "2.0.5",
-    "drupal/field_group": "3.2",
+    "drupal/field_group": "3.3",
     "drupal/fontawesome": "2.23",
     "drupal/google_analytics": "2.5",
     "drupal/health_check": "1.3",
