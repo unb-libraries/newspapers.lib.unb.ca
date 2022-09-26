@@ -1,6 +1,6 @@
 newspapers_styles:
   css:
-    component:
+    theme:
       dist/css/style.css: {}
 
 ajax_loading:
