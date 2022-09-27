@@ -51,7 +51,7 @@ permissions:
   - 'edit serial issue entities'
   - 'edit serial page entities'
   - 'edit terms in publisher'
-  - 'override page published option'
+  - 'enter all revision log entry'
   - 'override publication published option'
   - 'revert page revisions'
   - 'revert publication revisions'
