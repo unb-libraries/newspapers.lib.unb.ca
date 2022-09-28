@@ -28,7 +28,6 @@ module:
   digital_serial_page: 0
   digital_serial_title: 0
   dynamic_page_cache: 0
-  easy_breadcrumb: 0
   editor: 0
   externalauth: 0
   facets: 0

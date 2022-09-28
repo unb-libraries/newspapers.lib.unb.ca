@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\core\Url;
+
 /**
  * @file
  * Contains newspapers_lib_unb_ca.theme.
@@ -49,6 +51,17 @@ function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
       $variables['breadcrumb'][5]['text'] = trim(
         explode('-', $variables['breadcrumb'][5]['text']->render())[3]
       );
+      break;
+
+    case 'entity.webform.canonical':
+      // Override 'Newspapers @ UNB Libraries'
+      $variables['breadcrumb'][0]['text'] = t('Newspapers');
+      $custom_home = [
+        'text' => t('UNB Libraries'),
+        'url' => Url::fromUri('https://lib.unb.ca', []),
+      ];
+      // Prepend the normal breadcrumb trail with link to UNB Libraries.
+      array_unshift($variables['breadcrumb'], $custom_home);
       break;
 
     case 'newspapers_core.home':
