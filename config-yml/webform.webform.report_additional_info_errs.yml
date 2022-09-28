@@ -29,9 +29,6 @@ elements: |-
         '#type': email
         '#title': Email
         '#required': true
-      phone:
-        '#type': tel
-        '#title': Phone
     details:
       '#type': fieldset
       '#title': Details
