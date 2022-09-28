@@ -13,6 +13,11 @@ title: 'Report additional information or errors'
 description: ''
 category: ''
 elements: |-
+  info_box:
+    '#type': processed_text
+    '#text': |
+      <div class="alert alert-info">We appreciate your interest in this project. Questions regarding access to non-digital holdings and reference questions should be directed to the holding institution.</div>
+    '#format': full_html
   container:
     '#type': container
     '#attributes':
