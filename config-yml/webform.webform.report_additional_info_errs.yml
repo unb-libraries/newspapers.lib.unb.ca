@@ -252,7 +252,7 @@ handlers:
     settings:
       states:
         - completed
-      to_mail: libweb@unb.ca
+      to_mail: mic@unb.ca
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }
