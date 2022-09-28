@@ -72,8 +72,8 @@ settings:
   ajax_speed: null
   page: true
   page_submit_path: /report-info-errors
-  page_confirm_path: /report-info-errors
-  page_theme_name: ''
+  page_confirm_path: ''
+  page_theme_name: newspapers_lib_unb_ca
   form_title: source_entity_webform
   form_submit_once: false
   form_open_message: ''
@@ -128,10 +128,10 @@ settings:
   submission_access_denied_attributes: {  }
   previous_submission_message: ''
   previous_submissions_message: ''
-  autofill: false
+  autofill: true
   autofill_message: ''
   autofill_excluded_elements: {  }
-  wizard_progress_bar: true
+  wizard_progress_bar: false
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_progress_link: false

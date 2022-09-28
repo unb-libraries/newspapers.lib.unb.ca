@@ -618,6 +618,10 @@ a.back-link::before {
   h2 {
     color: $black;
   }
+
+  img {
+    max-height: 72px;
+  }
 }
 
 @media (max-width: 767px) {
