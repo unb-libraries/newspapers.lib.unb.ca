@@ -59,9 +59,9 @@ elements: |-
       class:
         - message-privacy
     '#markup': '<div class="alert alert-info" role="alert"><strong>Privacy: </strong>UNB Libraries will only use the comments you send to improve our website and services. We are not storing any personal information.</div>'
-  pid:
+  subdirectory:
     '#type': hidden
-    '#title': 'Publication Node ID'
+    '#title': 'Report URL subdirectory'
 css: ''
 javascript: ''
 settings:
@@ -268,7 +268,7 @@ handlers:
       sender_mail: ''
       sender_name: ''
       subject: _default
-      body: "<p>Submitted on [webform_submission:created]</p>\r\n\r\n<p>Submitted by: [webform_submission:user]</p>\r\n\r\n<p>Submitted values are:</p>\r\n[webform_submission:values]\r\n\r\n<p>Link:<br />\r\n<a href=\"https://newspapers.lib.unb.ca/node/[webform_submission:values:pid]\">https://newspapers.lib.unb.ca/node/[webform_submission:values:pid]</a></p>"
+      body: "<p>Submitted on [webform_submission:created]</p>\r\n\r\n<p>Submitted by: [webform_submission:user]</p>\r\n\r\n<p>Submitted values are:</p>\r\n[webform_submission:values]\r\n\r\n<p>Link:<br />\r\n<a href=\"https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]\">https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]</a></p>"
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
@@ -305,7 +305,7 @@ handlers:
       sender_mail: ''
       sender_name: ''
       subject: 'NBHNP Submission'
-      body: "<p>Thank you for your submission. We appreciate your interest in this project. Questions regarding access to non-digital holdings and reference questions should be directed to the holding institution.</p>\r\n\r\n<p>Submitted values:</p>\r\n[webform_submission:values]\r\n\r\n<p>Publication:<br />\r\n<a href=\"https://newspapers.lib.unb.ca/node/[webform_submission:values:pid]\">https://newspapers.lib.unb.ca/node/[webform_submission:values:pid]</a></p>\r\n\r\n<div><img alt=\"UNB Libraries\" src=\"https://media.lib.unb.ca/core/img-2015/UNB_Lib_Black_Red.png\" /></div>"
+      body: "<p>Thank you for your submission. We appreciate your interest in this project. Questions regarding access to non-digital holdings and reference questions should be directed to the holding institution.</p>\r\n\r\n<p>Submitted values:</p>\r\n[webform_submission:values]\r\n\r\n<p>Publication:<br />\r\n<a href=\"https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]\">https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]</a></p>\r\n\r\n<div><img alt=\"UNB Libraries\" src=\"https://media.lib.unb.ca/core/img-2015/UNB_Lib_Black_Red.png\" /></div>"
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true

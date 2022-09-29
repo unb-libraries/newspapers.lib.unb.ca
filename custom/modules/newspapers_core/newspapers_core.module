@@ -639,7 +639,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     $report_url_options = [
       'query' => [
         'newspaper' => $node->getTitle(),
-        'pid' => $node->id(),
+        'subdirectory' => 'node/' . $node->id(),
       ],
     ];
     $variables['report_url'] = Url::fromUri('base:' . $report_url, $report_url_options)->toString();
