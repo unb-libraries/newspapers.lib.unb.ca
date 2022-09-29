@@ -161,103 +161,110 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
    */
   public function addFieldValues(ItemInterface $item) {
     $entity = $item->getDatasource();
-    if ($entity->getEntityTypeId() == 'digital_serial_page') {
+    if (!empty($entity) && $entity->getEntityTypeId() == 'digital_serial_page') {
       $page_entity = $item->getOriginalObject()->getValue();
       $issue_entity = $page_entity->getParentIssue();
       $digital_title_entity = $issue_entity->getParentTitle();
       $publication_entity = $digital_title_entity->getParentPublication();
 
-      // Digital Issue ID.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_digital_issue_id');
-      foreach ($fields as $field) {
-        $field->addValue($issue_entity->id());
-      }
+      if (
+        !empty($page_entity) &&
+        !empty($issue_entity) &&
+        !empty($digital_title_entity) &&
+        !empty($publication_entity)
+      ) {
+        // Digital Issue ID.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_digital_issue_id');
+        foreach ($fields as $field) {
+          $field->addValue($issue_entity->id());
+        }
 
-      // Digital Page ID.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_digital_page_id');
-      foreach ($fields as $field) {
-        $field->addValue($page_entity->id());
-      }
+        // Digital Page ID.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_digital_page_id');
+        foreach ($fields as $field) {
+          $field->addValue($page_entity->id());
+        }
 
-      // Digital Title ID.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_digital_title_id');
-      foreach ($fields as $field) {
-        $field->addValue($digital_title_entity->id());
-      }
+        // Digital Title ID.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_digital_title_id');
+        foreach ($fields as $field) {
+          $field->addValue($digital_title_entity->id());
+        }
 
-      // Publication ID.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_publication_id');
-      foreach ($fields as $field) {
-        $field->addValue($publication_entity->id());
-      }
+        // Publication ID.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_publication_id');
+        foreach ($fields as $field) {
+          $field->addValue($publication_entity->id());
+        }
 
-      // Publication Year.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_year');
-      foreach ($fields as $field) {
-        $field->addValue((int) $issue_entity->getYear());
-      }
+        // Publication Year.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_year');
+        foreach ($fields as $field) {
+          $field->addValue((int) $issue_entity->getYear());
+        }
 
-      // Publication Decade.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_decade');
-      foreach ($fields as $field) {
-        $decade = floor($issue_entity->getYear() / 10) * 10;
-        $field->addValue($decade . 's');
-      }
+        // Publication Decade.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_decade');
+        foreach ($fields as $field) {
+          $decade = floor($issue_entity->getYear() / 10) * 10;
+          $field->addValue($decade . 's');
+        }
 
-      // Issue Title.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_publication_title');
-      foreach ($fields as $field) {
-        $field->addValue($publication_entity->getTitle());
-      }
+        // Issue Title.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_publication_title');
+        foreach ($fields as $field) {
+          $field->addValue($publication_entity->getTitle());
+        }
 
-      // Issue Volume.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_volume');
-      foreach ($fields as $field) {
-        $field->addValue($issue_entity->getIssueVol());
-      }
+        // Issue Volume.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_volume');
+        foreach ($fields as $field) {
+          $field->addValue($issue_entity->getIssueVol());
+        }
 
-      // Issue Issue.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_issue');
-      foreach ($fields as $field) {
-        $field->addValue($issue_entity->getIssueIssue());
-      }
+        // Issue Issue.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_issue');
+        foreach ($fields as $field) {
+          $field->addValue($issue_entity->getIssueIssue());
+        }
 
-      // Issue Country Location.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_country');
-      $country_repo = new CountryRepository();
-      $country_code = $publication_entity->get('field_place_of_publication')->first()->getCountryCode();
-      $country_list = $country_repo->getList();
-      $country_name = $country_list[$country_code];
-      foreach ($fields as $field) {
-        $field->addValue($country_name);
-      }
+        // Issue Country Location.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_country');
+        $country_repo = new CountryRepository();
+        $country_code = $publication_entity->get('field_place_of_publication')->first()->getCountryCode();
+        $country_list = $country_repo->getList();
+        $country_name = $country_list[$country_code];
+        foreach ($fields as $field) {
+          $field->addValue($country_name);
+        }
 
-      // Issue Province Location.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_administrative_area');
-      $subdivision_repo = new SubdivisionRepository();
-      $administrative_area_code = $publication_entity->get('field_place_of_publication')->first()->getAdministrativeArea();
-      $administrative_area_list = $subdivision_repo->getList([$country_code]);
-      $administrative_area = $administrative_area_list[$administrative_area_code];
-      foreach ($fields as $field) {
-        $field->addValue($administrative_area);
-      }
+        // Issue Province Location.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_administrative_area');
+        $subdivision_repo = new SubdivisionRepository();
+        $administrative_area_code = $publication_entity->get('field_place_of_publication')->first()->getAdministrativeArea();
+        $administrative_area_list = $subdivision_repo->getList([$country_code]);
+        $administrative_area = $administrative_area_list[$administrative_area_code];
+        foreach ($fields as $field) {
+          $field->addValue($administrative_area);
+        }
 
-      // Issue City Location.
-      $fields = $this->getFieldsHelper()
-        ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_locality');
-      foreach ($fields as $field) {
-        $field->addValue($publication_entity->get('field_place_of_publication')->first()->getLocality());
+        // Issue City Location.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_locality');
+        foreach ($fields as $field) {
+          $field->addValue($publication_entity->get('field_place_of_publication')->first()->getLocality());
+        }
       }
     }
   }
