@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 use Drupal\views\Views;
 
 /**
@@ -58,6 +59,44 @@ function digital_serial_issue_preprocess_digital_serial_issue(&$variables) {
   foreach ($fields_to_parse as $field_name => $field_label) {
     if (!empty($variables['issue_entity']->$field_name->value)) {
       $variables['metadata'][$field_label->render()] = $variables['issue_entity']->$field_name->value;
+    }
+  }
+
+  // Report additional information or errors button.
+  $dst = \Drupal::entityTypeManager()
+    ->getStorage('digital_serial_title')
+    ->load(
+      $variables['parent_title']
+        ->id
+        ->value
+    );
+  $full_title =
+    $dst
+      ->get('parent_title')
+      ->entity
+      ->getTitle() . ': ' .
+    $variables['issue_entity']
+      ->get('issue_date')
+      ->value;
+  $webform_report = \Drupal::entityTypeManager()
+    ->getStorage('webform')
+    ->load('report_additional_info_errs');
+  // Note: temporarily limited to root user.
+  if ($webform_report != NULL && \Drupal::currentUser()->id == 1) {
+    // Retrieve Webform URL alias for Report webform.
+    $report_url = $webform_report->getSetting('page_submit_path');
+    if(!empty($report_url)) {
+      $variables['display_report_link'] = TRUE;
+      $report_url_options = [
+        'query' => [
+          'newspaper' => $full_title,
+          'subdirectory' => 'serials/' .
+            $variables['parent_title']->id->value .
+            '/issues/' .
+            $variables['issue_entity']->id->value,
+        ],
+      ];
+      $variables['report_url'] = Url::fromUri('base:' . $report_url, $report_url_options)->toString();
     }
   }
 
