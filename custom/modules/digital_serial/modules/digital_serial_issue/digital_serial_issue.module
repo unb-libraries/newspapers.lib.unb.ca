@@ -82,7 +82,7 @@ function digital_serial_issue_preprocess_digital_serial_issue(&$variables) {
     ->getStorage('webform')
     ->load('report_additional_info_errs');
   // Note: temporarily limited to root user.
-  if ($webform_report != NULL && \Drupal::currentUser()->id == 1) {
+  if ($webform_report != NULL && \Drupal::currentUser()->id() == 1) {
     // Retrieve Webform URL alias for Report webform.
     $report_url = $webform_report->getSetting('page_submit_path');
     if(!empty($report_url)) {
