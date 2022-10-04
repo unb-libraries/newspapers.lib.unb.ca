@@ -9,6 +9,13 @@
                 <dd>{{ value }}</dd>
             {% endfor %}
         </dl>
+        {% if display_report_link %}
+        <div class="report-form">
+          <a class="border border-secondary btn btn-sm text-secondary" href="{{ report_url }}"><span class="fas fa-envelope"></span>
+            Report additional information or errors
+          </a>
+        </div>
+        {% endif %}
     </section>
 
     <aside class="digital-serial-page-preview col-sm-4 float-row">
