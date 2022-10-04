@@ -85,7 +85,7 @@ function digital_serial_issue_preprocess_digital_serial_issue(&$variables) {
   if ($webform_report != NULL && \Drupal::currentUser()->id() == 1) {
     // Retrieve Webform URL alias for Report webform.
     $report_url = $webform_report->getSetting('page_submit_path');
-    if(!empty($report_url)) {
+    if (!empty($report_url)) {
       $variables['display_report_link'] = TRUE;
       $report_url_options = [
         'query' => [

@@ -631,18 +631,20 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $webform_report = \Drupal::entityTypeManager()
     ->getStorage('webform')
     ->load('report_additional_info_errs');
+  // Note: temporarily limited to root user.
   if ($webform_report != NULL && \Drupal::currentUser()->id() == 1) {
-    // Note: temporarily limited to root user.
-    $variables['display_report_link'] = TRUE;
     // Retrieve Webform URL alias for Report webform.
     $report_url = $webform_report->getSetting('page_submit_path');
-    $report_url_options = [
-      'query' => [
-        'newspaper' => $node->getTitle(),
-        'subdirectory' => 'node/' . $node->id(),
-      ],
-    ];
-    $variables['report_url'] = Url::fromUri('base:' . $report_url, $report_url_options)->toString();
+    if (!empty($report_url)) {
+      $variables['display_report_link'] = TRUE;
+      $report_url_options = [
+        'query' => [
+          'newspaper' => $node->getTitle(),
+          'subdirectory' => 'node/' . $node->id(),
+        ],
+      ];
+      $variables['report_url'] = Url::fromUri('base:' . $report_url, $report_url_options)->toString();
+    }
   }
 
   $view_mode = $variables['view_mode'];
