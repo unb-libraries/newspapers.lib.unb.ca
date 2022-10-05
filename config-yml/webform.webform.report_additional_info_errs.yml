@@ -260,15 +260,15 @@ handlers:
       bcc_options: {  }
       cc_mail: ''
       cc_options: {  }
-      from_mail: _default
+      from_mail: '[webform_submission:values:email:raw]'
       from_options: {  }
-      from_name: _default
+      from_name: '[webform_submission:values:name:raw]'
       reply_to: ''
       return_path: ''
       sender_mail: ''
       sender_name: ''
-      subject: _default
-      body: "<p>Submitted on [webform_submission:created]</p>\r\n\r\n<p>Submitted by: [webform_submission:user]</p>\r\n\r\n<p>Submitted values are:</p>\r\n[webform_submission:values]\r\n\r\n<p>Link:<br />\r\n<a href=\"https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]\">https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]</a></p>"
+      subject: 'Webform submission: [webform_submission:values:newspaper]'
+      body: "<p><strong>Submitted values are:</strong></p>\r\n[webform_submission:values] <strong>Link:</strong><br />\r\n<a href=\"https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]\">https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]</a>"
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
@@ -297,15 +297,15 @@ handlers:
       bcc_options: {  }
       cc_mail: ''
       cc_options: {  }
-      from_mail: unb-libraries-no-reply@unb.ca
+      from_mail: '[site:mail]'
       from_options: {  }
       from_name: _default
-      reply_to: ''
+      reply_to: '[site:mail]'
       return_path: ''
       sender_mail: ''
       sender_name: ''
-      subject: 'NBHNP Submission'
-      body: "<p>Thank you for your submission. We appreciate your interest in this project. Questions regarding access to non-digital holdings and reference questions should be directed to the holding institution.</p>\r\n\r\n<p>Submitted values:</p>\r\n[webform_submission:values]\r\n\r\n<p>Publication:<br />\r\n<a href=\"https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]\">https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]</a></p>\r\n\r\n<div><img alt=\"UNB Libraries\" src=\"https://media.lib.unb.ca/core/img-2015/UNB_Lib_Black_Red.png\" /></div>"
+      subject: 'Thank you for your submission ([webform_submission:values:newspaper])'
+      body: "<p>We appreciate your interest in this project. Questions regarding access to non-digital holdings and reference questions should be directed to the holding institution.</p>\r\n\r\n<p><strong>Submitted values:</strong></p>\r\n[webform_submission:values]\r\n\r\n<div><strong>Publication:</strong><br />\r\n<a href=\"https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]\">https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]</a></div>\r\n\r\n<p><img alt=\"UNB Libraries\" src=\"https://media.lib.unb.ca/core/img-2015/UNB_Lib_Black_Red.png\" /></p>"
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
