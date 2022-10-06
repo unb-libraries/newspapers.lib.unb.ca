@@ -199,7 +199,8 @@ settings:
 access:
   create:
     roles:
-      - administrator
+      - anonymous
+      - authenticated
     users: {  }
     permissions: {  }
   view_any:
