@@ -651,8 +651,7 @@ a.back-link::before {
     padding: 1.5em 2em 1em;
   }
 }
-@media (min-width: 768px)
-and (max-width: 991px){
+@media (min-width: 768px) and (max-width: 991px){
   .image-placeholder {
     max-width: 160px;
   }
@@ -662,7 +661,11 @@ and (max-width: 991px){
   }
 }
 @media (min-width: 768px) {
-  // Fix Bootstrap responsive table button dropdown menus
+  /* Improve facets sidebar + main container sm-md width layout */
+  #main > div.row {
+    flex-wrap: nowrap;
+  }
+  /* Fix Bootstrap responsive table button dropdown menus */
   .table-responsive {
     margin-bottom: 1em;
     overflow-x: visible;
