@@ -2796,7 +2796,7 @@ display:
           expose:
             operator_id: search_api_fulltext_op
             label: Keywords
-            description: ''
+            description: 'Search for keywords within the fulltext content of digitized newspapers'
             use_operator: false
             operator: search_api_fulltext_op
             operator_limit_selection: false
@@ -2810,7 +2810,10 @@ display:
               anonymous: '0'
               administrator: '0'
               newspaper_administrator: '0'
+              serial_ho: '0'
+            expose_fields: false
             placeholder: ''
+            searched_fields_id: ''
           is_grouped: false
           group_info:
             label: ''

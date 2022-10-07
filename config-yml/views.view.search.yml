@@ -609,7 +609,7 @@ display:
           expose:
             operator_id: search_api_fulltext_op
             label: Keywords
-            description: ''
+            description: 'Search by title, location, publisher, notes, description or combination, i.e. Moncton 1932'
             use_operator: false
             operator: search_api_fulltext_op
             operator_limit_selection: false
