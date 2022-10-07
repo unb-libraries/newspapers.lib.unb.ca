@@ -94,3 +94,10 @@ textarea {
     }
   }
 }
+// Adjustment re: Search form actions input fieldset & adjacent buttons
+#views-exposed-form-search-search-page,
+#views-exposed-form-digital-page-lister-page-search {
+  .form-actions {
+      padding-bottom: 1.625rem;
+  }
+}
