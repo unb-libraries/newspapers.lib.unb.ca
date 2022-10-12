@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-testing-newspapers-lib-unb-ca
+  namespace: prod
+  labels:
+    app: cypress
+    tier: cron
+spec:
+  schedule: "*/5 * * * *"
+  startingDeadlineSeconds: 480
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    metadata:
+      name: cron-testing-newspapers-lib-unb-ca
+      labels:
+        app: cypress
+        tier: cron
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          nodeSelector:
+            deployenv: dev
+          containers:
+            -
+              name: cron-testing-newspapers-lib-unb-ca
+              env:
+                -
+                  name: DEPLOY_ENV
+                  value: prod
+                -
+                  name: CYPRESS_REPORTER_VERBOSITY
+                  value: '20'
+                -
+                  name: CYPRESS_SPEC_FILE
+                  valueFrom:
+                    secretKeyRef:
+                      name: newspapers-lib-unb-ca-cypress
+                      key: file
+                -
+                  name: CYPRESS_SPEC_FILE_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: newspapers-lib-unb-ca-cypress
+                      key: file_name
+              image: "ghcr.io/unb-libraries/cypress.status.lib.unb.ca:prod"
+              imagePullPolicy: Always
+              volumeMounts:
+                -
+                  mountPath: /usr/src/reports
+                  name: cypress-persistent-storage
+          priorityClassName: cron-priority-services
+          imagePullSecrets:
+            -
+              name: github-container-registry-auth
+          restartPolicy: Never
+          volumes:
+            -
+              name: cypress-persistent-storage
+              persistentVolumeClaim:
+                claimName: status-lib-unb-ca
