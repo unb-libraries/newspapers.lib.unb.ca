@@ -2759,7 +2759,7 @@ display:
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
+          expose_sort_order: false
           sort_asc_label: Asc
           sort_desc_label: Desc
           text_input_required: "<div class=\"alert alert-info\">\r\n  <span class=\"fas fa-question-circle\"></span> Enter 1 or more keyword terms to filter the result list.\r\n</div>"
@@ -2780,6 +2780,33 @@ display:
             value: "<div class=\"alert alert-warning\">\r\n    <i class=\"fas fa-exclamation-circle\"></i>\r\n    No results were found<span class=\"results-{{ filters.search_api_fulltext }}\"> for <b>{{ filters.search_api_fulltext }}</b></span>.\r\n</div>"
             format: full_html
           tokenize: true
+      sorts:
+        search_api_relevance:
+          id: search_api_relevance
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: search_api_relevance
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: Relevance
+            field_identifier: search_api_relevance
+          exposed: true
+        issue_date:
+          id: issue_date
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: issue_date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: DESC
+          expose:
+            label: 'Publication Date'
+            field_identifier: issue_date
+          exposed: true
       filters:
         search_api_fulltext:
           id: search_api_fulltext
@@ -2816,16 +2843,19 @@ display:
             searched_fields_id: ''
           is_grouped: false
           group_info:
-            label: ''
-            description: ''
-            identifier: ''
+            label: 'Fulltext search'
+            description: null
+            identifier: search_api_fulltext
             optional: true
             widget: select
             multiple: false
             remember: false
             default_group: All
             default_group_multiple: {  }
-            group_items: {  }
+            group_items:
+              1: {  }
+              2: {  }
+              3: {  }
           parse_mode: direct
           min_length: null
           fields: {  }
@@ -2842,6 +2872,7 @@ display:
         exposed_form: false
         relationships: false
         fields: false
+        sorts: false
         filters: false
         filter_groups: false
         header: false
@@ -2869,6 +2900,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'url.query_args:sort_by'
         - user.permissions
       tags:
         - 'config:search_api.index.pages_newspapers_lib_unb_ca'
