@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: cron-testing-newspapers-lib-unb-ca
-  namespace: prod
+  namespace: testing
   labels:
     app: cypress
     tier: cron
@@ -28,7 +28,7 @@ spec:
               env:
                 -
                   name: DEPLOY_ENV
-                  value: prod
+                  value: testing
                 -
                   name: CYPRESS_REPORTER_VERBOSITY
                   value: '20'
