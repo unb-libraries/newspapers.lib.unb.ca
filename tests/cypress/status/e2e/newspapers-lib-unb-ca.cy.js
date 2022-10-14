@@ -5,7 +5,7 @@ describe('New Brunswick Historical Newspapers Project', {baseUrl: host, groups: 
     beforeEach(() => {
       cy.visit('/')
       cy.title()
-        .should('contains', 'NB Newspapers')
+        .should('contains', 'New Brunswick Historical Newspapers')
     })
 
     specify('Title search for "daily" finds 25+ results', () => {
