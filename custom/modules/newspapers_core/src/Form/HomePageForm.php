@@ -271,10 +271,16 @@ class HomePageForm extends FormBase {
       '#type' => 'markup',
       '#markup' => '
         <div class="card collapse mt-3 w-100" id="searchTips">
-          <div class="card-header">Search Tips</div>
           <div class="card-body">
-            <p class="description m-0">Use uppercase <strong>AND</strong> operator to limit to all terms used. Use &quot;&quot; to do phrase searching.<br>
-            eg. <code>cattle AND Fredericton</code></p>
+            <h2 class="card-title sr-only">Search Term Guidelines</h2>
+            <div class="description m-0">
+              <ul class="mb-0">
+                <li>Use uppercase AND operator to limit to all terms used. eg. <code>cattle AND Fredericton</code></li>
+                <li>Use &quot;&quot; to do phrase searching. eg. <code>&quot;5000 pairs to select&quot;</code></li>
+                <li>See current listing of
+                  <a href="/digital-titles">digitally available titles</a></li>
+              </ul>
+            </div>
           </div>
         </div>',
     ];
