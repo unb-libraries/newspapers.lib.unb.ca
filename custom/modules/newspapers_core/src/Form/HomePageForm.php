@@ -277,6 +277,7 @@ class HomePageForm extends FormBase {
               <ul class="mb-0 px-3">
                 <li>Use uppercase AND operator to limit to all terms used. eg. <code>cattle AND Fredericton</code></li>
                 <li>Use &quot;&quot; to do phrase searching. eg. <code>&quot;5000 pairs to select&quot;</code></li>
+                <li>After searching, use the facets to limit by date, publication and location</li>
                 <li>See current listing of
                   <a href="/digital-titles">digitally available titles</a></li>
               </ul>
