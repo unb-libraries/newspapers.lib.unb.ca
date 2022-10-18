@@ -274,7 +274,7 @@ class HomePageForm extends FormBase {
           <div class="card-body">
             <h2 class="card-title sr-only">Search Term Guidelines</h2>
             <div class="description m-0">
-              <ul class="mb-0">
+              <ul class="mb-0 px-3">
                 <li>Use uppercase AND operator to limit to all terms used. eg. <code>cattle AND Fredericton</code></li>
                 <li>Use &quot;&quot; to do phrase searching. eg. <code>&quot;5000 pairs to select&quot;</code></li>
                 <li>See current listing of
