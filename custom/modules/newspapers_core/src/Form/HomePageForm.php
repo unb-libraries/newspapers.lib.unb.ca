@@ -250,7 +250,7 @@ class HomePageForm extends FormBase {
     $form['tab-content']['fulltext']['search']['input_fulltext'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search the fulltext of digitized newspapers'),
-      '#description' => '<span class="mr-1">' . $this->t('Search for keywords within the fulltext content of digitized 
+      '#description' => '<span class="mr-1">' . $this->t('Search for keywords within the fulltext of digitized 
         newspapers.') . '</span><a aria-controls="searchTips" aria-expanded="false" class="btn-link text-nowrap"
         data-toggle="collapse" href="#searchTips" role="button"><span aria-hidden="true"
         class="fas fa-question-circle mr-1"></span>tips</a>',
