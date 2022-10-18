@@ -2823,7 +2823,7 @@ display:
           expose:
             operator_id: search_api_fulltext_op
             label: Keywords
-            description: 'Search for keywords within the fulltext content of digitized newspapers'
+            description: '[note] Overwritten via newspapers_core_form_alter()'
             use_operator: false
             operator: search_api_fulltext_op
             operator_limit_selection: false
@@ -2880,6 +2880,17 @@ display:
       use_ajax: false
       display_description: ''
       header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: "<div class=\"card collapse mt-2\" id=\"searchTips\">\r\n  <div class=\"card-header\">\r\n    Search Tips\r\n  </div>\r\n  <div class=\"card-body\">\r\n    <p class=\"description m-0\">Use uppercase <strong>AND</strong> operator to limit to all terms used. Use &quot;&quot; to do phrase searching.<br>\r\n    eg. <code>cattle AND Fredericton</code></p>\r\n  </div>\r\n</div>"
+          tokenize: false
         result:
           id: result
           table: views
