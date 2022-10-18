@@ -32,7 +32,7 @@ describe('New Brunswick Historical Newspapers Project', {baseUrl: host, groups: 
         .click()
       cy.url()
         .should('match', /\/page-search\?fulltext=/)
-      cy.get('h2')
+      cy.get('h2.alert-success')
         .should('contain', 'Displaying 1 -')
       cy.get('.search-results .views-row')
         .should('have.lengthOf.at.least', 10)
