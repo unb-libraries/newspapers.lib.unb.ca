@@ -250,7 +250,10 @@ class HomePageForm extends FormBase {
     $form['tab-content']['fulltext']['search']['input_fulltext'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search the fulltext of digitized newspapers'),
-      '#description' => $this->t('Search for keywords within the fulltext content of newspapers.'),
+      '#description' => '<span class="mr-1">' . $this->t('Search for keywords within the fulltext content of digitized 
+        newspapers.') . '</span><a aria-controls="searchTips" aria-expanded="false" class="btn-link text-nowrap"
+        data-toggle="collapse" href="#searchTips" role="button"><span aria-hidden="true"
+        class="fas fa-question-circle mr-1"></span>tips</a>',
     ];
     $form['tab-content']['fulltext']['search']['actions'] = [
       '#type' => 'actions',
@@ -263,6 +266,17 @@ class HomePageForm extends FormBase {
           'btn-unb-red',
         ],
       ],
+    ];
+    $form['tab-content']['fulltext']['tips'] = [
+      '#type' => 'markup',
+      '#markup' => '
+        <div class="card collapse flex-grow-1 mt-3" id="searchTips">
+          <div class="card-header">Search Tips</div>
+          <div class="card-body">
+            <p class="description m-0">Use uppercase <strong>AND</strong> operator to limit to all terms used. Use &quot;&quot; to do phrase searching.<br>
+            eg. <code>cattle AND Fredericton</code></p>
+          </div>
+        </div>',
     ];
     $form['tab-content']['fulltext']['notes'] = [
       '#type' => 'markup',
