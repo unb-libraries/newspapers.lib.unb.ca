@@ -270,7 +270,7 @@ class HomePageForm extends FormBase {
     $form['tab-content']['fulltext']['tips'] = [
       '#type' => 'markup',
       '#markup' => '
-        <div class="card collapse flex-grow-1 mt-3" id="searchTips">
+        <div class="card collapse mt-3 w-100" id="searchTips">
           <div class="card-header">Search Tips</div>
           <div class="card-body">
             <p class="description m-0">Use uppercase <strong>AND</strong> operator to limit to all terms used. Use &quot;&quot; to do phrase searching.<br>
