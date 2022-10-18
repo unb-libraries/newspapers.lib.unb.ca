@@ -253,7 +253,7 @@ class HomePageForm extends FormBase {
       '#description' => '<span class="mr-1">' . $this->t('Search for keywords within the fulltext of digitized 
         newspapers.') . '</span><a aria-controls="searchTips" aria-expanded="false" class="btn-link text-nowrap"
         data-toggle="collapse" href="#searchTips" role="button"><span aria-hidden="true"
-        class="fas fa-question-circle mr-1"></span>tips</a>',
+        class="fas fa-question-circle mr-1"></span>Search tips</a>',
     ];
     $form['tab-content']['fulltext']['search']['actions'] = [
       '#type' => 'actions',
