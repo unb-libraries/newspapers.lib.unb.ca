@@ -2800,12 +2800,25 @@ display:
           field: issue_date
           relationship: none
           group_type: group
-          admin_label: ''
+          admin_label: 'Newest First'
           plugin_id: search_api
           order: DESC
           expose:
-            label: 'Publication Date'
-            field_identifier: issue_date
+            label: 'Publication Date (newest first)'
+            field_identifier: issue_date_desc
+          exposed: true
+        issue_date_1:
+          id: issue_date_1
+          table: search_api_index_pages_newspapers_lib_unb_ca
+          field: issue_date
+          relationship: none
+          group_type: group
+          admin_label: 'Oldest First'
+          plugin_id: search_api
+          order: ASC
+          expose:
+            label: 'Publication Date (oldest first)'
+            field_identifier: issue_date_asc
           exposed: true
       filters:
         search_api_fulltext:
