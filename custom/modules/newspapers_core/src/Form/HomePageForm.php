@@ -285,15 +285,6 @@ class HomePageForm extends FormBase {
           </div>
         </div>',
     ];
-    $form['tab-content']['fulltext']['notes'] = [
-      '#type' => 'markup',
-      '#markup' => '<div class="alert alert-info media mt-4 mb-0">
-        <b>Note:</b>
-        <p class="media-body mb-0 ml-1">
-        Only a limited number of newspapers have been digitized to date and new content will be added on a
-        continuing basis. See a current listing of <a href="/digital-titles">digitally available titles and coverage
-        dates</a>.</p></div>',
-    ];
 
     $form['tab-content']['about'] = [
       '#type' => 'container',
