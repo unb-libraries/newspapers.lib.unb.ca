@@ -2792,7 +2792,7 @@ display:
           order: DESC
           expose:
             label: Relevance
-            field_identifier: search_api_relevance
+            field_identifier: relevance
           exposed: true
         issue_date:
           id: issue_date
@@ -2805,7 +2805,7 @@ display:
           order: DESC
           expose:
             label: 'Publication Date (newest first)'
-            field_identifier: issue_date_desc
+            field_identifier: date_desc
           exposed: true
         issue_date_1:
           id: issue_date_1
@@ -2818,7 +2818,7 @@ display:
           order: ASC
           expose:
             label: 'Publication Date (oldest first)'
-            field_identifier: issue_date_asc
+            field_identifier: date_asc
           exposed: true
       filters:
         search_api_fulltext:
