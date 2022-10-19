@@ -130,11 +130,11 @@ class HomePageForm extends FormBase {
         Brunswick and across the world. Search and discover
         <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
         titles (including New Brunswick Historical Newspapers Online collection) available from UNB Libraries.</p>
-        <p class=\"mb-0\">Fulltext searching is available for our growing list of
-        <a href=\"/digital-titles\">digitized titles</a>.
-        For more worldwide digital newspaper content, consult
+        <p>Fulltext searching is available for our growing list of
+        <a href=\"/digital-titles\">digitized titles</a>. Not all publications are available digitally.</p>
+        <p>For more worldwide digital newspaper content, consult
         <a href=\"https://lib.unb.ca/eresources/collections/newspapers\" class=\"external\">
-        UNB Libraries licensed electronic Newspaper collections</a>.</p>";
+        UNB Libraries licensed electronic Newspaper collections</a>. UNB/STU login required.</p>";
 
     $form['blurb'] = [
       '#type' => 'markup',
