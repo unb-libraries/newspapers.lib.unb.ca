@@ -11,6 +11,9 @@ dockworker:
     environments:
       - dev
       - prod
+    workflow:
+      source: dockworker-drupal
+      type: deployment-workflow
   drupal:
     major: 9
   github:
