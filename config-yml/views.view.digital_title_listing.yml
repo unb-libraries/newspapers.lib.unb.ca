@@ -546,14 +546,14 @@ display:
               align: ''
               separator: ''
               empty_column: false
-              responsive: ''
+              responsive: priority-medium
             field_last_issue_sort_date:
               sortable: true
               default_sort_order: desc
               align: ''
               separator: ''
               empty_column: false
-              responsive: ''
+              responsive: priority-medium
           override: true
           sticky: false
           summary: ''
