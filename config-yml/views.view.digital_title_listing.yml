@@ -585,6 +585,17 @@ display:
       css_class: 'search-results digital-titles'
       use_ajax: true
       header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: "<div class=\"alert border\">\r\n<strong>Note:</strong> Only a limited number of newspapers have been digitized to date and new content is being added on a continuing basis, including extending the runs existing titles.\r\n<a href=\"/project\" class=\"btn btn-link p-0 text-left\">More information about the New Brunswick Historical Newspapers Project <span class=\"fas fa-angle-double-right fa-sm\"></span></a>\r\n</div>"
+          tokenize: false
         result:
           id: result
           table: views
