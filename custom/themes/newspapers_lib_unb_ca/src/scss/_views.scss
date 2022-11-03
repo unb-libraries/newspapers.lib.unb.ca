@@ -1,0 +1,8 @@
+@media (max-width: 767px) {
+  table {
+    // Address Safari + overflow:paged-y issue.
+    &.responsive-enabled > tbody > tr > td {
+      overflow: initial;
+    }
+  }
+}
