@@ -278,7 +278,7 @@ display:
           admin_label: ''
           plugin_id: field
           label: 'First Digitized Issue'
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -342,7 +342,7 @@ display:
           admin_label: ''
           plugin_id: field
           label: 'Last Digitized Issue'
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
