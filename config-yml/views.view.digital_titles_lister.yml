@@ -14,7 +14,7 @@ dependencies:
 id: digital_titles_lister
 label: 'Digital Titles Lister'
 module: views
-description: 'Listing of all publications with added ''Digital'' Serial Holding data.'
+description: 'Listing of publications containing a ''Digital'' holding with at least 1 issue.'
 tag: ''
 base_table: serial_holding
 base_field: id
@@ -768,7 +768,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: digital-titles-list
+      path: digital-titles
     cache_metadata:
       max-age: -1
       contexts:
