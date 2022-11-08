@@ -737,7 +737,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: "<div class=\"alert border\">\r\n<strong>Note:</strong> This is the current listing of newspapers that have been digitized. New content is being continually added, including extending the runs of existing titles.\r\n<a href=\"/project\" class=\"btn btn-link p-0 text-left\"><span class=\"fas fa-question-circle fa-sm\" aria=hidden=\"true\"></span> More information about the New Brunswick Historical Newspapers Project</a>\r\n</div>"
+          content: "<div class=\"alert border\">\r\n<strong>Note:</strong> This is the current listing of newspapers that have been digitized. New content is being continually added, including extending the runs of existing titles.\r\n<a href=\"/project\" class=\"btn btn-link p-0 text-left\"><span class=\"fas fa-question-circle fa-sm\" aria=hidden=\"true\"></span> Learn more about the New Brunswick Historical Newspapers Project</a>\r\n</div>"
           tokenize: false
         result:
           id: result
