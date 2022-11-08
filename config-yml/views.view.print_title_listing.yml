@@ -987,7 +987,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: "<h2 class=\"alert alert-success\">\r\n<i class=\"fas fa-check-circle fa-sm\"></i>\r\nDisplaying @start - @end of @total results\r\n</h2>"
+          content: "<h2 class=\"alert alert-success\">\r\nDisplaying @start - @end of @total results\r\n</h2>"
       footer: {  }
       display_extenders: {  }
     cache_metadata:
