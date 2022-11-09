@@ -131,7 +131,9 @@ class HomePageForm extends FormBase {
         <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
         titles available from UNB Libraries.</p>
         <p>Fulltext searching is available for our growing list of
-        <a href=\"/digital-titles\">digitized titles</a>. Not all publications are available digitally.</p>
+        <a href=\"/digital-titles\">digitized titles</a>. Not all publications are available digitally.
+        <a href=\"project\"><span class=\"fas fa-question-circle fa-sm mr-1\" aria-hidden=\"true\"></span>Learn
+        more about the New Brunswick Historical Newspapers Project</a></p>
         <p>For more worldwide digital newspaper content, consult
         <a href=\"https://lib.unb.ca/eresources/collections/newspapers\" class=\"external\">
         UNB Libraries licensed electronic Newspaper collections</a>. UNB/STU login required.</p>";
