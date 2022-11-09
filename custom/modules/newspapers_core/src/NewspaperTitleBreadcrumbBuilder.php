@@ -30,8 +30,7 @@ class NewspaperTitleBreadcrumbBuilder implements BreadcrumbBuilderInterface {
         'entity.node.edit_form',
       ]
       )
-      && $route_match->getParameter('node') instanceof NodeInterface
-      && $route_match->getParameter('node')->bundle() == 'publication';
+      && $route_match->getParameter('node') instanceof NodeInterface;
   }
 
   /**
