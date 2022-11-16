@@ -174,7 +174,7 @@
     "drupal/override_node_options": "2.6",
     "drupal/owlcarousel": "1.0-beta1",
     "drupal/pathauto": "1.11",
-    "drupal/redis": "1.5",
+    "drupal/redis": "1.6",
     "drupal/samlauth": "3.8",
     "drupal/search_api": "1.26",
     "drupal/search_api_autocomplete": "1.7",
