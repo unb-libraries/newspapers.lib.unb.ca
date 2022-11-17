@@ -28,25 +28,31 @@ elements: |-
     '#attributes':
       class:
         - theme-dark
-    name:
-      '#title': 'Your Name'
-      '#type': textfield
-      '#required': true
-      '#default_value': '[current-user:display-name]'
-    email:
-      '#title': 'Your Email'
-      '#type': email
-      '#required': true
-      '#default_value': '[current-user:mail]'
-    subject:
-      '#title': Subject
-      '#type': textfield
-      '#test': 'Testing contact webform from [site:name]'
-    message:
-      '#title': Message
-      '#type': textarea
-      '#required': true
-      '#test': 'Please ignore this email.'
+    personal_information:
+      '#type': fieldset
+      '#title': 'Personal Information'
+      name:
+        '#title': 'Your Name'
+        '#type': textfield
+        '#required': true
+        '#default_value': '[current-user:display-name]'
+      email:
+        '#title': 'Your Email'
+        '#type': email
+        '#required': true
+        '#default_value': '[current-user:mail]'
+    details:
+      '#type': fieldset
+      '#title': Details
+      subject:
+        '#title': Subject
+        '#type': textfield
+        '#test': 'Testing contact webform from [site:name]'
+      message:
+        '#title': Message
+        '#type': textarea
+        '#required': true
+        '#test': 'Please ignore this email.'
     actions:
       '#type': webform_actions
       '#title': 'Submit button(s)'
@@ -194,7 +200,6 @@ settings:
 access:
   create:
     roles:
-      - anonymous
       - authenticated
     users: {  }
     permissions: {  }
