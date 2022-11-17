@@ -33,6 +33,25 @@ function newspapers_core_cron() {
     update_page_sort_no_first_values();
     \Drupal::state()->set('newspapers_core.last_page_sort_run', time());
   }
+  if (_newspapers_core_empty_issue_needs_deleting()) {
+    delete_digital_issues_with_no_pages();
+    \Drupal::state()->set('newspapers_core.last_empty_issue_run', time());
+  }
+}
+
+/**
+ * Determine if the empty issues need deleting.
+ *
+ * @return bool
+ *   TRUE if the empty issues need deleting. FALSE otherwise.
+ */
+function _newspapers_core_empty_issue_needs_deleting() {
+  $last_empty_run = \Drupal::state()->get('newspapers_core.last_empty_issue_run', 0);
+  $time_now = time();
+  $current_hour = date('H', $time_now);
+  return ($time_now - $last_empty_run) > 10800 &&
+    $current_hour >= 1 &&
+    $current_hour <= 3;
 }
 
 /**
