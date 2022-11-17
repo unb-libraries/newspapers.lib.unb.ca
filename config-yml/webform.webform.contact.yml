@@ -22,31 +22,41 @@ id: contact
 title: Contact
 description: 'Basic email contact webform.'
 category: ''
-elements: |
-  name:
-    '#title': 'Your Name'
-    '#type': textfield
-    '#required': true
-    '#default_value': '[current-user:display-name]'
-  email:
-    '#title': 'Your Email'
-    '#type': email
-    '#required': true
-    '#default_value': '[current-user:mail]'
-  subject:
-    '#title': Subject
-    '#type': textfield
-    '#required': true
-    '#test': 'Testing contact webform from [site:name]'
-  message:
-    '#title': Message
-    '#type': textarea
-    '#required': true
-    '#test': 'Please ignore this email.'
-  actions:
-    '#type': webform_actions
-    '#title': 'Submit button(s)'
-    '#submit__label': 'Send message'
+elements: |-
+  container:
+    '#type': container
+    '#attributes':
+      class:
+        - theme-dark
+    name:
+      '#title': 'Your Name'
+      '#type': textfield
+      '#required': true
+      '#default_value': '[current-user:display-name]'
+    email:
+      '#title': 'Your Email'
+      '#type': email
+      '#required': true
+      '#default_value': '[current-user:mail]'
+    subject:
+      '#title': Subject
+      '#type': textfield
+      '#test': 'Testing contact webform from [site:name]'
+    message:
+      '#title': Message
+      '#type': textarea
+      '#required': true
+      '#test': 'Please ignore this email.'
+    actions:
+      '#type': webform_actions
+      '#title': 'Submit button(s)'
+      '#submit__label': 'Send Your Message'
+      '#reset__label': Cancel
+      '#update_hide': true
+      '#delete__label': Cancel
+  privacy:
+    '#type': webform_markup
+    '#markup': '<div class="alert alert-info" role="alert"><strong>Privacy: </strong> UNB Libraries will only use the comments you send to improve our website and services. We are not storing any personal information.</div>'
 css: ''
 javascript: ''
 settings:
@@ -56,7 +66,7 @@ settings:
   ajax_effect: ''
   ajax_speed: null
   page: true
-  page_submit_path: ''
+  page_submit_path: /contact
   page_confirm_path: ''
   page_theme_name: ''
   form_title: source_entity_webform
@@ -82,7 +92,7 @@ settings:
   form_required: false
   form_autofocus: false
   form_details_toggle: false
-  form_reset: false
+  form_reset: true
   form_access_denied: default
   form_access_denied_title: ''
   form_access_denied_message: ''
@@ -131,7 +141,7 @@ settings:
   wizard_track: ''
   wizard_prev_button_label: ''
   wizard_next_button_label: ''
-  wizard_toggle: false
+  wizard_toggle: true
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
   preview: 0
@@ -149,10 +159,10 @@ settings:
   draft_loaded_message: ''
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
-  confirmation_type: url_message
+  confirmation_type: message
   confirmation_url: '<front>'
   confirmation_title: ''
-  confirmation_message: 'Your message has been sent.'
+  confirmation_message: "<p class=\"h6\">Successfully Submitted</p>\r\n\r\n<p>Thank you for taking the time to submit your feedback to UNB Libraries.</p>"
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
