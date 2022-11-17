@@ -19,7 +19,7 @@ uid: null
 template: false
 archive: false
 id: contact
-title: Contact
+title: 'Contact Us'
 description: 'Basic email contact webform.'
 category: ''
 elements: |-
