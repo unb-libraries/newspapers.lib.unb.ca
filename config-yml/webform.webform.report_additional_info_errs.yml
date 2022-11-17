@@ -274,7 +274,7 @@ handlers:
       return_path: ''
       sender_mail: ''
       sender_name: ''
-      subject: 'Webform submission: [webform_submission:values:newspaper]'
+      subject: 'NBHNP submission: [webform_submission:values:newspaper]'
       body: "<p><strong>Submitted values are:</strong></p>\r\n[webform_submission:values] <strong>Link:</strong><br />\r\n<a href=\"https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]\">https://newspapers.lib.unb.ca/[webform_submission:values:subdirectory]</a>"
       excluded_elements: {  }
       ignore_access: false
