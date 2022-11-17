@@ -270,7 +270,7 @@ handlers:
       sender_mail: ''
       sender_name: ''
       subject: 'Thank you for your NBHNP submission'
-      body: "<p>We appreciate your interest in this project. Questions regarding access to non-digital holdings and reference questions should be directed to the holding institution.</p>\r\n\r\n<p><strong>Submitted values:</strong></p>\r\n[webform_submission:values]\r\n\r\n<div>&nbsp;</div>\r\n\r\n<p><img alt=\"UNB Libraries\" src=\"https://media.lib.unb.ca/core/img-2015/UNB_Lib_Black_Red.png\" /></p>"
+      body: "<p>We appreciate your interest in this project. Questions regarding access to non-digital holdings and reference questions should be directed to the holding institution.</p>\r\n\r\n<p><strong>Submitted values:</strong></p>\r\n[webform_submission:values]\r\n\r\n\r\n<p><img alt=\"UNB Libraries\" src=\"https://media.lib.unb.ca/core/img-2015/UNB_Lib_Black_Red.png\" /></p>"
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
