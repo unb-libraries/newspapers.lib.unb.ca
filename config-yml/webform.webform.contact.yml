@@ -48,6 +48,7 @@ elements: |-
         '#title': Subject
         '#type': textfield
         '#test': 'Testing contact webform from [site:name]'
+        '#required': true
       message:
         '#title': Message
         '#type': textarea
