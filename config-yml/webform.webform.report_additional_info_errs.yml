@@ -40,6 +40,7 @@ elements: |-
       newspaper:
         '#type': textfield
         '#title': Newspaper
+        '#disabled': true
       message:
         '#type': textarea
         '#title': Message
