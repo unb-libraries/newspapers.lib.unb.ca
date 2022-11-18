@@ -132,7 +132,8 @@ class HomePageForm extends FormBase {
         titles available from UNB Libraries.</p>
         <p>Fulltext searching is available for our growing list of
         <a href=\"/digital-titles\">digitized titles</a>. Learn
-        more about the <a href=\"project\">New Brunswick Historical Newspapers Project</a>.</p>
+        more about the <a href=\"project\">New Brunswick Historical Newspapers Project</a>
+        or contact us with questions.</p>
         <p>For more worldwide digital newspaper content, consult
         <a href=\"https://lib.unb.ca/eresources/collections/newspapers\" class=\"external\">
         UNB Libraries licensed electronic Newspaper collections</a>. UNB/STU login required.</p>";
