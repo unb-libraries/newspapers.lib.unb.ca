@@ -5,9 +5,6 @@
  * Include global settings overrides here.
  */
 
-// Specify install profile.
-$settings['install_profile'] = 'minimal';
-
 // Redis.
 $settings['cache_prefix']['default'] = 'DRUPAL_SITE_ID_';
 $conf['chq_redis_cache_enabled'] = TRUE;
