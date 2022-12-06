@@ -1,4 +1,29 @@
 services:
+  newspapers.lib.unb.ca:
+    build:
+      context: .
+    restart: unless-stopped
+    container_name: newspapers.lib.unb.ca
+    depends_on:
+      - drupal-mysql-lib-unb-ca
+      - drupal-redis-lib-unb-ca
+      - drupal-solr-lib-unb-ca
+    expose:
+      - "80"
+    ports:
+      - "3095:80"
+    networks:
+      - newspapers.lib.unb.ca
+    env_file:
+      - ./env/drupal.env
+    environment:
+      - DRUPAL_IMPORT_CONTENT=TRUE
+    volumes:
+      - drupal-data:/app/html/sites/default
+      - ./config-yml:/app/configuration
+      - ./custom/modules:/app/html/modules/custom
+      - ./custom/themes:/app/html/themes/custom
+      - ./tests:/app/tests
   drupal-mysql-lib-unb-ca:
     image: mysql:5.7
     restart: unless-stopped
@@ -45,31 +70,6 @@ services:
       - "4095:8025"
     networks:
       - newspapers.lib.unb.ca
-  newspapers.lib.unb.ca:
-    build:
-      context: .
-    restart: unless-stopped
-    container_name: newspapers.lib.unb.ca
-    depends_on:
-      - drupal-mysql-lib-unb-ca
-      - drupal-redis-lib-unb-ca
-      - drupal-solr-lib-unb-ca
-    expose:
-      - "80"
-    ports:
-      - "3095:80"
-    networks:
-      - newspapers.lib.unb.ca
-    env_file:
-      - ./env/drupal.env
-    environment:
-      - DRUPAL_IMPORT_CONTENT=TRUE
-    volumes:
-      - drupal-data:/app/html/sites/default
-      - ./config-yml:/app/configuration
-      - ./custom/modules:/app/html/modules/custom
-      - ./custom/themes:/app/html/themes/custom
-      - ./tests:/app/tests
 networks:
   newspapers.lib.unb.ca:
     name: newspapers.lib.unb.ca
