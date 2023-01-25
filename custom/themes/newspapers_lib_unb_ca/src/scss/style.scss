@@ -86,6 +86,10 @@ dl .inline-list {
 .publication {
   figure {
     margin-bottom: 1em;
+
+    img {
+      margin-bottom: 0;
+    }
   }
 
   h2 {
