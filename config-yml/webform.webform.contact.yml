@@ -23,9 +23,6 @@ title: 'Contact Us'
 description: 'Basic email contact webform.'
 category: ''
 elements: |-
-  info_box:
-    '#type': webform_markup
-    '#markup': '<div class="alert alert-info">We appreciate your interest in this project. Questions regarding access to non-digital holdings and reference questions should be directed to the holding institution.</div>'
   container:
     '#type': container
     '#attributes':
@@ -48,11 +45,10 @@ elements: |-
       '#type': fieldset
       '#title': Details
       subject:
-        '#type': textfield
         '#title': Subject
-        '#description': 'Include newspaper title if relevant.'
-        '#required': true
+        '#type': textfield
         '#test': 'Testing contact webform from [site:name]'
+        '#required': true
       message:
         '#title': Message
         '#type': textarea
