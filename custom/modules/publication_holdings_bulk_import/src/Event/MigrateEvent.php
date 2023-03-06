@@ -45,13 +45,13 @@ class MigrateEvent implements EventSubscriberInterface {
         'Holding Start Date *'
       ));
       if ($holding_start_date == '0000-00-00') {
-          $row->getSourceProperty('Holding Start Date *', NULL);
+        $row->getSourceProperty('Holding Start Date *', NULL);
       }
       $holding_end_date = trim($row->getSourceProperty(
         'Holding End Date *'
       ));
       if ($holding_end_date == '0000-00-00') {
-          $row->getSourceProperty('Holding End Date *', NULL);
+        $row->getSourceProperty('Holding End Date *', NULL);
       }
       $holding_type_string = trim($row->getSourceProperty('Type (Microform or Print) *'));
       if (
