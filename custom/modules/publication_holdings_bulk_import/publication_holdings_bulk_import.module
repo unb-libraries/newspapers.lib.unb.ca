@@ -446,6 +446,11 @@ function _publication_holdings_validate_list($data, $valid_items): bool {
  */
 function _publication_holdings_validate_date($data): bool {
   // First, make sure that the format is matched.
+
+  if($data == '0000-00-00'){
+    return TRUE;
+  }
+
   if(!preg_match('/\d{4}-\d{2}-\d{2}/',$data)){
     return FALSE;
   }

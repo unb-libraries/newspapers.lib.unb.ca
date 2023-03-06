@@ -41,6 +41,18 @@ class MigrateEvent implements EventSubscriberInterface {
 
     // Only act on rows for this migration.
     if (substr($id, 0, strlen($query)) === $query) {
+      $holding_start_date = trim($row->getSourceProperty(
+        'Holding Start Date *'
+      ));
+      if ($holding_start_date == '0000-00-00') {
+          $row->getSourceProperty('Holding Start Date *', NULL);
+      }
+      $holding_end_date = trim($row->getSourceProperty(
+        'Holding End Date *'
+      ));
+      if ($holding_end_date == '0000-00-00') {
+          $row->getSourceProperty('Holding End Date *', NULL);
+      }
       $holding_type_string = trim($row->getSourceProperty('Type (Microform or Print) *'));
       if (
         !empty($holding_type_string) &&
