@@ -134,12 +134,12 @@
             </figure>
           {% endif %}
 
-          {% if content.field_subtitle|field_value %}
-            <div>{% trans %}Subtitle / Tagline{% endtrans %}:</div>
-            <div>{{ content.field_subtitle|field_value }}</div>
-          {% endif %}
-
           <dl>
+            {% if content.field_subtitle|field_value %}
+              <dt>{% trans %}Subtitle / Tagline{% endtrans %}:</dt>
+              <dd>{{ content.field_subtitle|field_value }}</dd>
+            {% endif %}
+
             {% if publication_date_value %}
               <dt>{{ publication_date_label }}:</dt>
               <dd>{{ publication_date_value }}</dd>
