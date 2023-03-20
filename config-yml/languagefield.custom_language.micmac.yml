@@ -4,5 +4,6 @@ status: true
 dependencies: {  }
 id: micmac
 label: Mi’kmaq/Mi’kmaw/Micmac
+direction: ltr
 weight: null
 native_name: Mi’kmaq/Mi’kmaw/Micmac

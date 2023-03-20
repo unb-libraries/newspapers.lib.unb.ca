@@ -4,5 +4,6 @@ status: true
 dependencies: {  }
 id: wolast
 label: Wolastoqey/Maliseet
+direction: ltr
 weight: null
 native_name: Wolastoqey/Maliseet
