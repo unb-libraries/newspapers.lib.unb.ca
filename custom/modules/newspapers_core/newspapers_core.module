@@ -548,9 +548,10 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $microfilmers = $node->get('field_microfilmed_by');
   $microfilmed_by_values = [];
   foreach ($microfilmers as $microfilmer) {
-    $microfilmed_by_values[] = $microfilmer
-      ->entity
-      ->getName();
+    $microfilmed_by_value =  $microfilmer->entity;
+    if (!empty($microfilmed_by_value)) {
+      $microfilmed_by_values[] = $microfilmed_by_value->getName();
+    }
   }
   if (!empty($microfilmed_by_values)) {
     $variables['microfilmed_by_values'] = $microfilmed_by_values;
