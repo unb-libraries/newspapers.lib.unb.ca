@@ -216,6 +216,15 @@ class PublicationHoldingsBulkImportForm extends FormBase {
         return FALSE;
       }
 
+      // Check the header labels match the expected ones.
+      $import_columns = _publication_holdings_bulk_import_get_import_format_header($format_id);
+      if ($nbColumns != $import_columns) {
+        $form_state->setErrorByName('import_file', $this->t(
+          'The headers in the import file do not match those expected by the import format.'
+        ));
+        return FALSE;
+      }
+
       // Check Row Consistency.
       foreach ($reader as $row_num => $column) {
         if (count($column) != count($nbColumns)) {

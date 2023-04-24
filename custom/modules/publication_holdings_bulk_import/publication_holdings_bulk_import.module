@@ -357,6 +357,24 @@ function _publication_holdings_bulk_import_get_import_format($format_id): array 
 }
 
 /**
+ * Get an import format's column headers that are expected.
+ *
+ * @param string $format_id
+ *   The format ID to return.
+ *
+ * @return array
+ *   The import format headers that are expected.
+ */
+function _publication_holdings_bulk_import_get_import_format_header($format_id): array {
+  $labels = [];
+  $format = _publication_holdings_bulk_import_get_import_format($format_id);
+  foreach ($format['columns'] as $field) {
+    $labels[] = $field['name'];
+  }
+  return $labels;
+}
+
+/**
  * Validate data to determine if this is an existing taxonomy term.
  *
  * @param string $tid
