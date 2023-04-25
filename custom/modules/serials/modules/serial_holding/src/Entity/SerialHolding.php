@@ -420,6 +420,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
         'allowed_values' => [
           'neg' => 'preservation copy (negative)',
           'pos' => 'public copy (positive)',
+          'unk' => 'unknown'
         ],
       ])
       ->setDisplayOptions('form', [

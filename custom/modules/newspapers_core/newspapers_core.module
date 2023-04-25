@@ -1235,17 +1235,18 @@ function _newspapers_core_get_rendered_coverage(string $type, SerialHolding $hol
           'label' => 'public',
           'tooltip' => 'Available for general use on&#8209;site.',
         ],
+        'unk' => [
+          'label' => 'unknown',
+          'tooltip' => 'Public access to these copies may not be possible.',
+        ]
       ];
-
-      $suffix = $holding->getMicroformType() == 'neg'
-        ? ' <button class="btn btn-link btn-sm p-0" data-placement="bottom" data-toggle="tooltip"
-            title="' . $microform_type_suffixes['neg']['tooltip'] . '" type="button" >
-             (<span>' . $microform_type_suffixes['neg']['label'] . '</span>)
-           </button>'
-        : ' <button class="btn btn-link btn-sm p-0" data-placement="bottom" data-toggle="tooltip"
-            title="' . $microform_type_suffixes['pos']['tooltip'] . '" type="button">
-             (<span>' . $microform_type_suffixes['pos']['label'] . '</span>)
-           </button>';
+      $suffix = '';
+      $microform_type = $holding->getMicroformType();
+      if (!empty($microform_type)) {
+        $suffix = ' <button class="btn btn-link btn-sm p-0" data-placement="bottom" data-toggle="tooltip"
+          title="' . $microform_type_suffixes[$microform_type]['tooltip'] . '" type="button">
+          (<span>' . $microform_type_suffixes[$microform_type]['label'] . '</span>)</button>';
+      }
       break;
 
     default:
