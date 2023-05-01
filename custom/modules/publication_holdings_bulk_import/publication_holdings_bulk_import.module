@@ -207,9 +207,10 @@ function _publication_holdings_bulk_import_get_import_formats() {
                 'valid_items' => [
                   'neg',
                   'pos',
+                  'unk',
                 ],
               ],
-              'error' => t('is not a valid microform type. Valid types: neg,pos. Types are case sensitive!'),
+              'error' => t('is not a valid microform type. Valid types: neg,pos,unk. Types are case sensitive!'),
             ],
           ],
         ],
