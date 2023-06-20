@@ -2,8 +2,8 @@
 
 namespace Drupal\panb_title_content\Plugin\migrate\destination;
 
-use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Plugin\migrate\destination\DestinationBase;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
 
 /**

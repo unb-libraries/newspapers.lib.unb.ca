@@ -3,11 +3,11 @@
 namespace Drupal\publication_holdings_bulk_import\Event;
 
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\migrate\Row;
 use Drupal\migrate_plus\Event\MigrateEvents;
 use Drupal\migrate_plus\Event\MigratePrepareRowEvent;
 use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Drupal\migrate\Row;
 
 /**
  * Defines the migrate event subscriber.

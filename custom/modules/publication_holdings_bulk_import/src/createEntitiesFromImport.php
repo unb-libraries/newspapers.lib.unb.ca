@@ -8,8 +8,8 @@
  * be used in local.
  */
 
-use Drupal\taxonomy\Entity\Term;
 use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
 
 $set_nodes = [];
 $set_tids = [];
@@ -70,7 +70,7 @@ while (($row = fgetcsv($handle)) !== FALSE) {
 
   if (!in_array($institution_tid, $set_tids)) {
     $set_tids[] = $institution_tid;
-    // Entity query the database to see if an institution term with institution_tid exists.
+    // Entity query the db to see if institution term w/ institution_tid exists.
     $result = Drupal::entityQuery('taxonomy_term')
       ->condition('vid', 'institution')
       ->condition('tid', $institution_tid)
