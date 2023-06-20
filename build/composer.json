@@ -150,7 +150,7 @@
     }
   ],
   "require": {
-    "drupal/address": "1.11",
+    "drupal/address": "1.12",
     "drupal/allowed_formats": "1.5",
     "drupal/antibot": "2.0.2",
     "drupal/bootstrap_barrio": "5.1.10",
