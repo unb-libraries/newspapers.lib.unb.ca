@@ -2,8 +2,8 @@
 
 namespace Drupal\serial_holding_export;
 
-use Drupal\serial_holding\Entity\SerialHoldingInterface;
 use Drupal\node\NodeInterface;
+use Drupal\serial_holding\Entity\SerialHoldingInterface;
 
 /**
  * HoldingExportFormatter object.

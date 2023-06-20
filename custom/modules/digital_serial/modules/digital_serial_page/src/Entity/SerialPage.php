@@ -2,16 +2,16 @@
 
 namespace Drupal\digital_serial_page\Entity;
 
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
 use Drupal\digital_serial_issue\Entity\SerialIssueInterface;
 use Drupal\user\UserInterface;
-use Drupal\Core\Url;
-use Drupal\Core\Render\Markup;
-use Drupal\Core\Link;
 
 /**
  * Defines the Serial page entity.
