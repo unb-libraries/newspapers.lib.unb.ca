@@ -8,7 +8,7 @@
         attach: function (context, settings) {
             $(document, context)
                  .once('group_holdings')
-                 .each( function() {
+                 .each( function () {
                     showToggleInit(jQuery);
                  });
              // Required for BS4.x Tooltips.

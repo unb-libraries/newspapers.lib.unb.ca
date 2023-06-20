@@ -1,10 +1,10 @@
 .chosen-results li:first-child {
-    background: #666;
-    color: #fff;
+  background: #666;
+  color: #fff;
 }
 .chosen-container-single a.chosen-single:hover {
-    text-decoration: none!important;
+  text-decoration: none!important;
 }
 label.form-required::after {
-    background-image: none;
+  background-image: none;
 }

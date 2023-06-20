@@ -10,7 +10,7 @@
             }
 
             // Autofocus the search input of clicked tab.
-            $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function() {
+            $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function () {
                 $('#newspapers-core-homepage input[type="text"]:visible').focus();
             });
 
@@ -19,7 +19,7 @@
                 if (e.keyCode == 13) {
                     $('#newspapers-core-homepage input[type=submit]:visible').focus();
                     $('#newspapers-core-homepage input[type=submit]:visible').click();
-                    return false;
+                    return FALSE;
                 }
             });
         },

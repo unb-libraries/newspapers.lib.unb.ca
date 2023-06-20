@@ -2,18 +2,18 @@
 .claro-details > .claro-details__summary,
 .claro-details > .claro-details__summary:focus,
 .claro-details > .claro-details__summary:hover {
-    background: #edfdf6;
+  background: #edfdf6;
 }
 
 .feed-icons .views-data-export-feed .feed-icon {
-    background-size: cover;
-    width: 72px;
-    height: 28px;
+  background-size: cover;
+  width: 72px;
+  height: 28px;
 }
 
 /* Chosen + Claro Overrides */
 .form-element.chosen-container-single .chosen-single {
-    height: auto;
+  height: auto;
 }
 .node-publication-form .form-element,
 .node-publication-edit-form .form-element,
@@ -21,40 +21,40 @@
 .node-publication-edit-form .form-element.chosen-container-single,
 .node-publication-form .form-element.chosen-container-multi,
 .node-publication-edit-form .form-element.chosen-container-multi {
-    width: 100%!important;
+  width: 100%!important;
 }
 .node-publication-form .claro-autocomplete,
 .node-publication-form .form-managed-file__main,
 .node-publication-edit-form .claro-autocomplete,
 .node-publication-edit-form .form-managed-file__main {
-    display: block;
+  display: block;
 }
 .node-publication-form .address-container-inline > .form-item,
-.node-publication-edit-form .address-container-inline > .form-item{
-    margin: .5rem 0;
-    min-width: 240px;
-    width: 48%;
+.node-publication-edit-form .address-container-inline > .form-item {
+  margin: .5rem 0;
+  min-width: 240px;
+  width: 48%;
 }
 .node-publication-form .address-container-inline > .form-item:nth-child(even),
-.node-publication-edit-form .address-container-inline > .form-item:nth-child(even){
-    margin-left: 2%;
+.node-publication-edit-form .address-container-inline > .form-item:nth-child(even) {
+  margin-left: 2%;
 }
 @media (max-width: 1080px) {
-    .node-publication-form .address-container-inline > .form-item,
-    .node-publication-edit-form .address-container-inline > .form-item {
-        width: 100%;
-    }
-    .node-publication-form .address-container-inline > .form-item:nth-child(even),
-    .node-publication-edit-form .address-container-inline > .form-item:nth-child(even) {
-        margin-left: 0;
-    }
+  .node-publication-form .address-container-inline > .form-item,
+  .node-publication-edit-form .address-container-inline > .form-item {
+    width: 100%;
+  }
+  .node-publication-form .address-container-inline > .form-item:nth-child(even),
+  .node-publication-edit-form .address-container-inline > .form-item:nth-child(even) {
+    margin-left: 0;
+  }
 }
 
 .node-publication-form .address-container-inline .form-type--select .chosen-container-single,
 .node-publication-edit-form .address-container-inline .form-type--select .chosen-container-single {
-    margin-top: -3px;
+  margin-top: -3px;
 }
 .node-publication-form .chosen-container .chosen-drop,
 .node-publication-edit-form .chosen-container .chosen-drop {
-    left: -0.1rem;
+  left: -0.1rem;
 }

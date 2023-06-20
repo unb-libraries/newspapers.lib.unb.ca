@@ -1,117 +1,118 @@
 /* Tab Navigation style for Front page form */
 form .nav-tabs {
-    border-bottom: none;
+  border-bottom: none;
 }
 form .nav-tabs > li.active > a,
 form .nav-tabs > li.active > a:hover,
 form .nav-tabs > li.active > a:focus {
-    border-color: #333;
-    border-bottom: none;
+  border-color: #333;
+  border-bottom: none;
 }
 form {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 form .nav-tabs > li > a {
-    border:none;
+  border: none;
 }
 .alert {
-    margin-top: inherit!important; /* unb-lib.css override */
+  margin-top: inherit!important; /* unb-lib.css override */
 }
 .tab a:focus {
-    outline: 5px auto -webkit-focus-ring-color;
-    outline-offset: -2px;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
 }
 #search-wrapper .form-group {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 .search-form .form-wrapper {
-    margin-bottom: 1.5em;
+  margin-bottom: 1.5em;
 }
 .nav-tabs a:before {
-    display: inline-block;
-    font-family: "Font Awesome 5 Free";
-    font-weight: 700;
-    font-size: small;
-    opacity: .8;
-    padding-right: 4px;
-    vertical-align: text-bottom;
+  display: inline-block;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 700;
+  font-size: small;
+  opacity: .8;
+  padding-right: 4px;
+  vertical-align: text-bottom;
 }
 a#tab-title:before {
-    content: "\f022";
+  content: "\f022";
 }
 a#tab-fulltext:before {
-    content: "\f0c5";
+  content: "\f0c5";
 }
 a#tab-about:before {
-    content: "\f05a";
+  content: "\f05a";
 }
 #search-wrapper>.active {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 .tab-pane div.form-item,
 .tab-pane div.description {
-    width: 75%;
+  width: 75%;
 }
 div[data-drupal-selector="edit-actions"] {
-    margin-top: 1.875rem;
+  margin-top: 1.875rem;
 }
 div[data-drupal-selector="edit-actions"] input {
-    line-height: normal;
+  line-height: normal;
 }
 div[data-drupal-selector="edit-actions"] .btn-unb-red:focus,
 div[data-drupal-selector="edit-actions"] .btn-unb-red:hover,
 div[data-drupal-selector="edit-actions"] .btn-unb-red:active {
-    color: #fff!important;
+  color: #fff!important;
 }
 #edit-search-scope .custom-checkbox .custom-control-label::before,
 #edit-search-scope .custom-checkbox .custom-control-label::after {
-    left: -1.33rem;
-    top: .15rem;
+  left: -1.33rem;
+  top: .15rem;
 }
 
 #footer-top h2 {
-    color: #333;
-    font-family: 'ProximaNovaA-SemiBold','Century Gothic',AppleGothic,Arial,sans-serif;
-    font-weight: normal;
+  color: #333;
+  font-family: 'ProximaNovaA-SemiBold','Century Gothic',AppleGothic,Arial,sans-serif;
+  font-weight: normal;
 }
 #footer-top > div {
-    width: 100%;
+  width: 100%;
 }
 @media (min-width: 982px) {
-    #footer-top > div {
-        width: 50%;
-    }
+  #footer-top > div {
+    width: 50%;
+  }
 }
 @media (min-width: 768px) {
-    .tab-pane input[type="text"] {
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
-    }
-    .tab-pane div[data-drupal-selector="edit-actions"]  input {
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
-    }
+  .tab-pane input[type="text"] {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .tab-pane div[data-drupal-selector="edit-actions"]  input {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
 }
 @media (max-width: 990px) {
-    .tab-pane div.form-item, .tab-pane div.description {
-        width: 100%;
-        float: none;
-    }
-    .tab-pane div.form-type-textfield + span button {
-        margin-top: 0;
-        margin-button: 2em;
-    }
+  .tab-pane div.form-item,
+  .tab-pane div.description {
+    width: 100%;
+    float: none;
+  }
+  .tab-pane div.form-type-textfield + span button {
+    margin-top: 0;
+    margin-button: 2em;
+  }
 }
 @media (max-width: 414px) {
-    form .nav > li > a {
-        padding-left: 13px;
-        padding-right: 13px;
-    }
+  form .nav > li > a {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
 }
 @media (max-width: 320px) {
-    form .nav > li > a {
-        padding-left: 6px;
-        padding-right: 6px;
-    }
+  form .nav > li > a {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
 }

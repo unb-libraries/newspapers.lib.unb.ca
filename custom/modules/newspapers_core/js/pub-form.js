@@ -19,12 +19,12 @@ function firstIssueDateRange() {
         /**
          * Clear the end date widget when Approximate is NOT selected.
          */
-        jQuery("#edit-field-first-issue-date-0-end-value-date").datepicker("setDate", null).val('');
+        jQuery("#edit-field-first-issue-date-0-end-value-date").datepicker("setDate", NULL).val('');
         /**
          * Clear the start date widget when Exact is NOT selected.
          */
         if (jQuery("#edit-field-first-issue-date-type").val() != 'exact') {
-            jQuery("#edit-field-first-issue-date-0-value-date").datepicker("setDate", null).val('');
+            jQuery("#edit-field-first-issue-date-0-value-date").datepicker("setDate", NULL).val('');
         }
         jQuery("#edit-field-first-issue-date-0 .form-datetime-wrapper:nth-child(2) .form-item__label").removeClass("form-required");
         jQuery("#edit-field-first-issue-date-0 .form-datetime-wrapper:nth-child(2)").slideUp(200);
@@ -51,7 +51,7 @@ function lastIssueDateRange() {
          * Clear the start date widget when Exact is NOT selected.
          */
         if (jQuery("#edit-field-last-issue-date-type").val() != 'exact') {
-            jQuery("#edit-field-last-issue-date-0-value-date").datepicker("setDate", null).val('');
+            jQuery("#edit-field-last-issue-date-0-value-date").datepicker("setDate", NULL).val('');
         }
         /**
          * Clear the end date widget when Approximate in NOT selected.
@@ -72,18 +72,22 @@ function updatePrecedingLabel() {
             $upLabel = 'Continues:';
             $upDescription = 'Please select a single publication from the list';
             break;
+
         case 'union':
             $upLabel = 'Formed By The Union Of:';
             $upDescription = 'Please select at least 2 publications from the list';
             break;
+
         case 'absorbed':
             $upLabel = 'Absorbed:';
             $upDescription = 'Please select a single publication from the list';
             break;
+
         case 'separated':
             $upLabel = 'Separated from:';
             $upDescription = 'Please select a single publication from the list';
             break;
+
         default:
             $upLabel = 'N/A';
     }
@@ -102,19 +106,23 @@ function updateSucceedingLabel() {
             $downLabel = 'Continued by:';
             $downDescription = 'Please select a single publication from the list';
             break;
+
         case 'split_into':
             $downLabel = 'Split into:';
             $downDescription = 'Please select at least 2 publications from the list';
             break;
+
         case 'absorbed_by':
             $downLabel = 'Absorbed by:';
             $downDescription = 'Please select a single publication from the list';
             break;
+
         case 'merged_with_form':
             $upLabel = 'Merged with:';
             $downLabel = 'to form:';
             $upDescription = $downDescription = 'Please select a single publication from the list';
             break;
+
         default:
             $upLabel = $downLabel = $upDescription = $downDescription = 'N/A';
     }
@@ -124,7 +132,7 @@ function updateSucceedingLabel() {
     jQuery('.form-item-field-serial-relation-suc-ref-dn .description').text($downDescription);
 }
 
-(function($, Drupal) {
+(function ($, Drupal) {
     'use strict';
 
     Drupal.behaviors.inputPublicationDate = {
@@ -144,4 +152,3 @@ function updateSucceedingLabel() {
         }
     };
 })(jQuery, Drupal);
-

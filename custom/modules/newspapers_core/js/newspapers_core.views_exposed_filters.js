@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
     'use strict';
 
     Drupal.behaviors.inputDateWidget = {
@@ -8,7 +8,7 @@
 
             $("#toggle-widget").click(function () {
                 if (this.checked) {
-                    $("input#toggle-widget").attr("checked", true);
+                    $("input#toggle-widget").attr("checked", TRUE);
                     $(".filters").show(300);
                 } else {
                     $("input#toggle-widget").removeAttr("checked");
