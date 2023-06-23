@@ -1,0 +1,48 @@
+/* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+.field--name-field-media-oembed-video {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+
+  &::before {
+    display: block;
+    content: "";
+    padding-top: 56.25%;
+  }
+
+  /* Style iframe to fit in the container div with full height and width */
+  .media-oembed-content {
+    padding-bottom: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
+    &::after {
+      display: block;
+      clear: both;
+      content: "";
+    }
+  }
+}
+
+.align-center .field--name-field-media-oembed-video,
+.align-left .field--name-field-media-oembed-video,
+.align-right .field--name-field-media-oembed-video {
+  max-width: 1400 * 0.66;
+  width: 66vw;
+}
+.align-center .field--name-field-media-oembed-video {
+  margin: 0 auto;
+}
+.field--name-field-media-oembed-video {
+  width: inherit;
+
+  iframe {
+    min-width: 1400 * 0.31;
+  }
+}
