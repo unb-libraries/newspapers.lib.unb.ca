@@ -52,6 +52,8 @@ module:
   language: 0
   languagefield: 0
   link: 0
+  media: 0
+  media_library: 0
   menu_ui: 0
   migrate: 0
   migrate_plus: 0

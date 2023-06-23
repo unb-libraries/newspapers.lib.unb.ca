@@ -9,6 +9,7 @@ dependencies:
     - digital_serial_page
     - digital_serial_title
     - filter
+    - media
     - search_api_autocomplete
     - system
 _core:
@@ -21,6 +22,7 @@ permissions:
   - 'access content'
   - 'use search_api_autocomplete for search'
   - 'use text format basic_html'
+  - 'view media'
   - 'view published digital serial title entities'
   - 'view published serial issue entities'
   - 'view published serial page entities'
