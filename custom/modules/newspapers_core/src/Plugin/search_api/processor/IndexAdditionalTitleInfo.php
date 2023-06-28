@@ -63,6 +63,15 @@ class IndexAdditionalTitleInfo extends ProcessorPluginBase {
         'processor_id' => $this->getPluginId(),
       ];
       $properties['holdings'] = new ProcessorProperty($definition);
+
+      $definition = [
+        'label' => $this->t('Institutions'),
+        'description' => $this->t('List of UNB Library Holdings > Institution references available for this publication.'),
+        'type' => 'string',
+        'is_list' => TRUE,
+        'processor_id' => $this->getPluginId(),
+      ];
+      $properties['institutions'] = new ProcessorProperty($definition);
     }
 
     return $properties;
@@ -73,9 +82,10 @@ class IndexAdditionalTitleInfo extends ProcessorPluginBase {
    */
   public function addFieldValues(ItemInterface $item) {
     $node = $item->getOriginalObject()->getValue();
+    $node_id = $node->id();
+
     if ($node instanceof NodeInterface) {
       if ($node->bundle() == 'publication') {
-
         // Years published.
         $fields = $this->getFieldsHelper()
           ->filterForPropertyPath($item->getFields(), NULL, 'years_published');
@@ -92,7 +102,6 @@ class IndexAdditionalTitleInfo extends ProcessorPluginBase {
         // Holdings.
         $fields = $this->getFieldsHelper()
           ->filterForPropertyPath($item->getFields(), NULL, 'holdings');
-        $node_id = $node->id();
         $holdings = _newspapers_core_get_publication_holdings($node_id);
         if ($holdings) {
           foreach ($fields as $field) {
@@ -114,6 +123,37 @@ class IndexAdditionalTitleInfo extends ProcessorPluginBase {
               }
               else {
                 $field->addValue($type);
+              }
+            }
+          }
+        }
+
+        // Institutions.
+        $fields = $this->getFieldsHelper()
+          ->filterForPropertyPath($item->getFields(), NULL, 'institutions');
+        $holdings = _newspapers_core_get_publication_holdings($node_id);
+        if ($holdings) {
+          foreach ($fields as $field) {
+            foreach ($holdings as $type => $holding) {
+              if ($type == 'digital' || $type == 'online') {
+                continue;
+              }
+
+              foreach ($holding as $key => $serial_holding) {
+                $institution = $serial_holding
+                  ->holding_institution
+                  ->entity;
+                $institution_short_name = $institution
+                  ->get('field_short_name')
+                  ->getString();
+
+                if (!empty($institution_short_name)) {
+                  $institution_index = $institution_short_name;
+                }
+                else {
+                  $institution_index = $institution->label();
+                }
+                $field->addValue($institution_index);
               }
             }
           }
