@@ -5,6 +5,7 @@ dependencies:
   config:
     - filter.format.description_html
     - filter.format.full_html
+    - media.type.remote_video
     - node.type.page
     - node.type.publication
     - taxonomy.vocabulary.editor
@@ -15,6 +16,7 @@ dependencies:
     - digital_serial_page
     - digital_serial_title
     - filter
+    - media
     - node
     - override_node_options
     - publication_holdings_bulk_import
@@ -29,6 +31,7 @@ weight: 3
 is_admin: null
 permissions:
   - 'access content overview'
+  - 'access media overview'
   - 'access toolbar'
   - 'add digital serial title entities'
   - 'add serial holding entities'
@@ -39,13 +42,16 @@ permissions:
   - 'bulk import publication holdings'
   - 'create page content'
   - 'create publication content'
+  - 'create remote_video media'
   - 'create terms in editor'
   - 'create terms in family'
   - 'create terms in publisher'
+  - 'delete any remote_video media'
   - 'delete own page content'
   - 'delete serial holding entities'
   - 'edit any page content'
   - 'edit any publication content'
+  - 'edit any remote_video media'
   - 'edit digital serial title entities'
   - 'edit serial holding entities'
   - 'edit serial issue entities'
