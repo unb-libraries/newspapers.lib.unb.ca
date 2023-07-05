@@ -4,11 +4,13 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_frequency
+    - field.storage.node.field_marc_frequency
     - field.storage.node.field_place_of_publication
     - field.storage.node.field_sort_title
   module:
     - address
     - node
+    - options
     - serial_holding
     - taxonomy
     - user
@@ -471,7 +473,7 @@ display:
           admin_label: ''
           plugin_id: field
           label: Frequency
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -515,6 +517,68 @@ display:
           type: string
           settings:
             link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_marc_frequency:
+          id: field_marc_frequency
+          table: node__field_marc_frequency
+          field: field_marc_frequency
+          relationship: parent_title
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Frequency
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: '{{ field_frequency }}'
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: list_default
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -740,6 +804,7 @@ display:
             field_place_of_publication_locality: field_place_of_publication_locality
             holding_retention: holding_retention
             field_frequency: field_frequency
+            field_marc_frequency: field_marc_frequency
         holding_end_date:
           id: holding_end_date
           table: serial_holding
@@ -875,9 +940,11 @@ display:
             field_sort_title: field_sort_title
             field_place_of_publication: field_place_of_publication
             field_place_of_publication_locality: field_place_of_publication_locality
+            holding_coverage: holding_coverage
             holding_retention: holding_retention
             field_frequency: field_frequency
-            holding_coverage: holding_coverage
+            field_marc_frequency: field_marc_frequency
+            name: name
           default: field_sort_title
           info:
             holding_type:
@@ -915,6 +982,13 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
+            holding_coverage:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
             holding_retention:
               sortable: true
               default_sort_order: asc
@@ -923,13 +997,20 @@ display:
               empty_column: false
               responsive: ''
             field_frequency:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_marc_frequency:
               sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            holding_coverage:
+            name:
               sortable: false
               default_sort_order: asc
               align: ''
@@ -1000,6 +1081,7 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_frequency'
+        - 'config:field.storage.node.field_marc_frequency'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
   page_listing:
@@ -1021,5 +1103,6 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_frequency'
+        - 'config:field.storage.node.field_marc_frequency'
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
