@@ -16,3 +16,7 @@ use_duotone_file: false
 use_thin_file: false
 external_svg_integrity: ''
 bypass_validation: false
+use_sharpregular_file: false
+use_sharplight_file: false
+use_sharpsolid_file: false
+use_custom_file: false
