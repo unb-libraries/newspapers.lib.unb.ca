@@ -1,5 +1,13 @@
 #seadragon-viewer {
-  height: 800px;
+  background: #f8f9fa;
+  border : 1px solid #dee2e6;
+  height: 85vh;
+  padding: 0.25em;
+}
+@media only screen and (max-width: 480px) {
+  #seadragon-viewer {
+    height: 75vh;
+  }
 }
 
 #digital-serial-page-page-viewer-form > pre {
