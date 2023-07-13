@@ -1,6 +1,6 @@
 openseadragon:
   remote: https://github.com/openseadragon/openseadragon
-  version: 2.2.1
+  version: latest
   license:
     name: BSD 3-clause
     URL: https://raw.githubusercontent.com/openseadragon/openseadragon/master/LICENSE.txt
