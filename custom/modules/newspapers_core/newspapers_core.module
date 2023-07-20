@@ -1054,7 +1054,7 @@ function _newspapers_core_get_holding_details(string $type, SerialHolding $holdi
         'access' => [
           'label' => 'Access',
           'value' => Link::fromTextAndUrl(
-            'Access digitized content',
+            _newspapers_core_get_digital_holding_label($holding),
             Url::fromRoute(
               'view.digital_page_lister.page_issues',
               ['arg_0' => $holding->get('holding_digital_title')->entity->id()],
@@ -1918,4 +1918,42 @@ function _newspapers_core_rmdir_recursive($dir_path) {
     return FALSE;
   }
   return FALSE;
+}
+
+/**
+ * Determine the label to use for digital holdings display.
+ *
+ * @param \Drupal\serial_holding\Entity\SerialHolding $holding
+ *   The holding to determine the label for.
+ *
+ * @return string
+ *   The label to use for the holding.
+ */
+function _newspapers_core_get_digital_holding_label($holding): string {
+  if ($count = _newspapers_core_get_digital_holding_issue_count($holding) > 0) {
+    return "$count Issues Available";
+  }
+  return "Access digitized content";
+}
+
+/**
+ * Determines the number of digital_serial_issues for a holding.
+ *
+ * @param \Drupal\serial_holding\Entity\SerialHolding $holding
+ *   The holding to count issues for.
+ *
+ * @return int
+ *   The number of issues for the holding, 0 if holding has no digital title.
+ */
+function _newspapers_core_get_digital_holding_issue_count($holding): int {
+  if (empty($holding->get('holding_digital_title')->entity)) {
+    return 0;
+  }
+  return count(
+    _newspapers_core_get_titles_issues(
+      [
+        $holding->get('holding_digital_title')->entity->id()
+      ]
+    )
+  );
 }
