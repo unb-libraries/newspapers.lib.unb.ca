@@ -1930,7 +1930,8 @@ function _newspapers_core_rmdir_recursive($dir_path) {
  *   The label to use for the holding.
  */
 function _newspapers_core_get_digital_holding_label($holding): string {
-  if ($count = _newspapers_core_get_digital_holding_issue_count($holding) > 0) {
+  $count = _newspapers_core_get_digital_holding_issue_count($holding);
+  if ($count > 0) {
     return sprintf(
       '%s Issues Available Online',
       number_format($count)
