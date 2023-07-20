@@ -1931,7 +1931,10 @@ function _newspapers_core_rmdir_recursive($dir_path) {
  */
 function _newspapers_core_get_digital_holding_label($holding): string {
   if ($count = _newspapers_core_get_digital_holding_issue_count($holding) > 0) {
-    return "$count Issues Available";
+    return sprintf(
+      '%s Issues Available Online',
+      number_format($count)
+    );
   }
   return "Access digitized content";
 }
