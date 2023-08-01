@@ -20,7 +20,7 @@ spec:
       template:
         spec:
           nodeSelector:
-            deployenv: dev
+            deploy_cron: 'true'
           containers:
             -
               name: cron-newspapers-lib-unb-ca
