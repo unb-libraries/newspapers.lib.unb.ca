@@ -20,7 +20,7 @@ spec:
       template:
         spec:
           nodeSelector:
-            deployenv: dev
+            deploy_backup: 'true'
           containers:
             -
               name: weekly-backup-newspapers-lib-unb-ca
@@ -92,7 +92,7 @@ spec:
       template:
         spec:
           nodeSelector:
-            deployenv: dev
+            deploy_backup: 'true'
           containers:
             -
               name: monthly-backup-newspapers-lib-unb-ca
