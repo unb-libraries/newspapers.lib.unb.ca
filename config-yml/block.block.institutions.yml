@@ -1,0 +1,29 @@
+uuid: 9c52da16-ffb3-4a19-9aeb-04b143cc5b61
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.institutions
+  module:
+    - facets
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: institutions
+theme: newspapers_lib_unb_ca
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:institutions'
+settings:
+  id: 'facet_block:institutions'
+  label: Institutions
+  label_display: '0'
+  provider: facets
+  context_mapping: {  }
+  block_id: institutions
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/search*'
