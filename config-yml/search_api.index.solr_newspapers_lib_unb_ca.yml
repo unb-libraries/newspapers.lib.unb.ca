@@ -4,9 +4,9 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_additional_indexed_text
+    - field.storage.node.field_place_of_publication
     - field.storage.node.field_description
     - field.storage.node.field_editor
-    - field.storage.node.field_place_of_publication
     - field.storage.node.field_language
     - field.storage.node.field_family
     - field.storage.node.field_first_issue_date
@@ -288,6 +288,10 @@ field_settings:
     label: 'Holdings (Fulltext)'
     property_path: holdings
     type: text
+  institutions:
+    label: Institutions
+    property_path: institutions
+    type: string
   locality:
     label: 'City (Fulltext)'
     datasource_id: 'entity:node'
@@ -380,15 +384,18 @@ datasource_settings:
 processor_settings:
   add_url: {  }
   aggregated_field: {  }
+  auto_aggregated_fulltext_field: {  }
   content_access:
     weights:
       preprocess_query: -30
+  entity_type: {  }
   highlight:
     weights:
       postprocess_query: 0
     prefix: '<strong>'
     suffix: '</strong>'
     excerpt: true
+    excerpt_always: false
     excerpt_length: 256
     exclude_fields: {  }
     highlight: always
@@ -405,4 +412,5 @@ tracker_settings:
 options:
   cron_limit: 50
   index_directly: true
+  track_changes_in_references: true
 server: solr_newspapers_lib_unb_ca
