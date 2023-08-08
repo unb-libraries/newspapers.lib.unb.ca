@@ -13,12 +13,15 @@
   ul {
     display: flex;
     flex-direction: column;
+    margin-bottom: 0;
     padding-left: .35rem;
   }
 
   .facet-item {
+    align-items: flex-start;
     display: flex;
     flex-wrap: nowrap;
+    font-size: initial;
     margin-bottom: .65rem;
 
     input[type="checkbox"],
@@ -29,13 +32,18 @@
 
       .facet-item__count {
         color: $gray-600;
-        font-size: .85rem;
+        letter-spacing: 1px;
       }
     }
 
     input[type="checkbox"] {
-      margin-right: .35rem;
-      transform: scale(1.25);
+      margin-right: 0.5rem;
+      margin-top: 0.1rem;
+      transform: scale(1.33);
+
+      &:focus-visible {
+        outline-color: #0075ff;
+      }
     }
   }
 }
