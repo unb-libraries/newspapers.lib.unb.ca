@@ -783,7 +783,7 @@ display:
           skip_access: false
       relationships: {  }
       css_class: search-results
-      use_ajax: false
+      use_ajax: true
       header:
         result:
           id: result
