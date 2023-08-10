@@ -117,3 +117,11 @@ label.checkbox-toggle:hover {
 .item-list__range_slider li {
   list-style-type: none;
 }
+
+.ajax-progress {
+  .ajax-throbber {
+    & > div {
+      background-color: $link-color-hover;
+    }
+  }
+}
