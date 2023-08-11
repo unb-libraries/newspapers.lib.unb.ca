@@ -2893,7 +2893,7 @@ display:
         filter_groups: false
         header: false
       relationships: {  }
-      use_ajax: false
+      use_ajax: true
       display_description: ''
       header:
         area_text_custom:
