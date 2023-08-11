@@ -1957,7 +1957,7 @@ display:
         header: false
       relationships: {  }
       css_class: 'browse-issues image-link-shadow'
-      use_ajax: true
+      use_ajax: false
       display_description: ''
       header: {  }
       exposed_block: false
