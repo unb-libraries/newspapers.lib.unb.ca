@@ -189,7 +189,7 @@
     "drupal/twig_tweak": "2.10",
     "drupal/view_unpublished": "1.1",
     "drupal/views_data_export": "1.3",
-    "drupal/views_infinite_scroll": "1.9",
+    "drupal/views_infinite_scroll": "2.0.2",
     "drupal/webform": "6.1.5",
     "fortawesome/font-awesome": "5.15.4",
     "furf/jquery-ui-touch-punch": "dev-master",
