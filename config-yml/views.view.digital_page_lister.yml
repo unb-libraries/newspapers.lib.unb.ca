@@ -694,6 +694,7 @@ display:
         - user.permissions
       tags:
         - 'config:search_api.index.pages_newspapers_lib_unb_ca'
+        - 'search_api_list:pages_newspapers_lib_unb_ca'
   page_carousel:
     id: page_carousel
     display_title: Carousel
@@ -1118,6 +1119,7 @@ display:
         - user.permissions
       tags:
         - 'config:search_api.index.pages_newspapers_lib_unb_ca'
+        - 'search_api_list:pages_newspapers_lib_unb_ca'
   page_issues:
     id: page_issues
     display_title: Issues
@@ -1971,6 +1973,7 @@ display:
         - user.permissions
       tags:
         - 'config:search_api.index.pages_newspapers_lib_unb_ca'
+        - 'search_api_list:pages_newspapers_lib_unb_ca'
   page_search:
     id: page_search
     display_title: Search
@@ -2928,3 +2931,4 @@ display:
         - user.permissions
       tags:
         - 'config:search_api.index.pages_newspapers_lib_unb_ca'
+        - 'search_api_list:pages_newspapers_lib_unb_ca'
