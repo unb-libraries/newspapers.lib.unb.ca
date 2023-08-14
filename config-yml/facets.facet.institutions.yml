@@ -8,7 +8,7 @@ dependencies:
   module:
     - search_api
 id: institutions
-name: 'Institutions (print/microform)'
+name: 'Holdings Institution (print/microform)'
 weight: 0
 min_count: 1
 missing: false
