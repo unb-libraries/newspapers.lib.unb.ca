@@ -239,6 +239,21 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * {@inheritdoc}
    */
+  public function getFormattedIssueDisplayTitle() {
+    $date = $this->get('issue_date')->date;
+    $pub_date = $date->format('Y-m-d');
+    $parent_title = $this->getParentTitle();
+    $formatted_parent_title = $parent_title->getTitle();
+    $issue_title = $this->getIssueTitle();
+    if (empty($issue_title)) {
+      return "$formatted_parent_title: $pub_date";
+    }
+    return "$issue_title: $pub_date";
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getYear() {
     return (int) $this->get('issue_date')->date->format('Y');
   }

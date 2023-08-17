@@ -47,7 +47,7 @@ class SerialPageViewerForm extends FormBase {
       $url = Url::fromUri($referrer);
     }
     else {
-      $back_text = "Back to " . $digital_serial_issue->getDisplayTitle();
+      $back_text = "Back to " . $digital_serial_issue->getFormattedIssueDisplayTitle();
       $uri = "internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}";
       $url = Url::fromUri($uri);
     }
