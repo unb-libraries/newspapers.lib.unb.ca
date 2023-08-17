@@ -248,7 +248,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
     if (empty($issue_title)) {
       return "$formatted_parent_title: $pub_date";
     }
-    return "$issue_title: $pub_date";
+    return "$formatted_parent_title: $issue_title $pub_date";
   }
 
   /**
