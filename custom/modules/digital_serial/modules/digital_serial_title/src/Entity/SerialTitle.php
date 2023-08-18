@@ -154,6 +154,13 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
   /**
    * {@inheritdoc}
    */
+  public function getFormattedDisplayTitle() {
+    return $this->get('parent_title')->entity->label();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
 

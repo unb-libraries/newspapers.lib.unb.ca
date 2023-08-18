@@ -105,7 +105,7 @@ class DigitalSerialPageBreadcrumbBuilder implements BreadcrumbBuilderInterface {
 
     $breadcrumb->addLink(
       Link::createFromRoute(
-        $issue->getFormattedIssueDisplayTitle(),
+        $issue->getFormattedDisplayTitle(),
         'digital_serial_issue.title_view_issue',
         [
           'digital_serial_title' => $title->id(),

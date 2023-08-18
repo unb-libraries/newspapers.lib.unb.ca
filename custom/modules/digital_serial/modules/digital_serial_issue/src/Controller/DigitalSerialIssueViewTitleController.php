@@ -14,7 +14,7 @@ class DigitalSerialIssueViewTitleController {
    * Get title of serial issue.
    */
   public function getTitle(SerialTitle $digital_serial_title, SerialIssue $digital_serial_issue) {
-    return $digital_serial_issue->getFormattedIssueDisplayTitle();
+    return $digital_serial_issue->getFormattedDisplayTitle();
   }
 
 }
