@@ -825,7 +825,9 @@ display:
         cache: false
       display_description: ''
       exposed_block: true
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: true
       path: search
     cache_metadata:
       max-age: -1
