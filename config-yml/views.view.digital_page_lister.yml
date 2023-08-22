@@ -2918,7 +2918,9 @@ display:
           empty: false
           content: '<h2 class="alert alert-success">Displaying @start - @end of @total results</h2>'
       exposed_block: true
-      display_extenders: {  }
+      display_extenders:
+        ajax_history:
+          enable_history: true
       path: page-search
     cache_metadata:
       max-age: -1
