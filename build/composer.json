@@ -163,6 +163,7 @@
     "drupal/externalauth": "1.4",
     "drupal/facets": "2.0.6",
     "drupal/field_group": "3.4",
+    "drupal/file_management": "2.1",
     "drupal/fontawesome": "2.26",
     "drupal/google_analytics": "4.0.2",
     "drupal/health_check": "1.3",

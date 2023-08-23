@@ -1,6 +1,6 @@
 uuid: 7c6e4dfe-95f8-459c-a80d-879208a8e146
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - file
@@ -725,7 +725,7 @@ display:
       footer: {  }
       display_extenders: {  }
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -762,7 +762,7 @@ display:
         menu_name: admin
         context: ''
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -1120,7 +1120,7 @@ display:
       display_extenders: {  }
       path: admin/content/files/usage/%
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_interface'
         - url

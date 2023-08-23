@@ -38,6 +38,8 @@ module:
   field_group: 0
   field_ui: 0
   file: 0
+  file_management: 0
+  file_management_view: 0
   filter: 0
   fontawesome: 0
   google_analytics: 0
