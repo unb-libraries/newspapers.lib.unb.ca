@@ -39,6 +39,7 @@ permissions:
   - 'add serial page entities'
   - 'administer digital serial title entities'
   - 'administer serial issue entities'
+  - 'administer serial page entities'
   - 'bulk import publication holdings'
   - 'create page content'
   - 'create publication content'
