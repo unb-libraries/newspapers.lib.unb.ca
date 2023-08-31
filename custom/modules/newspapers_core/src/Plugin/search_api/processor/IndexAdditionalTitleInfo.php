@@ -135,25 +135,28 @@ class IndexAdditionalTitleInfo extends ProcessorPluginBase {
         if ($holdings) {
           foreach ($fields as $field) {
             foreach ($holdings as $type => $holding) {
-              if ($type == 'digital' || $type == 'online') {
-                continue;
-              }
-
               foreach ($holding as $key => $serial_holding) {
-                $institution = $serial_holding
-                  ->holding_institution
-                  ->entity;
-                $institution_short_name = $institution
-                  ->get('field_short_name')
-                  ->getString();
-
-                if (!empty($institution_short_name)) {
-                  $institution_index = $institution_short_name;
+                if (empty($serial_holding->getInstitution()) || empty(
+                  $serial_holding
+                    ->getInstitution()
+                    ->hasField('field_short_name')
+                  )
+                ) {
+                  $inst_short_name = NULL;
                 }
                 else {
-                  $institution_index = $institution->label();
+                  $inst_short_name = $serial_holding
+                    ->getInstitution()
+                    ->get('field_short_name')
+                    ->getString();
                 }
-                $field->addValue($institution_index);
+
+                // Get referenced Institution name, prioritizing short name if it exists.
+                $inst_full_name = empty($serial_holding->getInstitution())
+                  ? 'Unknown'
+                  : $serial_holding->getInstitution()->getName();
+                $institution_name = empty($inst_short_name) ? $inst_full_name : $inst_short_name;
+                $field->addValue($institution_name);
               }
             }
           }
