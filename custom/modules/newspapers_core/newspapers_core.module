@@ -627,11 +627,14 @@ function newspapers_core_preprocess_node__publication(&$variables) {
         }
 
         // Get the values. Digital should always appear first.
-        if ($type == 'digital') {
+        if ($type == 'digital' || $type == 'online') {
           array_push($variables['holding'][$type_key], _newspapers_core_get_holding_details($type, $type_holding));
         }
         else {
-          $variables['holding'][$type_key][] = _newspapers_core_get_holding_details($type, $type_holding);
+          $institutionid = $type_holding
+            ->getInstitution()
+            ->id();
+          $variables['holding'][$type_key][$institutionid][] = _newspapers_core_get_holding_details($type, $type_holding);
         }
       }
     }
