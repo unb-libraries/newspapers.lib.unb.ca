@@ -319,6 +319,8 @@
 
       <aside class="col-lg-4 mb-4 publication">
         {% set missing_coverage_label = 'Missing Coverage' %}
+        {% set institution_label = 'Institution' %}
+
         <div class="title-holdings">
           <h2 class="bg-unb-light border p-2">{% trans %}Holdings{% endtrans %}</h2>
           {% if holding|length > 0 %}
@@ -331,9 +333,9 @@
                     <li class="holding-item">
                       {% for field in item %}
                         {% if field.value %}
+                          {% set className = 'field-' ~ field.label|clean_class %}
                           {% if field.label == missing_coverage_label %}
-                            {# Coverage Statement is required+lighter weight so this should display below it #}
-                            <div>
+                            <div class="{{ className }}">
                               <button class="btn btn-link p-0"
                               data-target="#missingOnline{{ onlinecount }}" data-toggle="modal" type="button">
                                {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
@@ -359,7 +361,7 @@
                               </div>
                             </div>
                           {% else %}
-                            <div>{{ field.value|raw }}</div>
+                            <div class="{{ className }}">{{ field.value|raw }}</div>
                           {% endif %}
                         {% endif %}
                       {% endfor %}
@@ -385,39 +387,48 @@
                       {% set microformCollapsed = microformCollapsed|merge(["microformCount#{microformCount}"]) %}
                     {% endif %}
                     <li id="microformHolding{{ microformCount }}" class="{{ microformClasses|join(' ') }}">
-                      {% for field in item %}
-                        {% if field.value %}
-                          {% if field.label == missing_coverage_label %}
-                            {# Coverage Statement is required+lighter weight so this should display below it #}
-                            <div>
-                              <button class="btn btn-link p-0 text-left"
-                              data-target="#missingMicroform{{ microformcount }}" data-toggle="modal" type="button">
-                                {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
-                              </button>
-                              <div id="missingMicroform{{ microformcount }}" class="modal fade" aria-hidden="true"
-                              aria-labelledby="microform{{ microformcount }}ModalLabel" role="dialog" tabindex="-1">
-                                <div class="modal-dialog modal-xl">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <div id="microform{{ microformcount }}ModalLabel" class="modal-title h3">
-                                        {{ field.label }}
+                      {% for institution in item %}
+                        {% set isFirstInstitutionHolding = loop.first %}
+                        {% for key,field in institution %}
+                          {% if field.value %}
+                            {% set className = 'field-' ~ field.label|clean_class %}
+                            {% if field.label == institution_label %}
+                              {% if isFirstInstitutionHolding %}
+                                <div class="{{ className }}">{{ field.value|raw }}</div>
+                              {% else %}
+                                <hr class="bg-light my-2">
+                              {% endif %}
+                            {% elseif field.label == missing_coverage_label %}
+                              <div class="{{ className }}">
+                                <button class="btn btn-link p-0 text-left"
+                                data-target="#missingMicroform{{ microformcount }}" data-toggle="modal" type="button">
+                                  {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
+                                </button>
+                                <div id="missingMicroform{{ microformcount }}" class="modal fade" aria-hidden="true"
+                                aria-labelledby="microform{{ microformcount }}ModalLabel" role="dialog" tabindex="-1">
+                                  <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <div id="microform{{ microformcount }}ModalLabel" class="modal-title h3">
+                                          {{ field.label }}
+                                        </div>
+                                        <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
+                                          <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                          <span class="sr-only">Modal</span>
+                                        </button>
                                       </div>
-                                      <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                                        <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
-                                        <span class="sr-only">Modal</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      {{ field.value|raw }}
+                                      <div class="modal-body">
+                                        {{ field.value|raw }}
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          {% else %}
-                            <div>{{ field.value|raw }}</div>
+                            {% else %}
+                              <div class="{{ className }}">{{ field.value|raw }}</div>
+                            {% endif %}
                           {% endif %}
-                        {% endif %}
+                        {% endfor %}
                       {% endfor %}
                     </li>
                   {% endfor %}
@@ -449,38 +460,48 @@
                       {% set printCollapsed = printCollapsed|merge(["printCount#{printCount}"]) %}
                     {% endif %}
                     <li id="printHolding{{ printCount }}" class="{{ printClasses|join(' ') }}">
-                      {% for field in item %}
-                        {% if field.value %}
-                          {% if field.label == missing_coverage_label %}
-                            {# Coverage Statement is required+lighter weight so this should display below it #}
-                            <div>
-                              <button class="btn btn-link p-0 text-left"
-                              data-target="#missingPrint{{ printCount }}" data-toggle="modal" type="button">
-                                {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
-                              </button>
-                              <div id="missingPrint{{ printCount }}" class="modal fade"
-                              aria-labelledby="print{{ printCount }}ModalLabel" aria-hidden="true" tabindex="-1">
-                                <div class="modal-dialog modal-xl">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <div id="print{{ printCount }}ModalLabel" class="modal-title h3">
-                                        {{ field.label }}
+                      {% for institution in item %}
+                        {% set isFirstInstitutionHolding = loop.first %}
+                        {% for key,field in institution %}
+                          {% if field.value %}
+                            {% set className = 'field-' ~ field.label|clean_class %}
+                            {% if field.label == institution_label %}
+                              {% if isFirstInstitutionHolding %}
+                                <div class="{{ className }}">{{ field.value|raw }}</div>
+                              {% else %}
+                                <hr class="bg-light my-2">
+                              {% endif %}
+                            {% elseif field.label == missing_coverage_label %}
+                              {# Coverage Statement is required+lighter weight so this should display below it #}
+                              <div class="{{ className }}">
+                                <button class="btn btn-link p-0 text-left"
+                                data-target="#missingPrint{{ printCount }}" data-toggle="modal" type="button">
+                                  {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
+                                </button>
+                                <div id="missingPrint{{ printCount }}" class="modal fade"
+                                aria-labelledby="print{{ printCount }}ModalLabel" aria-hidden="true" tabindex="-1">
+                                  <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <div id="print{{ printCount }}ModalLabel" class="modal-title h3">
+                                          {{ field.label }}
+                                        </div>
+                                        <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
+                                          <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                        </button>
                                       </div>
-                                      <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                                        <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      {{ field.value|raw }}
+                                      <div class="modal-body">
+                                        {{ field.value|raw }}
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          {% else %}
-                            <div>{{ field.value|raw }}</div>
+                            {% else %}
+                              <div class="{{ className }}">{{ field.value|raw }}</div>
+                            {% endif %}
                           {% endif %}
-                        {% endif %}
+                        {% endfor %}
                       {% endfor %}
                     </li>
                   {% endfor %}
