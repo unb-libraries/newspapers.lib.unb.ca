@@ -293,6 +293,10 @@ a.btn-add:active {
     list-style-type: disc;
     margin: 1em;
 
+    li {
+      padding-bottom: 0.2rem;
+    }
+
     span {
       margin-left: .25em;
     }
