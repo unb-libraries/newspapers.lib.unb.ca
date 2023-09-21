@@ -650,13 +650,15 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     $options = [
       'attributes' => [
         'class' => [
-          'link-external',
+          'link-external-panb',
         ],
       ],
     ];
     $url = Url::fromUri($uri);
     $url->setOptions($options);
-    $text = t("holdings listed on the PANB Newspaper Directory");
+    $text = t('holdings listed on the PANB Newspaper
+      Directory<span class="fas fa-external-link-alt fa-sm ml-1"
+      aria-description="(link leads to external site)"></span>');
     $link = Link::fromTextAndUrl($text, $url);
 
     $variables['archives_link'] = $link->toRenderable();
