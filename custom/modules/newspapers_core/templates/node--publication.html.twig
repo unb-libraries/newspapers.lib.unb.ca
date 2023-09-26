@@ -347,7 +347,8 @@
                             <div class="{{ className }}">
                               <button class="btn btn-link p-0"
                               data-target="#missingOnline{{ onlinecount }}" data-toggle="modal" type="button">
-                               {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
+                               {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"
+                                aria-description="(button opens a modal window)"></span>
                               </button>
                               <div id="missingOnline{{ onlinecount }}" class="modal fade"
                               aria-hidden="true" aria-labelledby="online{{ onlinecount }}ModalLabel" tabindex="-1">
@@ -411,7 +412,8 @@
                               <div class="{{ className }}">
                                 <button class="btn btn-link p-0 text-left"
                                 data-target="#missingMicroform{{ microformcount }}" data-toggle="modal" type="button">
-                                  {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
+                                  {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"
+                                  aria-description="(button opens a modal window)"></span>
                                 </button>
                                 <div id="missingMicroform{{ microformcount }}" class="modal fade" aria-hidden="true"
                                 aria-labelledby="microform{{ microformcount }}ModalLabel" role="dialog" tabindex="-1">
@@ -485,7 +487,8 @@
                               <div class="{{ className }}">
                                 <button class="btn btn-link p-0 text-left"
                                 data-target="#missingPrint{{ printCount }}" data-toggle="modal" type="button">
-                                  {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"></span>
+                                  {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"
+                                  aria-description="(button opens a modal window)"></span>
                                 </button>
                                 <div id="missingPrint{{ printCount }}" class="modal fade"
                                 aria-labelledby="print{{ printCount }}ModalLabel" aria-hidden="true" tabindex="-1">
