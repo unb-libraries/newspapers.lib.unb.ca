@@ -64,6 +64,9 @@
       "drupal/elasticsearch_connector": {
         "Cannot combine elasticsearch with other backends": "https://www.drupal.org/files/issues/elasticsearch_connector-fix-serialize-closure-error-2904033-9.patch",
         "Cannot parse content access": "https://www.drupal.org/files/issues/2018-06-07/elasticsearch_connector-convert_boolean_fields-2978005-2.patch"
+      },
+      "drupal/search_api_autocomplete": {
+        "Fix SEARCH_API_SOLR_SCHEMA_VERSION WSOD": "https://git.drupalcode.org/project/search_api_autocomplete/-/merge_requests/14.patch"
       }
     }
   },
