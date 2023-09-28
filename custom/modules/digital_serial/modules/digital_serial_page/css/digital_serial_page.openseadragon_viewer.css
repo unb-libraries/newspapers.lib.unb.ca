@@ -18,3 +18,14 @@
   background-color: #f00;
   opacity: 0.5;
 }
+
+.border.btn-link:hover {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  -moz-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  -ms-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  -o-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+#seadragon-viewer .openseadragon-container div[title] {
+  cursor: pointer;
+}

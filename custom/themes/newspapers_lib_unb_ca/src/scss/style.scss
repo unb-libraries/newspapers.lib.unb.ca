@@ -509,14 +509,18 @@ a.btn-add:active {
 }
 
 /* High Resolution Image back link */
+a.back-link {
+  padding: .25rem 0;
+}
 a.back-results::before,
 a.back-link::before {
   font-family: "Font Awesome 5 Free";
-  content:"\f0d9";
-  color: $text-muted;
+  content: "\f100";
   display: inline-block;
+  font-size: 88%;
   font-weight: 900;
-  margin-right: 0.25em;
+  margin-right: 0.2em;
+  opacity: 0.65;
 }
 
 /* Holdings */

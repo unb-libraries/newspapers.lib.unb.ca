@@ -39,16 +39,36 @@ class SerialPageViewerForm extends FormBase {
       $digital_serial_page->id()
     );
 
-    $prev_text = '« ' . t('Previous');
-    $next_text = t('Next') . ' »';
+    $prev_text = [
+      '#type' => 'html_tag',
+      '#tag'  => 'span',
+      '#value' => $this->t('<span aria-hidden="true">« </span>Previous'),
+      '#attributes' => [
+        'aria-label' => ['Show previous page'],
+      ],
+    ];
+    $next_text = [
+      '#type' => 'html_tag',
+      '#tag'  => 'span',
+      '#value' => $this->t('Next<span aria-hidden="true"> »</span>'),
+      '#attributes' => [
+        'aria-label' => ['Show next page'],
+      ],
+    ];
 
     if (strpos($referrer, 'search') !== FALSE) {
       $back_text = t('Back to search results');
       $url = Url::fromUri($referrer);
     }
     else {
-      $back_text = "Back to " . $digital_serial_issue->getFormattedDisplayTitle();
-      $uri = "internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}";
+      // $back_text = "Back to " . $digital_serial_issue->getFormattedDisplayTitle();
+      // $uri = "internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}";
+      $back_text = [
+        '#type' => 'html_tag',
+        '#tag' => 'span',
+        '#value' => 'Digital issues for &ldquo;' . $digital_serial_issue->getIssueTitle() . '&rdquo;',
+      ];
+      $uri = "internal:/serials/browse/{$digital_serial_title->id()}";
       $url = Url::fromUri($uri);
     }
 
@@ -63,13 +83,7 @@ class SerialPageViewerForm extends FormBase {
 
     $form['page_view']['back_link'] = [
       '#markup' => Link::fromTextAndUrl(
-        $this->t(
-          '@link_label',
-          [
-            '@link_label' => $back_text,
-          ]
-        ),
-        $url)
+        $back_text, $url)
         ->toString(),
     ];
     $form['page_view']['back_link'];
@@ -77,57 +91,51 @@ class SerialPageViewerForm extends FormBase {
     $form['page_view']['pager'] = [
       '#type' => 'container',
       '#attributes' => [
-        'class' => ['pager'],
+        'class' => [
+          'pagination',
+        ],
+        'aria-label' => 'Page viewer controls',
+        'role' => 'group',
       ],
     ];
 
-    $disabled_link_options = [
-      'attributes' => [
-        'class' => [
-          'btn',
-          'btn-default',
-          'disabled',
-        ],
-      ],
-    ];
     $link_options = [
       'attributes' => [
         'class' => [
+          'border',
           'btn',
-          'btn-primary',
+          'btn-link',
+          'pager-link',
         ],
       ],
     ];
-    if (empty($prev_next['previous'])) {
-      $prev_next['previous'] = Url::fromUri('internal:#');
-      $prev_next['previous']->setOptions($disabled_link_options);
-    }
-    else {
-      $prev_next['previous']->setOptions($link_options);
-    }
-    $prev_link = [
-      '#markup' => Link::fromTextAndUrl($prev_text, $prev_next['previous'])
-        ->toString(),
-    ];
-    $form['page_view']['pager']['prev_page'] = $prev_link;
 
-    if (empty($prev_next['next'])) {
-      $prev_next['next'] = Url::fromUri('internal:#');
-      $prev_next['next']->setOptions($disabled_link_options);
+    if (!empty($prev_next['previous'])) {
+      $prev_next['previous']->setOptions($link_options);
+      $prev_link = [
+        '#markup' => Link::fromTextAndUrl($prev_text, $prev_next['previous'])
+          ->toString(),
+      ];
+      $form['page_view']['pager']['prev_page'] = $prev_link;
     }
-    else {
+
+    if (!empty($prev_next['next'])) {
       $prev_next['next']->setOptions($link_options);
+      $next_link = [
+        '#markup' => Link::fromTextAndUrl($next_text, $prev_next['next'])
+          ->toString(),
+      ];
+      $form['page_view']['pager']['next_page'] = $next_link;
     }
-    $next_link = [
-      '#markup' => Link::fromTextAndUrl($next_text, $prev_next['next'])
-        ->toString(),
-    ];
-    $form['page_view']['pager']['next_page'] = $next_link;
 
     $form['page_view']['zoom'] = [
-      '#markup' => '<div id="seadragon-viewer"></div>',
+      '#type' => 'container',
+      '#id' => 'seadragon-viewer',
+      '#attributes' => [
+        'aria-label' => 'Zoomable Page',
+        'role' => 'region',
+      ],
     ];
-
     $file = $digital_serial_page->get('page_image')->entity;
     $uri = $file->getFileUri();
     $image_path = file_url_transform_relative(file_create_url($uri));
