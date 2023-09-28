@@ -57,12 +57,10 @@ class SerialPageViewerForm extends FormBase {
     ];
 
     if (strpos($referrer, 'search') !== FALSE) {
-      $back_text = t('Back to search results');
+      $back_text = $this->t('Back to search results');
       $url = Url::fromUri($referrer);
     }
     else {
-      // $back_text = "Back to " . $digital_serial_issue->getFormattedDisplayTitle();
-      // $uri = "internal:/serials/{$digital_serial_title->id()}/issues/{$digital_serial_issue->id()}";
       $back_text = [
         '#type' => 'html_tag',
         '#tag' => 'span',
