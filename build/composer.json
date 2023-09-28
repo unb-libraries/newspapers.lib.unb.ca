@@ -184,7 +184,7 @@
     "drupal/samlauth": "3.9",
     "drupal/search_api": "1.29",
     "drupal/search_api_autocomplete": "1.7",
-    "drupal/search_api_solr": "4.2.12",
+    "drupal/search_api_solr": "4.3.0",
     "drupal/token": "1.12",
     "drupal/twig_field_value": "2.0.2",
     "drupal/twig_tweak": "2.10",
