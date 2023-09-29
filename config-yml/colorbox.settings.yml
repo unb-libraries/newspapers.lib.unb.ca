@@ -1,7 +1,7 @@
 dompurify_hide_warning: false
 custom:
   style: default
-  activate: null
+  activate: 0
   transition_type: null
   transition_speed: 100
   opacity: !!float 0
@@ -24,9 +24,9 @@ custom:
     text_start: ''
     text_stop: ''
 advanced:
-  unique_token: null
-  mobile_detect: null
+  unique_token: 1
+  mobile_detect: 1
   mobile_device_width: ''
-  caption_trim: null
+  caption_trim: 0
   caption_trim_length: 40
-  compression_type: null
+  compression_type: minified
