@@ -1,0 +1,32 @@
+dompurify_hide_warning: false
+custom:
+  style: default
+  activate: null
+  transition_type: null
+  transition_speed: 100
+  opacity: !!float 0
+  text_current: ''
+  text_previous: ''
+  text_next: ''
+  text_close: ''
+  maxwidth: ''
+  maxheight: ''
+  initialwidth: ''
+  initialheight: ''
+  overlayclose: false
+  returnfocus: false
+  fixed: false
+  scrolling: false
+  slideshow:
+    slideshow: null
+    auto: false
+    speed: 1000
+    text_start: ''
+    text_stop: ''
+advanced:
+  unique_token: null
+  mobile_detect: null
+  mobile_device_width: ''
+  caption_trim: null
+  caption_trim_length: 40
+  compression_type: null

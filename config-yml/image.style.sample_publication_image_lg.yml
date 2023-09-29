@@ -1,0 +1,15 @@
+uuid: 6de59176-527c-41b5-90e7-0c264becd080
+langcode: en
+status: true
+dependencies: {  }
+name: sample_publication_image_lg
+label: 'Sample publication image (large)'
+effects:
+  24c680f7-d9ad-4b58-b9ab-4adf3611ed0f:
+    uuid: 24c680f7-d9ad-4b58-b9ab-4adf3611ed0f
+    id: image_scale
+    weight: 1
+    data:
+      width: null
+      height: 300
+      upscale: false
