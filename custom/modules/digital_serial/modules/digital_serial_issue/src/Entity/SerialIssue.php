@@ -260,6 +260,14 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * {@inheritdoc}
    */
+  public function getPageCount() {
+    $pageIds = $this->getChildPageIds();
+    return count($pageIds);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getYear() {
     return (int) $this->get('issue_date')->date->format('Y');
   }
