@@ -570,11 +570,12 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    * Gets this issue's child page entity IDs.
    *
    * @return int[]
-   *   An array of the issue'sa child pages.
+   *   An array of the issue's child pages.
    */
   public function getChildPageIds() {
     $query = \Drupal::entityQuery('digital_serial_page')
-      ->condition('parent_issue', $this->id());
+      ->condition('parent_issue', $this->id())
+      ->sort('page_sort');
     return $query->execute();
   }
 
