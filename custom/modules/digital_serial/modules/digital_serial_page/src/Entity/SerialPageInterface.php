@@ -15,6 +15,14 @@ use Drupal\user\EntityOwnerInterface;
 interface SerialPageInterface extends ContentEntityInterface, EntityChangedInterface, EntityOwnerInterface {
 
   /**
+   * Gets the active pager number.
+   *
+   * @return int
+   *   Serial page viewer's active pager number.
+   */
+  public function getActivePagerNo();
+
+  /**
    * Gets the Serial page number.
    *
    * @return string

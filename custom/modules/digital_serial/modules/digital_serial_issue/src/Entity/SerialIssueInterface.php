@@ -191,6 +191,14 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
   public function getDisplayTitle();
 
   /**
+   * Get the number of available pages for this issue.
+   *
+   * @return int
+   *   The number of scanned pages added to the issue.
+   */
+  public function getPageCount();
+
+  /**
    * Get the issue year for this issue.
    *
    * @return int
