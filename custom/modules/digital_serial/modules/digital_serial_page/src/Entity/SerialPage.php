@@ -74,6 +74,18 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   /**
    * {@inheritdoc}
    */
+  public function getActivePagerNo() {
+    $sorted_issue_page_ids = $this
+      ->getParentIssue()
+      ->getChildPageIds();
+    $active_page_arr_key = array_search($this->id(), array_keys($sorted_issue_page_ids));
+
+    return $active_page_arr_key + 1;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getPageOcr() {
     return $this->get('page_ocr')->value;
   }
