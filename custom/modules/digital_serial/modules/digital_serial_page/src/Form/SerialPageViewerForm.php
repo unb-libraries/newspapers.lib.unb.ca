@@ -39,6 +39,10 @@ class SerialPageViewerForm extends FormBase {
       $digital_serial_page->id()
     );
 
+    $current_page = $digital_serial_page->getActivePagerNo();
+    $total_pages = $digital_serial_issue->getPageCount();
+    $viewer_active_page_text = "Page $current_page of $total_pages";
+
     $prev_text = [
       '#type' => 'html_tag',
       '#tag'  => 'span',
@@ -47,6 +51,20 @@ class SerialPageViewerForm extends FormBase {
         'aria-label' => ['Show previous page'],
       ],
     ];
+    $viewer_active_pager_item = [
+      '#type' => 'html_tag',
+      '#tag'  => 'span',
+      "#value" => $viewer_active_page_text,
+      "#attributes" => [
+        'class' => [
+          'btn',
+        ],
+        'id' => [
+          'active-viewer-page',
+        ],
+      ],
+    ];
+
     $next_text = [
       '#type' => 'html_tag',
       '#tag'  => 'span',
@@ -116,6 +134,8 @@ class SerialPageViewerForm extends FormBase {
       ];
       $form['page_view']['pager']['prev_page'] = $prev_link;
     }
+
+    $form['page_view']['pager']['active'] = $viewer_active_pager_item;
 
     if (!empty($prev_next['next'])) {
       $prev_next['next']->setOptions($link_options);
