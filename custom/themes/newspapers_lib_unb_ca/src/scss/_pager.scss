@@ -23,6 +23,10 @@
     }
   }
 
+  span#active-viewer-page {
+    cursor: default;
+  }
+
   a.page-link {
     &:hover {
       border-style: solid!important;
