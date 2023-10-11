@@ -80,7 +80,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->getChildPageIds();
     $active_page_arr_key = array_search($this->id(), array_keys($sorted_issue_page_ids));
 
-    return $active_page_arr_key + 1;
+    return ($active_page_arr_key === FALSE) ? 0 : $active_page_arr_key + 1;
   }
 
   /**
