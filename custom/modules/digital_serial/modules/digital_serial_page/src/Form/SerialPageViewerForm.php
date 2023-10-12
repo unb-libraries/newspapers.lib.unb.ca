@@ -178,6 +178,7 @@ class SerialPageViewerForm extends FormBase {
     $highlight = explode(' ', \Drupal::request()->query->get('highlight'));
 
     if (!empty($highlight[0])) {
+      self::filterHighlightKeywords($highlight);
       $hocr = $digital_serial_page->getPageHocr();
       if (!empty($hocr)) {
         $hocr_obj = new SerialPageHocr($hocr);
@@ -211,6 +212,55 @@ class SerialPageViewerForm extends FormBase {
     ];
 
     return $form;
+  }
+
+  /**
+   * Filters out unwanted elements from the highlight keywords.
+   *
+   * @param array $keywords
+   *   The keywords to filter.
+   */
+  private static function filterHighlightKeywords(array &$keywords): void {
+    self::stripHighlightQuotes($keywords);
+    $keywords = array_filter($keywords, [self, 'elementIsNotAStopWord']);
+  }
+
+  /**
+   * Strips quotes from the highlight keywords.
+   *
+   * @param array $keywords
+   *   The keywords to filter.
+   */
+  private static function stripHighlightQuotes(array &$keywords): void {
+    $keywords = str_replace('"', '', $keywords);
+  }
+
+  /**
+   * Determines if a string is not a stop word.
+   *
+   * @param string $element
+   *   The string to check.
+   *
+   * @return bool
+   *   TRUE if the string is not a stop word.
+   */
+  private static function elementIsNotAStopWord($element): bool {
+    $stop_words = [
+      'a',
+      'an',
+      'the',
+      'and',
+      'it',
+      'for',
+      'or',
+      'but',
+      'in',
+      'my',
+      'your',
+      'our',
+      'their',
+    ];
+    return !in_array(strtolower($element), $stop_words);
   }
 
   /**
