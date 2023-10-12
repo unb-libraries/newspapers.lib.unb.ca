@@ -14,15 +14,16 @@
 .pagination {
   justify-content: center;
 
-  span.page-link {
-    color: $black;
+  .page-item:not(.active) {
+    span.page-link {
+      color: $black;
 
-    &:hover {
-      background: none;
-      color: inherit;
+      &:hover {
+        background: none;
+        color: inherit;
+      }
     }
   }
-
   span#active-viewer-page {
     cursor: default;
   }
