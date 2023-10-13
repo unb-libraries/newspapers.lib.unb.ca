@@ -258,6 +258,7 @@ class SerialPageViewerForm extends FormBase {
       'our',
       'the',
       'their',
+      'to',
       'your',
     ];
     return !in_array(strtolower($element), $stop_words);
