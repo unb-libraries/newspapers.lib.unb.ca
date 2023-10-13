@@ -248,17 +248,17 @@ class SerialPageViewerForm extends FormBase {
     $stop_words = [
       'a',
       'an',
-      'the',
       'and',
-      'it',
-      'for',
-      'or',
       'but',
+      'for',
       'in',
+      'it',
       'my',
-      'your',
+      'or',
       'our',
+      'the',
       'their',
+      'your',
     ];
     return !in_array(strtolower($element), $stop_words);
   }
