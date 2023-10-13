@@ -222,7 +222,7 @@ class SerialPageViewerForm extends FormBase {
    */
   private static function filterHighlightKeywords(array &$keywords): void {
     self::stripHighlightQuotes($keywords);
-    $keywords = array_filter($keywords, [self, 'elementIsNotAStopWord']);
+    $keywords = array_filter($keywords, [self, 'elementIsNotStopWord']);
   }
 
   /**
@@ -244,7 +244,7 @@ class SerialPageViewerForm extends FormBase {
    * @return bool
    *   TRUE if the string is not a stop word.
    */
-  private static function elementIsNotAStopWord($element): bool {
+  private static function elementIsNotStopWord($element): bool {
     $stop_words = [
       'a',
       'an',
