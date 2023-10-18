@@ -174,7 +174,7 @@ class SerialPageViewerForm extends FormBase {
             'header' => TRUE,
             'scope' => 'row',
           ],
-          $digital_serial_issue->get("issue_title")->value,
+          $digital_serial_issue->getIssueTitle(),
         ],
       ],
       [
@@ -243,7 +243,7 @@ class SerialPageViewerForm extends FormBase {
       '#attributes' => [
         'class' => [
           'my-4',
-          'table-bordered',
+          'table',
         ],
       ],
       '#weight' => '1',
