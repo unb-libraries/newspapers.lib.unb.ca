@@ -973,7 +973,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<figure class=\"text-center\">\r\n{{ page_image }}\r\n<figcaption>\r\n<i class=\"fas fa-search-plus fa-sm mr-1\"></i>High-resolution image - page {{ page_no }}\r\n</figcaption>\r\n</figure>"
+            text: "<figure class=\"text-center\">\r\n{{ page_image }}\r\n<figcaption>\r\n<i class=\"fas fa-search-plus fa-sm mr-1\"></i>View issue in high resolution\r\n</figcaption>\r\n</figure>"
             make_link: true
             path: '/serials/{{ parent_digital_title_id }}/issues/{{ parent_digital_issue_id }}/pages/{{ parent_digital_page_id }}'
             absolute: false
@@ -1015,6 +1015,8 @@ display:
           settings:
             image_link: ''
             image_style: large
+            image_loading:
+              attribute: lazy
           group_column: ''
           group_columns: {  }
           group_rows: true
@@ -1033,9 +1035,10 @@ display:
             multi_type: separator
             multi_separator: ', '
       pager:
-        type: none
+        type: some
         options:
           offset: 0
+          items_per_page: 1
       sorts:
         page_sort:
           id: page_sort
@@ -1056,35 +1059,11 @@ display:
         groups:
           1: AND
       style:
-        type: owlcarousel
+        type: default
         options:
           grouping: {  }
           row_class: ''
-          default_row_class: true
-          items: '5'
-          itemsDesktop: '[1199,4]'
-          itemsDesktopSmall: '[979,3]'
-          itemsTablet: '[768,2]'
-          itemsMobile: '[479,1]'
-          singleItem: 1
-          itemsScaleUp: 1
-          slideSpeed: '200'
-          paginationSpeed: '500'
-          rewindSpeed: '1000'
-          autoPlay: 0
-          stopOnHover: 0
-          navigation: 1
-          prevText: ''
-          nextText: ''
-          rewindNav: 1
-          scrollPerPage: 0
-          pagination: 0
-          paginationNumbers: 0
-          responsive: 1
-          responsiveRefreshRate: '200'
-          mouseDrag: 1
-          touchDrag: 1
-          transitionStyle: fade
+          default_row_class: false
       row:
         type: fields
         options:
