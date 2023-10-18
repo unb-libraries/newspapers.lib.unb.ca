@@ -6,8 +6,8 @@ dependencies:
     - search_api.server.newspapers_lib_unb_ca
   module:
     - search_api_solr
-    - digital_serial_page
     - digital_serial_issue
+    - digital_serial_page
     - search_api
 third_party_settings:
   search_api_solr:
@@ -30,9 +30,8 @@ field_settings:
     type: date
     dependencies:
       module:
+        - digital_serial_issue
         - digital_serial_page
-        - digital_serial_issue
-        - digital_serial_issue
   issue_edition:
     label: 'Parent Issue » Serial issue » Edition'
     datasource_id: 'entity:digital_serial_page'
@@ -40,9 +39,8 @@ field_settings:
     type: string
     dependencies:
       module:
+        - digital_serial_issue
         - digital_serial_page
-        - digital_serial_issue
-        - digital_serial_issue
   issue_title:
     label: 'Parent Issue » Serial issue » Printed Title'
     datasource_id: 'entity:digital_serial_page'
@@ -50,9 +48,8 @@ field_settings:
     type: integer
     dependencies:
       module:
+        - digital_serial_issue
         - digital_serial_page
-        - digital_serial_issue
-        - digital_serial_issue
   page_ocr:
     label: 'Page OCR'
     datasource_id: 'entity:digital_serial_page'
@@ -130,12 +127,16 @@ datasource_settings:
 processor_settings:
   add_url: {  }
   aggregated_field: {  }
+  auto_aggregated_fulltext_field: {  }
+  custom_value: {  }
+  entity_type: {  }
   highlight:
     weights:
       postprocess_query: 0
     prefix: '<strong>'
     suffix: '</strong>'
     excerpt: true
+    excerpt_always: false
     excerpt_length: 416
     exclude_fields: {  }
     highlight: always
@@ -156,6 +157,7 @@ processor_settings:
       h3: 2
       strong: 2
   index_parent_page_info: {  }
+  language_with_fallback: {  }
   rendered_item: {  }
   solr_date_range:
     weights:
@@ -166,4 +168,5 @@ tracker_settings:
 options:
   cron_limit: 50
   index_directly: true
+  track_changes_in_references: true
 server: newspapers_lib_unb_ca

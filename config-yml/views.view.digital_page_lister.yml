@@ -1963,7 +1963,10 @@ display:
       display_description: ''
       header: {  }
       exposed_block: false
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
+        simple_sitemap_display_extender:
+          variants: {  }
       path: serials/browse/%
     cache_metadata:
       max-age: -1

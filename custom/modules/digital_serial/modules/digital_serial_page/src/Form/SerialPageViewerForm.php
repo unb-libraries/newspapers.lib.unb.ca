@@ -107,6 +107,7 @@ class SerialPageViewerForm extends FormBase {
       '#type' => 'container',
       '#attributes' => [
         'class' => [
+          'mb-2',
           'pagination',
         ],
         'aria-label' => 'Page viewer controls',
