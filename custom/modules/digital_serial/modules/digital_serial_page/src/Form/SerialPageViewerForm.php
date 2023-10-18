@@ -187,7 +187,17 @@ class SerialPageViewerForm extends FormBase {
       [
         'data' => [
           [
-            'data' => $this->t('Issue Title'),
+            'data' => $this->t('Publication Title'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $digital_serial_title->getParentPublication()->getTitle(),
+        ],
+      ],
+      [
+        'data' => [
+          [
+            'data' => $this->t('Printed Title'),
             'header' => TRUE,
             'scope' => 'row',
           ],
