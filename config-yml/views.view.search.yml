@@ -828,6 +828,14 @@ display:
       display_extenders:
         ajax_history:
           enable_history: true
+        simple_sitemap_display_extender:
+          variants:
+            default:
+              index: true
+              priority: '0.5'
+              changefreq: ''
+              arguments: {  }
+              max_links: 100
       path: search
     cache_metadata:
       max-age: -1
