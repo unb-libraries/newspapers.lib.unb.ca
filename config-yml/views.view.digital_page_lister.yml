@@ -1087,7 +1087,10 @@ display:
       css_class: image-link-shadow
       display_description: ''
       header: {  }
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
+        simple_sitemap_display_extender:
+          variants: {  }
       path: page-carousel
     cache_metadata:
       max-age: -1
