@@ -136,7 +136,6 @@ class SerialPageViewerForm extends FormBase {
     }
 
     $form['page_view']['pager']['active'] = $viewer_active_pager_item;
-
     if (!empty($prev_next['next'])) {
       $prev_next['next']->setOptions($link_options);
       $next_link = [
@@ -160,6 +159,95 @@ class SerialPageViewerForm extends FormBase {
     $full_path = DRUPAL_ROOT . $image_path;
     $image_extension = pathinfo($full_path, PATHINFO_EXTENSION);
     $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
+
+    $volume_issue_formatted = $this->t("Volume @volume, No. @issue",
+      [
+        '@volume' => !empty($digital_serial_issue->getIssueVol()) ? $digital_serial_issue->getIssueVol() : "n/a",
+        '@issue' => !empty($digital_serial_issue->getIssueIssue()) ? $digital_serial_issue->getIssueIssue() : "n/s",
+      ]
+    );
+    $rows = [
+      [
+        'data' => [
+          [
+            'data' => $this->t('Issue Title'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $digital_serial_issue->get("issue_title")->value,
+        ],
+      ],
+      [
+        'data' => [
+          [
+            'data' => $this->t('Volume / Issue Number'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $volume_issue_formatted,
+        ],
+      ],
+      [
+        'data' => [
+          [
+            'data' => $this->t('Date'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $digital_serial_issue->get("issue_date")->value,
+        ],
+      ],
+      [
+        'data' => [
+          [
+            'data' => $this->t('Language'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $digital_serial_issue
+            ->get("issue_language")
+            ->getFieldDefinition()
+            ->getSetting('allowed_values')[$digital_serial_issue->get("issue_language")->value],
+        ],
+      ],
+      [
+        'data' => [
+          [
+            'data' => $this->t('Media'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          ucfirst($digital_serial_issue->get("issue_media")->value),
+        ],
+      ],
+      /*
+      [
+        'data' => [
+          [
+            'data' => $this->t('Download Image'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          Link::fromTextAndUrl(
+            $file->getFilename(),
+            Url::fromUri("internal:/{$image_path}")
+          ),
+        ],
+      ],
+       */
+    ];
+    $form['page_view']['metadata'] = [
+      '#type' => 'table',
+      '#caption' => $this->t('Page Details'),
+      '#rows' => $rows,
+      '#attributes' => [
+        'class' => [
+          'my-4',
+          'table-bordered',
+        ],
+      ],
+      '#weight' => '1',
+    ];
 
     // Determine if we're using DZI or the plain old image.
     if (file_exists($dzi_path)) {
