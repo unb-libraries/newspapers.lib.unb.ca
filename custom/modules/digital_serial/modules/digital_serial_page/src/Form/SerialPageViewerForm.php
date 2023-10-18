@@ -166,6 +166,23 @@ class SerialPageViewerForm extends FormBase {
         '@issue' => !empty($digital_serial_issue->getIssueIssue()) ? $digital_serial_issue->getIssueIssue() : "n/s",
       ]
     );
+
+    $colgroups = [
+      [
+        'data' => [
+          [
+            'width' => [
+              '40%',
+            ],
+          ],
+          [
+            'width' => [
+              '60%',
+            ],
+          ]
+        ],
+      ],
+    ];
     $rows = [
       [
         'data' => [
@@ -238,6 +255,7 @@ class SerialPageViewerForm extends FormBase {
     ];
     $form['page_view']['metadata'] = [
       '#type' => 'table',
+      '#colgroups' => $colgroups,
       '#caption' => $this->t('Page Details'),
       '#rows' => $rows,
       '#attributes' => [
