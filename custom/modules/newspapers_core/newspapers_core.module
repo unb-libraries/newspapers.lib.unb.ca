@@ -640,6 +640,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     }
   }
   // Archives website link for extended 'no holdings' text re: titles with PANB title id.
+  /*
   $panb_title_id = $node->get('field_panb_id');
   $panb_value = $panb_title_id->getValue() ?? NULL;
   if (!empty($panb_value)) {
@@ -662,7 +663,9 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     $link = Link::fromTextAndUrl($text, $url);
 
     $variables['archives_link'] = $link->toRenderable();
+
   }
+  */
 
   // Report additional information or errors button.
   $webform_report = \Drupal::entityTypeManager()
