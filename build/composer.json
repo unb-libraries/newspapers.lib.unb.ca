@@ -210,7 +210,7 @@
     "drupal/views_ajax_history": "1.7",
     "drupal/views_data_export": "1.3",
     "drupal/views_infinite_scroll": "2.0.2",
-    "drupal/webform": "6.1.7",
+    "drupal/webform": "6.1.8",
     "fortawesome/font-awesome": "5.15.4",
     "furf/jquery-ui-touch-punch": "dev-master",
     "harvesthq/chosen": "~1.8",
