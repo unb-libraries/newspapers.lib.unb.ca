@@ -21,6 +21,7 @@ settings:
     authors_default: 0
   included_languages:
     zh-hans: zh-hans
+    zh-hant: zh-hant
     en: en
     fr: fr
     micmac: micmac
