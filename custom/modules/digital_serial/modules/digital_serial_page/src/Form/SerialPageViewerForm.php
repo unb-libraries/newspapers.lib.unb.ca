@@ -50,7 +50,7 @@ class SerialPageViewerForm extends FormBase {
 
     $current_page = $digital_serial_page->getActivePagerNo();
     $total_pages = $digital_serial_issue->getPageCount();
-    $viewer_active_page_text = "Page $current_page of $total_pages";
+    $viewer_active_page_text = "Image $current_page of $total_pages";
     $viewer_active_pager_item = [
       '#type' => 'html_tag',
       '#tag'  => 'span',
@@ -266,7 +266,7 @@ class SerialPageViewerForm extends FormBase {
     $form['page_view']['metadata'] = [
       '#type' => 'table',
       '#colgroups' => $colgroups,
-      '#caption' => $this->t('Page Details'),
+      '#caption' => $this->t('Image Details'),
       '#rows' => $rows,
       '#attributes' => [
         'class' => [
