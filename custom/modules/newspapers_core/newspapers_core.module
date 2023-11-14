@@ -177,7 +177,7 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
         t('Search for keywords within the fulltext of digitized newspapers.') .
         '</span><a aria-controls="searchTips" aria-expanded="false" class="btn-link text-nowrap"
         data-toggle="collapse" href="#searchTips" role="button"><span aria-hidden="true"
-        class="fas fa-question-circle mr-1"></span>Search tips</a>';
+        class="fa-solid fa-question-circle mr-1"></span>Search tips</a>';
 
         $form['#info']['filter-search_api_fulltext']['description'] = $extended_description;
       }
@@ -1065,7 +1065,7 @@ function _newspapers_core_get_holding_details(string $type, SerialHolding $holdi
       if (!empty($uri)) {
         $uri_options = [];
         $access_value = Link::fromTextAndUrl(
-          Markup::create('Access online<span class="fas fa-external-link-alt fa-sm ml-1"></span>'),
+          Markup::create('Access online<span class="fa-solid fa-external-link-alt fa-sm ml-1"></span>'),
           Url::fromUri($uri, $uri_options)
         );
       }
@@ -1302,7 +1302,7 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
   if(!empty($inst_description) && !empty($holding_identifier)) {
     $inst_string .= ' <span class="text-nowrap">(<button class="btn btn-link p-0 text-left"
       data-target="#Dialog-' . $holding_identifier . '" data-toggle="modal" type="button">' .
-      '<span class="fas fa-question-circle fa-sm mr-1" aria-hidden="true"></span><small>info</small></button>)</span>
+      '<span class="fa-solid fa-question-circle fa-sm mr-1" aria-hidden="true"></span><small>info</small></button>)</span>
       <div id="Dialog-' . $holding_identifier . '" class="modal fade" aria-hidden="true"
       aria-labelledby="' . 'Label-' . $holding_identifier . '" role="dialog" tabindex="-1">' .
         '<div class="modal-dialog modal-xl">
@@ -1310,7 +1310,7 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
             <div class="modal-header">
               <h2 id="Label-' . $holding_identifier . '" class="modal-title">' . $inst_full_name . '</h2>
                 <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                  <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                  <span class="fa-solid fa-window-close mr-1" aria-hidden="true"></span>Close
                   <span class="sr-only">Modal</span>
                 </button>
               </div>

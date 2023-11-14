@@ -62,7 +62,7 @@ class SerialHoldingListBuilder extends EntityListBuilder {
       '#type' => 'link',
       '#title' =>
       [
-        '#markup' => '<span class="fas fa-paperclip fa-sm mr-1"></span>' . $this->t('Add New Holding'),
+        '#markup' => '<span class="fa-solid fa-paperclip fa-sm mr-1"></span>' . $this->t('Add New Holding'),
       ],
       '#url' => Url::fromRoute(
         'serial_holding.add_holding',

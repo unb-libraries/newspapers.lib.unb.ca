@@ -313,13 +313,13 @@
           {% if display_report_link %}
           <div class="mb-1 link-report">
             <a href="{{ report_url }}">
-              Report additional information or errors<span class="fas fa-marker fa-sm ml-1" aria-hidden="true"></span>
+              Report additional information or errors<span class="fa-solid fa-marker fa-sm ml-1" aria-hidden="true"></span>
             </a>
           </div>
           {% endif %}
           <div class="link-external-terms">
             <a href="https://lib.unb.ca/archives/policies/terms">
-              Terms of Use for the NBHNP<span class="fas fa-external-link-alt fa-sm ml-1"
+              Terms of Use for the NBHNP<span class="fa-solid fa-external-link-alt fa-sm ml-1"
               aria-description="(link leads to external site)"></span>
             </a>
           </div>
@@ -347,7 +347,7 @@
                             <div class="{{ className }}">
                               <button class="btn btn-link p-0"
                               data-target="#missingOnline{{ onlinecount }}" data-toggle="modal" type="button">
-                               {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"
+                               {{ missing_coverage_label }}<span class="fa-solid fa-window-restore fa-sm ml-1"
                                 aria-description="(button opens a modal window)"></span>
                               </button>
                               <div id="missingOnline{{ onlinecount }}" class="modal fade"
@@ -359,7 +359,7 @@
                                         {{ field.label }}
                                       </div>
                                       <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                                        <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                        <span class="fa-solid fa-window-close mr-1" aria-hidden="true"></span>Close
                                         <span class="sr-only">Modal</span>
                                       </button>
                                     </div>
@@ -412,7 +412,7 @@
                               <div class="{{ className }}">
                                 <button class="btn btn-link p-0 text-left"
                                 data-target="#missingMicroform{{ microformcount }}" data-toggle="modal" type="button">
-                                  {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"
+                                  {{ missing_coverage_label }}<span class="fa-solid fa-window-restore fa-sm ml-1"
                                   aria-description="(button opens a modal window)"></span>
                                 </button>
                                 <div id="missingMicroform{{ microformcount }}" class="modal fade" aria-hidden="true"
@@ -424,7 +424,7 @@
                                           {{ field.label }}
                                         </div>
                                         <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                                          <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                          <span class="fa-solid fa-window-close mr-1" aria-hidden="true"></span>Close
                                           <span class="sr-only">Modal</span>
                                         </button>
                                       </div>
@@ -487,7 +487,7 @@
                               <div class="{{ className }}">
                                 <button class="btn btn-link p-0 text-left"
                                 data-target="#missingPrint{{ printCount }}" data-toggle="modal" type="button">
-                                  {{ missing_coverage_label }}<span class="fas fa-window-restore fa-sm ml-1"
+                                  {{ missing_coverage_label }}<span class="fa-solid fa-window-restore fa-sm ml-1"
                                   aria-description="(button opens a modal window)"></span>
                                 </button>
                                 <div id="missingPrint{{ printCount }}" class="modal fade"
@@ -499,7 +499,7 @@
                                           {{ field.label }}
                                         </div>
                                         <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                                          <span class="fas fa-window-close mr-1" aria-hidden="true"></span>Close
+                                          <span class="fa-solid fa-window-close mr-1" aria-hidden="true"></span>Close
                                         </button>
                                       </div>
                                       <div class="modal-body">
@@ -529,7 +529,7 @@
               </div>
             {% endif %}
           {% else %}
-            <p><span class="fas fa-info-circle text-muted" aria-hidden="true"></span>
+            <p><span class="fa-solid fa-info-circle text-muted" aria-hidden="true"></span>
               There are currently <strong>no verified holdings</strong> for this publication.
             </p>
           {% endif %}
