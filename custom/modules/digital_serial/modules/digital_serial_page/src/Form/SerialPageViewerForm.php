@@ -160,10 +160,80 @@ class SerialPageViewerForm extends FormBase {
     $image_extension = pathinfo($full_path, PATHINFO_EXTENSION);
     $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
 
+    $form['page_view']['metadata'] = $this->getMetadataRenderElement($digital_serial_title, $digital_serial_issue);
+
+    // Determine if we're using DZI or the plain old image.
+    if (file_exists($dzi_path)) {
+      $tile_sources = str_replace(".$image_extension", '.dzi', $image_path);
+    }
+    else {
+      $tile_sources = json_encode(
+        [
+          'type' => 'image',
+          'url' => $image_path,
+        ]
+      );
+    }
+
+    // Highlighting.
+    $overlays = [];
+    $highlight = explode(' ', \Drupal::request()->query->get('highlight'));
+
+    if (!empty($highlight[0])) {
+      self::filterHighlightKeywords($highlight);
+      $hocr = $digital_serial_page->getPageHocr();
+      if (!empty($hocr)) {
+        $hocr_obj = new SerialPageHocr($hocr);
+        $results = $hocr_obj->search($highlight, ['case_sensitive' => FALSE]);
+        $page = $hocr_obj->getPageDimensions();
+
+        foreach ($results as $ocr_item) {
+          $bounding_box = $ocr_item['bbox'];
+          $overlays[] = [
+            'x' => $bounding_box['left'] / $page['width'],
+            'y' => $bounding_box['top'] / $page['width'],
+            'width' => ($bounding_box['right'] - $bounding_box['left']) / $page['width'],
+            'height' => ($bounding_box['bottom'] - $bounding_box['top']) / $page['width'],
+            'className' => "digital-serial-page-highlight",
+          ];
+        }
+      }
+    }
+
+    $form['#attached'] = [
+      'library' => [
+        'digital_serial_page/openseadragon',
+        'digital_serial_page/openseadragon_viewer',
+      ],
+      'drupalSettings' => [
+        'digital_serial_page' => [
+          'tile_sources' => $tile_sources,
+          'overlays' => $overlays,
+        ],
+      ],
+    ];
+
+    return $form;
+  }
+
+  /**
+   * Gets serial page metadata for the page viewer.
+   *
+   * @param \Drupal\serial_holding\Entity\SerialTitleInterface $digital_serial_title
+   *   The digital serial title entity.
+   * @param \Drupal\serial_holding\Entity\SerialIssueInterface $digital_serial_issue
+   *   The digital serial issue entity.
+   *
+   * @return array
+   *   The render array of metadata.
+   */
+  private function getMetadataRenderElement(SerialTitleInterface $digital_serial_title, SerialIssueInterface $digital_serial_issue): array {
+    // URL object for Parent publication.
     $parent_title_url = $digital_serial_title
       ->getParentPublication()
       ->toUrl();
 
+    // Combination serial issue volume + issue number.
     $volume_issue_formatted = $this->t("Volume @volume, No. @issue",
       [
         '@volume' => !empty($digital_serial_issue->getIssueVol()) ? $digital_serial_issue->getIssueVol() : "n/a",
@@ -171,6 +241,7 @@ class SerialPageViewerForm extends FormBase {
       ]
     );
 
+    // Set up array for table element colgroup cols and row header/data cells.
     $colgroups = [
       [
         'data' => [
@@ -272,7 +343,9 @@ class SerialPageViewerForm extends FormBase {
       ],
        */
     ];
-    $form['page_view']['metadata'] = [
+
+    // Return Form API 'table' element .
+    return [
       '#type' => 'table',
       '#colgroups' => $colgroups,
       '#caption' => $this->t('Image Details'),
@@ -285,59 +358,6 @@ class SerialPageViewerForm extends FormBase {
       ],
       '#weight' => '1',
     ];
-
-    // Determine if we're using DZI or the plain old image.
-    if (file_exists($dzi_path)) {
-      $tile_sources = str_replace(".$image_extension", '.dzi', $image_path);
-    }
-    else {
-      $tile_sources = json_encode(
-        [
-          'type' => 'image',
-          'url' => $image_path,
-        ]
-      );
-    }
-
-    // Highlighting.
-    $overlays = [];
-    $highlight = explode(' ', \Drupal::request()->query->get('highlight'));
-
-    if (!empty($highlight[0])) {
-      self::filterHighlightKeywords($highlight);
-      $hocr = $digital_serial_page->getPageHocr();
-      if (!empty($hocr)) {
-        $hocr_obj = new SerialPageHocr($hocr);
-        $results = $hocr_obj->search($highlight, ['case_sensitive' => FALSE]);
-        $page = $hocr_obj->getPageDimensions();
-
-        foreach ($results as $ocr_item) {
-          $bounding_box = $ocr_item['bbox'];
-          $overlays[] = [
-            'x' => $bounding_box['left'] / $page['width'],
-            'y' => $bounding_box['top'] / $page['width'],
-            'width' => ($bounding_box['right'] - $bounding_box['left']) / $page['width'],
-            'height' => ($bounding_box['bottom'] - $bounding_box['top']) / $page['width'],
-            'className' => "digital-serial-page-highlight",
-          ];
-        }
-      }
-    }
-
-    $form['#attached'] = [
-      'library' => [
-        'digital_serial_page/openseadragon',
-        'digital_serial_page/openseadragon_viewer',
-      ],
-      'drupalSettings' => [
-        'digital_serial_page' => [
-          'tile_sources' => $tile_sources,
-          'overlays' => $overlays,
-        ],
-      ],
-    ];
-
-    return $form;
   }
 
   /**
