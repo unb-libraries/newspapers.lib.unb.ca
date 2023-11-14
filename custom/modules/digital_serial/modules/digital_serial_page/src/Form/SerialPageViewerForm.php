@@ -2,6 +2,7 @@
 
 namespace Drupal\digital_serial_page\Form;
 
+use Drupal\Core\Entity\EntityMalformedException;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
@@ -96,14 +97,14 @@ class SerialPageViewerForm extends FormBase {
     ];
     $url->setOptions($link_options);
 
-    $form['page_view']['back_link'] = [
+    $form['page_viewer']['back_link'] = [
       '#markup' => Link::fromTextAndUrl(
         $back_text, $url)
         ->toString(),
     ];
-    $form['page_view']['back_link'];
+    $form['page_viewer']['back_link'];
 
-    $form['page_view']['pager'] = [
+    $form['page_viewer']['pager'] = [
       '#type' => 'container',
       '#attributes' => [
         'class' => [
@@ -132,20 +133,20 @@ class SerialPageViewerForm extends FormBase {
         '#markup' => Link::fromTextAndUrl($prev_text, $prev_next['previous'])
           ->toString(),
       ];
-      $form['page_view']['pager']['prev_page'] = $prev_link;
+      $form['page_viewer']['pager']['prev_page'] = $prev_link;
     }
 
-    $form['page_view']['pager']['active'] = $viewer_active_pager_item;
+    $form['page_viewer']['pager']['active'] = $viewer_active_pager_item;
     if (!empty($prev_next['next'])) {
       $prev_next['next']->setOptions($link_options);
       $next_link = [
         '#markup' => Link::fromTextAndUrl($next_text, $prev_next['next'])
           ->toString(),
       ];
-      $form['page_view']['pager']['next_page'] = $next_link;
+      $form['page_viewer']['pager']['next_page'] = $next_link;
     }
 
-    $form['page_view']['zoom'] = [
+    $form['page_viewer']['zoom'] = [
       '#type' => 'container',
       '#id' => 'seadragon-viewer',
       '#attributes' => [
@@ -160,7 +161,7 @@ class SerialPageViewerForm extends FormBase {
     $image_extension = pathinfo($full_path, PATHINFO_EXTENSION);
     $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
 
-    $form['page_view']['metadata'] = $this->getMetadataRenderElement($digital_serial_title, $digital_serial_issue);
+    $form['page_viewer']['metadata'] = $this->getMetadataRenderElement($digital_serial_title, $digital_serial_issue);
 
     // Determine if we're using DZI or the plain old image.
     if (file_exists($dzi_path)) {
@@ -217,7 +218,7 @@ class SerialPageViewerForm extends FormBase {
   }
 
   /**
-   * Gets serial page metadata for the page viewer.
+   * Generates rendered metadata for the serial page viewer.
    *
    * @param \Drupal\serial_holding\Entity\SerialTitleInterface $digital_serial_title
    *   The digital serial title entity.
@@ -225,13 +226,17 @@ class SerialPageViewerForm extends FormBase {
    *   The digital serial issue entity.
    *
    * @return array
-   *   The render array of metadata.
+   *   The render array for the serial page's metadata.
    */
   private function getMetadataRenderElement(SerialTitleInterface $digital_serial_title, SerialIssueInterface $digital_serial_issue): array {
     // URL object for Parent publication.
-    $parent_title_url = $digital_serial_title
-      ->getParentPublication()
-      ->toUrl();
+    try {
+      $parent_title_url = $digital_serial_title
+        ->getParentPublication()
+        ->toUrl();
+    }
+    catch (EntityMalformedException $e) {
+    }
 
     // Combination serial issue volume + issue number.
     $volume_issue_formatted = $this->t("Volume @volume, No. @issue",
