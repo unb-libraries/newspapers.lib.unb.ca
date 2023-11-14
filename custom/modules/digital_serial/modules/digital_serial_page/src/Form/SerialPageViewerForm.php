@@ -160,6 +160,10 @@ class SerialPageViewerForm extends FormBase {
     $image_extension = pathinfo($full_path, PATHINFO_EXTENSION);
     $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
 
+    $parent_title_url = $digital_serial_title
+      ->getParentPublication()
+      ->toUrl();
+
     $volume_issue_formatted = $this->t("Volume @volume, No. @issue",
       [
         '@volume' => !empty($digital_serial_issue->getIssueVol()) ? $digital_serial_issue->getIssueVol() : "n/a",
@@ -191,7 +195,12 @@ class SerialPageViewerForm extends FormBase {
             'header' => TRUE,
             'scope' => 'row',
           ],
-          $digital_serial_title->getParentPublication()->getTitle(),
+          Link::fromTextAndUrl(
+            $digital_serial_title
+              ->getParentPublication()
+              ->getTitle(),
+            $parent_title_url
+          ),
         ],
       ],
       [
