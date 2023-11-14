@@ -179,7 +179,7 @@ class SerialPageViewerForm extends FormBase {
             'width' => [
               '60%',
             ],
-          ]
+          ],
         ],
       ],
     ];
