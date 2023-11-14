@@ -110,14 +110,14 @@
       "package": {
         "dist": {
           "type": "zip",
-          "url": "https://github.com/FortAwesome/Font-Awesome/archive/refs/tags/5.15.4.zip"
+          "url": "https://github.com/FortAwesome/Font-Awesome/archive/refs/tags/6.4.2.zip"
         },
         "extra": {
           "installer-name": "fontawesome"
         },
         "name": "fortawesome/font-awesome",
         "type": "drupal-library",
-        "version": "5.15.4"
+        "version": "6.4.2"
       },
       "type": "package"
     },
@@ -211,7 +211,7 @@
     "drupal/views_data_export": "1.4",
     "drupal/views_infinite_scroll": "2.0.2",
     "drupal/webform": "6.1.8",
-    "fortawesome/font-awesome": "5.15.4",
+    "fortawesome/font-awesome": "6.4.2",
     "furf/jquery-ui-touch-punch": "dev-master",
     "harvesthq/chosen": "~1.8",
     "markgoodyear/scrollup": "dev-master",
