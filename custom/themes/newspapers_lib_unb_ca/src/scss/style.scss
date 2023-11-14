@@ -307,8 +307,13 @@ a.btn-add:active {
       &::before {
         color: $checkmark;
         content: "\f061";
-        float: left;
-        font-family: 'Font Awesome 5 Free';
+        display: inline-block;
+        font: var(--fa-font-solid);
+        font-size: 90%;
+        margin-left: -1.25rem;
+        margin-right: .5rem;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
         margin-left: -1.25rem;
       }
     }
@@ -514,13 +519,14 @@ a.back-link {
 }
 a.back-results::before,
 a.back-link::before {
-  font-family: "Font Awesome 5 Free";
   content: "\f100";
   display: inline-block;
+  font: var(--fa-font-solid);
   font-size: 88%;
-  font-weight: 900;
   margin-right: 0.2em;
   opacity: 0.65;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Holdings */
@@ -593,11 +599,11 @@ a.back-link::before {
       font-size: .85rem;
 
       &:before {
-        font-family: "Font Awesome 5 Free";
+        font: var(--fa-font-solid);
         font-size: smaller;
         display: inline-block;
-        font-weight: 900;
-        margin: 0 .25rem;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
         vertical-align: baseline;
       }
 

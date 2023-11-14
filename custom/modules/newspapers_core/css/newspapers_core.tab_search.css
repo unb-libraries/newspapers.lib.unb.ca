@@ -29,8 +29,11 @@ form .nav-tabs > li > a {
 }
 .nav-tabs a:before {
   display: inline-block;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 700;
+  font: var(--fa-font-solid);
+  margin-bottom: 2px;
+  margin-right: .25rem;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
   font-size: small;
   opacity: .8;
   padding-right: 4px;

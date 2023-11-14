@@ -20,10 +20,12 @@
         &::before {
           content: "\f0dc";
           display: inline-block;
-          font-family: 'Font Awesome 5 Free';
-          font-weight: 900;
-          margin-right: 0.3em;
-          white-space: nowrap;
+          font: var(--fa-font-solid);
+          font-size: 80%;
+          margin-bottom: 2px;
+          margin-right: .5rem;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
         }
       }
     }

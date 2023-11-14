@@ -72,11 +72,14 @@
 }
 
 ul.js-facets-checkbox-links + a::before {
-  font-family: "Font Awesome 5 Free";
   content: "\f067";
   display: inline-block;
+  font: var(--fa-font-solid);
+  margin-bottom: 2px;
+  margin-right: .5rem;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
   font-size: 11px;
-  font-weight: 900;
   margin: 0 .25rem;
   vertical-align: baseline;
 }
