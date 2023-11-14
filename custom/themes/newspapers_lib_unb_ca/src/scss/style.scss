@@ -602,6 +602,7 @@ a.back-link::before {
         font: var(--fa-font-solid);
         font-size: smaller;
         display: inline-block;
+        margin-right: .25rem;
         text-rendering: auto;
         -webkit-font-smoothing: antialiased;
         vertical-align: baseline;
