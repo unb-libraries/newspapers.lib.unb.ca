@@ -305,7 +305,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: "<h2>This Day in New Brunswick History</h2>\r\n<p><span class=\"fas fa-exclamation-circle\"></span>\r\n    No digital issues were found from this day in history.\r\n</p>"
+            value: "<h2>This Day in New Brunswick History</h2>\r\n<p><span class=\"fa-solid fa-exclamation-circle\"></span>\r\n    No digital issues were found from this day in history.\r\n</p>"
             format: full_html
           tokenize: false
       sorts:

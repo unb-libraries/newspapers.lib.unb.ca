@@ -356,7 +356,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: "<div class=\"alert alert-warning\">\r\n    <i class=\"fas fa-exclamation-circle\"></i>\r\n    No results were found.\r\n</div>"
+            value: "<div class=\"alert alert-warning\">\r\n    <span class=\"fa-solid fa-exclamation-circle\"></span>\r\n    No results were found.\r\n</div>"
             format: full_html
           tokenize: true
       sorts:

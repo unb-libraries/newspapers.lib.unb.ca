@@ -516,7 +516,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: "<h2 class=\"title\">Featured Publication</h2>\r\n<p><span class=\"fas fa-exclamation-circle\"></span>\r\n    No publications  are currently featured.\r\n</p>"
+            value: "<h2 class=\"title\">Featured Publication</h2>\r\n<p><span class=\"fa-solid fa-exclamation-circle\"></span>\r\n    No publications  are currently featured.\r\n</p>"
             format: full_html
           tokenize: false
       sorts:

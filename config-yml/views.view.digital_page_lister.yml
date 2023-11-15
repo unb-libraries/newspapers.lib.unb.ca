@@ -546,7 +546,7 @@ display:
           content:
             value: |-
               <div class="alert alert-warning">
-                  <span class="fas fa-exclamation-circle"></span>
+                  <span class="fa-solid fa-exclamation-circle"></span>
                   No results were found.
               </div>
             format: full_html
@@ -679,7 +679,7 @@ display:
           empty: false
           content: |-
             <div class="alert alert-success">
-                <span class="fas fa-check-circle"></span>
+                <span class="fa-solid fa-check-circle"></span>
                 Displaying @start - @end of @total results
             </div>
       footer: {  }
@@ -973,7 +973,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<figure class=\"text-center\">\r\n{{ page_image }}\r\n<figcaption>\r\n<i class=\"fas fa-search-plus fa-sm mr-1\"></i>View issue in high resolution\r\n</figcaption>\r\n</figure>"
+            text: "<figure class=\"text-center\">\r\n{{ page_image }}\r\n<figcaption>\r\n<span class=\"fa-solid fa-search-plus fa-sm mr-1\"></span>View issue in high resolution\r\n</figcaption>\r\n</figure>"
             make_link: true
             path: '/serials/{{ parent_digital_title_id }}/issues/{{ parent_digital_issue_id }}/pages/{{ parent_digital_page_id }}'
             absolute: false
@@ -1782,7 +1782,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: "<div class=\"alert alert-warning\">\r\n    <i class=\"fas fa-exclamation-circle\"></i>\r\n    No results were found.\r\n</div>"
+            value: "<div class=\"alert alert-warning\">\r\n    <span class=\"fa-solid fa-exclamation-circle\"></span>\r\n    No results were found.\r\n</div>"
             format: full_html
           tokenize: false
       sorts:
@@ -2713,7 +2713,7 @@ display:
           element_wrapper_type: '0'
           element_wrapper_class: ''
           element_default_classes: false
-          empty: "<span class=\"no-result\"><i class=\"fas fa-exclamation-circle\"></i>\r\nSearch excerpt not available.</span>"
+          empty: "<span class=\"no-result\"><span class=\"fa-solid fa-exclamation-circle\"></span>\r\nSearch excerpt not available.</span>"
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
@@ -2767,7 +2767,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: "<div class=\"alert alert-warning\">\r\n    <i class=\"fas fa-exclamation-circle\"></i>\r\n    No results were found<span class=\"results-{{ filters.search_api_fulltext }}\"> for <b>{{ filters.search_api_fulltext }}</b></span>.\r\n</div>"
+            value: "<div class=\"alert alert-warning\">\r\n    <span class=\"fa-solid fa-exclamation-circle\"></span>\r\n    No results were found<span class=\"results-{{ filters.search_api_fulltext }}\"> for <b>{{ filters.search_api_fulltext }}</b></span>.\r\n</div>"
             format: full_html
           tokenize: true
       sorts:
