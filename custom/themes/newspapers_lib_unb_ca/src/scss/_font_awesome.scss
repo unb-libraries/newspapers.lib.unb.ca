@@ -1,0 +1,12 @@
+/* Override UNB LIB THEME 9.x-4.x class */
+a.external {
+  &:after {
+    content: "\f14c";
+    display: inline-block;
+    font: var(--fa-font-solid);
+    font-size: 95%;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    vertical-align: inherit;
+  }
+}
