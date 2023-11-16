@@ -1,17 +1,7 @@
 /* Override UNB LIB THEME 9.x-4.x class */
-a.external {
-  &:after {
-    content: "\f14c";
-    display: inline-block;
-    font: var(--fa-font-solid);
-    font-size: 95%;
-    font-weight: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    vertical-align: inherit;
-  }
-}
-
+a.external:after,
+#header button[data-target="#navbar"][aria-expanded="false"]::after,
+#header button[data-target="#navbar"][aria-expanded="true"]:after,
 .site-footer>div:not(.footer-middle) a.nav-link::after {
   font: var(--fa-font-solid);
   font-size: 95%;
@@ -19,4 +9,13 @@ a.external {
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   vertical-align: inherit;
+}
+
+#header button[data-target="#navbar"][aria-expanded="false"]::after {
+  margin-left: .35rem;
+}
+
+#header button[data-target="#navbar"][aria-expanded="false"]::after,
+#header button[data-target="#navbar"][aria-expanded="true"]:after {
+  vertical-align: text-top;
 }
