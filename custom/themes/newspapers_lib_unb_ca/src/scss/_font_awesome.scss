@@ -5,8 +5,18 @@ a.external {
     display: inline-block;
     font: var(--fa-font-solid);
     font-size: 95%;
+    font-weight: inherit;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     vertical-align: inherit;
   }
+}
+
+.site-footer>div:not(.footer-middle) a.nav-link::after {
+  font: var(--fa-font-solid);
+  font-size: 95%;
+  font-weight: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  vertical-align: inherit;
 }
