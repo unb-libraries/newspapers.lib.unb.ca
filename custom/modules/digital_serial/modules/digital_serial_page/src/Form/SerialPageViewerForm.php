@@ -210,11 +210,19 @@ class SerialPageViewerForm extends FormBase {
         'digital_serial_page' => [
           'tile_sources' => $tile_sources,
           'overlays' => $overlays,
+          'use_canvas' => $this->browserSupportsHugeCanvas(),
         ],
       ],
     ];
 
     return $form;
+  }
+
+  /**
+   * Determines if the current browser supports huge canvases.
+   */
+  private static function browserSupportsHugeCanvas() {
+    return stripos($_SERVER['HTTP_USER_AGENT'], 'Safari') === FALSE;
   }
 
   /**
