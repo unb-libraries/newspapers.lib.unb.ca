@@ -222,7 +222,7 @@ class SerialPageViewerForm extends FormBase {
    * Determines if the current browser supports huge canvases.
    */
   private static function browserSupportsHugeCanvas($browser) {
-    return !stripos($browser, 'Safari') === FALSE;
+    return !str_contains(strtolower($browser), 'safari');
   }
 
   /**
