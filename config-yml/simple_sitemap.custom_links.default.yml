@@ -3,7 +3,3 @@ links:
     path: /
     priority: '1.0'
     changefreq: daily
-  -
-    path: /search
-    priority: '1.0'
-    changefreq: weekly

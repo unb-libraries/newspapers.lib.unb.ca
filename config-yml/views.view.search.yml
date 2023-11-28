@@ -832,8 +832,8 @@ display:
           variants:
             default:
               index: true
-              priority: '0.5'
-              changefreq: ''
+              priority: '1.0'
+              changefreq: weekly
               arguments: {  }
               max_links: 100
       path: search
