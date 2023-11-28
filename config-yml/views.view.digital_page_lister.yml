@@ -10,7 +10,6 @@ dependencies:
     - datetime
     - digital_serial_issue
     - image
-    - owlcarousel
     - search_api
     - user
 id: digital_page_lister
@@ -1880,7 +1879,7 @@ display:
         operator: AND
         groups: {  }
       style:
-        type: owlcarousel
+        type: default
         options:
           grouping:
             -
@@ -1889,30 +1888,6 @@ display:
               rendered_strip: false
           row_class: ''
           default_row_class: false
-          items: '6'
-          itemsDesktop: '[1199,5]'
-          itemsDesktopSmall: '[991,4]'
-          itemsTablet: '[567,3]'
-          itemsMobile: '[414,2]'
-          singleItem: 0
-          itemsScaleUp: 0
-          slideSpeed: '500'
-          paginationSpeed: '500'
-          rewindSpeed: '1000'
-          autoPlay: 0
-          stopOnHover: 1
-          navigation: 1
-          prevText: ''
-          nextText: ''
-          rewindNav: 0
-          scrollPerPage: 1
-          pagination: 0
-          paginationNumbers: 0
-          responsive: 1
-          responsiveRefreshRate: '200'
-          mouseDrag: 1
-          touchDrag: 1
-          transitionStyle: fade
       row:
         type: fields
         options:
