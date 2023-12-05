@@ -142,6 +142,15 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
   public function getIssueEdition();
 
   /**
+   * Gets the Serial issue missing pages text.
+   *
+   * @return string|null
+   *   Missing pages text note fpr the Serial issue,
+   *   or NULL if it's empty.
+   */
+  public function getIssueMissingPages();
+
+  /**
    * Sets the Serial issue edition.
    *
    * @param string $issue_edition
