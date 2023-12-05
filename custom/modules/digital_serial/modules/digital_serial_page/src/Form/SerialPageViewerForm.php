@@ -166,6 +166,24 @@ class SerialPageViewerForm extends FormBase {
 
     $form['page_viewer']['metadata'] = $this->getMetadataRenderElement($digital_serial_title, $digital_serial_issue);
 
+    if (!empty($issue_missingp_note)) {
+      $form['page_viewer']['missing_pages_note'] = [
+        '#type' => 'container',
+        'child' => [
+          '#markup' => $this->t("This issue is missing pages: @note.", [
+            '@note' => $issue_missingp_note,
+          ]),
+        ],
+        '#attributes' => [
+          'class' => [
+            'alert',
+            'alert-info',
+          ],
+        ],
+        '#weight' => 5,
+      ];
+    }
+
     // Determine if we're using DZI or the plain old image.
     if (file_exists($dzi_path)) {
       $tile_sources = str_replace(".$image_extension", '.dzi', $image_path);
