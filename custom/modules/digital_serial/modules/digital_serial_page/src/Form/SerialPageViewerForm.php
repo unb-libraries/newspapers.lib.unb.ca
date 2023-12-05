@@ -42,7 +42,7 @@ class SerialPageViewerForm extends FormBase {
 
     $prev_text = [
       '#type' => 'html_tag',
-      '#tag'  => 'span',
+      '#tag' => 'span',
       '#value' => $this->t('<span aria-hidden="true">« </span>Previous'),
       '#attributes' => [
         'aria-label' => ['Show previous page'],
@@ -51,10 +51,12 @@ class SerialPageViewerForm extends FormBase {
 
     $current_page = $digital_serial_page->getActivePagerNo();
     $total_pages = $digital_serial_issue->getPageCount();
+    $issue_missingp_note = $digital_serial_issue->getIssueMissingPages();
+
     $viewer_active_page_text = "Image $current_page of $total_pages";
     $viewer_active_pager_item = [
       '#type' => 'html_tag',
-      '#tag'  => 'span',
+      '#tag' => 'span',
       "#value" => $viewer_active_page_text,
       "#attributes" => [
         'class' => [
@@ -68,7 +70,7 @@ class SerialPageViewerForm extends FormBase {
 
     $next_text = [
       '#type' => 'html_tag',
-      '#tag'  => 'span',
+      '#tag' => 'span',
       '#value' => $this->t('Next<span aria-hidden="true"> »</span>'),
       '#attributes' => [
         'aria-label' => ['Show next page'],
@@ -88,6 +90,7 @@ class SerialPageViewerForm extends FormBase {
       $uri = "internal:/serials/browse/{$digital_serial_title->id()}";
       $url = Url::fromUri($uri);
     }
+
     $link_options = [
       'attributes' => [
         'class' => [
