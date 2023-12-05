@@ -137,6 +137,18 @@
       "package": {
         "dist": {
           "type": "zip",
+          "url": "https://github.com/OwlCarousel2/OwlCarousel2/archive/2.3.4.zip"
+        },
+        "name": "owlcarousel2/owlcarousel2",
+        "type": "drupal-library",
+        "version": "2.3.4"
+      },
+      "type": "package"
+    },
+    {
+      "package": {
+        "dist": {
+          "type": "zip",
           "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/v1.11.4.zip"
         },
         "name": "simeydotme/jquery-ui-slider-pips",
@@ -217,6 +229,7 @@
     "markgoodyear/scrollup": "dev-master",
     "neitanod/forceutf8": "^2",
     "nodespark/des-connector": "5.x-dev",
+    "owlcarousel2/owlcarousel2": "2.3.4",
     "phpoffice/phpspreadsheet": "^1.5.0",
     "simeydotme/jquery-ui-slider-pips": "~1.11",
     "unb-libraries/alert_scheduler": "dev-8.x-1.x",
