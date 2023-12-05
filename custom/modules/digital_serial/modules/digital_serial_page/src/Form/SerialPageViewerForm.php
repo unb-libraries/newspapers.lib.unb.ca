@@ -170,7 +170,7 @@ class SerialPageViewerForm extends FormBase {
       $form['page_viewer']['missing_pages_note'] = [
         '#type' => 'container',
         'child' => [
-          '#markup' => $this->t("This issue is missing pages: @note.", [
+          '#markup' => $this->t("Issue note / missing pages: @note.", [
             '@note' => $issue_missingp_note,
           ]),
         ],
