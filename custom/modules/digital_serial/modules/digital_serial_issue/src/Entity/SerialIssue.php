@@ -413,7 +413,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
 
     $fields['issue_missingp'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Missing Pages'))
-      ->setDescription(t('Pages missing from the issue.'))
+      ->setDescription(t('Issue notes / pages missing from the issue.'))
       ->setSettings([
         'max_length' => 128,
         'text_processing' => 0,
