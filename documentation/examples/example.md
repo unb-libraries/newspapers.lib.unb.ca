@@ -22,7 +22,9 @@ drush scr move.php
 ```
 
 <hr><hr>
+
 ### Glassville News and Aberdeen and Kent Pioneer -> The Glassville News
+
 > Glassville News and Aberdeen and Kent Pioneer https://newspapers.lib.unb.ca/newspaper/glassville-news-and-aberdeen-and-kent-pioneer published from Jan? 1893 - Aug 15, 1893, digital issues Mar 15, 1893 - May 1, 1896, Sept. 1893-May 1896 should be moved to The Glassville News https://newspapers.lib.unb.ca/newspaper/glassville-news
 
 _move.php_:
