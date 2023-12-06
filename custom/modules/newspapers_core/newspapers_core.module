@@ -1656,6 +1656,7 @@ function _newspapers_core_move_issue_to_title($issue_id, $target_title_id, bool 
 
   if (!empty($target_title_entity)) {
     $issue_entity->setParentTitle($target_title_entity);
+    $issue_entity->save();
     _newspapers_core_reindex_issues([$issue_entity->id()]);
     if (!$skip_holdings_update) {
       _newspapers_core_update_holding_records(
