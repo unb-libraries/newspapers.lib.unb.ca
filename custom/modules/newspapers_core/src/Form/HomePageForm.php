@@ -125,11 +125,12 @@ class HomePageForm extends FormBase {
     ];
     $about_url->setOptions($about_link_options);
 
-    $blurb = "<p>New Brunswick Historical Newspapers Project provides researchers with
+    $blurb = "<p>The New Brunswick Historical Newspapers Project provides researchers with
         unified access to UNB Libraries&apos; current and historical newspaper collections in all formats, from New
         Brunswick and across the world. Search and discover
         <a href=\"/print-titles\">print</a>, microform, and selected digital newspaper
-        titles available from UNB Libraries.</p>
+        titles available from UNB Libraries. This site also acts as an index for all known New Brunswick
+        newspapers and listing of where copies are located throughout the province and beyond.</p>
         <p>Fulltext searching is available for our growing list of
         <a href=\"/digital-titles\">digitized titles</a>. Learn
         more about the <a href=\"project\">New Brunswick Historical Newspapers Project</a>
