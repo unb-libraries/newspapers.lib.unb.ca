@@ -65,25 +65,37 @@ def generate_issue_path(metadata_file_path, issue_metadata, output_path):
     year = issue_metadata['published']
     return os.path.join(output_path, cleaned_title, year, series, sequence)
 
-def get_metadata_file_marker_path(metadata_file_path):
-    return metadata_file_path.replace('.xml', '.xml.processed')
+def get_metadata_file_marker_path(metadata_file_path, output_path):
+    return os.path.join(
+        output_path,
+        '.crkn_processed',
+        metadata_file_path.replace('.xml', '.xml.processed').strip("/")
+    )
 
-def mark_metadata_file_as_processed(metadata_file_path):
-    marker_file_path = get_metadata_file_marker_path(metadata_file_path)
+def mark_metadata_file_as_processed(metadata_file_path, output_path):
+    marker_file_path = get_metadata_file_marker_path(metadata_file_path, output_path)
+    Path(os.path.dirname(marker_file_path)).mkdir(parents=True, exist_ok=True)
     Path(marker_file_path).touch()
 
-def metadata_file_needs_processing(metadata_file_path):
-    marker_file_path = get_metadata_file_marker_path(metadata_file_path)
+def metadata_file_needs_processing(metadata_file_path, output_path):
+    marker_file_path = get_metadata_file_marker_path(metadata_file_path, output_path)
     if os.path.isfile(marker_file_path):
         return False
     return True
 
+def normalize_path(path):
+    return os.path.normpath(os.path.abspath(path))
+
 ## Main
-source_path = check_metadata_structure_assertions(sys.argv[1])
-output_path = check_output_path(sys.argv[2])
+source_path = normalize_path(
+    check_metadata_structure_assertions(sys.argv[1])
+)
+output_path = normalize_path(
+    check_output_path(sys.argv[2])
+)
 
 for metadata_file_path in find_in_path('metadata.xml', source_path):
-    if not metadata_file_needs_processing(metadata_file_path):
+    if not metadata_file_needs_processing(metadata_file_path, output_path):
         print("Skipping: " + metadata_file_path + "...")
         continue
     print("Processing: " + metadata_file_path + "...")
@@ -107,4 +119,4 @@ for metadata_file_path in find_in_path('metadata.xml', source_path):
             cmr_file_path = os.path.join(copy_source, 'data/cmr.xml')
             if os.path.isfile(cmr_file_path):
                 shutil.copy2(cmr_file_path, issue_path)
-    mark_metadata_file_as_processed(metadata_file_path)
+    mark_metadata_file_as_processed(metadata_file_path, output_path)
