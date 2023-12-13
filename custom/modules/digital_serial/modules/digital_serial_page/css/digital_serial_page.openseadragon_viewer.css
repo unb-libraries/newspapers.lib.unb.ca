@@ -29,8 +29,16 @@
 #seadragon-viewer .openseadragon-container div[title] {
   cursor: pointer;
 }
-#edit-metadata caption {
+table caption {
   color: #212529;
   font-family: "ProximaNovaA-Thin", "Century Gothic", AppleGothic, Arial, sans-serif;
   font-size: 1.3rem;
+}
+.card .card-body {
+  padding: 1rem;
+}
+a span.filesize {
+  display: inline-block;
+  padding-left: .25rem;
+  text-decoration: none;
 }
