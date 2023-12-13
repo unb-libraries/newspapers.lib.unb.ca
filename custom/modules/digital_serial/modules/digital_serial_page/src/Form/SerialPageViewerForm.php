@@ -388,7 +388,7 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
-    // Create download image row IF page entity > digital image > file is obtainable.
+    // Create download image row IF page entity|digital image|file obtainable.
     if (file_exists($image_download_path)) {
       $image_download_uri = \Drupal::service('file_url_generator')
         ->generateAbsoluteString($page_image_file->getFileUri());
