@@ -6,6 +6,7 @@ use Drupal\Core\Entity\EntityMalformedException;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\digital_serial_issue\Entity\SerialIssueInterface;
@@ -168,6 +169,7 @@ class SerialPageViewerForm extends FormBase {
     $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
 
     $form['page_viewer']['metadata'] = $this->getMetadataRenderElement($digital_serial_title, $digital_serial_issue);
+    $form['page_viewer']['metadata-footer'] = $this->getMetadataFooter($digital_serial_title, $digital_serial_issue);
 
     if (!empty($issue_missingp_note)) {
       $form['page_viewer']['missing_pages_note'] = [
@@ -181,6 +183,7 @@ class SerialPageViewerForm extends FormBase {
           'class' => [
             'alert',
             'alert-info',
+            'mt-4',
           ],
         ],
         '#weight' => 5,
@@ -247,6 +250,17 @@ class SerialPageViewerForm extends FormBase {
    */
   private static function browserSupportsHugeCanvas($browser) {
     return !str_contains(strtolower($browser), 'safari') || str_contains(strtolower($browser), 'chrome');
+  }
+
+  /**
+   * Filters out unwanted elements from the highlight keywords.
+   *
+   * @param array $keywords
+   *   The keywords to filter.
+   */
+  private static function filterHighlightKeywords(array &$keywords): void {
+    self::stripHighlightQuotes($keywords);
+    $keywords = array_filter($keywords, [self, 'elementIsNotStopWord']);
   }
 
   /**
@@ -398,14 +412,57 @@ class SerialPageViewerForm extends FormBase {
   }
 
   /**
-   * Filters out unwanted elements from the highlight keywords.
+   * Gets rendered footer metadata for the serial page viewer.
    *
-   * @param array $keywords
-   *   The keywords to filter.
+   * @param \Drupal\serial_holding\Entity\SerialTitleInterface $dst
+   *   The serial title entity.
+   * @param \Drupal\serial_holding\Entity\SerialIssueInterface $dsi
+   *   The serial issue entity.
+   *
+   * @return array
+   *   The Report Info/Error metadata render array.
    */
-  private static function filterHighlightKeywords(array &$keywords): void {
-    self::stripHighlightQuotes($keywords);
-    $keywords = array_filter($keywords, [self, 'elementIsNotStopWord']);
+  private function getMetadataFooter($dst, $dsi) {
+    $footer_markup = '<div class="card-body d-flex flex-column flex-lg-row justify-content-between">';
+
+    $webform_report = \Drupal::entityTypeManager()
+      ->getStorage('webform')
+      ->load('report_additional_info_errs');
+    if ($webform_report != NULL) {
+      // Retrieve Webform URL alias for Report webform.
+      $report_url = $webform_report->getSetting('page_submit_path');
+      $report_url_options = [
+        'query' => [
+          'newspaper' => $dst->getParentPublication()->getTitle() . ': ' . $dsi->getDisplayTitle(),
+          'subdirectory' => 'serials/' . $dst->id() . '/issues/' . $dsi->id(),
+        ],
+      ];
+      $footer_markup .= '<div class="link-report mb-2 mb-lg-0">
+        <a href="' . Url::fromUri('base:' . $report_url, $report_url_options)->toString() .
+        '">Report additional information or errors<span class="fa-solid fa-marker fa-sm ml-1" aria-hidden="true"></span>
+        </a>
+      </div>';
+    }
+
+    $footer_markup .= '<div class="link-external-terms">
+        <a href="https://lib.unb.ca/archives/policies/terms">Terms of Use for the NBHNP
+        <span class="fa-solid fa-external-link-alt fa-sm ml-1" aria-description="link leads to external site"></span>
+        </a>
+      </div>
+    </div>';
+
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'card',
+        ],
+      ],
+      '#weight' => 1,
+      'child' => [
+        '#markup' => $footer_markup,
+      ],
+    ];
   }
 
   /**
