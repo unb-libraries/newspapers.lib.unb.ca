@@ -142,6 +142,15 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
   public function getIssueEdition();
 
   /**
+   * Gets the Serial issue errata text.
+   *
+   * @return string|null
+   *   Errata text note fpr the Serial issue,
+   *   or NULL if it's empty.
+   */
+  public function getIssueErrata();
+
+  /**
    * Gets the Serial issue missing pages text.
    *
    * @return string|null

@@ -53,7 +53,6 @@ class SerialPageViewerForm extends FormBase {
 
     $current_page = $digital_serial_page->getActivePagerNo();
     $total_pages = $digital_serial_issue->getPageCount();
-    $issue_missingp_note = $digital_serial_issue->getIssueMissingPages();
 
     $viewer_active_page_text = "Image $current_page of $total_pages";
     $viewer_active_pager_item = [
@@ -171,25 +170,6 @@ class SerialPageViewerForm extends FormBase {
 
     $form['page_viewer']['metadata-body'] = $this->getMetadataBody($digital_serial_title, $digital_serial_issue, $file, $full_path);
     $form['page_viewer']['metadata-footer'] = $this->getMetadataFooter($digital_serial_title, $digital_serial_issue);
-
-    if (!empty($issue_missingp_note)) {
-      $form['page_viewer']['missing_pages_note'] = [
-        '#type' => 'container',
-        'child' => [
-          '#markup' => $this->t("Issue note / missing pages: @note.", [
-            '@note' => $issue_missingp_note,
-          ]),
-        ],
-        '#attributes' => [
-          'class' => [
-            'alert',
-            'alert-info',
-            'mt-4',
-          ],
-        ],
-        '#weight' => 5,
-      ];
-    }
 
     // Determine if we're using DZI or the plain old image.
     if (file_exists($dzi_path)) {
@@ -317,7 +297,13 @@ class SerialPageViewerForm extends FormBase {
         ],
       ],
     ];
-    $rows = [
+
+    // Initialize optional row arrays.
+    $rows_missingp = $rows_errata = $rows_download = [];
+    $issue_missingp_note = $digital_serial_issue->getIssueMissingPages();
+    $issue_errata = $digital_serial_issue->getIssueErrata();
+
+    $rows_primary = [
       [
         'data' => [
           [
@@ -363,6 +349,39 @@ class SerialPageViewerForm extends FormBase {
           $digital_serial_issue->get("issue_date")->value,
         ],
       ],
+    ];
+
+    // Optional field groups.
+    if (!empty($issue_missingp_note)) {
+      $rows_missingp = [
+        [
+          'data' => [
+            [
+              'data' => $this->t('Missing Pages'),
+              'header' => TRUE,
+              'scope' => 'row',
+            ],
+            $issue_missingp_note,
+          ],
+        ],
+      ];
+    }
+    if (!empty($issue_errata)) {
+      $rows_errata = [
+        [
+          'data' => [
+            [
+              'data' => $this->t('Errata'),
+              'header' => TRUE,
+              'scope' => 'row',
+            ],
+            $issue_errata,
+          ],
+        ],
+      ];
+    }
+
+    $rows_secondary = [
       [
         'data' => [
           [
@@ -416,14 +435,16 @@ class SerialPageViewerForm extends FormBase {
       ),
 
       );
-      $rows[] = [
-        'data' => [
-          [
-            'data' => $this->t('Download Image'),
-            'header' => TRUE,
-            'scope' => 'row',
+      $rows_download = [
+        [
+          'data' => [
+            [
+              'data' => $this->t('Download Image'),
+              'header' => TRUE,
+              'scope' => 'row',
+            ],
+            $download_link,
           ],
-          $download_link,
         ],
       ];
     }
@@ -433,11 +454,12 @@ class SerialPageViewerForm extends FormBase {
       '#type' => 'table',
       '#colgroups' => $colgroups,
       '#caption' => $this->t('Image Details'),
-      '#rows' => $rows,
+      '#rows' => array_merge($rows_primary, $rows_missingp, $rows_errata, $rows_secondary, $rows_download),
       '#attributes' => [
         'class' => [
           'my-4',
           'table',
+          'table-sm',
         ],
       ],
       '#weight' => '1',

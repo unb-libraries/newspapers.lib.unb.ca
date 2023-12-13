@@ -214,6 +214,13 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * {@inheritdoc}
    */
+  public function getIssueErrata() {
+    return $this->get('issue_errata')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getParentTitle() {
     return $this->get('parent_title')->entity;
   }
