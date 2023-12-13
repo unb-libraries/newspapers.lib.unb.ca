@@ -159,7 +159,10 @@ class SerialPageViewerForm extends FormBase {
     ];
     $file = $digital_serial_page->get('page_image')->entity;
     $uri = $file->getFileUri();
-    $image_path = file_url_transform_relative(file_create_url($uri));
+    /* Deprecated D9.3.x: https://www.drupal.org/node/2940031 */
+    /* $image_path = file_url_transform_relative(file_create_url($uri)); */
+    $image_path = \Drupal::service('file_url_generator')->generateString($uri);
+
     $full_path = DRUPAL_ROOT . $image_path;
     $image_extension = pathinfo($full_path, PATHINFO_EXTENSION);
     $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
