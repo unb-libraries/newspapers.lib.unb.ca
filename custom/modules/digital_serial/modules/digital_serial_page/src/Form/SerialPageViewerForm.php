@@ -13,6 +13,7 @@ use Drupal\digital_serial_issue\Entity\SerialIssueInterface;
 use Drupal\digital_serial_page\Entity\SerialPageInterface;
 use Drupal\digital_serial_page\SerialPageHocr;
 use Drupal\digital_serial_title\Entity\SerialTitleInterface;
+use Drupal\file\Entity\File;
 
 /**
  * ManageArchivalMasterForm object.
@@ -168,7 +169,7 @@ class SerialPageViewerForm extends FormBase {
     $image_extension = pathinfo($full_path, PATHINFO_EXTENSION);
     $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
 
-    $form['page_viewer']['metadata'] = $this->getMetadataRenderElement($digital_serial_title, $digital_serial_issue);
+    $form['page_viewer']['metadata-body'] = $this->getMetadataBody($digital_serial_title, $digital_serial_issue, $file, $full_path);
     $form['page_viewer']['metadata-footer'] = $this->getMetadataFooter($digital_serial_title, $digital_serial_issue);
 
     if (!empty($issue_missingp_note)) {
@@ -270,11 +271,18 @@ class SerialPageViewerForm extends FormBase {
    *   The digital serial title entity.
    * @param \Drupal\serial_holding\Entity\SerialIssueInterface $digital_serial_issue
    *   The digital serial issue entity.
+   * @param \Drupal\file\Entity\File $page_image_file
+   *   The uploaded image file for the digital serial page.
+   * @param string $image_download_path
+   *   The downloadable image full path.
    *
    * @return array
    *   The render array for the serial page's metadata.
    */
-  private function getMetadataRenderElement(SerialTitleInterface $digital_serial_title, SerialIssueInterface $digital_serial_issue): array {
+  private function getMetadataBody(SerialTitleInterface $digital_serial_title,
+                                            SerialIssueInterface $digital_serial_issue,
+                                            File $page_image_file,
+                                            string $image_download_path): array {
     // URL object for Parent publication.
     try {
       $parent_title_url = $digital_serial_title
@@ -378,22 +386,47 @@ class SerialPageViewerForm extends FormBase {
           ucfirst($digital_serial_issue->get("issue_media")->value),
         ],
       ],
-      /*
-      [
+    ];
+
+    // Create download image row IF page entity > digital image > file is obtainable.
+    if (file_exists($image_download_path)) {
+      $image_download_uri = \Drupal::service('file_url_generator')
+        ->generateAbsoluteString($page_image_file->getFileUri());
+      $image_download_link_options = [
+        'attributes' => [
+          'download' => TRUE,
+        ],
+      ];
+
+      $image_size_bytes = $page_image_file->getSize();
+      if ($image_size_bytes > 1) {
+        $image_size_mb = round($image_size_bytes / 1048576, 2);
+        $image_size_text = " ($image_size_mb MB)";
+      }
+      else {
+        $image_size_text = '';
+      }
+
+      $download_link = Link::fromTextAndUrl(
+        Markup::create(
+          $page_image_file->getFilename() .
+          '<span class="text-muted filesize">' . $image_size_text . '</span>'
+        ),
+        Url::fromUri($image_download_uri, $image_download_link_options
+      ),
+
+      );
+      $rows[] = [
         'data' => [
           [
             'data' => $this->t('Download Image'),
             'header' => TRUE,
             'scope' => 'row',
           ],
-          Link::fromTextAndUrl(
-            $file->getFilename(),
-            Url::fromUri("internal:/{$image_path}")
-          ),
+          $download_link,
         ],
-      ],
-       */
-    ];
+      ];
+    }
 
     // Return Form API 'table' element .
     return [
