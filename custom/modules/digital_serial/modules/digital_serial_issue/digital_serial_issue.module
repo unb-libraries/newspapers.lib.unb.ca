@@ -45,7 +45,7 @@ function digital_serial_issue_preprocess_digital_serial_issue(&$variables) {
   $variables['metadata'] = [];
 
   $fields_to_parse = [
-    'issue_title' => t('Issue Title'),
+    'issue_title' => t('Printed Title'),
     'issue_volume' => t('Volume'),
     'issue_issue' => t('Issue'),
     'issue_edition' => t('Edition'),
