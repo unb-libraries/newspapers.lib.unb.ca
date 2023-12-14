@@ -272,6 +272,11 @@ class SerialPageViewerForm extends FormBase {
     catch (EntityMalformedException $e) {
     }
 
+    $issue_printed_title = $digital_serial_issue->getIssueTitle();
+    $issue_missingp_note = $digital_serial_issue->getIssueMissingPages();
+    $issue_errata = $digital_serial_issue->getIssueErrata();
+    $issue_edition = $digital_serial_issue->getIssueEdition();
+
     // Combination serial issue volume + issue number.
     $volume_issue_formatted = $this->t("Volume @volume, No. @issue",
       [
@@ -280,7 +285,7 @@ class SerialPageViewerForm extends FormBase {
       ]
     );
 
-    // Set up array for table element colgroup cols and row header/data cells.
+    // Set up array for table element colgroup cols.
     $colgroups = [
       [
         'data' => [
@@ -299,11 +304,10 @@ class SerialPageViewerForm extends FormBase {
     ];
 
     // Initialize optional row arrays.
-    $rows_missingp = $rows_errata = $rows_download = [];
-    $issue_missingp_note = $digital_serial_issue->getIssueMissingPages();
-    $issue_errata = $digital_serial_issue->getIssueErrata();
+    $row_printed_title = $row_missingp = $row_errata = $row_edition = $row_download = [];
 
-    $rows_primary = [
+    // Set up arrays for table element row header/data cells.
+    $row_pub_title = [
       [
         'data' => [
           [
@@ -319,16 +323,23 @@ class SerialPageViewerForm extends FormBase {
           ),
         ],
       ],
-      [
-        'data' => [
-          [
-            'data' => $this->t('Printed Title'),
-            'header' => TRUE,
-            'scope' => 'row',
+    ];
+    if (!empty($issue_printed_title)) {
+      $row_printed_title = [
+        [
+          'data' => [
+            [
+              'data' => $this->t('Printed Title'),
+              'header' => TRUE,
+              'scope' => 'row',
+            ],
+            $digital_serial_issue->getIssueTitle(),
           ],
-          $digital_serial_issue->getIssueTitle(),
         ],
-      ],
+      ];
+    }
+
+    $row_volume = [
       [
         'data' => [
           [
@@ -339,6 +350,25 @@ class SerialPageViewerForm extends FormBase {
           $volume_issue_formatted,
         ],
       ],
+    ];
+
+    // Optional edition.
+    if (!empty($issue_edition)) {
+      $row_edition = [
+        [
+          'data' => [
+            [
+              'data' => $this->t('Edition'),
+              'header' => TRUE,
+              'scope' => 'row',
+            ],
+            $issue_edition,
+          ],
+        ],
+      ];
+    }
+
+    $row_date = [
       [
         'data' => [
           [
@@ -351,9 +381,9 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
-    // Optional field groups.
+    // More optional fields.
     if (!empty($issue_missingp_note)) {
-      $rows_missingp = [
+      $row_missingp = [
         [
           'data' => [
             [
@@ -367,7 +397,7 @@ class SerialPageViewerForm extends FormBase {
       ];
     }
     if (!empty($issue_errata)) {
-      $rows_errata = [
+      $row_errata = [
         [
           'data' => [
             [
@@ -381,7 +411,7 @@ class SerialPageViewerForm extends FormBase {
       ];
     }
 
-    $rows_secondary = [
+    $rows_misc = [
       [
         'data' => [
           [
@@ -435,7 +465,7 @@ class SerialPageViewerForm extends FormBase {
       ),
 
       );
-      $rows_download = [
+      $row_download = [
         [
           'data' => [
             [
@@ -453,8 +483,18 @@ class SerialPageViewerForm extends FormBase {
     return [
       '#type' => 'table',
       '#colgroups' => $colgroups,
-      '#caption' => $this->t('Image Details'),
-      '#rows' => array_merge($rows_primary, $rows_missingp, $rows_errata, $rows_secondary, $rows_download),
+      '#caption' => $this->t('Issue Details'),
+      '#rows' => array_merge(
+        $row_pub_title,
+        $row_printed_title,
+        $row_volume,
+        $row_edition,
+        $row_date,
+        $row_missingp,
+        $row_errata,
+        $rows_misc,
+        $row_download
+      ),
       '#attributes' => [
         'class' => [
           'my-4',
