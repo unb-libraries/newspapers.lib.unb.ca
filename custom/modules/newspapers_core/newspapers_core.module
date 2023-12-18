@@ -1305,7 +1305,7 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
         '<div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 id="Label-' . $holding_identifier . '" class="modal-title">' . $inst_full_name . '</h2>
+              <h1 id="Label-' . $holding_identifier . '" class="h2 modal-title">' . $inst_full_name . '</h1>
                 <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
                   <span class="fa-solid fa-window-close mr-1" aria-hidden="true"></span>Close
                   <span class="sr-only">Modal</span>
