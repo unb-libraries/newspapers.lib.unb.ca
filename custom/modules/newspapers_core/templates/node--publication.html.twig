@@ -333,12 +333,12 @@
         <div class="title-holdings">
           <h2 class="bg-unb-light border p-2">{% trans %}Holdings{% endtrans %}</h2>
           {% if holding|length > 0 %}
-            {% if holding.online|length > 0 %}
+            {% if holding.online|length > 0 or holding.digital|length > 0 %}
               <div class="holding-group">
                 <h3>{% trans %}Online{% endtrans %}:</h3>
                 <ul class="holding-type">
-                  {% for item in holding.online %}
-                    {% set onlinecount = ( onlinecount | default(0) ) + 1 %}
+                  {% for item in holding.digital %}
+                    {% set digitalcount = ( digitalcount | default(0) ) + 1 %}
                     <li class="holding-item">
                       {% for field in item %}
                         {% if field.value %}
@@ -346,16 +346,16 @@
                           {% if field.label == missing_coverage_label %}
                             <div class="{{ className }}">
                               <button class="btn btn-link p-0"
-                              data-target="#missingOnline{{ onlinecount }}" data-toggle="modal" type="button">
+                              data-target="#missingDigital{{ digitalcount }}" data-toggle="modal" type="button">
                                {{ missing_coverage_label }}<span class="fa-solid fa-window-restore fa-sm ml-1"
                                 aria-description="(button opens a modal window)"></span>
                               </button>
-                              <div id="missingOnline{{ onlinecount }}" class="modal fade"
-                              aria-hidden="true" aria-labelledby="online{{ onlinecount }}ModalLabel" tabindex="-1">
+                              <div id="missingDigital{{ digitalcount }}" class="modal fade"
+                              aria-hidden="true" aria-labelledby="digital{{ digitalcount }}ModalLabel" tabindex="-1">
                                 <div class="modal-dialog modal-xl">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <div id="online{{ onlinecount }}ModalLabel" class="modal-title h3">
+                                      <div id="digital{{ digitalcount }}ModalLabel" class="modal-title h3">
                                         {{ field.label }}
                                       </div>
                                       <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
@@ -376,6 +376,46 @@
                         {% endif %}
                       {% endfor %}
                     </li>
+                  {% endfor %}
+                  {% for item in holding.online %}
+                  {% set onlinecount = ( onlinecount | default(0) ) + 1 %}
+                  <li class="holding-item">
+                    {% for field in item %}
+                      {% if field.value %}
+                        {% set className = 'field-' ~ field.label|clean_class %}
+                        {% if field.label == missing_coverage_label %}
+                          <div class="{{ className }}">
+                            <button class="btn btn-link p-0"
+                                    data-target="#missingOnline{{ onlinecount }}" data-toggle="modal" type="button">
+                              {{ missing_coverage_label }}<span class="fa-solid fa-window-restore fa-sm ml-1"
+                                                                aria-description="(button opens a modal window)"></span>
+                            </button>
+                            <div id="missingOnline{{ onlinecount }}" class="modal fade"
+                                 aria-hidden="true" aria-labelledby="online{{ onlinecount }}ModalLabel" tabindex="-1">
+                              <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <div id="online{{ onlinecount }}ModalLabel" class="modal-title h3">
+                                      {{ field.label }}
+                                    </div>
+                                    <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
+                                      <span class="fa-solid fa-window-close mr-1" aria-hidden="true"></span>Close
+                                      <span class="sr-only">Modal</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    {{ field.value|raw }}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        {% else %}
+                          <div class="{{ className }}">{{ field.value|raw }}</div>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  </li>
                   {% endfor %}
                 </ul>
               </div>
