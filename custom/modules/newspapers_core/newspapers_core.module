@@ -613,31 +613,24 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   if ($holdings) {
     foreach ($holdings as $type => $type_holdings) {
       foreach ($type_holdings as $type_holding) {
-        // Display digital items under online header.
-        if ($type == 'digital') {
-          $type_key = 'online';
-        }
-        else {
-          $type_key = $type;
-        }
-
         // Check if parent has been initially set.
-        if (empty($variables['holding'][$type_key])) {
-          $variables['holding'][$type_key] = [];
+        if (empty($variables['holding'][$type])) {
+          $variables['holding'][$type] = [];
         }
 
-        // Get the values. Digital should always appear first.
+        // Get the values - Digital/Online don't need inst id key for collapse feature.
         if ($type == 'digital' || $type == 'online') {
-          array_push($variables['holding'][$type_key], _newspapers_core_get_holding_details($type, $type_holding));
+          $variables['holding'][$type][] = _newspapers_core_get_holding_details($type, $type_holding);
         }
         else {
           $institutionid = $type_holding
             ->getInstitution()
             ->id();
-          $variables['holding'][$type_key][$institutionid][] = _newspapers_core_get_holding_details($type, $type_holding);
+          $variables['holding'][$type][$institutionid][] = _newspapers_core_get_holding_details($type, $type_holding);
         }
       }
     }
+
   }
 
   // Report additional information or errors button.
