@@ -534,7 +534,7 @@ class SerialPageViewerForm extends FormBase {
       ];
       $footer_markup .= '<div class="link-report mb-2 mb-lg-0">
         <a href="' . Url::fromUri('base:' . $report_url, $report_url_options)->toString() .
-        '">Report additional information or errors<span class="fa-solid fa-marker fa-sm ml-1" aria-hidden="true"></span>
+        '">Report additional information or errors<span class="fa-solid fa-pen-to-square fa-sm ml-1" aria-hidden="true"></span>
         </a>
       </div>';
     }

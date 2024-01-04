@@ -1299,7 +1299,7 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
   if(!empty($inst_description) && !empty($holding_identifier)) {
     $inst_string .= ' <span class="text-nowrap">(<button class="btn btn-link p-0 text-left"
       data-target="#Dialog-' . $holding_identifier . '" data-toggle="modal" type="button">' .
-      '<span class="fa-solid fa-question-circle fa-sm mr-1" aria-hidden="true"></span><small>info</small></button>)</span>
+      '<small>info</small><span class="fa-solid fa-info-circle fa-sm ml-1" aria-hidden="true"></span></button>)</span>
       <div id="Dialog-' . $holding_identifier . '" class="modal fade" aria-hidden="true"
       aria-labelledby="' . 'Label-' . $holding_identifier . '" role="dialog" tabindex="-1">' .
         '<div class="modal-dialog modal-xl">
@@ -1307,7 +1307,7 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
             <div class="modal-header">
               <h1 id="Label-' . $holding_identifier . '" class="h2 modal-title">' . $inst_full_name . '</h1>
                 <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                  <span class="fa-solid fa-window-close mr-1" aria-hidden="true"></span>Close
+                  Close<span class="fa-solid fa-window-close ml-1" aria-hidden="true"></span>
                   <span class="sr-only">Modal</span>
                 </button>
               </div>
