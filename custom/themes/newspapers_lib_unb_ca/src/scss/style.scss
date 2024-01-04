@@ -636,11 +636,22 @@ a.back-link::before {
 
   h2 {
     color: $black;
+    font-family: "ProximaNovaA-Regular", "Century Gothic", AppleGothic, Arial, sans-serif;
+    font-size: large;
+    text-align: center;
   }
 
   img {
-    max-height: 72px;
+    transition: filter 0.2s linear;
+    filter: grayscale(1);
+    max-height: 62px;
   }
+
+  a:focus img,
+  a:hover img {
+    filter: grayscale(0);
+  }
+
 }
 
 @media (max-width: 767px) {

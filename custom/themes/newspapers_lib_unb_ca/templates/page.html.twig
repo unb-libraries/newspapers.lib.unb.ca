@@ -2,7 +2,7 @@
 
 {% block footer_top_first %}
    {% if page.footer_top_first or page.footer_top_second %}
-   <div id="footer-top" class="d-flex flex-column flex-lg-row container justify-content-between mb-4">
+   <div id="footer-top" class="d-flex flex-column flex-lg-row container justify-content-around mb-4">
    {% endif %}
 
    {% if page.footer_top_first %}
@@ -24,8 +24,8 @@
    {% endif %}
 
    {% if page.footer %}
-     <div id="footer-middle" class="container">
-       <div class="hr py-4">{{ page.footer }}</div>
+     <div id="footer-middle" class="bg-unb-light p-3">
+       <div class="container py-4">{{ page.footer }}</div>
      </div>
    {% endif %}
 {% endblock %}
