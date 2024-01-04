@@ -426,33 +426,38 @@ class HomePageForm extends FormBase {
     // Fetch digital serial counts for the stats section.
     $database = \Drupal::database();
     try {
-      $pages_row_count = $database
+      $pages_row_count = number_format($database
         ->select('digital_serial_page', 'p')
         ->countQuery()
         ->execute()
-        ->fetchField();
+        ->fetchField()
+      );
     }
     catch (\Exception $e) {
       \Drupal::logger('type')->error($e->getMessage());
       $pages_row_count = 'Unknown';
     }
     try {
-      $issues_row_count = $database
+      $issues_row_count = number_format($database
         ->select('digital_serial_issue', 'i')
         ->countQuery()
         ->execute()
-        ->fetchField();
+        ->fetchField()
+      );
     }
     catch (\Exception $e) {
       \Drupal::logger('type')->error($e->getMessage());
       $issues_row_count = 'Unknown';
     }
     try {
-      $titles_row_count = $database
-        ->select('digital_serial_title', 't')
+      $sub_query = $database->select('digital_serial_issue', 'i')->fields('i', ['parent_title']);
+      $query = $database->select('digital_serial_title', 't');
+      $titles_row_count = number_format($query
+        ->condition('t.id', $sub_query, 'IN')
         ->countQuery()
         ->execute()
-        ->fetchField();
+        ->fetchField()
+      );
     }
     catch (\Exception $e) {
       \Drupal::logger('type')->error($e->getMessage());
@@ -462,9 +467,9 @@ class HomePageForm extends FormBase {
     return '<aside class="bg-light col-lg-4 p-3 stats">' .
       '<table class="table table-sm mb-3"><caption class="visually-hidden">Digitiazed Content</caption>' .
       '<colgroup><col width="25%"></colgroup><tbody>' .
-      '<tr><th class="text-uppercase" scope="row">Digital<br>titles</th><td>' . number_format($titles_row_count) . '</td></tr>' .
-      '<tr><th class="text-uppercase" scope="row">Digital<br>issues</th><td>' . number_format($issues_row_count) . '</td></tr>' .
-      '<tr><th class="text-uppercase" scope="row">Total<br>pages</th><td>' . number_format($pages_row_count) . '</td></tr>' .
+      '<tr><th class="text-uppercase" scope="row">Digital<br>titles</th><td>' . $titles_row_count . '</td></tr>' .
+      '<tr><th class="text-uppercase" scope="row">Digital<br>issues</th><td>' . $issues_row_count . '</td></tr>' .
+      '<tr><th class="text-uppercase" scope="row">Total<br>pages</th><td>' . $pages_row_count . '</td></tr>' .
       '</tbody></table>' .
       '<p class="mb-0"><a href="/digital-titles" class="ml-1">Current list of digitized titles</a></p>' .
       '</aside>';
