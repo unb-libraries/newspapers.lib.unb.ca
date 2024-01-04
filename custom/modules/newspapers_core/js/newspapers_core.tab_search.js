@@ -6,7 +6,7 @@
             // On empty fulltext input error: switch to Fulltext tab + focus input.
             if ($('div[aria-label="Error message"]').length) {
                 $('a#tab-fulltext').click();
-                $('#fulltext input[type=text]').focus();
+                $('#newspapers-core-homepage input[type="text"]:visible').focus();
             }
 
             // Autofocus the search input of clicked tab.
