@@ -92,6 +92,7 @@ div[data-drupal-selector="edit-actions"] .btn-unb-red:active {
 .stats table td {
   font-size: 1.5rem;
   font-weight: bold;
+  letter-spacing: 2px;
   line-height: 3rem;
   vertical-align: middle;
 }
