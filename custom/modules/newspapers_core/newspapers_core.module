@@ -176,8 +176,8 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
         $extended_description = '<span class="mr-1">' .
         t('Search for keywords within the fulltext of digitized newspapers.') .
         '</span><a aria-controls="searchTips" aria-expanded="false" class="btn-link text-nowrap"
-        data-toggle="collapse" href="#searchTips" role="button"><span aria-hidden="true"
-        class="fa-solid fa-question-circle mr-1"></span>Search tips</a>';
+        data-toggle="collapse" href="#searchTips" role="button">Search tips<span aria-hidden="true"
+        class="fa-solid fa-info-circle ml-1"></span></a>';
 
         $form['#info']['filter-search_api_fulltext']['description'] = $extended_description;
       }
