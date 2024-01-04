@@ -635,8 +635,9 @@ a.back-link::before {
   }
 
   h2 {
-    color: $black;
-    font-family: "ProximaNovaA-Regular", "Century Gothic", AppleGothic, Arial, sans-serif;
+    color: $dark;
+    font-family: 'ProximaNovaA-SemiBold','Century Gothic',AppleGothic,Arial,sans-serif;
+    font-weight: normal;
     font-size: large;
     text-align: center;
   }
