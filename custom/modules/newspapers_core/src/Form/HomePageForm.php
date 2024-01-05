@@ -55,7 +55,7 @@ class HomePageForm extends FormBase {
       UNB Libraries licensed electronic Newspaper collections</a>
       <span class="text-muted">(UNB/STU login required)</span>.</p>
       <p class="mb-0">We appreciate your interest in this project and we would be
-      <a href="/contact">happy to hear from you<span class="fa-solid fa-comment fa-sm ml-1" aria-hidden="true"></span></a>.
+      <a href="/contact">happy to hear from you<span class="fa-solid fa-comment-dots fa-sm ml-1" aria-hidden="true"></span></a>.
       </p>';
 
     $searchtips_markup = '<aside class="search-tips mt-3 w-100">
