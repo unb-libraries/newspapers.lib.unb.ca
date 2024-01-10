@@ -1742,15 +1742,17 @@ display:
             multi_type: separator
             multi_separator: ', '
       pager:
-        type: mini
+        type: full
         options:
           offset: 0
-          items_per_page: 52
+          items_per_page: 61
           total_pages: null
           id: 0
           tags:
-            next: 'newer issues ››'
-            previous: '‹‹ older issues'
+            next: »
+            previous: «
+            first: '‹ newest'
+            last: 'earliest ›'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -1759,6 +1761,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          quantity: 5
       exposed_form:
         type: basic
         options:
@@ -1794,7 +1797,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: search_api
-          order: ASC
+          order: DESC
           expose:
             label: ''
             field_identifier: issue_date
