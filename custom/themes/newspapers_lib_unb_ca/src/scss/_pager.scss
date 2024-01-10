@@ -13,6 +13,7 @@
 }
 .pagination {
   justify-content: center;
+  flex-wrap: wrap;
 
   .page-item:not(.active) {
     span.page-link {
