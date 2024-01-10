@@ -1946,7 +1946,18 @@ display:
       css_class: 'browse-issues image-link-shadow'
       use_ajax: false
       display_description: ''
-      header: {  }
+      header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: false
+          content: "<p class=\"text-muted\">\r\n<span class=\"fa-solid fa-circle-info text-info mr-1\"></span>You may <strong>swipe</strong> or <strong>click drag</strong> issues horizontally to quickly navigate through days of a month\r\n</p>"
+          tokenize: false
       exposed_block: false
       display_extenders:
         ajax_history: {  }
