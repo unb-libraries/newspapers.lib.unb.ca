@@ -27,10 +27,10 @@
       }
 
       .owl-prev {
-        left: 0;
+        left: -0.5rem;
       }
       .owl-next {
-        right: 0;
+        right: -0.5rem;
       }
     }
 
@@ -56,6 +56,7 @@
 // Stack Owl Carousel Grouping + Image
 .browse-issues {
   img {
+    border: 1px solid #dee2e6;
     transition: all .2s ease-in-out;
   }
 
@@ -70,12 +71,14 @@
 
   .owl-carousel {
     .owl-item {
-      margin-right: .25em;
+      margin: 0;
       margin-top: .5em;
+      text-align: center;
 
       &:first-child {
         float: none;
         margin-top: 0;
+        text-align: left;
         width: 100% !important;
       }
 
