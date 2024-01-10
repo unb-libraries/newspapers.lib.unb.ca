@@ -28,7 +28,12 @@
     cursor: default;
   }
 
+  .page-item.active .page-link {
+    background: $link-color;
+  }
+
   a.page-link {
+    color: $link-color;
     &:hover {
       border-style: solid!important;
     }
