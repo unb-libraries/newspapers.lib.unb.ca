@@ -2,7 +2,8 @@
 a.external:after,
 #header button[data-target="#navbar"][aria-expanded="false"]::after,
 #header button[data-target="#navbar"][aria-expanded="true"]:after,
-.site-footer>div:not(.footer-middle) a.nav-link::after {
+.site-footer>div:not(.footer-middle) a.nav-link::after,
+#emergency-banner .alert .alert-title:before {
   font: var(--fa-font-solid);
   font-size: 95%;
   font-weight: inherit;
