@@ -28,6 +28,16 @@ function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
   }
 
   switch ($route_name) {
+    case 'view.digital_page_lister.page_search':
+      // Inject Digital Titles breadcrumb on Digital Page Search View.
+      $digital_breadcrumb = [
+        'text' => t('Digitized Titles'),
+        'url' => Url::fromUri('internal:/digital-titles', []),
+      ];
+      $current_page_crumb = array_pop($variables['breadcrumb']);
+      array_push($variables['breadcrumb'], $digital_breadcrumb, $current_page_crumb);
+      break;
+
     case 'serial_holding.manage_serial_holdings':
       $variables['breadcrumb'][3]['text'] = t('Holdings');
       break;
