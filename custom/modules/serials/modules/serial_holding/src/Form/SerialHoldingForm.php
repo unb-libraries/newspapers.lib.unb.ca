@@ -36,7 +36,7 @@ class SerialHoldingForm extends ContentEntityForm {
       $this->parentEid = $entity->getParentTitle()->id();
     }
 
-    // Institution|taxonomy term|Name reserved for Digital Holdings (JIRA NBNP-318).
+    // Institution|taxonomy term|Name reserved - Digital Holdings (NBNP-318).
     $digital_inst_label = Term::load(self::DIGITAL_HOLDING_INST_ID)
       ->get('name')
       ->value;
@@ -55,7 +55,7 @@ class SerialHoldingForm extends ContentEntityForm {
       unset($form['holding_institution']['widget']['#options'][$digital_inst_key]);
     }
     else {
-      // Restrict select options to ONLY digital-related if holding type=digital.
+      // Restrict select option if holding type=digital.
       $form['holding_type']['widget']['#options'] = array_intersect(
         [$digital_key => 'Digital'],
         $form['holding_type']['widget']['#options']
