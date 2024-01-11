@@ -726,6 +726,7 @@ display:
           plugin_id: standard
           required: true
       css_class: 'search-results digital-titles'
+      use_ajax: true
       group_by: true
       header:
         area_text_custom:
@@ -768,7 +769,8 @@ display:
     position: 1
     display_options:
       display_extenders:
-        ajax_history: {  }
+        ajax_history:
+          enable_history: false
         simple_sitemap_display_extender:
           variants:
             default:
