@@ -37,12 +37,12 @@ class SerialHoldingForm extends ContentEntityForm {
     }
 
     // Institution|taxonomy term|Name reserved - Digital Holdings (NBNP-318).
-    $digital_inst_label = Term::load(self::DIGITAL_HOLDING_INST_ID)
+    $digital_inst_key = self::DIGITAL_HOLDING_INST_ID;
+    $digital_inst_label = Term::load($digital_inst_key)
       ->get('name')
       ->value;
     $is_digital_holding = FALSE;
     $digital_key = array_search("Digital", $form['holding_type']['widget']['#options']);
-    $digital_inst_key = array_search($digital_inst_label, $form['holding_institution']['widget']['#options'], TRUE);
     if (
       !empty($form['holding_type']['widget']['#default_value'][0]) &&
       $form['holding_type']['widget']['#default_value'][0] == $digital_key
