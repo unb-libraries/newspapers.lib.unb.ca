@@ -25,7 +25,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Digitally Available Titles'
+      title: 'Digitized Titles'
       fields:
         parent_title:
           id: parent_title
@@ -410,8 +410,8 @@ display:
           tags:
             next: ››
             previous: ‹‹
-            first: '« First'
-            last: 'Last »'
+            first: '‹ first'
+            last: 'last ›'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -420,7 +420,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          quantity: 9
+          quantity: 5
       exposed_form:
         type: basic
         options:
@@ -452,51 +452,6 @@ display:
       sorts: {  }
       arguments: {  }
       filters:
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          relationship: parent_title
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: title
-          plugin_id: string
-          operator: allwords
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: title_op
-            label: Title
-            description: ''
-            use_operator: false
-            operator: title_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: title
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              newspaper_administrator: '0'
-              serial_ho: '0'
-            placeholder: 'Enter 1 or more title terms'
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
         holding_type:
           id: holding_type
           table: serial_holding
@@ -556,7 +511,7 @@ display:
           operator: 'not empty'
           value: ''
           group: 1
-          exposed: true
+          exposed: false
           expose:
             operator_id: holding_start_date_op
             label: 'Holding Start Date'
@@ -735,10 +690,10 @@ display:
           field: area_text_custom
           relationship: none
           group_type: group
-          admin_label: ''
+          admin_label: 'Search Tips and Note'
           plugin_id: text_custom
           empty: true
-          content: "<div class=\"alert border\">\r\n<strong>Note:</strong> This is the current listing of newspapers that have been digitized. New content is being continually added, including extending the runs of existing titles.\r\n<a href=\"/project\" class=\"btn btn-link p-0 text-left\">Learn more about the New Brunswick Historical Newspapers Project</a>\r\n</div>"
+          content: "<div class=\"card collapse mt-2\" id=\"searchTips\">\r\n  <div class=\"card-body\">\r\n      <h2 class=\"card-title sr-only\">Search Term Guidelines</h2>\r\n      <div class=\"description m-0\">\r\n        <ul class=\"mb-0 px-3\">\r\n          <li>Use uppercase AND operator to limit to all terms used. eg. <code>cattle AND Fredericton</code></li>\r\n          <li>Use quotation marks to do phrase searching. eg. <code>&quot;5000 pairs to select&quot;</code></li>\r\n          <li>After searching, use the facets to limit by date, publication and location</li>\r\n        </ul>\r\n       </div>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"alert bg-light  border\">\r\n<strong>Note:</strong> This is the current listing of newspapers that have been digitized. New content is being continually added, including extending the runs of existing titles.\r\n<a href=\"/project\" class=\"btn btn-link p-0 text-left\">Learn more about the New Brunswick Historical Newspapers Project</a>\r\n</div>"
           tokenize: false
         result:
           id: result
@@ -757,7 +712,6 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
         - url.query_args
       tags:
         - 'config:field.storage.node.field_place_of_publication'
@@ -785,7 +739,6 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
-        - url
         - url.query_args
       tags:
         - 'config:field.storage.node.field_place_of_publication'
