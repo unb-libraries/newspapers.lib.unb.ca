@@ -26,4 +26,4 @@ visibility:
     id: request_path
     negate: false
     context_mapping: {  }
-    pages: '/page-search*'
+    pages: "/page-search*\r\n/digital-titles"
