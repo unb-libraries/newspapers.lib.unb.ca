@@ -5,6 +5,7 @@ namespace Drupal\serial_holding\Form;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\serial_holding\TaxonomyHelper;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Form controller for Serial holding edit forms.
@@ -12,6 +13,7 @@ use Drupal\serial_holding\TaxonomyHelper;
  * @ingroup serial_holding
  */
 class SerialHoldingForm extends ContentEntityForm {
+  const DIGITAL_HOLDING_INST_ID = '654';
 
   /**
    * The parent EID.
@@ -35,8 +37,9 @@ class SerialHoldingForm extends ContentEntityForm {
     }
 
     // Institution|taxonomy term|Name reserved for Digital Holdings (JIRA NBNP-318).
-    $digital_inst_label = "University of New Brunswick Libraries";
-
+    $digital_inst_label = Term::load(self::DIGITAL_HOLDING_INST_ID)
+      ->get('name')
+      ->value;
     $is_digital_holding = FALSE;
     $digital_key = array_search("Digital", $form['holding_type']['widget']['#options']);
     $digital_inst_key = array_search($digital_inst_label, $form['holding_institution']['widget']['#options'], TRUE);
