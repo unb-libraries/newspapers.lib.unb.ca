@@ -2745,8 +2745,8 @@ display:
           tags:
             next: ››
             previous: ‹‹
-            first: '« First'
-            last: 'Last »'
+            first: '‹ newest'
+            last: 'earliest ›'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -2922,6 +2922,8 @@ display:
       display_extenders:
         ajax_history:
           enable_history: true
+        simple_sitemap_display_extender:
+          variants: {  }
       path: page-search
     cache_metadata:
       max-age: -1
