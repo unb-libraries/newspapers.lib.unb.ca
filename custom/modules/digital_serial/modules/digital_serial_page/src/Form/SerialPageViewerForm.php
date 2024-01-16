@@ -86,7 +86,7 @@ class SerialPageViewerForm extends FormBase {
       $back_text = [
         '#type' => 'html_tag',
         '#tag' => 'span',
-        '#value' => 'Digital issues for &ldquo;' . $digital_serial_issue->getIssueTitle() . '&rdquo;',
+        '#value' => 'Browse digital issues',
       ];
       $uri = "internal:/serials/browse/{$digital_serial_title->id()}";
       $url = Url::fromUri($uri);
