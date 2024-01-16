@@ -45,7 +45,7 @@ class SerialPageViewerForm extends FormBase {
     $prev_text = [
       '#type' => 'html_tag',
       '#tag' => 'span',
-      '#value' => $this->t('<span aria-hidden="true">« </span>Previous'),
+      '#value' => $this->t('<span aria-hidden="true">« </span>previous'),
       '#attributes' => [
         'aria-label' => ['Show previous page'],
       ],
@@ -54,7 +54,7 @@ class SerialPageViewerForm extends FormBase {
     $current_page = $digital_serial_page->getActivePagerNo();
     $total_pages = $digital_serial_issue->getPageCount();
 
-    $viewer_active_page_text = "Image $current_page of $total_pages";
+    $viewer_active_page_text = "$current_page of $total_pages";
     $viewer_active_pager_item = [
       '#type' => 'html_tag',
       '#tag' => 'span',
@@ -72,7 +72,7 @@ class SerialPageViewerForm extends FormBase {
     $next_text = [
       '#type' => 'html_tag',
       '#tag' => 'span',
-      '#value' => $this->t('Next<span aria-hidden="true"> »</span>'),
+      '#value' => $this->t('next<span aria-hidden="true"> »</span>'),
       '#attributes' => [
         'aria-label' => ['Show next page'],
       ],
