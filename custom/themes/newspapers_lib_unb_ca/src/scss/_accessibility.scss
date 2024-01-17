@@ -1,0 +1,7 @@
+// Modal keyboard accessibility.
+.modal[tabindex="-1"]:focus {
+  .modal-dialog {
+    @include css3-prefix(box-shadow, 0 0 0 0.25rem rgba(0, 123, 255, .7));
+    border-radius: .25rem;
+  }
+}
