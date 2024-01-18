@@ -168,7 +168,7 @@ class SerialPageViewerForm extends FormBase {
     $image_extension = pathinfo($full_path, PATHINFO_EXTENSION);
     $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
 
-    $form['page_viewer']['metadata-body'] = $this->getMetadataBody($digital_serial_title, $digital_serial_issue, $file, $full_path);
+    $form['page_viewer']['metadata-body'] = $this->getMetadataBody($digital_serial_title, $digital_serial_issue, $current_page, $file, $full_path);
     $form['page_viewer']['metadata-footer'] = $this->getMetadataFooter($digital_serial_title, $digital_serial_issue);
 
     // Determine if we're using DZI or the plain old image.
@@ -251,6 +251,8 @@ class SerialPageViewerForm extends FormBase {
    *   The digital serial title entity.
    * @param \Drupal\serial_holding\Entity\SerialIssueInterface $digital_serial_issue
    *   The digital serial issue entity.
+   * @param string $page_number
+   *   The active issue/page pager number.
    * @param \Drupal\file\Entity\File $page_image_file
    *   The uploaded image file for the digital serial page.
    * @param string $image_download_path
@@ -261,6 +263,7 @@ class SerialPageViewerForm extends FormBase {
    */
   private function getMetadataBody(SerialTitleInterface $digital_serial_title,
                                             SerialIssueInterface $digital_serial_issue,
+                                            string $page_number,
                                             File $page_image_file,
                                             string $image_download_path): array {
     // URL object for Parent publication.
