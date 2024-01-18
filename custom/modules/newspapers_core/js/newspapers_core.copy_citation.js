@@ -8,7 +8,7 @@
 (function ($, Drupal) {
     'use strict';
 
-    Drupal.behaviors.citation = {
+    Drupal.behaviors.copy_citation = {
         attach: function (context, settings) {
             let copyButton= '#clipboardjs-button';
             let citationModal = '#citation-modal';
