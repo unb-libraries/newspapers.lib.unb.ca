@@ -1,3 +1,11 @@
+copy_citation:
+  js:
+    js/newspapers_core.copy_citation.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - clipboardjs/clipboardjs
+
 claro-overrides:
   css:
     theme:
