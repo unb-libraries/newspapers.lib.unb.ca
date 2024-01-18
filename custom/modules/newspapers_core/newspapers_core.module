@@ -1872,6 +1872,62 @@ function _newspapers_core_delete_image_dzi($page_id) {
 }
 
 /**
+ * Constructs render array for citation button and modal.
+ *
+ * @param string $citation_btn_markup
+ *    The raw HTML for the citation button that opens the generated citation modal.
+ * @param string $cited_title
+ *   The cited item title used in the modal header.
+ * @param string $citation_text
+ *    The text (and HTML tags) of the citation in the desired format.
+ *
+ * @return array
+ *   The render array for the citation, consisting of trigger button & modal with the copy feature.
+ */
+function _newspapers_core_get_citation_render_array(string $citation_btn_markup, string $cited_title, string $citation_text) {
+  $citation_modal_markup = '<div class="modal fade" id="citation-modal" tabindex="-1" aria-labelledby="citation-modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header align-items-center">
+        <h1 class="h2 modal-title">Cite ' . $cited_title . '</h1>
+        <button type="button" class="btn border border-secondary text-nowrap" data-dismiss="modal">
+          Close
+          <span class="sr-only">Modal</span><span class="fa-solid fa-close ml-1" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body py-4">' . $citation_text . '</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="clipboardjs-button"' .
+        ' data-clipboard-text="' . strip_tags($citation_text) . '" data-toggle="popover"' .
+        '>Copy Citation<span class="fa-solid fa-paperclip fa-sm ml-1"></span></button>
+      </div>
+    </div>
+  </div>
+</div>';
+
+return [
+    '#type' => 'container',
+    '#attributes' => [
+      'class' => [
+        'citation',
+      ],
+    ],
+    'child' => [
+      '#markup' => $citation_btn_markup . $citation_modal_markup,
+      '#allowed_tags' => [
+        'a',
+        'button',
+        'div',
+        'em',
+        'h1',
+        'p',
+        'span',
+      ],
+    ],
+  ];
+}
+
+/**
  * Removes a directory recursively.
  *
  * The recursive remove is potentially dangerous but is mitigated by string
