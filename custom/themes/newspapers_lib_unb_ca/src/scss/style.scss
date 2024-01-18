@@ -3,7 +3,13 @@
 /* Element style tweaks */
 h1 {
   margin-bottom: 2rem;
+
+  &.modal-title {
+    line-height: 1.25;
+    margin-bottom: 0;
+  }
 }
+
 figcaption {
   margin-bottom: 1em;
 }
