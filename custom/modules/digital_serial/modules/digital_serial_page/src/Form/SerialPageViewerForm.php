@@ -282,7 +282,13 @@ class SerialPageViewerForm extends FormBase {
     $issue_edition = $digital_serial_issue->getIssueEdition();
 
     // Combination serial issue volume + issue number.
-    $volume_issue_formatted = $this->t("Volume @volume, No. @issue",
+    $volume_issue_metadata_format = $this->t("Volume @volume, No. @issue",
+      [
+        '@volume' => !empty($digital_serial_issue->getIssueVol()) ? $digital_serial_issue->getIssueVol() : "n/a",
+        '@issue' => !empty($digital_serial_issue->getIssueIssue()) ? $digital_serial_issue->getIssueIssue() : "n/s",
+      ]
+    );
+    $volume_issue_citation_format = $this->t("@volume, no. @issue,",
       [
         '@volume' => !empty($digital_serial_issue->getIssueVol()) ? $digital_serial_issue->getIssueVol() : "n/a",
         '@issue' => !empty($digital_serial_issue->getIssueIssue()) ? $digital_serial_issue->getIssueIssue() : "n/s",
@@ -351,7 +357,7 @@ class SerialPageViewerForm extends FormBase {
             'header' => TRUE,
             'scope' => 'row',
           ],
-          $volume_issue_formatted,
+          $volume_issue_metadata_format,
         ],
       ],
     ];
