@@ -650,6 +650,18 @@ function newspapers_core_preprocess_node__publication(&$variables) {
       $variables['report_url'] = Url::fromUri('base:' . $report_url, $report_url_options)->toString();
     }
   }
+  // Publication citation.
+  global $base_url;
+  $citation_path =  $base_url . \Drupal::service('path.current')->getPath();
+  $citation_site_name = \Drupal::config('system.site')->get('name');
+  $cited_title = $node->getTitle();
+  $citation_text = "<em>$cited_title</em>. <em>$citation_site_name</em>, accessed " .
+    date_create('now')->format('F d, Y') . ", $citation_path.";
+  $citation_btn_markup =
+    '<button type="button" class="btn btn-link" data-target="#citation-modal" data-toggle="modal">
+     <span class="fa-solid fa-quote-left mr-1"></span>Cite this Record
+    </button>';
+  $variables['citation'] = _newspapers_core_get_citation_render_array($citation_btn_markup, $cited_title, $citation_text);
 
   $view_mode = $variables['view_mode'];
   if ($view_mode != 'featured') {
@@ -1305,14 +1317,12 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
           <div class="modal-content">
             <div class="modal-header">
               <h1 id="Label-' . $holding_identifier . '" class="h2 modal-title">' . $inst_full_name . '</h1>
-                <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                  Close<span class="fa-solid fa-window-close ml-1" aria-hidden="true"></span>
-                  <span class="sr-only">Modal</span>
-                </button>
-              </div>
-            <div class="modal-body">' .
-              $inst_description .
-            '</div>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">
+                Close
+                <span class="sr-only">Modal</span><span class="fa-solid fa-window-close ml-1" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="modal-body">' . $inst_description . '</div>
           </div>
         </div>
       </div>';
@@ -1885,22 +1895,37 @@ function _newspapers_core_delete_image_dzi($page_id) {
  *   The render array for the citation, consisting of trigger button & modal with the copy feature.
  */
 function _newspapers_core_get_citation_render_array(string $citation_btn_markup, string $cited_title, string $citation_text) {
+  $citation_footer = '<div class="card my-2">
+    <div class="card-header"><h2 class="h4 mb-0">Note</h2></div>
+    <div class="card-body">
+     <p>The above citation is for either the publication or a specific issue. <strong>If you are citing a specific
+      article</strong> in the Chicago Style, you should include the article title in the following format:</p>
+
+    <blockquote class="mx-0 mx-lg-3 text-dark text-word-break"><em>Daily Mail (Fredericton, New Brunswick: 1910).</em>
+      &quot;<strong>Article Title Goes Here</strong>&quot; 32, no. 6,
+      January 8, 1926: [1]. <em>New Brunswick Historical Newspapers Project</em>, accessed January 18, 2024,
+      https://newspapers.lib.unb.ca/serials/57/issues/3438/pages/26127
+    </blockquote>
+  </div>';
+
   $citation_modal_markup = '<div class="modal fade" id="citation-modal" tabindex="-1" aria-labelledby="citation-modal" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header align-items-center">
-        <h1 class="h2 modal-title">Cite ' . $cited_title . '</h1>
-        <button type="button" class="btn border border-secondary text-nowrap" data-dismiss="modal">
+        <h1 class="h2 modal-title mr-2">Cite ' . $cited_title . '</h1>
+        <button type="button" class="btn btn-close" data-dismiss="modal">
           Close
           <span class="sr-only">Modal</span><span class="fa-solid fa-close ml-1" aria-hidden="true"></span>
         </button>
       </div>
-      <div class="modal-body py-4">' . $citation_text . '</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="clipboardjs-button"' .
+      <div class="modal-body py-4">' . $citation_text .
+        '<div class="mt-3 text-right"><button type="button" class="btn btn-primary" id="clipboardjs-button"' .
         ' data-clipboard-text="' . strip_tags($citation_text) . '" data-toggle="popover"' .
-        '>Copy Citation<span class="fa-solid fa-paperclip fa-sm ml-1"></span></button>
+        '>Copy Citation<span class="fa-solid fa-paperclip fa-sm ml-1"></span></button></div>
       </div>
+      <div class="modal-footer">' .
+        $citation_footer .
+      '</div>
     </div>
   </div>
 </div>';
@@ -1916,12 +1941,15 @@ return [
       '#markup' => $citation_btn_markup . $citation_modal_markup,
       '#allowed_tags' => [
         'a',
+        'blockquote',
         'button',
         'div',
         'em',
         'h1',
+        'h2',
         'p',
         'span',
+        'strong',
       ],
     ],
   ];
