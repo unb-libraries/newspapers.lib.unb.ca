@@ -489,7 +489,7 @@ class SerialPageViewerForm extends FormBase {
       ];
     }
 
-    // Citation Format: $ParentTitle $vol, $iss, M d, Y: [$pageNum]. NBHNP. $url.
+    // Citation: $ParentTitle $vol, no. $iss, M d, Y: [$page#]. NBHNP. $url.
     global $base_url;
     $citation_btn_markup = '<button type="button" class="btn btn-link btn-sm"
       data-target="#citation-modal" data-toggle="modal">
