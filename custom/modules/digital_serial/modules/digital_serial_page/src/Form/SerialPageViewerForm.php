@@ -489,6 +489,35 @@ class SerialPageViewerForm extends FormBase {
       ];
     }
 
+    // Citation Format: $ParentTitle $vol, $iss, M d, Y: [$pageNum]. NBHNP. $url.
+    global $base_url;
+    $citation_btn_markup = '<button type="button" class="btn btn-link btn-sm"
+      data-target="#citation-modal" data-toggle="modal">
+      <span class="fa-solid fa-quote-left mr-1"></span>CMS - Chicago Manual of Style</button>';
+    $cited_title = $digital_serial_issue->getIssueTitle();
+    $citation_text = '<em>' . $digital_serial_title->getParentPublication()->getTitle() .
+      "</em> $volume_issue_citation_format " .
+      date("F d, Y", strtotime($digital_serial_issue->get("issue_date")->value)) .
+      ": [$page_number]. <em>" .
+      \Drupal::config('system.site')->get('name') . '</em>, accessed ' .
+      date_create('now')->format('F d, Y') . ', <span class="text-word-break">' .
+      $base_url . \Drupal::service('path.current')->getPath() . '</span>';
+    $citation_render_array = _newspapers_core_get_citation_render_array($citation_btn_markup, $cited_title, $citation_text);
+    $citation = \Drupal::service('renderer')->render($citation_render_array);
+
+    $row_citation = [
+      [
+        'data' => [
+          [
+            'data' => $this->t('Cite this Image'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $citation,
+        ],
+      ],
+    ];
+
     // Return Form API 'table' element .
     return [
       '#type' => 'table',
