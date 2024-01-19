@@ -532,7 +532,8 @@ class SerialPageViewerForm extends FormBase {
         $row_missingp,
         $row_errata,
         $rows_misc,
-        $row_download
+        $row_download,
+        $row_citation,
       ),
       '#attributes' => [
         'class' => [

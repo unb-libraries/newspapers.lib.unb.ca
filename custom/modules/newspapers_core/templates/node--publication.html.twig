@@ -307,6 +307,10 @@
               <dd class="no-borders">{{ content.field_supplemental_information|field_value }}</dd>
             {% endif %}
           </dl>
+
+          {% if citation %}
+            {{ citation }}
+          {% endif %}
         </div>
 
         <hr>
