@@ -6,6 +6,7 @@ core_version_requirement: ^8 || ^9
 package: Newspapers
 dependencies:
   - datetime_range
+  - clipboardjs
   - conditional_fields
   - digital_serial
   - views_data_export
