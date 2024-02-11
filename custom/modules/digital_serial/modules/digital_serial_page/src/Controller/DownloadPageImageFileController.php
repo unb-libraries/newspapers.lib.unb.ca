@@ -49,4 +49,29 @@ class DownloadPageImageFileController extends ControllerBase {
     throw new NotFoundHttpException();
   }
 
+  /**
+   * Get OCR of the page.
+   */
+  public function getPageOcr($filename = NULL) {
+    $query = \Drupal::entityQuery('file')
+      ->condition('status', 1)
+      ->condition('filename', $filename, 'CONTAINS');
+    $fids = $query->execute();
+
+    foreach ($fids as $fid) {
+      $page_query = \Drupal::entityQuery('digital_serial_page')
+        ->condition('status', 1)
+        ->condition('page_image', $fid);
+      $pages = $page_query->execute();
+      foreach ($pages as $page_id) {
+        $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_page');
+        $page = $storage->load($page_id);
+        $response = new Response();
+        $response->setContent($page->getPageHOcr());
+        $response->headers->set('Content-Type', 'text/plain');
+        return $response;
+      }
+    }
+  }
+
 }

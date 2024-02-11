@@ -38,6 +38,14 @@ digital_serial_page.issue_download_page:
   requirements:
     _permission: 'view published serial page entities'
 
+digital_serial_page.get_ocr:
+  path: '/serials_pages/download/ocr/{filename}'
+  defaults:
+    _controller: '\Drupal\digital_serial_page\Controller\DownloadPageImageFileController::getPageOcr'
+    _title: 'Download Image OCR'
+  requirements:
+    _permission: 'view published serial page entities'
+
 digital_serial_page.title_edit_page:
   path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages/{digital_serial_page}/edit'
   defaults:
