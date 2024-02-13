@@ -202,6 +202,7 @@
     "drupal/colorbox": "2.0.1",
     "drupal/conditional_fields": "4.0.0-alpha5",
     "drupal/core": "9.5.11",
+    "drupal/csv_serialization": "3.0.1",
     "drupal/easy_breadcrumb": "2.0.3",
     "drupal/editor_file": "1.7",
     "drupal/externalauth": "1.4",
