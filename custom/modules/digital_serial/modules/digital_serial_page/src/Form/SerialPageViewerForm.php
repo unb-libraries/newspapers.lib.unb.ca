@@ -457,19 +457,10 @@ class SerialPageViewerForm extends FormBase {
         ],
       ];
 
-      $image_size_bytes = $page_image_file->getSize();
-      if ($image_size_bytes > 1) {
-        $image_size_mb = round($image_size_bytes / 1048576, 2);
-        $image_size_text = " ($image_size_mb MB)";
-      }
-      else {
-        $image_size_text = '';
-      }
-
       $download_link = Link::fromTextAndUrl(
         Markup::create(
           $page_image_file->getFilename() .
-          '<span class="text-muted filesize">' . $image_size_text . '</span>'
+          $this->getImageSizeDisplay($image_download_path)
         ),
         Url::fromUri($image_download_uri, $image_download_link_options
       ),
@@ -587,10 +578,22 @@ class SerialPageViewerForm extends FormBase {
     return Link::fromTextAndUrl(
       Markup::create(
         $pdf_file_name .
-        '<span class="text-muted filesize">(' . $this->getFileSizeHuman($pdf_file_path) . 'B)</span>'
+        $this->getImageSizeDisplay($pdf_file_path)
       ),
       Url::fromUri($pdf_download_uri, $pdf_download_link_options),
     )->toString();
+  }
+
+  /**
+   * Retrieves the formatted image size display for the metadata table.
+   */
+  private function getImageSizeDisplay($file_path) {
+    if (filesize($file_path) < 1) {
+      return '';
+    }
+    return '<span class="text-muted filesize">(' .
+    $this->getFileSizeHuman($file_path) .
+    'B)</span>';
   }
 
   /**
