@@ -479,11 +479,16 @@ class SerialPageViewerForm extends FormBase {
         [
           'data' => [
             [
-              'data' => $this->t('Download Image'),
+              'data' => $this->t('Downloads'),
               'header' => TRUE,
               'scope' => 'row',
             ],
-            $download_link->toString() . $this->buildPdfDownloadLinkHtml($image_file_path, $image_download_uri),
+            [
+              'data' => [
+                '#markup' => $download_link->toString() .
+                $this->buildPdfDownloadLinkHtml($image_download_path, $image_download_uri),
+              ],
+            ],
           ],
         ],
       ];
