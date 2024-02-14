@@ -587,7 +587,7 @@ class SerialPageViewerForm extends FormBase {
     return Link::fromTextAndUrl(
       Markup::create(
         $pdf_file_name .
-        '<span class="text-muted filesize">(' . $this->getFileSizeHuman($pdf_file_path) . ')</span>'
+        '<span class="text-muted filesize">(' . $this->getFileSizeHuman($pdf_file_path) . 'B)</span>'
       ),
       Url::fromUri($pdf_download_uri, $pdf_download_link_options),
     )->toString();
@@ -596,10 +596,10 @@ class SerialPageViewerForm extends FormBase {
   /**
    * Converts a file size in bytes to a human-readable format.
    */
-  private function humanFilesize($bytes, $decimals = 2) {
+  private function humanFilesize($bytes, $decimals = 1) {
     $sz = 'BKMGTP';
     $factor = floor((strlen($bytes) - 1) / 3);
-    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+    return sprintf("%.{$decimals}f ", $bytes / pow(1024, $factor)) . @$sz[$factor];
   }
 
   /**
