@@ -475,6 +475,18 @@ class SerialPageViewerForm extends FormBase {
       ),
 
       );
+
+      $download_items = [$download_link->toString()];
+      $pdf_download_html = $this->buildPdfDownloadLinkHtml($image_download_path, $image_download_uri);
+      if (!empty($pdf_download_html)) {
+        $download_items[] = $pdf_download_html;
+      }
+      $download_html_list = '<ul class="d-inline list-unstyled">';
+      foreach ($download_items as $download_item) {
+        $download_html_list .= "<li>$download_item</li>";
+      }
+      $download_html_list .= '</ul>';
+
       $row_download = [
         [
           'data' => [
@@ -485,8 +497,7 @@ class SerialPageViewerForm extends FormBase {
             ],
             [
               'data' => [
-                '#markup' => $download_link->toString() .
-                $this->buildPdfDownloadLinkHtml($image_download_path, $image_download_uri),
+                '#markup' => $download_html_list,
               ],
             ],
           ],
@@ -555,14 +566,19 @@ class SerialPageViewerForm extends FormBase {
    * Builds the PDF HTML link for the image.
    */
   private function buildPdfDownloadLinkHtml($image_file_path, $image_download_uri) {
-    $pdf_file_path = str_replace('.jpg', '.pdf', $image_file_path);
+    $image_file_components = pathinfo($image_file_path);
+    $pdf_file_name = $image_file_components['filename'] . '.pdf';
+    $pdf_file_path = $image_file_components['dirname'] . '/pdf/' . $pdf_file_name;
+
     if (file_exists($pdf_file_path) === FALSE) {
       return '';
     }
-    $pdf_file_components = pathinfo($pdf_file_path);
-    $pdf_file_name = $pdf_file_components['filename'];
 
-    $pdf_download_uri = str_replace('.jpg', '.pdf', $image_download_uri);
+    $pdf_download_uri = str_replace(
+      $image_file_components['filename'] . '.jpg',
+      'pdf/' . $image_file_components['filename'] . '.pdf',
+      $image_download_uri
+    );
     $pdf_download_link_options = [
       'attributes' => [
         'download' => TRUE,
@@ -571,7 +587,7 @@ class SerialPageViewerForm extends FormBase {
     return Link::fromTextAndUrl(
       Markup::create(
         $pdf_file_name .
-        '<span class="text-muted filesize">' . $this->getFileSizeHuman($pdf_file_path) . '</span>'
+        '<span class="text-muted filesize">(' . $this->getFileSizeHuman($pdf_file_path) . ')</span>'
       ),
       Url::fromUri($pdf_download_uri, $pdf_download_link_options),
     )->toString();
