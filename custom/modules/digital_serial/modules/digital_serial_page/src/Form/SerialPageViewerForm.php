@@ -483,7 +483,7 @@ class SerialPageViewerForm extends FormBase {
               'header' => TRUE,
               'scope' => 'row',
             ],
-            $download_link,
+            $download_link->toString() . $this->buildPdfDownloadLinkHtml($image_file_path, $image_download_uri),
           ],
         ],
       ];
@@ -544,6 +544,49 @@ class SerialPageViewerForm extends FormBase {
       ],
       '#weight' => '1',
     ];
+  }
+
+  /**
+   * Builds the PDF HTML link for the image.
+   */
+  private function buildPdfDownloadLinkHtml($image_file_path, $image_download_uri) {
+    $pdf_file_path = str_replace('.jpg', '.pdf', $image_file_path);
+    if (file_exists($pdf_file_path) === FALSE) {
+      return '';
+    }
+    $pdf_file_components = pathinfo($pdf_file_path);
+    $pdf_file_name = $pdf_file_components['filename'];
+
+    $pdf_download_uri = str_replace('.jpg', '.pdf', $image_download_uri);
+    $pdf_download_link_options = [
+      'attributes' => [
+        'download' => TRUE,
+      ],
+    ];
+    return Link::fromTextAndUrl(
+      Markup::create(
+        $pdf_file_name .
+        '<span class="text-muted filesize">' . $this->getFileSizeHuman($pdf_file_path) . '</span>'
+      ),
+      Url::fromUri($pdf_download_uri, $pdf_download_link_options),
+    )->toString();
+  }
+
+  /**
+   * Converts a file size in bytes to a human-readable format.
+   */
+  private function humanFilesize($bytes, $decimals = 2) {
+    $sz = 'BKMGTP';
+    $factor = floor((strlen($bytes) - 1) / 3);
+    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+  }
+
+  /**
+   * Gets the human-readable file size for a file.
+   */
+  private function getFileSizeHuman($file_path) {
+    $file_size = filesize($file_path);
+    return $this->humanFilesize($file_size);
   }
 
   /**
