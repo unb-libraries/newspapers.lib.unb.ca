@@ -739,3 +739,9 @@ div.modal {
 .text-word-break {
   word-break: break-all;
 }
+
+label[for] {
+  &:hover {
+    cursor: pointer;
+  }
+}

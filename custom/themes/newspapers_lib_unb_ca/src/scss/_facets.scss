@@ -38,7 +38,7 @@
 
     input[type="checkbox"] {
       margin-right: 0.5rem;
-      margin-top: 0.1rem;
+      margin-top: 0.2rem;
       transform: scale(1.33);
 
       &:focus-visible {
@@ -87,9 +87,7 @@ ul.js-facets-checkbox-links + a.open::before {
   content: "\f068";
 }
 .facet-item:hover,
-.facet-item:hover input,
-.facet-item:hover label,
-label.checkbox-toggle:hover {
+.facet-item:hover input {
   cursor: pointer;
 }
 .facet-item__value {
