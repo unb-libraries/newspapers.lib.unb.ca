@@ -459,7 +459,7 @@ class SerialPageViewerForm extends FormBase {
 
       $download_link = Link::fromTextAndUrl(
         Markup::create(
-          $page_image_file->getFilename() .
+          '<span class="fa-solid fa-file-image mr-1 text-muted" aria-hidden="true"></span>' . $page_image_file->getFilename() .
           $this->getImageSizeDisplay($image_download_path)
         ),
         Url::fromUri($image_download_uri, $image_download_link_options
@@ -577,7 +577,7 @@ class SerialPageViewerForm extends FormBase {
     ];
     return Link::fromTextAndUrl(
       Markup::create(
-        $pdf_file_name .
+        '<span class="fa-solid fa-file-pdf mr-1 text-muted" aria-hidden="true"></span>' . $pdf_file_name .
         $this->getImageSizeDisplay($pdf_file_path)
       ),
       Url::fromUri($pdf_download_uri, $pdf_download_link_options),
