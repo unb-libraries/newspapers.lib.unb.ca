@@ -174,7 +174,7 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
     case 'views_exposed_form':
       if ($form['#id'] == 'views-exposed-form-digital-page-lister-page-search') {
         $extended_description = t('Find terms within the <strong>fulltext</strong> of our digitized newspaper pages. ') .
-        '<a aria-controls="searchTips" aria-expanded="false" class="btn-link text-nowrap"
+        '<a aria-controls="searchTips" aria-expanded="false" class="btn btn-link btn-sm text-nowrap"
         data-toggle="collapse" href="#searchTips" role="button">Search tips<span aria-hidden="true"
         class="fa-solid fa-info-circle ml-1"></span></a>';
 

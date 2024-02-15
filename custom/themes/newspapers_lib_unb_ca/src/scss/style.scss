@@ -249,6 +249,26 @@ a.btn-add:active {
   text-decoration: none;
 }
 
+.btn-link:not(.pager-link) {
+  padding: 0.1rem;
+
+  &:hover {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    text-decoration: none;
+  }
+}
+.alert .btn-link {
+  &.focus-ring {
+    box-shadow: none;
+    outline: 1px dotted;
+    text-decoration: underline;
+  }
+  &:hover {
+    box-shadow: none;
+    text-decoration: underline;
+  }
+}
+
 .messages--info {
   color: #325e1c;
   border-color: #c9e1bd #c9e1bd #c9e1bd transparent;
@@ -557,12 +577,6 @@ a.back-link::before {
     & span {
       border-bottom-style: dashed;
       border-bottom-width: 1px;
-    }
-  }
-
-  button:not([data-toggle="tooltip"]) {
-    &:hover {
-      text-decoration: underline;
     }
   }
 

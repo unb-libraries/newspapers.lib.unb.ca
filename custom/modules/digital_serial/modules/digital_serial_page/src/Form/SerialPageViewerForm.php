@@ -453,13 +453,17 @@ class SerialPageViewerForm extends FormBase {
         ->generateAbsoluteString($page_image_file->getFileUri());
       $image_download_link_options = [
         'attributes' => [
+          'class' => [
+            'btn',
+            'btn-link',
+          ],
           'download' => TRUE,
         ],
       ];
 
       $download_link = Link::fromTextAndUrl(
         Markup::create(
-          '<span class="fa-solid fa-file-image mr-1 text-muted" aria-hidden="true"></span>' . $page_image_file->getFilename() .
+          '<span class="fa-solid fa-file-image mr-1" aria-hidden="true"></span>' . $page_image_file->getFilename() .
           $this->getImageSizeDisplay($image_download_path)
         ),
         Url::fromUri($image_download_uri, $image_download_link_options
@@ -498,9 +502,9 @@ class SerialPageViewerForm extends FormBase {
 
     // Citation: $ParentTitle $vol, no. $iss, M d, Y: [$page#]. NBHNP. $url.
     global $base_url;
-    $citation_btn_markup = '<button type="button" class="btn btn-link btn-sm"
+    $citation_btn_markup = '<button type="button" class="btn btn-link"
       data-target="#citation-modal" data-toggle="modal">
-      <span class="fa-solid fa-quote-left mr-1"></span>CMS - Chicago Manual of Style</button>';
+      <span class="fa-solid fa-quote-left mr-1" aria-hidden="true"></span>CMS - Chicago Manual of Style</button>';
     $cited_title = $digital_serial_issue->getIssueTitle();
     $citation_text = '<em>' . $digital_serial_title->getParentPublication()->getTitle() .
       "</em> $volume_issue_citation_format " .
@@ -577,7 +581,7 @@ class SerialPageViewerForm extends FormBase {
     ];
     return Link::fromTextAndUrl(
       Markup::create(
-        '<span class="fa-solid fa-file-pdf mr-1 text-muted" aria-hidden="true"></span>' . $pdf_file_name .
+        '<span class="fa-solid fa-file-pdf mr-1" aria-hidden="true"></span>' . $pdf_file_name .
         $this->getImageSizeDisplay($pdf_file_path)
       ),
       Url::fromUri($pdf_download_uri, $pdf_download_link_options),

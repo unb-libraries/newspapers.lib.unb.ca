@@ -110,8 +110,16 @@ label.checkbox-toggle:hover {
 }
 
 .facets-soft-limit-link {
-  display: block;
+  border-radius: 0.25rem;
+  display: inline-block;
   margin-left: .5em;
+  padding: 0.2rem;
+
+  &:focus,
+  &:hover {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    text-decoration: none!important;
+  }
 }
 /* Slider facet override */
 .item-list__range_slider {
