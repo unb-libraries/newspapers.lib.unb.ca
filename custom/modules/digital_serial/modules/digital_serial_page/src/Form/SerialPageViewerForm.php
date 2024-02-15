@@ -242,7 +242,7 @@ class SerialPageViewerForm extends FormBase {
    */
   private static function filterHighlightKeywords(array &$keywords): void {
     self::stripHighlightQuotes($keywords);
-    $keywords = array_filter($keywords, [self, 'elementIsNotStopWord']);
+    $keywords = array_filter($keywords, [self::class, 'elementIsNotStopWord']);
   }
 
   /**
