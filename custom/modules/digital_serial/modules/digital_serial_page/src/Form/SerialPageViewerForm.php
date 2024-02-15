@@ -688,6 +688,7 @@ class SerialPageViewerForm extends FormBase {
    */
   private static function elementIsNotStopWord($element): bool {
     $stop_words = [
+      '',
       'a',
       'an',
       'and',
