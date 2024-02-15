@@ -576,6 +576,10 @@ class SerialPageViewerForm extends FormBase {
     );
     $pdf_download_link_options = [
       'attributes' => [
+        'class' => [
+          'btn',
+          'btn-link',
+        ],
         'download' => TRUE,
       ],
     ];
