@@ -21,3 +21,8 @@
 code {
   color: $accessible-pink;
 }
+
+.breadcrumb-item.active,
+.description.text-muted {
+  color: $gray-700!important;
+}
