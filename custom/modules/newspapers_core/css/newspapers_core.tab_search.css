@@ -46,6 +46,10 @@ form .nav-tabs > li > a {
 #search-wrapper .tab-pane fieldset {
   flex-grow: 1;
 }
+#search-wrapper .tab-pane fieldset.form-type-search {
+  margin-right: 0.25rem;
+}
+
 #search-wrapper>.active {
   display: flex;
   flex-wrap: wrap;
@@ -115,16 +119,7 @@ div[data-drupal-selector="edit-actions"] .btn-unb-red:active {
     width: 50%;
   }
 }
-@media (min-width: 768px) {
-  .tab-pane input[type="text"] {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-  }
-  .tab-pane div[data-drupal-selector="edit-actions"]  input {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-  }
-}
+
 @media (max-width: 990px) {
   .tab-pane div.form-item,
   .tab-pane div.description {

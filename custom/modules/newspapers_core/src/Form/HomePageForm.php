@@ -239,7 +239,7 @@ class HomePageForm extends FormBase {
       ],
     ];
     $form['panel-wrapper']['tab-content']['title']['input_title'] = [
-      '#type' => 'textfield',
+      '#type' => 'search',
       '#title' => $this->t('Search for newspaper titles'),
       '#description' => $this->t('Search by title, location, publisher, notes, description or combination. eg. <code>Moncton 1932</code>'),
     ];
@@ -287,7 +287,7 @@ class HomePageForm extends FormBase {
       ],
     ];
     $form['panel-wrapper']['tab-content']['fulltext']['search']['input_fulltext'] = [
-      '#type' => 'textfield',
+      '#type' => 'search',
       '#title' => $this->t('Search the fulltext of digitized newspapers'),
       '#description' => '<span class="mr-1">' .
       $this->t('Search for keywords within the fulltext of digitized newspapers') . '</span>',
