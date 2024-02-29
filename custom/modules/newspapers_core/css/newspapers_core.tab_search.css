@@ -59,7 +59,12 @@ form .nav-tabs > li > a {
   width: 75%;
 }
 div[data-drupal-selector="edit-actions"] {
-  margin-top: 1.875rem;
+  margin-top: 1rem;
+}
+@media (min-width: 980px) {
+  div[data-drupal-selector="edit-actions"] {
+    margin-top: 1.875rem;
+  }
 }
 div[data-drupal-selector="edit-actions"] input {
   line-height: normal;
