@@ -133,7 +133,7 @@ div[data-drupal-selector="edit-actions"] .btn-unb-red:active {
   }
   .tab-pane div.form-type-textfield + span button {
     margin-top: 0;
-    margin-button: 2em;
+    margin-bottom: 2em;
   }
 }
 @media (max-width: 414px) {
