@@ -15,7 +15,7 @@
             });
 
             // Simulate click function when user presses enter key.
-            $('input[type="text"]').on("keypress", function (e) {
+            $('input[type="search"]').on("keypress", function (e) {
                 if (e.keyCode == 13) {
                     $('#newspapers-core-homepage input[type=submit]:visible').focus();
                     $('#newspapers-core-homepage input[type=submit]:visible').click();
