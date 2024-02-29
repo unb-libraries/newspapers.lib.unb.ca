@@ -95,17 +95,11 @@ textarea {
   }
 }
 // Adjustment re: Search form actions input fieldset & adjacent buttons
-#views-exposed-form-search-search-page {
-  @media (min-width: 1366px) {
+@media (min-width: 1360px) {
+  #views-exposed-form-search-search-page,
+  #views-exposed-form-digital-page-lister-page-search {
     .form-actions {
-      padding-bottom: 1.85rem;
-    }
-  }
-}
-#views-exposed-form-digital-page-lister-page-search {
-  @media (min-width: 1360px) {
-    .form-actions {
-      padding-bottom: 1.85rem;
+      padding-bottom: 1.65rem;
     }
   }
 }
