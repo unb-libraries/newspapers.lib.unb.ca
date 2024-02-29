@@ -16,3 +16,8 @@
     }
   }
 }
+
+// WCAG-AA Contrast Ratio >= 4.5:1
+code {
+  color: $accessible-pink;
+}
