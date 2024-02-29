@@ -409,7 +409,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<figure>\r\n{{ page_image }} \r\n<figcaption class=\"sr-only\">{{ parent_publication_title }} , circa {{ issue_date }}</figure>\r\n</figure>"
+            text: "<figure>\r\n{{ page_image }} \r\n<figcaption class=\"visually-hidden\">{{ parent_publication_title }} , circa {{ issue_date }}</figure>\r\n</figure>"
             make_link: false
             path: ''
             absolute: false
