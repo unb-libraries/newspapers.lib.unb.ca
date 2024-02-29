@@ -137,7 +137,7 @@ processor_settings:
     suffix: '</strong>'
     excerpt: true
     excerpt_always: false
-    excerpt_length: 416
+    excerpt_length: 295
     exclude_fields: {  }
     highlight: always
     highlight_partial: true
