@@ -82,10 +82,10 @@
   <div{{ attributes.addClass("featured-publication d-flex") }}>
     <div class="mr-3">
       {% if content.field_sample_image|field_value %}
-        {{ content.field_sample_image }}
+        <figure>{{ content.field_sample_image }}</figure>
       {% else %}
-        <img class="no-borders image-placeholder"
-        src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" />
+        <figure><img class="no-borders image-placeholder"
+        src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" /></figure>
       {% endif %}
     </div>
     <div>

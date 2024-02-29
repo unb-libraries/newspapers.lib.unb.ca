@@ -122,6 +122,9 @@ dl .inline-list {
     }
   }
 }
+figure .field--type-image img {
+  margin-bottom: 0
+}
 
 /* Chosen overrides */
 select[multiple="multiple"] + .form-control {
