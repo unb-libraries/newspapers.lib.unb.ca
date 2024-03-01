@@ -79,8 +79,8 @@
 {% endif %}
 
 {% if view_mode == 'featured' %}
-  <div{{ attributes.addClass("featured-publication") }}>
-    <div class="float-left mr-3">
+  <div{{ attributes.addClass("featured-publication d-flex flex-column flex-sm-row") }}>
+    <div class="mr-3">
       {% if content.field_sample_image|field_value %}
         <figure>{{ content.field_sample_image }}</figure>
       {% else %}
