@@ -2917,7 +2917,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: '<h2 class="alert alert-success">Displaying @start - @end of @total results</h2>'
+          content: '<h2 class="untabled">Displaying @start - @end of @total results</h2>'
       exposed_block: true
       display_extenders:
         ajax_history:
