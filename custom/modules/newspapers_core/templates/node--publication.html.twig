@@ -120,7 +120,7 @@
         {{ title_suffix }}
 
         <div class="title-details">
-          <h2 class="bg-unb-light border p-2">{% trans %}Details{% endtrans %}</h2>
+          <h2 class="bg-unb-light border pl-2">{% trans %}Details{% endtrans %}</h2>
           {% if content.field_sample_image|field_value %}
             <figure class="image-link-shadow">
               {{ content.field_sample_image }}
@@ -135,7 +135,7 @@
             </figure>
           {% endif %}
 
-          <dl>
+          <dl class="pl-2">
             {% if content.field_subtitle|field_value %}
               <dt>{% trans %}Subtitle / Tagline{% endtrans %}:</dt>
               <dd>{{ content.field_subtitle|field_value }}</dd>
@@ -339,7 +339,7 @@
           <h2 class="bg-unb-light border p-2">{% trans %}Holdings{% endtrans %}</h2>
           {% if holding|length > 0 %}
             {% if holding.online|length > 0 or holding.digital|length > 0 %}
-              <div class="holding-group">
+              <div class="holding-group pl-2">
                 <h3>{% trans %}Online{% endtrans %}:</h3>
                 <ul class="holding-type">
                   {% for item in holding.digital %}
@@ -427,7 +427,7 @@
             {% endif %}
 
             {% if holding.microform|length > 0 %}
-              <div class="holding-group holding-group-microform">
+              <div class="holding-group holding-group-microform pl-2">
                 {% set microformClasses = ['holding-item'] %}
                 {% set microformCollapsed = [] %}
                 {% set microformCount = 0 %}
@@ -501,7 +501,7 @@
             {% endif %}
 
             {% if holding.print|length > 0 %}
-              <div class="holding-group holding-group-print">
+              <div class="holding-group holding-group-print pl-2">
                 {% set printClasses = ['holding-item'] %}
                 {% set printCollapsed = [] %}
                 {% set printCount = 0 %}

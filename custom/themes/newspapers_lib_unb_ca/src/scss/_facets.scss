@@ -1,11 +1,12 @@
 .facets-widget-range_slider,
 .facets-widget-checkbox {
   h3 {
-    background: $heading-bg;
+    border-bottom: 1px solid $gray-700;
+    color: $gray-700;
     font-family: 'ProximaNovaA-SemiBold','Century Gothic',AppleGothic,Arial,sans-serif;
     font-size: 1.1rem;
     font-weight: normal;
-    padding: .4rem .35rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -110,8 +111,8 @@ ul.js-facets-checkbox-links + a.open::before {
 .facets-soft-limit-link {
   border-radius: 0.25rem;
   display: inline-block;
-  margin-left: .5em;
-  padding: 0.2rem;
+  margin-left: 0.15em;
+  padding: 0.15rem 0.25rem 0.15rem 0;
 
   &:focus,
   &:hover {
