@@ -243,7 +243,7 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -296,16 +296,16 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: datetime_default
+          type: datetime_custom
           settings:
             timezone_override: ''
-            format_type: html_year
+            date_format: 'F j, Y'
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -344,7 +344,7 @@ display:
             replace_spaces: false
             path_case: none
             trim_whitespace: false
-            alt: ''
+            alt: 'Browse our scanned {{ issue_date }} issue of {{ parent_publication_title }}'
             rel: ''
             link_class: ''
             prefix: ''
@@ -368,7 +368,7 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -409,7 +409,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<figure>\r\n{{ page_image }} \r\n<figcaption class=\"visually-hidden\">{{ parent_publication_title }} , circa {{ issue_date }}</figure>\r\n</figure>"
+            text: '<figure aria-label="Digitized newspaper page from {{ issue_date }}">{{ page_image }}</figure>'
             make_link: false
             path: ''
             absolute: false
@@ -441,7 +441,7 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
