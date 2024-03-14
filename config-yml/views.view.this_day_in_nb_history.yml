@@ -336,7 +336,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: "<a href=\"/serials/{{ parent_digital_title_id }}/issues/{{ arguments.parent_digital_issue_id }}/pages\"\r\ndata-toggle=\"tooltip\"\r\ntitle=\"Browse our scanned {{ issue_date }} issue of {{ parent_publication_title }}\">{{ page_image }}</a>"
+            text: "<a href=\"/serials/{{ parent_digital_title_id }}/issues/{{ arguments.parent_digital_issue_id }}/pages\"\r\ndata-toggle=\"tooltip\"\r\ntitle=\"Browse our scan for the {{ issue_date }} issue of {{ parent_publication_title }}\">{{ page_image }}</a>"
             make_link: false
             path: '/serials/{{ parent_digital_title_id }}/issues/{{ arguments.parent_digital_issue_id }}/pages/{{ parent_digital_page_id }}'
             absolute: false
