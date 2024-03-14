@@ -81,16 +81,18 @@
 {% if view_mode == 'featured' %}
   <div{{ attributes.addClass("featured-publication d-flex flex-column flex-sm-row") }}>
     <div class="mr-3">
+      <a href="{{ url }}" tabindex="-1">
       {% if content.field_sample_image|field_value %}
         <figure class="d-inline-block">{{ content.field_sample_image }}</figure>
       {% else %}
         <figure class="d-inline-block"><img class="no-borders image-placeholder"
         src="/{{ active_theme_path() }}/src/img/sample-publication.jpg" alt="" /></figure>
       {% endif %}
+      </a>
     </div>
     <div>
       <h2>Featured Publication</h2>
-      <div class="title"><strong><a href="{{ url }}" tabindex="-1">{{ label }}</a></strong></div>
+      <div class="title"><strong><a href="{{ url }}">{{ label }}</a></strong></div>
       {% if publication_date_value %}
         <div class="date">{{ publication_date_value }}</div>
       {% endif %}
