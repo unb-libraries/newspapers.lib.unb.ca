@@ -416,7 +416,7 @@ display:
           entity_type: digital_serial_page
           plugin_id: search_api_field
           label: ''
-          exclude: true
+          exclude: false
           alter:
             alter_text: true
             text: "<a href=\"/serials/{{ parent_digital_title_id }}/issues/{{ arguments.parent_digital_issue_id }}/pages/{{ id }}\"\r\naria-label=\"Our scan for the {{ issue_date }} issue of {{ parent_publication_title }}\"\r\ndata-toggle=\"tooltip\" title=\"Browse this digital issue\">{{ page_image }}</a>"
@@ -480,55 +480,6 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
-        nothing_1:
-          id: nothing_1
-          table: views
-          field: nothing
-          relationship: none
-          group_type: group
-          admin_label: 'Figure element'
-          plugin_id: custom
-          label: ''
-          exclude: false
-          alter:
-            alter_text: true
-            text: '<figure aria-label="Digitized newspaper page from {{ issue_date }}">{{ page_image }}</figure>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: false
       pager:
         type: some
         options:
