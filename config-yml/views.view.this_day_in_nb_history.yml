@@ -323,6 +323,89 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
+        id:
+          id: id
+          table: search_api_datasource_pages_newspapers_lib_unb_ca_entity_digital_serial_page
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: digital_serial_page
+          plugin_id: search_api_field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: false
+          fallback_handler: search_api_numeric
+          fallback_options:
+            set_precision: false
+            precision: 0
+            decimal: .
+            separator: ''
+            format_plural: false
+            format_plural_string: !!binary MQNAY291bnQ=
+            prefix: ''
+            suffix: ''
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+            format_plural_values:
+              - '1'
+              - '@count'
         page_image:
           id: page_image
           table: search_api_datasource_pages_newspapers_lib_unb_ca_entity_digital_serial_page
@@ -336,7 +419,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: "<a href=\"/serials/{{ parent_digital_title_id }}/issues/{{ arguments.parent_digital_issue_id }}/pages\"\r\ndata-toggle=\"tooltip\"\r\ntitle=\"Browse our scan for the {{ issue_date }} issue of {{ parent_publication_title }}\">{{ page_image }}</a>"
+            text: "<a href=\"/serials/{{ parent_digital_title_id }}/issues/{{ arguments.parent_digital_issue_id }}/pages/{{ id }}\"\r\ndata-toggle=\"tooltip\"\r\ntitle=\"Browse our scan for the {{ issue_date }} issue of {{ parent_publication_title }}\">{{ page_image }}</a>"
             make_link: false
             path: '/serials/{{ parent_digital_title_id }}/issues/{{ arguments.parent_digital_issue_id }}/pages/{{ parent_digital_page_id }}'
             absolute: false
