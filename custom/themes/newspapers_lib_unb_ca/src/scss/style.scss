@@ -467,7 +467,7 @@ a.btn-add:active {
   display: inline;
   font-size: smaller;
 }
-.search-results tbody .views-field-field-sort-title span:first-of-type::before {
+.search-results tbody .views-field-field-sort-title span.holding:first-of-type::before {
   content: 'Available: ';
   color: $black;
 }

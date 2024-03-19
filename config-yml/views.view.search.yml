@@ -112,7 +112,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<span class="holding">{{ holdings }}</span>'
+            text: '<span class="holding"><span class="visually-hidden">available </span>{{ holdings }}</span>'
             make_link: false
             path: ''
             absolute: false
