@@ -9,7 +9,7 @@
     'use strict';
 
     Drupal.behaviors.copy_citation = {
-        attach: function (context, settings) {
+        attach: function () {
             let copyButton= '#clipboardjs-button';
             let citationModal = '#citation-modal';
             function triggerPopover(popoverContent) {

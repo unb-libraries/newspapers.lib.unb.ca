@@ -1,8 +1,8 @@
-(function ($, Drupal, DrupalSettings) {
+(function ($, Drupal) {
     'use strict';
 
     Drupal.behaviors.multiSubmit = {
-        attach: function (context, settings) {
+        attach: function () {
             // On empty fulltext input error: switch to Fulltext tab + focus input.
             if ($('div[aria-label="Error message"]').length) {
                 $('a#tab-fulltext').click();
@@ -24,4 +24,4 @@
             });
         },
     };
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal);

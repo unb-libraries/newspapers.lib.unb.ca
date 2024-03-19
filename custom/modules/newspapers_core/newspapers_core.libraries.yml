@@ -2,8 +2,8 @@ copy_citation:
   js:
     js/newspapers_core.copy_citation.js: {}
   dependencies:
-    - core/drupal
     - core/jquery
+    - core/drupal
     - clipboardjs/clipboardjs
 
 claro-overrides:
@@ -18,6 +18,7 @@ pubform:
   js:
     js/pub-form.js: {}
   dependencies:
+    - core/jquery
     - core/drupal
     - jquery_ui_datepicker/datepicker
 
@@ -25,8 +26,8 @@ holding-display:
   js:
     js/newspapers_core.holdings.js: {}
   dependencies:
-    - core/drupal
     - core/jquery
+    - core/drupal
     - core/once
 
 tab-search:
@@ -37,6 +38,7 @@ tab-search:
     js/newspapers_core.tab_search.js: {}
   dependencies:
     - core/jquery
+    - core/drupal
 
 views-exposed-filters:
   js:

@@ -1,8 +1,8 @@
-(function ($) {
+(function ($, Drupal) {
     'use strict';
 
     Drupal.behaviors.inputDateWidget = {
-        attach: function (context, settings) {
+        attach: function () {
             // Workaround: change Exposed filters type from "text' to 'date' for Views date fields.
             $(".views-exposed-filters input[name*='issue_date']").prop("type", "date");
 
@@ -23,4 +23,4 @@
             }
         },
     };
-})(jQuery);
+})(jQuery, Drupal);

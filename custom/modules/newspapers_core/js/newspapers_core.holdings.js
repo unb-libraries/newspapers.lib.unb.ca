@@ -1,11 +1,11 @@
 /**
  * @file NB Newspapers Core Publication Holdings Soft Limit Buttons.
  */
-(function ($, Drupal, DrupalSettings) {
+(function ($, Drupal) {
     'use strict';
 
     Drupal.behaviors.group_holdings = {
-        attach: function (context, settings) {
+        attach: function (context) {
             $(document, context)
                  .once('group_holdings')
                  .each( function () {
@@ -17,7 +17,7 @@
             });
         },
     };
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal);
 
 function showToggleInit($) {
     /**

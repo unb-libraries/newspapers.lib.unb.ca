@@ -136,7 +136,7 @@ function updateSucceedingLabel() {
     'use strict';
 
     Drupal.behaviors.inputPublicationDate = {
-        attach: function (context, settings) {
+        attach: function () {
             /**
              * Adjust Date component + Preceding/Succeeding label text.
              */
