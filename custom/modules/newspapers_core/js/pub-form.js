@@ -19,12 +19,12 @@ function firstIssueDateRange() {
         /**
          * Clear the end date widget when Approximate is NOT selected.
          */
-        jQuery("#edit-field-first-issue-date-0-end-value-date").datepicker("setDate", NULL).val('');
+        jQuery("#edit-field-first-issue-date-0-end-value-date").datepicker("setDate", null).val('');
         /**
          * Clear the start date widget when Exact is NOT selected.
          */
         if (jQuery("#edit-field-first-issue-date-type").val() != 'exact') {
-            jQuery("#edit-field-first-issue-date-0-value-date").datepicker("setDate", NULL).val('');
+            jQuery("#edit-field-first-issue-date-0-value-date").datepicker("setDate", null).val('');
         }
         jQuery("#edit-field-first-issue-date-0 .form-datetime-wrapper:nth-child(2) .form-item__label").removeClass("form-required");
         jQuery("#edit-field-first-issue-date-0 .form-datetime-wrapper:nth-child(2)").slideUp(200);
@@ -51,7 +51,7 @@ function lastIssueDateRange() {
          * Clear the start date widget when Exact is NOT selected.
          */
         if (jQuery("#edit-field-last-issue-date-type").val() != 'exact') {
-            jQuery("#edit-field-last-issue-date-0-value-date").datepicker("setDate", NULL).val('');
+            jQuery("#edit-field-last-issue-date-0-value-date").datepicker("setDate", null).val('');
         }
         /**
          * Clear the end date widget when Approximate in NOT selected.
