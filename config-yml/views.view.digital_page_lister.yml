@@ -2766,7 +2766,7 @@ display:
           expose_sort_order: false
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: "<div class=\"alert alert-info\">\r\n  Enter 1 or more keyword terms to filter the result list.\r\n</div>"
+          text_input_required: '<div class="alert alert-info">Enter 1 or more keyword terms to filter the result list.</div>'
           text_input_required_format: full_html
       cache:
         type: none

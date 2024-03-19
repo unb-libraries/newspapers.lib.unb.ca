@@ -291,7 +291,7 @@ class HomePageForm extends FormBase {
       '#type' => 'search',
       '#title' => $this->t('Search the fulltext of digitized newspapers'),
       '#description' => '<span class="mr-1">' .
-      $this->t('Search for keywords within the fulltext of digitized newspapers') . '</span>',
+      $this->t('Search for 1 or more keywords within the fulltext of digitized newspapers') . '</span>',
     ];
     $form['panel-wrapper']['tab-content']['fulltext']['search']['actions'] = [
       '#type' => 'actions',
