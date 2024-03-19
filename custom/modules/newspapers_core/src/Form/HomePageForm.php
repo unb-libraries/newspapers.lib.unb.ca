@@ -175,7 +175,8 @@ class HomePageForm extends FormBase {
     ];
     $form['nav-tabs']['fulltext'] = [
       '#markup' => '<li class="nav-item" role="presentation">' .
-      Link::fromTextAndUrl($this->t('Fulltext Search'), $fulltext_url)->toString() .
+      Link::fromTextAndUrl($this->t('Fulltext<span class="d-none d-md-inline"> Search</span>'),
+        $fulltext_url)->toString() .
       '</li>',
     ];
     $form['nav-tabs']['about'] = [

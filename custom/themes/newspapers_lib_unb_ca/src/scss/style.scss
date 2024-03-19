@@ -469,7 +469,7 @@ a.btn-add:active {
 }
 .search-results tbody .views-field-field-sort-title span:first-of-type::before {
   content: 'Available: ';
-  margin-left: .5em;
+  color: $black;
 }
 .search-results table a {
   display: block;
