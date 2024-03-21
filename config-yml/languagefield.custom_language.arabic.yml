@@ -1,0 +1,9 @@
+uuid: a021b2b6-e1b6-4b09-befc-957034f23cc0
+langcode: en
+status: true
+dependencies: {  }
+id: arabic
+label: Arabic
+direction: rtl
+weight: null
+native_name: Arabic
