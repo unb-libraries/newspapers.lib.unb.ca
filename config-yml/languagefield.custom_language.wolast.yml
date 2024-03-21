@@ -5,5 +5,5 @@ dependencies: {  }
 id: wolast
 label: Wolastoqey/Maliseet
 direction: ltr
-weight: null
+weight: -10
 native_name: Wolastoqey/Maliseet

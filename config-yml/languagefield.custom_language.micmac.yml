@@ -5,5 +5,5 @@ dependencies: {  }
 id: micmac
 label: Mi’kmaq/Mi’kmaw/Micmac
 direction: ltr
-weight: null
+weight: -10
 native_name: Mi’kmaq/Mi’kmaw/Micmac

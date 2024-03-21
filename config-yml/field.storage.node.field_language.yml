@@ -20,6 +20,7 @@ settings:
     current_interface: 0
     authors_default: 0
   included_languages:
+    ar: ar
     zh-hans: zh-hans
     zh-hant: zh-hant
     en: en
