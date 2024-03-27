@@ -72,3 +72,11 @@ digital_serial_issue.year_search:
     _title: 'Issue Search Results'
   requirements:
     _permission: 'view published serial issue entities'
+
+digital_serial_issue.title_search:
+  path: '/serials-title-search/{title_id}'
+  defaults:
+    _controller: '\Drupal\digital_serial_issue\Controller\DigitalSerialIssueSearchController::getTitleIssues'
+    _title: 'Issue Search Results'
+  requirements:
+    _permission: 'view published serial issue entities'

@@ -61,6 +61,23 @@ class DigitalSerialIssueSearchController {
   }
 
   /**
+   * Gets an entity's issues from a matching year.
+   */
+  public function getTitleIssues($title_id, $issue_year) {
+    $query = \Drupal::entityQuery('digital_serial_issue')
+      ->condition('parent_title', $title_id);
+    $issue_ids = $query->execute();
+
+    return new JsonResponse(
+      [
+        'data' => $issue_ids,
+        'method' => 'GET',
+        'status' => 200,
+      ]
+    );
+  }
+
+  /**
    * Remove the null string placeholder from a string and replace it with NULL.
    *
    * @param string $data
