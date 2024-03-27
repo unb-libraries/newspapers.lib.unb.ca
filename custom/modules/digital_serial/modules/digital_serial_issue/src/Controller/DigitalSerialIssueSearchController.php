@@ -63,7 +63,7 @@ class DigitalSerialIssueSearchController {
   /**
    * Gets an entity's issues from a matching year.
    */
-  public function getTitleIssues($title_id, $issue_year) {
+  public function getTitleIssues($title_id) {
     $query = \Drupal::entityQuery('digital_serial_issue')
       ->condition('parent_title', $title_id);
     $issue_ids = $query->execute();
