@@ -17,6 +17,11 @@
 .digital-serial-page-highlight {
   background-color: #f00;
   opacity: 0.3;
+
+  &:hover {
+    background-color: #f00;
+    cursor: default;
+  }
 }
 
 .border.btn-link:hover {
