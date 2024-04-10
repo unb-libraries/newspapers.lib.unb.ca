@@ -2,6 +2,10 @@
   cursor: pointer;
 }
 
+.digital-serial-page-highlight {
+  background-color: #f00;
+  opacity: 0.3;
+}
 .digital-serial-page-highlight:hover {
   background-color: #f00;
   cursor: default;
