@@ -213,6 +213,7 @@ class SerialPageViewerForm extends FormBase {
       'library' => [
         'digital_serial_page/openseadragon',
         'digital_serial_page/openseadragon_viewer',
+        'digital_serial_page/openseadragon_viewer_accessibility',
         'newspapers_core/copy_citation',
       ],
       'drupalSettings' => [
