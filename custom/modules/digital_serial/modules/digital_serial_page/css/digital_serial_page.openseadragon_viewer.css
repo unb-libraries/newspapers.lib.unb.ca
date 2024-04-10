@@ -14,16 +14,6 @@
   background-color: #f6f6f2;
 }
 
-.digital-serial-page-highlight {
-  background-color: #f00;
-  opacity: 0.3;
-
-  &:hover {
-    background-color: #f00;
-    cursor: default;
-  }
-}
-
 .border.btn-link:hover {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   -moz-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
@@ -31,9 +21,7 @@
   -o-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
-#seadragon-viewer .openseadragon-container div[title] {
-  cursor: pointer;
-}
+
 table caption {
   color: #212529;
   font-family: "ProximaNovaA-Thin", "Century Gothic", AppleGothic, Arial, sans-serif;

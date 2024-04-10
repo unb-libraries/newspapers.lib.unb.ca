@@ -1,0 +1,8 @@
+#seadragon-viewer .openseadragon-container div[title] {
+  cursor: pointer;
+}
+
+.digital-serial-page-highlight:hover {
+  background-color: #f00;
+  cursor: default;
+}
