@@ -195,7 +195,7 @@
     "drupal/address": "1.12",
     "drupal/allowed_formats": "2.0.0",
     "drupal/antibot": "2.0.3",
-    "drupal/ajax_loader": "2.1.1",
+    "drupal/ajax_loader": "2.1.2",
     "drupal/bootstrap_barrio": "5.1.10",
     "drupal/chosen": "3.0.5",
     "drupal/clipboardjs": "2.0.8",
