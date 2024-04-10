@@ -20,3 +20,14 @@ openseadragon_viewer:
     - core/jquery
     - core/drupalSettings
     - digital_serial_page/openseadragon
+
+openseadragon_viewer_accessibility:
+  css:
+    theme:
+      css/digital_serial_page.openseadragon_viewer_accessibility.css: {}
+  js:
+    js/digital_serial_page.openseadragon_viewer_accessibility.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - digital_serial_page/openseadragon_viewer
