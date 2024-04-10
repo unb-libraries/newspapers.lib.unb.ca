@@ -5,6 +5,7 @@
 .digital-serial-page-highlight {
   background-color: #f00;
   opacity: 0.3;
+  transition: none;
 }
 .digital-serial-page-highlight:focus {
   box-shadow: 0 0 0 0.25rem rgb(255, 0, 0);
