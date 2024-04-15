@@ -2894,7 +2894,7 @@ display:
         filter_groups: false
         header: false
       relationships: {  }
-      use_ajax: true
+      use_ajax: false
       display_description: ''
       header:
         area_text_custom:
@@ -2921,7 +2921,7 @@ display:
       exposed_block: true
       display_extenders:
         ajax_history:
-          enable_history: true
+          enable_history: false
         simple_sitemap_display_extender:
           variants: {  }
       path: page-search
