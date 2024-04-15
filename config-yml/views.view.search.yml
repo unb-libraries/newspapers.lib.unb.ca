@@ -796,7 +796,7 @@ display:
           skip_access: false
       relationships: {  }
       css_class: search-results
-      use_ajax: true
+      use_ajax: false
       header:
         result:
           id: result
@@ -840,7 +840,7 @@ display:
       exposed_block: true
       display_extenders:
         ajax_history:
-          enable_history: true
+          enable_history: false
         simple_sitemap_display_extender:
           variants:
             default:
