@@ -1,0 +1,16 @@
+.region-sidebar-first-top {
+  display: none;
+}
+@media (max-width: 767px) {
+  .region-sidebar-first-top {
+    display: inherit;
+    margin-left: inherit;
+    margin-right: inherit;
+  }
+}
+
+@media (min-width: 768px) {
+  #sidebarFacets {
+    display: inherit!important;
+  }
+}

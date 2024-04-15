@@ -1,0 +1,25 @@
+uuid: ee73000d-8e74-41e1-9ce8-35a3e8d6a99f
+langcode: en
+status: true
+dependencies:
+  module:
+    - newspapers_core
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: sidebarfacettoggle
+theme: newspapers_lib_unb_ca
+region: sidebar_first_top
+weight: 0
+provider: null
+plugin: sidebar_facet_toggle
+settings:
+  id: sidebar_facet_toggle
+  label: 'Sidebar Facet Toggle'
+  label_display: '0'
+  provider: newspapers_core
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/search\r\n/page-search"

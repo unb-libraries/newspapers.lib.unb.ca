@@ -1,5 +1,35 @@
 {% extends "@unb_lib_theme/page.html.twig" %}
 
+{% block content %}
+  <div id="main" class="my-2 {{ container }}">
+    {{ page.breadcrumb }}
+    <div class="row row-offcanvas row-offcanvas-left clearfix">
+      <main{{ content_attributes }}>
+        <section class="section">
+          {{ page.content }}
+        </section>
+      </main>
+      {% if page.sidebar_first %}
+        <div{{ sidebar_first_attributes }}>
+          {% if page.sidebar_first_top %}
+            {{ page.sidebar_first_top }}
+          {% endif %}
+          <div id="sidebarFacets" class="collapse show">
+            <aside class="section" role="complementary">{{ page.sidebar_first }}</aside>
+          </div>
+        </div>
+      {% endif %}
+      {% if page.sidebar_second %}
+        <div{{ sidebar_second_attributes }}>
+          <aside class="section" role="complementary">
+            {{ page.sidebar_second }}
+          </aside>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
 {% block footer_top_first %}
    {% if page.footer_top_first or page.footer_top_second %}
    <div id="footer-top" class="d-flex flex-column flex-lg-row container justify-content-around mb-4">

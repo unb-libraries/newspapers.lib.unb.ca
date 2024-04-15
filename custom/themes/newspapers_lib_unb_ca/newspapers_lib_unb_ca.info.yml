@@ -18,7 +18,8 @@ regions:
   help: 'Help'
   breadcrumb: Breadcrumb
   content: 'Content'
-  sidebar_first: 'Primary'
+  sidebar_first_top: 'Primary Top (Facets Toggle)'
+  sidebar_first: 'Primary (Facets)'
   sidebar_second: 'Secondary'
   footer_top_first: 'Footer top first'
   footer_top_second: 'Footer top second'
