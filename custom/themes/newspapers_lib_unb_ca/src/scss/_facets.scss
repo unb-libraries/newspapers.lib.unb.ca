@@ -121,6 +121,16 @@ ul.js-facets-checkbox-links + a.open::before {
   }
 }
 /* Slider facet override */
+.facets-widget-range_slider {
+  padding-top: .35rem;
+
+  .ui-slider-handle {
+    &:focus,
+    &:hover {
+      background: $link-color-hover;
+    }
+  }
+}
 .item-list__range_slider {
   display: contents;
 }

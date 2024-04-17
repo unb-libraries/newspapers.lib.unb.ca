@@ -15,7 +15,10 @@
             {{ page.sidebar_first_top }}
           {% endif %}
           <div id="sidebarFacets" class="collapse show">
-            <aside class="section" role="complementary">{{ page.sidebar_first }}</aside>
+            <aside class="section" role="complementary">
+              <h2 class="visually-hidden">Select Filters</h2>
+              {{ page.sidebar_first }}
+            </aside>
           </div>
         </div>
       {% endif %}

@@ -20,8 +20,8 @@ class SidebarFacetToggle extends BlockBase {
    */
   public function build() {
     $html = '
-        <button class="btn btn-block btn-sm btn-light border d-md-none" data-toggle="collapse" data-target="#sidebarFacets"
-         aria-expanded="true" aria-controls="sidebarFacets" type="button">Toggle search filters</button>';
+        <button class="btn btn-block btn-sm btn-dark d-md-none" data-toggle="collapse" data-target="#sidebarFacets"
+         aria-expanded="true" aria-controls="sidebarFacets" type="button">Toggle Search Filters</button>';
 
     $render_array = [
       '#type' => 'markup',
