@@ -2769,7 +2769,8 @@ display:
           text_input_required: '<div class="alert alert-info">Enter 1 or more keyword terms to filter the result list.</div>'
           text_input_required_format: full_html
       cache:
-        type: none
+        type: search_api_tag
+        options: {  }
       empty:
         area:
           id: area
@@ -2926,7 +2927,7 @@ display:
           variants: {  }
       path: page-search
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -2935,5 +2936,10 @@ display:
         - 'url.query_args:sort_by'
         - user.permissions
       tags:
+        - 'config:facets.facet.city_town'
+        - 'config:facets.facet.parent_issue_country'
+        - 'config:facets.facet.parent_issue_province'
+        - 'config:facets.facet.publication_title'
+        - 'config:facets.facet.publication_year'
         - 'config:search_api.index.pages_newspapers_lib_unb_ca'
         - 'search_api_list:pages_newspapers_lib_unb_ca'
