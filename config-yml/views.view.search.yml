@@ -833,7 +833,8 @@ display:
     position: 1
     display_options:
       cache:
-        type: none
+        type: search_api_tag
+        options: {  }
       defaults:
         cache: false
       display_description: ''
@@ -851,7 +852,7 @@ display:
               max_links: 100
       path: search
     cache_metadata:
-      max-age: -1
+      max-age: 0
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -860,6 +861,13 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:facets.facet.city_locality'
+        - 'config:facets.facet.country'
+        - 'config:facets.facet.holdings'
+        - 'config:facets.facet.institutions'
+        - 'config:facets.facet.language'
+        - 'config:facets.facet.province_state'
+        - 'config:facets.facet.publication_years'
         - 'config:field.storage.node.field_first_issue_search_date'
         - 'config:field.storage.node.field_last_issue_search_date'
         - 'config:field.storage.node.field_place_of_publication'
