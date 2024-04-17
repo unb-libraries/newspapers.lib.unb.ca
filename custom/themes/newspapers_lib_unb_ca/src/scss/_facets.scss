@@ -1,3 +1,9 @@
+#sidebarFacets {
+  aside {
+    padding-top: .35rem;
+  }
+}
+
 .facets-widget-range_slider,
 .facets-widget-checkbox {
   h3 {
@@ -122,8 +128,6 @@ ul.js-facets-checkbox-links + a.open::before {
 }
 /* Slider facet override */
 .facets-widget-range_slider {
-  padding-top: .35rem;
-
   .ui-slider-handle {
     &:focus,
     &:hover {
