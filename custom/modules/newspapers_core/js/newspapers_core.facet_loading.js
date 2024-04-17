@@ -1,15 +1,12 @@
-(function ($, Drupal, once) {
+(function ($, Drupal) {
     Drupal.behaviors.facetAnimation = {
-        attach: function (context) {
-            once('customFacetBehavior', '.facets-widget-checkbox .facet-item', context).forEach(function(element) {
-                element.click(function(event) {
-                    if (event.originalEvent !== undefined) {
-                        $('img', this).toggleClass('d-none');
-                        $('input', this).click();
-                        return false;
-                    }
-                });
+        attach: function () {
+            $('.facets-widget-checkbox .facet-item').click(function(e) {
+                if (e.originalEvent !== undefined) {
+                    $('label img', this).toggleClass('d-none');
+                    $('input', this).click();
+                }
             });
         },
     };
-})(jQuery, Drupal, once);
+})(jQuery, Drupal);

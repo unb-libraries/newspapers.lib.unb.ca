@@ -11,6 +11,13 @@ claro-overrides:
     theme:
       css/claro-admin-overrides.css: {}
 
+facet_loading:
+  js:
+    js/newspapers_core.facet_loading.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
 pubform:
   css:
     theme:

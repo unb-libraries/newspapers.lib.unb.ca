@@ -2,11 +2,3 @@ newspapers_styles:
   css:
     theme:
       dist/css/style.css: {}
-
-ajax_loading:
-  js:
-    dist/js/newspapers_core.ajax_loading.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupal
-    - core/once
