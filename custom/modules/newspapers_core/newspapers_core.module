@@ -190,7 +190,7 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
             '#attributes' => [
               'class' => [
                 'form-control',
-                'border-0',
+                'reset-link',
               ],
             ],
           ];
