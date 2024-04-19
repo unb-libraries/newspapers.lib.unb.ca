@@ -173,6 +173,7 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
   switch ($form_id) {
     case 'views_exposed_form':
       $form['#attached']['library'][] = 'newspapers_core/facet_loading';
+      $form['#attached']['library'][] = 'newspapers_core/link_button';
 
       // Title Search view > Exposed form > Include Reset Button checkbox > disabled > fallback.
       $route_name = \Drupal::routeMatch()->getRouteName();
@@ -182,15 +183,15 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
           // Show custom 'reset' link if query parameter exists (i.e. exposed fulltext filter, active facet).
           $form['actions']['link'] = [
             '#type' => 'link',
-            '#title' => Markup::create(
-              '<span class="fa-solid fa-refresh fa-sm mr-1"></span>' .
-              t('Show All Titles')
-            ),
+            '#title' => t('Show All Titles'),
             '#url' => Url::fromRoute($route_name),
             '#attributes' => [
+              'role' => 'button',
+              'type' => 'reset',
               'class' => [
-                'form-control',
-                'reset-link',
+                'btn',
+                'btn-light',
+                'border',
               ],
             ],
           ];

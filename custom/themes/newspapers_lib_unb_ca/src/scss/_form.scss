@@ -8,17 +8,6 @@
         margin-right: .5rem;
       }
     }
-
-    .reset-link {
-      border: none;
-      color: $link-color;
-
-      &:focus,
-      &:hover {
-        box-shadow: none;
-        color: $link-color-hover;
-      }
-    }
   }
 }
 
