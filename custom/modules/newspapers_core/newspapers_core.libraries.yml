@@ -26,6 +26,13 @@ holding-display:
     - core/drupal
     - core/once
 
+link_button:
+  js:
+    js/newspapers_core.a11y_link_button.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
 pubform:
   css:
     theme:
