@@ -299,6 +299,7 @@ function newspapers_core_form_views_exposed_form_alter(&$form, FormStateInterfac
       $form['#info']['filter-search_api_fulltext']['description'] = $extended_description;
       // Change exposed fulltext, non-autocomplete, input type to search (UI: "x").
       $form['fulltext']['#type'] = 'search';
+      $form['#attached']['library'][] = 'newspapers_core/search_input_required';
       break;
   }
 }
