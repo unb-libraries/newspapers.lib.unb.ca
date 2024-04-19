@@ -1,3 +1,8 @@
+claro-overrides:
+  css:
+    theme:
+      css/claro-admin-overrides.css: {}
+
 copy_citation:
   js:
     js/newspapers_core.copy_citation.js: {}
@@ -6,17 +11,20 @@ copy_citation:
     - core/drupal
     - clipboardjs/clipboardjs
 
-claro-overrides:
-  css:
-    theme:
-      css/claro-admin-overrides.css: {}
-
 facet_loading:
   js:
     js/newspapers_core.facet_loading.js: {}
   dependencies:
     - core/jquery
     - core/drupal
+
+holding-display:
+  js:
+    js/newspapers_core.holdings.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
 
 pubform:
   css:
@@ -28,14 +36,6 @@ pubform:
     - core/jquery
     - core/drupal
     - jquery_ui_datepicker/datepicker
-
-holding-display:
-  js:
-    js/newspapers_core.holdings.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupal
-    - core/once
 
 tab-search:
   css:
