@@ -37,6 +37,13 @@ pubform:
     - core/drupal
     - jquery_ui_datepicker/datepicker
 
+search_input_required:
+  js:
+    js/newspapers_core.search_input_required.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
 tab-search:
   css:
     theme:
