@@ -358,21 +358,6 @@ class HomePageForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    $values = $form_state->getValues();
-
-    /* Enforce fulltext search term */
-    $value = (string) $values['input_fulltext'];
-    $op = (string) $form_state->getValue('op');
-
-    if ($op === 'Search Fulltext' && empty($value)) {
-      $form_state->setErrorByName('input_fulltext', $this->t('Please provide a fulltext search term and try again'));
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     $op = (string) $form_state->getValue('op');

@@ -16,6 +16,19 @@
                     return false;
                 }
             });
+
+            // Ensure fulltext submissions contain string else prevent submission & report validity.
+            $('form').submit(function(event) {
+                const search_fulltext = '#newspapers-core-homepage input[name="input_fulltext"]';
+                if ($(search_fulltext).is(':visible') === true) {
+                    $(search_fulltext).attr('required', true);
+                    if (this.checkValidity() === false) {
+                        $(search_fulltext).addClass('is-invalid').attr('aria-invalid', 'true');
+                        event.preventDefault();
+                        this.reportValidity();
+                    }
+                }
+            });
         },
     };
 })(jQuery, Drupal);
