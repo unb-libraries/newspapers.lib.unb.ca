@@ -9,10 +9,10 @@
             }
 
             // If form validity check fails then prevent submission & report.
-            $('form').submit(function(e) {
-                console.log(this.validity);
-                if (this.checkValidity() === false) {
-                    e.preventDefault();
+            $('form').submit(function(event) {
+                 if (this.checkValidity() === false) {
+                    $(search_input).addClass('is-invalid').attr('aria-invalid', 'true');
+                    event.preventDefault();
                     this.reportValidity();
                 }
             });
