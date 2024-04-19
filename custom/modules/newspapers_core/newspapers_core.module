@@ -187,7 +187,6 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
             '#url' => Url::fromRoute($route_name),
             '#attributes' => [
               'role' => 'button',
-              'type' => 'reset',
               'class' => [
                 'btn',
                 'btn-light',
