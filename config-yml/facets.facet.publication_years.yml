@@ -43,6 +43,13 @@ only_visible_when_facet_source_is_visible: true
 show_only_one_result: true
 show_title: true
 processor_configs:
+  count_limit:
+    processor_id: count_limit
+    weights:
+      build: 50
+    settings:
+      minimum_items: 1
+      maximum_items: null
   display_value_widget_order:
     processor_id: display_value_widget_order
     weights:
