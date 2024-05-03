@@ -26,3 +26,8 @@ code {
 .description.text-muted {
   color: $gray-700!important;
 }
+
+// Offset height of affix|unb logo (66px)
+.sticky-top {
+  top: 70px;
+}
