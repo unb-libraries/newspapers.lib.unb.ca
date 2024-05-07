@@ -44,9 +44,10 @@
     }
 
     input[type="checkbox"] {
+      margin-left: 2px;
       margin-right: 0.5rem;
       margin-top: 0.2rem;
-      transform: scale(1.33);
+      transform: scale(1.32);
 
       &:focus-visible {
         outline-color: #0075ff;
@@ -148,4 +149,8 @@ ul.js-facets-checkbox-links + a.open::before {
       background-color: $link-color-hover;
     }
   }
+}
+
+.block-facet--range-slider {
+  min-height: 114px;
 }
