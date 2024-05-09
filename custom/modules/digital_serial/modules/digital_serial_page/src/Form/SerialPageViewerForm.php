@@ -268,7 +268,8 @@ class SerialPageViewerForm extends FormBase {
     SerialIssueInterface $digital_serial_issue,
     string $page_number,
     File $page_image_file,
-    string $image_download_path): array {
+    string $image_download_path,
+  ): array {
     // URL object for Parent publication.
     try {
       $parent_title_url = $digital_serial_title
