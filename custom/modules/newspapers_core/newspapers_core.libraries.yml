@@ -47,7 +47,6 @@ search_input_required:
     js/newspapers_core.search_input_required.js: {}
   dependencies:
     - core/jquery
-    - core/drupal
 
 tab-search:
   css:
