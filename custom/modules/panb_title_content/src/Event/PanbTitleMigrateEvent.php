@@ -411,7 +411,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   public function getMatchingTaxTerms(
     string $value,
     string $field,
-    string $vocabulary
+    string $vocabulary,
   ) : array {
     $query = \Drupal::entityQuery('taxonomy_term')
       ->condition('vid', $vocabulary)
@@ -562,7 +562,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
   protected function getDateFieldData(
     string $year_string,
     string $month_string,
-    string $day_string
+    string $day_string,
   ) : array {
     // Case 1 : Date is valid!
     if (checkdate((int) $month_string, (int) $day_string, (int) $year_string)) {
