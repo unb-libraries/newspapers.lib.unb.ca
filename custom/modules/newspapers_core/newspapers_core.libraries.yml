@@ -16,7 +16,6 @@ facet_loading:
     js/newspapers_core.facet_loading.js: {}
   dependencies:
     - core/jquery
-    - core/drupal
 
 holding-display:
   js:
