@@ -56,7 +56,6 @@ tab-search:
     js/newspapers_core.tab_search.js: {}
   dependencies:
     - core/jquery
-    - core/drupal
 
 views-exposed-filters:
   js:
