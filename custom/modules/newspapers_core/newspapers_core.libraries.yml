@@ -5,7 +5,7 @@ claro-overrides:
 
 copy_citation:
   js:
-    js/newspapers_core.copy_citation.js: {}
+    js/newspapers_core.copy_citation.min.js: { minified: true }
   dependencies:
     - clipboardjs/drupal
 
@@ -17,7 +17,7 @@ facet_loading:
 
 holding-display:
   js:
-    js/newspapers_core.holdings.js: {}
+    js/newspapers_core.holdings.min.js: { minified: true }
   dependencies:
     - core/jquery
     - core/drupal
@@ -49,7 +49,7 @@ search_input_required:
 tab-search:
   css:
     theme:
-      css/newspapers_core.tab_search.css: {}
+      css/newspapers_core.tab_search.min.css: { minified: true }
   js:
     js/newspapers_core.tab_search.js: {}
   dependencies:
