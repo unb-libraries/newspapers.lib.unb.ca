@@ -11,6 +11,16 @@
   }
 }
 
+// Fulltext Search view | Search button alignment - XL breakpoint
+@media (min-width: 1366px) {
+  #views-exposed-form-digital-page-lister-page-search {
+    .form-actions {
+      position: relative;
+      top: -1.45rem;
+    }
+  }
+}
+
 // Digital Title Listing view | submit button alignment
 .digital-titles {
   .views-exposed-form {
