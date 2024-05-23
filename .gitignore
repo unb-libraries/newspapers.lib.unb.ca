@@ -1,7 +1,8 @@
 .gitkeep
 .idea
-composer.lock
+/composer.lock
 scripts/local
 tests/features/bootstrap
 vendor
-config-yml/.htaccess
+configuration/.htaccess
+/build/vendor

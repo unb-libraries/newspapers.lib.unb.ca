@@ -1,0 +1,14 @@
+name: Update newspapers.lib.unb.ca
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '58 6 * * 1,4'
+
+jobs:
+  deploy:
+    uses: unb-libraries/dockworker/.github/workflows/update.yaml@6.x
+    with:
+      add-paths: 'build/composer.*'
+    secrets:
+      PAT_TOKEN: ${{ secrets.UNBLIBBOT_PAT_TOKEN }}

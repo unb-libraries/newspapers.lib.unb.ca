@@ -1,28 +1,72 @@
 dockworker:
-  version: '5'
+  version: '6'
   application:
-    name: newspapers.lib.unb.ca
-    finish_marker: '99_zz_notify_user_URI'
-    project_prefix: NBNP
-    upstream_images:
-      - ghcr.io/unb-libraries/drupal:9.x-2.x-unblib
-    uuid: 3095
-  deployment:
-    environments:
+    name: New Brunswick Historical Newspapers Project
+    uri: https://newspapers.lib.unb.ca
+    description: >
+      The New Brunswick Historical Newspapers Project provides researchers with
+      unified access to UNB Libraries' current and historical newspaper
+      collections in all formats, from New Brunswick and across the world.
+    topics:
+      - newspapers
+      - new brunswick
+      - history
+      - research
+    identifiers:
+      id: newspapers.lib.unb.ca
+      slug: newspapers-lib-unb-ca
+      short_slug: nbnp
+      uuid: 3095
+    framework:
+      name: Drupal
+      version: 9
+      startup_finished_marker: '99_zz_notify_user_URI'
+      endpoint:
+        name: http
+        port: 80
+        readiness_timeout: 15
+    license:
+      license: MIT
+      holder: University of New Brunswick Libraries
+    shell:
+      path: /bin/sh
+  endpoints:
+    env:
       - dev
       - prod
-    workflow:
-      source: dockworker-drupal
-      type: deployment-workflow
-  drupal:
-    major: 9
-  github:
-    repo: newspapers.lib.unb.ca
-    owner: unb-libraries
-  image:
-    push_branches:
-      - dev
-      - prod
-    name: ghcr.io/unb-libraries/newspapers.lib.unb.ca
-    date_tag_image: true
-    repository: ghcr
+    deployments:
+      newspapers-lib-unb-ca:
+        default: true
+        managed: true
+        name: newspapers-lib-unb-ca
+      drupal-mysql-lib-unb-ca:
+        managed: false
+        name: mysql
+      drupal-redis-lib-unb-ca:
+        managed: false
+        name: redis
+      drupal-solr-lib-unb-ca:
+        managed: false
+        name: solr
+  workflows:
+    vcs:
+      type: github
+      owner: unb-libraries
+      name: newspapers.lib.unb.ca
+    jira:
+      project_keys:
+        - NBNP
+    image:
+      name: ghcr.io/unb-libraries/newspapers.lib.unb.ca
+      parent: ghcr.io/unb-libraries/drupal:9.x-2.x-unblib
+      repository: GitHub
+      push-branches:
+        - dev
+        - prod
+    e2e_tests:
+        - id: core
+          frequency: '*/5 * * * *'
+          source_files:
+            - .dockworker/tests/e2e/newspapers.lib.unb.ca.yml
+          namespaces:
+            - prod

@@ -1,9 +1,9 @@
 services:
-  newspapers.lib.unb.ca:
+  newspapers-lib-unb-ca:
     build:
       context: .
     restart: unless-stopped
-    container_name: newspapers.lib.unb.ca
+    container_name: newspapers-lib-unb-ca
     depends_on:
       - drupal-mysql-lib-unb-ca
       - drupal-redis-lib-unb-ca
@@ -20,7 +20,7 @@ services:
       - DRUPAL_IMPORT_CONTENT=TRUE
     volumes:
       - drupal-data:/app/html/sites/default
-      - ./config-yml:/app/configuration
+      - ./configuration:/app/configuration
       - ./custom/modules:/app/html/modules/custom
       - ./custom/themes:/app/html/themes/custom
       - ./tests:/app/tests

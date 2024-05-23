@@ -16,7 +16,7 @@ RUN ${RSYNC_MOVE} /build/scripts/container/ /scripts/ && \
   /scripts/build.sh
 
 # Deploy configuration.
-COPY ./config-yml ${DRUPAL_CONFIGURATION_DIR}
+COPY ./configuration ${DRUPAL_CONFIGURATION_DIR}
 RUN /scripts/pre-init.d/72_secure_config_sync_dir.sh
 
 # Deploy custom modules, themes.
