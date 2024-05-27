@@ -2760,13 +2760,13 @@ display:
         type: input_required
         options:
           submit_button: 'Search in Pages'
-          reset_button: false
+          reset_button: true
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: false
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: '<div class="alert alert-info">Enter 1 or more keyword terms to filter the result list.</div>'
+          text_input_required: '<div class="alert alert-light border"><span class="fa-solid fa-lightbulb fa-lg mr-2 text-warning"></span>Please enter 1 or more search terms to begin.</div>'
           text_input_required_format: full_html
       cache:
         type: search_api_tag
@@ -2881,9 +2881,17 @@ display:
         operator: AND
         groups:
           1: AND
+      query:
+        type: search_api_query
+        options:
+          bypass_access: false
+          skip_access: false
+          preserve_facet_query_args: true
+          query_tags: {  }
       defaults:
         empty: false
         cache: false
+        query: false
         title: false
         use_ajax: false
         pager: false
