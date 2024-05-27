@@ -455,7 +455,7 @@ class HomePageForm extends FormBase {
     }
 
     return '<aside class="bg-light col-lg-4 p-3 stats">' .
-      '<table class="table table-sm mb-3"><caption class="visually-hidden">Digitiazed Content</caption>' .
+      '<table class="table table-sm mb-3"><caption class="visually-hidden">Digitized Content</caption>' .
       '<colgroup><col width="25%"></colgroup><tbody>' .
       '<tr><th class="text-uppercase" scope="row">Digital<br>titles</th><td>' . $titles_row_count . '</td></tr>' .
       '<tr><th class="text-uppercase" scope="row">Digital<br>issues</th><td>' . $issues_row_count . '</td></tr>' .
