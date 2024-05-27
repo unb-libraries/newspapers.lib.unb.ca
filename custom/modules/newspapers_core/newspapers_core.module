@@ -173,28 +173,12 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
   switch ($form_id) {
     case 'views_exposed_form':
       $form['#attached']['library'][] = 'newspapers_core/facet_loading';
-      $form['#attached']['library'][] = 'newspapers_core/link_button';
 
-      // Title Search view > Exposed form > Include Reset Button checkbox > disabled > fallback.
-      $route_name = \Drupal::routeMatch()->getRouteName();
-      if ($route_name == 'view.search.search_page' && empty($form['actions']['reset'])) {
+      // If Search view > Advanced > Exposed form > Settings > Include reset button > enabled,
+      // Ensure $form['actions']['reset']['#access'] = true when user supplies query and/or enables a facet.
+      if ($form['#id'] == 'views-exposed-form-search-search-page' && isset($form['actions']['reset'])) {
         $user_form_input = $form_state->getUserInput();
-        if (!empty($user_form_input)) {
-          // Show custom 'reset' link if query parameter exists (i.e. exposed fulltext filter, active facet).
-          $form['actions']['link'] = [
-            '#type' => 'link',
-            '#title' => t('Show All Titles'),
-            '#url' => Url::fromRoute($route_name),
-            '#attributes' => [
-              'role' => 'button',
-              'class' => [
-                'btn',
-                'btn-light',
-                'border',
-              ],
-            ],
-          ];
-        }
+        $form['actions']['reset']['#access'] = !empty($user_form_input);
       }
       break;
 
