@@ -2766,7 +2766,7 @@ display:
           expose_sort_order: false
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: '<div class="alert alert-light border"><span class="fa-solid fa-lightbulb fa-lg mr-2 text-warning"></span>Please enter 1 or more search terms to begin.</div>'
+          text_input_required: '<div class="alert alert-light border"><span class="fa-solid fa-lightbulb fa-lg mr-2 text-warning"></span>Please enter 1 or more keywords to begin.</div>'
           text_input_required_format: full_html
       cache:
         type: search_api_tag
