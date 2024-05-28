@@ -174,11 +174,10 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
     case 'views_exposed_form':
       $form['#attached']['library'][] = 'newspapers_core/facet_loading';
 
-      // If Search view > Advanced > Exposed form > Settings > Include reset button > enabled,
-      // Ensure $form['actions']['reset']['#access'] = true when user supplies query and/or enables a facet.
+      // NBNP-444: If Search view > Advanced > Exposed form > Settings > Include reset button > enabled,
+      // Ensure $form['actions']['reset']['#access'] = true when user supplies input, ie fulltext filter and/or facet.
       if ($form['#id'] == 'views-exposed-form-search-search-page' && isset($form['actions']['reset'])) {
-        $user_form_input = $form_state->getUserInput();
-        $form['actions']['reset']['#access'] = !empty($user_form_input);
+        $form['actions']['reset']['#access'] = !empty($form_state->getUserInput());
       }
       break;
 
