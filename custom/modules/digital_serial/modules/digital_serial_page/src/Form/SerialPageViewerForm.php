@@ -575,7 +575,7 @@ class SerialPageViewerForm extends FormBase {
 
     $pdf_download_uri = str_replace(
       $image_file_components['filename'] . '.jpg',
-      "/pdf/$pdf_dir/" . $image_file_components['filename'] . '.pdf',
+      "pdf/$pdf_dir/" . $image_file_components['filename'] . '.pdf',
       $image_download_uri
     );
     $pdf_download_link_options = [
