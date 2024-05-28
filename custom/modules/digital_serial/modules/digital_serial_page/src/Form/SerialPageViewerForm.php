@@ -566,7 +566,8 @@ class SerialPageViewerForm extends FormBase {
   private function buildPdfDownloadLinkHtml($image_file_path, $image_download_uri) {
     $image_file_components = pathinfo($image_file_path);
     $pdf_file_name = $image_file_components['filename'] . '.pdf';
-    $pdf_file_path = $image_file_components['dirname'] . '/pdf/' . $pdf_file_name;
+    $pdf_dir = explode('-', $image_file_components['filename'])[0];
+    $pdf_file_path = $image_file_components['dirname'] . "/pdf/$pdf_dir/" . $pdf_file_name;
 
     if (file_exists($pdf_file_path) === FALSE) {
       return '';
