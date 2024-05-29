@@ -99,6 +99,7 @@ ul.js-facets-checkbox-links + a.open::before {
 .facet-item__value {
   color: $link-color;
   text-transform: capitalize;
+  word-break: break-word;
 }
 .facet-item input:focus,
 .facet-item input:focus + label .facet-item__value,
