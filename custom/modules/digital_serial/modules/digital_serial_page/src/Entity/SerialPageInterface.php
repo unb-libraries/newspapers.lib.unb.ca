@@ -184,4 +184,20 @@ interface SerialPageInterface extends ContentEntityInterface, EntityChangedInter
    */
   public function setPageHocr($page_hocr);
 
+  /**
+   * Gets the storage URI for the Serial page image.
+   *
+   * @return string
+   *  The storage URI for the Serial page image.
+   */
+  public function getPagePermImageStorageUri();
+
+  /**
+   * Moves the Serial page image to permanent storage.
+   *
+   * @param bool $move_file
+   *   TRUE to move the file on-disk, FALSE to only update the database.
+   */
+  public function movePageImageToPermanentStorage($move_file = TRUE);
+
 }
