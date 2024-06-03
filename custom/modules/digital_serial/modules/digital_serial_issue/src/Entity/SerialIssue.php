@@ -623,4 +623,35 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
     return $paths;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public function createStoragePath() {
+    $file_system = \Drupal::service('file_system');
+    $issue_absolute_path = $file_system->realpath(
+      $this->getStorageUri()
+    );
+    if (!file_exists($issue_absolute_path)) {
+      mkdir($issue_absolute_path, 0755, TRUE);
+    }
+    return $issue_absolute_path;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getStorageUri() {
+    $default_file_scheme = \Drupal::config('system.file')->get('default_scheme');
+    $issue_id = $this->id();
+    return "$default_file_scheme://serials/pages/$issue_id";
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    $this->createStoragePath();
+    parent::postSave($storage, $update);
+  }
+
 }

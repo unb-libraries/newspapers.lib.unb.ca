@@ -224,4 +224,19 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
    */
   public function getYear();
 
+  /**
+   * Creates the storage path for the issue, if it doesn't already exist.
+   *
+   * @return string
+   *  The storage path.
+   */
+  public function createStoragePath();
+
+  /**
+   * Retrieves the Drupal storage URI for the issue.
+   *
+   * @return string
+   *  The storage URI.
+   */
+  public function getStorageUri();
 }
