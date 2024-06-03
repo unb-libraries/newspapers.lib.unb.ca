@@ -443,4 +443,54 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     parent::save();
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    $this->movePageImageToPermanentStorage(TRUE);
+    parent::postSave($storage, $update);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getPagePermImageStorageUri() {
+    $issue = $this->getParentIssue();
+    $file = $this->getPageImage();
+
+    if (!empty($issue) && !empty($file)) {
+      return $issue->getStorageUri() . '/' . $file->getFilename();
+    }
+    return '';
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function movePageImageToPermanentStorage($move_file = TRUE) {
+    $file = $this->getPageImage();
+    $perm_storage_uri = $this->getPagePermImageStorageUri();
+
+    // Do nothing if no URI or already in permanent storage.
+    if (
+      empty($perm_storage_uri) || $file->getFileUri() == $perm_storage_uri
+      ) {
+      return;
+    }
+
+    $file_system = \Drupal::service('file_system');
+    $perm_storage_absolute_file_location = $file_system->realpath($perm_storage_uri);
+
+    if ($move_file) {
+      $file_system->move(
+        $file_system->realpath($file->getFileUri()),
+        $perm_storage_absolute_file_location
+      );
+    }
+
+    $file->setFileUri($perm_storage_uri);
+    $file->setPermanent();
+    $file->save();
+  }
+
 }
