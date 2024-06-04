@@ -493,4 +493,50 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $file->save();
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public function getPdfUri() {
+    $issue = $this->getParentIssue();
+    $issue_id = $issue->id();
+    $file = $this->getPageImage();
+    $pdf_filename = str_replace('.jpg', '.pdf', $file->getFilename());
+    $default_file_scheme = \Drupal::config('system.file')->get('default_scheme');
+    $pdf_uri_schemas = [
+      "$default_file_scheme://serials/pages/$issue_id/$pdf_filename",
+      "$default_file_scheme://serials/pages/pdf/$issue_id/$pdf_filename"
+    ];
+
+    foreach ($pdf_uri_schemas as $pdf_uri_schema) {
+      $pdf_absolute_file_location = \Drupal::service('file_system')->realpath($pdf_uri_schema);
+      if (file_exists($pdf_absolute_file_location)) {
+        return $pdf_uri_schema;
+      }
+    }
+    return '';
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getDziUri() {
+    $issue = $this->getParentIssue();
+    $issue_id = $issue->id();
+    $file = $this->getPageImage();
+    $dzi_filename = str_replace('.jpg', '.dzi', $file->getFilename());
+    $default_file_scheme = \Drupal::config('system.file')->get('default_scheme');
+    $dzi_uri_schemas = [
+      "$default_file_scheme://serials/pages/$issue_id/$dzi_filename",
+      "$default_file_scheme://serials/pages/$dzi_filename"
+    ];
+
+    foreach ($dzi_uri_schemas as $dzi_uri_schema) {
+      $dzi_absolute_file_location = \Drupal::service('file_system')->realpath($dzi_uri_schema);
+      if (file_exists($dzi_absolute_file_location)) {
+        return $dzi_uri_schema;
+      }
+    }
+    return '';
+  }
+
 }
