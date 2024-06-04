@@ -167,7 +167,7 @@ class SerialPageViewerForm extends FormBase {
     $full_path = DRUPAL_ROOT . $image_path;
     $dzi_uri = $digital_serial_page->getDziUri();
 
-    $form['page_viewer']['metadata-body'] = $this->getMetadataBody($digital_serial_title, $digital_serial_issue, $current_page, $file, $full_path);
+    $form['page_viewer']['metadata-body'] = $this->getMetadataBody($digital_serial_title, $digital_serial_issue, $current_page, $file, $full_path, $digital_serial_page);
     $form['page_viewer']['metadata-footer'] = $this->getMetadataFooter($digital_serial_title, $digital_serial_issue);
 
     // Determine if we're using DZI or the plain old image.
@@ -267,7 +267,8 @@ class SerialPageViewerForm extends FormBase {
     SerialIssueInterface $digital_serial_issue,
     string $page_number,
     File $page_image_file,
-    string $image_download_path
+    string $image_download_path,
+    SerialPageInterface $digital_serial_page
   ): array {
     // URL object for Parent publication.
     try {
@@ -474,7 +475,7 @@ class SerialPageViewerForm extends FormBase {
       );
 
       $download_items = [$download_link->toString()];
-      $pdf_download_html = $this->buildPdfDownloadLinkHtml($image_download_path, $image_download_uri);
+      $pdf_download_html = $this->buildPdfDownloadLinkHtml($digital_serial_page);
       if (!empty($pdf_download_html)) {
         $download_items[] = $pdf_download_html;
       }
@@ -562,21 +563,14 @@ class SerialPageViewerForm extends FormBase {
   /**
    * Builds the PDF HTML link for the image.
    */
-  private function buildPdfDownloadLinkHtml($image_file_path, $image_download_uri) {
-    $image_file_components = pathinfo($image_file_path);
-    $pdf_file_name = $image_file_components['filename'] . '.pdf';
-    $pdf_dir = explode('-', $image_file_components['filename'])[0];
-    $pdf_file_path = $image_file_components['dirname'] . "/pdf/$pdf_dir/" . $pdf_file_name;
-
-    if (file_exists($pdf_file_path) === FALSE) {
+  private function buildPdfDownloadLinkHtml($digital_serial_page) {
+    $pdf_uri = $digital_serial_page->getPdfUri();
+    if (empty($pdf_uri)) {
       return '';
     }
+    $pdf_file_path = \Drupal::service('file_system')->realpath($pdf_uri);
+    $pdf_file_name = basename($pdf_file_path);
 
-    $pdf_download_uri = str_replace(
-      $image_file_components['filename'] . '.jpg',
-      "pdf/$pdf_dir/" . $image_file_components['filename'] . '.pdf',
-      $image_download_uri
-    );
     $pdf_download_link_options = [
       'attributes' => [
         'class' => [
@@ -586,12 +580,13 @@ class SerialPageViewerForm extends FormBase {
         'download' => TRUE,
       ],
     ];
+    $base_uri = str_replace('public://', 'base://', $pdf_uri);
     return Link::fromTextAndUrl(
       Markup::create(
         '<span class="fa-solid fa-file-pdf mr-1" aria-hidden="true"></span>' . $pdf_file_name .
         $this->getImageSizeDisplay($pdf_file_path)
       ),
-      Url::fromUri($pdf_download_uri, $pdf_download_link_options),
+      Url::fromUri($base_uri, $pdf_download_link_options),
     )->toString();
   }
 
