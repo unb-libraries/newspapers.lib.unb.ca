@@ -436,18 +436,11 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function save() {
-    _newspapers_core_delete_image_dzi($this->id());
-    parent::save();
-  }
-
-  /**
    * {@inheritDoc}
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     $this->movePageImageToPermanentStorage(TRUE);
+    _newspapers_core_delete_image_dzi($this->id());
     parent::postSave($storage, $update);
   }
 
