@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\digital_serial_page;
+namespace Drupal\newspapers_core;
 
 /**
  * Provides the connection between old and new storage of page files and assets.
@@ -19,6 +19,25 @@ class PageStorageMigration2024Helper {
 // docker cp . 435a2e17a33c:/app/html/sites/default/files/serials/pages/
 // chown -R nginx:nginx /app/html/sites/default/files/serials/pages/*
 // doas -u $NGINX_RUN_USER -- drush eval "\Drupal\digital_serial_page\PageStorageMigration2024Helper::MoveIssueAssets('18229');"
+// doas -u $NGINX_RUN_USER -- drush eval "\Drupal\digital_serial_page\PageStorageMigration2024Helper::bulkCreateNewStoragePaths();"
+
+/**
+ * Move all page assets for a given issue to the new storage location.
+ */
+public static function bulkCreateNewStoragePaths() {
+  $issue_ids = \Drupal::entityQuery('digital_serial_issue')
+    ->execute();
+  $count = count($issue_ids);
+  $progress = 0;
+  foreach ($issue_ids as $issue_id) {
+    $progress += 1;
+    echo "Creating issue $progress/$count...";
+    $issue_absolute_path = "/app/html/sites/default/files/serials/pages/$issue_id";
+    if (!file_exists($issue_absolute_path)) {
+      mkdir($issue_absolute_path, 0755, TRUE);
+    }
+  }
+}
 
 /**
  * Move all page assets for a given issue to the new storage location.
