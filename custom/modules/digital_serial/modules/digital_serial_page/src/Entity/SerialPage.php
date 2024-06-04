@@ -500,10 +500,9 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $issue_id = $issue->id();
     $file = $this->getPageImage();
     $pdf_filename = str_replace('.jpg', '.pdf', $file->getFilename());
-    $default_file_scheme = \Drupal::config('system.file')->get('default_scheme');
     $pdf_uri_schemas = [
-      "$default_file_scheme://serials/pages/$issue_id/$pdf_filename",
-      "$default_file_scheme://serials/pages/pdf/$issue_id/$pdf_filename"
+      "base://serials/pages/$issue_id/$pdf_filename",
+      "base://serials/pages/pdf/$issue_id/$pdf_filename"
     ];
 
     foreach ($pdf_uri_schemas as $pdf_uri_schema) {
@@ -523,10 +522,9 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $issue_id = $issue->id();
     $file = $this->getPageImage();
     $dzi_filename = str_replace('.jpg', '.dzi', $file->getFilename());
-    $default_file_scheme = \Drupal::config('system.file')->get('default_scheme');
     $dzi_uri_schemas = [
-      "$default_file_scheme://serials/pages/$issue_id/$dzi_filename",
-      "$default_file_scheme://serials/pages/$dzi_filename"
+      "base://serials/pages/$issue_id/$dzi_filename",
+      "base://serials/pages/$dzi_filename"
     ];
 
     foreach ($dzi_uri_schemas as $dzi_uri_schema) {
