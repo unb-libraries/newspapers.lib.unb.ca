@@ -86,21 +86,15 @@ public static function bulkCreateNewStoragePaths() {
   public static function moveDziTileLocation($page, $issue) {
     $file = $page->getPageImage();
     $issue_id = $issue->id();
-  
-    $file_system = \Drupal::service('file_system');
-    $default_file_scheme = \Drupal::config('system.file')->get('default_scheme');
-  
-    $issue_id = $issue->id();
-    $new_issue_path_uri = "$default_file_scheme://serials/pages/$issue_id";
-    $new_issue_file_uri = "$new_issue_path_uri/{$file->getFilename()}";
-    $old_issue_absolute_file_location = $file_system->realpath($file->getFileUri());
-    $new_issue_absolute_file_location = $file_system->realpath($new_issue_file_uri);
-  
-    $old_dzi_file = str_replace('.jpg', '.dzi', $old_issue_absolute_file_location);
-    $old_dzi_asset_path = str_replace('.jpg', '_files', $old_issue_absolute_file_location);
-    $new_dzi_file = str_replace('.jpg', '.dzi', $new_issue_absolute_file_location);
-    $new_dzi_asset_path = str_replace('.jpg', '_files', $new_issue_absolute_file_location);
-  
+    $file_name = $file->getFilename();
+
+    $old_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$file_name";
+    $new_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$issue_id/$file_name";
+    $old_dzi_file = str_replace('.jpg', '.dzi', $old_page_absolute_file_location);
+    $old_dzi_asset_path = str_replace('.jpg', '_files', $old_page_absolute_file_location);
+    $new_dzi_file = str_replace('.jpg', '.dzi', $new_page_absolute_file_location);
+    $new_dzi_asset_path = str_replace('.jpg', '_files', $new_page_absolute_file_location);
+
     if (file_exists($old_dzi_file)) {
       rename($old_dzi_file, $new_dzi_file);
     }
@@ -121,15 +115,9 @@ public static function bulkCreateNewStoragePaths() {
   public static function movePdfFileLocation($page, $issue) {
     $file = $page->getPageImage();
     $issue_id = $issue->id();
-  
-    $file_system = \Drupal::service('file_system');
-    $default_file_scheme = \Drupal::config('system.file')->get('default_scheme');
-  
-    $issue_id = $issue->id();
-    $new_issue_path_uri = "$default_file_scheme://serials/pages/$issue_id";
-    $new_issue_file_uri = "$new_issue_path_uri/{$file->getFilename()}";
-    $old_issue_absolute_file_location = $file_system->realpath($file->getFileUri());
-    $new_issue_absolute_file_location = $file_system->realpath($new_issue_file_uri);
+    $file_name = $file->getFilename();
+    $old_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$file_name";
+    $new_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$issue_id/$file_name";
   
     $old_pdf_file_path = str_replace(
       '/pages/',
@@ -137,17 +125,13 @@ public static function bulkCreateNewStoragePaths() {
       str_replace(
         '.jpg',
         '.pdf',
-        $old_issue_absolute_file_location
+        $old_page_absolute_file_location
       )
     );
     $new_pdf_file_path = str_replace(
-      '/pages/',
-      "/pages/$issue_id/",
-      str_replace(
-        '.jpg',
-        '.pdf',
-        $new_issue_absolute_file_location
-      )
+      '.jpg',
+      '.pdf',
+      $new_page_absolute_file_location
     );
   
     if (file_exists($old_pdf_file_path)) {
