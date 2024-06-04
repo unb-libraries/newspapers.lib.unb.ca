@@ -477,7 +477,6 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ) {
       return;
     }
-
     $file_system = \Drupal::service('file_system');
     $perm_storage_absolute_file_location = $file_system->realpath($perm_storage_uri);
 
