@@ -1889,20 +1889,17 @@ function _newspapers_core_delete_image_dzi($page_id) {
     ->getStorage('digital_serial_page')
     ->load($page_id);
   if (!empty($page)) {
-    $image = $page->getPageImage();
-    $uri = $image->getFileUri();
-    $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager')->getViaUri($uri);
-    $file_path = $stream_wrapper_manager->realpath();
-    if (file_exists($file_path) && str_contains($file_path, 'files/serials/pages')) {
-      $path_parts = pathinfo($file_path);
-      if (!empty($path_parts['extension'])) {
-        $dzi_path = str_replace(".{$path_parts['extension']}", '.dzi', $file_path);
-        $dzi_dir = str_replace(".{$path_parts['extension']}", '_files', $file_path);
-        if (file_exists($dzi_path) && str_contains($dzi_path, '.dzi')) {
-          unlink($dzi_path);
+    $dzi_path = $page-> getDziUri();
+    if (!empty($dzi_path)) {
+      $file_system = \Drupal::service('file_system');
+      $abs_dzi_path = $file_system->realpath($dzi_path);
+      if (!empty($abs_dzi_path)) {
+        if (file_exists($abs_dzi_path) && str_contains($abs_dzi_path, '.dzi')) {
+          unlink($abs_dzi_path);
         }
-        if (is_dir($dzi_dir) && str_contains($dzi_dir, '_files')) {
-          _newspapers_core_rmdir_recursive($dzi_dir);
+        $abs_dzi_dir = str_replace('.dzi', '_files', $abs_dzi_path);
+        if (is_dir($abs_dzi_dir) && str_contains($abs_dzi_dir, '_files')) {
+          _newspapers_core_rmdir_recursive($abs_dzi_dir);
         }
       }
     }
