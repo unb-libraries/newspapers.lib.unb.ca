@@ -200,4 +200,20 @@ interface SerialPageInterface extends ContentEntityInterface, EntityChangedInter
    */
   public function movePageImageToPermanentStorage($move_file = TRUE);
 
+  /**
+   * Gets the Serial page PDF uri.
+   *
+   * @return string
+   *  The Drupal URI for the Serial page's PDF. Empty if none.
+   */
+  public function getPdfUri();
+
+  /**
+   * Gets the Serial page DZI uri.
+   *
+   * @return string
+   *  The Drupal URI for the Serial page's DZI. Empty if none.
+   */
+  public function getDziUri();
+
 }
