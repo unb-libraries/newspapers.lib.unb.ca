@@ -165,15 +165,14 @@ class SerialPageViewerForm extends FormBase {
     $image_path = \Drupal::service('file_url_generator')->generateString($uri);
 
     $full_path = DRUPAL_ROOT . $image_path;
-    $image_extension = pathinfo($full_path, PATHINFO_EXTENSION);
-    $dzi_path = str_replace(".$image_extension", '.dzi', $full_path);
+    $dzi_uri = $digital_serial_page->getDziUri();
 
     $form['page_viewer']['metadata-body'] = $this->getMetadataBody($digital_serial_title, $digital_serial_issue, $current_page, $file, $full_path);
     $form['page_viewer']['metadata-footer'] = $this->getMetadataFooter($digital_serial_title, $digital_serial_issue);
 
     // Determine if we're using DZI or the plain old image.
-    if (file_exists($dzi_path)) {
-      $tile_sources = str_replace(".$image_extension", '.dzi', $image_path);
+    if (!empty($dzi_uri)) {
+      $tile_sources = \Drupal::service('file_url_generator')->generateString($dzi_uri);
     }
     else {
       $tile_sources = json_encode(
