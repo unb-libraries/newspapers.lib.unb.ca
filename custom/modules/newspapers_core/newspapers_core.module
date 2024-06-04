@@ -1877,7 +1877,7 @@ function _newspapers_core_delete_image_dzi($page_id) {
     $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager')->getViaUri($uri);
     $file_path = $stream_wrapper_manager->realpath();
     if (file_exists($file_path) && str_contains($file_path, 'files/serials/pages')) {
-      $path_parts = pathinfo($file_path,PATHINFO_ALL);
+      $path_parts = pathinfo($file_path);
       if (!empty($path_parts['extension'])) {
         $dzi_path = str_replace(".{$path_parts['extension']}", '.dzi', $file_path);
         $dzi_dir = str_replace(".{$path_parts['extension']}", '_files', $file_path);
