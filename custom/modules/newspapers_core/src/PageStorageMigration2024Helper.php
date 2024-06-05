@@ -14,12 +14,16 @@ namespace Drupal\newspapers_core;
  */
 class PageStorageMigration2024Helper {
 
-// 18229
-// scp -r 'retribution:/mnt/storage0/KubeNFS/newspapers-lib-unb-ca/prod/files/serials/pages/18229*' .
+// 18236
+// rm -rf /app/html/sites/default/files/serials/pages/*
+// doas -u $NGINX_RUN_USER -- drush eval "\Drupal\newspapers_core\PageStorageMigration2024Helper::bulkCreateNewStoragePaths();"
+// scp -r 'retribution:/mnt/storage0/KubeNFS/newspapers-lib-unb-ca/prod/files/serials/pages/18236*' .
 // docker cp . 435a2e17a33c:/app/html/sites/default/files/serials/pages/
+// mkdir -p /app/html/sites/default/files/serials/pages/pdf/18236
+// cp /app/html/sites/default/files/serials/pages/18236-0001.jpg /app/html/sites/default/files/serials/pages/pdf/18236/18236-0001.pdf
+// cp /app/html/sites/default/files/serials/pages/18236-0002.jpg /app/html/sites/default/files/serials/pages/pdf/18236/18236-0002.pdf
 // chown -R nginx:nginx /app/html/sites/default/files/serials/pages/*
-// doas -u $NGINX_RUN_USER -- drush eval "\Drupal\digital_serial_page\PageStorageMigration2024Helper::MoveIssueAssets('18229');"
-// doas -u $NGINX_RUN_USER -- drush eval "\Drupal\digital_serial_page\PageStorageMigration2024Helper::bulkCreateNewStoragePaths();"
+// doas -u $NGINX_RUN_USER -- drush eval "\Drupal\newspapers_core\PageStorageMigration2024Helper::MoveIssueAssets('18236');"
 
 /**
  * Move all page assets for a given issue to the new storage location.
@@ -31,7 +35,7 @@ public static function bulkCreateNewStoragePaths() {
   $progress = 0;
   foreach ($issue_ids as $issue_id) {
     $progress += 1;
-    echo "Creating issue $progress/$count...";
+    echo "Creating issue $progress/$count...\n";
     $issue_absolute_path = "/app/html/sites/default/files/serials/pages/$issue_id";
     if (!file_exists($issue_absolute_path)) {
       mkdir($issue_absolute_path, 0755, TRUE);
