@@ -1889,10 +1889,11 @@ function _newspapers_core_delete_image_dzi($page_id) {
     ->getStorage('digital_serial_page')
     ->load($page_id);
   if (!empty($page)) {
-    $dzi_path = $page-> getDziUri();
-    if (!empty($dzi_path)) {
+    $dzi_uri = $page->getDziUri();
+    if (!empty($dzi_uri)) {
       $file_system = \Drupal::service('file_system');
-      $abs_dzi_path = $file_system->realpath($dzi_path);
+      $abs_dzi_path = $file_system->realpath($dzi_uri);
+
       if (!empty($abs_dzi_path)) {
         if (file_exists($abs_dzi_path) && str_contains($abs_dzi_path, '.dzi')) {
           unlink($abs_dzi_path);

@@ -86,7 +86,8 @@ public static function bulkCreateNewStoragePaths() {
   public static function moveDziTileLocation($page, $issue) {
     $file = $page->getPageImage();
     $issue_id = $issue->id();
-    $file_name = $file->getFilename();
+    $image_file_name = $file->getFilename();
+    $file_name = str_replace('.jpg', '.dzi', $image_file_name);
 
     $old_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$file_name";
     $new_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$issue_id/$file_name";
