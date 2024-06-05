@@ -431,7 +431,8 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     if (!empty($page_image)) {
       $page_image->delete();
     }
-    _newspapers_core_delete_image_dzi($this->id());
+    $this->deleteDziFiles();
+    $this->deletePdfFile();
     parent::delete();
   }
 
@@ -440,7 +441,8 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     $this->movePageImageToPermanentStorage(TRUE);
-    _newspapers_core_delete_image_dzi($this->id());
+    $this->deleteDziFiles();
+    $this->deletePdfFile();
     parent::postSave($storage, $update);
   }
 
@@ -486,6 +488,33 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   }
 
   /**
+   * Removes the DZI files from disk for a page entity.
+   *
+   * The recursive remove is potentially dangerous but is mitigated by string
+   * checks.
+   */
+  public function deleteDziFiles() {
+    $dzi_path = $this->getDziPath();
+    if (!empty($dzi_path)) {
+      unlink($dzi_path);
+      $dzi_dir = str_replace('.dzi', '_files', $dzi_path);
+      if (is_dir($dzi_dir) && str_contains($dzi_dir, '_files')) {
+        _newspapers_core_rmdir_recursive($dzi_dir);
+      }
+    }
+  }
+
+  /**
+   * Removes the PDF from disk for a page entity.
+   */
+  public function deletePdfFile() {
+    $pdf_path = $this->getPdfPath();
+    if (!empty($pdf_path)) {
+      unlink($pdf_path);
+    }
+  }
+
+  /**
    * {@inheritDoc}
    */
   public function getPdfUri() {
@@ -510,6 +539,27 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   /**
    * {@inheritDoc}
    */
+  public function getPdfPath() {
+    $issue = $this->getParentIssue();
+    $issue_id = $issue->id();
+    $file = $this->getPageImage();
+    $pdf_filename = str_replace('.jpg', '.pdf', $file->getFilename());
+    $pdf_file_schemas = [
+      "/app/html/sites/default/files/serials/pages/pdf/$issue_id/$pdf_filename",
+      "/app/html/sites/default/files/serials/pages/$issue_id/$pdf_filename"
+    ];
+
+    foreach ($pdf_file_schemas as $pdf_file_schema) {
+      if (file_exists($pdf_file_schema)) {
+        return $pdf_file_schema;
+      }
+    }
+    return '';
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   public function getDziUri() {
     $issue = $this->getParentIssue();
     $issue_id = $issue->id();
@@ -524,6 +574,27 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       $dzi_absolute_file_location = \Drupal::service('file_system')->realpath($dzi_uri_schema);
       if (file_exists($dzi_absolute_file_location)) {
         return $dzi_uri_schema;
+      }
+    }
+    return '';
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getDziPath() {
+    $issue = $this->getParentIssue();
+    $issue_id = $issue->id();
+    $file = $this->getPageImage();
+    $dzi_filename = str_replace('.jpg', '.dzi', $file->getFilename());
+    $dzi_file_schemas = [
+      "/app/html/sites/default/files/serials/pages/$issue_id/$dzi_filename",
+      "/app/html/sites/default/files/serials/pages/$dzi_filename"
+    ];
+
+    foreach ($dzi_file_schemas as $dzi_file_schema) {
+      if (file_exists($dzi_file_schema)) {
+        return $dzi_file_schema;
       }
     }
     return '';
