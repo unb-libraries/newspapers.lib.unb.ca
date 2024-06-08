@@ -220,6 +220,29 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   /**
    * {@inheritdoc}
    */
+  public function getParentIssueId() {
+    return $this->get('parent_issue')->entity->id();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getParentTitle() {
+    $issue = $this->getParentIssue();
+    return $issue->get('parent_title')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getParentTitleId() {
+    $issue = $this->getParentIssue();
+    return $issue->get('parent_title')->entity->id();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function setParentIssue(SerialIssueInterface $issue) {
     $this->set('parent_issue', $issue->id());
     return $this;
@@ -518,13 +541,13 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    * {@inheritDoc}
    */
   public function getPdfUri() {
-    $issue = $this->getParentIssue();
-    $issue_id = $issue->id();
+    $issue_id = $this->getParentIssueId();
+    $title_id = $this->getParentTitleId();
     $file = $this->getPageImage();
     $pdf_filename = str_replace('.jpg', '.pdf', $file->getFilename());
     $pdf_uri_schemas = [
-      "base://serials/pages/$issue_id/$pdf_filename",
-      "base://serials/pages/pdf/$issue_id/$pdf_filename"
+      "base://serials/pages/$title_id/$issue_id/$pdf_filename",
+      "base://serials/pages/pdf/$issue_id/$pdf_filename",
     ];
 
     foreach ($pdf_uri_schemas as $pdf_uri_schema) {
@@ -540,13 +563,13 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    * {@inheritDoc}
    */
   public function getPdfPath() {
-    $issue = $this->getParentIssue();
-    $issue_id = $issue->id();
+    $issue_id = $this->getParentIssueId();
+    $title_id = $this->getParentTitleId();
     $file = $this->getPageImage();
     $pdf_filename = str_replace('.jpg', '.pdf', $file->getFilename());
     $pdf_file_schemas = [
+      "/app/html/sites/default/files/serials/pages/$title_id/$issue_id/$pdf_filename",
       "/app/html/sites/default/files/serials/pages/pdf/$issue_id/$pdf_filename",
-      "/app/html/sites/default/files/serials/pages/$issue_id/$pdf_filename"
     ];
 
     foreach ($pdf_file_schemas as $pdf_file_schema) {
@@ -561,13 +584,13 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    * {@inheritDoc}
    */
   public function getDziUri() {
-    $issue = $this->getParentIssue();
-    $issue_id = $issue->id();
+    $issue_id = $this->getParentIssueId();
+    $title_id = $this->getParentTitleId();
     $file = $this->getPageImage();
     $dzi_filename = str_replace('.jpg', '.dzi', $file->getFilename());
     $dzi_uri_schemas = [
-      "base://serials/pages/$issue_id/$dzi_filename",
-      "base://serials/pages/$dzi_filename"
+      "base://serials/pages/$title_id/$issue_id/$dzi_filename",
+      "base://serials/pages/$dzi_filename",
     ];
 
     foreach ($dzi_uri_schemas as $dzi_uri_schema) {
@@ -583,13 +606,13 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    * {@inheritDoc}
    */
   public function getDziPath() {
-    $issue = $this->getParentIssue();
-    $issue_id = $issue->id();
+    $issue_id = $this->getParentIssueId();
+    $title_id = $this->getParentTitleId();
     $file = $this->getPageImage();
     $dzi_filename = str_replace('.jpg', '.dzi', $file->getFilename());
     $dzi_file_schemas = [
-      "/app/html/sites/default/files/serials/pages/$issue_id/$dzi_filename",
-      "/app/html/sites/default/files/serials/pages/$dzi_filename"
+      "/app/html/sites/default/files/serials/pages/$title_id/$issue_id/$dzi_filename",
+      "/app/html/sites/default/files/serials/pages/$dzi_filename",
     ];
 
     foreach ($dzi_file_schemas as $dzi_file_schema) {
