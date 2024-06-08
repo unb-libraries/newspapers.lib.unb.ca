@@ -34,9 +34,13 @@ public static function bulkCreateNewStoragePaths() {
   $count = count($issue_ids);
   $progress = 0;
   foreach ($issue_ids as $issue_id) {
+    $issue = \Drupal::entityTypeManager()
+      ->getStorage('digital_serial_issue')
+      ->load($issue_id);
+    $title_id = $issue->getParentTitleId();
     $progress += 1;
     echo "Creating issue $progress/$count...\n";
-    $issue_absolute_path = "/app/html/sites/default/files/serials/pages/$issue_id";
+    $issue_absolute_path = "/app/html/sites/default/files/serials/pages/$title_id/$issue_id";
     if (!file_exists($issue_absolute_path)) {
       mkdir($issue_absolute_path, 0755, TRUE);
     }
@@ -90,11 +94,12 @@ public static function bulkCreateNewStoragePaths() {
   public static function moveDziTileLocation($page, $issue) {
     $file = $page->getPageImage();
     $issue_id = $issue->id();
+    $title_id = $issue->getParentTitleId();
     $image_file_name = $file->getFilename();
     $file_name = str_replace('.jpg', '.dzi', $image_file_name);
 
     $old_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$file_name";
-    $new_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$issue_id/$file_name";
+    $new_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$title_id/$issue_id/$file_name";
     $old_dzi_file = str_replace('.jpg', '.dzi', $old_page_absolute_file_location);
     $old_dzi_asset_path = str_replace('.jpg', '_files', $old_page_absolute_file_location);
     $new_dzi_file = str_replace('.jpg', '.dzi', $new_page_absolute_file_location);
@@ -120,9 +125,10 @@ public static function bulkCreateNewStoragePaths() {
   public static function movePdfFileLocation($page, $issue) {
     $file = $page->getPageImage();
     $issue_id = $issue->id();
+    $title_id = $issue->getParentTitleId();
     $file_name = $file->getFilename();
     $old_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$file_name";
-    $new_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$issue_id/$file_name";
+    $new_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$title_id/$issue_id/$file_name";
   
     $old_pdf_file_path = str_replace(
       '/pages/',

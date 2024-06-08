@@ -228,6 +228,13 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   /**
    * {@inheritdoc}
    */
+  public function getParentTitleId() {
+    return $this->get('parent_title')->entity->id();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function setParentTitle(SerialTitleInterface $title) {
     $this->set('parent_title', $title->id());
     return $this;
@@ -641,9 +648,10 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    * {@inheritDoc}
    */
   public function getStorageUri() {
+    $title_id = $this->getParentTitleId();
     $default_file_scheme = \Drupal::config('system.file')->get('default_scheme');
     $issue_id = $this->id();
-    return "$default_file_scheme://serials/pages/$issue_id";
+    return "$default_file_scheme://serials/pages/$title_id/$issue_id";
   }
 
   /**
