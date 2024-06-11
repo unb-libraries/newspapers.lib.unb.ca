@@ -172,7 +172,7 @@ class SerialPageViewerForm extends FormBase {
 
     // Determine if we're using DZI or the plain old image.
     if (!empty($dzi_uri)) {
-      $tile_sources = \Drupal::service('file_url_generator')->generateString($dzi_uri);
+      $tile_sources = $dzi_uri['path'];
     }
     else {
       $tile_sources = json_encode(
@@ -568,8 +568,7 @@ class SerialPageViewerForm extends FormBase {
     if (empty($pdf_uri)) {
       return '';
     }
-    $pdf_file_path = \Drupal::service('file_system')->realpath($pdf_uri);
-    $pdf_file_name = basename($pdf_file_path);
+    $pdf_file_name = basename($pdf_uri['file']);
 
     $pdf_download_link_options = [
       'attributes' => [
@@ -580,13 +579,13 @@ class SerialPageViewerForm extends FormBase {
         'download' => TRUE,
       ],
     ];
-    $base_uri = str_replace('public://', 'base://', $pdf_uri);
+
     return Link::fromTextAndUrl(
       Markup::create(
         '<span class="fa-solid fa-file-pdf mr-1" aria-hidden="true"></span>' . $pdf_file_name .
-        $this->getImageSizeDisplay($pdf_file_path)
+        $this->getImageSizeDisplay($pdf_uri['file'])
       ),
-      Url::fromUri($base_uri, $pdf_download_link_options),
+      Url::fromUserInput($pdf_uri['path'], $pdf_download_link_options),
     )->toString();
   }
 

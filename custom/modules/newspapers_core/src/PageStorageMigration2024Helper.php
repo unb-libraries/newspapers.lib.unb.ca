@@ -14,16 +14,18 @@ namespace Drupal\newspapers_core;
  */
 class PageStorageMigration2024Helper {
 
-// 18236
+  const BASE_STORAGE_PATH = '/app/html/sites/default/files/serials/pages';
+
+// 18237
 // rm -rf /app/html/sites/default/files/serials/pages/*
 // doas -u $NGINX_RUN_USER -- drush eval "\Drupal\newspapers_core\PageStorageMigration2024Helper::bulkCreateNewStoragePaths();"
-// scp -r 'retribution:/mnt/storage0/KubeNFS/newspapers-lib-unb-ca/prod/files/serials/pages/18236*' .
+// scp -r 'retribution:/mnt/storage0/KubeNFS/newspapers-lib-unb-ca/prod/files/serials/pages/18237*' .
 // docker cp . 435a2e17a33c:/app/html/sites/default/files/serials/pages/
-// mkdir -p /app/html/sites/default/files/serials/pages/pdf/18236
-// cp /app/html/sites/default/files/serials/pages/18236-0001.jpg /app/html/sites/default/files/serials/pages/pdf/18236/18236-0001.pdf
-// cp /app/html/sites/default/files/serials/pages/18236-0002.jpg /app/html/sites/default/files/serials/pages/pdf/18236/18236-0002.pdf
+// mkdir -p /app/html/sites/default/files/serials/pages/pdf/18237
+// cp /app/html/sites/default/files/serials/pages/18237-0001.jpg /app/html/sites/default/files/serials/pages/pdf/18237/18237-0001.pdf
+// cp /app/html/sites/default/files/serials/pages/18237-0002.jpg /app/html/sites/default/files/serials/pages/pdf/18237/18237-0002.pdf
 // chown -R nginx:nginx /app/html/sites/default/files/serials/pages/*
-// doas -u $NGINX_RUN_USER -- drush eval "\Drupal\newspapers_core\PageStorageMigration2024Helper::MoveIssueAssets('18236');"
+// doas -u $NGINX_RUN_USER -- drush eval "\Drupal\newspapers_core\PageStorageMigration2024Helper::MoveIssueAssets('18237');"
 
 /**
  * Move all page assets for a given issue to the new storage location.
@@ -34,13 +36,18 @@ public static function bulkCreateNewStoragePaths() {
   $count = count($issue_ids);
   $progress = 0;
   foreach ($issue_ids as $issue_id) {
+    // First, unlink the old storage location.
+    if (file_exists(self::BASE_STORAGE_PATH . "/$issue_id")) {
+      unlink(self::BASE_STORAGE_PATH . "/$issue_id");
+    }
+
     $issue = \Drupal::entityTypeManager()
       ->getStorage('digital_serial_issue')
       ->load($issue_id);
     $title_id = $issue->getParentTitleId();
     $progress += 1;
     echo "Creating issue $progress/$count...\n";
-    $issue_absolute_path = "/app/html/sites/default/files/serials/pages/$title_id/$issue_id";
+    $issue_absolute_path = self::BASE_STORAGE_PATH . "/$title_id/$issue_id";
     if (!file_exists($issue_absolute_path)) {
       mkdir($issue_absolute_path, 0755, TRUE);
     }
@@ -98,8 +105,8 @@ public static function bulkCreateNewStoragePaths() {
     $image_file_name = $file->getFilename();
     $file_name = str_replace('.jpg', '.dzi', $image_file_name);
 
-    $old_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$file_name";
-    $new_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$title_id/$issue_id/$file_name";
+    $old_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$file_name";
+    $new_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$title_id/$issue_id/$file_name";
     $old_dzi_file = str_replace('.jpg', '.dzi', $old_page_absolute_file_location);
     $old_dzi_asset_path = str_replace('.jpg', '_files', $old_page_absolute_file_location);
     $new_dzi_file = str_replace('.jpg', '.dzi', $new_page_absolute_file_location);
@@ -127,8 +134,8 @@ public static function bulkCreateNewStoragePaths() {
     $issue_id = $issue->id();
     $title_id = $issue->getParentTitleId();
     $file_name = $file->getFilename();
-    $old_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$file_name";
-    $new_page_absolute_file_location = "/app/html/sites/default/files/serials/pages/$title_id/$issue_id/$file_name";
+    $old_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$file_name";
+    $new_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$title_id/$issue_id/$file_name";
   
     $old_pdf_file_path = str_replace(
       '/pages/',

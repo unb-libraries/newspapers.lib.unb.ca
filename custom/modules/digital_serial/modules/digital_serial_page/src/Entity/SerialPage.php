@@ -59,6 +59,9 @@ use Drupal\user\UserInterface;
  */
 class SerialPage extends ContentEntityBase implements SerialPageInterface {
 
+  const PAGE_FILESTORE_LINK = '/sites/default/files';
+  const PAGE_FILESTORE_PATH = DRUPAL_ROOT . '/sites/default/files';
+
   use EntityChangedTrait;
 
   /**
@@ -517,8 +520,9 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    * checks.
    */
   public function deleteDziFiles() {
-    $dzi_path = $this->getDziPath();
-    if (!empty($dzi_path)) {
+    $dzi_info = $this->getDziUri();
+    if (!empty($dzi_info)) {
+      $dzi_path = $dzi_info['file'];
       unlink($dzi_path);
       $dzi_dir = str_replace('.dzi', '_files', $dzi_path);
       if (is_dir($dzi_dir) && str_contains($dzi_dir, '_files')) {
@@ -531,8 +535,9 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    * Removes the PDF from disk for a page entity.
    */
   public function deletePdfFile() {
-    $pdf_path = $this->getPdfPath();
-    if (!empty($pdf_path)) {
+    $pdf_info = $this->getPdfUri();
+    if (!empty($pdf_info)) {
+      $pdf_path = $pdf_info['file'];
       unlink($pdf_path);
     }
   }
@@ -545,39 +550,22 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $title_id = $this->getParentTitleId();
     $file = $this->getPageImage();
     $pdf_filename = str_replace('.jpg', '.pdf', $file->getFilename());
+
     $pdf_uri_schemas = [
-      "base://serials/pages/$title_id/$issue_id/$pdf_filename",
-      "base://serials/pages/pdf/$issue_id/$pdf_filename",
+      "/serials/pages/$title_id/$issue_id/$pdf_filename",
+      "/serials/pages/pdf/$issue_id/$pdf_filename",
     ];
 
     foreach ($pdf_uri_schemas as $pdf_uri_schema) {
-      $pdf_absolute_file_location = \Drupal::service('file_system')->realpath($pdf_uri_schema);
-      if (file_exists($pdf_absolute_file_location)) {
-        return $pdf_uri_schema;
+      $abs_path = self::PAGE_FILESTORE_PATH . $pdf_uri_schema;
+      if (file_exists($abs_path)) {
+        return [
+          'path' => self::PAGE_FILESTORE_LINK . $pdf_uri_schema,
+          'file' => $abs_path,
+        ];
       }
     }
-    return '';
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public function getPdfPath() {
-    $issue_id = $this->getParentIssueId();
-    $title_id = $this->getParentTitleId();
-    $file = $this->getPageImage();
-    $pdf_filename = str_replace('.jpg', '.pdf', $file->getFilename());
-    $pdf_file_schemas = [
-      "/app/html/sites/default/files/serials/pages/$title_id/$issue_id/$pdf_filename",
-      "/app/html/sites/default/files/serials/pages/pdf/$issue_id/$pdf_filename",
-    ];
-
-    foreach ($pdf_file_schemas as $pdf_file_schema) {
-      if (file_exists($pdf_file_schema)) {
-        return $pdf_file_schema;
-      }
-    }
-    return '';
+    return [];
   }
 
   /**
@@ -589,38 +577,20 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $file = $this->getPageImage();
     $dzi_filename = str_replace('.jpg', '.dzi', $file->getFilename());
     $dzi_uri_schemas = [
-      "base://serials/pages/$title_id/$issue_id/$dzi_filename",
-      "base://serials/pages/$dzi_filename",
+      "/serials/pages/$title_id/$issue_id/$dzi_filename",
+      "/serials/pages/$dzi_filename",
     ];
 
     foreach ($dzi_uri_schemas as $dzi_uri_schema) {
-      $dzi_absolute_file_location = \Drupal::service('file_system')->realpath($dzi_uri_schema);
-      if (file_exists($dzi_absolute_file_location)) {
-        return $dzi_uri_schema;
+      $abs_path = self::PAGE_FILESTORE_PATH . $dzi_uri_schema;
+      if (file_exists($abs_path)) {
+        return [
+          'path' => self::PAGE_FILESTORE_LINK . $dzi_uri_schema,
+          'file' => $abs_path,
+        ];
       }
     }
-    return '';
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public function getDziPath() {
-    $issue_id = $this->getParentIssueId();
-    $title_id = $this->getParentTitleId();
-    $file = $this->getPageImage();
-    $dzi_filename = str_replace('.jpg', '.dzi', $file->getFilename());
-    $dzi_file_schemas = [
-      "/app/html/sites/default/files/serials/pages/$title_id/$issue_id/$dzi_filename",
-      "/app/html/sites/default/files/serials/pages/$dzi_filename",
-    ];
-
-    foreach ($dzi_file_schemas as $dzi_file_schema) {
-      if (file_exists($dzi_file_schema)) {
-        return $dzi_file_schema;
-      }
-    }
-    return '';
+    return [];
   }
 
 }
