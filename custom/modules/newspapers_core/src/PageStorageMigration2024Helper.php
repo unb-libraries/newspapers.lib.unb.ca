@@ -108,9 +108,9 @@ public static function bulkCreateNewStoragePaths() {
     $old_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$file_name";
     $new_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$title_id/$issue_id/$file_name";
     $old_dzi_file = str_replace('.jpg', '.dzi', $old_page_absolute_file_location);
-    $old_dzi_asset_path = str_replace('.jpg', '_files', $old_page_absolute_file_location);
+    $old_dzi_asset_path = str_replace('.dzi', '_files', $old_dzi_file);
     $new_dzi_file = str_replace('.jpg', '.dzi', $new_page_absolute_file_location);
-    $new_dzi_asset_path = str_replace('.jpg', '_files', $new_page_absolute_file_location);
+    $new_dzi_asset_path = str_replace('.dzi', '_files', $new_dzi_file);
 
     if (file_exists($old_dzi_file)) {
       rename($old_dzi_file, $new_dzi_file);
