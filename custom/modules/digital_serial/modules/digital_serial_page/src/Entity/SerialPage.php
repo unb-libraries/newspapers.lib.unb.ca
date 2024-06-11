@@ -467,8 +467,9 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     $this->movePageImageToPermanentStorage(TRUE);
-    $this->deleteDziFiles();
-    $this->deletePdfFile();
+    // @TODO: This needs to be enabled post-2024 migration.
+    // $this->deleteDziFiles();
+    // $this->deletePdfFile();
     parent::postSave($storage, $update);
   }
 
