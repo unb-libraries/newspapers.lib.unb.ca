@@ -1,0 +1,27 @@
+#partnerships {
+  a {
+    svg.unb-lib-logo {
+      width: 250px;
+
+      .fill-unb,
+      .fill-libraries {
+        transition: fill 0.2s linear;
+      }
+      .fill-unb {
+        fill: $black;
+      }
+      .fill-libraries {
+        fill: $gray-700;
+      }
+    }
+
+    &:focus,
+    &:hover {
+      svg.unb-lib-logo {
+        .fill-libraries {
+          fill: $unb-logo-red;
+        }
+      }
+    }
+  }
+}
