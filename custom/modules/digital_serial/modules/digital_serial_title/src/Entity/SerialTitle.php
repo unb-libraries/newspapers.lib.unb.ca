@@ -330,4 +330,40 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
     drupal_flush_all_caches();
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public function getStorageUri() {
+    $default_file_scheme = \Drupal::config('system.file')->get('default_scheme');
+    $title_id = $this->id();
+    return "$default_file_scheme://serials/pages/$title_id";
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getStoragePath() {
+    $title_id = $this->id();
+    return DRUPAL_ROOT . "/sites/default/files/serials/pages/$title_id";
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function createStoragePath() {
+    $title_absolute_path = $this->getStoragePath();
+    if (!file_exists($title_absolute_path)) {
+      mkdir($title_absolute_path, 0755, TRUE);
+    }
+    return $title_absolute_path;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    $this->createStoragePath();
+    parent::postSave($storage, $update);
+  }
+
 }

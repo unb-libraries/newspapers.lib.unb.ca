@@ -14,7 +14,7 @@ namespace Drupal\newspapers_core;
  */
 class PageStorageMigration2024Helper {
 
-  const BASE_STORAGE_PATH = '/app/html/sites/default/files/serials/pages';
+  const BASE_PAGE_STORAGE_PATH = '/serials/pages';
 
 // 18237
 // rm -rf /app/html/sites/default/files/serials/pages/*
@@ -37,8 +37,9 @@ public static function bulkCreateNewStoragePaths() {
   $progress = 0;
   foreach ($issue_ids as $issue_id) {
     // First, unlink the old storage location.
-    if (file_exists(self::BASE_STORAGE_PATH . "/$issue_id")) {
-      unlink(self::BASE_STORAGE_PATH . "/$issue_id");
+    $old_storage_location = DRUPAL_ROOT . self::BASE_PAGE_STORAGE_PATH . "/$issue_id";
+    if (file_exists($old_storage_location)) {
+      unlink($old_storage_location);
     }
 
     $issue = \Drupal::entityTypeManager()
@@ -47,7 +48,7 @@ public static function bulkCreateNewStoragePaths() {
     $title_id = $issue->getParentTitleId();
     $progress += 1;
     echo "Creating issue $progress/$count...\n";
-    $issue_absolute_path = self::BASE_STORAGE_PATH . "/$title_id/$issue_id";
+    $issue_absolute_path = DRUPAL_ROOT . self::BASE_PAGE_STORAGE_PATH . "/$title_id/$issue_id";
     if (!file_exists($issue_absolute_path)) {
       mkdir($issue_absolute_path, 0755, TRUE);
     }
@@ -105,8 +106,8 @@ public static function bulkCreateNewStoragePaths() {
     $image_file_name = $file->getFilename();
     $file_name = str_replace('.jpg', '.dzi', $image_file_name);
 
-    $old_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$file_name";
-    $new_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$title_id/$issue_id/$file_name";
+    $old_page_absolute_file_location = DRUPAL_ROOT . self::BASE_PAGE_STORAGE_PATH . "/$file_name";
+    $new_page_absolute_file_location = DRUPAL_ROOT . self::BASE_PAGE_STORAGE_PATH . "/$title_id/$issue_id/$file_name";
     $old_dzi_file = str_replace('.jpg', '.dzi', $old_page_absolute_file_location);
     $old_dzi_asset_path = str_replace('.dzi', '_files', $old_dzi_file);
     $new_dzi_file = str_replace('.jpg', '.dzi', $new_page_absolute_file_location);
@@ -134,8 +135,8 @@ public static function bulkCreateNewStoragePaths() {
     $issue_id = $issue->id();
     $title_id = $issue->getParentTitleId();
     $file_name = $file->getFilename();
-    $old_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$file_name";
-    $new_page_absolute_file_location = self::BASE_STORAGE_PATH . "/$title_id/$issue_id/$file_name";
+    $old_page_absolute_file_location = DRUPAL_ROOT . self::BASE_PAGE_STORAGE_PATH . "/$file_name";
+    $new_page_absolute_file_location = DRUPAL_ROOT . self::BASE_PAGE_STORAGE_PATH . "/$title_id/$issue_id/$file_name";
   
     $old_pdf_file_path = str_replace(
       '/pages/',

@@ -634,14 +634,22 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    * {@inheritDoc}
    */
   public function createStoragePath() {
-    $file_system = \Drupal::service('file_system');
-    $issue_absolute_path = $file_system->realpath(
-      $this->getStorageUri()
-    );
+    $title = $this->getParentTitle();
+    $title->createStoragePath();
+    $issue_absolute_path = $this->getStoragePath();
     if (!file_exists($issue_absolute_path)) {
       mkdir($issue_absolute_path, 0755, TRUE);
     }
     return $issue_absolute_path;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getStoragePath() {
+    $title_id = $this->getParentTitleId();
+    $issue_id = $this->id();
+    return DRUPAL_ROOT . "/sites/default/files/serials/pages/$title_id/$issue_id";
   }
 
   /**

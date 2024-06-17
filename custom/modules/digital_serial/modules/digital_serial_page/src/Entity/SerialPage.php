@@ -486,6 +486,20 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     return '';
   }
 
+    /**
+   * {@inheritDoc}
+   */
+  public function getPagePermImageStoragePath() {
+    $issue = $this->getParentIssue();
+    $file = $this->getPageImage();
+
+    if (!empty($issue) && !empty($file)) {
+      return $issue->getStoragePath() . '/' . $file->getFilename();
+    }
+    return '';
+  }
+
+
   /**
    * {@inheritDoc}
    */
@@ -500,12 +514,13 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       return;
     }
     $file_system = \Drupal::service('file_system');
-    $perm_storage_absolute_file_location = $file_system->realpath($perm_storage_uri);
+    $issue = $this->getParentIssue();
+    $issue->createStoragePath();
 
     if ($move_file) {
       $file_system->move(
         $file_system->realpath($file->getFileUri()),
-        $perm_storage_absolute_file_location
+        $this->getPagePermImageStoragePath()
       );
     }
 
