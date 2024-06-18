@@ -8,7 +8,7 @@ namespace Drupal\digital_serial_issue;
  * @see \Drupal\digital_serial_issue\Entity\SerialIssue
  * @see \Drupal\digital_serial_page\Entity\SerialPage
  */
-class DataIntegrity
+class DataIntegrityOfficer
 {
 
   const EMPTY_DATA_VALUE = '--';
