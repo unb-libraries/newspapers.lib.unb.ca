@@ -82,13 +82,44 @@ public static function bulkCreateNewStoragePaths() {
       ->condition('parent_issue', $issue_id);
     $entity_ids = $query->execute();
     foreach ($entity_ids as $entity_id) {
-      $page = \Drupal::entityTypeManager()
-        ->getStorage('digital_serial_page')
-        ->load($entity_id);
-      $page->movePageImageToPermanentStorage();
-      self::moveDziTileLocation($page, $issue);
-      self::movePdfFileLocation($page, $issue);
+      self::movePageAssetsById($entity_id);
     }
+  }
+
+  /**
+   * Move all page assets for a page.
+   *
+   * @param int $page_id
+   *   The ID of the page to move.
+   */
+  public static function movePageAssetsById($page_id) {
+    $page = \Drupal::entityTypeManager()
+      ->getStorage('digital_serial_page')
+      ->load($page_id);
+    if ($page == NULL) {
+      return;
+    }
+    self::movePageAssets($page);
+  }
+
+  /**
+   * Move all page assets for a page.
+   *
+   * @param \Drupal\digital_serial_page\Entity\SerialPage $page
+   *   The page to move.
+   * @param \Drupal\digital_serial_issue\Entity\SerialIssue $issue
+   *   The issue to move. If not provided, the issue will be loaded from the page.
+   */
+  public static function movePageAssets($page, $issue = NULL) {
+    if ($issue == NULL) {
+      $issue = $page->getParentIssue();
+    }
+    if ($issue == NULL) {
+      return;
+    }
+    $page->movePageImageToPermanentStorage();
+    self::moveDziTileLocation($page, $issue);
+    self::movePdfFileLocation($page, $issue);
   }
 
   /**
@@ -155,6 +186,42 @@ public static function bulkCreateNewStoragePaths() {
   
     if (file_exists($old_pdf_file_path)) {
       rename($old_pdf_file_path, $new_pdf_file_path);
+    }
+  }
+
+  /**
+   * Get a list of pages with files stored in the old location.
+   *
+   * @param int $limit
+   *   The number of pages to return. Defaults to 50.
+   */
+  public static function getPagesNeedingToMove($limit = 50) {
+    $pages = [];
+    $sql = "SELECT fid from file_managed WHERE uri NOT LIKE 'public://serials/pages/%/%/%.jpg' AND uri LIKE 'public://serials/pages/%' LIMIT $limit";
+    $result = \Drupal::database()->query($sql);
+    $fids = $result->fetchCol();
+    foreach ($fids as $fid) {
+      $file = \Drupal\file\Entity\File::load($fid);
+      $page = \Drupal::entityTypeManager()
+        ->getStorage('digital_serial_page')
+        ->loadByProperties(['page_image' => $file->getFileUri()]);
+      if ($page != NULL) {
+        $pages[] = $page;
+      }
+    }
+    return $pages;
+  }
+
+  /**
+   * Move all pages with files stored in the old location to the new location.
+   *
+   * @param int $limit
+   *   The number of pages to move. Defaults to 50.
+   */
+  public static function movePagesNeedingToMove($limit = 50) {
+    $pages = self::getPagesNeedingToMove($limit);
+    foreach ($pages as $page) {
+      self::movePageAssets($page);
     }
   }
 

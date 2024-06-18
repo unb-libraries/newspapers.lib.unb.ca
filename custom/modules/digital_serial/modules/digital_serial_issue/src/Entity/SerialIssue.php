@@ -550,10 +550,14 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   public function save() {
     $parent_title = $this->getParentTitle();
 
+    if (empty($parent_title)) {
+      parent::save();
+      return;
+    }
+
     if (empty($this->getIssueTitle())) {
       $this->setIssueTitle($parent_title->getParentPublication()->getTitle());
     }
-
     parent::save();
     $parent_title->updateDigitalHoldingRecord();
   }
@@ -635,6 +639,9 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    */
   public function createStoragePath() {
     $title = $this->getParentTitle();
+    if (empty($title)) {
+      return '';
+    }
     $title->createStoragePath();
     $issue_absolute_path = $this->getStoragePath();
     if (!file_exists($issue_absolute_path)) {
