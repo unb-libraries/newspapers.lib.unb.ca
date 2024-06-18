@@ -507,10 +507,17 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $file = $this->getPageImage();
     $perm_storage_uri = $this->getPagePermImageStorageUri();
 
+    $file_uri = $file->getFileUri();
+    $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager')->getViaUri($file_uri);
+    $abs_file_path = $stream_wrapper_manager->realpath();
     // Do nothing if no URI or already in permanent storage.
     if (
-      empty($perm_storage_uri) || $file->getFileUri() == $perm_storage_uri
+      empty($perm_storage_uri) ||
+      $file->getFileUri() == $perm_storage_uri ||
+      $abs_file_path == false ||
+      !file_exists($abs_file_path)
       ) {
+      // Something might be wrong. Doing stuff might make it worse.
       return;
     }
     $file_system = \Drupal::service('file_system');
