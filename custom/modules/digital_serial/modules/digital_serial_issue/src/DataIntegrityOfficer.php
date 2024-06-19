@@ -281,7 +281,7 @@ class DataIntegrityOfficer
    * @return array
    *   An array of page entities that do not have a valid image file associated with them.
    */
-  public static function reportPagesWithMissingFiles()
+  public static function reportPagesWithMissingFiles($print_info = FALSE)
   {
     // Case 1: No FID referenced.
     $pages = self::getMissingFilesNoFid();
@@ -290,29 +290,47 @@ class DataIntegrityOfficer
       $items[] = [
         'page_id' => $page->id(),
         'fid' => NULL,
+        'uri' => NULL,
+        'path' => NULL,
         'details' => 'No Image Referenced',
       ];
     }
-    $pages = self::getAbsoluteFilePaths();
+
     // Case 2&3: FID referenced but no file, or file zero length.
-    foreach ($pages as $page) {
-      $file_path = $page['uri'];
-      if (!file_exists($file_path)) {
-        $items[] = [
-          'page_id' => $page['id'],
-          'fid' => $page['fid'],
-          'path' => $file_path,
-          'details' => 'File DNE',
-        ];
-      } elseif (filesize($file_path) == 0) {
-        $items[] = [
-          'page_id' => $page['id'],
-          'fid' => $page['fid'],
-          'path' => $file_path,
-          'details' => 'File 0length',
-        ];
+    // This is a large operation, so we process in chunks.
+    $item_count = 250;
+    $offset = 0;
+    $returned_items = $item_count;
+
+    while ($returned_items == $item_count) {
+      if ($print_info) {
+        echo "Processing $item_count items starting at $offset\n";
+      }
+      $pages = self::getPageFilesDetail($offset, $item_count);
+      $returned_items = count($pages);
+      $offset += $item_count;
+
+      foreach ($pages as $page) {
+        if (!file_exists($page['path'])) {
+          $items[] = [
+            'page_id' => $page['id'],
+            'fid' => $page['fid'],
+            'uri' => $page['uri'],
+            'path' => $page['path'],
+            'details' => 'File DNE',
+          ];
+        } elseif (filesize($page['path']) == 0) {
+          $items[] = [
+            'page_id' => $page['id'],
+            'fid' => $page['fid'],
+            'uri' => $page['uri'],
+            'path' => $page['path'],
+            'details' => 'Zero length',
+          ];
+        }
       }
     }
+
     return $items;
   }
 
@@ -338,26 +356,29 @@ class DataIntegrityOfficer
   }
 
   /**
-   * Gets all pages that have an associated file but the file is zero or missing.
+   * Gets details of image files associated with serial pages.
    *
    * @return array[]
-   *   An assoiative array of pages that have an associated file but the file is zero or missing.
+   *   An array of assoiative arrays of page details.
    */
-  public static function getAbsoluteFilePaths()
+  public static function getPageFilesDetail($offset = 0, $limit = 50)
   {
-    $sql = "SELECT id FROM digital_serial_page WHERE page_image__target_id IS NOT NULL LIMIT 50";
+    $sql = "SELECT id FROM digital_serial_page WHERE page_image__target_id IS NOT NULL ORDER BY id LIMIT $limit OFFSET $offset";
     $result = \Drupal::database()->query($sql);
     $ids = $result->fetchCol();
     $pages = [];
-    $file_system = \Drupal::service('file_system');
+
     foreach ($ids as $id) {
       $page_entity = \Drupal::entityTypeManager()
         ->getStorage('digital_serial_page')
         ->load($id);
+      $file = $page_entity->getPageImage();
+      $abs_file_path = DRUPAL_ROOT . str_replace('public://', '/sites/default/files/', $file->getFileUri());
       $pages[] = [
         'id' => $page_entity->id(),
         'fid' => $page_entity->getPageImage()->target_id,
-        'path' => $file_system->realpath($page_entity->getPageImage()->getFileUri()),
+        'uri' => $page_entity->getPageImage()->getFileUri(),
+        'path' => $abs_file_path
       ];
     }
     return $pages;
