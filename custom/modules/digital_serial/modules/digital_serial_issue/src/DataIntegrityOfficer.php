@@ -154,7 +154,7 @@ class DataIntegrityOfficer
    * @return array
    *   An associative array of issues and its associated data.
    */
-  public static function getDataIntegrityIssues()
+  public static function getDataIntegrityIssues($print_info = FALSE)
   {
     $report = [];
     $report['Orphaned Issues'] = self::getFormattedReport(
@@ -167,7 +167,7 @@ class DataIntegrityOfficer
       self::reportIssuesWithNoPages()
     );
     $report['Pages With Invalid Images'] = self::getFormattedReport(
-      self::reportPagesWithMissingFiles()
+      self::reportPagesWithMissingFiles($print_info)
     );
     return $report;
   }
@@ -175,9 +175,9 @@ class DataIntegrityOfficer
   /**
    * Prints a report of any data integrity issues that may exist within the system.
    */
-  public static function printDataIntegrityIssues()
+  public static function printDataIntegrityIssues($print_info = FALSE)
   {
-    $report = self::getDataIntegrityIssues();
+    $report = self::getDataIntegrityIssues($print_info);
 
     foreach ($report as $label => $data) {
       if (empty($data)) {
