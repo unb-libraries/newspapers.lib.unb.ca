@@ -297,17 +297,18 @@ class DataIntegrityOfficer
     // Case 2&3: FID referenced but no file, or file zero length.
     foreach ($pages as $page) {
       $file_path = $page['uri'];
-      $fid = $page['id'];
       if (!file_exists($file_path)) {
         $items[] = [
           'page_id' => $page['id'],
-          'fid' => $fid,
+          'fid' => $page['fid'],
+          'path' => $file_path,
           'details' => 'File DNE',
         ];
       } elseif (filesize($file_path) == 0) {
         $items[] = [
           'page_id' => $page['id'],
-          'fid' => $fid,
+          'fid' => $page['fid'],
+          'path' => $file_path,
           'details' => 'File 0length',
         ];
       }
@@ -355,6 +356,7 @@ class DataIntegrityOfficer
         ->load($id);
       $pages[] = [
         'id' => $page_entity->id(),
+        'fid' => $page_entity->getPageImage()->target_id,
         'path' => $file_system->realpath($page_entity->getPageImage()->getFileUri()),
       ];
     }
