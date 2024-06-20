@@ -330,6 +330,8 @@ class DataIntegrityOfficer
           ];
         }
       }
+      // Clear memory cache to prevent memory exhaustion.
+      \Drupal::service('entity.memory_cache')->deleteAll();
     }
 
     return $items;
