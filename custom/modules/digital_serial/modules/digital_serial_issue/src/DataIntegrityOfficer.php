@@ -303,8 +303,9 @@ class DataIntegrityOfficer
     $returned_items = $item_count;
 
     while ($returned_items == $item_count) {
+      $memuse = memory_get_usage();
       if ($print_info) {
-        echo "Processing $item_count items starting at $offset\n";
+        echo "Processing $item_count items starting at $offset [Memory: $memuse]\n";
       }
       $pages = self::getPageFilesDetail($offset, $item_count);
       $returned_items = count($pages);
@@ -367,6 +368,7 @@ class DataIntegrityOfficer
     $result = \Drupal::database()->query($sql);
     $ids = $result->fetchCol();
     $pages = [];
+    unset($result);
 
     foreach ($ids as $id) {
       $page_entity = \Drupal::entityTypeManager()
@@ -374,12 +376,14 @@ class DataIntegrityOfficer
         ->load($id);
       $file = $page_entity->getPageImage();
       $abs_file_path = DRUPAL_ROOT . str_replace('public://', '/sites/default/files/', $file->getFileUri());
+      unset($file);
       $pages[] = [
         'id' => $page_entity->id(),
         'fid' => $page_entity->getPageImage()->target_id,
         'uri' => $page_entity->getPageImage()->getFileUri(),
         'path' => $abs_file_path
       ];
+      unset($page_entity);
     }
     return $pages;
   }
