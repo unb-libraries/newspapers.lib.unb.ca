@@ -11,6 +11,7 @@ dependencies:
     - digital_serial_title
     - node
     - serial_holding
+    - user
 id: digital_titles_lister
 label: 'Digital Titles Lister'
 module: views
@@ -432,8 +433,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access content'
       cache:
         type: tag
         options: {  }
@@ -713,6 +715,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
+        - user.permissions
       tags:
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
@@ -740,6 +743,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
+        - user.permissions
       tags:
         - 'config:field.storage.node.field_place_of_publication'
         - 'config:field.storage.node.field_sort_title'
