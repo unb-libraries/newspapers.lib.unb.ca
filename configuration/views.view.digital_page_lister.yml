@@ -2840,7 +2840,7 @@ display:
           exposed: true
           expose:
             operator_id: search_api_fulltext_op
-            label: Keywords
+            label: 'Search within digitized content'
             description: '[note] Overwritten via newspapers_core_form_alter()'
             use_operator: false
             operator: search_api_fulltext_op
