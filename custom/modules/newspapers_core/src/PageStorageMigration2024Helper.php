@@ -217,10 +217,15 @@ public static function bulkCreateNewStoragePaths() {
    *
    * @param int $limit
    *   The number of pages to move. Defaults to 50.
+   * @param bool $verbose
+   *   Whether to output verbose information. Defaults to FALSE.
    */
-  public static function movePagesNeedingToMove($limit = 50) {
+  public static function movePagesNeedingToMove($limit = 50, $verbose = FALSE) {
     $pages = self::getPagesNeedingToMove($limit);
     foreach ($pages as $page) {
+      if ($verbose) {
+        echo "Moving page {$page->id()}...\n";
+      }
       self::movePageAssets($page);
     }
   }
