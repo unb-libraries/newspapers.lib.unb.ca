@@ -206,7 +206,7 @@ public static function bulkCreateNewStoragePaths() {
         ->getStorage('digital_serial_page')
         ->loadByProperties(['page_image' => $file->id()]);
       if ($page != NULL) {
-        $pages[] = $page;
+        $pages[] = reset($page);
       }
     }
     return $pages;
