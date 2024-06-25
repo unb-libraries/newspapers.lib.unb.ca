@@ -204,7 +204,7 @@ public static function bulkCreateNewStoragePaths() {
       $file = \Drupal\file\Entity\File::load($fid);
       $page = \Drupal::entityTypeManager()
         ->getStorage('digital_serial_page')
-        ->loadByProperties(['page_image' => $file->getFileUri()]);
+        ->loadByProperties(['page_image' => $file->id()]);
       if ($page != NULL) {
         $pages[] = $page;
       }
