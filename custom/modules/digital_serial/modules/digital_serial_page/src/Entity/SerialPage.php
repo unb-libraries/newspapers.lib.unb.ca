@@ -503,7 +503,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   /**
    * {@inheritDoc}
    */
-  public function movePageImageToPermanentStorage($move_file = TRUE) {
+  public function movePageImageToPermanentStorage($move_file = TRUE, $verbose = FALSE) {
     $file = $this->getPageImage();
     $perm_storage_uri = $this->getPagePermImageStorageUri();
 
@@ -518,6 +518,21 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       !file_exists($abs_file_path)
       ) {
       // Something might be wrong. Doing stuff might make it worse.
+      if ($verbose) {
+        $id = $this->id();
+        if (empty($perm_storage_uri)) {
+          \Drupal::logger('digital_serial_page')->notice("No permanent storage URI found for page $id");
+        }
+        if ($file->getFileUri() == $perm_storage_uri) {
+          \Drupal::logger('digital_serial_page')->notice("Page $id already in permanent storage");
+        }
+        if ($abs_file_path == false) {
+          \Drupal::logger('digital_serial_page')->notice("File path for page $id is invalid");
+        }
+        if (!file_exists($abs_file_path)) {
+          \Drupal::logger('digital_serial_page')->notice("File $abs_file_path for page $id does not exist in the filesystem");
+        }
+      }
       return;
     }
     $file_system = \Drupal::service('file_system');
