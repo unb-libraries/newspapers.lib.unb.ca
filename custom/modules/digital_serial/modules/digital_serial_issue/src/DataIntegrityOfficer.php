@@ -5,6 +5,8 @@ namespace Drupal\digital_serial_issue;
 /**
  * Provides data integrity helpers.
  *
+ * doas -u $NGINX_RUN_USER -- drush eval "\Drupal\digital_serial_issue\DataIntegrityOfficer::MoveIssueAssets('18237');"
+ *
  * @see \Drupal\digital_serial_issue\Entity\SerialIssue
  * @see \Drupal\digital_serial_page\Entity\SerialPage
  */

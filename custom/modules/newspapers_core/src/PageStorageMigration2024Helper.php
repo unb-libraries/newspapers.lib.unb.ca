@@ -25,7 +25,7 @@ class PageStorageMigration2024Helper {
 // cp /app/html/sites/default/files/serials/pages/18237-0001.jpg /app/html/sites/default/files/serials/pages/pdf/18237/18237-0001.pdf
 // cp /app/html/sites/default/files/serials/pages/18237-0002.jpg /app/html/sites/default/files/serials/pages/pdf/18237/18237-0002.pdf
 // chown -R nginx:nginx /app/html/sites/default/files/serials/pages/*
-// doas -u $NGINX_RUN_USER -- drush eval "\Drupal\newspapers_core\PageStorageMigration2024Helper::MoveIssueAssets('18237');"
+// doas -u $NGINX_RUN_USER -- drush eval "\Drupal\newspapers_core\PageStorageMigration2024Helper::movePagesNeedingToMove(100, TRUE);"
 
 /**
  * Move all page assets for a given issue to the new storage location.
