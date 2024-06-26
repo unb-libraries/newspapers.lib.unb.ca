@@ -213,6 +213,40 @@ public static function bulkCreateNewStoragePaths() {
   }
 
   /**
+   * Gets a count of pages stored in the old location.
+   *
+   * @param int $limit
+   *   The number of pages to return. Defaults to 50.
+   */
+  public static function countPagesNeedingToMove() {
+    $sql = "SELECT COUNT(fid) from file_managed WHERE uri NOT LIKE 'public://serials/pages/%/%/%.jpg' AND uri LIKE 'public://serials/pages/%'";
+    $result = \Drupal::database()->query($sql);
+    return $result->fetchCol();
+  }
+
+  /**
+   * Gets a count of pages stored in the new location.
+   *
+   * @param int $limit
+   *   The number of pages to return. Defaults to 50.
+   */
+  public static function countPagesAlreadyMoved() {
+    $sql = "SELECT COUNT(fid) from file_managed WHERE uri LIKE 'public://serials/pages/%/%/%.jpg'";
+    $result = \Drupal::database()->query($sql);
+    return $result->fetchCol();
+  }
+
+  /**
+   * Print the count of pages needing to move and already moved.
+   */
+  public static function printCountPagesNeedingToMove() {
+    $count_old = self::countPagesNeedingToMove();
+    $count_new = self::countPagesAlreadyMoved();
+    echo "Pages needing to move: $count_old\n";
+    echo "Pages already moved: $count_new\n";
+  }
+
+  /**
    * Move all pages with files stored in the old location to the new location.
    *
    * @param int $limit
