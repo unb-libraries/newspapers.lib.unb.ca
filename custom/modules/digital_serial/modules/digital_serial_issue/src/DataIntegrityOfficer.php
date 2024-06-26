@@ -321,6 +321,7 @@ class DataIntegrityOfficer
             'uri' => $page['uri'],
             'path' => $page['path'],
             'details' => 'File DNE',
+            'url' => $page['url'],
           ];
         } elseif (filesize($page['path']) == 0) {
           $items[] = [
@@ -329,6 +330,7 @@ class DataIntegrityOfficer
             'uri' => $page['uri'],
             'path' => $page['path'],
             'details' => 'Zero length',
+            'url' => $page['url'],
           ];
         }
       }
@@ -379,13 +381,22 @@ class DataIntegrityOfficer
         ->getStorage('digital_serial_page')
         ->load($id);
       $file = $page_entity->getPageImage();
+      $issue = $page_entity->getParentIssue();
+      $title = $issue->getParentTitle();
+      $url = sprintf(
+        'https://newspapers.lib.unb.ca/serials/%s/issues/%s/pages/%s',
+        $title->id(),
+        $issue->id(),
+        $page_entity->id()
+      );
       $abs_file_path = DRUPAL_ROOT . str_replace('public://', '/sites/default/files/', $file->getFileUri());
       unset($file);
       $pages[] = [
         'id' => $page_entity->id(),
         'fid' => $page_entity->getPageImage()->target_id,
         'uri' => $page_entity->getPageImage()->getFileUri(),
-        'path' => $abs_file_path
+        'path' => $abs_file_path,
+        'url' => $url,
       ];
       unset($page_entity);
     }
