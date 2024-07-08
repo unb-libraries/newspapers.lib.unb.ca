@@ -59,7 +59,6 @@ dependencies:
     - file
     - image
     - languagefield
-    - path
     - text
 third_party_settings:
   field_group:
@@ -597,12 +596,6 @@ content:
       placeholder: ''
     third_party_settings:
       conditional_fields: {  }
-  path:
-    type: path
-    weight: 25
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   promote:
     type: boolean_checkbox
     weight: 23
@@ -656,3 +649,4 @@ hidden:
   field_last_issue_sort_date: true
   field_previous_identifications: true
   langcode: true
+  path: true
