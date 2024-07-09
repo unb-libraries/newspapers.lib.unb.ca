@@ -23,7 +23,6 @@ module:
   contact: 0
   contextual: 0
   csv_serialization: 0
-  ctools: 0
   datetime: 0
   datetime_range: 0
   digital_serial: 0
