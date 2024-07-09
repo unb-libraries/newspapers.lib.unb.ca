@@ -59,6 +59,7 @@ dependencies:
     - file
     - image
     - languagefield
+    - path
     - text
 third_party_settings:
   field_group:
@@ -123,7 +124,7 @@ third_party_settings:
       label: Description
       region: content
       parent_name: ''
-      weight: 12
+      weight: 13
       format_type: details
       format_settings:
         classes: ''
@@ -139,13 +140,13 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 22
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
   field_credit:
     type: string_textarea
-    weight: 20
+    weight: 21
     region: content
     settings:
       rows: 2
@@ -171,7 +172,7 @@ content:
         hide_guidelines: '1'
   field_editor:
     type: entity_reference_autocomplete
-    weight: 11
+    weight: 12
     region: content
     settings:
       match_operator: CONTAINS
@@ -351,7 +352,7 @@ content:
             selector: ''
   field_issn:
     type: string_textfield
-    weight: 16
+    weight: 17
     region: content
     settings:
       size: 60
@@ -359,7 +360,7 @@ content:
     third_party_settings: {  }
   field_language:
     type: languagefield_select
-    weight: 18
+    weight: 19
     region: content
     settings:
       format:
@@ -457,13 +458,13 @@ content:
     third_party_settings: {  }
   field_microfilmed_by:
     type: options_select
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   field_oclc:
     type: string_textfield
-    weight: 15
+    weight: 16
     region: content
     settings:
       size: 60
@@ -485,7 +486,7 @@ content:
     third_party_settings: {  }
   field_publisher:
     type: entity_reference_autocomplete
-    weight: 10
+    weight: 11
     region: content
     settings:
       match_operator: CONTAINS
@@ -550,7 +551,7 @@ content:
       conditional_fields: {  }
   field_subject_notes:
     type: string_textarea
-    weight: 14
+    weight: 15
     region: content
     settings:
       rows: 4
@@ -558,7 +559,7 @@ content:
     third_party_settings: {  }
   field_subjects:
     type: string_textfield
-    weight: 13
+    weight: 14
     region: content
     settings:
       size: 60
@@ -575,7 +576,7 @@ content:
       conditional_fields: {  }
   field_supplemental_information:
     type: file_generic
-    weight: 19
+    weight: 20
     region: content
     settings:
       progress_indicator: throbber
@@ -596,9 +597,15 @@ content:
       placeholder: ''
     third_party_settings:
       conditional_fields: {  }
+  path:
+    type: path
+    weight: 28
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 23
+    weight: 24
     region: content
     settings:
       display_label: true
@@ -610,14 +617,14 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 28
+    weight: 29
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 24
+    weight: 25
     region: content
     settings:
       display_label: true
@@ -632,7 +639,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 21
+    weight: 22
     region: content
     settings:
       match_operator: CONTAINS
@@ -649,4 +656,3 @@ hidden:
   field_last_issue_sort_date: true
   field_previous_identifications: true
   langcode: true
-  path: true
