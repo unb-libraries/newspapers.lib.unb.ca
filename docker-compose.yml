@@ -71,6 +71,8 @@ services:
       - "4095:8025"
     networks:
       - newspapers.lib.unb.ca
+    profiles:
+      - mailhog
 networks:
   newspapers.lib.unb.ca:
     name: newspapers.lib.unb.ca
