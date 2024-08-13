@@ -61,7 +61,7 @@ class DigitalSerialIssueSearchController {
   }
 
   /**
-   * Gets an entity's issues from a matching year.
+   * Gets an entity's issues from a title.
    */
   public function getTitleIssues($title_id) {
     $query = \Drupal::entityQuery('digital_serial_issue')
@@ -71,6 +71,24 @@ class DigitalSerialIssueSearchController {
     return new JsonResponse(
       [
         'data' => $issue_ids,
+        'method' => 'GET',
+        'status' => 200,
+      ]
+    );
+  }
+
+  /**
+   * Gets an issue's parent title.
+   */
+  public function getIssueTitleId($issue_id) {
+    $issue = \Drupal::entityTypeManager()
+      ->getStorage('digital_serial_issue')
+      ->load($issue_id);
+    $title_id = $issue->parent_title->target_id;
+
+    return new JsonResponse(
+      [
+        'data' => $title_id,
         'method' => 'GET',
         'status' => 200,
       ]
