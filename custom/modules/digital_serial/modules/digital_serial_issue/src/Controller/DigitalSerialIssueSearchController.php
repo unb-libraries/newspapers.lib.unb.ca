@@ -88,7 +88,7 @@ class DigitalSerialIssueSearchController {
     if ($issue == NULL) {
       $title_id = NULL;
     } else {
-      $title_id = $issue->getParentTitle();
+      $title_id = $issue->getParentTitleId();
     }
 
     return new JsonResponse(
