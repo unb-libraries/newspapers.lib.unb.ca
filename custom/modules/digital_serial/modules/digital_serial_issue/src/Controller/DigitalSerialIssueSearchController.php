@@ -84,7 +84,12 @@ class DigitalSerialIssueSearchController {
     $issue = \Drupal::entityTypeManager()
       ->getStorage('digital_serial_issue')
       ->load($issue_id);
-    $title_id = $issue->parent_title->target_id;
+
+    if ($issue == NULL) {
+      $title_id = NULL;
+    } else {
+      $title_id = $issue->getParentTitle();
+    }
 
     return new JsonResponse(
       [
