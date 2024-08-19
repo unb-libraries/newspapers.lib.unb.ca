@@ -210,7 +210,7 @@
     "drupal/jquery_ui": "1.7",
     "drupal/jquery_ui_datepicker": "2.1.0",
     "drupal/jquery_ui_slider": "2.1.0",
-    "drupal/jquery_ui_touch_punch": "1.1.0",
+    "drupal/jquery_ui_touch_punch": "1.1.1",
     "drupal/languagefield": "1.9",
     "drupal/migrate_plus": "6.0.2",
     "drupal/migrate_source_csv": "3.6",
