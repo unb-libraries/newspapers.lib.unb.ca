@@ -207,7 +207,7 @@
     "drupal/health_check": "<=2.0.1",
     "jackmoore/colorbox": "dev-master",
     "drupal/jquery_scrollup": "2.0.0",
-    "drupal/jquery_ui": "1.6",
+    "drupal/jquery_ui": "1.7",
     "drupal/jquery_ui_datepicker": "2.0.0",
     "drupal/jquery_ui_slider": "2.0.0",
     "drupal/jquery_ui_touch_punch": "1.1.0",
