@@ -220,7 +220,7 @@
     "drupal/owlcarousel": "1.0-beta1",
     "drupal/pathauto": "1.13",
     "drupal/redis": "1.8",
-    "drupal/samlauth": "3.9",
+    "drupal/samlauth": "3.10",
     "drupal/search_api": "<=1.30",
     "drupal/search_api_autocomplete": "1.8",
     "drupal/search_api_solr": "<=4.3.1",
