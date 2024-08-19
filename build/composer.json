@@ -225,7 +225,7 @@
     "drupal/search_api_autocomplete": "1.8",
     "drupal/search_api_solr": "<=4.3.1",
     "drupal/simple_sitemap": "4.1.9",
-    "drupal/token": "1.14",
+    "drupal/token": "1.15",
     "drupal/twig_field_value": "2.0.2",
     "drupal/twig_tweak": "3.3.0",
     "drupal/view_unpublished": "1.2",
