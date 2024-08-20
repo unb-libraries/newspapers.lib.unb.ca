@@ -294,6 +294,9 @@ class HomePageForm extends FormBase {
       '#description' => '<span class="mr-1">' .
         $this->t('Find 1 or more terms within the fulltext of our digitized newspaper pages') .
         '</span>',
+        '#attributes' => [
+          'required' => 'required',
+        ],
     ];
     $form['panel-wrapper']['tab-content']['fulltext']['search']['actions'] = [
       '#type' => 'actions',
