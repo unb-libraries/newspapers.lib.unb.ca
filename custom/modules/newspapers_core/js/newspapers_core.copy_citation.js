@@ -15,8 +15,9 @@
             content: popoverContent,
             delay: { 'show': 500 },
             html: true,
-            placement: 'left',
+            placement: 'auto',
             trigger: 'manual',
+
         };
         $(copyButton).popover(options).popover('show');
         $(copyButton).blur(function () {
