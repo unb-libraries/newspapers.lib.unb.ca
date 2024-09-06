@@ -1896,7 +1896,7 @@ function _newspapers_core_delete_image_dzi($page_id) {
  */
 function _newspapers_core_get_citation_render_array(string $citation_btn_markup, string $cited_title, string $citation_text) {
   $citation_footer = '<div class="citation-note">
-    <h2 class="h4">Note</h2>
+    <h2 class="h4 mt-1">Note</h2>
     <p>The above citation is for either the publication or a specific issue. <strong>If you are citing a specific
     article</strong> in the Chicago Style, you should include the article title in the following format:</p>
     <blockquote class="mx-0 mx-lg-3 text-dark text-word-break"><em>Daily Mail (Fredericton, New Brunswick: 1910).</em>
