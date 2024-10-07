@@ -319,7 +319,7 @@ class XlsHoldingExport {
       if (
         !$holding->isPublished() ||
         empty($parent_publication) ||
-        $parent_publication->published->value == 0 ||
+        !$parent_publication->isPublished() ||
         empty($institution_id) ||
         !in_array($institution_id, self::HOLDINGS_EXPORT_INSTITUTION_IDS)
       ) {
