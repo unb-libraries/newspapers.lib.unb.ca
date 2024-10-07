@@ -350,7 +350,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
    * {@inheritdoc}
    */
   public function isDigitalHolding() {
-    return strtolower($this->getHoldingType()->name()) == 'digital';
+    return strtolower($this->getHoldingType()->label()) == 'digital';
   }
 
   /**
