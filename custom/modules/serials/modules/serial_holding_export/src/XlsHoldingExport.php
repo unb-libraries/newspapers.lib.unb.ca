@@ -321,7 +321,8 @@ class XlsHoldingExport {
         empty($parent_publication) ||
         !$parent_publication->isPublished() ||
         empty($institution_id) ||
-        !in_array($institution_id, self::HOLDINGS_EXPORT_INSTITUTION_IDS)
+        !in_array($institution_id, self::HOLDINGS_EXPORT_INSTITUTION_IDS) ||
+        $holding->isDigitalHoldingButDigitalTitleHasNoIssues()
       ) {
         continue;
       }

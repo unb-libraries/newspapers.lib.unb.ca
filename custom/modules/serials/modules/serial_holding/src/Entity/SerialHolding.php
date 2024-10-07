@@ -349,6 +349,42 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
   /**
    * {@inheritdoc}
    */
+  public function isDigitalHolding() {
+    return strtolower($this->getHoldingType()->name()) == 'digital';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDigitalSerialTitle() {
+    if (!$this->isDigitalHolding()) {
+      return NULL;
+    }
+    return $this->get('holding_digital_title')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isDigitalHoldingButDigitalTitleHasNoIssues() {
+    if (!$this->isDigitalHolding()) {
+      return FALSE;
+    }
+
+    // The holding is linked to a digital title.
+    $digital_title = $this->getDigitalSerialTitle();
+    if (
+      empty($digital_title) ||
+      empty($digital_title->getIssues())
+      ) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getInstitution() {
     return $this->get('holding_institution')->entity;
   }

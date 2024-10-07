@@ -332,4 +332,28 @@ interface SerialHoldingInterface extends ContentEntityInterface, EntityChangedIn
    */
   public function getMicroformType();
 
+  /**
+   * Determines if the holding is a Digital Holding.
+   *
+   * @return bool
+   *   TRUE if the holding is a digital holding. FALSE otherwise.
+   */
+  public function isDigitalHolding();
+
+  /**
+   * Gets the holding's corresponding digital title (if it has one).
+   *
+   * @return \Drupal\digital_serial_title\Entity\DigitalSerialTitleInterface|NULL
+   *  The digital title entity if it exists.
+   */
+  public function getDigitalSerialTitle();
+
+  /**
+   * Determines if the holding is a digital holding but has no corresponding issues.
+   *
+   * @return bool
+   *   TRUE if the holding is a digital holding but has no digital issues. FALSE otherwise.
+   */
+  public function isDigitalHoldingButDigitalTitleHasNoIssues();
+
 }
