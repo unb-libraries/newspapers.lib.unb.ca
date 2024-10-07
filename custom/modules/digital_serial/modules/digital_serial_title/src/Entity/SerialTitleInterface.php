@@ -80,4 +80,26 @@ interface SerialTitleInterface extends ContentEntityInterface, EntityChangedInte
    */
   public function getParentPublication();
 
+  /**
+   * Gets the issues associated with the digital title.
+   *
+   * @param int $limit
+   *   The number of issues to return. 0 for all. Default is 0.
+   *
+   * @return \Drupal\digital_serial_issue\Entity\SerialIssueInterface[]
+   *   An array of issue entities.
+   */
+  public function getIssues($limit = 0);
+
+  /**
+   * Gets the issue IDs associated with the digital title.
+   *
+   * @param int $limit
+   *   The number of issues to return. 0 for all. Default is 0.
+   *
+   * @return int[]
+   *  An array of issue IDs.
+   */
+  public function getIssueIds($limit = 0);
+
 }

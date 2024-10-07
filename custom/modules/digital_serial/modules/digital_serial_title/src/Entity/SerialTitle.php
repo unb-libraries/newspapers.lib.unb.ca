@@ -369,19 +369,26 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
   /**
    * {@inheritDoc}
    */
-  public function getIssues() {
-    $query = \Drupal::entityQuery('digital_serial_issue')
-      ->condition('parent_title', $this->id());
-    $issue_ids = $query->execute();
-
+  public function getIssues($limit = 0) {
     $issues = [];
-    foreach ($issue_ids as $issue_id) {
+    foreach ($this->getIssueIds($limit) as $issue_id) {
       $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_issue');
       $issue = $storage->load($issue_id);
       $issues[] = $issue;
     }
-
     return $issues;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getIssueIds($limit = 0) {
+    $query = \Drupal::entityQuery('digital_serial_issue')
+      ->condition('parent_title', $this->id());
+    if ($limit > 0) {
+      $query->range(0, $limit);
+    }
+    return $query->execute();
   }
 
 }

@@ -375,7 +375,7 @@ class SerialHolding extends ContentEntityBase implements SerialHoldingInterface 
     $digital_title = $this->getDigitalSerialTitle();
     if (
       empty($digital_title) ||
-      empty($digital_title->getIssues())
+      empty($digital_title->getIssueIds(1))
       ) {
       return TRUE;
     }
