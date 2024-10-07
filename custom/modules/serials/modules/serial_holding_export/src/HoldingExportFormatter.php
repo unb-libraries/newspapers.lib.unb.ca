@@ -101,6 +101,17 @@ class HoldingExportFormatter {
   }
 
   /**
+   * Formatter callback for a 'validated' publication issn. Invalid values return an empty string.
+   */
+  public function getPublicationValidatedIssn() {
+    $issn = $this->getPublicationIssn();
+    if (!is_numeric(substr($issn, 0, 4))) {
+      return '';
+    }
+    return $issn;
+  }
+
+  /**
    * Formatter callback for publication issn.
    */
   public function getPublicationIssn() {
