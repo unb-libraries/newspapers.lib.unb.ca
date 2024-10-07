@@ -20,6 +20,15 @@ class XlsHoldingExport {
   const SUCCESS_RESPONSE_CODE = 200;
 
   /**
+   * We only export holdings from these institutions (UNB Libraries!).
+   */
+  const HOLDINGS_EXPORT_INSTITUTION_IDS = [
+    626,
+    652,
+    654,
+  ];
+
+  /**
    * The response object.
    *
    * @var \Symfony\Component\HttpFoundation\Response
@@ -304,21 +313,32 @@ class XlsHoldingExport {
 
     $spreadsheet_array = [];
     foreach ($this->holdings as $holding) {
-      $row = [];
-      $parent_title = $holding->getParentTitle();
-      if ($parent_title != NULL) {
-        $formatter = HoldingExportFormatter::create($holding, $parent_title, $type_data);
-        foreach ($this->columnMapping as $map_key => $formatter_method) {
-          if (method_exists($formatter, $formatter_method)) {
-            $row[] = $formatter->$formatter_method();
-          }
-          else {
-            $row[] = NULL;
-          }
-        }
-        $spreadsheet_array[] = $row;
+      $parent_publication = $holding->getParentTitle();
+      $institution_id = $holding->getInstitution()->id();
+
+      if (
+        !$holding->isPublished() ||
+        empty($parent_publication) ||
+        $parent_publication->published->value == 0 ||
+        empty($institution_id) ||
+        !in_array($institution_id, self::HOLDINGS_EXPORT_INSTITUTION_IDS)
+      ) {
+        continue;
       }
+
+      $row = [];
+      $formatter = HoldingExportFormatter::create($holding, $parent_publication, $type_data);
+      foreach ($this->columnMapping as $map_key => $formatter_method) {
+        if (method_exists($formatter, $formatter_method)) {
+          $row[] = $formatter->$formatter_method();
+        }
+        else {
+          $row[] = NULL;
+        }
+      }
+      $spreadsheet_array[] = $row;
     }
+
     $this->sheet
       ->fromArray(
         $spreadsheet_array,

@@ -1,3 +1,11 @@
+publication_holdings_bulk_import.admin.export:
+  title: 'Export Holdings'
+  parent: 'system.admin'
+  description: 'Export serial holdings by type to open XML spreadsheet format'
+  menu_name: account
+  route_name: newspapers_core.export_holdings
+  weight: 11
+
 publication_holdings_bulk_import.admin.import:
   title: 'Bulk Import Holdings'
   parent: 'system.admin'
