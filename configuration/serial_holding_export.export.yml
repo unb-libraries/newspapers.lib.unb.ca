@@ -9,7 +9,7 @@ holding_types:
     coverage_depth: print
     column_mapping:
       publication_title: getPublicationTitle
-      print_identifier: getPublicationIssn
+      print_identifier: getPublicationValidatedIssn
       online_identifier: null
       date_first_issue_online: getHoldingStartDate
       num_first_vol_online: null
@@ -41,7 +41,7 @@ holding_types:
     coverage_depth: print
     column_mapping:
       publication_title: getPublicationTitle
-      print_identifier: getPublicationIssn
+      print_identifier: getPublicationValidatedIssn
       online_identifier: null
       date_first_issue_online: getHoldingStartDate
       num_first_vol_online: null
@@ -73,7 +73,7 @@ holding_types:
     coverage_depth: fulltext
     column_mapping:
       publication_title: getPublicationTitle
-      print_identifier: getPublicationIssn
+      print_identifier: getPublicationValidatedIssn
       online_identifier: null
       date_first_issue_online: getHoldingStartDate
       num_first_vol_online: null
@@ -105,7 +105,7 @@ holding_types:
     coverage_depth: fulltext
     column_mapping:
       publication_title: getPublicationTitle
-      print_identifier: getPublicationIssn
+      print_identifier: getPublicationValidatedIssn
       online_identifier: null
       date_first_issue_online: getHoldingStartDate
       num_first_vol_online: null
