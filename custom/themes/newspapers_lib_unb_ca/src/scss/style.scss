@@ -511,6 +511,11 @@ a.btn-add:active {
 }
 .search-results .excerpt {
   color: $gray-700;
+
+  em {
+    font-style: normal;
+    color: $gray-800;
+  }
 }
 
 /* Override Search API Autocomplete */
