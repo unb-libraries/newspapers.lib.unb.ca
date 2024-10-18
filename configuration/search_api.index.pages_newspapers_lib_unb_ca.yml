@@ -133,8 +133,8 @@ processor_settings:
   highlight:
     weights:
       postprocess_query: 0
-    prefix: '<strong>'
-    suffix: '</strong>'
+    prefix: '<em>'
+    suffix: '</em>'
     excerpt: true
     excerpt_always: false
     excerpt_length: 295
