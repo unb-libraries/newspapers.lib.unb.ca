@@ -59,10 +59,6 @@
         "Extend Daterange functionality": "https://www.drupal.org/files/issues/2794481-50.patch",
         "HTML5 validation issue": "https://www.drupal.org/files/issues/2018-07-13/1797438-145.patch",
         "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch"
-      },
-      "drupal/elasticsearch_connector": {
-        "Cannot combine elasticsearch with other backends": "https://www.drupal.org/files/issues/elasticsearch_connector-fix-serialize-closure-error-2904033-9.patch",
-        "Cannot parse content access": "https://www.drupal.org/files/issues/2018-06-07/elasticsearch_connector-convert_boolean_fields-2978005-2.patch"
       }
     }
   },
@@ -237,7 +233,6 @@
     "harvesthq/chosen": "~1.8",
     "markgoodyear/scrollup": "dev-master",
     "neitanod/forceutf8": "^2",
-    "nodespark/des-connector": "5.x-dev",
     "owlcarousel2/owlcarousel2": "2.3.4",
     "phpoffice/phpspreadsheet": "^1.5.0",
     "simeydotme/jquery-ui-slider-pips": "~1.11",
