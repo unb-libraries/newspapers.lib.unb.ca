@@ -100,11 +100,9 @@ ul.js-facets-checkbox-links + a.open::before {
   color: $link-color;
   word-break: break-word;
 }
-.block-facet--checkbox {
-  &:not(.block-facet-blockinstitutions) {
-    .facet-item__value {
-      text-transform: capitalize;
-    }
+.block-facet-blockholdings {
+  .facet-item__value {
+    text-transform: capitalize;
   }
 }
 .facet-item input:focus,
