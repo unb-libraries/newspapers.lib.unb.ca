@@ -10493,12 +10493,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/unb-libraries/unb_lib_theme.git",
-                "reference": "271bc9727f2af18fb1d1474efda02e557419cc72"
+                "reference": "453a609e6f15773f8e2d81b6a19d0aecc2b4d4e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/271bc9727f2af18fb1d1474efda02e557419cc72",
-                "reference": "271bc9727f2af18fb1d1474efda02e557419cc72",
+                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/453a609e6f15773f8e2d81b6a19d0aecc2b4d4e3",
+                "reference": "453a609e6f15773f8e2d81b6a19d0aecc2b4d4e3",
                 "shasum": ""
             },
             "require-dev": {
@@ -10522,7 +10522,7 @@
                 "issues": "https://github.com/unb-libraries/unb_lib_theme/issues",
                 "source": "https://github.com/unb-libraries/unb_lib_theme/tree/9.x-4.x"
             },
-            "time": "2025-01-22T12:53:14+00:00"
+            "time": "2025-01-22T14:19:06+00:00"
         },
         {
             "name": "webflo/drupal-finder",
