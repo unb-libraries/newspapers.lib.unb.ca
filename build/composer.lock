@@ -2988,7 +2988,7 @@
             ],
             "authors": [
                 {
-                    "name": "Daniel.Moberly",
+                    "name": "daniel.moberly",
                     "homepage": "https://www.drupal.org/user/1160788"
                 },
                 {
@@ -10493,12 +10493,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/unb-libraries/unb_lib_theme.git",
-                "reference": "4571c721a7862629e38c7629e034d4c952f72a47"
+                "reference": "271bc9727f2af18fb1d1474efda02e557419cc72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/4571c721a7862629e38c7629e034d4c952f72a47",
-                "reference": "4571c721a7862629e38c7629e034d4c952f72a47",
+                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/271bc9727f2af18fb1d1474efda02e557419cc72",
+                "reference": "271bc9727f2af18fb1d1474efda02e557419cc72",
                 "shasum": ""
             },
             "require-dev": {
@@ -10522,7 +10522,7 @@
                 "issues": "https://github.com/unb-libraries/unb_lib_theme/issues",
                 "source": "https://github.com/unb-libraries/unb_lib_theme/tree/9.x-4.x"
             },
-            "time": "2025-01-21T17:22:37+00:00"
+            "time": "2025-01-22T12:53:14+00:00"
         },
         {
             "name": "webflo/drupal-finder",
