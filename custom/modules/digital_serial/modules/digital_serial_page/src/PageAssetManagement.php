@@ -73,7 +73,7 @@ class PageAssetManagement {
           continue;
         }
         $pdf_file_path = $file_root . '/' . $file_info['rel_pdf_filepath'];
-        if (!file_exists($pdf_file_path)) {
+        if (file_exists($pdf_file_path)) {
           $pages_with_missing[$fid] = $file_info;
         }
         if (count($pages_with_missing) >= $limit) {
