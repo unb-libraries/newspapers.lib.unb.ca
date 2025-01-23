@@ -106,7 +106,7 @@ class PageAssetManagement {
     LEFT JOIN digital_serial_issue dsi
     ON dsp.parent_issue = dsi.id
     LEFT JOIN digital_serial_title dst
-    ON dsp.parent_title = dst.id
+    ON dsi.parent_title = dst.id
     WHERE fm.uri LIKE 'public://serials/pages/%.jpg'
     LIMIT $limit
     OFFSET $offset;
