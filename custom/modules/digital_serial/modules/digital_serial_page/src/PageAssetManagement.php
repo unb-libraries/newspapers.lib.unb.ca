@@ -34,15 +34,14 @@ class PageAssetManagement {
         if (!self::fileShouldBeChecked($file_info, $file_root)) {
           continue;
         }
+
         $dzi_file_path = $file_root . '/' . $file_info['rel_dzi_filepath'];
-        if (!file_exists($dzi_file_path)) {
-          $pages_with_missing[$fid] = $file_info;
-          continue;
-        }
         $dzi_dir_path = $file_root . '/' . $file_info['rel_dzi_dirpath'];
-        if (!is_dir($dzi_dir_path)) {
+        if (file_exists($dzi_file_path) && is_dir($dzi_dir_path)) {
           $pages_with_missing[$fid] = $file_info;
-          continue;
+        }
+        if (count($pages_with_missing) >= $limit) {
+          break;
         }
       }
     }
@@ -76,7 +75,9 @@ class PageAssetManagement {
         $pdf_file_path = $file_root . '/' . $file_info['rel_pdf_filepath'];
         if (!file_exists($pdf_file_path)) {
           $pages_with_missing[$fid] = $file_info;
-          continue;
+        }
+        if (count($pages_with_missing) >= $limit) {
+          break;
         }
       }
     }
