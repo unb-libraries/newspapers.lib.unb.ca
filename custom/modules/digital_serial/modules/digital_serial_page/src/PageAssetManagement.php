@@ -24,7 +24,8 @@ class PageAssetManagement {
   public static function getMissingDziPages(string $file_root, int $limit = 50) {
     $pages_with_missing = [];
     $while_counter = 0;
-    while (count($pages_with_missing) < $limit) {
+    $added_counter = 0;
+    while ($added_counter < $limit) {
       $file_infos = self::getPageImagesInfo($limit, $while_counter * $limit);
       $while_counter++;
       if (empty($file_infos)) {
@@ -37,10 +38,11 @@ class PageAssetManagement {
 
         $dzi_file_path = $file_root . '/' . $file_info['rel_dzi_filepath'];
         $dzi_dir_path = $file_root . '/' . $file_info['rel_dzi_dirpath'];
-        if (file_exists($dzi_file_path) && is_dir($dzi_dir_path)) {
+        if (!file_exists($dzi_file_path) || !is_dir($dzi_dir_path)) {
           $pages_with_missing[$fid] = $file_info;
+          $added_counter++;
         }
-        if (count($pages_with_missing) >= $limit) {
+        if ($added_counter >= $limit) {
           break;
         }
       }
@@ -62,7 +64,8 @@ class PageAssetManagement {
   public static function getMissingPdfPages(string $file_root, int $limit = 50) {
     $pages_with_missing = [];
     $while_counter = 0;
-    while (count($pages_with_missing) < $limit) {
+    $added_counter = 0;
+    while ($added_counter < $limit) {
       $file_infos = self::getPageImagesInfo($limit, $while_counter * $limit);
       $while_counter++;
       if (empty($file_infos)) {
@@ -73,10 +76,11 @@ class PageAssetManagement {
           continue;
         }
         $pdf_file_path = $file_root . '/' . $file_info['rel_pdf_filepath'];
-        if (file_exists($pdf_file_path)) {
+        if (!file_exists($pdf_file_path)) {
           $pages_with_missing[$fid] = $file_info;
+          $added_counter++;
         }
-        if (count($pages_with_missing) >= $limit) {
+        if ($added_counter >= $limit) {
           break;
         }
       }
