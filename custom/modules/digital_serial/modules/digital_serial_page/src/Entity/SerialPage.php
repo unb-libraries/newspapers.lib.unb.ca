@@ -537,7 +537,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $pdf_uri_schemas = [
       "/serials/pages/$title_id/$issue_id/$pdf_filename",
       "/serials/pages/pdf/$issue_id/$pdf_filename",
-      "/serials/pages/pdf/$title_id/$issue_id/$pdf_filename",
+      "/serials/pdf/$title_id/$issue_id/$pdf_filename",
     ];
 
     foreach ($pdf_uri_schemas as $pdf_uri_schema) {
@@ -563,7 +563,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $dzi_uri_schemas = [
       "/serials/pages/$title_id/$issue_id/$dzi_filename",
       "/serials/pages/$dzi_filename",
-      "/serials/pages/dzi/$title_id/$issue_id/$dzi_filename",
+      "/serials/dzi/$title_id/$issue_id/$dzi_filename",
     ];
 
     foreach ($dzi_uri_schemas as $dzi_uri_schema) {
