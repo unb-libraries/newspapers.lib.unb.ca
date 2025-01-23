@@ -466,10 +466,8 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    * {@inheritDoc}
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
-    $this->movePageImageToPermanentStorage(TRUE);
-    // @TODO: This needs to be enabled post-2024 migration.
-    // $this->deleteDziFiles();
-    // $this->deletePdfFile();
+    $this->deleteDziFiles();
+    $this->deletePdfFile();
     parent::postSave($storage, $update);
   }
 
@@ -497,58 +495,6 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       return $issue->getStoragePath() . '/' . $file->getFilename();
     }
     return '';
-  }
-
-
-  /**
-   * {@inheritDoc}
-   */
-  public function movePageImageToPermanentStorage($move_file = TRUE, $verbose = FALSE) {
-    $file = $this->getPageImage();
-    $perm_storage_uri = $this->getPagePermImageStorageUri();
-
-    $file_uri = $file->getFileUri();
-    $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager')->getViaUri($file_uri);
-    $abs_file_path = $stream_wrapper_manager->realpath();
-    // Do nothing if no URI or already in permanent storage.
-    if (
-      empty($perm_storage_uri) ||
-      $file->getFileUri() == $perm_storage_uri ||
-      $abs_file_path == false ||
-      !file_exists($abs_file_path)
-      ) {
-      // Something might be wrong. Doing stuff might make it worse.
-      if ($verbose) {
-        $id = $this->id();
-        if (empty($perm_storage_uri)) {
-          \Drupal::logger('digital_serial_page')->notice("No permanent storage URI found for page $id");
-        }
-        if ($file->getFileUri() == $perm_storage_uri) {
-          \Drupal::logger('digital_serial_page')->notice("Page $id already in permanent storage");
-        }
-        if ($abs_file_path == false) {
-          \Drupal::logger('digital_serial_page')->notice("File path for page $id is invalid");
-        }
-        if (!file_exists($abs_file_path)) {
-          \Drupal::logger('digital_serial_page')->notice("File $abs_file_path for page $id does not exist in the filesystem");
-        }
-      }
-      return;
-    }
-    $file_system = \Drupal::service('file_system');
-    $issue = $this->getParentIssue();
-    $issue->createStoragePath();
-
-    if ($move_file) {
-      $file_system->move(
-        $file_system->realpath($file->getFileUri()),
-        $this->getPagePermImageStoragePath()
-      );
-    }
-
-    $file->setFileUri($perm_storage_uri);
-    $file->setPermanent();
-    $file->save();
   }
 
   /**
@@ -588,10 +534,8 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $title_id = $this->getParentTitleId();
     $file = $this->getPageImage();
     $pdf_filename = str_replace('.jpg', '.pdf', $file->getFilename());
-
     $pdf_uri_schemas = [
-      "/serials/pages/$title_id/$issue_id/$pdf_filename",
-      "/serials/pages/pdf/$issue_id/$pdf_filename",
+      "/serials/pages/pdf/$title_id/$issue_id/$pdf_filename",
     ];
 
     foreach ($pdf_uri_schemas as $pdf_uri_schema) {
@@ -615,8 +559,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $file = $this->getPageImage();
     $dzi_filename = str_replace('.jpg', '.dzi', $file->getFilename());
     $dzi_uri_schemas = [
-      "/serials/pages/$title_id/$issue_id/$dzi_filename",
-      "/serials/pages/$dzi_filename",
+      "/serials/pages/dzi/$title_id/$issue_id/$dzi_filename",
     ];
 
     foreach ($dzi_uri_schemas as $dzi_uri_schema) {
