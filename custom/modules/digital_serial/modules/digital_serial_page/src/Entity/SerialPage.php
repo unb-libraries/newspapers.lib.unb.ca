@@ -535,6 +535,8 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $file = $this->getPageImage();
     $pdf_filename = str_replace('.jpg', '.pdf', $file->getFilename());
     $pdf_uri_schemas = [
+      "/serials/pages/$title_id/$issue_id/$pdf_filename",
+      "/serials/pages/pdf/$issue_id/$pdf_filename",
       "/serials/pages/pdf/$title_id/$issue_id/$pdf_filename",
     ];
 
@@ -559,6 +561,8 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $file = $this->getPageImage();
     $dzi_filename = str_replace('.jpg', '.dzi', $file->getFilename());
     $dzi_uri_schemas = [
+      "/serials/pages/$title_id/$issue_id/$dzi_filename",
+      "/serials/pages/$dzi_filename",
       "/serials/pages/dzi/$title_id/$issue_id/$dzi_filename",
     ];
 
