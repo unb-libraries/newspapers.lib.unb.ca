@@ -53,3 +53,19 @@ digital_serial_page.title_edit_page:
      _title: 'Edit Page Data'
   requirements:
     _permission: 'edit serial page entities'
+
+digital_serial_page.with_missing_pdf:
+  path: '/serials_pages/with_missing_pdf/{limit}'
+  defaults:
+    _controller: '\Drupal\digital_serial_page\Controller\GetMissingPageAssetsController::serveMissingFilesWithMissingPdfs'
+    _title: 'Pages With Missing PDFs'
+  requirements:
+    _permission: 'view published serial page entities'
+
+digital_serial_page.with_missing_dzi:
+  path: '/serials_pages/with_missing_dzi/{limit}'
+  defaults:
+    _controller: '\Drupal\digital_serial_page\Controller\GetMissingPageAssetsController::serveMissingFilesWithMissingDzis'
+    _title: 'Pages With Missing DZI Assets'
+  requirements:
+    _permission: 'view published serial page entities'
