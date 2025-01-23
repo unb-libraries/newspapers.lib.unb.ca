@@ -120,7 +120,7 @@ EOT;
       $extensionless_filename = $image_file_data['filename'];
       # Ex: serials/pages/100/18086/18086-0001.jpg
       $rel_image_path = str_replace('public://', '', $row['uri']);
-      $rel_dzi_filepath = "serials/dzi/$title_id/$issue_id/$extensionless_filename.pdf";
+      $rel_dzi_filepath = "serials/dzi/$title_id/$issue_id/$extensionless_filename.dzi";
       $rel_dzi_dirpath = "serials/dzi/$title_id/$issue_id/{$extensionless_filename}_files";
       $rel_pdf_filepath = "serials/pdf/$title_id/$issue_id/$extensionless_filename.pdf";
       $images[$row['fid']] = [
