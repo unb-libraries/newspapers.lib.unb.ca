@@ -202,9 +202,10 @@
               </dt>
               <dd class="no-borders">({% trans %}This includes all related titles and supplements and
                 the publication dates of each{%  endtrans %})
-                <br >
+                <br>
                 {% set supplemental_tid = node.field_family.target_id %}
                 {% if supplemental_tid %}
+                  {{ attach_library('newspapers_core/colorbox_link') }}
                   {{ drupal_field('field_supplemental_information', 'taxonomy_term', supplemental_tid) }}
                 {% endif %}
                 {{ family }}
