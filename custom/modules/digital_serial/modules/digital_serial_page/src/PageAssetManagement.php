@@ -17,16 +17,18 @@ class PageAssetManagement {
    *   The path to the root of the persistent Drupal filesystem.
    * @param int $limit
    *   The number of records to return.
+   * @param int $skip
+   *   The number of records to skip evaluating.
    *
    * @return array
    *   An array of pages with missing dzi files.
    */
-  public static function getMissingDziPages(string $file_root, int $limit = 50) {
+  public static function getMissingDziPages(string $file_root, int $limit = 50, int $skip = 0) {
     $pages_with_missing = [];
     $while_counter = 0;
     $added_counter = 0;
     while ($added_counter < $limit) {
-      $file_infos = self::getPageImagesInfo($limit, $while_counter * $limit);
+      $file_infos = self::getPageImagesInfo($limit, ($while_counter * $limit) + $skip);
       $while_counter++;
       if (empty($file_infos)) {
         continue;
@@ -57,16 +59,18 @@ class PageAssetManagement {
    *   The path to the root of the persistent Drupal filesystem.
    * @param int $limit
    *   The number of records to return.
+   * @param int $skip
+   *   The number of records to skip evaluating.
    *
    * @return array
    *   An array of pages with missing pdf files.
    */
-  public static function getMissingPdfPages(string $file_root, int $limit = 50) {
+  public static function getMissingPdfPages(string $file_root, int $limit = 50, int $skip = 0) {
     $pages_with_missing = [];
     $while_counter = 0;
     $added_counter = 0;
     while ($added_counter < $limit) {
-      $file_infos = self::getPageImagesInfo($limit, $while_counter * $limit);
+      $file_infos = self::getPageImagesInfo($limit, ($while_counter * $limit) + $skip);
       $while_counter++;
       if (empty($file_infos)) {
         continue;
@@ -113,6 +117,7 @@ class PageAssetManagement {
     LEFT JOIN digital_serial_title dst
     ON dsi.parent_title = dst.id
     WHERE fm.uri LIKE 'public://serials/pages/%.jpg'
+    ORDER BY fm.fid ASC
     LIMIT $limit
     OFFSET $offset;
 EOT;
