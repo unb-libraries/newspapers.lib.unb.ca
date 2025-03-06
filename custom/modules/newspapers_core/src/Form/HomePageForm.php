@@ -58,7 +58,7 @@ class HomePageForm extends FormBase {
       <a href="/contact">happy to hear from you<span class="fa-solid fa-comment-dots fa-sm ml-1" aria-hidden="true"></span></a>.
       </p>';
 
-    $searchtips_markup = '<aside class="search-tips mt-3 w-100">
+    $searchtips_markup = '<aside class="search-tips mt-4 w-100">
           <p class="h3 mb-1">Search Tips:</p>
           <ul class="mb-0">
             <li>Use uppercase AND operator to limit to all terms used. eg. <code>cattle AND Fredericton</code></li>
