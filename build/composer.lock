@@ -15118,8 +15118,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "jackmoore/colorbox": 20,
         "furf/jquery-ui-touch-punch": 20,
+        "jackmoore/colorbox": 20,
         "markgoodyear/scrollup": 20,
         "unb-libraries/alert_scheduler": 20,
         "unb-libraries/calendar_hours": 20,
@@ -15129,7 +15129,7 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
