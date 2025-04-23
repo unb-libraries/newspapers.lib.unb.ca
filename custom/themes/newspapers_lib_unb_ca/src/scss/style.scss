@@ -25,11 +25,6 @@ a.share {
   display: inline-block;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
-
-  &:hover,
-  &:focus-visible {
-    transform: scale(1.1);
-  }
 }
 
 .pagination a:focus,

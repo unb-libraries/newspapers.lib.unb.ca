@@ -318,11 +318,11 @@
           <dl class="my-3">
             <dt class="visually-hidden">{% trans %}Social sharing options{% endtrans %}:</dt>
             <dd>
-              <a target="_blank" rel="noopener noreferrer" class="share"
+              <a target="_blank" rel="noopener noreferrer" class="btn btn-link share"
                  href="https://www.facebook.com/share.php?u={{ uri }}&title={{ node.label }}">{% include '@newspapers_core/includes/facebook.html.twig' %}</a>
-              <a target="_blank" rel="noopener noreferrer" class="mx-3 share"
+              <a target="_blank" rel="noopener noreferrer" class="btn btn-link mx-2 share"
                  href="https://x.com/intent/tweet?url={{ uri }}&url={{ uri }}&hashtags=UNBLibraries">{% include '@newspapers_core/includes/x-logo.html.twig' %}</a>
-              <a target="_blank" rel="noopener noreferrer" class="share"
+              <a target="_blank" rel="noopener noreferrer" class="btn btn-link share"
                  href="mailto:?subject=NBHNP Recommendation: {{ node.label }}&body=A New Brunswick Historic Newspapers Project publication has been shared with you:%0D%0A{{ uri }}.">{% include '@newspapers_core/includes/email.html.twig' %}</a>
             </ul>
             </dd>
