@@ -207,6 +207,7 @@
     "drupal/jquery_ui_slider": "2.1.0",
     "drupal/jquery_ui_touch_punch": "1.1.1",
     "drupal/languagefield": "<=1.9",
+    "drupal/metatag": "<2.0.0",
     "drupal/migrate_plus": "6.0.5",
     "drupal/migrate_source_csv": "3.7",
     "drupal/migrate_tools": "6.0.5",

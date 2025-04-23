@@ -1,0 +1,23 @@
+uuid: e81ad660-8506-4edb-b74e-a0211e7e56d2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: sL588ui1E_8-2c_UupwyYxcqX2OVyMFp3HTLbbFqvPc
+id: global
+label: Global
+tags:
+  canonical_url: '[current-page:url]'
+  content_language: en
+  geo_placename: Fredericton
+  geo_position: '45.946153; -66.643089'
+  geo_region: CA-NB
+  og_country_name: Canada
+  og_latitude: '45.946153'
+  og_locale: en_CA
+  og_locality: Fredericton
+  og_longitude: '-66.643089'
+  og_postal_code: 'E3B 5H5'
+  og_region: 'New Brunswick'
+  og_street_address: '5 Macaulay Ln'
+  title: '[current-page:title] | [site:name]'

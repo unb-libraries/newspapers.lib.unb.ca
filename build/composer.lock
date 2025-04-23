@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9628d38acb04c25aadfbfc0c1f2d0fc6",
+    "content-hash": "0033512d8cc432dd89a30a679f3d3b3e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3572,6 +3572,73 @@
                 "source": "http://cgit.drupalcode.org/languagefield",
                 "issues": "http://drupal.org/project/languagefield",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/metatag",
+            "version": "1.26.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/metatag.git",
+                "reference": "8.x-1.26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/metatag-8.x-1.26.zip",
+                "reference": "8.x-1.26",
+                "shasum": "afa4a37422748baa2f0c35b13961438668ef3be8"
+            },
+            "require": {
+                "drupal/core": "^9.3 || ^10",
+                "drupal/token": "^1.0"
+            },
+            "require-dev": {
+                "drupal/devel": "^4.0 || ^5.0",
+                "drupal/hal": "^9 || ^1 || ^2",
+                "drupal/metatag_dc": "*",
+                "drupal/metatag_open_graph": "*",
+                "drupal/page_manager": "^4.0",
+                "drupal/panelizer": "^4.0",
+                "drupal/redirect": "^1.0",
+                "drupal/webprofiler": "^9 || ^10",
+                "mpyw/phpunit-patch-serializable-comparison": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.26",
+                    "datestamp": "1687856123",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "See contributors",
+                    "homepage": "https://www.drupal.org/node/640498/committers",
+                    "role": "Developer"
+                },
+                {
+                    "name": "dave reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                }
+            ],
+            "description": "Manage meta tags for all entities.",
+            "homepage": "https://www.drupal.org/project/metatag",
+            "keywords": [
+                "Drupal",
+                "seo"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/metatag",
+                "issues": "https://www.drupal.org/project/issues/metatag",
+                "docs": "https://www.drupal.org/docs/8/modules/metatag"
             }
         },
         {
@@ -15125,8 +15192,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "furf/jquery-ui-touch-punch": 20,
         "jackmoore/colorbox": 20,
+        "furf/jquery-ui-touch-punch": 20,
         "markgoodyear/scrollup": 20,
         "unb-libraries/alert_scheduler": 20,
         "unb-libraries/calendar_hours": 20,
@@ -15136,7 +15203,7 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

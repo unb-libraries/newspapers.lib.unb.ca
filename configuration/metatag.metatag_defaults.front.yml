@@ -1,0 +1,16 @@
+uuid: 1021c9c8-c0b4-4226-b0a8-f1059f4a8f5f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 1noCXlegCr5HFehQRF1ViXy1jhU1jZ_sNN99a8Sj5jo
+id: front
+label: 'Front page'
+tags:
+  canonical_url: 'https://newspapers.lib.unb.ca'
+  description: 'The New Brunswick Historical Newspapers Project provides researchers with unified access to UNB Libraries'' current and historical newspaper collections in all formats, from New Brunswick and across the world.'
+  og_description: 'The New Brunswick Historical Newspapers Project provides researchers with unified access to UNB Libraries'' current and historical newspaper collections in all formats, from New Brunswick and across the world.'
+  og_image: 'https://media.lib.unb.ca/core/img-rwd/apple-mobile-144px.png'
+  og_title: 'New Brunswick Historical Newspapers Project'
+  og_url: 'https://newspapers.lib.unb.ca'
+  title: 'New Brunswick Historical Newspapers Project'
