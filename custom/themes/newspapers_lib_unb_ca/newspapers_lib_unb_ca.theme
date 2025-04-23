@@ -78,5 +78,13 @@ function newspapers_lib_unb_ca_preprocess_breadcrumb(&$variables) {
       $variables['breadcrumb'][1]['text'] = t('Newspapers');
       break;
   }
+}
 
+/**
+ * Implements hook_preprocess().
+ */
+function newspapers_lib_unb_ca_preprocess_node__publication(array &$variables) {
+  $request = \Drupal::request();
+  /* Provide absolute URL of publication node to corresponding twig template */
+  $variables['uri'] = $request->getUri();
 }
