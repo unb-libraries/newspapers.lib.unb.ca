@@ -394,18 +394,6 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
-    $row_date = [
-      [
-        'data' => [
-          [
-            'data' => $this->t('Place of Publication'),
-            'header' => TRUE,
-            'scope' => 'row',
-          ],
-          $this->getPlacePublication($digital_serial_title),        ],
-      ],
-    ];
-
     // More optional fields.
     if (!empty($issue_missingp_note)) {
       $row_missingp = [
