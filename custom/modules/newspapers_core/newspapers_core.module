@@ -1131,7 +1131,7 @@ function _newspapers_core_get_holding_details(string $type, SerialHolding $holdi
  * @return array
  *   Associative array of holdings, with holding type as key.
  */
-function _newspapers_core_get_publication_holdings($nid) {
+function _newspapers_core_get_publication_holdings(int $nid) {
   $holding_section = [];
   $holding_types = [];
   $query = Drupal::service('entity_type.manager')
