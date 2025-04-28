@@ -2023,6 +2023,109 @@ function _newspapers_core_get_digital_holding_issue_count($holding): int {
 }
 
 /**
+ * Generates a rendered build array for social media share links.
+ * @param string $title
+ *     The title of the entity that's being shared.
+ *
+ * @param int $svg_size
+ *    The pixel size for the requested SVG, default 40.
+ *
+ * @return array $build
+ *   The render array for social media SVG share links.
+ */
+function _newspapers_core_get_rendered_social_links(string $title, int $svg_size=30): array {
+  $facebook_share_uri = 'https://www.facebook.com/sharer/sharer.php';
+  $x_share_uri = 'https://x.com/intent/tweet';
+  $request = \Drupal::request();
+
+  $build['social']['facebook'] =
+    [
+      '#type' => 'link',
+      '#title' =>
+        [
+          '#markup' => Markup::create(_newspapers_core_get_social_svg('facebook', $svg_size)),
+        ],
+      '#url' => Url::fromUri(
+        $facebook_share_uri,
+        [
+          'query' =>
+            [
+              'u' => $request->getUri(),
+            ],
+        ]
+      ),
+      '#attributes' =>
+        [
+          'class' =>
+            [
+              'btn',
+              'btn-link',
+              'share',
+            ],
+          'target' => '_blank',
+        ],
+    ];
+
+  $build['social']['twitter'] = [
+    '#type' => 'link',
+    '#title' =>
+      [
+        '#markup' => Markup::create(_newspapers_core_get_social_svg('x-twitter', $svg_size)),
+      ],
+    '#url' => Url::fromUri(
+      $x_share_uri,
+      [
+        'query' =>
+          [
+            'url' => $request->getUri(),
+            'via' => 'UNBLibraries',
+            'hashtags' => 'UNBLibraries',
+          ],
+      ]
+    ),
+    '#attributes' =>
+      [
+        'class' =>
+          [
+            'btn',
+            'btn-link',
+            'mx-2',
+            'share',
+          ],
+        'target' => '_blank',
+      ],
+  ];
+
+  $encoded_mailto_subject = empty($title) ? rawurlencode("NBHNP Recommendation") : rawurlencode("NBHNP Recommendation: " . $title);
+  $encoded_mailto_body = rawurlencode("A New Brunswick Historic Newspapers Project publication has been shared with you:\n" .
+    $request->getUri());
+  $mail_link_options =
+    [
+      'attributes' =>
+        [
+          'target' => '_blank',
+          'class' =>
+            [
+              'btn',
+              'btn-link',
+              'share'
+            ],
+        ],
+    ];
+  $mailto_url_object = Url::fromUri(
+    "mailto:?subject={$encoded_mailto_subject}&body={$encoded_mailto_body}",
+    $mail_link_options
+  );
+  $emailSVGMarkup = Markup::create(_newspapers_core_get_social_svg('email', $svg_size));
+  $build['social']['email'] = Link::fromTextAndUrl(
+    $emailSVGMarkup,
+    $mailto_url_object
+  )->toRenderable();
+
+  return $build;
+}
+
+/**
  * Returns HTML markup for supported social sharing SVGs, of optional pixel size.
  *
  * @param string $platform_name
