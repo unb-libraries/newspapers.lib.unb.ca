@@ -651,7 +651,7 @@ class SerialPageViewerForm extends FormBase {
    * @return array
    *   The Report Info/Error metadata render array.
    */
-  private function getMetadataFooter($dst, $dsi) {
+  private function getMetadataFooter(SerialTitleInterface $dst, SerialIssueInterface $dsi): array {
     $footer_markup = '<div class="card-body d-flex flex-column flex-lg-row justify-content-between">';
 
     $webform_report = \Drupal::entityTypeManager()
@@ -750,6 +750,24 @@ class SerialPageViewerForm extends FormBase {
   private static function getPageUrl($title_id, $issue_id, $page_id) {
     $uri = "internal:/serials/$title_id/issues/$issue_id/pages/$page_id";
     return Url::fromUri($uri);
+  }
+
+  /**
+   * Gets the Place of Publication value for the issue.
+   *
+   * @param \Drupal\serial_holding\Entity\SerialTitleInterface $dst
+   *    The digital serial title entity.
+   *
+   * @return string
+   *    The issue's place of publication.
+   */
+  private function getPlacePublication(SerialTitleInterface $dst): string {
+    $place_publication = $dst
+      ->getParentPublication()
+      ->get("field_place_of_publication")
+      ->getValue()[0];
+
+    return $place_publication["locality"] . ", " . $place_publication["administrative_area"];
   }
 
   /**
