@@ -394,6 +394,18 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
+    $row_date = [
+      [
+        'data' => [
+          [
+            'data' => $this->t('Place of Publication'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $this->getPlacePublication($digital_serial_title),        ],
+      ],
+    ];
+
     // More optional fields.
     if (!empty($issue_missingp_note)) {
       $row_missingp = [
@@ -532,6 +544,22 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
+    $renderer = \Drupal::service('renderer');
+    $social_render_array = _newspapers_core_get_rendered_social_links( $digital_serial_issue->getIssueTitle(), 24);
+    $social_rendered = $renderer->render($social_render_array);
+    $row_social = [
+      [
+        'data' => [
+          [
+            'data' => $this->t('Share'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $social_rendered,
+        ],
+      ],
+    ];
+
     // Return Form API 'table' element .
     return [
       '#type' => 'table',
@@ -548,6 +576,7 @@ class SerialPageViewerForm extends FormBase {
         $rows_misc,
         $row_download,
         $row_citation,
+        $row_social,
       ),
       '#attributes' => [
         'class' => [
