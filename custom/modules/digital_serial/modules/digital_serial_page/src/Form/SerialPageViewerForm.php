@@ -394,6 +394,19 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
+    $row_place = [
+      [
+        'data' => [
+          [
+            'data' => $this->t('Place of Publication'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $this->getPlacePublication($digital_serial_title),
+        ],
+      ],
+    ];
+
     // More optional fields.
     if (!empty($issue_missingp_note)) {
       $row_missingp = [
@@ -560,6 +573,7 @@ class SerialPageViewerForm extends FormBase {
       '#caption' => $this->t('Issue Details'),
       '#rows' => array_merge(
         $row_pub_title,
+        $row_place,
         $row_printed_title,
         $row_volume,
         $row_edition,
