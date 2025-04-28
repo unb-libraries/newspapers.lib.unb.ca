@@ -533,7 +533,12 @@ class SerialPageViewerForm extends FormBase {
     ];
 
     $renderer = \Drupal::service('renderer');
-    $social_render_array = _newspapers_core_get_rendered_social_links( $digital_serial_issue->getIssueTitle(), 24);
+    $social_render_array = _newspapers_core_get_rendered_social_links(
+      $digital_serial_title
+        ->getParentPublication()
+        ->getTitle(),
+      24
+    );
     $social_rendered = $renderer->render($social_render_array);
     $row_social = [
       [
