@@ -33,6 +33,10 @@
       .owl-next {
         right: -0.5rem;
       }
+
+      .disabled {
+        display: none;
+      }
     }
 
     .owl-page.active span {
@@ -57,13 +61,13 @@
 // Stack Owl Carousel Grouping + Image
 .browse-issues {
   img {
-    border-color: transparent;
+    border: none;
     box-shadow: none;
     transition: all .2s ease-in-out;
   }
 
   a {
-    display: inline-block;
+    display: block;
 
     &:hover {
       img {
@@ -96,8 +100,8 @@
 
   .owl-carousel {
     .owl-item {
-      margin: 0;
       margin-top: .5em;
+      padding: 0 1px;
       text-align: center;
 
       &:first-child {
