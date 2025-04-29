@@ -1943,7 +1943,7 @@ display:
         filter_groups: false
         header: false
       relationships: {  }
-      css_class: 'browse-issues image-link-shadow'
+      css_class: browse-issues
       use_ajax: false
       display_description: ''
       header:
