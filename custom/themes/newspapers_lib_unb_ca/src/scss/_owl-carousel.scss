@@ -8,14 +8,15 @@
 
     .owl-buttons {
       div {
-        background: #d82e3b;
+        background: $link-color-hover;
         border: 1px solid #fff;
-        box-shadow: 0 0 1px 0px white inset, 0 0 1px 0px white;
+        box-shadow: 0 0 1px 0 white inset, 0 0 1px 0 white;
         padding: 5px 14px;
         margin: 0 .4em;
         font-size: 20px;
-        opacity: 0.7;
+        opacity: 0.75;
         position: absolute;
+        transition: opacity 0.2s ease-in-out;
 
         &:first-child::before {
           content: '«';
@@ -56,9 +57,30 @@
 // Stack Owl Carousel Grouping + Image
 .browse-issues {
   img {
-    border: 1px solid #dee2e6;
+    border-color: transparent;
+    box-shadow: none;
     transition: all .2s ease-in-out;
   }
+
+  a {
+    display: inline-block;
+
+    &:hover {
+      img {
+        box-shadow: 0 0 3px 1px $link-color-hover;
+      }
+    }
+
+    &.focus-ring {
+      outline: $link-color-hover dotted 1px;
+      outline-offset: 0;
+
+      img {
+        box-shadow: 0 0 3px 1px $link-color-hover;
+      }
+    }
+  }
+
   .issue-date {
     font-weight: bold;
   }
