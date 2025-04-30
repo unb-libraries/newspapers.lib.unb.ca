@@ -1992,10 +1992,13 @@ function _newspapers_core_rmdir_recursive($dir_path) {
 function _newspapers_core_get_digital_holding_label($holding): string {
   $count = _newspapers_core_get_digital_holding_issue_count($holding);
   if ($count > 0) {
-    return sprintf(
-      '%s Issues Available Online',
-      number_format($count)
-    );
+    if ($count > 1) {
+      return sprintf(
+        '%s Issues Available Online',
+        number_format($count)
+      );
+    }
+    return "1 Issue Available Online";
   }
   return "Access digitized content";
 }
