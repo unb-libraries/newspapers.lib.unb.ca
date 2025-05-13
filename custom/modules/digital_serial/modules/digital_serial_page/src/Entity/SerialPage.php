@@ -428,7 +428,10 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $image_markup = Markup::create($rendered_image);
     $file = $this->getPageImage();
     $uri = $file->getFileUri();
-    $url = Url::fromUri(file_create_url($uri));
+    $url = Url::fromUri(
+      \Drupal::service('file_url_generator')
+        ->generateAbsoluteString($uri)
+    );
 
     return (Link::fromTextAndUrl($image_markup, $url));
   }
