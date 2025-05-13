@@ -15,6 +15,10 @@ function digital_serial_page_entity_presave(EntityInterface $entity) {
   switch ($entity->bundle()) {
 
     case 'digital_serial_page':
+      // Update parent digital serial title 'changed' property when page entity is created/updated.
+      $dst = $entity->getParentIssue()->getParentTitle();
+      $dst->setChangedTime(time())->save();
+
       // Autofill empty page sort field using required page no field.
       $page_no = trim($entity->getPageNo());
       $page_sort = trim($entity->getPageSort());
