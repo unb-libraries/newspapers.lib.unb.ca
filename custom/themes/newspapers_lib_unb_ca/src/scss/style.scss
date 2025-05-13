@@ -258,6 +258,14 @@ a.btn-add:active {
   border: 1px solid #adadad;
   text-decoration: none;
 }
+a.more {
+  &::after {
+    content: '»';
+    display: inline-block;
+    font-size: $font-size-base * 1.2;
+    margin-left: $spacer * 0.2;
+  }
+}
 
 .btn-link:not(.pager-link) {
   padding: 0.1rem;
