@@ -23,7 +23,8 @@
           font: var(--fa-font-solid);
           font-size: 80%;
           margin-bottom: 2px;
-          margin-right: .5rem;
+          margin-right: .33rem;
+          opacity: 0.85;
           text-rendering: auto;
           -webkit-font-smoothing: antialiased;
         }
@@ -43,4 +44,9 @@
       background-color: #fffdfa;
     }
   }
+}
+
+.tablesort {
+  width: 18px;
+  height: 18px;
 }
