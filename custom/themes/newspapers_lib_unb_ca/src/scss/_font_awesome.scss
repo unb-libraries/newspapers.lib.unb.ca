@@ -20,3 +20,19 @@ a.external:after,
 #header button[data-target="#navbar"][aria-expanded="true"]:after {
   vertical-align: text-top;
 }
+
+@mixin fa-icon($content, $margin, $size, $color: inherit) {
+  background: none;
+  color: $color;
+  content: $content;
+  display: inline-block;
+  font: var(--fa-font-solid);
+  font-size: $size;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  @if $margin == left {
+    margin-left: .25rem;
+  } @else {
+    margin-right: .25rem;
+  }
+}

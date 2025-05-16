@@ -332,6 +332,21 @@ a.more {
   width: auto;
 }
 
+.family-wrapper {
+  button[data-target=".multi-collapse"] {
+    &[aria-expanded="false"] {
+      &::after {
+        @include fa-icon('\f103', 'left', smaller, $link-color);
+      }
+    }
+    &[aria-expanded="true"] {
+      &::after {
+        @include fa-icon('\f102', 'left', smaller, $link-color);
+      }
+    }
+  }
+}
+
 .item-list {
   .history-list {
     list-style-type: disc;
@@ -361,6 +376,13 @@ a.more {
         margin-left: -1.25rem;
       }
     }
+  }
+}
+/* Page Viewer Metadata table row */
+td .item-list {
+  .history-list {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 }
 
