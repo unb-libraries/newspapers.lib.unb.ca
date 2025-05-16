@@ -317,7 +317,7 @@ class SerialPageViewerForm extends FormBase {
     ];
 
     // Initialize optional row arrays.
-    $row_printed_title = $row_missingp = $row_errata = $row_edition = $row_download = [];
+    $rows_title_misc = $row_missingp = $row_errata = $row_edition = $row_download = [];
 
     // Set up arrays for table element row header/data cells.
     $row_pub_title = [
@@ -337,19 +337,41 @@ class SerialPageViewerForm extends FormBase {
         ],
       ],
     ];
-    if (!empty($issue_printed_title)) {
-      $row_printed_title = [
-        [
-          'data' => [
-            [
-              'data' => $this->t('Printed Title'),
-              'header' => TRUE,
-              'scope' => 'row',
-            ],
-            $digital_serial_issue->getIssueTitle(),
+
+    $title_hist_render_array = _newspapers_core_get_rendered_title_history(
+      $digital_serial_title->getParentPublication(),
+      FALSE,
+      4
+    );
+
+    /* Only include optional broad title history row if >1 item in render array */
+    if (count($title_hist_render_array['#children'][0]['#items']) > 1) {
+      $title_history = \Drupal::service('renderer')->render($title_hist_render_array);
+    }
+    $rows_title_misc = [
+      [
+        'data' => [
+          [
+            'data' => $this->t('Printed Title'),
+            'header' => TRUE,
+            'scope' => 'row',
           ],
+          $digital_serial_issue->getIssueTitle(),
+        ],
+      ],
+    ];
+    if(!empty($title_history)) {
+      $row_title_hist = [
+        'data' => [
+          [
+            'data' => $this->t('Publication Family'),
+            'header' => TRUE,
+            'scope' => 'row',
+          ],
+          $title_history,
         ],
       ];
+      array_unshift($rows_title_misc, $row_title_hist);
     }
 
     $row_volume = [
@@ -574,7 +596,7 @@ class SerialPageViewerForm extends FormBase {
       '#rows' => array_merge(
         $row_pub_title,
         $row_place,
-        $row_printed_title,
+        $rows_title_misc,
         $row_volume,
         $row_edition,
         $row_date,
