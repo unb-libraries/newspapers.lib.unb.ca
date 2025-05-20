@@ -16,7 +16,7 @@
   #views-exposed-form-digital-page-lister-page-search {
     .form-actions {
       position: relative;
-      top: -1.45rem;
+      top: -3.25rem;
     }
   }
 }
@@ -105,15 +105,10 @@ textarea {
   }
 }
 // Adjustment re: Search form actions input fieldset & adjacent buttons
-@media (min-width: 1360px) {
+@media (min-width: 1366px) {
   #views-exposed-form-search-search-page {
     .form-actions {
       padding-bottom: 1.65rem;
-    }
-  }
-  #views-exposed-form-digital-page-lister-page-search {
-    .form-actions {
-      padding-bottom: 1.85rem;
     }
   }
 }
