@@ -11,12 +11,20 @@
   }
 }
 
-// Fulltext Search view | Search button alignment - XL breakpoint
+// Fulltext Search view | Search button alignment - breakpoints
+@media (min-width: 992px) and (max-width: 1365px) {
+  .layout-no-sidebars #views-exposed-form-digital-page-lister-page-search {
+    .form-actions {
+      position: relative;
+      top: $spacer * -3.25;
+    }
+  }
+}
 @media (min-width: 1366px) {
   #views-exposed-form-digital-page-lister-page-search {
     .form-actions {
       position: relative;
-      top: -3.25rem;
+      top: $spacer * -3.25;
     }
   }
 }
