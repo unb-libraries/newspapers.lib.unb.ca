@@ -28,6 +28,7 @@ dependencies:
     - field.field.node.publication.field_last_issue_date_type
     - field.field.node.publication.field_last_issue_search_date
     - field.field.node.publication.field_last_issue_sort_date
+    - field.field.node.publication.field_location
     - field.field.node.publication.field_marc_frequency
     - field.field.node.publication.field_microfilmed_by
     - field.field.node.publication.field_oclc
@@ -91,6 +92,7 @@ hidden:
   field_last_issue_precise_date: true
   field_last_issue_search_date: true
   field_last_issue_sort_date: true
+  field_location: true
   field_marc_frequency: true
   field_microfilmed_by: true
   field_oclc: true

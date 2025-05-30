@@ -27,6 +27,7 @@ dependencies:
     - field.field.node.publication.field_last_issue_date_type
     - field.field.node.publication.field_last_issue_search_date
     - field.field.node.publication.field_last_issue_sort_date
+    - field.field.node.publication.field_location
     - field.field.node.publication.field_marc_frequency
     - field.field.node.publication.field_microfilmed_by
     - field.field.node.publication.field_oclc
@@ -57,6 +58,7 @@ dependencies:
     - datetime_range
     - field_group
     - file
+    - geofield
     - image
     - languagefield
     - path
@@ -110,7 +112,7 @@ third_party_settings:
       label: Relationships
       region: content
       parent_name: ''
-      weight: 9
+      weight: 11
       format_type: details
       format_settings:
         classes: ''
@@ -124,13 +126,28 @@ third_party_settings:
       label: Description
       region: content
       parent_name: ''
-      weight: 13
+      weight: 15
       format_type: details
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
         open: true
+        description: ''
+        required_fields: true
+    group_geo_location:
+      children:
+        - field_location
+      label: 'Geo Location'
+      region: content
+      parent_name: ''
+      weight: 5
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: false
         description: ''
         required_fields: true
 id: node.publication.default
@@ -140,13 +157,13 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 23
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
   field_credit:
     type: string_textarea
-    weight: 21
+    weight: 23
     region: content
     settings:
       rows: 2
@@ -172,7 +189,7 @@ content:
         hide_guidelines: '1'
   field_editor:
     type: entity_reference_autocomplete
-    weight: 12
+    weight: 14
     region: content
     settings:
       match_operator: CONTAINS
@@ -213,7 +230,7 @@ content:
             selector: ''
   field_featured:
     type: boolean_checkbox
-    weight: 27
+    weight: 29
     region: content
     settings:
       display_label: true
@@ -299,7 +316,7 @@ content:
     third_party_settings: {  }
   field_frequency:
     type: string_textfield
-    weight: 5
+    weight: 7
     region: content
     settings:
       size: 60
@@ -307,7 +324,7 @@ content:
     third_party_settings: {  }
   field_frequency_notes:
     type: string_textfield
-    weight: 7
+    weight: 9
     region: content
     settings:
       size: 60
@@ -316,7 +333,7 @@ content:
       conditional_fields: {  }
   field_geographic_coverage:
     type: string_textfield
-    weight: 8
+    weight: 10
     region: content
     settings:
       size: 60
@@ -352,7 +369,7 @@ content:
             selector: ''
   field_issn:
     type: string_textfield
-    weight: 17
+    weight: 19
     region: content
     settings:
       size: 60
@@ -360,7 +377,7 @@ content:
     third_party_settings: {  }
   field_language:
     type: languagefield_select
-    weight: 19
+    weight: 21
     region: content
     settings:
       format:
@@ -450,21 +467,28 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_location:
+    type: geofield_latlon
+    weight: 6
+    region: content
+    settings:
+      html5_geolocation: false
+    third_party_settings: {  }
   field_marc_frequency:
     type: options_select
-    weight: 6
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   field_microfilmed_by:
     type: options_select
-    weight: 18
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
   field_oclc:
     type: string_textfield
-    weight: 16
+    weight: 18
     region: content
     settings:
       size: 60
@@ -472,7 +496,7 @@ content:
     third_party_settings: {  }
   field_panb_id:
     type: string_textfield
-    weight: 26
+    weight: 28
     region: content
     settings:
       size: 60
@@ -486,7 +510,7 @@ content:
     third_party_settings: {  }
   field_publisher:
     type: entity_reference_autocomplete
-    weight: 11
+    weight: 13
     region: content
     settings:
       match_operator: CONTAINS
@@ -523,7 +547,7 @@ content:
       conditional_fields: {  }
   field_serial_relation_suc_ref_up:
     type: options_select
-    weight: 21
+    weight: 22
     region: content
     settings: {  }
     third_party_settings:
@@ -536,7 +560,7 @@ content:
     third_party_settings: {  }
   field_serial_relationship_op_suc:
     type: options_select
-    weight: 20
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -551,7 +575,7 @@ content:
       conditional_fields: {  }
   field_subject_notes:
     type: string_textarea
-    weight: 15
+    weight: 17
     region: content
     settings:
       rows: 4
@@ -559,7 +583,7 @@ content:
     third_party_settings: {  }
   field_subjects:
     type: string_textfield
-    weight: 14
+    weight: 16
     region: content
     settings:
       size: 60
@@ -576,7 +600,7 @@ content:
       conditional_fields: {  }
   field_supplemental_information:
     type: file_generic
-    weight: 20
+    weight: 22
     region: content
     settings:
       progress_indicator: throbber
@@ -599,32 +623,32 @@ content:
       conditional_fields: {  }
   path:
     type: path
-    weight: 28
+    weight: 30
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 24
+    weight: 26
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   simple_sitemap:
-    weight: 10
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 29
+    weight: 31
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 25
+    weight: 27
     region: content
     settings:
       display_label: true
@@ -639,7 +663,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 22
+    weight: 24
     region: content
     settings:
       match_operator: CONTAINS
