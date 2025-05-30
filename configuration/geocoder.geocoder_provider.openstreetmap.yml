@@ -1,0 +1,16 @@
+uuid: 5ce54ff5-f957-46a1-8020-d825101301e7
+langcode: en
+status: true
+dependencies: {  }
+id: openstreetmap
+label: OpenStreetMap
+plugin: openstreetmap
+configuration:
+  throttle:
+    period: 2
+    limit: 1
+  geocoder:
+    locale: ''
+  rootUrl: 'https://nominatim.openstreetmap.org'
+  userAgent: NBHNP
+  referer: 'https://newspapers.lib.unb.ca'

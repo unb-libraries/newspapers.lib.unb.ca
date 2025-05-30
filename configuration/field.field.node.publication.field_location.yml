@@ -1,0 +1,38 @@
+uuid: d1ca78ae-a162-4d91-8868-8b0d5f05f3cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_location
+    - node.type.publication
+  module:
+    - geocoder_field
+    - geofield
+third_party_settings:
+  geocoder_field:
+    method: geocode
+    weight: 0
+    field: field_place_of_publication
+    skip_not_empty_value: false
+    disabled: false
+    hidden: false
+    providers:
+      - openstreetmap
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: preserve
+      status_message: true
+      log: true
+id: node.publication.field_location
+field_name: field_location
+entity_type: node
+bundle: publication
+label: Coordinates
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geofield
