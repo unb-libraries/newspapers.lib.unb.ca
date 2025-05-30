@@ -28,7 +28,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Map of Cities'
+      title: 'Places of Publication'
       fields:
         title:
           id: title
