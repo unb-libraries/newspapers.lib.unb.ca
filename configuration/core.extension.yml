@@ -43,6 +43,11 @@ module:
   file_management_view: 0
   filter: 0
   fontawesome: 0
+  geocoder: 0
+  geocoder_address: 0
+  geocoder_field: 0
+  geocoder_geofield: 0
+  geofield: 0
   google_analytics: 0
   health_check: 0
   help: 0
@@ -55,6 +60,9 @@ module:
   jquery_ui_touch_punch: 0
   language: 0
   languagefield: 0
+  leaflet: 0
+  leaflet_markercluster: 0
+  leaflet_views: 0
   link: 0
   media: 0
   media_library: 0
