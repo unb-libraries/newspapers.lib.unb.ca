@@ -20,6 +20,11 @@ a:not(.btn):not(.button):not(.cd-top):not(.nav-link):active {
   text-decoration: underline;
 }
 
+// Fix leaflet map fullscreen toggle icon.
+.leaflet-control-fullscreen a {
+  background-image: url(/modules/contrib/leaflet/js/Leaflet.fullscreen-gh-pages/dist/fullscreen.png)!important;
+}
+
 /* Social Share links */
 a.share {
   display: inline-block;
