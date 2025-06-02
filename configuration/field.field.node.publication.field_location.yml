@@ -13,7 +13,7 @@ third_party_settings:
     method: geocode
     weight: 0
     field: field_place_of_publication
-    skip_not_empty_value: false
+    skip_not_empty_value: true
     disabled: false
     hidden: false
     providers:
@@ -29,7 +29,7 @@ field_name: field_location
 entity_type: node
 bundle: publication
 label: Coordinates
-description: ''
+description: '<strong>Note:</strong> delete both coordinate values to have the system automatically regenerate them'
 required: false
 translatable: false
 default_value: {  }
