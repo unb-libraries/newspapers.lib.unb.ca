@@ -696,7 +696,7 @@ display:
           leaflet_markercluster:
             control: true
             include_path: false
-            options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":true,"removeOutsideVisibleBounds":false,"zoomToBoundsOnClick":true,"maxClusterRadius":75}'
+            options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":false,"removeOutsideVisibleBounds":false,"zoomToBoundsOnClick":true,"maxClusterRadius":75}'
             excluded: '0'
           fullscreen:
             control: true
