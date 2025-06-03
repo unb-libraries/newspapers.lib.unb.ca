@@ -660,12 +660,12 @@ display:
             options: '{"position":"topright","setView":"untilPanOrZoom","returnToPrevBounds":true,"keepCurrentZoomLevel":true,"strings":{"title":"Locate my position"}}'
             automatic: false
           map_position:
-            force: false
+            force: true
             center:
-              lat: !!float 0
-              lon: !!float 0
+              lat: 46.254599
+              lon: -66.197613
             zoomControlPosition: topleft
-            zoom: 8
+            zoom: 7
             minZoom: 1
             maxZoom: 18
             zoomFiner: 0
@@ -696,7 +696,7 @@ display:
           leaflet_markercluster:
             control: true
             include_path: false
-            options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":false,"removeOutsideVisibleBounds":false,"zoomToBoundsOnClick":true,"maxClusterRadius":75}'
+            options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":false,"removeOutsideVisibleBounds":false}'
             excluded: '0'
           fullscreen:
             control: true
@@ -720,7 +720,7 @@ display:
               popup: false
               options: ''
           map_lazy_load:
-            lazy_load: false
+            lazy_load: true
           feature_properties:
             values: ''
       row:
