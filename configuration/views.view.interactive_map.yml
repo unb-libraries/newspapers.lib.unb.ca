@@ -440,6 +440,72 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        field_sample_image:
+          id: field_sample_image
+          table: node__field_sample_image
+          field: field_sample_image
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<div class="border-secondary border-bottom border-top mb-1 py-1 text-center">{{ field_sample_image }}</div>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: image
+          settings:
+            image_link: ''
+            image_style: sample_publication_image
+            image_loading:
+              attribute: lazy
+          group_column: ''
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         nothing:
           id: nothing
           table: views
@@ -452,7 +518,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"h4 mb-0\">{{ title }}</div>\r\n<div class=\"h5 text-secondary\">{{ field_first_issue_sort_date }} - {{ field_last_issue_sort_date }}</div>\r\n<div class=\"text-black\">{{ field_place_of_publication_locality }}, {{ field_place_of_publication_administrative_area }}</div>\r\n\r\n"
+            text: "<div class=\"h4 mb-0\">{{ title }}</div>\r\n<div class=\"h5 text-secondary\">{{ field_first_issue_sort_date }} - {{ field_last_issue_sort_date }}</div>\r\n{{ field_sample_image }}\r\n<div class=\"text-black\">{{ field_place_of_publication_locality }}, {{ field_place_of_publication_administrative_area }}</div>\r\n\r\n"
             make_link: false
             path: ''
             absolute: false
@@ -627,6 +693,52 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        field_place_of_publication_administrative_area:
+          id: field_place_of_publication_administrative_area
+          table: node__field_place_of_publication
+          field: field_place_of_publication_administrative_area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: administrative_area
+          operator: in
+          value:
+            NB: NB
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+            label_type: static
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          country:
+            country_source: static
+            country_argument_id: ''
+            country_filter_id: ''
+            country_static_code: CA
       style:
         type: leaflet_map
         options:
@@ -660,12 +772,12 @@ display:
             options: '{"position":"topright","setView":"untilPanOrZoom","returnToPrevBounds":true,"keepCurrentZoomLevel":true,"strings":{"title":"Locate my position"}}'
             automatic: false
           map_position:
-            force: true
+            force: false
             center:
-              lat: 46.254599
-              lon: -66.197613
+              lat: null
+              lon: null
             zoomControlPosition: topleft
-            zoom: 7
+            zoom: 8
             minZoom: 1
             maxZoom: 18
             zoomFiner: 0
@@ -763,542 +875,35 @@ display:
         - 'config:field.storage.node.field_first_issue_sort_date'
         - 'config:field.storage.node.field_last_issue_sort_date'
         - 'config:field.storage.node.field_location'
-  page_1:
-    id: page_1
-    display_title: Page
+        - 'config:field.storage.node.field_sample_image'
+  page_nb:
+    id: page_nb
+    display_title: 'NB Page'
     display_plugin: page
     position: 1
     display_options:
-      fields:
-        field_location:
-          id: field_location
-          table: node__field_location
-          field: field_location
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: geofield_default
-          settings:
-            output_format: wkt
-            output_escape: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_place_of_publication_locality:
-          id: field_place_of_publication_locality
-          table: node__field_place_of_publication
-          field: field_place_of_publication_locality
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: subdivision
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          display_name: true
-        field_place_of_publication_country_code:
-          id: field_place_of_publication_country_code
-          table: node__field_place_of_publication
-          field: field_place_of_publication_country_code
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: country
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          display_name: true
-        field_place_of_publication_administrative_area:
-          id: field_place_of_publication_administrative_area
-          table: node__field_place_of_publication
-          field: field_place_of_publication_administrative_area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: subdivision
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: '{{ field_place_of_publication_country_code }}'
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          display_name: true
-        field_first_issue_sort_date:
-          id: field_first_issue_sort_date
-          table: node__field_first_issue_sort_date
-          field: field_first_issue_sort_date
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: Unknown
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: datetime_default
-          settings:
-            timezone_override: ''
-            format_type: html_year
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_last_issue_sort_date:
-          id: field_last_issue_sort_date
-          table: node__field_last_issue_sort_date
-          field: field_last_issue_sort_date
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: Unknown
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: datetime_default
-          settings:
-            timezone_override: ''
-            format_type: html_year
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: title
-          plugin_id: field
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: false
-            ellipsis: false
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_sample_image:
-          id: field_sample_image
-          table: node__field_sample_image
-          field: field_sample_image
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: ''
-          exclude: true
-          alter:
-            alter_text: true
-            text: '<div class="border-secondary border-bottom border-top mb-1 py-1 text-center">{{ field_sample_image }}</div>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: image
-          settings:
-            image_link: ''
-            image_style: sample_publication_image
-            image_loading:
-              attribute: lazy
-          group_column: ''
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        nothing:
-          id: nothing
-          table: views
-          field: nothing
-          relationship: none
-          group_type: group
-          admin_label: 'Title with metadata'
-          plugin_id: custom
-          label: ''
-          exclude: false
-          alter:
-            alter_text: true
-            text: "<div class=\"h4 mb-0\">{{ title }}</div>\r\n<div class=\"h5 text-secondary\">{{ field_first_issue_sort_date }} - {{ field_last_issue_sort_date }}</div>\r\n{{ field_sample_image }}\r\n<div class=\"text-black\">{{ field_place_of_publication_locality }}, {{ field_place_of_publication_administrative_area }}</div>\r\n\r\n"
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: false
       defaults:
-        fields: false
+        fields: true
+      display_description: ''
       display_extenders:
         ajax_history: {  }
         simple_sitemap_display_extender:
           variants: {  }
       path: map
+      menu:
+        type: 'default tab'
+        title: NB
+        description: ''
+        weight: 0
+        expanded: false
+        menu_name: main
+        parent: ''
+        context: '0'
+      tab_options:
+        type: none
+        title: ''
+        description: ''
+        weight: 0
     cache_metadata:
       max-age: -1
       contexts:
@@ -1311,18 +916,299 @@ display:
         - 'config:field.storage.node.field_last_issue_sort_date'
         - 'config:field.storage.node.field_location'
         - 'config:field.storage.node.field_sample_image'
-  page_local:
-    id: page_local
-    display_title: 'Page w/o Popup Covers'
+  page_non_nb:
+    id: page_non_nb
+    display_title: 'Non-NB Page'
     display_plugin: page
     position: 1
     display_options:
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            publication: publication
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+        field_location_lat:
+          id: field_location_lat
+          table: node__field_location
+          field: field_location_lat
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: numeric
+          operator: 'not empty'
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_location_lon:
+          id: field_location_lon
+          table: node__field_location
+          field: field_location_lon
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: numeric
+          operator: 'not empty'
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_place_of_publication_administrative_area:
+          id: field_place_of_publication_administrative_area
+          table: node__field_place_of_publication
+          field: field_place_of_publication_administrative_area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: administrative_area
+          operator: 'not in'
+          value:
+            NB: NB
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+            label_type: static
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          country:
+            country_source: static
+            country_argument_id: ''
+            country_filter_id: ''
+            country_static_code: CA
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: leaflet_map
+        options:
+          grouping: {  }
+          data_source:
+            field_location: field_location
+          entity_source: __base_table
+          name_field: title
+          leaflet_tooltip:
+            value: ''
+            options: '{"permanent":false,"direction":"center"}'
+          leaflet_popup:
+            value: nothing
+            options: '{"maxWidth":"300","minWidth":"50","autoPan":true}'
+            view_mode: full
+          leaflet_map: 'OSM Mapnik'
+          height: '720'
+          height_unit: px
+          hide_empty_map: false
+          disable_wheel: false
+          gesture_handling: true
+          fitbounds_options: '{"padding":[0,0]}'
+          reset_map:
+            control: true
+            options: '{"position":"topleft","title":"Reset View"}'
+          map_scale:
+            control: true
+            options: '{"position":"bottomright","maxWidth":100,"metric":true,"imperial":false,"updateWhenIdle":false}'
+          locate:
+            control: false
+            options: '{"position":"topright","setView":"untilPanOrZoom","returnToPrevBounds":true,"keepCurrentZoomLevel":true,"strings":{"title":"Locate my position"}}'
+            automatic: false
+          map_position:
+            force: true
+            center:
+              lat: 47.75565
+              lon: -59.6677893
+            zoomControlPosition: topleft
+            zoom: 3
+            minZoom: 1
+            maxZoom: 18
+            zoomFiner: 0
+          weight: ''
+          icon:
+            iconType: marker
+            iconUrl: ''
+            shadowUrl: ''
+            className: ''
+            iconSize:
+              x: ''
+              'y': ''
+            iconAnchor:
+              x: ''
+              'y': ''
+            shadowSize:
+              x: ''
+              'y': ''
+            shadowAnchor:
+              x: ''
+              'y': ''
+            popupAnchor:
+              x: ''
+              'y': ''
+            html: '<div></div>'
+            html_class: leaflet-map-divicon
+            circle_marker_options: '{"radius":100,"color":"red","fillColor":"#f03","fillOpacity":0.5}'
+          leaflet_markercluster:
+            control: true
+            include_path: false
+            options: '{"spiderfyOnMaxZoom":true,"showCoverageOnHover":false,"removeOutsideVisibleBounds":false}'
+            excluded: '0'
+          fullscreen:
+            control: true
+            options: '{"position":"topleft","pseudoFullscreen":false}'
+          path: '{"color":"#3388ff","opacity":"1.0","stroke":true,"weight":3,"fill":"depends","fillColor":"*","fillOpacity":"0.2","radius":"6"}'
+          geocoder:
+            control: false
+            settings:
+              autocomplete:
+                placeholder: 'Search Address'
+                title: 'Search an Address on the Map'
+              position: topright
+              input_size: 20
+              providers:
+                openstreetmap:
+                  weight: '0'
+                  checked: 0
+              min_terms: 4
+              delay: 800
+              zoom: 16
+              popup: false
+              options: ''
+          map_lazy_load:
+            lazy_load: true
+          feature_properties:
+            values: ''
+      row:
+        type: fields
+        options:
+          default_field_elements: false
+          inline: {  }
+          separator: ''
+          hide_empty: false
+      defaults:
+        style: false
+        row: false
+        filters: false
+        filter_groups: false
       display_description: ''
       display_extenders:
         ajax_history: {  }
         simple_sitemap_display_extender:
           variants: {  }
-      path: map/local
+      path: map/non-nb
+      menu:
+        type: tab
+        title: 'Outside NB'
+        description: ''
+        weight: 0
+        expanded: false
+        menu_name: main
+        parent: ''
+        context: '0'
     cache_metadata:
       max-age: -1
       contexts:
@@ -1334,3 +1220,4 @@ display:
         - 'config:field.storage.node.field_first_issue_sort_date'
         - 'config:field.storage.node.field_last_issue_sort_date'
         - 'config:field.storage.node.field_location'
+        - 'config:field.storage.node.field_sample_image'
