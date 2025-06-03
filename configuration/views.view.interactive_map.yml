@@ -1186,7 +1186,7 @@ display:
           admin_label: ''
           plugin_id: field
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: true
             text: '<div class="border-secondary border-bottom border-top mb-1 py-1 text-center">{{ field_sample_image }}</div>'
