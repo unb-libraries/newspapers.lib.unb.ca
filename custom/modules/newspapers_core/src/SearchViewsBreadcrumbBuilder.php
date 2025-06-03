@@ -31,7 +31,8 @@ class SearchViewsBreadcrumbBuilder implements BreadcrumbBuilderInterface {
         'view.digital_titles_lister.page_listing',
         'view.print_title_listing.page_listing',
         'view.digital_page_lister.page_issues',
-        'view.interactive_map.page_1',
+        'view.interactive_map.page_nb',
+        'view.interactive_map.page_non_nb',
       ]
     );
   }
