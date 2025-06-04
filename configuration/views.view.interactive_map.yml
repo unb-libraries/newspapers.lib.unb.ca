@@ -892,7 +892,7 @@ display:
       path: map
       menu:
         type: 'default tab'
-        title: NB
+        title: 'New Brunswick (NB)'
         description: ''
         weight: 0
         expanded: false
