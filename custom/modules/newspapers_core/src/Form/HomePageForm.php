@@ -39,11 +39,18 @@ class HomePageForm extends FormBase {
       $fulltext_pane_class = "";
     }
     else {
-      $fulltext_pane_class = $about_pane_class = NULL;
+      $fulltext_pane_class = $about_pane_class = $map_pane_class = NULL;
       $title_pane_class = "show active";
     }
 
     // Markup snippets.
+    $map_markup = '<div>Consult our <a href="/map">places of publication</a> map to browse
+    locales of newspapers published within and outside of New Brunswick.<br>
+    <a href="/map" tabindex="-1" data-placement="bottom" data-toggle="tooltip" data-bs-toggle="tooltip"
+    title="Places of Publication" data-bs-title="Places of Publication"><img
+    src="/themes/custom/newspapers_lib_unb_ca/dist/img/map.png"
+    alt="Map of New Brunswick and surrounding area"></a></div>';
+
     $about_markup = '<p>The <a href="project">New Brunswick Historical Newspapers Project</a> provides
       researchers with unified access to UNB Libraries&apos; current and historical newspaper collections in all formats,
       from New Brunswick and across the world. Search and discover
@@ -124,6 +131,33 @@ class HomePageForm extends FormBase {
     ];
     $fulltext_url->setOptions($fulltext_link_options);
 
+    $map_url = Url::fromUri("internal:");
+    $map_link_options = [
+      'attributes' => [
+        'id' => [
+          'tab-map',
+        ],
+        'class' => [
+          'nav-link',
+        ],
+        'role' => [
+          'tab',
+        ],
+        'data-toggle' => [
+          'tab',
+        ],
+        'aria-controls' => [
+          'about',
+        ],
+        'aria-selected' => [
+          'false',
+        ],
+
+      ],
+      'fragment' => 'map',
+    ];
+    $map_url->setOptions($map_link_options);
+
     $about_url = Url::fromUri("internal:");
     $about_link_options = [
       'attributes' => [
@@ -178,6 +212,12 @@ class HomePageForm extends FormBase {
       Link::fromTextAndUrl($this->t('Fulltext<span class="d-none d-md-inline"> Search</span>'),
         $fulltext_url)->toString() .
       '</li>',
+    ];
+    $form['nav-tabs']['map'] = [
+      '#markup' => '<li class="nav-item" role="presentation">' .
+        Link::fromTextAndUrl($this->t('<span class="d-none d-md-inline">Publication </span>Map'),
+          $map_url)->toString() .
+        '</li>',
     ];
     $form['nav-tabs']['about'] = [
       '#markup' => '<li class="nav-item" role="presentation">' .
@@ -314,6 +354,35 @@ class HomePageForm extends FormBase {
     $form['panel-wrapper']['tab-content']['fulltext']['tips'] = [
       '#type' => 'markup',
       '#markup' => $searchtips_markup,
+    ];
+
+    // Publication Map tab.
+    $form['panel-wrapper']['tab-content']['map'] = [
+      '#type' => 'container',
+      '#weight' => 100,
+      '#attributes' => [
+        'class' => [
+          'tab-pane',
+          'fade',
+          $map_pane_class,
+        ],
+        'id' => [
+          'map',
+        ],
+        'role' => [
+          'tabpanel',
+        ],
+        'aria-labelledby' => [
+          'map-about',
+        ],
+      ],
+    ];
+    $form['panel-wrapper']['tab-content']['map']['wrapper'] = [
+      '#type' => 'container',
+    ];
+    $form['panel-wrapper']['tab-content']['map']['wrapper']['image'] = [
+      '#type' => 'markup',
+      '#markup' => $map_markup,
     ];
 
     // About the Project tab pane.
