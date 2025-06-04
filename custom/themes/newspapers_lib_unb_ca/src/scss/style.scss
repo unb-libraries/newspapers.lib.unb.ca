@@ -25,6 +25,20 @@ a:not(.btn):not(.button):not(.cd-top):not(.nav-link):active {
   background-image: url(/modules/contrib/leaflet/js/Leaflet.fullscreen-gh-pages/dist/fullscreen.png)!important;
 }
 
+.leaflet-control {
+  a[role="button"]:hover {
+    color: inherit;
+    opacity: 0.75;
+    text-decoration: none!important;
+  }
+}
+
+.leaflet-popup {
+  a.leaflet-popup-close-button {
+    font-size: 24px;
+  }
+}
+
 /* Social Share links */
 a.share {
   display: inline-block;
