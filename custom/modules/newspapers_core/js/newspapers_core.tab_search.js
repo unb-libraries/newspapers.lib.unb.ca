@@ -31,4 +31,7 @@
             }
         }
     });
+
+    // Enable Bootstrap Tooltips.
+    $('[data-bs-toggle="tooltip"]').tooltip();
 })(jQuery);
