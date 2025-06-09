@@ -1941,12 +1941,12 @@
             "authors": [
                 {
                     "name": "Alberto Siles",
-                    "homepage": "https://www.drupal.org/user/827704",
+                    "homepage": "https://www.drupal.org/user/3520894",
                     "email": "alberto@siles.pe"
                 },
                 {
-                    "name": "ricardo.castaneda",
-                    "homepage": "https://www.drupal.org/user/3520894"
+                    "name": "hatuhay",
+                    "homepage": "https://www.drupal.org/user/827704"
                 },
                 {
                     "name": "WillAcon",
@@ -4341,15 +4341,11 @@
                     "homepage": "https://www.drupal.org/user/577844"
                 },
                 {
-                    "name": "Anybody",
-                    "homepage": "https://www.drupal.org/user/291091"
-                },
-                {
                     "name": "danielzigo",
                     "homepage": "https://www.drupal.org/user/3569258"
                 },
                 {
-                    "name": "Hebl",
+                    "name": "hebl",
                     "homepage": "https://www.drupal.org/user/3688118"
                 },
                 {
@@ -4363,10 +4359,6 @@
                 {
                     "name": "swim",
                     "homepage": "https://www.drupal.org/user/1968266"
-                },
-                {
-                    "name": "thomas.frobieter",
-                    "homepage": "https://www.drupal.org/user/409335"
                 }
             ],
             "description": "Drupal integration for Owl Carousel",
@@ -15097,16 +15089,16 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "8.18.1",
+            "version": "8.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "06b18b3f64979ab31d27c37021838439f3ed5919"
+                "reference": "9cc50509c3912d465a9f6898069f64cf2abf4e8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/06b18b3f64979ab31d27c37021838439f3ed5919",
-                "reference": "06b18b3f64979ab31d27c37021838439f3ed5919",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/9cc50509c3912d465a9f6898069f64cf2abf4e8a",
+                "reference": "9cc50509c3912d465a9f6898069f64cf2abf4e8a",
                 "shasum": ""
             },
             "require": {
@@ -15146,7 +15138,7 @@
             ],
             "support": {
                 "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/8.18.1"
+                "source": "https://github.com/slevomat/coding-standard/tree/8.19.0"
             },
             "funding": [
                 {
@@ -15158,7 +15150,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-05-22T14:32:30+00:00"
+            "time": "2025-06-07T15:02:20+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
