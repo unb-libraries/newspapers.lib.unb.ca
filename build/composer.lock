@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c52b0d179827c142c933d0e82e71e6f0",
+    "content-hash": "ddd314d2d8b9ca3fd94c9724b25affcf",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5689,10 +5689,10 @@
         },
         {
             "name": "fontawesome/fontawesome",
-            "version": "6.5.1",
+            "version": "6.7.2",
             "dist": {
                 "type": "zip",
-                "url": "https://use.fontawesome.com/releases/v6.5.1/fontawesome-free-6.5.1-web.zip"
+                "url": "https://use.fontawesome.com/releases/v6.7.2/fontawesome-free-6.7.2-web.zip"
             },
             "type": "drupal-library",
             "extra": {
@@ -11628,22 +11628,21 @@
         },
         {
             "name": "unb-libraries/unb_lib_theme",
-            "version": "dev-9.x-4.x",
+            "version": "dev-10.x-4.x",
             "source": {
                 "type": "git",
                 "url": "https://github.com/unb-libraries/unb_lib_theme.git",
-                "reference": "453a609e6f15773f8e2d81b6a19d0aecc2b4d4e3"
+                "reference": "31499c524322569819ef3b5728e9340103569e36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/453a609e6f15773f8e2d81b6a19d0aecc2b4d4e3",
-                "reference": "453a609e6f15773f8e2d81b6a19d0aecc2b4d4e3",
+                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/31499c524322569819ef3b5728e9340103569e36",
+                "reference": "31499c524322569819ef3b5728e9340103569e36",
                 "shasum": ""
             },
             "require-dev": {
                 "twbs/bootstrap": "~4.5.3"
             },
-            "default-branch": true,
             "type": "drupal-theme",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -11659,9 +11658,9 @@
             "homepage": "https://github.com/unb-libraries/unb_lib_theme",
             "support": {
                 "issues": "https://github.com/unb-libraries/unb_lib_theme/issues",
-                "source": "https://github.com/unb-libraries/unb_lib_theme/tree/9.x-4.x"
+                "source": "https://github.com/unb-libraries/unb_lib_theme/tree/10.x-4.x"
             },
-            "time": "2025-01-22T14:19:06+00:00"
+            "time": "2025-01-22T12:55:31+00:00"
         },
         {
             "name": "webflo/drupal-finder",
@@ -15699,8 +15698,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "furf/jquery-ui-touch-punch": 20,
         "jackmoore/colorbox": 20,
+        "furf/jquery-ui-touch-punch": 20,
         "markgoodyear/scrollup": 20,
         "unb-libraries/alert_scheduler": 20,
         "unb-libraries/calendar_hours": 20,
@@ -15710,7 +15709,7 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
