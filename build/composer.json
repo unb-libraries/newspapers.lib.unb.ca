@@ -245,7 +245,7 @@
     "unb-libraries/calendar_hours": "dev-9.x-1.x",
     "unb-libraries/drupal-builder": "^9",
     "unb-libraries/saml_features": "dev-9.x-1.x",
-    "unb-libraries/unb_lib_theme": "dev-9.x-4.x",
+    "unb-libraries/unb_lib_theme": "dev-10.x-4.x",
     "willdurand/geocoder": "4.6.0",
     "zenorocha/clipboardjs": "dev-master"
   },
