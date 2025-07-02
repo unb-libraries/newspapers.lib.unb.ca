@@ -182,6 +182,7 @@
   ],
   "require": {
     "drupal/address": "1.12",
+    "drupal/admin_toolbar": "3.6.1",
     "drupal/allowed_formats": "2.0.0",
     "drupal/antibot": "2.0.4",
     "drupal/ajax_loader": "<=2.1.2",
