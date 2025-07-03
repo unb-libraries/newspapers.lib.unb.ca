@@ -50,3 +50,13 @@
   width: 18px;
   height: 18px;
 }
+
+#detailsWrapper {
+  caption {
+    @include visually-hidden;
+  }
+
+  .table-responsive {
+    margin-bottom: 0;
+  }
+}
