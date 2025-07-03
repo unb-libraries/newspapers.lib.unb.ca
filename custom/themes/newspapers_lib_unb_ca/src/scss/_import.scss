@@ -2,6 +2,8 @@
 @import '../../../../../vendor/unb-libraries/unb_lib_theme/src/scss/style.scss';
 
 @import "local-variables";
+@import "mixins";
+
 @import "accessibility";
 @import "breadcrumb";
 @import "digital-page-lister";
