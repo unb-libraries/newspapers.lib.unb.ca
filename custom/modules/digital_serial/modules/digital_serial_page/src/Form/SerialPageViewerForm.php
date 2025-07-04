@@ -42,41 +42,14 @@ class SerialPageViewerForm extends FormBase {
       $digital_serial_page->id()
     );
 
-    $prev_text = [
-      '#type' => 'html_tag',
-      '#tag' => 'span',
-      '#value' => $this->t('<span aria-hidden="true">« </span>previous'),
-      '#attributes' => [
-        'aria-label' => ['Show previous page'],
-      ],
-    ];
-
-    $current_page = $digital_serial_page->getActivePagerNo();
-    $total_pages = $digital_serial_issue->getPageCount();
-
-    $viewer_active_page_text = "$current_page of $total_pages";
-    $viewer_active_pager_item = [
-      '#type' => 'html_tag',
-      '#tag' => 'span',
-      "#value" => $viewer_active_page_text,
-      "#attributes" => [
-        'class' => [
-          'btn',
-        ],
-        'id' => [
-          'active-viewer-page',
-        ],
-      ],
-    ];
-
-    $next_text = [
-      '#type' => 'html_tag',
-      '#tag' => 'span',
-      '#value' => $this->t('next<span aria-hidden="true"> »</span>'),
-      '#attributes' => [
-        'aria-label' => ['Show next page'],
-      ],
-    ];
+    // Citation: $ParentTitle $vol, no. $iss, M d, Y: [$page#]. NBHNP. $url.
+    $volume_issue_citation_format = $this->t("@volume, no. @issue,",
+      [
+        '@volume' => !empty($digital_serial_issue->getIssueVol()) ? $digital_serial_issue->getIssueVol() : "n/a",
+        '@issue' => !empty($digital_serial_issue->getIssueIssue()) ? $digital_serial_issue->getIssueIssue() : "n/s",
+      ]
+    );
+    global $base_url;
 
     if (strpos($referrer, 'search') !== FALSE) {
       $back_text = $this->t('Back to search results');
@@ -86,91 +59,249 @@ class SerialPageViewerForm extends FormBase {
       $back_text = [
         '#type' => 'html_tag',
         '#tag' => 'span',
-        '#value' => 'Browse digital issues',
+        '#value' => $this->t('Back to Digital Issues'),
       ];
       $uri = "internal:/serials/browse/{$digital_serial_title->id()}";
       $url = Url::fromUri($uri);
     }
 
-    $link_options = [
-      'attributes' => [
-        'class' => [
-          'back-link',
-        ],
-      ],
-    ];
-    $url->setOptions($link_options);
-
-    $form['page_viewer']['back_link'] = [
-      '#markup' => Link::fromTextAndUrl(
-        $back_text, $url)
-        ->toString(),
-    ];
-    $form['page_viewer']['back_link'];
-
-    $form['page_viewer']['pager'] = [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' => [
-          'mb-2',
-          'pagination',
-        ],
-        'aria-label' => 'Page viewer controls',
-        'role' => 'group',
-      ],
-    ];
-
-    $link_options = [
-      'attributes' => [
-        'class' => [
-          'border',
-          'btn',
-          'btn-link',
-          'pager-link',
-        ],
-      ],
-    ];
-
-    if (!empty($prev_next['previous'])) {
-      $prev_next['previous']->setOptions($link_options);
-      $prev_link = [
-        '#markup' => Link::fromTextAndUrl($prev_text, $prev_next['previous'])
-          ->toString(),
-      ];
-      $form['page_viewer']['pager']['prev_page'] = $prev_link;
-    }
-
-    $form['page_viewer']['pager']['active'] = $viewer_active_pager_item;
-    if (!empty($prev_next['next'])) {
-      $prev_next['next']->setOptions($link_options);
-      $next_link = [
-        '#markup' => Link::fromTextAndUrl($next_text, $prev_next['next'])
-          ->toString(),
-      ];
-      $form['page_viewer']['pager']['next_page'] = $next_link;
-    }
-
     $form['page_viewer']['zoom'] = [
       '#type' => 'container',
       '#id' => 'seadragon-viewer',
+      '#weight' => 50,
       '#attributes' => [
         'aria-label' => 'Zoomable Page',
         'role' => 'region',
       ],
     ];
+
+    $form['page_viewer']['nav'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'controls',
+          'align-items-center',
+          'd-flex',
+          'justify-content-between',
+          'border',
+          'mb-0',
+          'p-1',
+        ],
+      ],
+    ];
+    $form['page_viewer']['nav']['toolbar'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'mb-0',
+          'text-center'
+        ],
+        'id' => 'toolbarDiv',
+      ],
+    ];
+    $form['page_viewer']['nav']['pager'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => [
+          'align-items-center',
+          'btn-sm',
+          'my-0',
+          'text-center',
+        ],
+        'aria-label' => 'Page viewer controls',
+        'role' => 'group',
+      ],
+      '#weight' => 0,
+    ];
+
+    $form['page_viewer']['nav']['pager']['previous'] = [];
+    $prev_link_options = [
+      'attributes' => [
+        'class' => [
+          'btn',
+          'btn-link',
+          'p-1',
+        ],
+        'id' => 'previous',
+        'title' => $this->t('Previous Image'),
+      ],
+    ];
+    $current_page = $digital_serial_page->getActivePagerNo();
+    $total_pages = $digital_serial_issue->getPageCount();
+    $prev_text = [
+      '#type' => 'html_tag',
+      '#tag' => 'span',
+      '#value' => '',
+      '#attributes' => [
+        'aria-label' => ['Previous image'],
+        'class' => [
+          'fa-solid',
+          'fa-backward',
+        ],
+      ],
+    ];
+    $viewer_active_page_text = "Page <span class=\"text-nowrap\">$current_page of $total_pages</span>";
+    $viewer_active_pager_item = [
+      '#type' => 'html_tag',
+      '#tag' => 'span',
+      "#value" => $viewer_active_page_text,
+      "#attributes" => [
+        'class' => [
+          'ml-1',
+        ],
+        'id' => [
+          'pageIndicator',
+        ],
+      ],
+    ];
+    $next_text = [
+      '#type' => 'html_tag',
+      '#tag' => 'span',
+      '#value' => '',
+      '#attributes' => [
+        'aria-label' => ['Next image'],
+        'class' => [
+          'fa-solid',
+          'fa-forward',
+        ]
+      ],
+    ];
+    if (!empty($prev_next['previous'])) {
+      $prev_next['previous']->setOptions($prev_link_options);
+      $prev_link = [
+        '#markup' => Link::fromTextAndUrl($prev_text, $prev_next['previous'])
+          ->toString(),
+      ];
+      $form['page_viewer']['nav']['pager']['prev_page'] = $prev_link;
+    }
+    $form['page_viewer']['nav']['pager']['active'] = $viewer_active_pager_item;
+    $next_link_options = [
+      'attributes' => [
+        'class' => [
+          'btn',
+          'btn-link',
+          'btn-sm',
+          'p-1',
+        ],
+        'id' => 'next',
+        'title' => $this->t('Next image'),
+      ],
+    ];
+    if (!empty($prev_next['next'])) {
+      $prev_next['next']->setOptions($next_link_options);
+      $next_link = [
+        '#markup' => Link::fromTextAndUrl($next_text, $prev_next['next'])
+          ->toString(),
+      ];
+      $form['page_viewer']['nav']['pager']['next_page'] = $next_link;
+    }
+
+    $form['page_viewer']['nav']['details'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'button',
+      '#value' => t('<span class="fa-solid fa-circle-info mr-1" 
+        aria-hidden="true"></span><span class="d-none d-md-inline">Issue</span> Details'),
+      '#attributes' => [
+        'class' => [
+          'btn',
+          'btn-sm',
+          'btn-link',
+          'mx-2',
+        ],
+        'type' => 'button',
+        'data-target' => '#detailsWrapper',
+        'data-toggle' => 'collapse',
+        'aria-expanded' => 'false',
+        'aria-controls' => 'detailsWrapper',
+      ],
+      '#weight' => 20,
+    ];
+
+    // Get render array for the downloads visibility toggle section.
     $file = $digital_serial_page->get('page_image')->entity;
     $uri = $file->getFileUri();
-    /* Deprecated D9.3.x: https://www.drupal.org/node/2940031 */
-    /* $image_path = file_url_transform_relative(file_create_url($uri)); */
     $image_path = \Drupal::service('file_url_generator')->generateString($uri);
+    $downloads = $this->getRenderedDownloadSection($digital_serial_page);
+    if (!empty($downloads)) {
+      $form['page_viewer']['download-wrapper'] = $downloads;
+      // Page viewer > navigation > Download button.
+      $form['page_viewer']['nav']['download'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'button',
+        '#value' => t('<span class="fa-solid fa-download mr-1"></span>Download'),
+        '#attributes' => [
+          'class' => [
+            'btn',
+            'btn-sm',
+            'btn-link',
+            'mx-2',
+          ],
+          'type' => 'button',
+          'data-target' => '#downloadsWrapper',
+          'data-toggle' => 'collapse',
+          'aria-expanded' => 'false',
+          'aria-controls' => 'downloadsWrapper',
+        ],
+        '#weight' => 30,
+      ];
+    }
 
-    $full_path = DRUPAL_ROOT . $image_path;
-    $dzi_uri = $digital_serial_page->getDziUri();
+    // Get Cite button markup + rendered citation modal section.
+    $citation_btn_markup = '<button type="button" class="btn btn-link btn-sm"
+      data-target="#citation-modal" data-toggle="modal">
+      <span class="fa-solid fa-quote-left mr-1" aria-hidden="true"></span>Cite</button>';
+    $page_number = $digital_serial_page->getActivePagerNo(); /* Duplicate of $current_page */
+    $cited_title = $digital_serial_issue->getIssueTitle();
+    $citation_text = '<em>' . $digital_serial_title->getParentPublication()->getTitle() .
+      "</em> $volume_issue_citation_format " .
+      date("F d, Y", strtotime($digital_serial_issue->get("issue_date")->value)) .
+      ": [$page_number]. <em>" .
+      \Drupal::config('system.site')->get('name') . '</em>, accessed ' .
+      date_create('now')->format('F d, Y') . ', <span class="text-word-break">' .
+      $base_url . \Drupal::service('path.current')->getPath() . '</span>.';
+    $citation_render_array = _newspapers_core_get_citation_render_array($citation_btn_markup, $cited_title, $citation_text);
+    $citation_modal = \Drupal::service('renderer')->render($citation_render_array);
+    $form['page_viewer']['citation'] = [
+      '#markup' => $citation_modal,
+    ];
 
-    $form['page_viewer']['metadata-body'] = $this->getMetadataBody($digital_serial_title, $digital_serial_issue, $current_page, $file, $full_path, $digital_serial_page);
+    // Page viewer > navigation > Cite button.
+    $form['page_viewer']['nav']['citation'] = [
+      '#markup' =>  $citation_btn_markup,
+      '#allowed_tags' => [
+        'button',
+        'span',
+      ],
+      '#prefix' => '<div class="citation-wrapper mx-2">',
+      '#suffix' => '</div>',
+      '#weight' => 40,
+    ];
+
+    // Get render array for the social sharing links nav section.
+    $renderer = \Drupal::service('renderer');
+    $social_render_array = _newspapers_core_get_rendered_social_links(
+      $digital_serial_title
+        ->getParentPublication()
+        ->getTitle(),
+      27
+    );
+    $social_rendered = $renderer->render($social_render_array);
+    // Page viewer > navigation > Social Share buttons.
+    $form['page_viewer']['nav']['social'] = [
+      '#markup' => $social_rendered,
+      '#prefix' => '<div class="social-wrapper text-center">',
+      '#suffix' => '</div>',
+      '#weight' => 50,
+    ];
+
+    // Get Issue Details visibility toggle section.
+    $form['page_viewer']['metadata-body'] = $this->getMetadataBody($digital_serial_title, $digital_serial_issue, $current_page, $digital_serial_page);
+
+    // Get Page Viewer Footer links section.
     $form['page_viewer']['metadata-footer'] = $this->getMetadataFooter($digital_serial_title, $digital_serial_issue);
 
     // Determine if we're using DZI or the plain old image.
+    $dzi_uri = $digital_serial_page->getDziUri();
     if (!empty($dzi_uri)) {
       $tile_sources = $dzi_uri['path'];
     }
@@ -182,6 +313,25 @@ class SerialPageViewerForm extends FormBase {
         ]
       );
     }
+
+    $back_link_options = [
+      'attributes' => [
+        'class' => [
+          'btn',
+          'btn-sm',
+          'btn-link',
+          'py-1',
+        ],
+        'id' => 'backLink',
+      ],
+    ];
+    $url->setOptions($back_link_options);
+    $form['page_viewer']['back_link'] = [
+      '#markup' => Link::fromTextAndUrl(
+        $back_text, $url)
+        ->toString(),
+      '#weight' => 50,
+    ];
 
     // Highlighting.
     $overlays = [];
@@ -254,10 +404,6 @@ class SerialPageViewerForm extends FormBase {
    *   The digital serial issue entity.
    * @param string $page_number
    *   The active issue/page pager number.
-   * @param \Drupal\file\Entity\File $page_image_file
-   *   The uploaded image file for the digital serial page.
-   * @param string $image_download_path
-   *   The downloadable image full path.
    *
    * @return array
    *   The render array for the serial page's metadata.
@@ -266,8 +412,6 @@ class SerialPageViewerForm extends FormBase {
     SerialTitleInterface $digital_serial_title,
     SerialIssueInterface $digital_serial_issue,
     string $page_number,
-    File $page_image_file,
-    string $image_download_path,
     SerialPageInterface $digital_serial_page
   ): array {
     // URL object for Parent publication.
@@ -291,12 +435,6 @@ class SerialPageViewerForm extends FormBase {
         '@issue' => !empty($digital_serial_issue->getIssueIssue()) ? $digital_serial_issue->getIssueIssue() : "n/s",
       ]
     );
-    $volume_issue_citation_format = $this->t("@volume, no. @issue,",
-      [
-        '@volume' => !empty($digital_serial_issue->getIssueVol()) ? $digital_serial_issue->getIssueVol() : "n/a",
-        '@issue' => !empty($digital_serial_issue->getIssueIssue()) ? $digital_serial_issue->getIssueIssue() : "n/s",
-      ]
-    );
 
     // Set up array for table element colgroup cols.
     $colgroups = [
@@ -304,12 +442,12 @@ class SerialPageViewerForm extends FormBase {
         'data' => [
           [
             'width' => [
-              '40%',
+              '21%',
             ],
           ],
           [
             'width' => [
-              '60%',
+              '79%',
             ],
           ],
         ],
@@ -485,94 +623,15 @@ class SerialPageViewerForm extends FormBase {
       ],
     ];
 
-    // Create download image row IF page entity|digital image|file obtainable.
-    if (file_exists($image_download_path)) {
-      $image_download_uri = \Drupal::service('file_url_generator')
-        ->generateAbsoluteString($page_image_file->getFileUri());
-      $image_download_link_options = [
-        'attributes' => [
-          'class' => [
-            'btn',
-            'btn-link',
-          ],
-          'download' => TRUE,
-        ],
-      ];
-
-      $download_link = Link::fromTextAndUrl(
-        Markup::create(
-          '<span class="fa-solid fa-file-image mr-1" aria-hidden="true"></span>' . $page_image_file->getFilename() .
-          $this->getImageSizeDisplay($image_download_path)
-        ),
-        Url::fromUri($image_download_uri, $image_download_link_options
-      ),
-
-      );
-
-      $download_items = [$download_link->toString()];
-      $pdf_download_html = $this->buildPdfDownloadLinkHtml($digital_serial_page);
-      if (!empty($pdf_download_html)) {
-        $download_items[] = $pdf_download_html;
-      }
-      $download_html_list = '<ul class="d-inline list-unstyled">';
-      foreach ($download_items as $download_item) {
-        $download_html_list .= "<li>$download_item</li>";
-      }
-      $download_html_list .= '</ul>';
-
-      $row_download = [
-        [
-          'data' => [
-            [
-              'data' => $this->t('Downloads'),
-              'header' => TRUE,
-              'scope' => 'row',
-            ],
-            [
-              'data' => [
-                '#markup' => $download_html_list,
-              ],
-            ],
-          ],
-        ],
-      ];
-    }
-
-    // Citation: $ParentTitle $vol, no. $iss, M d, Y: [$page#]. NBHNP. $url.
-    global $base_url;
-    $citation_btn_markup = '<button type="button" class="btn btn-link"
-      data-target="#citation-modal" data-toggle="modal">
-      <span class="fa-solid fa-quote-left mr-1" aria-hidden="true"></span>CMS - Chicago Manual of Style</button>';
-    $cited_title = $digital_serial_issue->getIssueTitle();
-    $citation_text = '<em>' . $digital_serial_title->getParentPublication()->getTitle() .
-      "</em> $volume_issue_citation_format " .
-      date("F d, Y", strtotime($digital_serial_issue->get("issue_date")->value)) .
-      ": [$page_number]. <em>" .
-      \Drupal::config('system.site')->get('name') . '</em>, accessed ' .
-      date_create('now')->format('F d, Y') . ', <span class="text-word-break">' .
-      $base_url . \Drupal::service('path.current')->getPath() . '</span>.';
-    $citation_render_array = _newspapers_core_get_citation_render_array($citation_btn_markup, $cited_title, $citation_text);
-    $citation = \Drupal::service('renderer')->render($citation_render_array);
-
-    $row_citation = [
-      [
-        'data' => [
-          [
-            'data' => $this->t('Cite this Image'),
-            'header' => TRUE,
-            'scope' => 'row',
-          ],
-          $citation,
-        ],
-      ],
-    ];
+    // Download row moved to page viewer navigation.
+    // Cite this image row moved to page viewer navigation.
 
     $renderer = \Drupal::service('renderer');
     $social_render_array = _newspapers_core_get_rendered_social_links(
       $digital_serial_title
         ->getParentPublication()
         ->getTitle(),
-      24
+       24
     );
     $social_rendered = $renderer->render($social_render_array);
     $row_social = [
@@ -604,17 +663,16 @@ class SerialPageViewerForm extends FormBase {
         $row_errata,
         $rows_misc,
         $row_download,
-        $row_citation,
-        $row_social,
       ),
+      // Moved to toolbar: $row_social,         $row_citation,
       '#attributes' => [
         'class' => [
-          'my-4',
           'table',
           'table-sm',
         ],
       ],
-      '#weight' => '1',
+      '#prefix' => '<div id="detailsWrapper" class="border mb-3 collapse">',
+      '#suffix' => '</div>',
     ];
   }
 
@@ -723,7 +781,7 @@ class SerialPageViewerForm extends FormBase {
           'card',
         ],
       ],
-      '#weight' => 1,
+      '#weight' => 50,
       'child' => [
         '#markup' => $footer_markup,
       ],
@@ -883,4 +941,83 @@ class SerialPageViewerForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
   }
 
+  public function getRenderedDownloadSection (SerialPageInterface $digital_serial_page) {
+    $page_image_file = $digital_serial_page->get('page_image')->entity;
+    $uri = $page_image_file->getFileUri();
+
+    $image_path = \Drupal::service('file_url_generator')->generateString($uri);
+    $image_download_path = DRUPAL_ROOT . $image_path;
+
+    // Create download image row IF page entity|digital image|file obtainable.
+    if (file_exists($image_download_path)) {
+      $image_download_uri = \Drupal::service('file_url_generator')
+        ->generateAbsoluteString($page_image_file->getFileUri());
+      $image_download_link_options = [
+        'attributes' => [
+          'class' => [
+            'btn',
+            'btn-link',
+          ],
+          'download' => TRUE,
+        ],
+      ];
+
+      $download_link = Link::fromTextAndUrl(
+        Markup::create(
+          '<span class="fa-solid fa-file-image mr-1" aria-hidden="true"></span>' . $page_image_file->getFilename() .
+          $this->getImageSizeDisplay($image_download_path)
+        ),
+        Url::fromUri($image_download_uri, $image_download_link_options
+        ),
+
+      );
+
+      $download_items = [$download_link->toString()];
+      $pdf_download_html = $this->buildPdfDownloadLinkHtml($digital_serial_page);
+      if (!empty($pdf_download_html)) {
+        $download_items[] = $pdf_download_html;
+      }
+      $download_html_list = '<ul class="list-inline list-unstyled">';
+      foreach ($download_items as $download_item) {
+        $download_html_list .= "<li class='list-inline-item mx-3'>$download_item</li>";
+      }
+      $download_html_list .= '</ul>';
+
+      return [
+        '#type' => 'fieldset',
+        '#title' => $this->t('Download & Save Options'),
+        '#attributes' => [
+          'class' => [
+            'mb-0',
+            'mt-3',
+            'text-center'
+          ],
+        ],
+        '#prefix' => '<div id="downloadsWrapper" class="border mb-3 collapse">',
+        '#suffix' => '</div>',
+        '#weight' => 10,
+        'child' => [
+          '#markup' =>  $download_html_list,
+        ],
+      ];
+
+      /*$row_download = [
+        [
+          'data' => [
+            [
+              'data' => $this->t('Downloads'),
+              'header' => TRUE,
+              'scope' => 'row',
+            ],
+            [
+              'data' => [
+                '#markup' => $download_html_list,
+              ],
+            ],
+          ],
+        ],
+      ];*/
+
+    }
+  }
 }
