@@ -3,7 +3,7 @@
     Drupal.behaviors.accessibility = {
         attach: function () {
             // Make OpenSeaDragon viewer controls keyboard accessible.
-            $('#seadragon-viewer .openseadragon-container div[title]').attr('tabindex', '0');
+            $('#toolbarDiv div[title]').attr('tabindex', '0');
             setTimeout(function() {
                 // Remove OpenSeaDragon viewer empty highlight links from keyboard tab flow.
                 // Not ideal but allow 1 second for overlay to render.
