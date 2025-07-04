@@ -1330,7 +1330,7 @@ function _newspapers_core_get_rendered_institution(string $holding_type, SerialH
       '<small>info</small><span class="fa-solid fa-info-circle fa-sm ml-1" aria-hidden="true"></span></button>)</span>
       <div id="Dialog-' . $holding_identifier . '" class="modal fade" aria-hidden="true"
       aria-labelledby="' . 'Label-' . $holding_identifier . '" role="dialog" tabindex="-1">' .
-        '<div class="modal-dialog modal-xl">
+        '<div class="modal-dialog modal-dialog-centered modal-xl">
           <div class="modal-content">
             <div class="modal-header">
               <h1 id="Label-' . $holding_identifier . '" class="h2 modal-title">' . $inst_full_name . '</h1>
@@ -1948,8 +1948,8 @@ function _newspapers_core_delete_image_dzi($page_id) {
 function _newspapers_core_get_citation_render_array(string $citation_btn_markup, string $cited_title, string $citation_text) {
   $citation_footer = '<div class="citation-note">
     <h2 class="h4 mt-1">Note</h2>
-    <p>The above citation is for either the publication or a specific issue. <strong>If you are citing a specific
-    article</strong> in the Chicago Style, you should include the article title in the following format:</p>
+    <p>The above citation in the <strong>Chicago Manual of Style</strong> is for either the publication or a specific issue.
+    If you are citing a <strong>specific article</strong> you should include the article title in the following format:</p>
     <blockquote class="mx-0 mx-lg-3 text-dark text-word-break"><em>Daily Mail (Fredericton, New Brunswick: 1910).</em>
       &quot;<strong>Article Title Goes Here</strong>&quot; 32, no. 6,
       January 8, 1926: [1]. <em>New Brunswick Historical Newspapers Project</em>, accessed January 18, 2024,
@@ -1958,7 +1958,7 @@ function _newspapers_core_get_citation_render_array(string $citation_btn_markup,
   </div>';
 
   $citation_modal_markup = '<div class="modal fade" id="citation-modal" tabindex="-1" aria-labelledby="citation-modal" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header align-items-center">
         <h1 class="h2 modal-title mr-2">Cite ' . $cited_title . '</h1>
@@ -1982,12 +1982,12 @@ function _newspapers_core_get_citation_render_array(string $citation_btn_markup,
 return [
     '#type' => 'container',
     '#attributes' => [
-      'class' => [
-        'citation',
+      'id' => [
+        'citationModalWrapper',
       ],
     ],
     'child' => [
-      '#markup' => $citation_btn_markup . $citation_modal_markup,
+      '#markup' => $citation_modal_markup,
       '#allowed_tags' => [
         'a',
         'blockquote',
