@@ -35,3 +35,85 @@ a span.filesize {
   padding-left: .25rem;
   text-decoration: none;
 }
+
+#toolbarDiv {
+  background: #fff;
+
+  div:last-child {
+    width: inherit!important;
+
+    div:first-child {
+      position: relative!important;
+    }
+  }
+
+  #backLink:before,
+  button[data-toggle="collapse"]:after {
+    display: inline-block;
+    font: var(--fa-font-solid);
+    margin-left: 0.2rem;
+    text-rendering: auto;
+    vertical-align: text-bottom;
+    -webkit-font-smoothing: antialiased;
+  }
+  #backLink:before {
+    content: "\f048";
+    margin-right: 0.25rem;
+  }
+  button[aria-expanded="true"]:after {
+    content: "\f0d8";
+  }
+  button[aria-expanded="false"]:after {
+    content: "\f0d7";
+  }
+
+  &.fullpage {
+    background: #eee;
+    justify-content: center!important;
+
+    button[data-target="#detailsWrapper"],
+    .pagination,
+    .social-wrapper,
+    .citation-wrapper {
+      display: none;
+    }
+  }
+
+  /* OpenSeadgraon Controls: copy default button focus style. */
+  div[tabindex="0"] {
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    transition: box-shadow .15s ease-in-out;
+
+    &:hover,
+    &:focus-visible {
+      box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+      outline: none;
+    }
+
+  }
+}
+
+#backLink:before {
+  content: "\f048";
+  display: inline-block;
+  font: var(--fa-font-solid);
+  margin-right: 0.25rem;
+  margin-left: 0.2rem;
+  text-rendering: auto;
+  vertical-align: text-bottom;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn[aria-expanded="true"] {
+  color: #900;
+}
+
+.social-wrapper a {
+  margin: 0.1rem 0;
+}
+
+fieldset legend {
+  font-size: medium;
+  font-weight: bold;
+}
