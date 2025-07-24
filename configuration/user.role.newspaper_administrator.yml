@@ -50,6 +50,8 @@ permissions:
   - 'delete any remote_video media'
   - 'delete own page content'
   - 'delete serial holding entities'
+  - 'delete serial issue entities'
+  - 'delete serial page entities'
   - 'edit any page content'
   - 'edit any publication content'
   - 'edit any remote_video media'
