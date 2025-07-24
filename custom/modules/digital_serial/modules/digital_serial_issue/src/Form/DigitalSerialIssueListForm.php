@@ -53,7 +53,7 @@ class DigitalSerialIssueListForm extends FormBase {
 
     $form['add_issue'] = [
       '#type' => 'link',
-      '#title' => t('Add New Issue'),
+      '#title' => t('<span class="fas fa-circle-plus mr-1"></span>Add New Issue'),
       '#url' => Url::fromRoute(
         'digital_serial_issue.title_add_issue',
         [
@@ -61,8 +61,9 @@ class DigitalSerialIssueListForm extends FormBase {
         ]
       ),
       '#attributes' => [
-        'class' => ['btn btn-success'],
+        'class' => ['btn btn-primary mb-4'],
       ],
+      '#weight' => -50,
     ];
 
     return $form;
