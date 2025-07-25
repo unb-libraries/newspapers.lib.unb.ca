@@ -24,7 +24,7 @@ class SerialPageListBuilder extends EntityListBuilder {
       '#attributes' => [
         'class' => ['btn btn-info btn-add'],
       ],
-      '#title' => t('Add New Page'),
+      '#title' => t('<span class="fas fa-circle-plus mr-1"></span>Add New Page'),
       '#type' => 'link',
       '#url' => Url::fromRoute(
         'digital_serial_page.issue_add_page',
@@ -33,6 +33,7 @@ class SerialPageListBuilder extends EntityListBuilder {
           'digital_serial_issue' => \Drupal::routeMatch()->getParameters()->get('digital_serial_issue'),
         ]
       ),
+      '#weight' => -50,
     ];
 
     return $build;
