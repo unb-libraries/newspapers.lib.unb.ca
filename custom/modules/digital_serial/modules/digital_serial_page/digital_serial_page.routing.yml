@@ -1,7 +1,7 @@
 digital_serial_page.manage_pages:
   path: '/serials/{digital_serial_title}/issues/{digital_serial_issue}/pages'
   defaults:
-    _title: NULL
+    _title_callback: '\Drupal\digital_serial_title\Controller\NewspaperPublicationDigitalTitleListTitleController::getTitleIssuesTitle'
     _entity_list: digital_serial_page
   requirements:
     _permission: 'administer serial page entities'
