@@ -22,7 +22,7 @@ class SerialPageListBuilder extends EntityListBuilder {
 
     $build['add_pages_button'] = [
       '#attributes' => [
-        'class' => ['btn btn-info btn-add'],
+        'class' => ['btn btn-primary mb-4'],
       ],
       '#title' => t('<span class="fas fa-circle-plus mr-1"></span>Add New Page'),
       '#type' => 'link',
