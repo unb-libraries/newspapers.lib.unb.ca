@@ -73,33 +73,6 @@
     },
     {
       "package": {
-        "dist": {
-          "type": "zip",
-          "url": "https://github.com/jackmoore/colorbox/archive/refs/heads/master.zip"
-        },
-        "extra": {
-          "installer-name": "colorbox"
-        },
-        "name": "jackmoore/colorbox",
-        "type": "drupal-library",
-        "version": "dev-master"
-      },
-      "type": "package"
-    },
-    {
-      "package": {
-        "dist": {
-          "type": "zip",
-          "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip"
-        },
-        "name": "harvesthq/chosen",
-        "type": "drupal-library",
-        "version": "1.8.7"
-      },
-      "type": "package"
-    },
-    {
-      "package": {
         "name": "fontawesome/fontawesome",
         "version": "6.7.2",
         "type": "drupal-library",
@@ -120,6 +93,48 @@
           "url": "https://github.com/furf/jquery-ui-touch-punch/archive/refs/heads/master.zip"
         },
         "name": "furf/jquery-ui-touch-punch",
+        "type": "drupal-library",
+        "version": "dev-master"
+      },
+      "type": "package"
+    },
+    {
+      "package": {
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/jackmoore/colorbox/archive/refs/heads/master.zip"
+        },
+        "extra": {
+          "installer-name": "colorbox"
+        },
+        "name": "jackmoore/colorbox",
+        "type": "drupal-library",
+        "version": "dev-master"
+      },
+      "type": "package"
+    },
+    {
+      "package": {
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/harvesthq/chosen/archive/refs/tags/v1.8.7.zip"
+        },
+        "name": "harvesthq/chosen",
+        "type": "drupal-library",
+        "version": "1.8.7"
+      },
+      "type": "package"
+    },
+    {
+      "package": {
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/markgoodyear/scrollup/archive/refs/heads/master.zip"
+        },
+        "extra": {
+          "installer-name": "scrollup"
+        },
+        "name": "markgoodyear/scrollup",
         "type": "drupal-library",
         "version": "dev-master"
       },
@@ -153,21 +168,6 @@
       "package": {
         "dist": {
           "type": "zip",
-          "url": "https://github.com/markgoodyear/scrollup/archive/refs/heads/master.zip"
-        },
-        "extra": {
-          "installer-name": "scrollup"
-        },
-        "name": "markgoodyear/scrollup",
-        "type": "drupal-library",
-        "version": "dev-master"
-      },
-      "type": "package"
-    },
-    {
-      "package": {
-        "dist": {
-          "type": "zip",
           "url": "https://github.com/zenorocha/clipboard.js/archive/refs/heads/master.zip"
         },
         "extra": {
@@ -182,12 +182,12 @@
   ],
   "require": {
     "drupal/address": "1.12",
-    "drupal/admin_toolbar": "3.6.1",
-    "drupal/allowed_formats": "2.0.0",
+    "drupal/admin_toolbar": "3.6.2",
+    "drupal/allowed_formats": "<3.0.0",
     "drupal/antibot": "2.0.4",
     "drupal/ajax_loader": "<=2.1.2",
     "drupal/bootstrap_barrio": "5.1.12",
-    "drupal/chosen": "3.0.6",
+    "drupal/chosen": "<4.0.0",
     "drupal/clipboardjs": "2.0.9",
     "drupal/colorbox": "<2.1.0",
     "drupal/conditional_fields": "<=4.0.0-alpha5",
@@ -214,18 +214,18 @@
     "drupal/metatag": "<2.0.0",
     "drupal/migrate_plus": "6.0.5",
     "drupal/migrate_source_csv": "3.7",
-    "drupal/migrate_tools": "6.0.5",
+    "drupal/migrate_tools": " <6.1.0",
     "drupal/noreqnewpass": "1.4",
     "drupal/override_node_options": "2.9",
     "drupal/owlcarousel": "1.0-beta1",
     "drupal/pathauto": "1.13",
-    "drupal/redis": "1.9",
+    "drupal/redis": "1.10",
     "drupal/samlauth": "3.11",
     "drupal/search_api": "<=1.30",
     "drupal/search_api_autocomplete": "<1.9",
     "drupal/search_api_solr": "<=4.3.1",
     "drupal/simple_sitemap": "<4.2.1",
-    "drupal/token": "1.15",
+    "drupal/token": "1.16",
     "drupal/twig_field_value": "2.0.5",
     "drupal/twig_tweak": "<3.4.0",
     "drupal/view_unpublished": "1.3",
@@ -237,7 +237,6 @@
     "geocoder-php/nominatim-provider": "5.7.0",
     "geocoder-php/common-http": "4.5.0",
     "harvesthq/chosen": "~1.8",
-    "markgoodyear/scrollup": "dev-master",
     "neitanod/forceutf8": "^2",
     "owlcarousel2/owlcarousel2": "2.3.4",
     "phpoffice/phpspreadsheet": "^1.5.0",
