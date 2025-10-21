@@ -200,7 +200,7 @@
     "drupal/file_management": "2.1",
     "drupal/fontawesome": "2.26",
     "drupal/google_analytics": "4.0.3",
-    "drupal/health_check": "<=2.0.1",
+    "drupal/health_check": "^3",
     "jackmoore/colorbox": "dev-master",
     "drupal/geocoder": "<=3.40",
     "drupal/geofield": "<=1.57",
