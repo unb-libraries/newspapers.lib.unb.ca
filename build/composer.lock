@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00b0ce906b502802b6c4e12be4a2483f",
+    "content-hash": "806145fe8cc320b4db57cd4b8bff8e50",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7045,6 +7045,18 @@
             "time": "2022-12-02T22:17:43+00:00"
         },
         {
+            "name": "markgoodyear/scrollup",
+            "version": "dev-master",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/markgoodyear/scrollup/archive/refs/heads/master.zip"
+            },
+            "type": "drupal-library",
+            "extra": {
+                "installer-name": "scrollup"
+            }
+        },
+        {
             "name": "masterminds/html5",
             "version": "2.7.6",
             "source": {
@@ -11721,12 +11733,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/unb-libraries/unb_lib_theme.git",
-                "reference": "1119a34a22b89e80a7aa84f95ed51a5daee8f638"
+                "reference": "6cd7ba3e1d497163d0c818f7909aaa3397c449fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/1119a34a22b89e80a7aa84f95ed51a5daee8f638",
-                "reference": "1119a34a22b89e80a7aa84f95ed51a5daee8f638",
+                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/6cd7ba3e1d497163d0c818f7909aaa3397c449fb",
+                "reference": "6cd7ba3e1d497163d0c818f7909aaa3397c449fb",
                 "shasum": ""
             },
             "require-dev": {
@@ -11749,7 +11761,7 @@
                 "issues": "https://github.com/unb-libraries/unb_lib_theme/issues",
                 "source": "https://github.com/unb-libraries/unb_lib_theme/tree/10.x-4.x"
             },
-            "time": "2025-08-21T17:33:43+00:00"
+            "time": "2025-11-12T14:16:25+00:00"
         },
         {
             "name": "webflo/drupal-finder",
@@ -12503,29 +12515,29 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v1.1.2",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/composer-installer.git",
-                "reference": "e9cf5e4bbf7eeaf9ef5db34938942602838fc2b1"
+                "reference": "845eb62303d2ca9b289ef216356568ccc075ffd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/e9cf5e4bbf7eeaf9ef5db34938942602838fc2b1",
-                "reference": "e9cf5e4bbf7eeaf9ef5db34938942602838fc2b1",
+                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/845eb62303d2ca9b289ef216356568ccc075ffd1",
+                "reference": "845eb62303d2ca9b289ef216356568ccc075ffd1",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^2.2",
                 "php": ">=5.4",
-                "squizlabs/php_codesniffer": "^2.0 || ^3.1.0 || ^4.0"
+                "squizlabs/php_codesniffer": "^3.1.0 || ^4.0"
             },
             "require-dev": {
                 "composer/composer": "^2.2",
                 "ext-json": "*",
                 "ext-zip": "*",
                 "php-parallel-lint/php-parallel-lint": "^1.4.0",
-                "phpcompatibility/php-compatibility": "^9.0",
+                "phpcompatibility/php-compatibility": "^9.0 || ^10.0.0@dev",
                 "yoast/phpunit-polyfills": "^1.0"
             },
             "type": "composer-plugin",
@@ -12595,7 +12607,7 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-07-17T20:45:56+00:00"
+            "time": "2025-11-11T04:32:07+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -15843,8 +15855,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "furf/jquery-ui-touch-punch": 20,
         "jackmoore/colorbox": 20,
+        "furf/jquery-ui-touch-punch": 20,
+        "markgoodyear/scrollup": 20,
         "unb-libraries/alert_scheduler": 20,
         "unb-libraries/calendar_hours": 20,
         "unb-libraries/saml_features": 20,
@@ -15853,7 +15866,7 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

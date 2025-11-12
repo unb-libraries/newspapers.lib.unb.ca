@@ -237,6 +237,7 @@
     "geocoder-php/nominatim-provider": "5.7.0",
     "geocoder-php/common-http": "4.5.0",
     "harvesthq/chosen": "~1.8",
+    "markgoodyear/scrollup": "dev-master",
     "neitanod/forceutf8": "^2",
     "owlcarousel2/owlcarousel2": "2.3.4",
     "phpoffice/phpspreadsheet": "^1.5.0",
