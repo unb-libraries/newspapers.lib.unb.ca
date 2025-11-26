@@ -32,19 +32,19 @@ First, find the digital title ID of the digital title that the issue is currentl
 
 Then, move the digital issue to the new digital title:
 ```
-drush eval '_newspapers_core_move_issue_to_title(198, 108)'
+drush eval '_newspapers_core_move_issue_to_title(44036, 165)'
 ```
 
 Then, update the holding record 'coverage' ranges for the digital serial titles:
 
 ```
-drush eval '_newspapers_core_update_holding_records([48, 108])'
+drush eval '_newspapers_core_update_holding_records([161, 165])'
 ```
 
 Then, re-index the issue in solr:
 
 ```
-drush eval '_newspapers_core_reindex_issues(['198'])'
+drush eval '_newspapers_core_reindex_issues(['44036'])'
 ```
 
 ### Move MULTIPLE Digital Issues From a Digital Title To a Different Digital Title Based On A Date Range
