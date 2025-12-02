@@ -835,8 +835,12 @@ display:
     position: 1
     display_options:
       cache:
-        type: search_api_tag
-        options: {  }
+        type: search_api_time
+        options:
+          results_lifespan: 21600
+          results_lifespan_custom: 0
+          output_lifespan: 21600
+          output_lifespan_custom: 0
       defaults:
         cache: false
       display_description: ''

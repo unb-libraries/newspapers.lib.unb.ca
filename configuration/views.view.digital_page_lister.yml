@@ -531,8 +531,12 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: none
-        options: {  }
+        type: search_api_time
+        options:
+          results_lifespan: 21600
+          results_lifespan_custom: 0
+          output_lifespan: 21600
+          output_lifespan_custom: 0
       empty:
         area:
           id: area
@@ -1773,7 +1777,12 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       cache:
-        type: none
+        type: search_api_time
+        options:
+          results_lifespan: 21600
+          results_lifespan_custom: 0
+          output_lifespan: 21600
+          output_lifespan_custom: 0
       empty:
         area:
           id: area
@@ -2769,8 +2778,12 @@ display:
           text_input_required: '<div class="alert alert-light border"><span class="fa-solid fa-lightbulb fa-lg mr-2 text-warning"></span>Please enter 1 or more keywords to begin.</div>'
           text_input_required_format: full_html
       cache:
-        type: search_api_tag
-        options: {  }
+        type: search_api_time
+        options:
+          results_lifespan: 21600
+          results_lifespan_custom: 0
+          output_lifespan: 21600
+          output_lifespan_custom: 0
       empty:
         area:
           id: area
