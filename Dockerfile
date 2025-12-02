@@ -7,6 +7,8 @@ ENV DRUPAL_SITE_ID newspapers
 ENV DRUPAL_SITE_URI newspapers.lib.unb.ca
 ENV DRUPAL_SITE_UUID 655af73f-dc1a-48f1-84a1-3da88d2d1ad4
 
+ENV ENABLE_NEWRELIC=true
+
 # Build application.
 COPY ./build/ /build/
 RUN ${RSYNC_MOVE} /build/scripts/container/ /scripts/ && \
