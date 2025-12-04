@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "806145fe8cc320b4db57cd4b8bff8e50",
+    "content-hash": "2dae162e6e3786f752b69f92cc7c237c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -8629,10 +8629,10 @@
         },
         {
             "name": "simeydotme/jquery-ui-slider-pips",
-            "version": "1.11.5",
+            "version": "2.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/refs/tags/v1.11.5.zip"
+                "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/refs/tags/2.0.0.zip"
             },
             "type": "drupal-library"
         },
@@ -12920,16 +12920,16 @@
         },
         {
             "name": "instaclick/php-webdriver",
-            "version": "1.4.19",
+            "version": "1.4.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/instaclick/php-webdriver.git",
-                "reference": "3b2a2ddc4e0a690cc691d7e5952964cc4b9538b1"
+                "reference": "981db0846ff4ac5be0301d609e36e2f023e74301"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/instaclick/php-webdriver/zipball/3b2a2ddc4e0a690cc691d7e5952964cc4b9538b1",
-                "reference": "3b2a2ddc4e0a690cc691d7e5952964cc4b9538b1",
+                "url": "https://api.github.com/repos/instaclick/php-webdriver/zipball/981db0846ff4ac5be0301d609e36e2f023e74301",
+                "reference": "981db0846ff4ac5be0301d609e36e2f023e74301",
                 "shasum": ""
             },
             "require": {
@@ -12977,9 +12977,9 @@
             ],
             "support": {
                 "issues": "https://github.com/instaclick/php-webdriver/issues",
-                "source": "https://github.com/instaclick/php-webdriver/tree/1.4.19"
+                "source": "https://github.com/instaclick/php-webdriver/tree/1.4.20"
             },
-            "time": "2024-03-19T01:58:53+00:00"
+            "time": "2025-12-04T11:20:11+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -15856,8 +15856,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "furf/jquery-ui-touch-punch": 20,
         "jackmoore/colorbox": 20,
+        "furf/jquery-ui-touch-punch": 20,
         "markgoodyear/scrollup": 20,
         "unb-libraries/alert_scheduler": 20,
         "unb-libraries/calendar_hours": 20,
@@ -15867,7 +15867,7 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

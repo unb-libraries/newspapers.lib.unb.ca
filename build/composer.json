@@ -156,11 +156,11 @@
       "package": {
         "dist": {
           "type": "zip",
-          "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/refs/tags/v1.11.5.zip"
+          "url": "https://github.com/simeydotme/jQuery-ui-Slider-Pips/archive/refs/tags/2.0.0.zip"
         },
         "name": "simeydotme/jquery-ui-slider-pips",
         "type": "drupal-library",
-        "version": "1.11.5"
+        "version": "2.0.0"
       },
       "type": "package"
     },
@@ -241,7 +241,7 @@
     "neitanod/forceutf8": "^2",
     "owlcarousel2/owlcarousel2": "2.3.4",
     "phpoffice/phpspreadsheet": "^1.5.0",
-    "simeydotme/jquery-ui-slider-pips": "~1.11",
+    "simeydotme/jquery-ui-slider-pips": "^2",
     "unb-libraries/alert_scheduler": "dev-8.x-1.x",
     "unb-libraries/calendar_hours": "dev-9.x-1.x",
     "unb-libraries/drupal-builder": "^9",
