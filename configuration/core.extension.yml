@@ -104,7 +104,6 @@ module:
   tour: 0
   twig_field_value: 0
   twig_tweak: 0
-  update: 0
   user: 0
   view_unpublished: 0
   views_ajax_history: 0
