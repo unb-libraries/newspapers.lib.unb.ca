@@ -43,23 +43,21 @@ only_visible_when_facet_source_is_visible: true
 show_only_one_result: true
 show_title: true
 processor_configs:
-  count_limit:
-    processor_id: count_limit
-    weights:
-      build: 50
-    settings:
-      minimum_items: 1
-      maximum_items: null
   display_value_widget_order:
     processor_id: display_value_widget_order
     weights:
       sort: 40
     settings:
       sort: ASC
+  hide_1_result_facet:
+    processor_id: hide_1_result_facet
+    weights:
+      build: 50
+    settings: {  }
   hierarchy_processor:
     processor_id: hierarchy_processor
     weights:
-      build: 100
+      build: -6
     settings: {  }
   range_slider:
     processor_id: range_slider
@@ -68,9 +66,14 @@ processor_configs:
       post_query: 60
       build: 20
     settings: {  }
+  slider:
+    processor_id: slider
+    weights:
+      post_query: 60
+    settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
     weights:
       pre_query: 50
-      build: 15
+      build: -10
     settings: {  }
