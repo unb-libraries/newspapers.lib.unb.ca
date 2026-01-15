@@ -2429,7 +2429,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{{ parent_publication_title }}: {{ issue_date }} ({{ parent_issue_volume }}{{ parent_issue_issue }})'
+            text: '{{ parent_publication_title }}: {{ issue_date }} ({{ parent_issue_volume }}{{ parent_issue_issue }}{{ page_no }})'
             make_link: true
             path: '/serials/{{ parent_digital_title_id }}/issues/{{ parent_digital_issue_id }}/pages/{{ parent_digital_page_id }}?highlight={{ filters.search_api_fulltext }}'
             absolute: false
