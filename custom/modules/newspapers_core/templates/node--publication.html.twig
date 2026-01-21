@@ -311,9 +311,12 @@
             {% endif %}
           </dl>
 
-          {% if citation %}
-            {{ citation }}
-          {% endif %}
+          {# if citation_modal #}
+            <div class-"citation">
+              {{ citation_btn }}
+              {{ citation_modal }}
+            </div>
+          {# endif #}
 
           <dl class="my-3">
             <dt class="visually-hidden">{% trans %}Social sharing options{% endtrans %}:</dt>

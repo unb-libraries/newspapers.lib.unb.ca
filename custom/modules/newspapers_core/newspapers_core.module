@@ -674,11 +674,18 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $cited_title = $node->getTitle();
   $citation_text = "<em>$cited_title</em>. <em>$citation_site_name</em>, accessed " .
     date_create('now')->format('F d, Y') . ", $citation_path.";
-  $citation_btn_markup =
-    '<button type="button" class="btn btn-link" data-target="#citation-modal" data-toggle="modal">
-     <span class="fa-solid fa-quote-left mr-1"></span>Cite this Record
-    </button>';
-  $variables['citation'] = _newspapers_core_get_citation_render_array($citation_btn_markup, $cited_title, $citation_text);
+
+  $citation_btn_markup = '<button type="button" class="btn btn-link" data-target="#citation-modal" data-toggle="modal">
+    <span class="fa-solid fa-quote-left mr-1" aria-hidden="true"></span>Cite this record</button>';
+  $citation_btn_render_array = [
+    '#markup' =>  $citation_btn_markup,
+    '#allowed_tags' => [
+       'button',
+       'span',
+    ],
+  ];
+  $variables['citation_btn'] = $citation_btn_render_array;
+  $variables['citation_modal'] = _newspapers_core_get_citation_render_array($cited_title, $citation_text);
 
   $view_mode = $variables['view_mode'];
   if ($view_mode != 'featured') {
@@ -1935,8 +1942,6 @@ function _newspapers_core_delete_image_dzi($page_id) {
 /**
  * Constructs render array for citation button and modal.
  *
- * @param string $citation_btn_markup
- *    The raw HTML for the citation button that opens the generated citation modal.
  * @param string $cited_title
  *   The cited item title used in the modal header.
  * @param string $citation_text
@@ -1945,7 +1950,7 @@ function _newspapers_core_delete_image_dzi($page_id) {
  * @return array
  *   The render array for the citation, consisting of trigger button & modal with the copy feature.
  */
-function _newspapers_core_get_citation_render_array(string $citation_btn_markup, string $cited_title, string $citation_text) {
+function _newspapers_core_get_citation_render_array(string $cited_title, string $citation_text) {
   $citation_footer = '<div class="citation-note">
     <h2 class="h4 mt-1">Note</h2>
     <p>The above citation in the <strong>Chicago Manual of Style</strong> is for either the publication or a specific issue.
