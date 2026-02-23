@@ -259,7 +259,7 @@ class SerialPageViewerForm extends FormBase {
       \Drupal::config('system.site')->get('name') . '</em>, accessed ' .
       date_create('now')->format('F d, Y') . ', <span class="text-word-break">' .
       $base_url . \Drupal::service('path.current')->getPath() . '</span>.';
-    $citation_render_array = _newspapers_core_get_citation_render_array($citation_btn_markup, $cited_title, $citation_text);
+    $citation_render_array = _newspapers_core_get_citation_render_array($cited_title, $citation_text);
     $citation_modal = \Drupal::service('renderer')->render($citation_render_array);
     $form['page_viewer']['citation'] = [
       '#markup' => $citation_modal,
