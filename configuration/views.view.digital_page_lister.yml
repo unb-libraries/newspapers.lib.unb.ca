@@ -531,7 +531,7 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: none
+        type: search_api_tag
         options: {  }
       empty:
         area:
@@ -1745,7 +1745,7 @@ display:
         type: full
         options:
           offset: 0
-          items_per_page: 61
+          items_per_page: 31
           total_pages: null
           id: 0
           tags:
@@ -1773,7 +1773,8 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       cache:
-        type: none
+        type: search_api_tag
+        options: {  }
       empty:
         area:
           id: area
@@ -1973,6 +1974,8 @@ display:
         - url.query_args
         - user.permissions
       tags:
+        - 'config:facets.facet.publication_decade'
+        - 'config:facets.facet.publication_year_issue'
         - 'config:search_api.index.pages_newspapers_lib_unb_ca'
         - 'search_api_list:pages_newspapers_lib_unb_ca'
   page_search:

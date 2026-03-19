@@ -500,8 +500,12 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: none
-        options: {  }
+        type: search_api_time
+        options:
+          results_lifespan: 3600
+          results_lifespan_custom: 0
+          output_lifespan: 3600
+          output_lifespan_custom: 0
       empty:
         area:
           id: area
@@ -597,7 +601,9 @@ display:
     display_plugin: block
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        ajax_history: {  }
+        simple_sitemap_display_extender: {  }
       block_category: 'Newspapers Core'
     cache_metadata:
       max-age: -1
