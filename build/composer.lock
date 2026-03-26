@@ -5137,8 +5137,20 @@
             ],
             "authors": [
                 {
+                    "name": "anybody",
+                    "homepage": "https://www.drupal.org/user/291091"
+                },
+                {
+                    "name": "chesn0k",
+                    "homepage": "https://www.drupal.org/user/3650191"
+                },
+                {
                     "name": "chi",
                     "homepage": "https://www.drupal.org/user/556138"
+                },
+                {
+                    "name": "grevil",
+                    "homepage": "https://www.drupal.org/user/3668491"
                 }
             ],
             "description": "A Twig extension with some useful functions and filters for Drupal development.",
@@ -12867,30 +12879,30 @@
         },
         {
             "name": "friends-of-behat/mink-browserkit-driver",
-            "version": "v1.6.2",
+            "version": "v1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfBehat/MinkBrowserKitDriver.git",
-                "reference": "4f7d58037f8aa5f3aa17308cb6341b029859ea65"
+                "reference": "2a47704e2fb4a1701fc5779b45148f3a7ec6ec2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfBehat/MinkBrowserKitDriver/zipball/4f7d58037f8aa5f3aa17308cb6341b029859ea65",
-                "reference": "4f7d58037f8aa5f3aa17308cb6341b029859ea65",
+                "url": "https://api.github.com/repos/FriendsOfBehat/MinkBrowserKitDriver/zipball/2a47704e2fb4a1701fc5779b45148f3a7ec6ec2d",
+                "reference": "2a47704e2fb4a1701fc5779b45148f3a7ec6ec2d",
                 "shasum": ""
             },
             "require": {
                 "behat/mink": "^1.7",
                 "php": "^7.4|^8.0",
-                "symfony/browser-kit": "^4.4|^5.0|^6.0|^7.0",
-                "symfony/dom-crawler": "^4.4|^5.0|^6.0|^7.0"
+                "symfony/browser-kit": "^4.4|^5.0|^6.0|^7.0|^8.0",
+                "symfony/dom-crawler": "^4.4|^5.0|^6.0|^7.0|^8.0"
             },
             "replace": {
                 "behat/mink-browserkit-driver": "self.version"
             },
             "require-dev": {
                 "friends-of-behat/mink-driver-testsuite": "dev-master",
-                "symfony/http-kernel": "^4.4|^5.0|^6.0|^7.0"
+                "symfony/http-kernel": "^4.4|^5.0|^6.0|^7.0|^8.0"
             },
             "type": "mink-driver",
             "extra": {
@@ -12923,10 +12935,10 @@
                 "testing"
             ],
             "support": {
-                "source": "https://github.com/FriendsOfBehat/MinkBrowserKitDriver/tree/v1.6.2"
+                "source": "https://github.com/FriendsOfBehat/MinkBrowserKitDriver/tree/v1.6.3"
             },
             "abandoned": "behat/mink-browserkit-driver",
-            "time": "2024-02-06T13:25:07+00:00"
+            "time": "2026-03-23T09:38:29+00:00"
         },
         {
             "name": "instaclick/php-webdriver",
@@ -12993,16 +13005,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "5.3.2",
+            "version": "5.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "2f7abf648939847a789c55c206d4cb9dd0d53e2c"
+                "reference": "a0b7c13588b102d7d6536823e96d1c88d3dba85e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/2f7abf648939847a789c55c206d4cb9dd0d53e2c",
-                "reference": "2f7abf648939847a789c55c206d4cb9dd0d53e2c",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/a0b7c13588b102d7d6536823e96d1c88d3dba85e",
+                "reference": "a0b7c13588b102d7d6536823e96d1c88d3dba85e",
                 "shasum": ""
             },
             "require": {
@@ -13052,9 +13064,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/5.3.2"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/5.3.3"
             },
-            "time": "2026-02-27T12:33:19+00:00"
+            "time": "2026-03-24T18:47:53+00:00"
         },
         {
             "name": "mikey179/vfsstream",
