@@ -6360,16 +6360,16 @@
         },
         {
             "name": "itamair/geophp",
-            "version": "1.10",
+            "version": "1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itamair/geoPHP.git",
-                "reference": "7403410f7252e4d0ce128a705ba8b40613195e16"
+                "reference": "592b4eba8d4bc700561f67667d0fab1f5bac3eaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itamair/geoPHP/zipball/7403410f7252e4d0ce128a705ba8b40613195e16",
-                "reference": "7403410f7252e4d0ce128a705ba8b40613195e16",
+                "url": "https://api.github.com/repos/itamair/geoPHP/zipball/592b4eba8d4bc700561f67667d0fab1f5bac3eaf",
+                "reference": "592b4eba8d4bc700561f67667d0fab1f5bac3eaf",
                 "shasum": ""
             },
             "require-dev": {
@@ -6401,9 +6401,9 @@
             "homepage": "https://github.com/itamair/geoPHP",
             "support": {
                 "issues": "https://github.com/itamair/geoPHP/issues",
-                "source": "https://github.com/itamair/geoPHP/tree/1.10"
+                "source": "https://github.com/itamair/geoPHP/tree/1.11"
             },
-            "time": "2026-03-09T17:22:59+00:00"
+            "time": "2026-04-01T15:21:35+00:00"
         },
         {
             "name": "jackmoore/colorbox",
@@ -12154,16 +12154,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.5.10",
+            "version": "1.5.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "961a5e4056dd2e4a2eedcac7576075947c28bf63"
+                "reference": "68ff39175e8e94a4bb1d259407ce51a6a60f09e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/961a5e4056dd2e4a2eedcac7576075947c28bf63",
-                "reference": "961a5e4056dd2e4a2eedcac7576075947c28bf63",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/68ff39175e8e94a4bb1d259407ce51a6a60f09e6",
+                "reference": "68ff39175e8e94a4bb1d259407ce51a6a60f09e6",
                 "shasum": ""
             },
             "require": {
@@ -12210,7 +12210,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.5.10"
+                "source": "https://github.com/composer/ca-bundle/tree/1.5.11"
             },
             "funding": [
                 {
@@ -12222,7 +12222,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-08T15:06:51+00:00"
+            "time": "2026-03-30T09:16:10+00:00"
         },
         {
             "name": "composer/composer",
