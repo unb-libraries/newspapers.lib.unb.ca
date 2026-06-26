@@ -85,9 +85,16 @@
       }
     }
   }
+  .card-footer a {
+    display: block;
 
+    &:hover {
+      text-decoration: none!important;
+    }
+  }
   .issue-date {
     font-weight: bold;
+    font-size: small;
   }
 
   .issue-meta {

@@ -1,0 +1,124 @@
+uuid: 9c1a14a7-f2d5-4a09-a757-aac8e06e0599
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.server.newspapers_lib_unb_ca
+  module:
+    - search_api_solr
+    - digital_serial_issue
+    - search_api
+third_party_settings:
+  search_api_solr:
+    finalize: false
+    commit_before_finalize: false
+    commit_after_finalize: false
+    debug_finalize: false
+    highlighter:
+      maxAnalyzedChars: 51200
+      fragmenter: gap
+      usePhraseHighlighter: true
+      highlightMultiTerm: true
+      preserveMulti: false
+      regex:
+        slop: 0.5
+        pattern: blank
+        maxAnalyzedChars: 10000
+      highlight:
+        mergeContiguous: false
+        requireFieldMatch: false
+        snippets: 3
+        fragsize: 0
+    mlt:
+      mintf: 1
+      mindf: 1
+      maxdf: 0
+      maxdfpct: 0
+      minwl: 0
+      maxwl: 0
+      maxqt: 100
+      maxntp: 2000
+      boost: false
+      interestingTerms: none
+    term_modifiers:
+      slop: 3
+      fuzzy: 1
+    advanced:
+      index_prefix: ''
+      collection: ''
+      timezone: ''
+    multilingual:
+      limit_to_content_language: false
+      include_language_independent: true
+      use_language_undefined_as_fallback_language: false
+      specific_languages:
+        en: '0'
+      use_universal_collation: false
+id: issues
+name: issues.newspapers.lib.unb.ca
+description: ''
+read_only: false
+field_settings:
+  issue_date:
+    label: 'Publication Date'
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: issue_date
+    type: date
+    dependencies:
+      module:
+        - digital_serial_issue
+  issue_edition:
+    label: Edition
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: issue_edition
+    type: string
+    dependencies:
+      module:
+        - digital_serial_issue
+  issue_issue:
+    label: Issue
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: issue_issue
+    type: string
+    dependencies:
+      module:
+        - digital_serial_issue
+  issue_title:
+    label: 'Printed Title'
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: issue_title
+    type: string
+    dependencies:
+      module:
+        - digital_serial_issue
+  issue_vol:
+    label: Volume
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: issue_vol
+    type: string
+    dependencies:
+      module:
+        - digital_serial_issue
+  parent_publication_title:
+    label: 'Parent Publication Title'
+    property_path: parent_publication_title
+    type: string
+datasource_settings:
+  'entity:digital_serial_issue': {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  auto_aggregated_fulltext_field: {  }
+  custom_value: {  }
+  entity_type: {  }
+  language_with_fallback: {  }
+  rendered_item: {  }
+  solr_date_range: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  index_directly: true
+  track_changes_in_references: true
+server: newspapers_lib_unb_ca
