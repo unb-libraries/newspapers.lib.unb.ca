@@ -462,6 +462,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     }
     $this->deleteDziFiles();
     $this->deletePdfFile();
+    $this->markParentIssueForReindex();
     parent::delete();
   }
 
@@ -472,7 +473,29 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $this->movePageImageToPermanentStorage(TRUE);
     $this->deleteDziFiles();
     $this->deletePdfFile();
+    $this->markParentIssueForReindex();
     parent::postSave($storage, $update);
+  }
+
+  /**
+   * Queues this page's parent issue for reindexing in issue-level indexes.
+   *
+   * The issues Search API index derives first-page data (id + thumbnail URI)
+   * from a page lookup, so page saves/deletes must propagate to the parent
+   * issue — Search API only tracks the issue itself, not its child pages. If the
+   * page moved between issues, the previous parent is refreshed too.
+   */
+  protected function markParentIssueForReindex() {
+    $issue = $this->getParentIssue();
+    if (!empty($issue)) {
+      $issue->markForReindexInIssuesIndex();
+    }
+    if (!empty($this->original)) {
+      $previous_issue = $this->original->get('parent_issue')->entity;
+      if (!empty($previous_issue) && (empty($issue) || $previous_issue->id() !== $issue->id())) {
+        $previous_issue->markForReindexInIssuesIndex();
+      }
+    }
   }
 
   /**

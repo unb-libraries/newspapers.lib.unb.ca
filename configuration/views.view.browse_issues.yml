@@ -2,19 +2,21 @@ uuid: d7905740-ee94-40c3-be7d-7415c27d4517
 langcode: en
 status: true
 dependencies:
+  config:
+    - image.style.browse_archives
+    - search_api.index.issues
   module:
-    - datetime
-    - digital_serial_issue
-    - digital_serial_title
     - owlcarousel
+    - search_api
+    - twig_tweak
     - user
 id: browse_issues
 label: 'Browse Issues'
 module: views
 description: ''
 tag: ''
-base_table: digital_serial_issue
-base_field: id
+base_table: search_api_index_issues
+base_field: search_api_id
 display:
   default:
     id: default
@@ -24,16 +26,14 @@ display:
     display_options:
       title: ''
       fields:
-        issue_title:
-          id: issue_title
-          table: digital_serial_issue
-          field: issue_title
+        first_page_image_uri:
+          id: first_page_image_uri
+          table: search_api_index_issues
+          field: first_page_image_uri
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: digital_serial_issue
-          entity_field: issue_title
-          plugin_id: field
+          plugin_id: search_api
           label: ''
           exclude: true
           alter:
@@ -70,15 +70,396 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+        first_page_id:
+          id: first_page_id
+          table: search_api_index_issues
+          field: first_page_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_numeric
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ''
+          format_plural: false
+          format_plural_string: !!binary Aw==
+          prefix: ''
+          suffix: ''
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+          format_plural_values: {  }
+        id:
+          id: id
+          table: search_api_index_issues
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+        parent_title_id:
+          id: parent_title_id
+          table: search_api_index_issues
+          field: parent_title_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+        issue_title:
+          id: issue_title
+          table: search_api_index_issues
+          field: issue_title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+        issue_vol:
+          id: issue_vol
+          table: search_api_index_issues
+          field: issue_vol
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+        issue_issue:
+          id: issue_issue
+          table: search_api_index_issues
+          field: issue_issue
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
+        issue_date:
+          id: issue_date
+          table: search_api_index_issues
+          field: issue_date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: string
+          type: datetime_custom
           settings:
-            link_to_entity: false
+            timezone_override: UTC
+            date_format: 'F d, Y'
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -89,6 +470,84 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
+        issue_date_1:
+          id: issue_date_1
+          table: search_api_index_issues
+          field: issue_date
+          relationship: none
+          group_type: group
+          admin_label: 'Year + Month'
+          plugin_id: search_api_field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: datetime_custom
+          settings:
+            timezone_override: UTC
+            date_format: 'F Y'
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          field_rendering: true
+          fallback_handler: search_api
+          fallback_options:
+            link_to_item: false
+            use_highlighting: false
+            multi_type: separator
+            multi_separator: ', '
         nothing:
           id: nothing
           table: views
@@ -101,7 +560,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '<div class="bd-placeholder-img bg-light p-2" width="100%" height="180"><span class="h6">{{ issue_title }}</small></div>'
+            text: '<div class="bd-placeholder-img bg-light p-2" width="100%" height="180"><span class="h6">{{ issue_title }}</span></div>'
             make_link: false
             path: ''
             absolute: false
@@ -138,255 +597,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
-        issue_date:
-          id: issue_date
-          table: digital_serial_issue
-          field: issue_date
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: digital_serial_issue
-          entity_field: issue_date
-          plugin_id: field
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: div
-          element_class: issue-date
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: datetime_custom
-          settings:
-            timezone_override: ''
-            date_format: 'F d, Y'
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        issue_issue:
-          id: issue_issue
-          table: digital_serial_issue
-          field: issue_issue
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: digital_serial_issue
-          entity_field: issue_issue
-          plugin_id: field
-          label: Issue
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        issue_vol:
-          id: issue_vol
-          table: digital_serial_issue
-          field: issue_vol
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: digital_serial_issue
-          entity_field: issue_vol
-          plugin_id: field
-          label: Volume
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        view_digital_serial_issue:
-          id: view_digital_serial_issue
-          table: digital_serial_issue
-          field: view_digital_serial_issue
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: digital_serial_issue
-          plugin_id: entity_link
-          label: ''
-          exclude: true
-          alter:
-            alter_text: true
-            text: '<span class="issue-meta"><small>Volume {{ issue_vol }} No. {{ issue_issue }}</small></span>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: view
-          output_url_as_text: false
-          absolute: false
         nothing_1:
           id: nothing_1
           table: views
@@ -399,7 +609,9 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"issue-date\">{{ issue_date }}</div>\r\n<div class=\"issue-meta\"><small>Volume {{ issue_vol }} No. {{ issue_issue }}</small></div>"
+            text: |
+              <div class="issue-date">{{ issue_date }}</div>
+              <div class="issue-meta"><small>Volume {{ issue_vol }} No. {{ issue_issue }}</small></div>
             make_link: false
             path: ''
             absolute: false
@@ -436,125 +648,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
-        issue_date_1:
-          id: issue_date_1
-          table: digital_serial_issue
-          field: issue_date
-          relationship: none
-          group_type: group
-          admin_label: 'Year + Month'
-          entity_type: digital_serial_issue
-          entity_field: issue_date
-          plugin_id: field
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: datetime_custom
-          settings:
-            timezone_override: ''
-            date_format: 'F Y'
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        view_digital_serial_issue_1:
-          id: view_digital_serial_issue_1
-          table: digital_serial_issue
-          field: view_digital_serial_issue
-          relationship: none
-          group_type: group
-          admin_label: 'Issue button'
-          entity_type: digital_serial_issue
-          plugin_id: entity_link
-          label: ''
-          exclude: true
-          alter:
-            alter_text: true
-            text: "<span role=\"button\" class=\"btn btn-primary d-block\">Browse issue</span>\r\n"
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: view
-          output_url_as_text: false
-          absolute: false
         nothing_2:
           id: nothing_2
           table: views
@@ -567,7 +660,14 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"card-footer p-0\">\r\n{{ view_digital_serial_issue_1 }}\r\n</div>"
+            text: |
+              <div class="card-footer p-0">
+              {% if first_page_id %}
+              <a href="/serials/{{ parent_title_id }}/issues/{{ id }}/pages/{{ first_page_id }}" hreflang="en"><span role="button" class="btn btn-primary d-block">Browse issue</span></a>
+              {% else %}
+              <a href="/serials/{{ parent_title_id }}/issues/{{ id }}" hreflang="en"><span role="button" class="btn btn-primary d-block">Browse issue</span></a>
+              {% endif %}
+              </div>
             make_link: false
             path: ''
             absolute: false
@@ -597,9 +697,9 @@ display:
           element_label_type: ''
           element_label_class: ''
           element_label_colon: false
-          element_wrapper_type: ''
+          element_wrapper_type: '0'
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -640,20 +740,18 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: tag
+        type: search_api_tag
         options: {  }
       empty: {  }
       sorts:
         issue_date:
           id: issue_date
-          table: digital_serial_issue
+          table: search_api_index_issues
           field: issue_date
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: digital_serial_issue
-          entity_field: issue_date
-          plugin_id: standard
+          plugin_id: search_api
           order: DESC
           expose:
             label: ''
@@ -661,30 +759,26 @@ display:
           exposed: false
         issue_issue_sort:
           id: issue_issue_sort
-          table: digital_serial_issue
+          table: search_api_index_issues
           field: issue_issue_sort
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: digital_serial_issue
-          entity_field: issue_issue_sort
-          plugin_id: standard
+          plugin_id: search_api
           order: DESC
           expose:
             label: ''
             field_identifier: ''
           exposed: false
       arguments:
-        id:
-          id: id
-          table: digital_serial_title
-          field: id
-          relationship: parent_title
+        parent_title_id:
+          id: parent_title_id
+          table: search_api_index_issues
+          field: parent_title_id
+          relationship: none
           group_type: group
           admin_label: ''
-          entity_type: digital_serial_title
-          entity_field: id
-          plugin_id: numeric
+          plugin_id: search_api
           default_action: 'not found'
           exception:
             value: all
@@ -712,7 +806,48 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-      filters: {  }
+      filters:
+        status:
+          id: status
+          table: search_api_index_issues
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups: {  }
       style:
         type: owlcarousel
         options:
@@ -755,25 +890,11 @@ display:
           separator: ''
           hide_empty: false
       query:
-        type: views_query
+        type: search_api_query
         options:
-          query_comment: ''
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
-          query_tags: {  }
-      relationships:
-        parent_title:
-          id: parent_title
-          table: digital_serial_issue
-          field: parent_title
-          relationship: none
-          group_type: group
-          admin_label: 'Digital Serial Title'
-          entity_type: digital_serial_issue
-          entity_field: parent_title
-          plugin_id: standard
-          required: true
+          bypass_access: false
+          skip_access: false
+      relationships: {  }
       css_class: browse-issues
       header:
         area:
@@ -820,7 +941,7 @@ display:
         ajax_history: {  }
         simple_sitemap_display_extender:
           variants: {  }
-      path: demo/issue
+      path: browse-issues/%
     cache_metadata:
       max-age: -1
       contexts:

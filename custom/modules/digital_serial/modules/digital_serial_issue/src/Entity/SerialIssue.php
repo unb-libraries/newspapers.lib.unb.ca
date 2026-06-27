@@ -600,6 +600,27 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   }
 
   /**
+   * Marks this issue for reindexing in any Search API index that tracks issues.
+   *
+   * Search API tracks the issue entity, but the issue's first-page data is
+   * derived from its child pages (which reference the issue, not vice versa).
+   * Page changes therefore do not mark the issue dirty on their own, so callers
+   * (e.g. page save/delete) invoke this to queue the issue for reindexing on the
+   * next cron run. The mark is idempotent, so repeated calls (e.g. a bulk page
+   * import) collapse to a single reindex.
+   */
+  public function markForReindexInIssuesIndex() {
+    $indexes = ContentEntity::getIndexesForEntity($this);
+    if (empty($indexes)) {
+      return;
+    }
+    $tracker_id = $this->id() . ':' . $this->language()->getId();
+    foreach ($indexes as $index) {
+      $index->trackItemsUpdated('entity:digital_serial_issue', [$tracker_id]);
+    }
+  }
+
+  /**
    * Gets this issue's child page entity IDs.
    *
    * @return int[]
@@ -610,6 +631,46 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
       ->condition('parent_issue', $this->id())
       ->sort('page_sort');
     return $query->execute();
+  }
+
+  /**
+   * Gets the entity ID of this issue's first page.
+   *
+   * "First" is the page with the lowest page_sort value, which is not
+   * necessarily page "1". Used to precompute the issue's cover/landing page at
+   * index time. Access checking is intentionally disabled so the lookup is not
+   * filtered by the (anonymous) user running cron-time indexing.
+   *
+   * @return int|null
+   *   The first page's entity ID, or NULL if the issue has no pages.
+   */
+  public function getFirstPageId() {
+    $page_ids = \Drupal::entityQuery('digital_serial_page')
+      ->condition('parent_issue', $this->id())
+      ->sort('page_sort')
+      ->range(0, 1)
+      ->accessCheck(FALSE)
+      ->execute();
+    if (empty($page_ids)) {
+      return NULL;
+    }
+    return (int) reset($page_ids);
+  }
+
+  /**
+   * Loads this issue's first page entity.
+   *
+   * @return \Drupal\digital_serial_page\Entity\SerialPageInterface|null
+   *   The first page entity, or NULL if the issue has no pages.
+   */
+  public function getFirstPage() {
+    $first_page_id = $this->getFirstPageId();
+    if (empty($first_page_id)) {
+      return NULL;
+    }
+    return \Drupal::entityTypeManager()
+      ->getStorage('digital_serial_page')
+      ->load($first_page_id);
   }
 
   /**

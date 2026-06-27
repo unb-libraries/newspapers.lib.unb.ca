@@ -59,6 +59,7 @@ services:
       - docker-entrypoint-multiple.sh
       - newspapers.lib.unb.ca:/solr-conf
       - pages.newspapers.lib.unb.ca:/solr-conf
+      - issues.newspapers.lib.unb.ca:/solr-conf
     volumes:
       - solr-data:/opt/solr/server/solr/mycores
   mailhog:

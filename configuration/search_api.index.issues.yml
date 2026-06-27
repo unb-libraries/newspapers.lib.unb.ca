@@ -3,10 +3,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - search_api.server.newspapers_lib_unb_ca
+    - search_api.server.issues_drupal_solr_lib_unb_ca
   module:
     - search_api_solr
     - digital_serial_issue
+    - digital_serial_title
     - search_api
 third_party_settings:
   search_api_solr:
@@ -59,6 +60,22 @@ name: issues.newspapers.lib.unb.ca
 description: ''
 read_only: false
 field_settings:
+  first_page_id:
+    label: 'First Page ID'
+    property_path: first_page_id
+    type: integer
+  first_page_image_uri:
+    label: 'First Page Image URI'
+    property_path: first_page_image_uri
+    type: string
+  id:
+    label: ID
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: id
+    type: integer
+    dependencies:
+      module:
+        - digital_serial_issue
   issue_date:
     label: 'Publication Date'
     datasource_id: 'entity:digital_serial_issue'
@@ -83,6 +100,14 @@ field_settings:
     dependencies:
       module:
         - digital_serial_issue
+  issue_issue_sort:
+    label: 'Issue Sort'
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: issue_issue_sort
+    type: string
+    dependencies:
+      module:
+        - digital_serial_issue
   issue_title:
     label: 'Printed Title'
     datasource_id: 'entity:digital_serial_issue'
@@ -99,10 +124,23 @@ field_settings:
     dependencies:
       module:
         - digital_serial_issue
-  parent_publication_title:
-    label: 'Parent Publication Title'
-    property_path: parent_publication_title
-    type: string
+  parent_title_id:
+    label: 'Parent Title ID'
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: 'parent_title:entity:id'
+    type: integer
+    dependencies:
+      module:
+        - digital_serial_issue
+        - digital_serial_title
+  status:
+    label: 'Publishing status'
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: status
+    type: boolean
+    dependencies:
+      module:
+        - digital_serial_issue
 datasource_settings:
   'entity:digital_serial_issue': {  }
 processor_settings:
@@ -111,8 +149,8 @@ processor_settings:
   auto_aggregated_fulltext_field: {  }
   custom_value: {  }
   entity_type: {  }
+  index_issue_first_page_info: {  }
   language_with_fallback: {  }
-  rendered_item: {  }
   solr_date_range: {  }
 tracker_settings:
   default:
@@ -121,4 +159,4 @@ options:
   cron_limit: 50
   index_directly: true
   track_changes_in_references: true
-server: newspapers_lib_unb_ca
+server: issues_drupal_solr_lib_unb_ca

@@ -217,6 +217,33 @@ interface SerialIssueInterface extends ContentEntityInterface, EntityChangedInte
   public function getPageCount();
 
   /**
+   * Gets the entity ID of this issue's first page.
+   *
+   * "First" is the page with the lowest page_sort value, which is not
+   * necessarily page "1".
+   *
+   * @return int|null
+   *   The first page's entity ID, or NULL if the issue has no pages.
+   */
+  public function getFirstPageId();
+
+  /**
+   * Loads this issue's first page entity.
+   *
+   * @return \Drupal\digital_serial_page\Entity\SerialPageInterface|null
+   *   The first page entity, or NULL if the issue has no pages.
+   */
+  public function getFirstPage();
+
+  /**
+   * Marks this issue for reindexing in any Search API index that tracks issues.
+   *
+   * Used to propagate child-page changes (which Search API does not track on
+   * the issue) to issue-level indexes.
+   */
+  public function markForReindexInIssuesIndex();
+
+  /**
    * Get the issue year for this issue.
    *
    * @return int
