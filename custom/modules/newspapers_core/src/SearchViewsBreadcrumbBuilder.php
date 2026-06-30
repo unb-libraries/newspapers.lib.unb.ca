@@ -31,6 +31,7 @@ class SearchViewsBreadcrumbBuilder implements BreadcrumbBuilderInterface {
         'view.digital_titles_lister.page_listing',
         'view.print_title_listing.page_listing',
         'view.digital_page_lister.page_issues',
+        'view.digital_issue_lister.page_issues',
         'view.interactive_map.page_nb',
         'view.interactive_map.page_non_nb',
       ]
@@ -60,7 +61,7 @@ class SearchViewsBreadcrumbBuilder implements BreadcrumbBuilderInterface {
     );
 
     $digital_serial_title_id = $route_match->getParameter('arg_0');
-    if ($route == 'view.digital_page_lister.page_issues' && is_numeric($digital_serial_title_id)) {
+    if ($route == 'view.digital_issue_lister.page_issues' && is_numeric($digital_serial_title_id)) {
       $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_title');
       $title = $storage->load($digital_serial_title_id);
       if (!empty($title)) {
