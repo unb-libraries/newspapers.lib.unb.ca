@@ -866,7 +866,7 @@ display:
           plugin_id: text
           empty: false
           content:
-            value: "<p class=\"text-muted\">\r\n<span class=\"fa-solid fa-circle-info text-info mr-1\"></span>You may <strong>swipe</strong> or <strong>click drag</strong> issues horizontally to quickly navigate through days of a month.\r\n</p>\r\n"
+            value: "<p class=\"text-muted\">\r\n<span class=\"fa-solid fa-circle-info text-info mr-1\"></span>You may <strong>swipe</strong> or <strong>click drag</strong> horizontally to quickly navigate through monthly issues, where applicable.\r\n</p>\r\n"
             format: full_html
           tokenize: true
         result:
