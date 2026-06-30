@@ -8,7 +8,7 @@ dependencies:
     - digital_serial_title
     - user
 id: digital_issue_list
-label: 'Digital Issue List'
+label: 'Digital Issues Blocks'
 module: views
 description: ''
 tag: ''
