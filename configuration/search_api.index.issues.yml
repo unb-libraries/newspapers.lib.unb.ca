@@ -108,6 +108,14 @@ field_settings:
     dependencies:
       module:
         - digital_serial_issue
+  issue_pub_decade:
+    label: 'Facet: Publication Decade'
+    property_path: issue_pub_decade
+    type: string
+  issue_pub_year:
+    label: 'Facet: Publication Year'
+    property_path: issue_pub_year
+    type: integer
   issue_title:
     label: 'Printed Title'
     datasource_id: 'entity:digital_serial_issue'
@@ -124,6 +132,10 @@ field_settings:
     dependencies:
       module:
         - digital_serial_issue
+  parent_publication_title:
+    label: 'Parent Publication Title'
+    property_path: parent_publication_title
+    type: string
   parent_title_id:
     label: 'Parent Title ID'
     datasource_id: 'entity:digital_serial_issue'
@@ -150,7 +162,9 @@ processor_settings:
   custom_value: {  }
   entity_type: {  }
   index_issue_first_page_info: {  }
+  index_issue_publication_facet_info: {  }
   language_with_fallback: {  }
+  rendered_item: {  }
   solr_date_range: {  }
 tracker_settings:
   default:
