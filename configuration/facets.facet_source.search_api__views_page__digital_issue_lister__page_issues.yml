@@ -1,0 +1,9 @@
+uuid: ed412eed-f318-4a79-9e79-b7d4d1faa3bd
+langcode: en
+status: true
+dependencies: {  }
+id: search_api__views_page__digital_issue_lister__page_issues
+name: 'search_api:views_page__digital_issue_lister__page_issues'
+filter_key: null
+url_processor: query_string
+breadcrumb: {  }
