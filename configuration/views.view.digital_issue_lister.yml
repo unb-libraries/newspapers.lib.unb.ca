@@ -1,19 +1,18 @@
-uuid: d7905740-ee94-40c3-be7d-7415c27d4517
+uuid: ed3d2795-1bb8-461a-9ac2-02fcd47f9d4a
 langcode: en
 status: true
 dependencies:
   config:
-    - image.style.browse_archives
     - search_api.index.issues
   module:
+    - datetime
     - owlcarousel
     - search_api
-    - twig_tweak
     - user
-id: browse_issues
-label: 'Browse Issues'
+id: digital_issue_lister
+label: 'Digital Issue Browser'
 module: views
-description: ''
+description: 'Issue-based source for digital serial browsing.'
 tag: ''
 base_table: search_api_index_issues
 base_field: search_api_id
@@ -24,8 +23,61 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: ''
+      title: 'Digital Issues'
       fields:
+        parent_publication_title:
+          id: parent_publication_title
+          table: search_api_index_issues
+          field: parent_publication_title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          link_to_item: false
+          use_highlighting: false
+          multi_type: separator
+          multi_separator: ', '
         first_page_image_uri:
           id: first_page_image_uri
           table: search_api_index_issues
@@ -548,70 +600,19 @@ display:
             use_highlighting: false
             multi_type: separator
             multi_separator: ', '
-        nothing:
-          id: nothing
-          table: views
-          field: nothing
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: custom
-          label: ''
-          exclude: false
-          alter:
-            alter_text: true
-            text: '<div class="bd-placeholder-img bg-light p-2" width="100%" height="180"><span class="h6">{{ issue_title }}</span></div>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: '0'
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: '0'
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: false
         nothing_1:
           id: nothing_1
           table: views
           field: nothing
           relationship: none
           group_type: group
-          admin_label: ''
+          admin_label: 'Wrapper: BS card > BS body'
           plugin_id: custom
           label: ''
           exclude: false
           alter:
             alter_text: true
-            text: |
-              <div class="issue-date">{{ issue_date }}</div>
-              <div class="issue-meta"><small>Volume {{ issue_vol }} No. {{ issue_issue }}</small></div>
+            text: "<div class=\"card-header\">\r\n<div class=\"h6 mb-0\">{{ issue_title }}</div>\r\n</div>\r\n<div class=\"card-body\">\r\n<p class=\"card-text\">\r\n<small class=\"issue-date\">{{ issue_date }}</small><br>\r\n<span class=\"issue-meta\">\r\n  <small>Volume {{ issue_vol }}</small>\r\n   <small>No. {{ issue_issue }}</small>\r\n</span>\r\n</p>\r\n{% if first_page_id %}\r\n<a class=\"stretched-link\" href=\"/serials/{{ parent_title_id }}/issues/{{ id }}/pages/{{ first_page_id }}\" hreflang=\"en\">Load Issue</a>\r\n{% else %}\r\n<a  class=\"stretched-link\" href=\"/serials/{{ parent_title_id }}/issues/{{ id }}\" hreflang=\"en\">Issue Details</a>\r\n{% endif %}\r\n</div>"
             make_link: false
             path: ''
             absolute: false
@@ -642,64 +643,8 @@ display:
           element_label_class: ''
           element_label_colon: false
           element_wrapper_type: div
-          element_wrapper_class: card-body
+          element_wrapper_class: card
           element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: false
-        nothing_2:
-          id: nothing_2
-          table: views
-          field: nothing
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: custom
-          label: ''
-          exclude: false
-          alter:
-            alter_text: true
-            text: |
-              <div class="card-footer p-0">
-              {% if first_page_id %}
-              <a href="/serials/{{ parent_title_id }}/issues/{{ id }}/pages/{{ first_page_id }}" hreflang="en"><span role="button" class="btn btn-primary d-block">Browse issue</span></a>
-              {% else %}
-              <a href="/serials/{{ parent_title_id }}/issues/{{ id }}" hreflang="en"><span role="button" class="btn btn-primary d-block">Browse issue</span></a>
-              {% endif %}
-              </div>
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: '0'
-          element_wrapper_class: ''
-          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -784,8 +729,8 @@ display:
             value: all
             title_enable: false
             title: All
-          title_enable: false
-          title: ''
+          title_enable: true
+          title: '{{ parent_publication_title }} - Digital Issues'
           default_argument_type: fixed
           default_argument_options:
             argument: ''
@@ -856,7 +801,7 @@ display:
               field: issue_date_1
               rendered: true
               rendered_strip: false
-          row_class: card
+          row_class: ''
           default_row_class: true
           items: '6'
           itemsDesktop: '[1199,5]'
@@ -896,6 +841,7 @@ display:
           skip_access: false
       relationships: {  }
       css_class: browse-issues
+      use_ajax: false
       header:
         area:
           id: area
@@ -907,7 +853,7 @@ display:
           plugin_id: text
           empty: false
           content:
-            value: "<h1>{{ issue_title }} - Digital Issues</h1>\r\n<p class=\"text-muted\">\r\n<span class=\"fa-solid fa-circle-info text-info mr-1\"></span>You may <strong>swipe</strong> or <strong>click drag</strong> issues horizontally to quickly navigate through days of a month\r\n</p>\r\n"
+            value: "<p class=\"text-muted\">\r\n<span class=\"fa-solid fa-circle-info text-info mr-1\"></span>You may <strong>swipe</strong> or <strong>click drag</strong> issues horizontally to quickly navigate through days of a month.\r\n</p>\r\n"
             format: full_html
           tokenize: true
         result:
@@ -919,7 +865,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: 'Displaying @start - @end of @total issues'
+          content: '<div class="search-results"><h2>Displaying @start - @end of @total results</h2></div>'
       footer: {  }
       display_extenders: {  }
     cache_metadata:
@@ -930,18 +876,22 @@ display:
         - url
         - url.query_args
         - user.permissions
-      tags: {  }
-  page_1:
-    id: page_1
+      tags:
+        - 'config:search_api.index.issues'
+        - 'search_api_list:issues'
+  page_issues:
+    id: page_issues
     display_title: Page
     display_plugin: page
     position: 1
     display_options:
       display_extenders:
-        ajax_history: {  }
+        ajax_history:
+          enable_history: false
+          exclude_args: ''
         simple_sitemap_display_extender:
           variants: {  }
-      path: browse-issues/%
+      path: serials/browse/%
     cache_metadata:
       max-age: -1
       contexts:
@@ -950,4 +900,8 @@ display:
         - url
         - url.query_args
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:facets.facet.digital_issue_publication_decade'
+        - 'config:facets.facet.digital_issue_publication_year'
+        - 'config:search_api.index.issues'
+        - 'search_api_list:issues'
