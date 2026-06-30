@@ -1,4 +1,13 @@
 .owl-theme {
+  .card {
+    margin: 1px 3px;
+
+    .card-body {
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
+    }
+  }
+
   .owl-controls {
     // Prev/Next Arrow Carousel Hack
     margin-top: 0;
@@ -9,12 +18,12 @@
     .owl-buttons {
       div {
         background: $link-color-hover;
-        border: 1px solid #fff;
-        box-shadow: 0 0 1px 0 white inset, 0 0 1px 0 white;
-        padding: 5px 14px;
+        border: 1px solid rgba(0, 0, 0, .125);
+        box-shadow: 0 0 1px 0 white inset, 0 0 1px 0 black;
+        padding: 5px 8px;
         margin: 0 .4em;
-        font-size: 20px;
-        opacity: 0.7;
+        font-size: 0.9rem;
+        opacity: 0.75;
         position: absolute;
         transition: opacity 0.2s ease-in-out;
 
@@ -85,16 +94,9 @@
       }
     }
   }
-  .card-footer a {
-    display: block;
 
-    &:hover {
-      text-decoration: none!important;
-    }
-  }
   .issue-date {
     font-weight: bold;
-    font-size: small;
   }
 
   .issue-meta {
@@ -109,7 +111,7 @@
   .owl-carousel {
     .owl-item {
       margin-top: .5em;
-      padding: 0 1px;
+      padding: 0;
       text-align: center;
 
       &:first-child {
