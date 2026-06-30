@@ -1,6 +1,6 @@
 uuid: 2bcd9527-74b8-4a05-9403-a5ce216cf576
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - facets.facet.publication_year_issue
@@ -12,7 +12,7 @@ dependencies:
 id: publicationyear_2
 theme: newspapers_lib_unb_ca
 region: sidebar_first
-weight: 2
+weight: 0
 provider: null
 plugin: 'facet_block:publication_year_issue'
 settings:
