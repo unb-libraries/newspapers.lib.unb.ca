@@ -4,7 +4,11 @@
   <div id="main" class="my-2 {{ container }}">
     {{ page.breadcrumb }}
     <div class="row row-offcanvas row-offcanvas-left clearfix">
+    {% if page.sidebar_first %}
+      <main{{ content_attributes.addClass('col-md-9') }}>
+    {% else %}
       <main{{ content_attributes }}>
+    {% endif %}
         <section class="section">
           {{ page.content }}
         </section>
