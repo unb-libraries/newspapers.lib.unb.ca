@@ -1108,6 +1108,7 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      enabled: false
       title: 'Digital Issues'
       fields:
         parent_publication_title:
@@ -1964,7 +1965,7 @@ display:
         ajax_history: {  }
         simple_sitemap_display_extender:
           variants: {  }
-      path: serials/browse/%
+      path: pages/browse/%
     cache_metadata:
       max-age: -1
       contexts:
