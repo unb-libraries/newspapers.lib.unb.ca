@@ -1,0 +1,29 @@
+uuid: c85300e9-e2b4-4d48-b9b5-7f154f5b1970
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.digital_issue_publication_decade
+  module:
+    - facets
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: facetpublicationdecade
+theme: newspapers_lib_unb_ca
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:digital_issue_publication_decade'
+settings:
+  id: 'facet_block:digital_issue_publication_decade'
+  label: 'Facet: Publication Decade'
+  label_display: '0'
+  provider: facets
+  context_mapping: {  }
+  block_id: facetpublicationdecade
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/serials/browse/*'

@@ -1,0 +1,29 @@
+uuid: 4d8aac48-01b0-4bff-b22b-95a8a25acc74
+langcode: en
+status: true
+dependencies:
+  config:
+    - facets.facet.digital_issue_publication_year
+  module:
+    - facets
+    - system
+  theme:
+    - newspapers_lib_unb_ca
+id: facetpublicationyear
+theme: newspapers_lib_unb_ca
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'facet_block:digital_issue_publication_year'
+settings:
+  id: 'facet_block:digital_issue_publication_year'
+  label: 'Facet: Publication Year'
+  label_display: '0'
+  provider: facets
+  context_mapping: {  }
+  block_id: facetpublicationyear
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/serials/browse/*'
