@@ -63,12 +63,12 @@ class IndexIssueInfo extends ProcessorPluginBase {
       $properties['issue_pub_decade'] = new ProcessorProperty($definition);
 
       $definition = [
-        'label' => $this->t('Parent Publication Title'),
-        'description' => $this->t('The parent publication title'),
+        'label' => $this->t('Parent Issue Publication Title'),
+        'description' => $this->t('The parent issue publication title'),
         'type' => 'string',
         'processor_id' => $this->getPluginId(),
       ];
-      $properties['parent_publication_title'] = new ProcessorProperty($definition);
+      $properties['parent_iss_publication_title'] = new ProcessorProperty($definition);
     }
 
     return $properties;
@@ -109,7 +109,7 @@ class IndexIssueInfo extends ProcessorPluginBase {
 
       // Issue Parent Title.
         $fields = $this->getFieldsHelper()
-          ->filterForPropertyPath($item->getFields(), NULL, 'parent_publication_title');
+          ->filterForPropertyPath($item->getFields(), NULL, 'parent_iss_publication_title');
         foreach ($fields as $field) {
           $field->addValue($publication_entity->getTitle());
         }

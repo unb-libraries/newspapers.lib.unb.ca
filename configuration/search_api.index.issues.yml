@@ -132,9 +132,9 @@ field_settings:
     dependencies:
       module:
         - digital_serial_issue
-  parent_publication_title:
-    label: 'Parent Publication Title'
-    property_path: parent_publication_title
+  parent_iss_publication_title:
+    label: 'Parent Issue Publication Title'
+    property_path: parent_iss_publication_title
     type: string
   parent_title_id:
     label: 'Parent Title ID'
