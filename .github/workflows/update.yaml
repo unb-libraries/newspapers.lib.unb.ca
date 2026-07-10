@@ -8,7 +8,5 @@ on:
 jobs:
   deploy:
     uses: unb-libraries/dockworker/.github/workflows/update.yaml@6.x
-    with:
-      add-paths: 'build/composer.*'
     secrets:
       PAT_TOKEN: ${{ secrets.UNBLIBBOT_PAT_TOKEN }}

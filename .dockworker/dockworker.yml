@@ -30,6 +30,10 @@ dockworker:
       holder: University of New Brunswick Libraries
     shell:
       path: /bin/sh
+  update:
+    targets:
+      - dir: build
+        type: composer
   endpoints:
     env:
       - dev
