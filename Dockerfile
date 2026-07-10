@@ -27,16 +27,12 @@ ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION
 LABEL ca.unb.lib.generator="drupal9" \
-  com.microscaling.docker.dockerfile="/Dockerfile" \
-  com.microscaling.license="MIT" \
-  org.label-schema.build-date=$BUILD_DATE \
-  org.label-schema.description="newspapers.lib.unb.ca provides researchers with unified access to UNB Libraries' current and historical newspaper collections in all formats, from New Brunswick and across the world." \
-  org.label-schema.name="newspapers.lib.unb.ca" \
-  org.label-schema.schema-version="1.0" \
-  org.label-schema.url="https://newspapers.lib.unb.ca" \
-  org.label-schema.vcs-ref=$VCS_REF \
-  org.label-schema.vcs-url="https://github.com/unb-libraries/newspapers.lib.unb.ca" \
-  org.label-schema.vendor="University of New Brunswick Libraries" \
-  org.label-schema.version=$VERSION \
   org.opencontainers.image.authors="UNB Libraries <libsupport@unb.ca>" \
-  org.opencontainers.image.source="https://github.com/unb-libraries/newspapers.lib.unb.ca"
+  org.opencontainers.image.created="$BUILD_DATE" \
+  org.opencontainers.image.description="newspapers.lib.unb.ca provides researchers with unified access to UNB Libraries' current and historical newspaper collections in all formats, from New Brunswick and across the world." \
+  org.opencontainers.image.revision="$VCS_REF" \
+  org.opencontainers.image.source="https://github.com/unb-libraries/newspapers.lib.unb.ca" \
+  org.opencontainers.image.title="newspapers.lib.unb.ca" \
+  org.opencontainers.image.url="https://newspapers.lib.unb.ca" \
+  org.opencontainers.image.vendor="University of New Brunswick Libraries" \
+  org.opencontainers.image.version="$VERSION"
