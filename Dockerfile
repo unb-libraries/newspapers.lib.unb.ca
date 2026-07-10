@@ -1,10 +1,10 @@
 FROM ghcr.io/unb-libraries/drupal:9.x-2.x-unblib
 
 # Install additional OS packages.
-ENV ADDITIONAL_OS_PACKAGES postfix php7-ldap php7-xmlreader php7-zip php7-redis
-ENV DRUPAL_SITE_ID newspapers
-ENV DRUPAL_SITE_URI newspapers.lib.unb.ca
-ENV DRUPAL_SITE_UUID 655af73f-dc1a-48f1-84a1-3da88d2d1ad4
+ENV ADDITIONAL_OS_PACKAGES="postfix php7-ldap php7-xmlreader php7-zip php7-redis"
+ENV DRUPAL_SITE_ID="newspapers"
+ENV DRUPAL_SITE_URI="newspapers.lib.unb.ca"
+ENV DRUPAL_SITE_UUID="655af73f-dc1a-48f1-84a1-3da88d2d1ad4"
 
 # Build application.
 COPY ./build/ /build/
