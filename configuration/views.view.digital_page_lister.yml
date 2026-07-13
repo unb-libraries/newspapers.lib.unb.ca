@@ -529,7 +529,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access content'
+          perm: 'administer serial page entities'
       cache:
         type: search_api_tag
         options: {  }
@@ -1108,7 +1108,7 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      enabled: false
+      enabled: true
       title: 'Digital Issues'
       fields:
         parent_publication_title:
