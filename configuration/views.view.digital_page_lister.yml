@@ -1108,7 +1108,7 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      enabled: true
+      enabled: false
       title: 'Digital Issues'
       fields:
         parent_publication_title:

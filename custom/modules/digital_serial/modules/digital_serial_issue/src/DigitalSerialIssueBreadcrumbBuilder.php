@@ -80,11 +80,11 @@ class DigitalSerialIssueBreadcrumbBuilder implements BreadcrumbBuilderInterface 
         ['node' => $parent_title->id()]
       )
     );
-
+    // Original Route: view.digital_page_lister.page_issues.
     $breadcrumb->addLink(
       Link::createFromRoute(
         t('Digital Issues'),
-        'view.digital_page_lister.page_issues',
+        'view.digital_issue_lister.page_issues',
         ['arg_0' => $title->id()],
         []
       )
