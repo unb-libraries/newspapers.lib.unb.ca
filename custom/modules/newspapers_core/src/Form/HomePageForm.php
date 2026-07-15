@@ -51,20 +51,18 @@ class HomePageForm extends FormBase {
     src="/themes/custom/newspapers_lib_unb_ca/dist/img/map.png"
     alt="Map of New Brunswick and surrounding area"></a></div>';
 
-    $about_markup = '<p>The New Brunswick Historical Newspapers Project provides
-      researchers with unified access to UNB Libraries&apos; current and historical newspaper collections in all formats,
-      from New Brunswick and across the world. Search and discover
-      <a href="/print-titles">print</a>, microform, and selected digital newspaper
-      titles available from UNB Libraries. This site also acts as an index for all known New Brunswick
-      newspapers and listing of where copies are located throughout the province and beyond.</p>
-      <p>For more worldwide digital newspaper content, consult
+    $about_markup = '<p>The New Brunswick Historical Newspapers Project provides researchers with unified
+      access to UNB Libraries&apos; current and historical newspaper collections in all formats,
+      from New Brunswick and across the world. Search our index for all known New Brunswick newspapers and discover
+      <a href="/print-titles">print</a>, microform, and selected digital titles available from UNB Libraries.
+      Learn more <a href="/project">about the NBHNP</a> or how we
+      <a href="/determining-newspaper-digitization-priorities">determine newspaper digitization priorities</a>.</p>
+      <p>We appreciate your interest in this project and would be
+      <a href="/contact">happy to hear from you</a>.</p>
+      <p class="mb-0">For more worldwide digital newspaper content, consult
       <a href="https://lib.unb.ca/eresources/collections/newspapers" class="external">
       UNB Libraries licensed electronic Newspaper collections</a>
-      <span class="text-muted">(UNB/STU login required)</span>.</p>
-      <p>We appreciate your interest in this project and we would be
-      <a href="/contact">happy to hear from you</a>.</p>
-      <p class="mb-0">Learn more <a href="/project">about the NBHNP</a> or how we
-      <a href="/determining-newspaper-digitization-priorities">determine newspaper digitization priorities</a>.</p>';
+      <span class="text-muted">(UNB/STU login required)</span>.</p>';
 
     $searchtips_markup = '<aside class="search-tips mt-4 w-100">
           <p class="h3 mb-1">Search Tips:</p>
