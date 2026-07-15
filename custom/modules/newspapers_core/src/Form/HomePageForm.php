@@ -51,7 +51,7 @@ class HomePageForm extends FormBase {
     src="/themes/custom/newspapers_lib_unb_ca/dist/img/map.png"
     alt="Map of New Brunswick and surrounding area"></a></div>';
 
-    $about_markup = '<p>The <a href="project">New Brunswick Historical Newspapers Project</a> provides
+    $about_markup = '<p>The New Brunswick Historical Newspapers Project provides
       researchers with unified access to UNB Libraries&apos; current and historical newspaper collections in all formats,
       from New Brunswick and across the world. Search and discover
       <a href="/print-titles">print</a>, microform, and selected digital newspaper
@@ -61,9 +61,10 @@ class HomePageForm extends FormBase {
       <a href="https://lib.unb.ca/eresources/collections/newspapers" class="external">
       UNB Libraries licensed electronic Newspaper collections</a>
       <span class="text-muted">(UNB/STU login required)</span>.</p>
-      <p class="mb-0">We appreciate your interest in this project and we would be
-      <a href="/contact">happy to hear from you<span class="fa-solid fa-comment-dots fa-sm ml-1" aria-hidden="true"></span></a>.
-      </p>';
+      <p>We appreciate your interest in this project and we would be
+      <a href="/contact">happy to hear from you</a>.</p>
+      <p class="mb-0">Learn more <a href="/project">about the NBHNP</a> or how we
+      <a href="/determining-newspaper-digitization-priorities">determine newspaper digitization priorities</a>.</p>';
 
     $searchtips_markup = '<aside class="search-tips mt-4 w-100">
           <p class="h3 mb-1">Search Tips:</p>
