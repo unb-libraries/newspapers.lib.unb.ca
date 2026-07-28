@@ -53,6 +53,7 @@ module:
   health_check: 0
   help: 0
   history: 0
+  honeypot: 0
   image: 0
   jquery_scrollup: 0
   jquery_ui: 0
