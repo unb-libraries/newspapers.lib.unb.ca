@@ -968,11 +968,13 @@ function _newspapers_core_get_holding_details(string $type, SerialHolding $holdi
     $missing_value = $missing_value[0]['value'];
   }
 
+  $location = trim($holding->getHoldingLocation());
+  $call_no = trim($holding->getHoldingCallNumber());
+  $location_and__call = empty($call_no) ? $location : $location . " " . $call_no;
+  $filed_as = trim($holding->getHoldingFiledAs());
   switch ($type) {
     case 'microform':
-      $filed_as = $holding->getHoldingFiledAs();
-      $location_value = empty($filed_as) ? $holding->getHoldingLocation() : $holding->getHoldingLocation() .
-        ", filed as " . $filed_as;
+      $location_value = empty($filed_as) ? $location_and__call : $location_and__call . ", filed as " . $filed_as;
 
       $holding_infos = [
         'institution' => [
@@ -988,7 +990,7 @@ function _newspapers_core_get_holding_details(string $type, SerialHolding $holdi
           'value' => $missing_value,
         ],
         'location' => [
-          'label' => 'Location',
+          'label' => 'Location / Call Number',
           'value' => $location_value,
         ],
         'last_received' => [
@@ -1003,8 +1005,6 @@ function _newspapers_core_get_holding_details(string $type, SerialHolding $holdi
       break;
 
     case 'print':
-      $location = trim($holding->getHoldingLocation());
-      $call_no = trim($holding->getHoldingCallNumber());
       if (!empty($location) && !empty($call_no)) {
         $location_call_label = 'Location and Call Number';
         $location_call_value = $location . " " . $call_no;
