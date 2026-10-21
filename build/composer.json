@@ -24,6 +24,9 @@
     },
     "sort-packages": true
   },
+  "provide": {
+    "drupal/toolbar": "9.5.11"
+  },
   "conflict": {
     "drupal/drupal": "*"
   },
