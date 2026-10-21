@@ -25,9 +25,12 @@ services:
       - ./custom/themes:/app/html/themes/custom
       - ./tests:/app/tests
   drupal-mysql-lib-unb-ca:
-    image: mariadb:10.11
+    image: ghcr.io/unb-libraries/mariadb:12.0
     restart: unless-stopped
-    command: mysqld --skip-name-resolve --max_allowed_packet=64M
+    command:
+      - mariadbd
+      - --skip-name-resolve
+      - --max_allowed_packet=64M
     env_file:
       - ./env/mysql.env
     expose:
