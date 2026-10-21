@@ -22,7 +22,12 @@
     "preferred-install": {
       "*": "dist"
     },
-    "sort-packages": true
+    "sort-packages": true,
+    "policy": {
+      "advisories": {
+        "block": false
+      }
+    }
   },
   "provide": {
     "drupal/toolbar": "9.5.11"
