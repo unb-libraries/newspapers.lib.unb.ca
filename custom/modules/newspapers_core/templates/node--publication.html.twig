@@ -517,72 +517,88 @@
                 {% set printCollapsed = [] %}
                 {% set printCount = 0 %}
                 <h3>{% trans %}Print{% endtrans %}:</h3>
-                <ul class="holding-type">
-                  {% for item in holding.print %}
-                    {% set printCount = printCount + 1 %}
-                    {% if printCount == holdingSoftLimit + 1 %}
-                      {% set printClasses = printClasses|merge(['collapse', 'multi-collapse']) %}
-                    {% endif %}
-                    {% if printCount > holdingSoftLimit %}
-                      {% set printCollapsed = printCollapsed|merge(["printCount#{printCount}"]) %}
-                    {% endif %}
-                    <li id="printHolding{{ printCount }}" class="{{ printClasses|join(' ') }}">
-                      {% for institution in item %}
-                        {% set isFirstInstitutionHolding = loop.first %}
-                        {% for key,field in institution %}
-                          {% if field.value %}
-                            {% set className = 'field-' ~ field.label|clean_class %}
-                            {% if field.label == institution_label %}
-                              {% if isFirstInstitutionHolding %}
-                                <div class="{{ className }}">{{ field.value|raw }}</div>
-                              {% else %}
-                                <hr class="bg-light my-2">
-                              {% endif %}
-                            {% elseif field.label == missing_coverage_label %}
-                              {# Coverage Statement is required+lighter weight so this should display below it #}
-                              <div class="{{ className }}">
-                                <button class="btn btn-link p-0 text-left"
-                                data-target="#missingPrint{{ printCount }}" data-toggle="modal" type="button">
-                                  {{ missing_coverage_label }}<span class="fa-solid fa-circle-info fa-sm ml-1"
-                                  aria-description="(button opens a modal window)"></span>
-                                </button>
-                                <div id="missingPrint{{ printCount }}" class="modal fade"
-                                aria-labelledby="print{{ printCount }}ModalLabel" aria-hidden="true" tabindex="-1">
-                                  <div class="modal-dialog modal-dialog-centered modal-xl">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <div id="print{{ printCount }}ModalLabel" class="modal-title h3">
-                                          {{ field.label }}
+                <div class="card mb-4">
+                  <div class="card-body bg-light">
+                    <h4 class="card-title">No Public Access</h4>
+                    <p class="card-text text-small">
+                      Print holdings are provided here for indexing and tracking purposes only. They <strong>CANNOT</strong>
+                      be retrieved for public access given their fragile conditions and off-site storage.
+                    <p>
+                    <div class="custom-control custom-checkbox">
+                      <input id="printHoldingsAgree" type="checkbox" class="custom-control-input" aria-controls="printHoldingsWrapper"
+                         aria-expanded="false" data-target="#printHoldingsWrapper" data-toggle="collapse">
+                      <label class="custom-control-label lh-lg" for="printHoldingsAgree">I understand</label>
+                    </div>
+                  </div>
+                </div>
+                <div id="printHoldingsWrapper" class="collapse">
+                  <ul id="printHoldings" class="holding-type">
+                    {% for item in holding.print %}
+                      {% set printCount = printCount + 1 %}
+                      {% if printCount == holdingSoftLimit + 1 %}
+                        {% set printClasses = printClasses|merge(['collapse', 'multi-collapse']) %}
+                      {% endif %}
+                      {% if printCount > holdingSoftLimit %}
+                        {% set printCollapsed = printCollapsed|merge(["printCount#{printCount}"]) %}
+                      {% endif %}
+                      <li id="printHolding{{ printCount }}" class="{{ printClasses|join(' ') }}">
+                        {% for institution in item %}
+                          {% set isFirstInstitutionHolding = loop.first %}
+                          {% for key,field in institution %}
+                            {% if field.value %}
+                              {% set className = 'field-' ~ field.label|clean_class %}
+                              {% if field.label == institution_label %}
+                                {% if isFirstInstitutionHolding %}
+                                  <div class="{{ className }}">{{ field.value|raw }}</div>
+                                {% else %}
+                                  <hr class="bg-light my-2">
+                                {% endif %}
+                              {% elseif field.label == missing_coverage_label %}
+                                {# Coverage Statement is required+lighter weight so this should display below it #}
+                                <div class="{{ className }}">
+                                  <button class="btn btn-link p-0 text-left"
+                                  data-target="#missingPrint{{ printCount }}" data-toggle="modal" type="button">
+                                    {{ missing_coverage_label }}<span class="fa-solid fa-circle-info fa-sm ml-1"
+                                    aria-description="(button opens a modal window)"></span>
+                                  </button>
+                                  <div id="missingPrint{{ printCount }}" class="modal fade"
+                                  aria-labelledby="print{{ printCount }}ModalLabel" aria-hidden="true" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                                      <div class="modal-content">
+                                        <div cla1.7ss="modal-header">
+                                          <div id="print{{ printCount }}ModalLabel" class="modal-title h3">
+                                            {{ field.label }}
+                                          </div>
+                                          <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
+                                            Close<span class="fa-solid fa-window-close ml-1" aria-hidden="true"></span>
+                                            <span class="sr-only">Modal</span>
+                                          </button>
                                         </div>
-                                        <button class="btn btn-primary" aria-label="Close" data-dismiss="modal" type="button">
-                                          Close<span class="fa-solid fa-window-close ml-1" aria-hidden="true"></span>
-                                          <span class="sr-only">Modal</span>
-                                        </button>
-                                      </div>
-                                      <div class="modal-body">
-                                        {{ field.value|raw }}
+                                        <div class="modal-body">
+                                          {{ field.value|raw }}
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            {% else %}
-                              <div class="{{ className }}">{{ field.value|raw }}</div>
+                              {% else %}
+                                <div class="{{ className }}">{{ field.value|raw }}</div>
+                              {% endif %}
                             {% endif %}
-                          {% endif %}
+                          {% endfor %}
                         {% endfor %}
-                      {% endfor %}
-                    </li>
-                  {% endfor %}
-                </ul>
-                {% if printCount > holdingSoftLimit %}
-                  <button class="btn btn-link"
-                  aria-controls="{% for item in printCollapsed %}{{ item }}{% endfor %}" aria-expanded="false"
-                  data-target=".holding-group-print .multi-collapse" data-toggle="collapse" type="button">
-                    Show All
-                    <span class="sr-only">Print Holdings</span>
-                  </button>
-                {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  {% if printCount > holdingSoftLimit %}
+                    <button class="btn btn-link"
+                      aria-controls="{% for item in printCollapsed %}{{ item }}{% endfor %}" aria-expanded="false"
+                      data-target=".holding-group-print .multi-collapse" data-toggle="collapse" type="button">
+                      Show All
+                      <span class="visually-hidden">Print Holdings</span>
+                    </button>
+                  {% endif %}
+                </div>
               </div>
             {% endif %}
           {% else %}
@@ -590,7 +606,7 @@
               There are currently <strong>no verified holdings</strong> for this publication.
             </p>
           {% endif %}
-          <div class="card text-small">
+          <div class="card text-small ml-2 ms-2">
             <div class="card-body">
               <p class="card-text">
                 The <a href="/project">New Brunswick Historical Newspapers Project</a> is an ongoing collaboration between
