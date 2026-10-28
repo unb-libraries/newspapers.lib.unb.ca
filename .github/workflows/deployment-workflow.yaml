@@ -1,18 +1,27 @@
 name: Deploy newspapers.lib.unb.ca
+
 on:
-  pull_request:
   push:
+    branches: [dev, prod]
+  pull_request:
   workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
-    uses: unb-libraries/dockworker/.github/workflows/build-push-deploy-notify.yaml@6.x
+    uses: unb-libraries/github-workflows/.github/workflows/build-push-deploy-notify.yaml@1.x
     with:
       branch-env-map: '{"dev":"dev","prod":"prod"}'
-      build-themes: true
       deploy-branches: '["dev","prod"]'
       image-name: 'ghcr.io/unb-libraries/newspapers.lib.unb.ca'
       k8s-deployment-name: 'newspapers-lib-unb-ca'
+      build-themes: true
       platforms: 'linux/amd64'
+      check-logs: true
+      log-check-profile: 'drupal'
     secrets:
       KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
