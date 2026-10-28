@@ -483,7 +483,8 @@ class SerialPageViewerForm extends FormBase {
     );
 
     /* Only include optional broad title history row if >1 item in render array */
-    if (count($title_hist_render_array['#children'][0]['#items']) > 1) {
+    $broad_history_total = !empty($title_hist_render_array['#children'][0]['#items']) ? count($title_hist_render_array['#children'][0]['#items']) : 0;
+    if ($broad_history_total > 1) {
       $title_history = \Drupal::service('renderer')->render($title_hist_render_array);
     }
     $rows_title_misc = [
