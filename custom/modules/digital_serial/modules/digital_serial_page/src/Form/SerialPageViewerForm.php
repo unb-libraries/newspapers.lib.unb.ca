@@ -173,6 +173,16 @@ class SerialPageViewerForm extends FormBase {
           ->toString(),
       ];
       $form['page_viewer']['nav']['pager']['prev_page'] = $prev_link;
+    } else {
+      $prev_text['#attributes'] = [
+        'aria-hidden' => ['true'],
+        'class' => [
+          'fa-solid',
+          'fa-backward',
+          'opacity-0',
+        ],
+      ];
+      $form['page_viewer']['nav']['pager']['prev_page'] = $prev_text;
     }
     $form['page_viewer']['nav']['pager']['active'] = $viewer_active_pager_item;
     $next_link_options = [
@@ -194,6 +204,16 @@ class SerialPageViewerForm extends FormBase {
           ->toString(),
       ];
       $form['page_viewer']['nav']['pager']['next_page'] = $next_link;
+    } else {
+      $next_text['#attributes'] = [
+        'aria-hidden' => ['true'],
+        'class' => [
+          'fa-solid',
+          'fa-backward',
+          'opacity-0',
+        ],
+      ];
+      $form['page_viewer']['nav']['pager']['next_page'] = $next_text;
     }
 
     $form['page_viewer']['nav']['details'] = [
