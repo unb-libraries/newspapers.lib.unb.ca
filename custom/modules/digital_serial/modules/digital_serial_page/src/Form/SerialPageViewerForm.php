@@ -209,7 +209,7 @@ class SerialPageViewerForm extends FormBase {
         'aria-hidden' => ['true'],
         'class' => [
           'fa-solid',
-          'fa-backward',
+          'fa-forward',
           'opacity-0',
         ],
       ];
