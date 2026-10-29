@@ -437,7 +437,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
    * @param array $context
    *   The batch context array.
    */
-  public static function createPage($parent_issue, $page_no, $page_sort, $page_image_filepath, $page_ocr_filepath = NULL, $page_hocr_filepath = NULL, &$context) {
+  public static function createPage($parent_issue, $page_no, $page_sort, $page_image_filepath, $page_ocr_filepath, $page_hocr_filepath, &$context) {
     // Image File.
     $image_file = self::addFileToFileSystem($page_image_filepath);
 

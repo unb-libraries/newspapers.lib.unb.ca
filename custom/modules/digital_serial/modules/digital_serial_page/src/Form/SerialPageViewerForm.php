@@ -335,7 +335,7 @@ class SerialPageViewerForm extends FormBase {
 
     // Highlighting.
     $overlays = [];
-    $highlight = explode(' ', \Drupal::request()->query->get('highlight'));
+    $highlight = explode(' ', \Drupal::request()->query->get('highlight', ''));
 
     if (!empty($highlight[0])) {
       self::filterHighlightKeywords($highlight);
@@ -369,7 +369,7 @@ class SerialPageViewerForm extends FormBase {
         'digital_serial_page' => [
           'tile_sources' => $tile_sources,
           'overlays' => $overlays,
-          'use_canvas' => $this->browserSupportsHugeCanvas($_SERVER['HTTP_USER_AGENT']),
+          'use_canvas' => $this->browserSupportsHugeCanvas($_SERVER['HTTP_USER_AGENT'] ?? ''),
         ],
       ],
     ];
@@ -619,7 +619,7 @@ class SerialPageViewerForm extends FormBase {
             'header' => TRUE,
             'scope' => 'row',
           ],
-          ucfirst($digital_serial_issue->get("issue_media")->value),
+          ucfirst($digital_serial_issue->get("issue_media")->value ?? ''),
         ],
       ],
     ];

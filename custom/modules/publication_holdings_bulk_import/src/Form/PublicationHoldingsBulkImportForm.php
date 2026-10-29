@@ -113,7 +113,6 @@ class PublicationHoldingsBulkImportForm extends FormBase {
     $user_input = $form_state->getUserInput();
 
     if (empty($user_input['_triggering_element_value']) || $user_input['_triggering_element_value'] != 'Remove') {
-      ini_set("auto_detect_line_endings", '1');
       if (!empty($form_state->getValue('import_file')[0])) {
         $file = File::Load($form_state->getValue('import_file')[0]);
         if (!empty($file)) {
