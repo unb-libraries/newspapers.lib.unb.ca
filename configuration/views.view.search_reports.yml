@@ -634,10 +634,10 @@ display:
       filename: nbnp-titles.csv
       automatic_download: false
       export_limit: 2000
-      store_in_public_file_directory: null
       custom_redirect_path: false
       redirect_to_display: none
       include_query_params: false
+      store_in_public_file_directory: null
     cache_metadata:
       max-age: -1
       contexts:

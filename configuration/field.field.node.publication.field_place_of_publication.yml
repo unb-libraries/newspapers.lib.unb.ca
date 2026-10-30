@@ -44,6 +44,8 @@ settings:
       override: hidden
     addressLine2:
       override: hidden
+    addressLine3:
+      override: hidden
     postalCode:
       override: hidden
     sortingCode:
