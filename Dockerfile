@@ -1,7 +1,7 @@
 FROM ghcr.io/unb-libraries/drupal:9.x-4.x-unblib
 
 # Install additional OS packages.
-ENV ADDITIONAL_OS_PACKAGES="postfix php82-ldap php82-xmlreader php82-zip php82-pecl-redis"
+ENV ADDITIONAL_OS_PACKAGES="postfix php${PHP_VERSION}-ldap php${PHP_VERSION}-xmlreader php${PHP_VERSION}-zip php${PHP_VERSION}-pecl-redis"
 ENV DRUPAL_SITE_ID="newspapers"
 ENV DRUPAL_SITE_URI="newspapers.lib.unb.ca"
 ENV DRUPAL_SITE_UUID="655af73f-dc1a-48f1-84a1-3da88d2d1ad4"
