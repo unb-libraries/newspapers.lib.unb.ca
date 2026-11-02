@@ -75,7 +75,7 @@ class PublicationHoldingsBulkImportForm extends FormBase {
       '#description' => t('Upload a file, allowed extensions: CSV'),
       '#upload_location' => 'public://holding_csv_upload/',
       '#upload_validators' => [
-        'file_validate_extensions' => ['csv'],
+        'FileExtension' => ['extensions' => 'csv'],
       ],
     ];
 

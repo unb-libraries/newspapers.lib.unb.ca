@@ -10,15 +10,10 @@ field_name: field_language
 entity_type: node
 type: language_field
 settings:
+  maxlength: 12
   language_range:
-    11: '11'
-    12: '12'
-    1: 0
-    2: 0
-    site_default: 0
-    und: 0
-    current_interface: 0
-    authors_default: 0
+    11: 11
+    12: 12
   included_languages:
     ar: ar
     zh-hans: zh-hans
@@ -30,7 +25,6 @@ settings:
     wolast: wolast
   excluded_languages: {  }
   groups: ''
-  maxlength: 12
   allowed_values_function: languagefield_allowed_values
 module: languagefield
 locked: false

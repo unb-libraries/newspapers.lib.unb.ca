@@ -26,6 +26,7 @@ $holding_types = [
 
 foreach ($holding_types as $type) {
   $result = Drupal::entityQuery('taxonomy_term')
+    ->accessCheck(TRUE)
     ->condition('vid', 'serial_holding_types')
     ->condition('name', $type)
     ->execute();
@@ -46,6 +47,7 @@ while (($row = fgetcsv($handle)) !== FALSE) {
   if (!in_array($publication_nid, $set_nodes)) {
     $set_nodes[] = $publication_nid;
     $result = Drupal::entityQuery('node')
+      ->accessCheck(TRUE)
       ->condition('type', 'publication')
       ->condition('nid', $publication_nid)
       ->execute();
@@ -72,6 +74,7 @@ while (($row = fgetcsv($handle)) !== FALSE) {
     $set_tids[] = $institution_tid;
     // Entity query the db to see if institution term w/ institution_tid exists.
     $result = Drupal::entityQuery('taxonomy_term')
+      ->accessCheck(TRUE)
       ->condition('vid', 'institution')
       ->condition('tid', $institution_tid)
       ->execute();

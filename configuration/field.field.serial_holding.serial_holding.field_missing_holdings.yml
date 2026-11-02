@@ -8,10 +8,6 @@ dependencies:
     - allowed_formats
     - serial_holding
     - text
-third_party_settings:
-  allowed_formats:
-    allowed_formats:
-      - basic_html
 id: serial_holding.serial_holding.field_missing_holdings
 field_name: field_missing_holdings
 entity_type: serial_holding
@@ -22,5 +18,7 @@ required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats:
+    - basic_html
 field_type: text_long

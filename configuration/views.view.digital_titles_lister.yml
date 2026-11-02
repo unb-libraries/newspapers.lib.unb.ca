@@ -15,7 +15,7 @@ dependencies:
 id: digital_titles_lister
 label: 'Digital Titles Lister'
 module: views
-description: 'Listing of publications containing a ''Digital'' holding with at least 1 issue.'
+description: "Listing of publications containing a 'Digital' holding with at least 1 issue."
 tag: ''
 base_table: serial_holding
 base_field: id
@@ -472,6 +472,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 25
           total_pages: null
           id: 0

@@ -14,29 +14,35 @@
     "allow-plugins": {
       "composer/installers": true,
       "cweagans/composer-patches": true,
-      "drupal/core-composer-scaffold": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "php-http/discovery": true
+      "drupal/core-composer-scaffold": true,
+      "php-http/discovery": true,
+      "phpstan/extension-installer": true
     },
     "discard-changes": true,
-    "preferred-install": {
-      "*": "dist"
+    "platform": {
+      "php": "8.2.35"
     },
-    "sort-packages": true,
     "policy": {
       "advisories": {
         "block": false
       }
-    }
-  },
-  "provide": {
-    "drupal/toolbar": "9.5.11"
+    },
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
   },
   "conflict": {
     "drupal/drupal": "*"
   },
-  "description": "Drupal 8 component of newspapers.lib.unb.ca",
+  "description": "Drupal 10 component of newspapers.lib.unb.ca",
   "extra": {
+    "drupal-scaffold": {
+      "locations": {
+        "web-root": "./"
+      }
+    },
     "enable-patching": true,
     "installer-paths": {
       "core": [
@@ -64,12 +70,12 @@
       },
       "drupal/core": {
         "Exposed filter values available as tokens": "https://www.drupal.org/files/issues/2022-10-30/2761273-50.patch",
-        "Extend Daterange functionality": "https://www.drupal.org/files/issues/2794481-50.patch",
-        "HTML5 validation issue": "https://www.drupal.org/files/issues/2018-07-13/1797438-145.patch",
+        "Extend Daterange functionality": "https://www.drupal.org/files/issues/2024-06-26/2794481-262.patch",
         "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch"
       },
       "drupal/jquery_scrollup": {
-        "D11 compatibility": "https://www.drupal.org/files/issues/2024-03-17/jquery_scrollup.2.0.0.rector.patch"
+        "D11 compatibility": "https://www.drupal.org/files/issues/2024-03-17/jquery_scrollup.2.0.0.rector.patch",
+        "PHP 8.2 string interpolation deprecations": "/build/patches/jquery_scrollup_2.0.x_php82.patch"
       }
     }
   },
@@ -192,61 +198,64 @@
     }
   ],
   "require": {
-    "drupal/address": "2.0.4",
-    "drupal/admin_toolbar": "3.6.3",
-    "drupal/allowed_formats": "<3.0.0",
-    "drupal/antibot": "2.0.5",
-    "drupal/ajax_loader": "2.1.5",
-    "drupal/bootstrap_barrio": "5.1.12",
-    "drupal/chosen": "<4.0.0",
-    "drupal/clipboardjs": "2.0.9",
-    "drupal/colorbox": "<2.1.0",
-    "drupal/conditional_fields": "<=4.0.0-alpha6",
-    "drupal/core": "9.5.11",
-    "drupal/csv_serialization": "3.0.1",
-    "drupal/editor_file": "<=1.8",
-    "drupal/externalauth": "<2.0.11",
-    "drupal/facets": "<2.0.8",
-    "drupal/field_group": "3.6",
-    "drupal/file_management": "2.1",
-    "drupal/fontawesome": "2.26",
-    "drupal/geocoder": "<4.0",
-    "drupal/geofield": "<1.64",
-    "drupal/google_analytics": "4.0.3",
-    "drupal/health_check": "3.2.0",
-    "drupal/honeypot":"<2.2.0",
-    "drupal/jquery_scrollup": "2.0.0",
-    "drupal/jquery_ui": "1.8",
-    "drupal/jquery_ui_datepicker": "2.1.1",
-    "drupal/jquery_ui_slider": "2.1.0",
-    "drupal/jquery_ui_touch_punch": "1.1.2",
-    "drupal/languagefield": "<1.12",
-    "drupal/leaflet": "<10.4.0",
-    "drupal/metatag": "<2.0.0",
-    "drupal/migrate_plus": "6.0.5",
-    "drupal/migrate_source_csv": "3.7",
-    "drupal/migrate_tools": " <6.1.0",
-    "drupal/noreqnewpass": "<1.5",
-    "drupal/override_node_options": "2.9",
-    "drupal/owlcarousel": "1.0-beta1",
-    "drupal/pathauto": "<1.14",
-    "drupal/redis": "1.11",
-    "drupal/samlauth": "<3.14",
-    "drupal/search_api": "<1.31",
-    "drupal/search_api_autocomplete": "<1.10",
-    "drupal/search_api_solr": "<4.3.2",
-    "drupal/simple_sitemap": "<4.2.1",
-    "drupal/token": "<1.17",
-    "drupal/twig_field_value": "2.0.5",
-    "drupal/twig_tweak": "<3.4.0",
-    "drupal/view_unpublished": "<1.4",
-    "drupal/views_ajax_history": "1.8",
-    "drupal/views_data_export": "1.10",
-    "drupal/webform": "<6.2.0",
+    "drupal/address": "^2",
+    "drupal/admin_toolbar": "^3",
+    "drupal/ajax_loader": "^2",
+    "drupal/allowed_formats": "^3",
+    "drupal/antibot": "^2",
+    "drupal/bootstrap_barrio": "^5",
+    "drupal/chosen": "^4 || ^5",
+    "drupal/ckeditor": "^1",
+    "drupal/clipboardjs": "^2",
+    "drupal/colorbox": "^2",
+    "drupal/conditional_fields": "^4@alpha",
+    "drupal/core": "^10",
+    "drupal/core-composer-scaffold": "^10",
+    "drupal/core-recommended": "^10",
+    "drupal/csv_serialization": "^4",
+    "drupal/editor_file": "^2",
+    "drupal/externalauth": "^2",
+    "drupal/facets": "^2 || ^3",
+    "drupal/field_group": "^3 || ^4@beta",
+    "drupal/file_management": "^2",
+    "drupal/fontawesome": "^2 || ^3",
+    "drupal/geocoder": "^4",
+    "drupal/geofield": "^1 || ^10",
+    "drupal/google_analytics": "^4",
+    "drupal/health_check": "^3",
+    "drupal/honeypot": "^2",
+    "drupal/jquery_scrollup": "^2",
+    "drupal/jquery_ui": "^1",
+    "drupal/jquery_ui_datepicker": "^2",
+    "drupal/jquery_ui_slider": "^2",
+    "drupal/jquery_ui_touch_punch": "^1",
+    "drupal/languagefield": "^1 <1.15.0",
+    "drupal/leaflet": "^10",
+    "drupal/metatag": "^2",
+    "drupal/migrate_plus": "^6",
+    "drupal/migrate_source_csv": "^3",
+    "drupal/migrate_tools": "^6",
+    "drupal/noreqnewpass": "^1",
+    "drupal/override_node_options": "^2",
+    "drupal/owlcarousel": "^3",
+    "drupal/pathauto": "^1",
+    "drupal/redis": "^1",
+    "drupal/samlauth": "^3",
+    "drupal/search_api": "^1",
+    "drupal/search_api_autocomplete": "^1",
+    "drupal/search_api_solr": "^4",
+    "drupal/simple_sitemap": "^4",
+    "drupal/token": "^1",
+    "drupal/twig_field_value": "^2",
+    "drupal/twig_tweak": "^3",
+    "drupal/view_unpublished": "^1",
+    "drupal/views_ajax_history": "^1@rc",
+    "drupal/views_data_export": "^1",
+    "drupal/webform": "^6",
     "fontawesome/fontawesome": "6.7.2",
     "furf/jquery-ui-touch-punch": "dev-master",
-    "geocoder-php/nominatim-provider": "5.7.0",
-    "geocoder-php/common-http": "4.5.0",
+    "geocoder-php/common-http": "^4",
+    "geocoder-php/nominatim-provider": "^5",
     "harvesthq/chosen": "~1.8",
     "jackmoore/colorbox": "dev-master",
     "markgoodyear/scrollup": "dev-master",
@@ -254,32 +263,17 @@
     "owlcarousel2/owlcarousel2": "2.3.4",
     "phpoffice/phpspreadsheet": "^1.5.0",
     "simeydotme/jquery-ui-slider-pips": "^2",
-    "unb-libraries/alert_scheduler": "dev-8.x-1.x",
-    "unb-libraries/calendar_hours": "dev-9.x-1.x",
-    "unb-libraries/drupal-builder": "^9",
-    "unb-libraries/saml_features": "dev-9.x-1.x",
+    "unb-libraries/alert_scheduler": "dev-10.x-1.x",
+    "unb-libraries/calendar_hours": "dev-10.x-1.x",
+    "unb-libraries/composer-drupal-scaffold": "^10",
+    "unb-libraries/saml_features": "dev-10.x-1.x",
     "unb-libraries/unb_lib_theme": "dev-10.x-4.x",
-    "willdurand/geocoder": "4.6.0",
+    "willdurand/geocoder": "^4",
     "zenorocha/clipboardjs": "dev-master"
   },
   "require-dev": {
     "drupal/devel": "^5",
-    "unb-libraries/drupal-development-libraries": "^9"
-  },
-  "scripts": {
-    "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-    "post-install-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-    ],
-    "post-update-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-    ],
-    "pre-install-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-    ],
-    "pre-update-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-    ]
+    "unb-libraries/drupal-development-libraries": "^10"
   },
   "type": "project"
 }

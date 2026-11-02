@@ -1,7 +1,7 @@
 name: Publication Holdings Bulk Import
 type: module
 description: Publication Holdings Bulk Import
-core_version_requirement: ^9
+core_version_requirement: ^10 || ^11
 package: NBHP
 dependencies:
   - migrate_source_csv

@@ -6,3 +6,4 @@ name: 'Serial Holding Types'
 vid: serial_holding_types
 description: 'Types of holdings.'
 weight: 0
+new_revision: false

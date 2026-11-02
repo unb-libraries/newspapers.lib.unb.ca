@@ -92,6 +92,7 @@ function _newspapers_core_page_sort_values_needs_update() {
  */
 function update_ongoing_publication_dates() {
   $query = \Drupal::entityQuery('node')
+    ->accessCheck(TRUE)
     ->condition('type', 'publication')
     ->condition('field_last_issue_date_type', 'ongoing');
   $results = $query->execute();
@@ -729,6 +730,15 @@ function newspapers_core_preprocess_page_title(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_form().
+ */
+function newspapers_core_preprocess_form(&$variables) {
+  // Disable client-side html5 validation, since it is not fully accessible.
+  // Replaces core patch from https://www.drupal.org/node/1797438.
+  $variables['attributes']['novalidate'] = TRUE;
+}
+
+/**
  * Implements hook_preprocess_views_exposed_form().
  */
 function newspapers_core_preprocess_views_exposed_form(&$variables) {
@@ -1145,6 +1155,7 @@ function _newspapers_core_get_publication_holdings(int $nid) {
   $query = Drupal::service('entity_type.manager')
     ->getStorage('serial_holding')
     ->getQuery()
+    ->accessCheck(TRUE)
     ->condition('parent_title', $nid);
   $entity_ids = $query->execute();
 
@@ -1161,12 +1172,14 @@ function _newspapers_core_get_publication_holdings(int $nid) {
 
     if ($holding_type === 'digital') {
       $dst_query = \Drupal::entityQuery('digital_serial_title')
+        ->accessCheck(TRUE)
         ->condition('status', 1)
         ->condition('parent_title', $nid);
       $dst_result = $dst_query->execute();
       // Note: there should be a maximum of ONE digital serial title.
       $dst_id = reset($dst_result);
       $dsi_query = \Drupal::entityQuery('digital_serial_issue')
+        ->accessCheck(TRUE)
         ->condition('status', 1)
         ->condition('parent_title', $dst_id);
       $dsi_ids = $dsi_query->execute();

@@ -16,7 +16,7 @@ archive: false
 id: report_additional_info_errs
 title: 'Report additional information or errors'
 description: ''
-category: ''
+categories: {  }
 elements: |-
   info_box:
     '#type': processed_text

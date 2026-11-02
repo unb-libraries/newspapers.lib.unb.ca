@@ -407,6 +407,7 @@ function _publication_holdings_validate_term_reference($tid, $vid): bool {
  */
 function _publication_holdings_validate_node($nid, $bundle): bool {
   $nids = \Drupal::entityQuery('node')
+    ->accessCheck(TRUE)
     ->condition('nid', $nid)
     ->condition('type', $bundle)
     ->execute();

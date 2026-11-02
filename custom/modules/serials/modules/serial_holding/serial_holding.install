@@ -154,6 +154,7 @@ function serial_holding_update_8107(&$sandbox) {
     $sandbox['current'] = 0;
     $sandbox['microform_tid'] = $microform_term->id();
     $sandbox['total'] = \Drupal::entityQuery('serial_holding')
+      ->accessCheck(TRUE)
       ->condition('holding_type', $sandbox['microform_tid'], '=')
       ->count()
       ->execute();
@@ -162,6 +163,7 @@ function serial_holding_update_8107(&$sandbox) {
 
   // Process the next batch of entities.
   $tids = \Drupal::entityQuery('serial_holding')
+    ->accessCheck(TRUE)
     ->condition('holding_type', $sandbox['microform_tid'], '=')
     ->range($sandbox['current'], $batch_size)
     ->execute();
@@ -273,6 +275,7 @@ function serial_holding_update_8111(&$sandbox) {
     $sandbox['institution_unblibfr_tid'] = $institution_unblib_fr_term->id();
     $sandbox['institution_unblib_tid'] = $institution_unblib_term->id();
     $sandbox['total'] = \Drupal::entityQuery('serial_holding')
+      ->accessCheck(TRUE)
       ->count()
       ->execute();
   }
@@ -280,6 +283,7 @@ function serial_holding_update_8111(&$sandbox) {
 
   // Process the next batch of entities.
   $tids = \Drupal::entityQuery('serial_holding')
+    ->accessCheck(TRUE)
     ->range($sandbox['current'], $batch_size)
     ->execute();
   foreach ($tids as $tid) {

@@ -4,8 +4,9 @@
 namespace Drupal\digital_serial_import\Drush;
 
 use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\File\FileExists;
 use Drupal\file\Entity\File;
+use Drupal\user\Entity\User;
 use Drupal\digital_serial_issue\Entity\SerialIssue;
 use Drupal\digital_serial_page\Entity\SerialPage;
 use Drush\Commands\DrushCommands;
@@ -176,7 +177,7 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
     $file_basename = basename($source);
     $file_destination = "$destination://$file_basename";
     if (file_exists($source)) {
-      $file_uri = \Drupal::service('file_system')->copy($source, $file_destination, FileSystemInterface::EXISTS_REPLACE);
+      $file_uri = \Drupal::service('file_system')->copy($source, $file_destination, FileExists::Replace);
       $file = File::Create([
         'uri' => $file_uri,
       ]);
@@ -252,10 +253,8 @@ class DigitalSerialIssueImportCommands extends DrushCommands {
    * Display an error message and quit the command.
    */
   private function displayErrorQuit($message) {
-    drush_set_error(
-      $message
-    );
-    die();
+    $this->logger()->error($message);
+    exit(1);
   }
 
   /**

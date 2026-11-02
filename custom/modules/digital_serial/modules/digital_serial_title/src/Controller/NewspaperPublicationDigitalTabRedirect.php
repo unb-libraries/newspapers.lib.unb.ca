@@ -24,6 +24,7 @@ class NewspaperPublicationDigitalTabRedirect extends ControllerBase {
     $node = Node::load($nid);
 
     $query = \Drupal::entityQuery('digital_serial_title')
+      ->accessCheck(TRUE)
       ->condition('status', 1)
       ->condition('parent_title', $node->id());
     $nids = $query->execute();

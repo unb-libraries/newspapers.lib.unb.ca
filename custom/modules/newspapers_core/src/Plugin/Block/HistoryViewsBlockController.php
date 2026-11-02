@@ -34,6 +34,7 @@ class HistoryViewsBlockController extends BlockBase {
     $history_date = $date->format('m-d');
 
     $history_issue_results = \Drupal::entityQuery('digital_serial_issue')
+      ->accessCheck(TRUE)
       ->condition('issue_date', $history_date, 'ENDS_WITH')
       ->execute();
 
@@ -42,6 +43,7 @@ class HistoryViewsBlockController extends BlockBase {
       $selected_issue_id = array_rand($history_issue_results, 1);
 
       $history_page_results = \Drupal::entityQuery('digital_serial_page')
+        ->accessCheck(TRUE)
         ->condition('parent_issue', $selected_issue_id)
         ->execute();
 

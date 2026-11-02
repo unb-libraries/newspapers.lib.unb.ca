@@ -162,7 +162,7 @@
               <dt>{{ content.field_geographic_coverage|field_label }}:</dt>
               <dd>
                 <ul class="list-unstyled">
-                  {% for key, item in content.field_geographic_coverage if key|first != '#' %}
+                  {% for key, item in content.field_geographic_coverage|filter((v, k) => k|first != '#') %}
                     <li>{{ item }}</li>
                   {% endfor %}
                 </ul>
@@ -261,7 +261,7 @@
               <dt>{{ content.field_subjects|field_label }}:</dt>
               <dd>
                 <ul class="list-unstyled">
-                  {% for key, item in content.field_subjects if key|first != '#' %}
+                  {% for key, item in content.field_subjects|filter((v, k) => k|first != '#') %}
                     <li>{{ item }}</li>
                   {% endfor %}
                 </ul>

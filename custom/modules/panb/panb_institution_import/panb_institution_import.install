@@ -13,7 +13,7 @@ use Drupal\panb\TaxonomyHelper;
 function panb_institution_import_install() {
   module_set_weight('panb_institution_import', 2);
   $vocabulary = 'institution';
-  $yaml_file = drupal_get_path('module', 'panb_institution_import') .
+  $yaml_file = \Drupal::service('extension.list.module')->getPath('panb_institution_import') .
     '/data/' . 'panb.taxonomy.institution.terms.yml';
 
   TaxonomyHelper::addTermsFromYaml($vocabulary, $yaml_file);

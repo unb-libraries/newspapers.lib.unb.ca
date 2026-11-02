@@ -26,6 +26,7 @@ class DigitalSerialIssueSearchController {
     $formatted_date = $date_obj->format('Y-m-d');
 
     $query = \Drupal::entityQuery('digital_serial_issue')
+      ->accessCheck(TRUE)
       ->condition('parent_title', $title_id)
       ->condition('issue_date', $formatted_date)
       ->condition('issue_vol', $this->deNullifyString($issue_volume))
@@ -46,6 +47,7 @@ class DigitalSerialIssueSearchController {
    */
   public function getYearIssues($title_id, $issue_year) {
     $query = \Drupal::entityQuery('digital_serial_issue')
+      ->accessCheck(TRUE)
       ->condition('parent_title', $title_id)
       ->condition('issue_date', "$issue_year-01-01", '>=')
       ->condition('issue_date', "$issue_year-12-31", '<=');
@@ -65,6 +67,7 @@ class DigitalSerialIssueSearchController {
    */
   public function getTitleIssues($title_id) {
     $query = \Drupal::entityQuery('digital_serial_issue')
+      ->accessCheck(TRUE)
       ->condition('parent_title', $title_id);
     $issue_ids = $query->execute();
 

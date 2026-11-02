@@ -25,7 +25,7 @@ archive: false
 id: contact
 title: 'Contact Us'
 description: 'Basic email contact webform.'
-category: ''
+categories: {  }
 elements: |-
   container:
     '#type': container

@@ -6,3 +6,4 @@ name: Publisher
 vid: publisher
 description: 'Publishing organization'
 weight: 0
+new_revision: false

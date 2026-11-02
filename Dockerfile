@@ -1,7 +1,7 @@
-FROM ghcr.io/unb-libraries/drupal:9.x-4.x-unblib
+FROM ghcr.io/unb-libraries/drupal:10.x-1.x-unblib
 
 # Install additional OS packages.
-ENV ADDITIONAL_OS_PACKAGES="postfix php${PHP_VERSION}-ldap php${PHP_VERSION}-xmlreader php${PHP_VERSION}-zip php${PHP_VERSION}-pecl-redis"
+ENV ADDITIONAL_OS_PACKAGES="postfix php${PHP_VERSION}-xmlreader php${PHP_VERSION}-zip php${PHP_VERSION}-pecl-redis"
 ENV DRUPAL_SITE_ID="newspapers"
 ENV DRUPAL_SITE_URI="newspapers.lib.unb.ca"
 ENV DRUPAL_SITE_UUID="655af73f-dc1a-48f1-84a1-3da88d2d1ad4"
@@ -10,7 +10,6 @@ ENV DRUPAL_SITE_UUID="655af73f-dc1a-48f1-84a1-3da88d2d1ad4"
 COPY ./build/ /build/
 RUN ${RSYNC_MOVE} /build/scripts/container/ /scripts/ && \
   /scripts/addOsPackages.sh && \
-  /scripts/initOpenLdap.sh && \
   /scripts/setupStandardConf.sh && \
   /scripts/build.sh
 
@@ -26,7 +25,7 @@ COPY ./custom/modules ${DRUPAL_ROOT}/modules/custom
 ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION
-LABEL ca.unb.lib.generator="drupal9" \
+LABEL ca.unb.lib.generator="drupal10" \
   org.opencontainers.image.authors="UNB Libraries <libsupport@unb.ca>" \
   org.opencontainers.image.created="$BUILD_DATE" \
   org.opencontainers.image.description="newspapers.lib.unb.ca provides researchers with unified access to UNB Libraries' current and historical newspaper collections in all formats, from New Brunswick and across the world." \

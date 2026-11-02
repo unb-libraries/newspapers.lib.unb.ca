@@ -6,9 +6,8 @@
 
     Drupal.behaviors.group_holdings = {
         attach: function (context) {
-            $(document, context)
-                 .once('group_holdings')
-                 .each( function () {
+            once('group_holdings', 'html', context)
+                 .forEach( function () {
                     showToggleInit(jQuery);
                  });
              // Required for BS4.x Tooltips.

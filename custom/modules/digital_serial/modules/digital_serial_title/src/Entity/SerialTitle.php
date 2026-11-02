@@ -229,6 +229,7 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
    */
   private function deleteChildPages() {
     $query = \Drupal::entityQuery('digital_serial_issue')
+      ->accessCheck(TRUE)
       ->condition('parent_title', $this->id());
     $issue_ids = $query->execute();
 
@@ -244,6 +245,7 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
    */
   private function deleteHoldingRecords() {
     $query = \Drupal::entityQuery('serial_holding')
+      ->accessCheck(TRUE)
       ->condition('holding_digital_title', $this->id());
     $holding_ids = $query->execute();
 
@@ -283,6 +285,7 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
    */
   public function getHoldingDates() {
     $query = \Drupal::entityQuery('digital_serial_issue')
+      ->accessCheck(TRUE)
       ->condition('parent_title', $this->id());
     $issue_ids = $query->execute();
 
@@ -304,6 +307,7 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
    */
   public function updateDigitalHoldingRecord() {
     $query = \Drupal::entityQuery('serial_holding')
+      ->accessCheck(TRUE)
       ->condition('holding_digital_title', $this->id());
     $holding_ids = $query->execute();
 
@@ -384,6 +388,7 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
    */
   public function getIssueIds($limit = 0) {
     $query = \Drupal::entityQuery('digital_serial_issue')
+      ->accessCheck(TRUE)
       ->condition('parent_title', $this->id());
     if ($limit > 0) {
       $query->range(0, $limit);

@@ -291,8 +291,7 @@ text_files:
     was
     will
     with
-  protwords: |
-
+  protwords: ''
   accents: |
     # À => A
     "\u00C0" => "A"

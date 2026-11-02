@@ -414,6 +414,7 @@ class PanbTitleMigrateEvent implements EventSubscriberInterface {
     string $vocabulary
   ) : array {
     $query = \Drupal::entityQuery('taxonomy_term')
+      ->accessCheck(TRUE)
       ->condition('vid', $vocabulary)
       ->condition($field, $value);
 

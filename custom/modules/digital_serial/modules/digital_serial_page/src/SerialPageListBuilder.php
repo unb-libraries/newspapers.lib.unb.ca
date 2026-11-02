@@ -46,6 +46,7 @@ class SerialPageListBuilder extends EntityListBuilder {
     $issue = \Drupal::routeMatch()->getParameters()->get('digital_serial_issue');
 
     $query = $this->getStorage()->getQuery()
+      ->accessCheck(TRUE)
       ->condition('parent_issue', $issue)
       ->sort('page_sort');
 

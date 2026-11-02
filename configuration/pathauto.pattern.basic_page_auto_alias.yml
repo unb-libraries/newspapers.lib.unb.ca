@@ -7,10 +7,10 @@ dependencies:
 id: basic_page_auto_alias
 label: 'Basic Page Auto-alias'
 type: 'canonical_entities:node'
-pattern: '[node:title]'
+pattern: '/[node:title]'
 selection_criteria:
   5140604a-8277-4ff7-84d1-2810d875ddb2:
-    id: node_type
+    id: 'entity_bundle:node'
     negate: false
     uuid: 5140604a-8277-4ff7-84d1-2810d875ddb2
     context_mapping:

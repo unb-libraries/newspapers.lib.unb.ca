@@ -424,7 +424,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    */
   public function getLinkedStyledImage($image_style) {
     $image = $this->getStyledImage($image_style);
-    $rendered_image = render($image);
+    $rendered_image = \Drupal::service('renderer')->render($image);
     $image_markup = Markup::create($rendered_image);
     $file = $this->getPageImage();
     $uri = $file->getFileUri();

@@ -4,5 +4,6 @@ status: true
 dependencies: {  }
 name: Editor
 vid: editor
-description: 'The publication''s editor'
+description: "The publication's editor"
 weight: 0
+new_revision: false

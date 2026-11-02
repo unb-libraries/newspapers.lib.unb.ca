@@ -628,6 +628,7 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
    */
   public function getChildPageIds() {
     $query = \Drupal::entityQuery('digital_serial_page')
+      ->accessCheck(TRUE)
       ->condition('parent_issue', $this->id())
       ->sort('page_sort');
     return $query->execute();

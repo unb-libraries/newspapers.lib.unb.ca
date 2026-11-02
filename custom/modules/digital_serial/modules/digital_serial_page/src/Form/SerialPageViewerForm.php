@@ -32,7 +32,7 @@ class SerialPageViewerForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, SerialTitleInterface $digital_serial_title = NULL, SerialIssueInterface $digital_serial_issue = NULL, SerialPageInterface $digital_serial_page = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, ?SerialTitleInterface $digital_serial_title = NULL, ?SerialIssueInterface $digital_serial_issue = NULL, ?SerialPageInterface $digital_serial_page = NULL) {
     $form = [];
     $referrer = \Drupal::request()->server->get('HTTP_REFERER');
 
@@ -903,6 +903,7 @@ class SerialPageViewerForm extends FormBase {
     ];
 
     $query = \Drupal::entityQuery('digital_serial_page')
+      ->accessCheck(TRUE)
       ->condition('parent_issue', $issue_id)
       ->sort('page_sort');
     $entity_ids = $query->execute();

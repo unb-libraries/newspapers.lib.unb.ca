@@ -111,6 +111,7 @@ content:
     settings:
       timezone_override: ''
       format_type: html_date
+      from_to: both
       separator: '-'
     third_party_settings: {  }
     weight: 1
@@ -144,6 +145,7 @@ content:
     settings:
       timezone_override: ''
       format_type: html_date
+      from_to: both
       separator: '-'
     third_party_settings: {  }
     weight: 4

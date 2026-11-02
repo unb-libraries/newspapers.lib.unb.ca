@@ -30,7 +30,7 @@ class PanbController extends ControllerBase {
     }
 
     $yml_file = 'panb.taxonomy.sample.terms.yml';
-    $terms_yml_file_path = file_get_contents(drupal_get_path('module', 'panb') . '/data/' . $yml_file);
+    $terms_yml_file_path = file_get_contents(\Drupal::service('extension.list.module')->getPath('panb') . '/data/' . $yml_file);
     if (empty($terms_yml_file_path)) {
       $markup .= 'Error: could not load the yaml file containing the term data.';
     }

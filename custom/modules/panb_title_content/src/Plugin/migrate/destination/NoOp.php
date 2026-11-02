@@ -45,7 +45,7 @@ class NoOp extends DestinationBase {
   /**
    * {@inheritdoc}
    */
-  public function fields(MigrationInterface $migration = NULL) {
+  public function fields(?MigrationInterface $migration = NULL) {
     return [];
   }
 

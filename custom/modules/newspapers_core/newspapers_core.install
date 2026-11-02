@@ -32,6 +32,7 @@ function newspapers_core_update_9101(&$sandbox) {
   // Initialize variables during first pass through.
   if (!isset($sandbox['total'])) {
     $nids = \Drupal::entityQuery('node')
+      ->accessCheck(TRUE)
       ->condition('type', 'publication')
       ->exists('field_description')
       ->execute();
@@ -43,6 +44,7 @@ function newspapers_core_update_9101(&$sandbox) {
 
   // Process next batch of publication nodes.
   $nids = \Drupal::entityQuery('node')
+    ->accessCheck(TRUE)
     ->condition('type', 'publication')
     ->exists('field_description')
     ->range($sandbox['current'], $batch_size)
@@ -66,5 +68,29 @@ function newspapers_core_update_9101(&$sandbox) {
     $sandbox['#finished'] = 1;
   } else {
     $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Swap the removed node_type condition for entity_bundle:node in pathauto
+ * patterns. pathauto_update_8108() already ran on this site, but config
+ * imports kept restoring node_type; Drupal 10 no longer provides it.
+ */
+function newspapers_core_update_10001() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('pathauto.pattern.') as $name) {
+    $pattern = $config_factory->getEditable($name);
+    $changed = FALSE;
+    foreach ($pattern->get('selection_criteria') ?? [] as $uuid => $condition) {
+      if ($condition['id'] === 'node_type') {
+        $pattern->set("selection_criteria.$uuid.id", 'entity_bundle:node');
+        $changed = TRUE;
+      }
+    }
+    if ($changed) {
+      $pattern->save(TRUE);
+    }
   }
 }

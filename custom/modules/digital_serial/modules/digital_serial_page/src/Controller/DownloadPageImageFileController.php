@@ -27,6 +27,7 @@ class DownloadPageImageFileController extends ControllerBase {
    */
   public function servePageEntityFile($digital_serial_issue = NULL, $page_no = NULL) {
     $query = \Drupal::entityQuery('digital_serial_page')
+      ->accessCheck(TRUE)
       ->condition('parent_issue', $digital_serial_issue)
       ->condition('page_no', $page_no);
 
@@ -54,12 +55,14 @@ class DownloadPageImageFileController extends ControllerBase {
    */
   public function getPageOcr($filename = NULL) {
     $query = \Drupal::entityQuery('file')
+      ->accessCheck(TRUE)
       ->condition('status', 1)
       ->condition('filename', $filename, 'CONTAINS');
     $fids = $query->execute();
 
     foreach ($fids as $fid) {
       $page_query = \Drupal::entityQuery('digital_serial_page')
+        ->accessCheck(TRUE)
         ->condition('status', 1)
         ->condition('page_image', $fid);
       $pages = $page_query->execute();

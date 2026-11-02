@@ -22,6 +22,7 @@ class SerialHoldingListBuilder extends EntityListBuilder {
     $entity_query = $this
       ->getStorage()
       ->getQuery()
+      ->accessCheck(TRUE)
       ->condition('parent_title', $title);
 
     $header = $this->buildHeader();

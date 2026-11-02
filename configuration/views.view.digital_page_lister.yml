@@ -502,6 +502,7 @@ display:
         type: mini
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 10
           total_pages: null
           id: 0
@@ -584,7 +585,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options: {  }
           summary:
             sort_order: asc
@@ -1746,6 +1746,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 31
           total_pages: null
           id: 0
@@ -1823,7 +1824,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options: {  }
           summary:
             sort_order: asc
@@ -1894,30 +1894,18 @@ display:
               rendered_strip: false
           row_class: ''
           default_row_class: false
-          items: '6'
-          itemsDesktop: '[1199,5]'
-          itemsDesktopSmall: '[991,4]'
-          itemsTablet: '[567,3]'
-          itemsMobile: '[414,2]'
-          singleItem: 0
-          itemsScaleUp: 0
-          slideSpeed: '500'
-          paginationSpeed: '500'
-          rewindSpeed: '1000'
-          autoPlay: 0
-          stopOnHover: 1
-          navigation: 1
-          prevText: ''
-          nextText: ''
-          rewindNav: 0
-          scrollPerPage: 1
-          pagination: 0
-          paginationNumbers: 0
-          responsive: 1
-          responsiveRefreshRate: '200'
-          mouseDrag: 1
-          touchDrag: 1
-          transitionStyle: fade
+          items: 2
+          margin: '0'
+          nav: true
+          autoplay: false
+          autoplayHoverPause: true
+          loop: false
+          dots: false
+          rtl: false
+          dimensionMobile: '568'
+          itemsMobile: 4
+          dimensionDesktop: '1200'
+          itemsDesktop: 6
       row:
         type: fields
         options:
@@ -2743,6 +2731,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 10
           total_pages: null
           id: 0

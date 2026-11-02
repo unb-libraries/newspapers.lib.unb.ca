@@ -4,7 +4,7 @@ custom:
   activate: 0
   transition_type: null
   transition_speed: 100
-  opacity: !!float 0
+  opacity: 0.0
   text_current: ''
   text_previous: ''
   text_next: ''

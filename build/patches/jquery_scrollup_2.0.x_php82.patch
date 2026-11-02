@@ -1,0 +1,39 @@
+diff --git a/jquery_scrollup.module b/jquery_scrollup.module
+index 3b1c814..9ded6d2 100644
+--- a/jquery_scrollup.module
++++ b/jquery_scrollup.module
+@@ -29,22 +29,22 @@ function jquery_scrollup_page_attachments(array &$attachments) {
+   $style = $style_icon = $style_hover = $style_icon_hover = '';
+   switch ($settings['buttonType']) {
+     case 'icon':
+-      $style_icon .= !empty($settings['buttonColor']) ? "background-color: ${settings['buttonColor']}; " : '';
+-      $style_icon_hover .= !empty($settings['buttonColorHover']) ? "background-color: ${settings['buttonColorHover']}; " : '';
+-      $style .= !empty($settings['buttonBgColor']) ? "background-color: ${settings['buttonBgColor']}; " : '';
+-      $style_hover .= !empty($settings['buttonBgColorHover']) ? "background-color: ${settings['buttonBgColorHover']}; " : '';
++      $style_icon .= !empty($settings['buttonColor']) ? "background-color: {$settings['buttonColor']}; " : '';
++      $style_icon_hover .= !empty($settings['buttonColorHover']) ? "background-color: {$settings['buttonColorHover']}; " : '';
++      $style .= !empty($settings['buttonBgColor']) ? "background-color: {$settings['buttonBgColor']}; " : '';
++      $style_hover .= !empty($settings['buttonBgColorHover']) ? "background-color: {$settings['buttonBgColorHover']}; " : '';
+       break;
+     case 'pill':
+-      $style .= !empty($settings['buttonColor']) ? "color: ${settings['buttonColor']}; " : '';
+-      $style .= !empty($settings['buttonBgColor']) ? "background-color: ${settings['buttonBgColor']}; " : '';
+-      $style_hover .= !empty($settings['buttonColorHover']) ? "color: ${settings['buttonColorHover']}; " : '';
+-      $style_hover .= !empty($settings['buttonBgColorHover']) ? "background-color: ${settings['buttonBgColorHover']}; " : '';
++      $style .= !empty($settings['buttonColor']) ? "color: {$settings['buttonColor']}; " : '';
++      $style .= !empty($settings['buttonBgColor']) ? "background-color: {$settings['buttonBgColor']}; " : '';
++      $style_hover .= !empty($settings['buttonColorHover']) ? "color: {$settings['buttonColorHover']}; " : '';
++      $style_hover .= !empty($settings['buttonBgColorHover']) ? "background-color: {$settings['buttonBgColorHover']}; " : '';
+       break;
+     case 'tab':
+-      $style .= !empty($settings['buttonColor']) ? "color: ${settings['buttonColor']}; " : '';
+-      $style .= !empty($settings['buttonBgColor']) ? "background: ${settings['buttonBgColor']}; " : '';
+-      $style_hover .= !empty($settings['buttonColorHover']) ? "color: ${settings['buttonColorHover']}; " : '';
+-      $style_hover .= !empty($settings['buttonBgColorHover']) ? "background: ${settings['buttonBgColorHover']}; " : '';
++      $style .= !empty($settings['buttonColor']) ? "color: {$settings['buttonColor']}; " : '';
++      $style .= !empty($settings['buttonBgColor']) ? "background: {$settings['buttonBgColor']}; " : '';
++      $style_hover .= !empty($settings['buttonColorHover']) ? "color: {$settings['buttonColorHover']}; " : '';
++      $style_hover .= !empty($settings['buttonBgColorHover']) ? "background: {$settings['buttonBgColorHover']}; " : '';
+       break;
+     default:
+       break;

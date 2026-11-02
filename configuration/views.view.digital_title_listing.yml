@@ -16,7 +16,7 @@ dependencies:
 id: digital_title_listing
 label: 'Digital Title Listing'
 module: views
-description: 'Listing of all publications associated with a ''Digital'' Serial Holding Type.'
+description: "Listing of all publications associated with a 'Digital' Serial Holding Type."
 tag: ''
 base_table: digital_serial_title
 base_field: id
@@ -401,6 +401,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 25
           total_pages: null
           id: 0
