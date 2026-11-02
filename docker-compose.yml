@@ -40,7 +40,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
   drupal-redis-lib-unb-ca:
-    image: redis:7-alpine
+    image: ghcr.io/unb-libraries/redis:8.2-alpine
     restart: unless-stopped
     command: redis-server --maxmemory-policy allkeys-lru --maxmemory 128mb
     expose:
@@ -66,7 +66,7 @@ services:
     volumes:
       - solr-data:/opt/solr/server/solr/mycores
   mailhog:
-    image: mailhog/mailhog
+    image: ghcr.io/unb-libraries/mailpit:v1.29
     restart: unless-stopped
     expose:
       - "1025"
