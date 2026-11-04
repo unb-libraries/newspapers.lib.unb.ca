@@ -1577,7 +1577,19 @@ display:
         relationships: false
         fields: false
         arguments: false
+        header: false
       relationships: {  }
+      header:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: '<div class="search-results"><h2>Displaying @start - @end of @total digital issues</h2></div>'
       display_extenders:
         ajax_history:
           enable_history: false
