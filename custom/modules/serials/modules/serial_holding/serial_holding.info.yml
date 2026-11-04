@@ -1,7 +1,7 @@
 name: Serial Holding
 type: module
 description: Provides a serial holding entity for serial titles
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^11
 package: Serials
 dependencies:
   - serials:serials

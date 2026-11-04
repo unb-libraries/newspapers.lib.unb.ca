@@ -19,7 +19,7 @@ dockworker:
       uuid: 3095
     framework:
       name: Drupal
-      version: 10
+      version: 11
       startup_finished_marker: '99_startup_sequence_complete'
       endpoint:
         name: http
@@ -62,7 +62,7 @@ dockworker:
         - NBNP
     image:
       name: ghcr.io/unb-libraries/newspapers.lib.unb.ca
-      parent: ghcr.io/unb-libraries/drupal:10.x-1.x-unblib
+      parent: ghcr.io/unb-libraries/drupal:11.x-1.x-unblib
       repository: GitHub
       push-branches:
         - dev

@@ -505,6 +505,7 @@ display:
           empty_table: false
           caption: ''
           description: ''
+          class: ''
       row:
         type: fields
       query:
@@ -1247,7 +1248,7 @@ display:
           admin_label: ''
           entity_type: digital_serial_issue
           entity_field: parent_title
-          plugin_id: numeric
+          plugin_id: entity_target_id
           default_action: ignore
           exception:
             value: all
@@ -1274,6 +1275,7 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
+          target_entity_type_id: digital_serial_title
       defaults:
         relationships: false
         fields: false
@@ -1990,7 +1992,7 @@ display:
           admin_label: ''
           entity_type: digital_serial_issue
           entity_field: parent_title
-          plugin_id: numeric
+          plugin_id: entity_target_id
           default_action: empty
           exception:
             value: all
@@ -2017,6 +2019,7 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
+          target_entity_type_id: digital_serial_title
       filters:
         issue_date:
           id: issue_date
@@ -2046,9 +2049,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              newspaper_administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -2090,9 +2090,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              newspaper_administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -2134,9 +2131,6 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              newspaper_administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:

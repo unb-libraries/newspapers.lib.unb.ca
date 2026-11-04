@@ -1,0 +1,22 @@
+--- a/src/TypedData/CountryName.php
++++ b/src/TypedData/CountryName.php
+@@ -36,7 +36,7 @@
+   /**
+    * {@inheritdoc}
+    */
+-  public function __construct(DataDefinitionInterface $definition, $name = NULL, TypedDataInterface $parent = NULL) {
++  public function __construct(DataDefinitionInterface $definition, $name = NULL, ?TypedDataInterface $parent = NULL) {
+     parent::__construct($definition, $name, $parent);
+ 
+     if ($definition->getSetting('property source') === NULL) {
+--- a/src/TypedData/SubdivisionName.php
++++ b/src/TypedData/SubdivisionName.php
+@@ -37,7 +37,7 @@
+   /**
+    * {@inheritdoc}
+    */
+-  public function __construct(DataDefinitionInterface $definition, $name = NULL, TypedDataInterface $parent = NULL) {
++  public function __construct(DataDefinitionInterface $definition, $name = NULL, ?TypedDataInterface $parent = NULL) {
+     parent::__construct($definition, $name, $parent);
+ 
+     if ($definition->getSetting('property source') === NULL) {

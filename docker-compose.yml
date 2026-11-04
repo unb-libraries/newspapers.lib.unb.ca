@@ -16,6 +16,7 @@ services:
       - newspapers.lib.unb.ca
     env_file:
       - ./env/drupal.env
+      - ./env/mysql.env
     environment:
       - DRUPAL_IMPORT_CONTENT=TRUE
     volumes:
@@ -40,9 +41,12 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
   drupal-redis-lib-unb-ca:
-    image: redis:7-alpine
+    image: ghcr.io/unb-libraries/redis:8.2-alpine
+    command:
+      - redis-server
+      - --maxmemory-policy allkeys-lru
+      - --maxmemory 128mb
     restart: unless-stopped
-    command: redis-server --maxmemory-policy allkeys-lru --maxmemory 128mb
     expose:
       - "6379"
     networks:
@@ -50,7 +54,7 @@ services:
     env_file:
       - ./env/redis.env
   drupal-solr-lib-unb-ca:
-    image: ghcr.io/unb-libraries/solr-drupal:8.x-4.x
+    image: ghcr.io/unb-libraries/solr-drupal:9.x-11.x
     restart: unless-stopped
     env_file:
       - ./env/solr.env
@@ -59,14 +63,14 @@ services:
     networks:
       - newspapers.lib.unb.ca
     entrypoint:
-      - docker-entrypoint-multiple.sh
+      - /scripts/docker-entrypoint-multiple.sh
       - newspapers.lib.unb.ca:/solr-conf
       - pages.newspapers.lib.unb.ca:/solr-conf
       - issues.newspapers.lib.unb.ca:/solr-conf
     volumes:
-      - solr-data:/opt/solr/server/solr/mycores
+      - solr-data:/var/solr/data
   mailhog:
-    image: mailhog/mailhog
+    image: ghcr.io/unb-libraries/mailpit:v1.29
     restart: unless-stopped
     expose:
       - "1025"

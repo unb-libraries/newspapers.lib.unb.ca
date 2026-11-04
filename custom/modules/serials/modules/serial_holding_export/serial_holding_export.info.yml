@@ -1,7 +1,7 @@
 name: 'Serial Holding Export'
 type: module
 description: 'Provides an endpoint to view serial holding lists'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^11
 package: 'Serials'
 dependencies:
 - serials:serial_holding
