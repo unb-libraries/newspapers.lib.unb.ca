@@ -108,11 +108,11 @@ class IndexIssueInfo extends ProcessorPluginBase {
       }
 
       // Issue Parent Title.
-        $fields = $this->getFieldsHelper()
-          ->filterForPropertyPath($item->getFields(), NULL, 'parent_iss_publication_title');
-        foreach ($fields as $field) {
-          $field->addValue($publication_entity->getTitle());
-        }
+      $fields = $this->getFieldsHelper()
+        ->filterForPropertyPath($item->getFields(), NULL, 'parent_iss_publication_title');
+      foreach ($fields as $field) {
+        $field->addValue($publication_entity->getTitle());
+      }
     }
   }
 
