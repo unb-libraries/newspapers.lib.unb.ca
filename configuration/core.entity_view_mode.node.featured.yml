@@ -6,6 +6,6 @@ dependencies:
     - node
 id: node.featured
 label: Featured
-description: ''
+description: null
 targetEntityType: node
 cache: true

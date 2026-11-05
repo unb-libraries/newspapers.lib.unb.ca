@@ -2,7 +2,7 @@ name: Digital Serial Issue
 description: Digital serial issue content
 package: Serials
 
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^11
 type: module
 
 dependencies:

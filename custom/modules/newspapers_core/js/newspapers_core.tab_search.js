@@ -32,6 +32,9 @@
         }
     });
 
-    // Enable Bootstrap Tooltips.
-    $('[data-bs-toggle="tooltip"]').tooltip();
+    // Enable Bootstrap Tooltips once the DOM is ready; the theme's Bootstrap
+    // bundle loads after this script, so $.fn.tooltip isn't defined yet here.
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    });
 })(jQuery);

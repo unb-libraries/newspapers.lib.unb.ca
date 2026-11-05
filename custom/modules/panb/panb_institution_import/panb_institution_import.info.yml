@@ -1,7 +1,7 @@
 name: PANB Institution Import
 type: module
 description: PANB Institution Vocabulary One-time Import Tool
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^11
 package: PANB
 dependencies:
   - panb

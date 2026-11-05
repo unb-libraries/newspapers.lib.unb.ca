@@ -333,6 +333,7 @@ display:
           summary: ''
           order: asc
           empty_table: false
+          class: ''
       row:
         type: fields
         options:
@@ -363,7 +364,7 @@ display:
       footer: {  }
       display_extenders: {  }
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -430,7 +431,7 @@ display:
         page_1: page_1
       inherit_arguments: false
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -457,7 +458,7 @@ display:
         menu_name: main
         parent: ''
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'

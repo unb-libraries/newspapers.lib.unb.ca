@@ -1,14 +1,11 @@
 uuid: e4e4cda2-2375-452d-8881-f9ba6364aec9
 langcode: en
 status: true
-dependencies:
-  module:
-    - honeypot
+dependencies: {  }
 _core:
   default_config_hash: 0z5wjALFUgv5CCHfNbB94Vymdd7uhf7QMH-cTwRP5hI
 id: honeypot
 label: Honeypot
-module: honeypot
 routes:
   -
     route_name: honeypot.config
@@ -19,6 +16,7 @@ tips:
     label: Honeypot
     weight: 1
     position: top-start
+    selector: null
     body: "<p>Congratulations on installing Honeypot on your site! With just a few clicks, you can have your site well-protected against automated spam bots.</p><p>Click 'Next' to be guided through this configuration page.</p>"
   protect-all-forms:
     id: protect-all-forms
