@@ -33,7 +33,9 @@ form .nav-tabs > li > a {
 #search-wrapper #fulltext fieldset input:not(:focus) {
   border-color: #6c757d;
 }
-
+#search-wrapper .form-actions {
+  align-self: flex-start;
+}
 .search-form .form-wrapper {
   margin-bottom: 1.5em;
 }
@@ -63,7 +65,7 @@ div[data-drupal-selector="edit-actions"] {
 }
 @media (min-width: 1366px) {
   div[data-drupal-selector="edit-actions"] {
-    margin-top: 1.875rem;
+    margin-top: 1.9rem;
   }
 }
 div[data-drupal-selector="edit-actions"] input {
