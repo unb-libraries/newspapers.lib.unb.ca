@@ -64,10 +64,6 @@ field_settings:
     label: 'First Page ID'
     property_path: first_page_id
     type: integer
-  first_page_image_uri:
-    label: 'First Page Image URI'
-    property_path: first_page_image_uri
-    type: string
   id:
     label: ID
     datasource_id: 'entity:digital_serial_issue'
@@ -132,6 +128,11 @@ field_settings:
     dependencies:
       module:
         - digital_serial_issue
+  page_image:
+    label: 'First Page » Image'
+    datasource_id: 'entity:digital_serial_issue'
+    property_path: 'first_page:page_image'
+    type: integer
   parent_iss_publication_title:
     label: 'Parent Issue Publication Title'
     property_path: parent_iss_publication_title

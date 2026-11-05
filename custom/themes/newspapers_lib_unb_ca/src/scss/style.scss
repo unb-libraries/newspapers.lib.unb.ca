@@ -194,9 +194,58 @@ p {
 }
 
 /* Browse Issues */
-.views-infinite-scroll-content-wrapper > div:not(:first-child),
-.browse-issues .view-content > div:not(:first-child) {
-  margin: 2rem 0;
+.browse-issues {
+  .card {
+    box-shadow: 0 0 2px transparent;
+    margin: 1px 3px;
+    padding: 3px;
+    text-align: center;
+    transition: box-shadow 0.25s ease-in-out;
+
+    &:focus-within,
+    &:hover {
+      box-shadow: 0 0 2px $link-color-hover;
+    }
+
+    .card-header {
+      padding-left: calc($spacer * 0.5);
+      padding-right: calc($spacer * 0.5);
+    }
+
+    .card-body {
+      padding: calc($spacer * 0.75) calc($spacer * 0.25);
+
+      a {
+        color: $black;
+        line-height: 1.3;
+
+        &:focus,
+        &:hover {
+          color: $link-color-hover;
+          text-decoration: none!important;
+        }
+
+        abbr {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .view-content {
+    & > div:not(:first-child) {
+      display: inline-block;
+      margin: calc($spacer * 0.25) 0;
+      max-width: 16.2%;
+      min-width: 166px;
+    }
+
+    h3 {
+      border-bottom: 1px solid #6c6a69;
+      padding-bottom: 2px;
+      margin-top: 2rem;
+    }
+  }
 }
 
 .image-link-shadow a img {
