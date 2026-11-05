@@ -69,13 +69,6 @@
 
 // Stack Owl Carousel Grouping + Image
 .browse-issues {
-  img {
-    background: $gray-200;
-    border: none;
-    box-shadow: none;
-    transition: all .2s ease-in-out;
-  }
-
   a {
     display: inline-block;
 
@@ -93,19 +86,6 @@
       img {
         box-shadow: 0 0 3px 1px $link-color-hover;
       }
-    }
-  }
-
-  .issue-date {
-    font-weight: bold;
-  }
-
-  .issue-meta {
-    color: $text-muted;
-    line-height: 1em;
-
-    small:not(:last-child) {
-      margin-right: .3em;
     }
   }
 

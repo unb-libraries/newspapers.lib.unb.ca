@@ -207,6 +207,11 @@ p {
       box-shadow: 0 0 2px $link-color-hover;
     }
 
+    img {
+      background: $gray-100;
+      border: 1px solid $gray-200;
+    }
+
     .card-header {
       padding-left: calc($spacer * 0.5);
       padding-right: calc($spacer * 0.5);
@@ -227,6 +232,19 @@ p {
 
         abbr {
           text-decoration: none;
+        }
+      }
+
+      .issue-date {
+        font-weight: bold;
+      }
+
+      .issue-meta {
+        color: $secondary;
+        line-height: $spacer;
+
+        small:not(:last-child) {
+          margin-right: calc($spacer * 0.3);
         }
       }
     }

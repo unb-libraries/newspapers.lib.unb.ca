@@ -31,6 +31,10 @@
 
   .page-item.active .page-link {
     background: $link-color;
+
+    &:hover {
+      color: $white;
+    }
   }
 
   a.page-link {
