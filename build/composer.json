@@ -216,7 +216,7 @@
     "drupal/ajax_loader": "^2",
     "drupal/allowed_formats": "^3",
     "drupal/antibot": "^2",
-    "drupal/bootstrap_barrio": "^5",
+    "drupal/bootstrap_barrio": "5.1.12",
     "drupal/chosen": "^5",
     "drupal/clipboardjs": "^2",
     "drupal/colorbox": "^2",
