@@ -20,6 +20,11 @@ a:not(.btn):not(.button):not(.cd-top):not(.nav-link):active {
   text-decoration: underline;
 }
 
+// Skip link unb_lib_theme override re: D11
+#skiptocontent a {
+  top: -4rem;
+}
+
 // Fix leaflet map fullscreen toggle icon.
 .leaflet-control-fullscreen a {
   background-image: url(/modules/contrib/leaflet/js/Leaflet.fullscreen-gh-pages/dist/fullscreen.png)!important;
