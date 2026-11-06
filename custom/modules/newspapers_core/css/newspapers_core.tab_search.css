@@ -65,7 +65,8 @@ div[data-drupal-selector="edit-actions"] {
 }
 @media (min-width: 1366px) {
   div[data-drupal-selector="edit-actions"] {
-    margin-top: 1.9rem;
+    margin-left: 5px;
+    margin-top: 2rem;
   }
 }
 div[data-drupal-selector="edit-actions"] input {
