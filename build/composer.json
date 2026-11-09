@@ -16,7 +16,6 @@
       "cweagans/composer-patches": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "drupal/core-composer-scaffold": true,
-      "mglaman/composer-drupal-lenient": true,
       "php-http/discovery": true,
       "phpstan/extension-installer": true,
       "symfony/runtime": true,
@@ -41,12 +40,6 @@
   },
   "description": "Drupal 11 component of newspapers.lib.unb.ca",
   "extra": {
-    "drupal-lenient": {
-      "allowed-list": [
-        "drupal/file_management",
-        "drupal/jquery_scrollup"
-      ]
-    },
     "drupal-scaffold": {
       "locations": {
         "web-root": "./"
@@ -97,6 +90,44 @@
   "name": "unb-libraries/newspapers.lib.unb.ca",
   "prefer-stable": true,
   "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "drupal/file_management",
+        "version": "2.1.0",
+        "type": "drupal-module",
+        "description": "Allows you to edit existing files or images.",
+        "license": "GPL-2.0-or-later",
+        "require": {
+          "drupal/core": "^10 || ^11"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://ftp.drupal.org/files/projects/file_management-8.x-2.1.zip",
+          "reference": "8.x-2.1",
+          "shasum": "6b7414c66ca772f9188941369a89a2e72477ae98"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "drupal/jquery_scrollup",
+        "version": "2.0.0",
+        "type": "drupal-module",
+        "description": "Integrates jquery ScrollUp plugin with Drupal",
+        "license": "GPL-2.0-or-later",
+        "require": {
+          "drupal/core": "^10 || ^11"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://ftp.drupal.org/files/projects/jquery_scrollup-2.0.0.zip",
+          "reference": "2.0.0",
+          "shasum": "33a5d649135dd59ed325e9a1eac7b0d557e975c3"
+        }
+      }
+    },
     {
       "type": "composer",
       "url": "https://packages.drupal.org/8"
@@ -229,14 +260,14 @@
     "drupal/externalauth": "^2",
     "drupal/facets": "^3",
     "drupal/field_group": "^4@beta",
-    "drupal/file_management": "^2",
+    "drupal/file_management": "2.1.0",
     "drupal/fontawesome": "^3",
     "drupal/geocoder": "^4",
     "drupal/geofield": "^10",
     "drupal/google_analytics": "^4",
     "drupal/health_check": "^3",
     "drupal/honeypot": "^2",
-    "drupal/jquery_scrollup": "^2",
+    "drupal/jquery_scrollup": "2.0.0",
     "drupal/jquery_ui": "^1",
     "drupal/jquery_ui_datepicker": "^2",
     "drupal/jquery_ui_slider": "^2",
@@ -272,7 +303,6 @@
     "harvesthq/chosen": "~1.8",
     "jackmoore/colorbox": "dev-master",
     "markgoodyear/scrollup": "dev-master",
-    "mglaman/composer-drupal-lenient": "^1",
     "neitanod/forceutf8": "^2",
     "owlcarousel2/owlcarousel2": "2.3.4",
     "phpoffice/phpspreadsheet": "^1.5.0",

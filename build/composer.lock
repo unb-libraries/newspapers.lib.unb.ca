@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6941b7170f83a88a143c1b954c98bfc",
+    "content-hash": "896c8ba6dd92716e74c1f9d8ec77457a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2883,11 +2883,6 @@
         {
             "name": "drupal/file_management",
             "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/file_management.git",
-                "reference": "8.x-2.1"
-            },
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/file_management-8.x-2.1.zip",
@@ -2895,40 +2890,13 @@
                 "shasum": "6b7414c66ca772f9188941369a89a2e72477ae98"
             },
             "require": {
-                "drupal/core": "^8 || ^9 || ^10 || ^11 || ^12"
+                "drupal/core": "^10 || ^11"
             },
             "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-2.1",
-                    "datestamp": "1667849281",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
-                "GPL-2.0+"
+                "GPL-2.0-or-later"
             ],
-            "authors": [
-                {
-                    "name": "David Pacassi Torrico (dpacassi)",
-                    "homepage": "https://www.drupal.org/u/dpacassi",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "mattbloomfield",
-                    "homepage": "https://www.drupal.org/user/3620586"
-                }
-            ],
-            "description": "Allows you to edit existing files or images.",
-            "homepage": "https://www.drupal.org/project/file_management",
-            "support": {
-                "source": "https://cgit.drupalcode.org/file_management",
-                "issues": "https://www.drupal.org/project/issues/file_management"
-            }
+            "description": "Allows you to edit existing files or images."
         },
         {
             "name": "drupal/fontawesome",
@@ -3338,11 +3306,6 @@
         {
             "name": "drupal/jquery_scrollup",
             "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/jquery_scrollup.git",
-                "reference": "2.0.0"
-            },
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/jquery_scrollup-2.0.0.zip",
@@ -3350,36 +3313,13 @@
                 "shasum": "33a5d649135dd59ed325e9a1eac7b0d557e975c3"
             },
             "require": {
-                "drupal/core": "^8 || ^9 || ^10 || ^11 || ^12"
+                "drupal/core": "^10 || ^11"
             },
             "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "2.0.0",
-                    "datestamp": "1672671622",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
                 "GPL-2.0-or-later"
             ],
-            "authors": [
-                {
-                    "name": "Dominique Clause (Dom.)",
-                    "homepage": "https://www.drupal.org/u/dom",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Integrates jquery ScrollUp plugin with Drupal",
-            "homepage": "https://www.drupal.org/project/jquery_scrollup",
-            "support": {
-                "source": "https://git.drupalcode.org/project/jquery_scrollup",
-                "issues": "https://www.drupal.org/project/issues/jquery_scrollup?version=8.x"
-            }
+            "description": "Integrates jquery ScrollUp plugin with Drupal"
         },
         {
             "name": "drupal/jquery_ui",
@@ -7035,64 +6975,6 @@
                 "source": "https://github.com/mck89/peast/tree/v1.17.7"
             },
             "time": "2026-07-21T11:56:06+00:00"
-        },
-        {
-            "name": "mglaman/composer-drupal-lenient",
-            "version": "1.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mglaman/composer-drupal-lenient.git",
-                "reference": "bcb9be7f2d3160be43cd1d13a44580734a5afee0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mglaman/composer-drupal-lenient/zipball/bcb9be7f2d3160be43cd1d13a44580734a5afee0",
-                "reference": "bcb9be7f2d3160be43cd1d13a44580734a5afee0",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^2.0",
-                "php": ">=8.1"
-            },
-            "require-dev": {
-                "composer/composer": "^2.3",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.6",
-                "phpstan/phpstan-phpunit": "^1.1",
-                "phpstan/phpstan-strict-rules": "^1.2",
-                "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "^3.6"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "ComposerDrupalLenient\\Plugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "ComposerDrupalLenient\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Matt Glaman",
-                    "email": "nmd.matt@gmail.com"
-                }
-            ],
-            "support": {
-                "issues": "https://github.com/mglaman/composer-drupal-lenient/issues",
-                "source": "https://github.com/mglaman/composer-drupal-lenient/tree/1.0.7"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/mglaman",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-11-21T15:59:26+00:00"
         },
         {
             "name": "neitanod/forceutf8",
