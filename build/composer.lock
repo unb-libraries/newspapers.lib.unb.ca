@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "896c8ba6dd92716e74c1f9d8ec77457a",
+    "content-hash": "0c320cb1e8b51e9240f6628cfad432cd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6153,15 +6153,6 @@
             "time": "2025-12-05T14:53:09+00:00"
         },
         {
-            "name": "harvesthq/chosen",
-            "version": "1.8.7",
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip"
-            },
-            "type": "drupal-library"
-        },
-        {
             "name": "itamair/geophp",
             "version": "1.12",
             "source": {
@@ -6207,18 +6198,6 @@
                 "source": "https://github.com/itamair/geoPHP/tree/1.12"
             },
             "time": "2026-04-02T10:02:52+00:00"
-        },
-        {
-            "name": "jackmoore/colorbox",
-            "version": "dev-master",
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/jackmoore/colorbox/archive/refs/heads/master.zip"
-            },
-            "type": "drupal-library",
-            "extra": {
-                "installer-name": "colorbox"
-            }
         },
         {
             "name": "justinrainbow/json-schema",
@@ -7073,6 +7052,15 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.9.0"
             },
             "time": "2026-09-13T18:51:52+00:00"
+        },
+        {
+            "name": "noli42/chosen",
+            "version": "3.1.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/noli42/chosen/releases/download/3.1.4/chosen-assets-v3.1.4.zip"
+            },
+            "type": "drupal-library"
         },
         {
             "name": "onelogin/php-saml",
@@ -12103,6 +12091,18 @@
             "time": "2026-11-04T08:27:22+00:00"
         },
         {
+            "name": "turbojettechnologies/colorbox",
+            "version": "dev-master",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/TurbojetTechnologies/colorbox/archive/master.zip"
+            },
+            "type": "drupal-library",
+            "extra": {
+                "installer-name": "colorbox"
+            }
+        },
+        {
             "name": "twbs/bootstrap",
             "version": "v4.6.2",
             "source": {
@@ -12978,8 +12978,8 @@
         "drupal/field_group": 10,
         "drupal/views_ajax_history": 5,
         "furf/jquery-ui-touch-punch": 20,
-        "jackmoore/colorbox": 20,
         "markgoodyear/scrollup": 20,
+        "turbojettechnologies/colorbox": 20,
         "unb-libraries/alert_scheduler": 20,
         "unb-libraries/calendar_hours": 20,
         "unb-libraries/saml_features": 20,
@@ -12988,10 +12988,10 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
+    "platform": [],
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.4.27"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.3.0"
 }

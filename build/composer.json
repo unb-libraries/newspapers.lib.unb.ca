@@ -163,12 +163,12 @@
       "package": {
         "dist": {
           "type": "zip",
-          "url": "https://github.com/jackmoore/colorbox/archive/refs/heads/master.zip"
+          "url": "https://github.com/TurbojetTechnologies/colorbox/archive/master.zip"
         },
         "extra": {
           "installer-name": "colorbox"
         },
-        "name": "jackmoore/colorbox",
+        "name": "turbojettechnologies/colorbox",
         "type": "drupal-library",
         "version": "dev-master"
       },
@@ -178,11 +178,11 @@
       "package": {
         "dist": {
           "type": "zip",
-          "url": "https://github.com/harvesthq/chosen/releases/download/v1.8.7/chosen_v1.8.7.zip"
+          "url": "https://github.com/noli42/chosen/releases/download/3.1.4/chosen-assets-v3.1.4.zip"
         },
-        "name": "harvesthq/chosen",
+        "name": "noli42/chosen",
         "type": "drupal-library",
-        "version": "1.8.7"
+        "version": "3.1.4"
       },
       "type": "package"
     },
@@ -300,13 +300,13 @@
     "furf/jquery-ui-touch-punch": "dev-master",
     "geocoder-php/common-http": "^4",
     "geocoder-php/nominatim-provider": "^5",
-    "harvesthq/chosen": "~1.8",
-    "jackmoore/colorbox": "dev-master",
     "markgoodyear/scrollup": "dev-master",
     "neitanod/forceutf8": "^2",
+    "noli42/chosen": "3.1.4",
     "owlcarousel2/owlcarousel2": "2.3.4",
     "phpoffice/phpspreadsheet": "^1.5.0",
     "simeydotme/jquery-ui-slider-pips": "^2",
+    "turbojettechnologies/colorbox": "dev-master",
     "unb-libraries/alert_scheduler": "dev-11.x-1.x",
     "unb-libraries/calendar_hours": "dev-11.x-1.x",
     "unb-libraries/composer-drupal-scaffold": "^11",
