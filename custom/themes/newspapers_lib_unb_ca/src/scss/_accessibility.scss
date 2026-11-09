@@ -31,3 +31,12 @@ code {
 .sticky-top {
   top: 70px;
 }
+
+#skiptocontent {
+  a {
+    &:focus {
+      outline-width: 2px;
+      outline-offset: -2px;
+    }
+  }
+}
