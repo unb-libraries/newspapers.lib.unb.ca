@@ -76,7 +76,7 @@
     "patches": {
       "drupal/address": {
         "Integrate Address with Search API": "https://www.drupal.org/files/issues/2022-08-11/address-n2812659-37-fix.patch",
-        "PHP 8.4 explicit nullable types for Search API patch": "/build/patches/address_search_api_php84.patch"
+        "PHP 8.4 explicit nullable types for Search API patch": "https://raw.githubusercontent.com/unb-libraries/newspapers.lib.unb.ca/dev/build/patches/address_search_api_php84.patch"
       },
       "drupal/core": {
         "Exposed filter values available as tokens": "https://www.drupal.org/files/issues/2022-10-30/2761273-50.patch",
@@ -84,11 +84,11 @@
         "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch"
       },
       "drupal/file_management": {
-        "Drupal 11 compatibility": "/build/patches/file_management_2.x_d11.patch"
+        "Drupal 11 compatibility": "https://raw.githubusercontent.com/unb-libraries/newspapers.lib.unb.ca/dev/build/patches/file_management_2.x_d11.patch"
       },
       "drupal/jquery_scrollup": {
         "D11 compatibility": "https://www.drupal.org/files/issues/2024-03-17/jquery_scrollup.2.0.0.rector.patch",
-        "PHP 8.2 string interpolation deprecations": "/build/patches/jquery_scrollup_2.0.x_php82.patch"
+        "PHP 8.2 string interpolation deprecations": "https://raw.githubusercontent.com/unb-libraries/newspapers.lib.unb.ca/dev/build/patches/jquery_scrollup_2.0.x_php82.patch"
       }
     }
   },
