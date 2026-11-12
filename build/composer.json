@@ -311,7 +311,7 @@
     "unb-libraries/calendar_hours": "dev-11.x-1.x",
     "unb-libraries/composer-drupal-scaffold": "^11",
     "unb-libraries/saml_features": "dev-10.x-1.x",
-    "unb-libraries/unb_lib_theme": "dev-11.x-4.x",
+    "unb-libraries/unb_lib_theme": "dev-10.x-4.x",
     "willdurand/geocoder": "^4",
     "zenorocha/clipboardjs": "dev-master"
   },

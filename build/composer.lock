@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c320cb1e8b51e9240f6628cfad432cd",
+    "content-hash": "cb6359bcc95f8c7ca04bb2a029a8a9ff",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -12441,16 +12441,16 @@
         },
         {
             "name": "unb-libraries/unb_lib_theme",
-            "version": "dev-11.x-4.x",
+            "version": "dev-10.x-4.x",
             "source": {
                 "type": "git",
                 "url": "https://github.com/unb-libraries/unb_lib_theme.git",
-                "reference": "ed1cc5faed70877f61f67503c514696b853b266b"
+                "reference": "b130f9b23857130c3499190950d9d953965f992b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/ed1cc5faed70877f61f67503c514696b853b266b",
-                "reference": "ed1cc5faed70877f61f67503c514696b853b266b",
+                "url": "https://api.github.com/repos/unb-libraries/unb_lib_theme/zipball/b130f9b23857130c3499190950d9d953965f992b",
+                "reference": "b130f9b23857130c3499190950d9d953965f992b",
                 "shasum": ""
             },
             "require-dev": {
@@ -12471,9 +12471,9 @@
             "homepage": "https://github.com/unb-libraries/unb_lib_theme",
             "support": {
                 "issues": "https://github.com/unb-libraries/unb_lib_theme/issues",
-                "source": "https://github.com/unb-libraries/unb_lib_theme/tree/11.x-4.x"
+                "source": "https://github.com/unb-libraries/unb_lib_theme/tree/10.x-4.x"
             },
-            "time": "2026-11-05T18:44:09+00:00"
+            "time": "2026-11-12T14:25:18+00:00"
         },
         {
             "name": "willdurand/geocoder",
@@ -12988,10 +12988,10 @@
     },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.4.27"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.9.0"
 }

@@ -19,7 +19,7 @@
   "name": "unb-libraries/newspapers.lib.unb.ca",
   "prefer-stable": true,
   "require": {
-    "unb-libraries/unb_lib_theme": "dev-11.x-4.x"
+    "unb-libraries/unb_lib_theme": "dev-10.x-4.x"
   },
   "require-dev": {
     "twbs/bootstrap": "~4.5.3",
