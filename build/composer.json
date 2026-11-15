@@ -23,7 +23,7 @@
     },
     "discard-changes": true,
     "platform": {
-      "php": "8.4.27"
+      "php": "8.5.12"
     },
     "preferred-install": {
       "*": "dist"
@@ -304,7 +304,7 @@
     "neitanod/forceutf8": "^2",
     "noli42/chosen": "3.1.4",
     "owlcarousel2/owlcarousel2": "2.3.4",
-    "phpoffice/phpspreadsheet": "^1.5.0",
+    "phpoffice/phpspreadsheet": "^5",
     "simeydotme/jquery-ui-slider-pips": "^2",
     "turbojettechnologies/colorbox": "dev-master",
     "unb-libraries/alert_scheduler": "dev-11.x-1.x",
