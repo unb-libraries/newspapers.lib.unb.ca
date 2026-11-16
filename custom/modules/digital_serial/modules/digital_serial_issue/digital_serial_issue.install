@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for digital_serial_issue.
+ */
+
+/**
+ * Remove the issues index's page_image field before configuration import.
+ *
+ * The field indexed first_page:page_image, a property the first-page processor
+ * no longer provides. Deploys run updb before config import, and with the field
+ * still active, Search API cannot build Views data, so updb fails and the import
+ * that removes the field never runs. Edit the raw config: loading the index
+ * entity would try to resolve the same missing property.
+ */
+function digital_serial_issue_update_8001() {
+  $config = \Drupal::configFactory()->getEditable('search_api.index.issues');
+  if ($config->isNew() || $config->get('field_settings.page_image') === NULL) {
+    return t('The issues index has no page_image field; nothing to do.');
+  }
+  $config->clear('field_settings.page_image')->save(TRUE);
+  return t('Removed the page_image field from the issues index; the configuration import adds first_page_image_uri.');
+}
