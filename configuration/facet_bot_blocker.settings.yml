@@ -186,14 +186,16 @@ facet_bot_blocker_html: |
             Too many filters
         </h1>
         <h2 id="subheader" class="subheader primary-text-color">
-            A search can use up to three filters.
+            Off campus, a search can use up to three filters.
         </h2>
         <hr role="presentation" aria-hidden="true">
         <div class="clearfix"></div>
 
         <div class="context primary-text-color">
           <p>
-            Go back to the filters you had, or start again with none.
+            This protects our services from automated traffic. On campus or on the
+            <a class="primary-text-color" href="https://go.unb.ca/vpn">UNB VPN</a>, there's no limit.
+            Otherwise, go back to the filters you had, or start again with none.
           </p>
         </div>
         <div class="buttons-container">
