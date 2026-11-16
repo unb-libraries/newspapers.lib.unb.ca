@@ -1,0 +1,229 @@
+facets_bot_blocker_limit: 3
+facet_bot_blocker_return_gone: false
+facet_bot_blocker_html: |
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" media="screen" href="https://unb.ca/webcomps/_css/myfontswebfontskit.css">
+    <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <title>University of New Brunswick Libraries: Too Many Filters</title>
+    <style>
+      * {
+       box-sizing:border-box;
+      }
+      html, body, div, span, p, img, h1, h2 {
+       background:transparent;
+       border:0;
+       margin:0;
+       padding:0;
+       vertical-align:baseline;
+      }
+      html {
+       overflow-y:scroll;
+       overflow-x:hidden;
+       width:100%;
+       height:100%;
+      }
+      body {
+       min-height:100%;
+      }
+      img {
+       border:0;
+       height:auto;
+       max-width:100%;
+       vertical-align:middle;
+      }
+      a:focus, button:focus {
+       outline:3px solid #4A90D9;
+       outline-offset:2px;
+      }
+      .background-color {
+        background-color:rgb(57, 62, 68) !important
+      }
+      .clearfix {
+       clear:both;
+      }
+      .clearfix:before,
+      .clearfix:after {
+        content:"\0020";
+        display:block;
+        height:0;
+        visibility:hidden;
+      }
+      .clearfix:after {
+        clear: both;
+      }
+      .plain.error-page-wrapper {
+        background-color:rgba(45, 45, 45, 1);
+        font-family:'ProximaNovaA-Regular', 'Century Gothic', AppleGothic, Arial, sans-serif;
+        padding:0 5%;
+        position:relative;
+      }
+      .plain.error-page-wrapper hr {
+        background-color: rgba(255,255,255,.2);
+        border:none;
+        height:1px;
+        margin:35px 0;
+        max-width:250px;
+        width:100%;
+      }
+      .plain.error-page-wrapper .buttons-container {
+        margin-top:2rem;
+        overflow:hidden;
+      }
+      .plain.error-page-wrapper .buttons-container a {
+        min-height:44px;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+      }
+      .plain.error-page-wrapper .content-container {
+        left:-30px;
+        max-width:400px;
+        opacity:0;
+        position:relative;
+        transition:all .5s ease-out, opacity .5s ease-out;
+      }
+      .plain.error-page-wrapper .content-container-img {
+        margin-left:5.4rem;
+      }
+      .plain.error-page-wrapper .content-container.in {
+        left: 0;
+        opacity:1;
+      }
+      .plain.error-page-wrapper .content-container.in+.content-container-img {
+        margin-left:2rem;
+      }
+      .plain.error-page-wrapper .context {
+        color:#fff;
+        font-size:18px;
+        line-height:1.6;
+        transition:color .2s linear;
+      }
+      .plain.error-page-wrapper .context p {
+        margin:0;
+      }
+      .plain.error-page-wrapper .context p:nth-child(n+2) {
+        margin-top:12px;
+      }
+      .plain.error-page-wrapper .head-line {
+        color:rgba(255,255,255,.7);
+        font-size:48px;
+        font-weight:inherit;
+        letter-spacing:-1px;
+        line-height:60px;
+        margin-bottom:5px;
+        transition:color .2s linear;
+      }
+      .plain.error-page-wrapper .subheader {
+        color:#fff;
+        font-size:36px;
+        font-weight:inherit;
+        line-height:46px;
+        transition:color .2s linear;
+      }
+      .primary-text-color {
+        color:#fff !important;
+      }
+
+      @media screen and (max-width: 485px) {
+        .plain.error-page-wrapper .head-line {
+          font-size:36px;
+          line-height:44px;
+         }
+        .plain.error-page-wrapper .subheader {
+          font-size:2.2rem;
+          line-height:38px;
+         }
+        .plain.error-page-wrapper hr {
+          width:185px;
+          margin:25px 0;
+         }
+        .plain.error-page-wrapper .context {
+          font-size:16px;
+          line-height:1.5;
+         }
+        .plain.error-page-wrapper .buttons-container {
+          margin-top:35px;
+        }
+        .plain.error-page-wrapper .buttons-container a {
+          font-size:14px;
+          padding:10px 20px;
+          width:auto;
+          text-align:center;
+        }
+        .plain.error-page-wrapper .content-container {
+          max-width:100%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .plain.error-page-wrapper .content-container {
+          transition: none;
+          opacity: 1;
+          left: 0;
+        }
+      }
+    </style>
+    <noscript>
+      <style>
+        .plain.error-page-wrapper .content-container {
+          opacity: 1;
+          left: 0;
+        }
+      </style>
+    </noscript>
+  </head>
+
+
+
+  <body class="plain error-page-wrapper background-color">
+    <main>
+      <div class="content-container float-left">
+        <h1 class="head-line">
+            Oops!
+        </h1>
+        <h2 id="subheader" class="subheader primary-text-color">
+            That search has too many filters.
+        </h2>
+        <hr role="presentation" aria-hidden="true">
+        <div class="clearfix"></div>
+
+        <div class="context primary-text-color">
+          <p>
+            To keep this site available, a search can use at most three filters. Remove some
+            filters and try again.
+          </p>
+          <p>
+            Error 403
+          </p>
+        </div>
+        <div class="buttons-container">
+          <a class="border border-white btn btn-light rounded-lg mr-2" href="@path">Start again</a>
+          <a class="border border-white btn btn-danger rounded-lg" href="mailto:libweb@unb.ca?subject=Too%20many%20filters%20-%20newspapers.lib.unb.ca" target="_blank" rel="noopener noreferrer">Report a problem</a>
+        </div>
+      </div>
+      <div class="content-container content-container-img float-left d-none d-lg-block">
+        <img src="https://raw.githubusercontent.com/unb-libraries/static-assets/main/images/pages/page-unavailable.png"
+             alt="" role="presentation">
+      </div>
+    </main>
+
+    <script>
+      // Center the content and fade it in.
+      var content = document.querySelectorAll('.content-container');
+      function center() {
+        var top = (document.body.offsetHeight - content[0].offsetHeight) / 2;
+        content.forEach(function (el) { el.style.top = Math.max(top, 0) + 'px'; });
+      }
+      center();
+      window.addEventListener('resize', center);
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.setTimeout(function () {
+        content.forEach(function (el) { el.classList.add('in'); });
+      }, reduced ? 0 : 500);
+    </script>
+  </body>
+  </html>

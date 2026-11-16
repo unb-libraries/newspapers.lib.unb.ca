@@ -258,6 +258,7 @@
     "drupal/csv_serialization": "^4",
     "drupal/editor_file": "^2",
     "drupal/externalauth": "^2",
+    "drupal/facet_bot_blocker": "^1.0",
     "drupal/facets": "^3",
     "drupal/field_group": "^4@beta",
     "drupal/file_management": "2.1.0",
