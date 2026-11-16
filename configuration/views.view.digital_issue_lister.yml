@@ -1331,14 +1331,14 @@ display:
           multi_type: separator
           multi_separator: ', '
           format_plural_values: {  }
-        page_image:
-          id: page_image
+        first_page_cover:
+          id: first_page_cover
           table: search_api_index_issues
-          field: page_image
+          field: first_page_cover
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: search_api_field
+          plugin_id: issue_cover_image
           label: ''
           exclude: true
           alter:
@@ -1380,30 +1380,10 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
-          type: image
-          settings:
-            image_link: ''
-            image_style: browse_archives
-            image_loading:
-              attribute: lazy
-          group_column: ''
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
+          link_to_item: false
+          use_highlighting: false
           multi_type: separator
-          separator: ', '
-          field_api_classes: false
-          field_rendering: true
-          fallback_handler: search_api
-          fallback_options:
-            link_to_item: false
-            use_highlighting: false
-            multi_type: separator
-            multi_separator: ', '
+          multi_separator: ', '
         nothing_1:
           id: nothing_1
           table: views
@@ -1416,7 +1396,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div class=\"cover-page\">{{ page_image }}</div>\r\n<div class=\"card-body\">\r\n<div class=\"card-title h6\" aria-hidden=\"true\">{{ issue_title }}</div>\r\n<p class=\"card-text\">\r\n{% if first_page_id %}\r\n<a class=\"stretched-link\" href=\"/serials/{{ parent_title_id }}/issues/{{ id }}/pages/{{ first_page_id }}\" hreflang=\"en\">\r\n{% else %}\r\n<a  class=\"stretched-link\" href=\"/serials/{{ parent_title_id }}/issues/{{ id }}\" hreflang=\"en\">\r\n{% endif %}\r\n<small class=\"issue-date\">{{ issue_date }}</small><br>\r\n<span class=\"issue-meta\">\r\n  <small>Volume {{ issue_vol }}</small><span class=\"visually-hidden\">,</span>\r\n  <small><abbr title=\"Number\">No.</abbr> {{ issue_issue }}</small>\r\n</span>\r\n</a>\r\n</p>\r\n</div>"
+            text: "<div class=\"cover-page\">{{ first_page_cover }}</div>\r\n<div class=\"card-body\">\r\n<div class=\"card-title h6\" aria-hidden=\"true\">{{ issue_title }}</div>\r\n<p class=\"card-text\">\r\n{% if first_page_id %}\r\n<a class=\"stretched-link\" href=\"/serials/{{ parent_title_id }}/issues/{{ id }}/pages/{{ first_page_id }}\" hreflang=\"en\">\r\n{% else %}\r\n<a  class=\"stretched-link\" href=\"/serials/{{ parent_title_id }}/issues/{{ id }}\" hreflang=\"en\">\r\n{% endif %}\r\n<small class=\"issue-date\">{{ issue_date }}</small><br>\r\n<span class=\"issue-meta\">\r\n  <small>Volume {{ issue_vol }}</small><span class=\"visually-hidden\">,</span>\r\n  <small><abbr title=\"Number\">No.</abbr> {{ issue_issue }}</small>\r\n</span>\r\n</a>\r\n</p>\r\n</div>"
             make_link: false
             path: ''
             absolute: false

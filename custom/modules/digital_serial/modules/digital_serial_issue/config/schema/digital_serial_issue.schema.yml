@@ -1,0 +1,3 @@
+views.field.issue_cover_image:
+  type: views.field.search_api
+  label: 'Issue cover image (from the indexed first-page image URI)'

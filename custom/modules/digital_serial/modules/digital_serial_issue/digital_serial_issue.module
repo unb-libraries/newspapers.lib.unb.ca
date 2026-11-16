@@ -104,3 +104,25 @@ function digital_serial_issue_preprocess_digital_serial_issue(&$variables) {
   $view->setArguments([$variables['issue_entity']->id()]);
   $variables['page_list'] = $view->render();
 }
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * Adds "First page cover" to the issues index: the indexed first-page image
+ * URI rendered with the browse_archives image style by the issue_cover_image
+ * field plugin, without loading any entity.
+ */
+function digital_serial_issue_views_data_alter(array &$data) {
+  if (empty($data['search_api_index_issues']['first_page_image_uri']['field'])) {
+    return;
+  }
+  $field = $data['search_api_index_issues']['first_page_image_uri']['field'];
+  $field['id'] = 'issue_cover_image';
+  $field['title'] = t('First page cover');
+  $data['search_api_index_issues']['first_page_cover'] = [
+    'title' => t('First page cover'),
+    'help' => t("The issue's first page image, rendered with the browse_archives image style from the indexed URI."),
+    'group' => $data['search_api_index_issues']['first_page_image_uri']['group'] ?? t('Search'),
+    'field' => $field,
+  ];
+}
