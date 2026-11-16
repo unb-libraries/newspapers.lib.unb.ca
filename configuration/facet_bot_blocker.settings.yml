@@ -183,26 +183,22 @@ facet_bot_blocker_html: |
     <main>
       <div class="content-container float-left">
         <h1 class="head-line">
-            Oops!
+            Too many filters
         </h1>
         <h2 id="subheader" class="subheader primary-text-color">
-            That search has too many filters.
+            A search can use up to three filters.
         </h2>
         <hr role="presentation" aria-hidden="true">
         <div class="clearfix"></div>
 
         <div class="context primary-text-color">
           <p>
-            To keep this site available, a search can use at most three filters. Remove some
-            filters and try again.
-          </p>
-          <p>
-            Error 403
+            Go back to the filters you had, or start again with none.
           </p>
         </div>
         <div class="buttons-container">
-          <a class="border border-white btn btn-light rounded-lg mr-2" href="@path">Start again</a>
-          <a class="border border-white btn btn-danger rounded-lg" href="mailto:libweb@unb.ca?subject=Too%20many%20filters%20-%20newspapers.lib.unb.ca" target="_blank" rel="noopener noreferrer">Report a problem</a>
+          <a id="go-back" class="border border-white btn btn-light rounded-lg mr-2" href="@path">Go back to my filters</a>
+          <a class="border border-white btn btn-outline-light rounded-lg" href="@path">Clear all filters</a>
         </div>
       </div>
       <div class="content-container content-container-img float-left d-none d-lg-block">
@@ -212,6 +208,33 @@ facet_bot_blocker_html: |
     </main>
 
     <script>
+      // "Go back to my filters": coming from a page on this site, step back in history, which
+      // restores the filters the visitor had (and their scroll position). Otherwise (a shared or
+      // bookmarked link) keep the first three filters. Without JavaScript the link is @path.
+      (function () {
+        var link = document.getElementById('go-back');
+        var params = new URLSearchParams(window.location.search);
+        var kept = [];
+        var others = new URLSearchParams();
+        params.forEach(function (value, key) {
+          var m = /^f\[(\d+)\]$/.exec(key);
+          if (m) { kept.push([parseInt(m[1], 10), value]); } else { others.append(key, value); }
+        });
+        kept.sort(function (a, b) { return a[0] - b[0]; });
+        kept.slice(0, 3).forEach(function (f, i) { others.append('f[' + i + ']', f[1]); });
+        var query = others.toString();
+        link.setAttribute('href', window.location.pathname + (query ? '?' + query : ''));
+
+        var sameSite = false;
+        try { sameSite = document.referrer && new URL(document.referrer).host === window.location.host; } catch (e) {}
+        if (sameSite && window.history.length > 1) {
+          link.addEventListener('click', function (event) {
+            event.preventDefault();
+            window.history.back();
+          });
+        }
+      })();
+
       // Center the content and fade it in.
       var content = document.querySelectorAll('.content-container');
       function center() {
