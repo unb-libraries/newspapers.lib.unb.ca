@@ -108,11 +108,19 @@ function digital_serial_issue_preprocess_digital_serial_issue(&$variables) {
 /**
  * Implements hook_views_data_alter().
  *
- * Adds "First page cover" to the issues index: the indexed first-page image
- * URI rendered with the browse_archives image style by the issue_cover_image
- * field plugin, without loading any entity.
+ * Lets the issue browser render from Solr alone: issue_date gets a date
+ * fallback handler, and "First page cover" renders the indexed first-page
+ * image URI with the browse_archives image style (issue_cover_image plugin)
+ * without loading any entity.
  */
 function digital_serial_issue_views_data_alter(array &$data) {
+  // Search API maps datetime field items to a plain-text fallback, so turning
+  // off entity field rendering on issue_date would print the raw timestamp.
+  // Use its date handler instead, which formats the indexed value directly.
+  if (isset($data['search_api_index_issues']['issue_date']['field'])) {
+    $data['search_api_index_issues']['issue_date']['field']['fallback_handler'] = 'search_api_date';
+  }
+
   if (empty($data['search_api_index_issues']['first_page_image_uri']['field'])) {
     return;
   }

@@ -1191,9 +1191,12 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          field_rendering: true
-          fallback_handler: search_api
+          field_rendering: false
+          fallback_handler: search_api_date
           fallback_options:
+            date_format: custom
+            custom_date_format: 'F d, Y'
+            timezone: UTC
             link_to_item: false
             use_highlighting: false
             multi_type: separator
@@ -1262,9 +1265,12 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-          field_rendering: true
-          fallback_handler: search_api
+          field_rendering: false
+          fallback_handler: search_api_date
           fallback_options:
+            date_format: custom
+            custom_date_format: 'F Y'
+            timezone: UTC
             link_to_item: false
             use_highlighting: false
             multi_type: separator
