@@ -1,0 +1,31 @@
+diff --git a/src/EventSubscriber/FacetBotBlockerEventSubscriber.php b/src/EventSubscriber/FacetBotBlockerEventSubscriber.php
+index d693722..1492b2f 100644
+--- a/src/EventSubscriber/FacetBotBlockerEventSubscriber.php
++++ b/src/EventSubscriber/FacetBotBlockerEventSubscriber.php
+@@ -9,6 +9,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
+ use Drupal\Core\Extension\ModuleHandlerInterface;
+ use Drupal\Core\Session\AccountProxyInterface;
+ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
++use Symfony\Component\HttpFoundation\IpUtils;
+ use Symfony\Component\HttpFoundation\Response;
+ use Symfony\Component\HttpKernel\Event\RequestEvent;
+ use Symfony\Component\HttpKernel\KernelEvents;
+@@ -153,6 +154,18 @@ class FacetBotBlockerEventSubscriber implements EventSubscriberInterface {
+       $is_blocked = TRUE;
+     }
+ 
++    // Clients in facet_bot_blocker_exempt_cidrs may use any number of facets.
++    // The client is the X-Forwarded-For header, which the UNB Libraries Gateway
++    // replaces with the connecting address alone; a list (a header Envoy
++    // appended to rather than replaced) is not trusted.
++    if ($is_blocked) {
++      $exempt = $immutableConfig->get('facet_bot_blocker_exempt_cidrs') ?: [];
++      $client = trim((string) $request->headers->get('X-Forwarded-For', ''));
++      if ($exempt && $client !== '' && !str_contains($client, ',') && IpUtils::checkIp($client, $exempt)) {
++        $is_blocked = FALSE;
++      }
++    }
++
+     // If blocked, build and set a response. Otherwise, increment "allowed"
+     // counter if there's a facet param.
+     if ($is_blocked) {

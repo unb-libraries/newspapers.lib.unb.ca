@@ -76,6 +76,9 @@
         "Extend Daterange functionality": "https://www.drupal.org/files/issues/2024-06-26/2794481-262.patch",
         "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch"
       },
+      "drupal/facet_bot_blocker": {
+        "Exempt client ranges from the facet limit": "https://raw.githubusercontent.com/unb-libraries/newspapers.lib.unb.ca/dev/build/patches/facet_bot_blocker_exempt_cidrs.patch"
+      },
       "drupal/file_management": {
         "Drupal 11 compatibility": "https://raw.githubusercontent.com/unb-libraries/newspapers.lib.unb.ca/dev/build/patches/file_management_2.x_d11.patch"
       },
