@@ -422,11 +422,11 @@ class HomePageForm extends FormBase {
     $form['#cache'] = [
       'keys' => ['newspapers_frontpage'],
       'contexts' => ['url'],
-      // The stats section counts digital titles, issues and pages.
+      // The stats section shows counts that cron refreshes. Listing tags such
+      // as digital_serial_page_list would evict the front page on every page
+      // saved during an import.
       'tags' => [
-        'digital_serial_title_list',
-        'digital_serial_issue_list',
-        'digital_serial_page_list',
+        NEWSPAPERS_CORE_STATS_CACHE_TAG,
       ],
       'max-age' => Cache::PERMANENT,
     ];
@@ -492,46 +492,15 @@ class HomePageForm extends FormBase {
    *   The string value of the digital title stats HTML markup.
    */
   private function getStatsMarkup(): string {
-    // Fetch digital serial counts for the stats section.
-    $database = \Drupal::database();
-    try {
-      $pages_row_count = number_format($database
-        ->select('digital_serial_page', 'p')
-        ->countQuery()
-        ->execute()
-        ->fetchField()
-      );
+    // Counted by cron, see _newspapers_core_get_frontpage_stats().
+    $counts = _newspapers_core_get_frontpage_stats();
+    $formatted = [];
+    foreach (['titles', 'issues', 'pages'] as $key) {
+      $formatted[$key] = isset($counts[$key]) ? number_format($counts[$key]) : 'Unknown';
     }
-    catch (\Exception $e) {
-      \Drupal::logger('type')->error($e->getMessage());
-      $pages_row_count = 'Unknown';
-    }
-    try {
-      $issues_row_count = number_format($database
-        ->select('digital_serial_issue', 'i')
-        ->countQuery()
-        ->execute()
-        ->fetchField()
-      );
-    }
-    catch (\Exception $e) {
-      \Drupal::logger('type')->error($e->getMessage());
-      $issues_row_count = 'Unknown';
-    }
-    try {
-      $sub_query = $database->select('digital_serial_issue', 'i')->fields('i', ['parent_title']);
-      $query = $database->select('digital_serial_title', 't');
-      $titles_row_count = number_format($query
-        ->condition('t.id', $sub_query, 'IN')
-        ->countQuery()
-        ->execute()
-        ->fetchField()
-      );
-    }
-    catch (\Exception $e) {
-      \Drupal::logger('type')->error($e->getMessage());
-      $titles_row_count = 'Unknown';
-    }
+    $titles_row_count = $formatted['titles'];
+    $issues_row_count = $formatted['issues'];
+    $pages_row_count = $formatted['pages'];
 
     return '<aside class="bg-light col-lg-4 p-3 stats">' .
       '<table class="table table-sm mb-3"><caption class="visually-hidden">Digitized Content</caption>' .

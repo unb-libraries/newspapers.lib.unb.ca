@@ -7,7 +7,9 @@
 
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
@@ -25,9 +27,30 @@ use Drupal\views\ViewExecutable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
+ * Cache tag for content chosen by today's date, or at random for the day.
+ *
+ * The internal page cache keeps anonymous pages until a tag on them is
+ * invalidated and ignores max-age, so cron invalidates this tag when the date
+ * changes.
+ */
+const NEWSPAPERS_CORE_DAILY_CACHE_TAG = 'newspapers_core:daily';
+
+/**
+ * Cache tag for the digital content counts on the front page.
+ */
+const NEWSPAPERS_CORE_STATS_CACHE_TAG = 'newspapers_core:frontpage_stats';
+
+/**
+ * How long the front page counts are kept before cron counts again.
+ */
+const NEWSPAPERS_CORE_STATS_LIFETIME = 3600;
+
+/**
  * Implements hook_cron().
  */
 function newspapers_core_cron() {
+  _newspapers_core_refresh_daily_cache();
+  _newspapers_core_get_frontpage_stats(TRUE);
   if (_newspapers_core_ongoing_publication_dates_needs_update()) {
     update_ongoing_publication_dates();
     \Drupal::state()->set('newspapers_core.last_ongoing_run', time());
@@ -39,6 +62,112 @@ function newspapers_core_cron() {
   if (_newspapers_core_empty_issue_needs_deleting()) {
     delete_digital_issues_with_no_pages();
     \Drupal::state()->set('newspapers_core.last_empty_issue_run', time());
+  }
+}
+
+/**
+ * Returns today's date in the site's timezone, as Y-m-d.
+ */
+function _newspapers_core_today(): string {
+  return (new DrupalDateTime())->format('Y-m-d');
+}
+
+/**
+ * Returns the number of seconds until the next day starts.
+ */
+function _newspapers_core_seconds_until_tomorrow(): int {
+  $now = new DrupalDateTime();
+  $tomorrow = new DrupalDateTime('tomorrow');
+  return max(1, $tomorrow->getTimestamp() - $now->getTimestamp());
+}
+
+/**
+ * Invalidates the daily cache tag once the date has changed.
+ */
+function _newspapers_core_refresh_daily_cache(): void {
+  $state = \Drupal::state();
+  $today = _newspapers_core_today();
+  if ($state->get('newspapers_core.daily_cache_date') !== $today) {
+    Cache::invalidateTags([NEWSPAPERS_CORE_DAILY_CACHE_TAG]);
+    $state->set('newspapers_core.daily_cache_date', $today);
+  }
+}
+
+/**
+ * Returns the number of digital titles, issues and pages.
+ *
+ * Counting every page is slow on a large table, so the counts are kept in
+ * state and only counted again by cron, at most every
+ * NEWSPAPERS_CORE_STATS_LIFETIME seconds. A change invalidates
+ * NEWSPAPERS_CORE_STATS_CACHE_TAG.
+ *
+ * @param bool $refresh
+ *   TRUE to count again if the stored counts are older than their lifetime.
+ *
+ * @return array
+ *   The counts, keyed by titles, issues and pages. A count that failed is
+ *   NULL.
+ */
+function _newspapers_core_get_frontpage_stats(bool $refresh = FALSE): array {
+  $state = \Drupal::state();
+  $stored = $state->get('newspapers_core.frontpage_stats');
+  $now = \Drupal::time()->getRequestTime();
+  if (!empty($stored) && (!$refresh || $now - $stored['time'] < NEWSPAPERS_CORE_STATS_LIFETIME)) {
+    return $stored['counts'];
+  }
+
+  $database = \Drupal::database();
+  $counts = [];
+  $queries = [
+    'titles' => function () use ($database) {
+      $issue_titles = $database->select('digital_serial_issue', 'i')->fields('i', ['parent_title']);
+      return $database->select('digital_serial_title', 't')
+        ->condition('t.id', $issue_titles, 'IN')
+        ->countQuery();
+    },
+    'issues' => fn() => $database->select('digital_serial_issue', 'i')->countQuery(),
+    'pages' => fn() => $database->select('digital_serial_page', 'p')->countQuery(),
+  ];
+  foreach ($queries as $key => $query) {
+    try {
+      $counts[$key] = (int) $query()->execute()->fetchField();
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('newspapers_core')->error($e->getMessage());
+      $counts[$key] = NULL;
+    }
+  }
+
+  $state->set('newspapers_core.frontpage_stats', ['counts' => $counts, 'time' => $now]);
+  if (!empty($stored) && $stored['counts'] !== $counts) {
+    Cache::invalidateTags([NEWSPAPERS_CORE_STATS_CACHE_TAG]);
+  }
+  return $counts;
+}
+
+/**
+ * Implements hook_block_build_BASE_BLOCK_ID_alter() for views_block.
+ */
+function newspapers_core_block_build_views_block_alter(array &$build, BlockPluginInterface $block) {
+  // The featured publication is picked at random, which makes its view
+  // uncacheable. For logged-in users the block was then built on every
+  // request, while the anonymous page cache, ignoring max-age, kept one pick
+  // indefinitely. Keep a pick for the day instead.
+  if ($block->getDerivativeId() === 'featured-publication') {
+    $build['#cache']['max-age'] = _newspapers_core_seconds_until_tomorrow();
+    $build['#cache']['tags'][] = NEWSPAPERS_CORE_DAILY_CACHE_TAG;
+  }
+}
+
+/**
+ * Implements hook_views_post_render().
+ */
+function newspapers_core_views_post_render(ViewExecutable $view, &$output) {
+  // The view's own render element carries the random sort's max-age of 0,
+  // which would bubble up through the block above.
+  if ($view->id() === 'featured' && is_array($output)) {
+    $output['#cache']['max-age'] = _newspapers_core_seconds_until_tomorrow();
+    $output['#cache']['tags'][] = NEWSPAPERS_CORE_DAILY_CACHE_TAG;
   }
 }
 
@@ -576,6 +705,12 @@ function newspapers_core_entity_presave(EntityInterface $entity) {
 function newspapers_core_preprocess_node__publication(&$variables) {
   $node = $variables['elements']['#node'];
 
+  // The node's render cache holds this output for every visitor. Track the
+  // entities and config it shows; values that depend on the visitor's request
+  // are filled in by newspapers_core/request_context.
+  $cacheability = CacheableMetadata::createFromRenderArray($variables)
+    ->addCacheableDependency(\Drupal::config('system.site'));
+
   $variables['publication_date_label'] = t("Dates of Publication");
   $variables['publication_date_value'] = _newspapers_core_get_daterange($node, TRUE);
 
@@ -636,6 +771,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $publishers = $node->get('field_publisher');
   $publisher_values = [];
   foreach ($publishers as $publisher) {
+    $cacheability->addCacheableDependency($publisher->entity);
     $publisher_values[] = $publisher
       ->entity
       ->getName();
@@ -653,6 +789,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $editors = $node->get('field_editor');
   $editor_values = [];
   foreach ($editors as $editor) {
+    $cacheability->addCacheableDependency($editor->entity);
     $editor_values[] = $editor
       ->entity
       ->getName();
@@ -668,6 +805,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   foreach ($microfilmers as $microfilmer) {
     $microfilmed_by_value =  $microfilmer->entity;
     if (!empty($microfilmed_by_value)) {
+      $cacheability->addCacheableDependency($microfilmed_by_value);
       $microfilmed_by_values[] = $microfilmed_by_value->getName();
     }
   }
@@ -732,6 +870,12 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   if ($holdings) {
     foreach ($holdings as $type => $type_holdings) {
       foreach ($type_holdings as $type_holding) {
+        $cacheability->addCacheableDependency($type_holding);
+        foreach (['holding_type', 'holding_institution', 'holding_digital_title'] as $reference) {
+          if ($type_holding->hasField($reference) && !empty($type_holding->get($reference)->entity)) {
+            $cacheability->addCacheableDependency($type_holding->get($reference)->entity);
+          }
+        }
         // Check if parent has been initially set.
         if (empty($variables['holding'][$type])) {
           $variables['holding'][$type] = [];
@@ -757,6 +901,7 @@ function newspapers_core_preprocess_node__publication(&$variables) {
     ->getStorage('webform')
     ->load('report_additional_info_errs');
   if ($webform_report != NULL) {
+    $cacheability->addCacheableDependency($webform_report);
     // Retrieve Webform URL alias for Report webform.
     $report_url = $webform_report->getSetting('page_submit_path');
     if (!empty($report_url)) {
@@ -776,7 +921,8 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $citation_site_name = \Drupal::config('system.site')->get('name');
   $cited_title = $node->getTitle();
   $citation_text = "<em>$cited_title</em>. <em>$citation_site_name</em>, accessed " .
-    date_create('now')->format('F d, Y') . ", $citation_path.";
+    _newspapers_core_get_citation_accessed_date_markup() . ", $citation_path.";
+  $cacheability->addCacheContexts(['url.site', 'url.path']);
 
   $citation_btn_markup = '<button type="button" class="btn btn-link" data-target="#citation-modal" data-toggle="modal">
     <span class="fa-solid fa-quote-left mr-1" aria-hidden="true"></span>Cite this record</button>';
@@ -791,27 +937,29 @@ function newspapers_core_preprocess_node__publication(&$variables) {
   $variables['citation_modal'] = _newspapers_core_get_citation_render_array($cited_title, $citation_text);
 
   $view_mode = $variables['view_mode'];
+  $variables['back_link'] = NULL;
   if ($view_mode != 'featured') {
-    $referer = \Drupal::request()->server->get('HTTP_REFERER');
-    if ((strpos($referer, 'search') !== FALSE)) {
-      $link_text = t("Back to search results");
-      $back_link = Url::fromUri($referer);
-      $link_options = [
-        'attributes' => [
-          'class' => [
-            'back-results',
-          ],
+    // Hidden until newspapers_core/request_context finds the visitor came from
+    // a search on this site, and points it there.
+    $variables['back_link'] = [
+      '#type' => 'link',
+      '#title' => t('Back to search results'),
+      '#url' => Url::fromRoute('view.search.search_page'),
+      '#attributes' => [
+        'class' => [
+          'back-results',
         ],
-      ];
-      $back_link->setOptions($link_options);
-      $link = Link::fromTextAndUrl($link_text, $back_link);
-      $variables['back_link'] = $link->toRenderable();
-    }
-    else {
-      $variables['back_link'] = NULL;
-    }
+        'data-back-to-search' => t('Back to search results'),
+      ],
+      '#attached' => [
+        'library' => [
+          'newspapers_core/request_context',
+        ],
+      ],
+    ];
   }
 
+  $cacheability->applyTo($variables);
 }
 
 /**
@@ -1280,11 +1428,13 @@ function _newspapers_core_get_publication_holdings(int $nid) {
       $dst_result = $dst_query->execute();
       // Note: there should be a maximum of ONE digital serial title.
       $dst_id = reset($dst_result);
-      $dsi_query = \Drupal::entityQuery('digital_serial_issue')
+      // Only whether one exists matters, not the possibly thousands of IDs.
+      $dsi_ids = empty($dst_id) ? [] : \Drupal::entityQuery('digital_serial_issue')
         ->accessCheck(TRUE)
         ->condition('status', 1)
-        ->condition('parent_title', $dst_id);
-      $dsi_ids = $dsi_query->execute();
+        ->condition('parent_title', $dst_id)
+        ->range(0, 1)
+        ->execute();
       // Exclude holding if no digital serial issues found for current digital serial title.
       if (empty($dsi_ids)) {
         continue;
@@ -2212,13 +2362,12 @@ function _newspapers_core_get_digital_holding_issue_count($holding): int {
   if (empty($holding->get('holding_digital_title')->entity)) {
     return 0;
   }
-  return count(
-    _newspapers_core_get_titles_issues(
-      [
-        $holding->get('holding_digital_title')->entity->id()
-      ]
-    )
-  );
+  return (int) \Drupal::database()
+    ->select('digital_serial_issue', 'i')
+    ->condition('i.parent_title', $holding->get('holding_digital_title')->entity->id())
+    ->countQuery()
+    ->execute()
+    ->fetchField();
 }
 
 /**
