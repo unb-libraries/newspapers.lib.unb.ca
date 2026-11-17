@@ -163,9 +163,9 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
     $entity = $item->getDatasource();
     if (!empty($entity) && $entity->getEntityTypeId() == 'digital_serial_page') {
       $page_entity = $item->getOriginalObject()->getValue();
-      $issue_entity = $page_entity->getParentIssue();
-      $digital_title_entity = $issue_entity->getParentTitle();
-      $publication_entity = $digital_title_entity->getParentPublication();
+      $issue_entity = $page_entity?->getParentIssue();
+      $digital_title_entity = $issue_entity?->getParentTitle();
+      $publication_entity = $digital_title_entity?->getParentPublication();
 
       if (
         !empty($page_entity) &&
@@ -237,33 +237,41 @@ class IndexPageParentPageInfo extends ProcessorPluginBase {
           $field->addValue($issue_entity->getIssueIssue());
         }
 
-        // Issue Country Location.
-        $fields = $this->getFieldsHelper()
-          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_country');
-        $country_repo = new CountryRepository();
-        $country_code = $publication_entity->get('field_place_of_publication')->first()->getCountryCode();
-        $country_list = $country_repo->getList();
-        $country_name = $country_list[$country_code];
-        foreach ($fields as $field) {
-          $field->addValue($country_name);
-        }
+        // A publication without a place of publication has no location values.
+        $place = $publication_entity->get('field_place_of_publication')->first();
+        if (!empty($place)) {
+          // Issue Country Location.
+          $fields = $this->getFieldsHelper()
+            ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_country');
+          $country_repo = new CountryRepository();
+          $country_code = $place->getCountryCode();
+          $country_list = $country_repo->getList();
+          $country_name = $country_list[$country_code] ?? NULL;
+          if (!empty($country_name)) {
+            foreach ($fields as $field) {
+              $field->addValue($country_name);
+            }
+          }
 
-        // Issue Province Location.
-        $fields = $this->getFieldsHelper()
-          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_administrative_area');
-        $subdivision_repo = new SubdivisionRepository();
-        $administrative_area_code = $publication_entity->get('field_place_of_publication')->first()->getAdministrativeArea();
-        $administrative_area_list = $subdivision_repo->getList([$country_code]);
-        $administrative_area = $administrative_area_list[$administrative_area_code];
-        foreach ($fields as $field) {
-          $field->addValue($administrative_area);
-        }
+          // Issue Province Location.
+          $fields = $this->getFieldsHelper()
+            ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_administrative_area');
+          $subdivision_repo = new SubdivisionRepository();
+          $administrative_area_code = $place->getAdministrativeArea();
+          $administrative_area_list = empty($country_code) ? [] : $subdivision_repo->getList([$country_code]);
+          $administrative_area = $administrative_area_list[$administrative_area_code] ?? NULL;
+          if (!empty($administrative_area)) {
+            foreach ($fields as $field) {
+              $field->addValue($administrative_area);
+            }
+          }
 
-        // Issue City Location.
-        $fields = $this->getFieldsHelper()
-          ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_locality');
-        foreach ($fields as $field) {
-          $field->addValue($publication_entity->get('field_place_of_publication')->first()->getLocality());
+          // Issue City Location.
+          $fields = $this->getFieldsHelper()
+            ->filterForPropertyPath($item->getFields(), NULL, 'parent_issue_locality');
+          foreach ($fields as $field) {
+            $field->addValue($place->getLocality());
+          }
         }
       }
     }
