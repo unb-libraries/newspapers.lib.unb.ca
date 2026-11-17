@@ -575,27 +575,26 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   }
 
   /**
-   * Reindexes this issue in solr.
+   * Queues this issue's pages for reindexing in solr.
    */
   public function reIndexInSolr() {
     $page_ids = $this->getChildPageIds();
-    if (!empty($page_ids)) {
-      $page_list = array_values($page_ids);
-      $first_entity_id = array_shift($page_list);
-      $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_page');
-      $first_page_entity = $storage->load($first_entity_id);
-      $index_list = ContentEntity::getIndexesForEntity($first_page_entity);
-      $language_page_ids = array_map(
-        function ($val) {
-          return $val . ':en';
-        },
-      $page_ids);
-      $page_entities = $storage->loadMultiple($page_list);
-      if (!empty($page_entities) && !empty($index_list)) {
-        foreach ($index_list as $index) {
-          $index->trackItemsUpdated("entity:digital_serial_page", $language_page_ids);
-        }
-      }
+    if (empty($page_ids)) {
+      return;
+    }
+    $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_page');
+    $first_page_entity = $storage->load(reset($page_ids));
+    if (empty($first_page_entity)) {
+      return;
+    }
+    $language_page_ids = array_map(
+      function ($val) {
+        return $val . ':en';
+      },
+      array_values($page_ids)
+    );
+    foreach (ContentEntity::getIndexesForEntity($first_page_entity) as $index) {
+      $index->trackItemsUpdated("entity:digital_serial_page", $language_page_ids);
     }
   }
 
@@ -737,6 +736,25 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     $this->createStoragePath();
     parent::postSave($storage, $update);
+
+    // The pages index copies these issue values into each page through a
+    // processor, which Search API cannot track. Reindex the pages when one of
+    // them changes, whichever way the issue was saved.
+    $original = $this->getOriginal();
+    if ($update && !empty($original)) {
+      $fields_indexed_with_pages = [
+        'issue_vol',
+        'issue_issue',
+        'issue_date',
+        'parent_title',
+      ];
+      foreach ($fields_indexed_with_pages as $field_name) {
+        if (!$this->get($field_name)->equals($original->get($field_name))) {
+          $this->reIndexInSolr();
+          break;
+        }
+      }
+    }
   }
 
 }
