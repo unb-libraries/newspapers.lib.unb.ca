@@ -4,7 +4,7 @@ namespace Drupal\digital_serial_page\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\digital_serial_page\PageAssetManagement;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * GetMissingPageAssetsController object.
@@ -21,22 +21,11 @@ class GetMissingPageAssetsController extends ControllerBase {
    * @param int $skip
    *   The number of pages to skip evaluating. Defaults to 0.
    *
-   * @return mixed
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
   public function serveMissingFilesWithMissingPdfs($limit = 50, $skip = 0) {
-    $missing_pages = PageAssetManagement::getMissingPdfPages(self::PERSISTENT_DRUPAL_FILE_ROOT, $limit, $skip);
-    $response = new Response();
-
-    if (empty($missing_pages)) {
-      $response->setContent(json_encode([]));
-      $response->headers->set('Content-Type', 'application/json');
-      return $response;
-    }
-
-    $response->setContent(json_encode($missing_pages));
-    $response->headers->set('Content-Type', 'application/json');
-    return $response;
+    return $this->buildResponse(PageAssetManagement::getMissingPdfPages(self::PERSISTENT_DRUPAL_FILE_ROOT, $limit, $skip));
   }
 
   /**
@@ -47,22 +36,35 @@ class GetMissingPageAssetsController extends ControllerBase {
    * @param int $skip
    *   The number of pages to skip evaluating. Defaults to 0.
    *
-   * @return mixed
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
    *   The response.
    */
   public function serveMissingFilesWithMissingDzis($limit = 50, $skip = 0) {
-    $missing_pages = PageAssetManagement::getMissingDziPages(self::PERSISTENT_DRUPAL_FILE_ROOT, $limit, $skip);
-    $response = new Response();
+    return $this->buildResponse(PageAssetManagement::getMissingDziPages(self::PERSISTENT_DRUPAL_FILE_ROOT, $limit, $skip));
+  }
 
-    if (empty($missing_pages)) {
-      $response->setContent(json_encode([]));
-      $response->headers->set('Content-Type', 'application/json');
-      return $response;
+  /**
+   * Builds the response for a missing-asset scan.
+   *
+   * A scan that ran out of time without finding a page answers 503, so
+   * clients do not read an empty list as "nothing is missing". The scan has
+   * saved its progress, so retrying continues where it stopped.
+   *
+   * @param array $result
+   *   The result of PageAssetManagement::getPagesWithMissingAsset().
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   The response.
+   */
+  protected function buildResponse(array $result) {
+    if (empty($result['pages']) && !$result['complete']) {
+      return new JsonResponse(
+        ['error' => 'The scan for missing assets ran out of time before finding a page. It saved its progress; retry the request.'],
+        503,
+        ['Retry-After' => '0'],
+      );
     }
-
-    $response->setContent(json_encode($missing_pages));
-    $response->headers->set('Content-Type', 'application/json');
-    return $response;
+    return new JsonResponse($result['pages']);
   }
 
 }

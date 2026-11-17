@@ -1,0 +1,5 @@
+services:
+  digital_serial_page.commands:
+    class: \Drupal\digital_serial_page\Drush\PageAssetScanCommands
+    tags:
+    - { name: drush.command }
