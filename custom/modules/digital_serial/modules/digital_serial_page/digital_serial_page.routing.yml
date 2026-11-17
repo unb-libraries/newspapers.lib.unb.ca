@@ -60,9 +60,13 @@ digital_serial_page.with_missing_pdf:
     _controller: '\Drupal\digital_serial_page\Controller\GetMissingPageAssetsController::serveMissingFilesWithMissingPdfs'
     _title: 'Pages With Missing PDFs'
   requirements:
-    _permission: 'view published serial page entities'
+    # Each request can walk every page image on disk. Limited to the accounts
+    # that ingest pages, which systems-toolkit uses over basic auth.
+    _permission: 'add serial page entities'
     limit: '\d+'
     skip: '\d+'
+  options:
+    _auth: ['basic_auth', 'cookie']
 
 digital_serial_page.with_missing_dzi:
   path: '/serials_pages/with_missing_dzi/{limit}/{skip}'
@@ -70,6 +74,10 @@ digital_serial_page.with_missing_dzi:
     _controller: '\Drupal\digital_serial_page\Controller\GetMissingPageAssetsController::serveMissingFilesWithMissingDzis'
     _title: 'Pages With Missing DZI Assets'
   requirements:
-    _permission: 'view published serial page entities'
+    # Each request can walk every page image on disk. Limited to the accounts
+    # that ingest pages, which systems-toolkit uses over basic auth.
+    _permission: 'add serial page entities'
     limit: '\d+'
     skip: '\d+'
+  options:
+    _auth: ['basic_auth', 'cookie']
