@@ -7,6 +7,7 @@
 
 use Drupal\Component\Utility\Xss;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemList;
@@ -1536,6 +1537,13 @@ function _newspapers_core_get_rendered_title_history(Node $node, bool $supplemen
     return NULL;
   }
 
+  // Family members are listed by title and dates, and a publication joining
+  // or leaving the family changes the list.
+  $cache_tags = ['taxonomy_term:' . $term_id, 'node_list:publication'];
+  foreach ($family_nodes as $family_node) {
+    $cache_tags = Cache::mergeTags($cache_tags, $family_node->getCacheTags());
+  }
+
   foreach ($family_nodes as $family_node) {
     $field_start_date = $family_node
       ->get('field_first_issue_date')
@@ -1620,9 +1628,13 @@ function _newspapers_core_get_rendered_title_history(Node $node, bool $supplemen
   }
 
   if ($supplemental_titles) {
+    $render_array_family['#cache']['tags'] = $cache_tags;
     return $render_array_family;
   } else {
     $render = [
+      '#cache' => [
+        'tags' => $cache_tags,
+      ],
       '#theme' => 'container',
       '#attributes' => [
         'class' => [
@@ -2124,6 +2136,20 @@ return [
 }
 
 /**
+ * Returns the markup for the date a citation was accessed.
+ *
+ * Cached pages are shared between visitors and days, so the server writes a
+ * placeholder and newspapers_core/request_context puts in the visitor's date.
+ * The citation's copy button gets the same replacement.
+ *
+ * @return string
+ *   The placeholder markup.
+ */
+function _newspapers_core_get_citation_accessed_date_markup(): string {
+  return '<span class="citation-accessed-date">[date accessed]</span>';
+}
+
+/**
  * Removes a directory recursively.
  *
  * The recursive remove is potentially dangerous but is mitigated by string
@@ -2296,6 +2322,9 @@ function _newspapers_core_get_rendered_social_links(string $title, int $svg_size
     $emailSVGMarkup,
     $mailto_url_object
   )->toRenderable();
+
+  // The links share the current URL, query string included.
+  $build['#cache']['contexts'][] = 'url';
 
   return $build;
 }

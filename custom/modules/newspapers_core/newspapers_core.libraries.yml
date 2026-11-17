@@ -14,6 +14,7 @@ copy_citation:
     js/newspapers_core.copy_citation.min.js: { minified: true }
   dependencies:
     - clipboardjs/drupal
+    - newspapers_core/request_context
 
 facet_loading:
   js:
@@ -34,6 +35,13 @@ link_button:
     js/newspapers_core.a11y_link_button.js: {}
   dependencies:
     - core/jquery
+
+request_context:
+  js:
+    js/newspapers_core.request_context.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
 
 pubform:
   css:

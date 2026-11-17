@@ -2,6 +2,7 @@
 
 namespace Drupal\digital_serial_page\Entity;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -463,6 +464,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $this->deleteDziFiles();
     $this->deletePdfFile();
     $this->markParentIssueForReindex();
+    $this->invalidateParentIssueCache();
     parent::delete();
   }
 
@@ -471,10 +473,55 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     $this->movePageImageToPermanentStorage(TRUE);
+    $this->deleteStaleGeneratedAssets();
+    $this->markParentIssueForReindex();
+    $this->invalidateParentIssueCache();
+    parent::postSave($storage, $update);
+  }
+
+  /**
+   * Removes generated DZI tiles and PDFs that no longer match the page.
+   *
+   * Both are made from the page image and stored under the page's title and
+   * issue. Saves that change neither, such as the page_sort fix in cron or a
+   * metadata edit, keep them, so they need not be generated again.
+   */
+  protected function deleteStaleGeneratedAssets() {
+    $original = $this->getOriginal();
+    if (!empty($original)) {
+      $image_changed = $this->get('page_image')->target_id != $original->get('page_image')->target_id;
+      $moved = $this->get('parent_issue')->target_id != $original->get('parent_issue')->target_id;
+      if (!$image_changed && !$moved) {
+        return;
+      }
+      // Assets of the previous image or location would otherwise be orphaned.
+      if (!empty($original->getPageImage()) && !empty($original->getParentIssue())) {
+        $original->deleteDziFiles();
+        $original->deletePdfFile();
+      }
+    }
     $this->deleteDziFiles();
     $this->deletePdfFile();
-    $this->markParentIssueForReindex();
-    parent::postSave($storage, $update);
+  }
+
+  /**
+   * Invalidates the cache of the page's issue, and its previous one if moved.
+   *
+   * Issue displays and every page viewer in the issue show the page count and
+   * the previous and next pages, which change as pages are added, moved,
+   * reordered or removed.
+   */
+  protected function invalidateParentIssueCache() {
+    $tags = [];
+    foreach ([$this, $this->getOriginal()] as $version) {
+      $issue = $version?->get('parent_issue')->entity;
+      if (!empty($issue)) {
+        $tags = Cache::mergeTags($tags, $issue->getCacheTagsToInvalidate());
+      }
+    }
+    if (!empty($tags)) {
+      Cache::invalidateTags($tags);
+    }
   }
 
   /**

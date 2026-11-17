@@ -61,10 +61,9 @@ class SerialPageForm extends ContentEntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     /* @var $entity \Drupal\digital_serial_page\Entity\SerialPage */
     $entity = &$this->entity;
+    // The page and its issue invalidate their own cache tags on save, so the
+    // displays showing them update without flushing every cache.
     $this->saveAndReportSaveAction($form, $form_state, $entity);
-
-    // Clear cache after save so page added in UI immediately shows in displays.
-    drupal_flush_all_caches();
 
     // Redirect back to serial page list.
     $form_state->setRedirect(

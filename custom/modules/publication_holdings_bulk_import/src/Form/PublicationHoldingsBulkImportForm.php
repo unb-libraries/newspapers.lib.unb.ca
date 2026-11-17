@@ -150,9 +150,12 @@ class PublicationHoldingsBulkImportForm extends FormBase {
       $import_id,
       $file_path
     );
-    drupal_flush_all_caches();
+    // The migration was just written to config, so drop the cached migration
+    // definitions to load it. Holdings refresh their publications as they save.
+    $migration_manager = \Drupal::service('plugin.manager.migration');
+    $migration_manager->clearCachedDefinitions();
 
-    $migration = \Drupal::service('plugin.manager.migration')->createInstance($migrateObject->importId);
+    $migration = $migration_manager->createInstance($migrateObject->importId);
     $map = $migration->getIdMap();
     $source_plugin = $migration->getSourcePlugin();
     $source_rows = $source_plugin->count();

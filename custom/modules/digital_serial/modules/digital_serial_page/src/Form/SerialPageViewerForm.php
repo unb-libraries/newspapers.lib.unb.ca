@@ -2,6 +2,7 @@
 
 namespace Drupal\digital_serial_page\Form;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityMalformedException;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -23,6 +24,20 @@ class SerialPageViewerForm extends FormBase {
   use StringTranslationTrait;
 
   /**
+   * The cacheability of the viewer, gathered while it is built.
+   *
+   * @var \Drupal\Core\Cache\CacheableMetadata
+   */
+  protected $cacheability;
+
+  /**
+   * Whether a generated asset (tiles, image download or PDF) is missing.
+   *
+   * @var bool
+   */
+  protected $assetsIncomplete = FALSE;
+
+  /**
    * {@inheritdoc}
    */
   public function getFormId() {
@@ -34,7 +49,26 @@ class SerialPageViewerForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, ?SerialTitleInterface $digital_serial_title = NULL, ?SerialIssueInterface $digital_serial_issue = NULL, ?SerialPageInterface $digital_serial_page = NULL) {
     $form = [];
-    $referrer = \Drupal::request()->server->get('HTTP_REFERER');
+    $this->assetsIncomplete = FALSE;
+    $publication = $digital_serial_title->getParentPublication();
+
+    // Shown to every visitor of the page's URL, so it must not depend on
+    // anything else in the request. The referrer, the browser and today's date
+    // are applied by JavaScript instead. The issue's cache tag covers its page
+    // count and the previous and next pages, as SerialPage invalidates it.
+    $this->cacheability = (new CacheableMetadata())
+      ->addCacheContexts(['url.query_args:highlight', 'url.site'])
+      ->addCacheableDependency($digital_serial_title)
+      ->addCacheableDependency($digital_serial_issue)
+      ->addCacheableDependency($digital_serial_page)
+      ->addCacheableDependency($this->config('system.site'));
+    if (!empty($publication)) {
+      $this->cacheability->addCacheableDependency($publication);
+    }
+    $page_image_file = $digital_serial_page->get('page_image')->entity;
+    if (!empty($page_image_file)) {
+      $this->cacheability->addCacheableDependency($page_image_file);
+    }
 
     $prev_next = $this->getPrevNextPageUrls(
       $digital_serial_title->id(),
@@ -51,19 +85,15 @@ class SerialPageViewerForm extends FormBase {
     );
     global $base_url;
 
-    if (strpos($referrer, 'search') !== FALSE) {
-      $back_text = $this->t('Back to search results');
-      $url = Url::fromUri($referrer);
-    }
-    else {
-      $back_text = [
-        '#type' => 'html_tag',
-        '#tag' => 'span',
-        '#value' => $this->t('Back to Digital Issues'),
-      ];
-      $uri = "internal:/serials/browse/{$digital_serial_title->id()}";
-      $url = Url::fromUri($uri);
-    }
+    // newspapers_core/request_context points this at the visitor's search
+    // results when they came from one.
+    $back_text = [
+      '#type' => 'html_tag',
+      '#tag' => 'span',
+      '#value' => $this->t('Back to Digital Issues'),
+    ];
+    $uri = "internal:/serials/browse/{$digital_serial_title->id()}";
+    $url = Url::fromUri($uri);
 
     $form['page_viewer']['zoom'] = [
       '#type' => 'container',
@@ -277,10 +307,10 @@ class SerialPageViewerForm extends FormBase {
       date("F d, Y", strtotime($digital_serial_issue->get("issue_date")->value)) .
       ": [$page_number]. <em>" .
       \Drupal::config('system.site')->get('name') . '</em>, accessed ' .
-      date_create('now')->format('F d, Y') . ', <span class="text-word-break">' .
+      _newspapers_core_get_citation_accessed_date_markup() . ', <span class="text-word-break">' .
       $base_url . \Drupal::service('path.current')->getPath() . '</span>.';
     $citation_render_array = _newspapers_core_get_citation_render_array($cited_title, $citation_text);
-    $citation_modal = \Drupal::service('renderer')->render($citation_render_array);
+    $citation_modal = $this->renderAndCollect($citation_render_array);
     $form['page_viewer']['citation'] = [
       '#markup' => $citation_modal,
     ];
@@ -298,14 +328,13 @@ class SerialPageViewerForm extends FormBase {
     ];
 
     // Get render array for the social sharing links nav section.
-    $renderer = \Drupal::service('renderer');
     $social_render_array = _newspapers_core_get_rendered_social_links(
       $digital_serial_title
         ->getParentPublication()
         ->getTitle(),
       27
     );
-    $social_rendered = $renderer->render($social_render_array);
+    $social_rendered = $this->renderAndCollect($social_render_array);
     // Page viewer > navigation > Social Share buttons.
     $form['page_viewer']['nav']['social'] = [
       '#markup' => $social_rendered,
@@ -326,6 +355,7 @@ class SerialPageViewerForm extends FormBase {
       $tile_sources = $dzi_uri['path'];
     }
     else {
+      $this->assetsIncomplete = TRUE;
       $tile_sources = json_encode(
         [
           'type' => 'image',
@@ -343,6 +373,7 @@ class SerialPageViewerForm extends FormBase {
           'py-1',
         ],
         'id' => 'backLink',
+        'data-back-to-search' => $this->t('Back to search results'),
       ],
     ];
     $url->setOptions($back_link_options);
@@ -384,24 +415,41 @@ class SerialPageViewerForm extends FormBase {
         'digital_serial_page/openseadragon_viewer',
         'digital_serial_page/openseadragon_viewer_accessibility',
         'newspapers_core/copy_citation',
+        'newspapers_core/request_context',
       ],
       'drupalSettings' => [
         'digital_serial_page' => [
           'tile_sources' => $tile_sources,
           'overlays' => $overlays,
-          'use_canvas' => $this->browserSupportsHugeCanvas($_SERVER['HTTP_USER_AGENT'] ?? ''),
         ],
       ],
     ];
+
+    // Tiles and PDFs are generated outside Drupal, after the page is saved,
+    // and nothing tells Drupal when they appear. Keep the viewer out of every
+    // cache until they exist, or it would go on offering the plain image.
+    if ($this->assetsIncomplete) {
+      $this->cacheability->setCacheMaxAge(0);
+      \Drupal::service('page_cache_kill_switch')->trigger();
+    }
+    $this->cacheability->applyTo($form);
 
     return $form;
   }
 
   /**
-   * Determines if the current browser supports huge canvases.
+   * Renders an element, keeping its cacheability for the viewer.
+   *
+   * @param array $element
+   *   The render array.
+   *
+   * @return \Drupal\Component\Render\MarkupInterface
+   *   The rendered markup.
    */
-  private static function browserSupportsHugeCanvas($browser) {
-    return !str_contains(strtolower($browser), 'safari') || str_contains(strtolower($browser), 'chrome');
+  private function renderAndCollect(array $element) {
+    $markup = \Drupal::service('renderer')->render($element);
+    $this->cacheability->addCacheableDependency(CacheableMetadata::createFromRenderArray($element));
+    return $markup;
   }
 
   /**
@@ -505,7 +553,7 @@ class SerialPageViewerForm extends FormBase {
     /* Only include optional broad title history row if >1 item in render array */
     $broad_history_total = !empty($title_hist_render_array['#children'][0]['#items']) ? count($title_hist_render_array['#children'][0]['#items']) : 0;
     if ($broad_history_total > 1) {
-      $title_history = \Drupal::service('renderer')->render($title_hist_render_array);
+      $title_history = $this->renderAndCollect($title_hist_render_array);
     }
     $rows_title_misc = [
       [
@@ -647,14 +695,13 @@ class SerialPageViewerForm extends FormBase {
     // Download row moved to page viewer navigation.
     // Cite this image row moved to page viewer navigation.
 
-    $renderer = \Drupal::service('renderer');
     $social_render_array = _newspapers_core_get_rendered_social_links(
       $digital_serial_title
         ->getParentPublication()
         ->getTitle(),
        24
     );
-    $social_rendered = $renderer->render($social_render_array);
+    $social_rendered = $this->renderAndCollect($social_render_array);
     $row_social = [
       [
         'data' => [
@@ -703,6 +750,7 @@ class SerialPageViewerForm extends FormBase {
   private function buildPdfDownloadLinkHtml($digital_serial_page) {
     $pdf_uri = $digital_serial_page->getPdfUri();
     if (empty($pdf_uri)) {
+      $this->assetsIncomplete = TRUE;
       return '';
     }
     $pdf_file_name = basename($pdf_uri['file']);
@@ -773,6 +821,7 @@ class SerialPageViewerForm extends FormBase {
       ->getStorage('webform')
       ->load('report_additional_info_errs');
     if ($webform_report != NULL) {
+      $this->cacheability->addCacheableDependency($webform_report);
       // Retrieve Webform URL alias for Report webform.
       $report_url = $webform_report->getSetting('page_submit_path');
       $report_url_options = [
@@ -880,9 +929,13 @@ class SerialPageViewerForm extends FormBase {
     $place_publication = $dst
       ->getParentPublication()
       ->get("field_place_of_publication")
-      ->getValue()[0];
+      ->getValue()[0] ?? [];
 
-    return $place_publication["locality"] . ", " . $place_publication["administrative_area"];
+    // A publication may have no place of publication, or only part of one.
+    return implode(', ', array_filter([
+      $place_publication["locality"] ?? '',
+      $place_publication["administrative_area"] ?? '',
+    ]));
   }
 
   /**
@@ -1041,5 +1094,7 @@ class SerialPageViewerForm extends FormBase {
       ];*/
 
     }
+    $this->assetsIncomplete = TRUE;
+    return NULL;
   }
 }
