@@ -61,6 +61,8 @@ digital_serial_page.with_missing_pdf:
     _title: 'Pages With Missing PDFs'
   requirements:
     _permission: 'view published serial page entities'
+    limit: '\d+'
+    skip: '\d+'
 
 digital_serial_page.with_missing_dzi:
   path: '/serials_pages/with_missing_dzi/{limit}/{skip}'
@@ -69,3 +71,5 @@ digital_serial_page.with_missing_dzi:
     _title: 'Pages With Missing DZI Assets'
   requirements:
     _permission: 'view published serial page entities'
+    limit: '\d+'
+    skip: '\d+'

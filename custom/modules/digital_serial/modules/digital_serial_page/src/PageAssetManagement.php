@@ -10,13 +10,23 @@ namespace Drupal\digital_serial_page;
  */
 class PageAssetManagement {
 
-    /**
+  /**
+   * The largest number of pages one request may return.
+   */
+  const MAX_LIMIT = 500;
+
+  /**
+   * The number of page images read from the database per batch.
+   */
+  const BATCH_SIZE = 500;
+
+  /**
    * Gets pages with missing dzi files.
    *
    * @param string $file_root
    *   The path to the root of the persistent Drupal filesystem.
    * @param int $limit
-   *   The number of records to return.
+   *   The number of records to return, at most MAX_LIMIT.
    * @param int $skip
    *   The number of records to skip evaluating.
    *
@@ -24,32 +34,10 @@ class PageAssetManagement {
    *   An array of pages with missing dzi files.
    */
   public static function getMissingDziPages(string $file_root, int $limit = 50, int $skip = 0) {
-    $pages_with_missing = [];
-    $while_counter = 0;
-    $added_counter = 0;
-    while ($added_counter < $limit) {
-      $file_infos = self::getPageImagesInfo($limit, ($while_counter * $limit) + $skip);
-      $while_counter++;
-      if (empty($file_infos)) {
-        continue;
-      }
-      foreach ($file_infos as $fid => $file_info) {
-        if (!self::fileShouldBeChecked($file_info, $file_root)) {
-          continue;
-        }
-
-        $dzi_file_path = $file_root . '/' . $file_info['rel_dzi_filepath'];
-        $dzi_dir_path = $file_root . '/' . $file_info['rel_dzi_dirpath'];
-        if (!file_exists($dzi_file_path) || !is_dir($dzi_dir_path)) {
-          $pages_with_missing[$fid] = $file_info;
-          $added_counter++;
-        }
-        if ($added_counter >= $limit) {
-          break;
-        }
-      }
-    }
-    return $pages_with_missing;
+    return self::getPagesWithMissingAsset($limit, $skip, function (array $file_info) use ($file_root) {
+      return !file_exists($file_root . '/' . $file_info['rel_dzi_filepath']) ||
+        !is_dir($file_root . '/' . $file_info['rel_dzi_dirpath']);
+    }, $file_root);
   }
 
   /**
@@ -58,7 +46,7 @@ class PageAssetManagement {
    * @param string $file_root
    *   The path to the root of the persistent Drupal filesystem.
    * @param int $limit
-   *   The number of records to return.
+   *   The number of records to return, at most MAX_LIMIT.
    * @param int $skip
    *   The number of records to skip evaluating.
    *
@@ -66,25 +54,49 @@ class PageAssetManagement {
    *   An array of pages with missing pdf files.
    */
   public static function getMissingPdfPages(string $file_root, int $limit = 50, int $skip = 0) {
+    return self::getPagesWithMissingAsset($limit, $skip, function (array $file_info) use ($file_root) {
+      return !file_exists($file_root . '/' . $file_info['rel_pdf_filepath']);
+    }, $file_root);
+  }
+
+  /**
+   * Walks the page images once, collecting those missing an asset.
+   *
+   * Stops at $limit matches or at the last image. Only the first batch uses
+   * OFFSET; later batches continue from the last file ID read, so a full walk
+   * reads each row once.
+   *
+   * @param int $limit
+   *   The number of records to return, at most MAX_LIMIT.
+   * @param int $skip
+   *   The number of records to skip evaluating.
+   * @param callable $is_missing
+   *   Returns TRUE when the given file info lacks the asset.
+   * @param string $file_root
+   *   The path to the root of the persistent Drupal filesystem.
+   *
+   * @return array
+   *   File infos keyed by file ID.
+   */
+  protected static function getPagesWithMissingAsset(int $limit, int $skip, callable $is_missing, string $file_root): array {
+    $limit = min(max($limit, 0), self::MAX_LIMIT);
+    $skip = max($skip, 0);
     $pages_with_missing = [];
-    $while_counter = 0;
-    $added_counter = 0;
-    while ($added_counter < $limit) {
-      $file_infos = self::getPageImagesInfo($limit, ($while_counter * $limit) + $skip);
-      $while_counter++;
+    $after_fid = NULL;
+    while (count($pages_with_missing) < $limit) {
+      $file_infos = $after_fid === NULL
+        ? self::getPageImagesInfo(self::BATCH_SIZE, $skip)
+        : self::getPageImagesInfo(self::BATCH_SIZE, 0, $after_fid);
       if (empty($file_infos)) {
-        continue;
+        break;
       }
       foreach ($file_infos as $fid => $file_info) {
-        if (!self::fileShouldBeChecked($file_info, $file_root)) {
+        $after_fid = $fid;
+        if (!self::fileShouldBeChecked($file_info, $file_root) || !$is_missing($file_info)) {
           continue;
         }
-        $pdf_file_path = $file_root . '/' . $file_info['rel_pdf_filepath'];
-        if (!file_exists($pdf_file_path)) {
-          $pages_with_missing[$fid] = $file_info;
-          $added_counter++;
-        }
-        if ($added_counter >= $limit) {
+        $pages_with_missing[$fid] = $file_info;
+        if (count($pages_with_missing) >= $limit) {
           break;
         }
       }
@@ -99,14 +111,18 @@ class PageAssetManagement {
    *    The number of records to return.
    * @param int $offset
    *    The number of records to skip.
+   * @param int|null $after_fid
+   *    When set, only return files with a higher file ID.
    *
    * @return array
    *    An array of image info.
    */
   static function getPageImagesInfo(
     int $limit = 50,
-    int $offset = 0
+    int $offset = 0,
+    ?int $after_fid = NULL
     ) : array {
+    $after_condition = $after_fid === NULL ? '' : 'AND fm.fid > :after_fid';
     $sql = <<<EOT
     SELECT fm.fid, fm.uri, dst.id AS title_id, dsi.id AS issue_id
     FROM file_managed fm
@@ -117,11 +133,13 @@ class PageAssetManagement {
     LEFT JOIN digital_serial_title dst
     ON dsi.parent_title = dst.id
     WHERE fm.uri LIKE 'public://serials/pages/%.jpg'
+    $after_condition
     ORDER BY fm.fid ASC
     LIMIT $limit
     OFFSET $offset;
 EOT;
-    $result = \Drupal::database()->query($sql);
+    $args = $after_fid === NULL ? [] : [':after_fid' => $after_fid];
+    $result = \Drupal::database()->query($sql, $args);
     $images = [];
     while ($row = $result->fetchAssoc()) {
       $image_file_data = pathinfo($row['uri']);
