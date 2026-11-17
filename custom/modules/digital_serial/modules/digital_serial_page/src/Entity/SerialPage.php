@@ -464,7 +464,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $this->deleteDziFiles();
     $this->deletePdfFile();
     $this->markParentIssueForReindex();
-    $this->invalidateParentIssueCache();
+    $this->invalidateParentCaches();
     parent::delete();
   }
 
@@ -475,7 +475,7 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
     $this->movePageImageToPermanentStorage(TRUE);
     $this->deleteStaleGeneratedAssets();
     $this->markParentIssueForReindex();
-    $this->invalidateParentIssueCache();
+    $this->invalidateParentCaches();
     parent::postSave($storage, $update);
   }
 
@@ -505,18 +505,22 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
   }
 
   /**
-   * Invalidates the cache of the page's issue, and its previous one if moved.
+   * Invalidates the caches of the page's issue and title, and previous ones.
    *
    * Issue displays and every page viewer in the issue show the page count and
-   * the previous and next pages, which change as pages are added, moved,
-   * reordered or removed.
+   * the previous and next pages, and the title page counts pages, all of which
+   * change as pages are added, moved, reordered or removed.
    */
-  protected function invalidateParentIssueCache() {
+  protected function invalidateParentCaches() {
     $tags = [];
     foreach ([$this, $this->getOriginal()] as $version) {
       $issue = $version?->get('parent_issue')->entity;
       if (!empty($issue)) {
         $tags = Cache::mergeTags($tags, $issue->getCacheTagsToInvalidate());
+        $title = $issue->getParentTitle();
+        if (!empty($title)) {
+          $tags = Cache::mergeTags($tags, $title->getCacheTags());
+        }
       }
     }
     if (!empty($tags)) {

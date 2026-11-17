@@ -9,15 +9,26 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
+ * The shortest time, in seconds, between page saves moving a title's changed time.
+ */
+const DIGITAL_SERIAL_PAGE_TITLE_CHANGED_INTERVAL = 3600;
+
+/**
  * Implements hook_entity_presave().
  */
 function digital_serial_page_entity_presave(EntityInterface $entity) {
   switch ($entity->bundle()) {
 
     case 'digital_serial_page':
-      // Update parent digital serial title 'changed' property when page entity is created/updated.
+      // The digital titles list shows when each title last had a page added or
+      // changed. That takes a full save of the title, and imports save pages by
+      // the hundred, so move the time forward at most hourly. SerialPage
+      // invalidates the title's cache tag on every save.
       $dst = $entity->getParentIssue()->getParentTitle();
-      $dst->setChangedTime(time())->save();
+      $now = \Drupal::time()->getRequestTime();
+      if ($now - (int) $dst->getChangedTime() >= DIGITAL_SERIAL_PAGE_TITLE_CHANGED_INTERVAL) {
+        $dst->setChangedTime($now)->save();
+      }
 
       // Autofill empty page sort field using required page no field.
       $page_no = trim($entity->getPageNo());
