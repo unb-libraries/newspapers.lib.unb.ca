@@ -70,6 +70,34 @@ class SerialIssue extends ContentEntityBase implements SerialIssueInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * The printed title and the issue date, e.g. "The News, 1907-08-16". Falls
+   * back to the publication's title when the printed title is empty, and
+   * leaves out whichever part is missing.
+   */
+  public function label() {
+    $name = $this->getIssueTitle();
+    if ($name === NULL || $name === '') {
+      $publication = $this->getParentTitle()?->getParentPublication();
+      $name = $publication?->label();
+    }
+    $date = $this->get('issue_date')->date;
+
+    $parts = [];
+    if ($name !== NULL && $name !== '') {
+      $parts[] = $name;
+    }
+    if (!empty($date)) {
+      $parts[] = $date->format('Y-m-d');
+    }
+    if (!empty($parts)) {
+      return implode(', ', $parts);
+    }
+    return trim($this->getEntityType()->getLabel() . ' ' . $this->id());
+  }
+
+  /**
+   * {@inheritdoc}
    */
   public function getCreatedTime() {
     return $this->get('created')->value;

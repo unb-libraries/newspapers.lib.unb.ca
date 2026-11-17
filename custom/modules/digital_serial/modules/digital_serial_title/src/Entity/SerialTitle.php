@@ -45,7 +45,6 @@ use Drupal\user\UserInterface;
  *     "langcode" = "langcode",
  *     "status" = "status",
  *   },
- *   label_callback = "digital_serial_title_format_label",
  *   links = {
  *     "canonical" = "/serials/{digital_serial_title}",
  *     "add-form" = "/serials/add",
@@ -69,6 +68,22 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
     $values += [
       'user_id' => \Drupal::currentUser()->id(),
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * Core no longer calls an entity type's label_callback, so the label is
+   * built here, e.g. "The News: Digital Issues".
+   */
+  public function label() {
+    $publication_name = $this->getParentPublication()?->label();
+    if ($publication_name !== NULL && $publication_name !== '') {
+      // Concatenate rather than use a placeholder, which would HTML-escape the
+      // name and leave it double-escaped wherever the label is rendered.
+      return $publication_name . ': ' . $this->t('Digital Issues');
+    }
+    return (string) $this->t('Digital Issues');
   }
 
   /**

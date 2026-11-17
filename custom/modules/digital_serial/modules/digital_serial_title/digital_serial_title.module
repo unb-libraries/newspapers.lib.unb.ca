@@ -61,7 +61,9 @@ function digital_serial_title_preprocess_digital_serial_title(&$variables) {
 }
 
 /**
- * Label callback for the SerialTitle entity.
+ * Formats the label of a SerialTitle entity.
+ *
+ * Kept for callers outside this module; use $digital_serial_title->label().
  *
  * @param \Drupal\digital_serial_title\Entity\SerialTitleInterface $digital_serial_title
  *   The entity.
@@ -70,5 +72,5 @@ function digital_serial_title_preprocess_digital_serial_title(&$variables) {
  *   The string to serve as label.
  */
 function digital_serial_title_format_label(SerialTitleInterface $digital_serial_title) {
-  return $digital_serial_title->getParentPublication()->getTitle() . t(': Digital Issues');
+  return $digital_serial_title->label();
 }
