@@ -17,6 +17,8 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
+use Drupal\search_api\Entity\Index;
+use Drupal\search_api\Utility\Utility;
 use Drupal\serial_holding\Entity\SerialHolding;
 use Drupal\views\ViewExecutable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -303,6 +305,105 @@ function newspapers_core_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Newspaper Core Functions') . '</p>';
       return $output;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function newspapers_core_node_update(EntityInterface $node) {
+  if ($node->getType() != 'publication') {
+    return;
+  }
+  // The issues and pages indexes copy the publication's title and place of
+  // publication into each digital issue and page. Reindex those when either
+  // value changes.
+  $original = $node->getOriginal();
+  if (empty($original)) {
+    return;
+  }
+  foreach (['title', 'field_place_of_publication'] as $field_name) {
+    if (!$node->get($field_name)->equals($original->get($field_name))) {
+      _newspapers_core_reindex_publication_digital_content($node->id());
+      return;
+    }
+  }
+}
+
+/**
+ * Queues a publication's digital issues and pages for reindexing.
+ *
+ * A publication can have many thousands of pages. Small sets are indexed at
+ * the end of the request. Larger ones are only marked in the tracker, which
+ * leaves the indexing to cron or drush, as indexing them in the request would
+ * stall it.
+ *
+ * @param int $nid
+ *   The node ID of the publication.
+ * @param int $direct_limit
+ *   The largest number of items per index to index within the request.
+ */
+function _newspapers_core_reindex_publication_digital_content($nid, $direct_limit = 100) {
+  if (!\Drupal::moduleHandler()->moduleExists('search_api')) {
+    return;
+  }
+  $database = \Drupal::database();
+  $title_ids = $database->select('digital_serial_title', 't')
+    ->fields('t', ['id'])
+    ->condition('t.parent_title', $nid)
+    ->execute()
+    ->fetchCol();
+  if (empty($title_ids)) {
+    return;
+  }
+
+  $issue_items = [];
+  $issues = $database->select('digital_serial_issue', 'i')
+    ->fields('i', ['id', 'langcode'])
+    ->condition('i.parent_title', $title_ids, 'IN')
+    ->execute();
+  foreach ($issues as $issue) {
+    $issue_items[$issue->id] = $issue->id . ':' . $issue->langcode;
+  }
+  if (empty($issue_items)) {
+    return;
+  }
+
+  $page_items = [];
+  foreach (array_chunk(array_keys($issue_items), 1000) as $issue_ids) {
+    $pages = $database->select('digital_serial_page', 'p')
+      ->fields('p', ['id', 'langcode'])
+      ->condition('p.parent_issue', $issue_ids, 'IN')
+      ->execute();
+    foreach ($pages as $page) {
+      $page_items[] = $page->id . ':' . $page->langcode;
+    }
+  }
+
+  $datasource_items = [
+    'entity:digital_serial_issue' => array_values($issue_items),
+    'entity:digital_serial_page' => $page_items,
+  ];
+  foreach (Index::loadMultiple() as $index) {
+    if (!$index->status() || $index->isReadOnly() || !$index->hasValidTracker()) {
+      continue;
+    }
+    foreach ($datasource_items as $datasource_id => $raw_ids) {
+      if (empty($raw_ids) || !$index->isValidDatasource($datasource_id)) {
+        continue;
+      }
+      if (count($raw_ids) <= $direct_limit) {
+        $index->trackItemsUpdated($datasource_id, $raw_ids);
+        continue;
+      }
+      foreach (array_chunk($raw_ids, 1000) as $chunk) {
+        $item_ids = [];
+        foreach ($chunk as $raw_id) {
+          $item_ids[] = Utility::createCombinedId($datasource_id, $raw_id);
+        }
+        $index->getTrackerInstance()->trackItemsUpdated($item_ids);
+      }
+    }
   }
 }
 
