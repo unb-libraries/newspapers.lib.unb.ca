@@ -149,8 +149,10 @@ class SerialHoldingListBuilder extends EntityListBuilder {
     $row['id'] = $entity->id();
     $row['type'] = $holding_type;
     $row['institution'] = $inst_term_name;
+    // Coverage is optional; the link still needs text to reach the edit form.
+    $coverage = $entity->getHoldingCoverage();
     $row['coverage'] = Link::createFromRoute(
-      $entity->getHoldingCoverage(),
+      ($coverage === NULL || $coverage === '') ? $this->t('[None specified]') : $coverage,
       'entity.serial_holding.edit_form',
       ['serial_holding' => $entity->id()]
     );
