@@ -2,6 +2,8 @@
 
 namespace Drupal\digital_serial_title\Entity;
 
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -260,20 +262,16 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
    * Get a holdings statement for this digital title.
    */
   public function getHoldingsStatement() {
-    $digital_dates = $this->getHoldingDates();
-    if (!empty($digital_dates) && count($digital_dates) > 1) {
-      $reversed = array_reverse($digital_dates);
-      $first_date = array_pop($reversed);
-      $last_date = array_pop($digital_dates);
+    $range = $this->getHoldingDateRange();
+    if ($range['count'] > 1) {
       $holdings_statement = $this->t('Issues between ') .
-        $first_date->format('Y-m-d') .
+        $range['start']->format('Y-m-d') .
         ' - ' .
-        $last_date->format('Y-m-d');
+        $range['end']->format('Y-m-d');
       return $holdings_statement;
     }
-    elseif (!empty($digital_dates) && count($digital_dates) == 1) {
-      $only_date = array_pop($digital_dates);
-      return $only_date->format('Y-m-d');
+    elseif ($range['count'] == 1) {
+      return $range['start']->format('Y-m-d');
     }
     else {
       return "No holdings found";
@@ -282,6 +280,9 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
 
   /**
    * Get a holdings dates for all issues.
+   *
+   * This loads every issue of the title. Use getHoldingDateRange() when only
+   * the earliest and latest dates are needed.
    */
   public function getHoldingDates() {
     $query = \Drupal::entityQuery('digital_serial_issue')
@@ -303,6 +304,38 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
   }
 
   /**
+   * Gets the earliest and latest issue dates of this title.
+   *
+   * Runs one aggregate query instead of loading the title's issues, so its
+   * cost does not grow with the number of issues.
+   *
+   * @return array
+   *   An array with the keys:
+   *   - count: The number of issues that have a date.
+   *   - start: The earliest issue date as a DrupalDateTime, NULL if count is 0.
+   *   - end: The latest issue date as a DrupalDateTime, NULL if count is 0.
+   */
+  public function getHoldingDateRange() {
+    // Issue dates are stored as Y-m-d strings, which sort chronologically.
+    $result = \Drupal::entityQueryAggregate('digital_serial_issue')
+      ->accessCheck(TRUE)
+      ->condition('parent_title', $this->id())
+      ->condition('issue_date', '', '<>')
+      ->aggregate('id', 'COUNT')
+      ->aggregate('issue_date', 'MIN')
+      ->aggregate('issue_date', 'MAX')
+      ->execute();
+    $row = reset($result);
+
+    $count = empty($row['id_count']) ? 0 : (int) $row['id_count'];
+    return [
+      'count' => $count,
+      'start' => $count ? new DrupalDateTime($row['issue_date_min']) : NULL,
+      'end' => $count ? new DrupalDateTime($row['issue_date_max']) : NULL,
+    ];
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function updateDigitalHoldingRecord() {
@@ -311,27 +344,51 @@ class SerialTitle extends ContentEntityBase implements SerialTitleInterface {
       ->condition('holding_digital_title', $this->id());
     $holding_ids = $query->execute();
 
-    foreach ($holding_ids as $holding_id) {
+    if (!empty($holding_ids)) {
+      $range = $this->getHoldingDateRange();
       $storage = \Drupal::entityTypeManager()->getStorage('serial_holding');
-      $holding = $storage->load($holding_id);
-      $title_holding_dates = $this->getHoldingDates();
-
-      if (!empty($title_holding_dates) && count($title_holding_dates) > 1) {
-        $reversed = array_reverse($title_holding_dates);
-        $start_date = array_pop($reversed);
-        $end_date = array_pop($title_holding_dates);
-        $holding->setHoldingStartDate($start_date);
-        $holding->setHoldingEndDate($end_date);
-        $holding->save();
-      }
-      elseif (!empty($title_holding_dates) && count($title_holding_dates) == 1) {
-        $only_date = array_pop($title_holding_dates);
-        $holding->setHoldingStartDate($only_date);
-        $holding->setHoldingEndDate($only_date);
+      foreach ($holding_ids as $holding_id) {
+        $holding = $storage->load($holding_id);
+        if ($range['count'] == 0) {
+          continue;
+        }
+        // Most issue saves leave the title's date range as it was. Skip the
+        // holding save then, as it only repeats the stored values.
+        $start = $range['start']->format('Y-m-d');
+        $end = $range['end']->format('Y-m-d');
+        if ($holding->get('holding_start_date')->value === $start && $holding->get('holding_end_date')->value === $end) {
+          continue;
+        }
+        $holding->setHoldingStartDate($range['start']);
+        $holding->setHoldingEndDate($range['end']);
         $holding->save();
       }
     }
-    drupal_flush_all_caches();
+
+    // The title page and the parent publication page show issue counts and
+    // holding dates that no cache tag on those pages tracks. Invalidate both
+    // rather than flushing every cache.
+    $tags = $this->getCacheTagsToInvalidate();
+    $publication = $this->getParentPublication();
+    if (!empty($publication)) {
+      $tags = Cache::mergeTags($tags, $publication->getCacheTagsToInvalidate());
+    }
+    Cache::invalidateTags($tags);
+
+    // A publication is indexed as held online only while this title has a
+    // published issue. Reindex it when that may have changed: the title has
+    // just gained its first published issue or lost its last one.
+    if (!empty($publication)) {
+      $published_issues = \Drupal::entityQuery('digital_serial_issue')
+        ->accessCheck(FALSE)
+        ->condition('status', 1)
+        ->condition('parent_title', $this->id())
+        ->range(0, 2)
+        ->execute();
+      if (count($published_issues) < 2) {
+        _serials_reindex_publications([$publication->id()]);
+      }
+    }
   }
 
   /**

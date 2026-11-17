@@ -422,6 +422,12 @@ class HomePageForm extends FormBase {
     $form['#cache'] = [
       'keys' => ['newspapers_frontpage'],
       'contexts' => ['url'],
+      // The stats section counts digital titles, issues and pages.
+      'tags' => [
+        'digital_serial_title_list',
+        'digital_serial_issue_list',
+        'digital_serial_page_list',
+      ],
       'max-age' => Cache::PERMANENT,
     ];
 

@@ -5,8 +5,10 @@
  * Contains serials.module.
  */
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\search_api\Plugin\search_api\datasource\ContentEntity;
 
 /**
  * Implements hook_help().
@@ -25,17 +27,101 @@ function serials_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_entity_presave().
+ * Implements hook_ENTITY_TYPE_insert().
  */
-function serials_serial_holding_presave(EntityInterface $entity) {
-  // Flush cache so template variables refreshed after serial holding edits.
-  drupal_flush_all_caches();
+function serials_serial_holding_insert(EntityInterface $entity) {
+  _serials_refresh_holding_publications($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function serials_serial_holding_update(EntityInterface $entity) {
+  _serials_refresh_holding_publications($entity);
 }
 
 /**
  * Implements hook_ENTITY_TYPE_delete().
  */
 function serials_serial_holding_delete(EntityInterface $entity) {
-  // Flush cache so serial holding removed from display right after deletion.
-  drupal_flush_all_caches();
+  _serials_refresh_holding_publications($entity);
+}
+
+/**
+ * Refreshes the publications a holding belongs to after the holding changes.
+ *
+ * Publication pages and the publication search index build their holdings data
+ * from queries, so neither a cache tag nor Search API tracks the dependency.
+ * This invalidates the publication's cached output and queues it for
+ * reindexing after a holding is added, edited, moved or removed.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $holding
+ *   The serial holding that was saved or deleted.
+ */
+function _serials_refresh_holding_publications(EntityInterface $holding) {
+  $nids = [];
+  // Include the previous publication, in case the holding was moved.
+  foreach ([$holding, $holding->getOriginal()] as $version) {
+    if (empty($version) || $version->get('parent_title')->isEmpty()) {
+      continue;
+    }
+    $nids[] = $version->get('parent_title')->target_id;
+  }
+  $nids = array_unique($nids);
+  if (empty($nids)) {
+    return;
+  }
+
+  $tags = [];
+  foreach ($nids as $nid) {
+    $tags[] = 'node:' . $nid;
+  }
+  Cache::invalidateTags($tags);
+
+  // The search index only holds the holding's type and institution. Skip the
+  // reindex for edits to anything else, such as the date range that every
+  // imported issue extends.
+  $original = $holding->getOriginal();
+  if (!empty($original)) {
+    $indexed_fields = [
+      'parent_title',
+      'holding_type',
+      'holding_institution',
+      'holding_digital_title',
+      'status',
+    ];
+    $changed = FALSE;
+    foreach ($indexed_fields as $field_name) {
+      if (!$holding->get($field_name)->equals($original->get($field_name))) {
+        $changed = TRUE;
+        break;
+      }
+    }
+    if (!$changed) {
+      return;
+    }
+  }
+  _serials_reindex_publications($nids);
+}
+
+/**
+ * Queues publications for reindexing in every search index that tracks them.
+ *
+ * @param array $nids
+ *   The node IDs of the publications to reindex.
+ */
+function _serials_reindex_publications(array $nids) {
+  if (empty($nids) || !\Drupal::moduleHandler()->moduleExists('search_api')) {
+    return;
+  }
+  $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($nids);
+  foreach ($nodes as $node) {
+    $item_ids = [];
+    foreach (array_keys($node->getTranslationLanguages()) as $langcode) {
+      $item_ids[] = $node->id() . ':' . $langcode;
+    }
+    foreach (ContentEntity::getIndexesForEntity($node) as $index) {
+      $index->trackItemsUpdated('entity:node', $item_ids);
+    }
+  }
 }
