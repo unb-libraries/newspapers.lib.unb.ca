@@ -510,6 +510,14 @@ mod tests {
     const EXAMPLE: &str = include_str!("../config.example.toml");
 
     #[test]
+    fn the_hammer_config_is_valid_and_pinned() {
+        let config = Config::parse(include_str!("../config/hammer.toml")).unwrap();
+        assert!(config.problems().is_empty(), "{:?}", config.problems());
+        assert!(config.unpinned_images().is_empty());
+        assert!(config.notify.is_some());
+    }
+
+    #[test]
     fn credential_errors_never_quote_the_file() {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("creds.toml");

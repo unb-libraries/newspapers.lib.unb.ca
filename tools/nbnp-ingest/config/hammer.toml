@@ -1,0 +1,48 @@
+# nbnp-ingest on HAMMER, the imaging workstation. No secrets: the site password is in
+# credentials_file (mode 600), and AWS credentials come from ~/.aws as usual.
+#
+# Install as /home/imaging/.config/nbnp-ingest/config.toml, where the tool looks by default.
+# Every key is documented in config.example.toml.
+
+[site]
+base_url = "https://newspapers.lib.unb.ca"
+credentials_file = "/home/imaging/.config/nbnp-ingest/site-credentials.toml"
+
+[paths]
+source_root = "/mnt/nbnp"
+public_files = "/mnt/newspapers.lib.unb.ca/prod/files"
+work_dir = "/home/imaging/nbnp-ingest/work"
+log_dir = "/home/imaging/NBHP/logs/nbnp-ingest"
+
+[webtree]
+# The web server's user and group in the site's pods.
+owner_uid = 100
+owner_gid = 102
+# The title and issue directories under serials/dzi and serials/pdf belong to imaging
+# (gid 2100). On vengeance, uid 100 is in gid 2100 so the NFS server lets it write
+# there (rpc.mountd runs with manage-gids).
+directory_group = 2100
+
+[ocr]
+# Tesseract 5.5.4 with eng, fra and osd (ghcr.io/unb-libraries/tesseract:5.x on 2026-11-18).
+image = "ghcr.io/unb-libraries/tesseract@sha256:6b1104b8e19f8cfc056237bc2ce7eac9b9dd3b6f58cce31c8a288b90ca277ad1"
+
+[ocr.languages]
+eng = "eng"
+fre = "fra"
+
+[dzi]
+# tools/nbnp-ingest/docker/vips, vips 8.14.1 (nbnp-ingest-vips:bookworm on 2026-11-18).
+image = "ghcr.io/unb-libraries/nbnp-ingest-vips@sha256:2ea567b108f2a55659b8b819d9c86830bfcd5b33a3a2fe6137ea5af7dc42aa76"
+
+[limits]
+# 24 threads (8 performance cores with two each, 8 efficiency cores). 16 OCR runs at once
+# gave 647 pages an hour and leaves 8 threads for the system; 20 gave 717 (2026-11-18).
+cpu_slots = 16
+
+[notify]
+region = "us-east-1"
+# The import summary, as the PHP importer sent it (syskit nbhp.awsSnsTopicId).
+summary_topic_arn = "arn:aws:sns:us-east-1:344420214229:NBHPImportBot"
+# The one-line "[title:years] import (result)" event (syskit nbhp.awsNotificationTopicId).
+event_topic_arn = "arn:aws:sns:us-east-1:344420214229:NBNP-Ingest-Notifications"
