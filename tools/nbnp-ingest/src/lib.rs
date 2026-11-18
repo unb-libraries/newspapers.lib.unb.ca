@@ -17,6 +17,10 @@ use std::process::ExitCode;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use tracing::{Level, error};
+use tracing_subscriber::filter::LevelFilter;
+use tracing_subscriber::fmt::layer;
+use tracing_subscriber::layer::SubscriberExt as _;
+use tracing_subscriber::util::SubscriberInitExt as _;
 
 use cli::{Cli, Command, ConfigCommand};
 use config::Config;
@@ -72,6 +76,7 @@ fn run(cli: &Cli) -> Result<Outcome, Error> {
             yes,
             force,
             all,
+            no_notify,
         } => async_runtime()?.block_on(commands::import::run(
             &loaded.config,
             path,
@@ -84,6 +89,25 @@ fn run(cli: &Cli) -> Result<Outcome, Error> {
                     (false, true) => commands::import::Mode::Run,
                     (false, false) => commands::import::Mode::ShowOnly,
                 },
+                notify: !*no_notify,
+            },
+            &run_id(),
+            None,
+        )),
+        Command::Run {
+            path,
+            title,
+            yes,
+            force,
+            no_notify,
+        } => async_runtime()?.block_on(commands::run::run(
+            &loaded.config,
+            path,
+            commands::run::Options {
+                title: *title,
+                yes: *yes,
+                force: *force,
+                notify: !*no_notify,
             },
             &run_id(),
         )),
@@ -119,9 +143,15 @@ fn init_logging(verbose: u8) {
         1 => Level::DEBUG,
         _ => Level::TRACE,
     };
-    tracing_subscriber::fmt()
-        .with_writer(std::io::stderr)
-        .with_max_level(level)
-        .with_target(false)
+    // The terminal, and a copy without colour codes for the run's log file once it is open.
+    tracing_subscriber::registry()
+        .with(LevelFilter::from_level(level))
+        .with(layer().with_writer(std::io::stderr).with_target(false))
+        .with(
+            layer()
+                .with_writer(|| adapters::run_log::LogFileWriter)
+                .with_ansi(false)
+                .with_target(false),
+        )
         .init();
 }

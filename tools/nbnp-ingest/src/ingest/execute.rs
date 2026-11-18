@@ -88,8 +88,46 @@ struct IssueTarget {
     ocr_language: String,
 }
 
+/// What a run did for an issue.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct IssueDone {
+    pub issue_id: u64,
+    pub created: bool,
+    pub pages_uploaded: usize,
+    /// Pages whose tiles or PDF were installed.
+    pub asset_pages: usize,
+    pub state_written: bool,
+}
+
+impl IssueDone {
+    /// `created issue #7; uploaded 12 pages; tiles and PDF for 12 pages; state file written`.
+    #[must_use]
+    pub fn describe(&self) -> String {
+        let mut done = Vec::new();
+        if self.created {
+            done.push(format!("created issue #{}", self.issue_id));
+        }
+        if self.pages_uploaded > 0 {
+            done.push(format!(
+                "uploaded {}",
+                report::counted(self.pages_uploaded, "page")
+            ));
+        }
+        if self.asset_pages > 0 {
+            done.push(format!(
+                "tiles and PDF for {}",
+                report::counted(self.asset_pages, "page")
+            ));
+        }
+        if self.state_written {
+            done.push("state file written".into());
+        }
+        done.join("; ")
+    }
+}
+
 /// Carries out the job and says what was done, or why it stopped.
-pub async fn run_issue(workers: &Workers, job: &IssueJob) -> Result<String, String> {
+pub async fn run_issue(workers: &Workers, job: &IssueJob) -> Result<IssueDone, String> {
     let (issue_id, uuid) = match &job.on_site {
         OnSite::Existing { issue_id, uuid } => (*issue_id, *uuid),
         OnSite::New { uuid, metadata } => {
@@ -126,22 +164,13 @@ pub async fn run_issue(workers: &Workers, job: &IssueJob) -> Result<String, Stri
         workers.ocr.remove(sha256, &job.ocr_language);
     }
 
-    let mut done = Vec::new();
-    if matches!(job.on_site, OnSite::New { .. }) {
-        done.push(format!("created issue #{issue_id}"));
-    }
-    if !job.create.is_empty() {
-        done.push(format!(
-            "uploaded {}",
-            report::counted(job.create.len(), "page")
-        ));
-    }
-    if !needs.is_empty() {
-        done.push(format!(
-            "tiles and PDF for {}",
-            report::counted(needs.len(), "page")
-        ));
-    }
+    let mut done = IssueDone {
+        issue_id,
+        created: matches!(job.on_site, OnSite::New { .. }),
+        pages_uploaded: job.create.len(),
+        asset_pages: needs.len(),
+        state_written: false,
+    };
     if !job.state_complete {
         write_state(
             workers,
@@ -149,9 +178,9 @@ pub async fn run_issue(workers: &Workers, job: &IssueJob) -> Result<String, Stri
             &IssueState::complete(&uuid.to_string(), issue_id),
         )
         .map_err(|e| format!("complete on the site, but {e}"))?;
-        done.push("state file written".into());
+        done.state_written = true;
     }
-    Ok(done.join("; "))
+    Ok(done)
 }
 
 /// How long the site may take to see newly installed files, and how often to ask meanwhile.

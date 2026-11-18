@@ -63,6 +63,26 @@ pub enum Command {
         /// List every issue, not only those with something to do
         #[arg(long)]
         all: bool,
+        /// Send no SNS notification when done
+        #[arg(long)]
+        no_notify: bool,
+    },
+    /// The regular ingest: check, import (with --yes), then audit, logged together
+    Run {
+        /// A title, year or issue directory, or anything above them
+        path: PathBuf,
+        /// Digital Title ID to use instead of each issue's `title_id`
+        #[arg(long, value_name = "ID")]
+        title: Option<u32>,
+        /// Import; without this, the plan is shown and nothing is changed
+        #[arg(long)]
+        yes: bool,
+        /// Import again an issue whose state file says complete but which the site no longer has
+        #[arg(long)]
+        force: bool,
+        /// Send no SNS notification when done
+        #[arg(long)]
+        no_notify: bool,
     },
     /// Write an issue.toml beside each legacy metadata.php that has none
     Convert {

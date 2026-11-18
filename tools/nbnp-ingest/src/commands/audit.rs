@@ -23,7 +23,7 @@ use crate::domain::state::Status;
 use crate::error::{Error, Outcome};
 use crate::ingest::prepare::{Ready, TitleLists, load_titles, prepare};
 use crate::ingest::resolve::{Resolution, hash_local, ids_text, resolve, stored_checksums};
-use crate::report;
+use crate::report::{self, out, outln};
 use crate::source::Titles;
 
 #[derive(Debug, Clone, Copy, Default)]
@@ -274,15 +274,15 @@ fn print_report(root: &Path, issues: &[IssueDir], results: &[IssueResult], all: 
         }
         report::write_findings(&mut out, &result.findings);
     }
-    print!("{out}");
-    println!(
+    out!("{out}");
+    outln!(
         "\nAudited {} under {}: {clean} match the site, {with_errors} differ, \
          {failed} could not be audited.",
         report::counted(issues.len(), "issue"),
         root.display()
     );
     if by_metadata > 0 {
-        println!(
+        outln!(
             "  Found by metadata (imported before this tool): {}.",
             report::counted(by_metadata, "issue")
         );

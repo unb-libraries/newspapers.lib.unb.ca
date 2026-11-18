@@ -5,6 +5,35 @@ use std::path::Path;
 
 use crate::domain::finding::Finding;
 
+/// Prints to stdout and copies to the run's log file, once one is open; `print!` otherwise.
+macro_rules! out {
+    ($($arg:tt)*) => {
+        $crate::report::emit(&format!($($arg)*))
+    };
+}
+
+/// [`out!`] with a newline, like `println!`.
+macro_rules! outln {
+    () => {
+        $crate::report::emit("\n")
+    };
+    ($($arg:tt)*) => {
+        $crate::report::emit(&format!("{}\n", format_args!($($arg)*)))
+    };
+}
+
+pub(crate) use {out, outln};
+
+/// What `out!` and `outln!` do.
+pub fn emit(text: &str) {
+    use std::io::Write as _;
+
+    let mut stdout = std::io::stdout().lock();
+    let _ = stdout.write_all(text.as_bytes());
+    let _ = stdout.flush();
+    crate::adapters::run_log::copy_to_log(text);
+}
+
 /// The result of one environment check.
 #[derive(Debug)]
 pub struct Check {

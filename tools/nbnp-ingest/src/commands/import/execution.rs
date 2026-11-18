@@ -1,6 +1,7 @@
 //! Carrying out the plans: one task per issue, sharing the run's CPU and upload slots.
 
 use std::sync::Arc;
+use std::time::Instant;
 
 use tokio::sync::{Mutex, Semaphore};
 use tokio::task::JoinSet;
@@ -52,9 +53,11 @@ pub(super) async fn execute(
         let (workers, issues) = (workers.clone(), Arc::clone(&issues));
         tasks.spawn(async move {
             let Ok(_issue) = issues.acquire_owned().await else {
-                return (index, Err("the run is stopping".to_owned()));
+                return (index, Err("the run is stopping".to_owned()), None);
             };
-            (index, run_issue(&workers, &job).await)
+            let started = Instant::now();
+            let done = run_issue(&workers, &job).await;
+            (index, done, Some(started.elapsed()))
         });
     }
     // Ctrl-C stops admitting work: waiting issues and pages end with "the run is stopping",
@@ -64,7 +67,10 @@ pub(super) async fn execute(
     loop {
         tokio::select! {
             joined = tasks.join_next() => match joined {
-                Some(Ok((index, done))) => plans[index].done = Some(done),
+                Some(Ok((index, done, elapsed))) => {
+                    plans[index].done = Some(done);
+                    plans[index].elapsed = elapsed;
+                }
                 Some(Err(error)) => tracing::error!("an issue task failed: {error}"),
                 None => break,
             },

@@ -11,7 +11,7 @@ use crate::config::Config;
 use crate::domain::finding::{Finding, any_errors};
 use crate::domain::pages;
 use crate::error::{Error, Outcome};
-use crate::report;
+use crate::report::{self, out, outln};
 use crate::source::{self, Origin, Titles};
 
 #[derive(Debug, Default)]
@@ -74,7 +74,7 @@ pub fn run(config: &Config, root: &Path, verbose: bool) -> Result<Outcome, Error
         let _ = writeln!(out, "{:<5}  {}", problem.severity, problem.message);
     }
 
-    print!("{out}");
+    out!("{out}");
     print_summary(root, &totals, tree.problems.len());
     Ok(if totals.with_errors > 0 || any_errors(&tree.problems) {
         Outcome::Findings
@@ -124,32 +124,34 @@ fn write_issue(out: &mut String, root: &Path, issue: &IssueDir, findings: &[Find
 }
 
 fn print_summary(root: &Path, totals: &Totals, tree_problems: usize) {
-    println!(
+    outln!(
         "\nChecked {} ({}, {} skipped) under {}.",
         report::counted(totals.issues, "issue"),
         report::counted(totals.pages, "page"),
         totals.skipped,
         root.display()
     );
-    println!(
+    outln!(
         "  {} with errors, {} with warnings only.",
-        totals.with_errors, totals.with_warnings
+        totals.with_errors,
+        totals.with_warnings
     );
     if tree_problems > 0 {
-        println!("  {tree_problems} problems outside issue directories.");
+        outln!("  {tree_problems} problems outside issue directories.");
     }
-    println!(
+    outln!(
         "  Metadata: {} from issue.toml, {} from metadata.php only.",
-        totals.issue_files, totals.legacy_only
+        totals.issue_files,
+        totals.legacy_only
     );
     if totals.imported_by_php > 0 {
-        println!(
+        outln!(
             "  {} were imported by the PHP importer.",
             totals.imported_by_php
         );
     }
     if totals.without_title_id > 0 {
-        println!(
+        outln!(
             "  {} have no title_id from a title.toml; importing them needs --title.",
             totals.without_title_id
         );

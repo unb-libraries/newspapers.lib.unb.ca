@@ -14,6 +14,7 @@ use crate::adapters::source_write::SourceWriter;
 use crate::config::Config;
 use crate::domain::metadata::{IssueFields, IssueMetadata, TitleFile, render_issue_toml};
 use crate::error::{Error, Outcome};
+use crate::report::outln;
 use crate::source::{Titles, read_legacy};
 
 /// What happened to one issue.
@@ -83,14 +84,14 @@ pub fn run(config: &Config, root: &Path, dry_run: bool, run_id: &str) -> Result<
         match convert(issue, config, &mut titles, &writer, dry_run) {
             Converted::Written => {
                 written += 1;
-                println!(
+                outln!(
                     "wrote    {}",
                     issue.path.join(&config.source.issue_file).display()
                 );
             }
             Converted::WouldWrite(text) => {
                 written += 1;
-                println!(
+                outln!(
                     "# {}\n{text}",
                     issue.path.join(&config.source.issue_file).display()
                 );
@@ -105,21 +106,21 @@ pub fn run(config: &Config, root: &Path, dry_run: bool, run_id: &str) -> Result<
                 .add(&issue.path, language, media),
             Converted::Failed(error) => {
                 failed += 1;
-                println!("FAILED   {}\n         {error}", issue.path.display());
+                outln!("FAILED   {}\n         {error}", issue.path.display());
             }
         }
     }
 
     let needing_title: usize = proposals.values().map(|p| p.issues).sum();
     if !proposals.is_empty() {
-        println!(
+        outln!(
             "\n{needing_title} issues have no {} above them. Create these, set title_id to the \
              Digital Title ID on the site, and run convert again:",
             config.source.title_file
         );
         for (title, proposal) in &proposals {
             let dir = proposal.dir.as_deref().unwrap_or(root);
-            println!(
+            outln!(
                 "\n# {}  ({} {})\ntitle_id = 0\ntitle = {}\nlanguage = {}\nmedia = {}",
                 dir.join(&config.source.title_file).display(),
                 proposal.issues,
@@ -136,7 +137,7 @@ pub fn run(config: &Config, root: &Path, dry_run: bool, run_id: &str) -> Result<
     }
 
     let verb = if dry_run { "Would write" } else { "Wrote" };
-    println!(
+    outln!(
         "\n{verb} {written} issue files; {already} issues already had one; {failed} failed; \
          {needing_title} wait for a title file."
     );
