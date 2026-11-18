@@ -4,13 +4,27 @@ namespace Drupal\digital_serial_ingest\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\digital_serial_ingest\IngestNormalizer;
+use Drupal\digital_serial_ingest\TitleIssueList;
 use Drupal\digital_serial_issue\Entity\SerialIssueInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Serves the read endpoints used by tools/nbnp-ingest.
  */
 class IngestController extends ControllerBase {
+
+  /**
+   * Constructs an IngestController.
+   */
+  public function __construct(protected TitleIssueList $titleIssueList) {}
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): static {
+    return new static($container->get('digital_serial_ingest.title_issue_list'));
+  }
 
   /**
    * Returns an issue and its pages, looked up by UUID.
@@ -43,6 +57,19 @@ class IngestController extends ControllerBase {
       return $this->notFound("No digital title $title_id.");
     }
     return new JsonResponse((new IngestNormalizer())->title($title));
+  }
+
+  /**
+   * Lists a title's issues, so the tool can match issues imported before it.
+   */
+  public function titleIssues(int $title_id): JsonResponse {
+    if ($this->entityTypeManager()->getStorage('digital_serial_title')->load($title_id) === NULL) {
+      return $this->notFound("No digital title $title_id.");
+    }
+    return new JsonResponse([
+      'title_id' => $title_id,
+      'issues' => $this->titleIssueList->forTitle($title_id),
+    ]);
   }
 
   /**

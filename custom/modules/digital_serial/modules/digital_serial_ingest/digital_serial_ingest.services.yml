@@ -1,0 +1,4 @@
+services:
+  digital_serial_ingest.title_issue_list:
+    class: Drupal\digital_serial_ingest\TitleIssueList
+    arguments: ['@database', '@entity_type.manager', '@entity_field.manager']

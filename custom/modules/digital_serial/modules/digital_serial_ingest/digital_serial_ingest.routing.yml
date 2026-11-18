@@ -37,3 +37,15 @@ digital_serial_ingest.title:
   options:
     _auth: ['basic_auth']
     no_cache: TRUE
+
+digital_serial_ingest.title_issues:
+  path: '/serials-ingest/titles/{title_id}/issues'
+  defaults:
+    _controller: '\Drupal\digital_serial_ingest\Controller\IngestController::titleIssues'
+  methods: [GET]
+  requirements:
+    _permission: 'add serial page entities'
+    title_id: '\d+'
+  options:
+    _auth: ['basic_auth']
+    no_cache: TRUE
