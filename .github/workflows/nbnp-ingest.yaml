@@ -66,12 +66,18 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
+      # Compare the whole push, not just its last commit. A new branch, or a
+      # force push whose old head is gone, builds unconditionally.
       - name: Did the Dockerfile change?
         id: changed
+        env:
+          BEFORE: ${{ github.event.before }}
         run: |
-          if git diff --quiet HEAD~1 HEAD -- tools/nbnp-ingest/docker/vips; then
+          if [[ "$BEFORE" =~ ^0+$ ]] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          elif git diff --quiet "$BEFORE" HEAD -- tools/nbnp-ingest/docker/vips; then
             echo "build=false" >> "$GITHUB_OUTPUT"
           else
             echo "build=true" >> "$GITHUB_OUTPUT"
