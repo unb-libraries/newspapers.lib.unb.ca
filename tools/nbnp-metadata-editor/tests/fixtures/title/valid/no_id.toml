@@ -1,4 +1,4 @@
-# expect: title_id
+# warn: title_id
 title = "The News"
 language = "eng"
 media = "print"

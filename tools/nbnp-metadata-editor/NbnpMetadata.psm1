@@ -21,7 +21,9 @@ $script:Schemas = @{
         FileName = 'title.toml'
         # Key order of the written file.
         Keys     = @('title_id', 'title', 'language', 'media')
-        Required = @('title_id', 'title', 'language', 'media')
+        # The Title ID may not be known yet when the file is made; nbnp-ingest refuses to import
+        # without it, and the editor warns.
+        Required = @('title', 'language', 'media')
     }
     Issue = @{
         FileName = 'issue.toml'
@@ -378,7 +380,7 @@ function Test-NbnpMetadata {
         if ($key -eq 'missing_pages' -and $text -ne '') {
             $text = (($text -split ',') | ForEach-Object { ($_.Trim() -replace '\s*-\s*', '-') }) -join ', '
         }
-        if ($text -eq '' -and $value.Kind -eq 'string' -and $schema.Required -notcontains $key) { continue }
+        if ($text -eq '' -and $schema.Required -notcontains $key) { continue }
         $clean[$key] = New-NbnpValue $text $value.Kind
     }
 
@@ -461,6 +463,10 @@ function Test-NbnpMetadata {
 
     if ($clean.Contains('missing_pages') -and -not (Test-MissingPages $clean['missing_pages'].Text)) {
         & $error_ 'missing_pages' 'Missing pages must be page numbers or ranges separated by commas, such as 3, 6, 7 or 4-8: numbers, dashes and commas only, without zero padding.'
+    }
+
+    if ($Kind -eq 'Title' -and -not $clean.Contains('title_id')) {
+        & $warn 'title_id' 'Title ID is not set. The file can be saved, but the issues under this title cannot be imported until it is filled in.'
     }
 
     if ($Kind -eq 'Issue') {

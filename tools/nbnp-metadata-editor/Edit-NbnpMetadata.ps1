@@ -129,26 +129,58 @@ $form.StartPosition = 'CenterScreen'
 $form.Font = New-Object Drawing.Font('Segoe UI', 9)
 $form.AutoScaleMode = 'Dpi'
 $form.AutoScroll = $true
-$form.ClientSize = New-Object Drawing.Size(760, 700)
+# The issue form has two columns; the title form, being short, one.
+$columns = if ($Kind -eq 'Issue') { 2 } else { 1 }
+$form.ClientSize = if ($columns -eq 2) { New-Object Drawing.Size(1180, 640) } else { New-Object Drawing.Size(720, 460) }
 $form.MinimumSize = New-Object Drawing.Size(600, 400)
 
 $errorProvider = New-Object Windows.Forms.ErrorProvider
 $errorProvider.BlinkStyle = 'NeverBlink'
 
-$grid = New-Object Windows.Forms.TableLayoutPanel
-$grid.ColumnCount = 2
-[void]$grid.ColumnStyles.Add((New-Object Windows.Forms.ColumnStyle('AutoSize')))
-[void]$grid.ColumnStyles.Add((New-Object Windows.Forms.ColumnStyle('Percent', 100)))
-$grid.Dock = 'Top'
-$grid.AutoSize = $true
-$grid.Padding = New-Object Windows.Forms.Padding(12, 12, 24, 12)
+# A grid of label and control rows. The form is an outer grid: the file at the top, the field
+# grids side by side, then messages and buttons across the whole width.
+function New-Grid {
+    $grid = New-Object Windows.Forms.TableLayoutPanel
+    $grid.ColumnCount = 2
+    [void]$grid.ColumnStyles.Add((New-Object Windows.Forms.ColumnStyle('AutoSize')))
+    [void]$grid.ColumnStyles.Add((New-Object Windows.Forms.ColumnStyle('Percent', 100)))
+    $grid.Dock = 'Fill'
+    $grid.AutoSize = $true
+    $grid.Margin = New-Object Windows.Forms.Padding(0, 0, 12, 0)
+    $grid
+}
 
+$outer = New-Object Windows.Forms.TableLayoutPanel
+$outer.ColumnCount = $columns
+for ($i = 0; $i -lt $columns; $i++) {
+    [void]$outer.ColumnStyles.Add((New-Object Windows.Forms.ColumnStyle('Percent', (100 / $columns))))
+}
+$outer.Dock = 'Top'
+$outer.AutoSize = $true
+$outer.Padding = New-Object Windows.Forms.Padding(12, 12, 12, 12)
+
+function Add-OuterRow([Windows.Forms.Control[]] $Controls, [switch] $Span) {
+    $row = $outer.RowCount
+    $outer.RowCount = $row + 1
+    [void]$outer.RowStyles.Add((New-Object Windows.Forms.RowStyle('AutoSize')))
+    for ($i = 0; $i -lt $Controls.Count; $i++) { $outer.Controls.Add($Controls[$i], $i, $row) }
+    if ($Span) { $outer.SetColumnSpan($Controls[0], $columns) }
+}
+
+$header = New-Grid
+$left = New-Grid
+$right = if ($columns -eq 2) { New-Grid } else { $null }
+Add-OuterRow @($header) -Span
+Add-OuterRow @(@($left, $right) | Where-Object { $null -ne $_ })
+
+$script:Grid = $header
 $script:Inputs = @{}
-$script:HelpWidth = 520
+$script:HelpWidth = if ($columns -eq 2) { 400 } else { 520 }
 
-# Adds a row: a label and a control, or with no label a control under the controls column, or
-# with -Span one control across both columns.
+# Adds a row to the current grid: a label and a control, or with no label a control under the
+# controls column, or with -Span one control across both columns.
 function Add-Row([Windows.Forms.Control] $Left, [Windows.Forms.Control] $Right, [switch] $Span) {
+    $grid = $script:Grid
     $row = $grid.RowCount
     $grid.RowCount = $row + 1
     [void]$grid.RowStyles.Add((New-Object Windows.Forms.RowStyle('AutoSize')))
@@ -189,8 +221,8 @@ function Add-TextField([string] $Key, [string] $Label, [string] $Help, [switch] 
         $box.Multiline = $true
         $box.AcceptsReturn = $true
         $box.ScrollBars = 'Vertical'
-        $box.Height = 70
-        $box.Width = 480
+        $box.Height = 90
+        $box.Width = 400
     }
     $box.Margin = New-Object Windows.Forms.Padding(3, 3, 24, 3)
     Add-Row (New-Label $Label) $box
@@ -231,14 +263,17 @@ function Get-InputText([string] $Key) {
 # Where the file goes.
 $target = New-Object Windows.Forms.TextBox
 $target.ReadOnly = $true
-$target.Width = 480
+$target.Width = if ($columns -eq 2) { 900 } else { 480 }
 $target.Text = $file.Path
 $target.Margin = New-Object Windows.Forms.Padding(3, 3, 24, 3)
 Add-Row (New-Label 'File') $target
 Add-Row $null (New-Label $(if ($file.Exists) { 'Editing the existing file.' } else { 'A new file will be created.' }) -Help)
 
+$script:Grid = $left
+
 if ($Kind -eq 'Title') {
-    Add-TextField 'title_id' 'Title ID' ("The Digital Title ID on the site: in the title's address, " +
+    Add-TextField 'title_id' 'Title ID' ("Leave empty if not known yet; the title's issues cannot be imported " +
+        "until it is filled in. It is the Digital Title ID on the site: in the title's address, " +
         'https://newspapers.lib.unb.ca/serials/browse/48, it is 48.') -Width 120 | Out-Null
     Add-TextField 'title' 'Title' 'The exact, complete title from the masthead.' | Out-Null
     Add-LanguageField 'language' 'Language' 'eng for English, fre for French.' | Out-Null
@@ -249,7 +284,8 @@ if ($Kind -eq 'Title') {
     Set-Input 'language' 'eng'
 }
 else {
-    # What the issue inherits.
+    # Right: what the issue inherits.
+    $script:Grid = $right
     Add-Heading 'From the title'
     if ($script:TitleFile) {
         $v = $script:TitleFile.Values
@@ -265,6 +301,8 @@ else {
         Add-Row $null $none -Span
     }
 
+    # Left: the issue's own values.
+    $script:Grid = $left
     Add-Heading 'This issue'
     $supplement = New-Object Windows.Forms.CheckBox
     $supplement.Text = 'This is a supplement'
@@ -299,6 +337,8 @@ else {
     $supplementTitle = Add-TextField 'supplement_title' 'Supplement title' 'The supplement''s title as printed, if it has one.'
     Add-TextField 'missing_pages' 'Missing pages' ('Optional. Page numbers separated by commas, or ranges: ' +
         '3, 6, 7 or 4-8. Numbers, dashes and commas only; no zero padding.') -Width 200 | Out-Null
+    # Right: errata, then values that differ from the title.
+    $script:Grid = $right
     $errata = Add-TextField 'errata' 'Errata' ('Optional. Short and clear to everyone. For any problem with the ' +
         'printed issue numbering, use "Incorrect issue numbering".') -Multiline
     $insert = New-Object Windows.Forms.Button
@@ -344,10 +384,10 @@ if ($Kind -eq 'Issue' -and $file.Values.Contains('supplement_title')) { $supplem
 # Messages and buttons.
 $status = New-Object Windows.Forms.Label
 $status.AutoSize = $true
-$status.MaximumSize = New-Object Drawing.Size(680, 0)
+$status.MaximumSize = New-Object Drawing.Size($(if ($columns -eq 2) { 1100 } else { 680 }), 0)
 $status.ForeColor = [Drawing.Color]::DarkRed
 $status.Margin = New-Object Windows.Forms.Padding(3, 12, 3, 6)
-Add-Row $null $status -Span
+Add-OuterRow @($status) -Span
 
 $buttons = New-Object Windows.Forms.FlowLayoutPanel
 $buttons.FlowDirection = 'RightToLeft'
@@ -359,11 +399,11 @@ $cancel.DialogResult = 'Cancel'
 $save = New-Object Windows.Forms.Button
 $save.Text = 'Save'
 $buttons.Controls.AddRange(@($cancel, $save))
-Add-Row $null $buttons -Span
+Add-OuterRow @($buttons) -Span
 $form.AcceptButton = $null   # Enter adds lines in Errata; Save is clicked.
 $form.CancelButton = $cancel
 
-$form.Controls.Add($grid)
+$form.Controls.Add($outer)
 
 #endregion
 
@@ -375,8 +415,6 @@ function Get-FormValues {
         $text = Get-InputText $key
         if ($key -eq 'supplement_title' -and -not $supplement.Checked) { continue }
         $valueKind = if ($key -eq 'date' -or $key -eq 'title_id') { 'bare' } else { 'string' }
-        # An empty Title ID override is left out, not written as nothing.
-        if ($script:FileKind -eq 'Issue' -and $key -eq 'title_id' -and $text.Trim() -eq '') { continue }
         $values[$key] = New-NbnpValue $text $valueKind
     }
     $values

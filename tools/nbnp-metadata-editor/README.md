@@ -45,6 +45,9 @@ On Windows 11 both items are under **Show more options** (or hold Shift while ri
 Create the title's `title.toml` first: each issue inherits the title, language and media from
 the nearest `title.toml` in the folders above it, and the issue form shows those values.
 
+The issue form has two columns: the issue's own values on the left; on the right, what it
+inherits from the title, the errata, and the values that differ from the title.
+
 Fill in the form and choose **Save**. Values that need correcting are marked in red with the
 reason; nothing is written until they are fixed. A warning, such as a date whose year differs
 from the year in the folder name, asks whether to save anyway. **Cancel** closes without
@@ -54,7 +57,7 @@ writing anything.
 
 | Field | What to enter |
 |---|---|
-| Title ID | The Digital Title ID: in `https://newspapers.lib.unb.ca/serials/browse/48` it is `48`. |
+| Title ID | The Digital Title ID: in `https://newspapers.lib.unb.ca/serials/browse/48` it is `48`. Leave it empty if it is not known yet: the file saves with a warning, but nbnp-ingest refuses to import the title's issues (`missing field title_id`) until it is filled in. |
 | Title | The exact, complete title from the masthead. In an issue, only when it differs from the title's. |
 | Language | `eng` or `fre`. |
 | Date | `YYYY-MM-DD`, as printed, such as `1909-01-29`. If the day is not printed (a monthly) or you are unsure of it, use the 1st. The weekday is shown beside it as a check. |
@@ -136,9 +139,11 @@ on a Windows PC with the list below after changing the form or the installer.
 1. Install; both items appear on a folder and inside an open folder (Windows 11: under Show
    more options).
 2. On a new title folder, create a `title.toml` with ID `48`, title `The News`, language
-   `eng`, media `print`. Open the file: four lines, `title_id = 48` without quotes.
+   `eng`, media `print`. Open the file: four lines, `title_id = 48` without quotes. Save
+   another with the ID empty: a warning, then a file with no `title_id` line.
 3. On a new issue folder below it, create an `issue.toml` with date `1909-01-29`, volume `33`,
-   issue `5`. The form shows the inherited title; the file has three lines and no empty fields.
+   issue `5`. The form opens in two columns, fits the screen, and shows the inherited title on
+   the right; the file has three lines and no empty fields.
 4. Reopen it: the values are filled in. Change the issue to `6` and save: `issue.toml.bak`
    holds the previous version.
 5. Try title ID `-1`, `4.5` and `abc`, date `1909-02-29`, volume `05`, missing pages `1 & 2`:

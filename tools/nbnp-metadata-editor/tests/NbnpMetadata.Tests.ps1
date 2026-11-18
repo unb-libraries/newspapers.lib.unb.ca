@@ -168,11 +168,21 @@ Describe 'Checking' {
     It 'checks title IDs: <Id>' -ForEach @(
         @{ Id = '48'; Ok = $true }, @{ Id = '4294967295'; Ok = $true }, @{ Id = '4294967296'; Ok = $false },
         @{ Id = '0'; Ok = $false }, @{ Id = '-1'; Ok = $false }, @{ Id = '4.8'; Ok = $false },
-        @{ Id = 'abc'; Ok = $false }, @{ Id = ''; Ok = $false }
+        @{ Id = 'abc'; Ok = $false }, @{ Id = ''; Ok = $true }
     ) {
         $checked = Test-NbnpMetadata -Kind Title -Today $script:Today -Values (
             Values @{ title_id = $Id; title = 'The News'; language = 'eng'; media = 'print' })
-        (@($checked.Findings | Where-Object Field -EQ 'title_id').Count -eq 0) | Should -Be $Ok
+        (@($checked.Findings | Where-Object { $_.Field -eq 'title_id' -and $_.Severity -eq 'Error' }).Count -eq 0) |
+            Should -Be $Ok
+    }
+
+    It 'saves a title without a Title ID, with a warning and no title_id line' {
+        $checked = Test-NbnpMetadata -Kind Title -Today $script:Today -Values (
+            Values @{ title_id = ''; title = 'The News'; language = 'eng'; media = 'print' })
+        $checked.Findings.Severity | Should -Be 'Warning'
+        $checked.Findings.Field | Should -Be 'title_id'
+        ConvertTo-NbnpToml -Kind Title -Values $checked.Values |
+            Should -Be "title = `"The News`"`nlanguage = `"eng`"`nmedia = `"print`"`n"
     }
 
     It 'checks dates: <Date>' -ForEach @(
