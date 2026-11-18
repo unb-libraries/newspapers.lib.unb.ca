@@ -52,7 +52,9 @@ pull = "missing"                       # default; always, missing or never
 
 [ocr]
 # Pin by digest so a run is reproducible: image@sha256:...
-image = "ghcr.io/unb-libraries/tesseract:5.x-singlethread"
+# Each OCR run is limited to one thread (OMP_THREAD_LIMIT=1) whatever the image
+# sets; limits.cpu_slots decides how many run at once.
+image = "ghcr.io/unb-libraries/tesseract:5.x"
 dpi = 300                              # default
 oem = 1                                # default
 timeout_secs = 900                     # default; per page

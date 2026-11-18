@@ -34,6 +34,8 @@ pub struct Spec {
     /// Runs as the image's default user when not set.
     pub user: Option<(u32, u32)>,
     pub mounts: Vec<Mount>,
+    /// Set in the container, over the image's own values.
+    pub env: Vec<(String, String)>,
     pub entrypoint: Option<String>,
     pub args: Vec<OsString>,
     pub timeout: Duration,
@@ -89,6 +91,9 @@ impl Runtime {
         }
         for mount in &spec.mounts {
             invocation = invocation.args(["--mount", &mount_option(mount)?]);
+        }
+        for (name, value) in &spec.env {
+            invocation = invocation.args(["--env", &format!("{name}={value}")]);
         }
         if let Some(entrypoint) = &spec.entrypoint {
             invocation = invocation.args(["--entrypoint", entrypoint]);
@@ -236,6 +241,7 @@ mod tests {
                     read_only: false,
                 },
             ],
+            env: vec![("OMP_THREAD_LIMIT".into(), "1".into())],
             entrypoint: Some("tesseract".into()),
             args: vec!["/in/a.jpg".into(), "/out/a".into()],
             timeout: Duration::from_mins(15),
@@ -253,6 +259,7 @@ mod tests {
              --user 1000:1000 \
              --mount type=bind,source=/mnt/nbnp/The_News/TN_1909,target=/in,readonly \
              --mount type=bind,source=/work/ocr,target=/out \
+             --env OMP_THREAD_LIMIT=1 \
              --entrypoint tesseract tesseract@sha256:00 /in/a.jpg /out/a"
         );
     }
