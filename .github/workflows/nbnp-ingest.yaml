@@ -56,7 +56,8 @@ jobs:
         run: cargo test --locked
 
   vips-image:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    # On dev: pushes build when the Dockerfile changed; a manual run always builds.
+    if: github.ref == 'refs/heads/dev' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     needs: checks
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -68,14 +69,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Compare the whole push, not just its last commit. A new branch, or a
-      # force push whose old head is gone, builds unconditionally.
+      # Compare the whole push, not just its last commit. A manual run, a new
+      # branch, or a force push whose old head is gone builds unconditionally.
       - name: Did the Dockerfile change?
         id: changed
         env:
+          EVENT: ${{ github.event_name }}
           BEFORE: ${{ github.event.before }}
         run: |
-          if [[ "$BEFORE" =~ ^0+$ ]] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+          if [[ "$EVENT" == workflow_dispatch || "$BEFORE" =~ ^0+$ ]] \
+            || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
             echo "build=true" >> "$GITHUB_OUTPUT"
           elif git diff --quiet "$BEFORE" HEAD -- tools/nbnp-ingest/docker/vips; then
             echo "build=false" >> "$GITHUB_OUTPUT"
