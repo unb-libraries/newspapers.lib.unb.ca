@@ -1,0 +1,47 @@
+# Checks tools/nbnp-metadata-editor: Windows PowerShell 5.1 compatibility, the Pester tests,
+# and that nbnp-ingest check accepts the files the editor saves. Runs when either changes.
+name: nbnp-metadata-editor
+
+on:
+  push:
+    branches: [dev, prod]
+    paths:
+      - 'tools/nbnp-metadata-editor/**'
+      - 'tools/nbnp-ingest/**'
+      - '.github/workflows/nbnp-metadata-editor.yaml'
+  pull_request:
+    paths:
+      - 'tools/nbnp-metadata-editor/**'
+      - 'tools/nbnp-ingest/**'
+      - '.github/workflows/nbnp-metadata-editor.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nbnp-metadata-editor-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # The same toolchain as the nbnp-ingest workflow.
+  RUST_VERSION: "1.95.0"
+  CARGO_TERM_COLOR: always
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: tools/nbnp-ingest -> target
+
+      - name: tests
+        run: tools/nbnp-metadata-editor/tests/run-tests.sh

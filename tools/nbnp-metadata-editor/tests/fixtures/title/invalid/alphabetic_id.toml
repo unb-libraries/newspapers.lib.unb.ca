@@ -1,0 +1,5 @@
+# expect: title_id
+title_id = abc
+title = "The News"
+language = "eng"
+media = "print"

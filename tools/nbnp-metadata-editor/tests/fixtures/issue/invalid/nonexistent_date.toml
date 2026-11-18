@@ -1,0 +1,4 @@
+# expect: date
+date = 1909-02-29
+volume = "33"
+issue = "5"

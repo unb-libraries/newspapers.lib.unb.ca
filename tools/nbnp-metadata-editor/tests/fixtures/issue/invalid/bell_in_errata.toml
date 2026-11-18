@@ -1,0 +1,5 @@
+# expect: errata
+date = 1909-01-29
+volume = "33"
+issue = "5"
+errata = "Torn\u0007"

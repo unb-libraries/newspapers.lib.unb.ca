@@ -1,0 +1,6 @@
+# expect: date
+title_id = 48
+title = "The News"
+language = "eng"
+media = "print"
+date = 1909-01-01

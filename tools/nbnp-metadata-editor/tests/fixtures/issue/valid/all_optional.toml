@@ -1,0 +1,9 @@
+date = 1881-07-06
+volume = "34"
+issue = "28"
+edition = "Evening"
+supplement_title = "Supplement to \"The\" Visitor \\ Parish Notes"
+missing_pages = "3, 6-8"
+errata = """
+Incorrect issue numbering
+Page 4 is printed as \"3\" – café"""
