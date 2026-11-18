@@ -13,6 +13,7 @@ mod ingest;
 mod report;
 mod source;
 
+use std::io::IsTerminal as _;
 use std::process::ExitCode;
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -151,7 +152,13 @@ fn init_logging(verbose: u8) {
     // The terminal, and a copy without colour codes for the run's log file once it is open.
     tracing_subscriber::registry()
         .with(filter)
-        .with(layer().with_writer(std::io::stderr).with_target(false))
+        .with(
+            layer()
+                .with_writer(std::io::stderr)
+                // Colour only on a terminal, not when output is piped into a file.
+                .with_ansi(std::io::stderr().is_terminal())
+                .with_target(false),
+        )
         .with(
             layer()
                 .with_writer(|| adapters::run_log::LogFileWriter)
