@@ -185,9 +185,7 @@ function Read-TomlValue {
                 if ($escape.Error) { return & $fail $escape.Error }
                 [void]$sb.Append($escape.Value); $p = $escape.Position; continue
             }
-            if ([char]::IsControl($ch) -and $ch -ne "`n" -and $ch -ne "`t") {
-                return & $fail 'control characters must be escaped'
-            }
+            if (Test-TomlForbidden $ch -Multiline) { return & $fail 'control characters must be escaped' }
             [void]$sb.Append($ch); $p++
         }
     }
@@ -199,6 +197,9 @@ function Read-TomlValue {
         $extra = 0
         while ($extra -lt 2 -and $end + 3 + $extra -lt $Text.Length -and $Text[$end + 3 + $extra] -eq "'") { $extra++ }
         $value = $Text.Substring($p, $end - $p) + [string]::new("'", $extra)
+        foreach ($ch in $value.ToCharArray()) {
+            if (Test-TomlForbidden $ch -Multiline) { return & $fail 'literal strings cannot hold control characters' }
+        }
         return & $ok (New-NbnpValue $value 'string') ($end + 3 + $extra)
     }
     if ($rest.StartsWith('"')) {
@@ -213,7 +214,7 @@ function Read-TomlValue {
                 if ($escape.Error) { return & $fail $escape.Error }
                 [void]$sb.Append($escape.Value); $p = $escape.Position; continue
             }
-            if ([char]::IsControl($ch) -and $ch -ne "`t") { return & $fail 'control characters must be escaped' }
+            if (Test-TomlForbidden $ch) { return & $fail 'control characters must be escaped' }
             [void]$sb.Append($ch); $p++
         }
     }
@@ -221,7 +222,11 @@ function Read-TomlValue {
         $end = $Text.IndexOf("'", $p + 1)
         $nl = $Text.IndexOf("`n", $p + 1)
         if ($end -lt 0 -or ($nl -ge 0 -and $nl -lt $end)) { return & $fail 'the string is not closed on its line' }
-        return & $ok (New-NbnpValue $Text.Substring($p + 1, $end - $p - 1) 'string') ($end + 1)
+        $value = $Text.Substring($p + 1, $end - $p - 1)
+        foreach ($ch in $value.ToCharArray()) {
+            if (Test-TomlForbidden $ch) { return & $fail 'literal strings cannot hold control characters' }
+        }
+        return & $ok (New-NbnpValue $value 'string') ($end + 1)
     }
     # A bare value: a date, number or boolean. Kept as text; validation decides if it fits.
     $bare = [regex]::Match($rest, '^[0-9A-Za-z+_.:-]+')
@@ -232,6 +237,15 @@ function Read-TomlValue {
         return & $fail 'lists and tables are not used in these files'
     }
     & $fail 'expected a value'
+}
+
+function Test-TomlForbidden([char] $Ch, [switch] $Multiline) {
+    # TOML refuses control characters U+0000-U+001F and U+007F written raw in a string, except a
+    # tab, and a line break in a multi-line string. Other characters, C1 controls included, may
+    # be written as they are.
+    $code = [int]$Ch
+    if ($code -eq 0x09 -or ($Multiline -and $code -eq 0x0A)) { return $false }
+    $code -le 0x1F -or $code -eq 0x7F
 }
 
 function Read-TomlEscape {
@@ -371,6 +385,9 @@ function Test-NbnpMetadata {
         if (-not $Values.Contains($key) -or $null -eq $Values[$key]) { continue }
         $value = $Values[$key]
         $text = [string]$value.Text
+        # As typed on Windows: an accent and its letter as one character, so text compares and
+        # searches alike whether it was typed or pasted.
+        try { $text = $text.Normalize([Text.NormalizationForm]::FormC) } catch { }
         if ($key -eq 'errata') {
             $text = ($text -replace "`r`n", "`n").TrimEnd()
         }
@@ -439,14 +456,23 @@ function Test-NbnpMetadata {
                 }
             }
         }
-        if ($key -ne 'errata' -and $text -match '[\x00-\x1F\x7F]') {
-            & $error_ $key "$(Get-FieldLabel $key) must be a single line."
+        if ($key -ne 'errata' -and $text -match '\p{Cc}') {
+            & $error_ $key "$(Get-FieldLabel $key) must be a single line, without control characters."
         }
-        if ($key -eq 'errata' -and $text -match '[\x00-\x08\x0B-\x1F\x7F]') {
+        if ($key -eq 'errata' -and $text -match '[\p{Cc}-[\n\t]]') {
             & $error_ $key 'Errata contains a control character; retype it.'
         }
-        if ($script:MaxLength.ContainsKey($key) -and $text.Length -gt $script:MaxLength[$key]) {
-            & $error_ $key "$(Get-FieldLabel $key) is $($text.Length) characters; the site stores at most $($script:MaxLength[$key])."
+        if ($text -match '[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]') {
+            & $error_ $key "$(Get-FieldLabel $key) contains a broken character; retype it."
+        }
+        $invisible = @([regex]::Matches($text, '\p{Cf}') | ForEach-Object { 'U+{0:X4}' -f [int][char]$_.Value } |
+                Select-Object -Unique)
+        if ($invisible.Count -gt 0) {
+            & $warn $key "$(Get-FieldLabel $key) contains invisible characters ($($invisible -join ', ')), often pasted with text; remove them unless they are meant."
+        }
+        $length = Get-CharacterCount $text
+        if ($script:MaxLength.ContainsKey($key) -and $length -gt $script:MaxLength[$key]) {
+            & $error_ $key "$(Get-FieldLabel $key) is $length characters; the site stores at most $($script:MaxLength[$key])."
         }
     }
 
@@ -480,6 +506,12 @@ function Test-NbnpMetadata {
     }
 
     [pscustomobject]@{ Values = $clean; Findings = $findings.ToArray() }
+}
+
+function Get-CharacterCount([string] $Text) {
+    # Characters as the site and nbnp-ingest count them: code points, so a character outside the
+    # Basic Multilingual Plane (two UTF-16 units) counts once.
+    $Text.Length - [regex]::Matches($Text, '[\uDC00-\uDFFF]').Count
 }
 
 function Test-MissingPages([string] $Text) {

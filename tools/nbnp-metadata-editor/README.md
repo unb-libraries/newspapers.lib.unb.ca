@@ -74,6 +74,12 @@ writing anything.
 | Missing pages | Page numbers separated by commas, or ranges: `3, 6, 7` or `4-8`. Numbers, dashes and commas only. |
 | Errata | Short and clear to everyone. For any problem with printed issue numbering, use "Incorrect issue numbering" (the button inserts it). |
 
+Any script can be entered: accented and Indigenous-language letters, right-to-left and CJK
+text, and characters outside the Basic Multilingual Plane. Accents are stored joined to their
+letter (`é` as one character), as Windows types them, so pasted text compares and searches
+alike. Invisible characters that often arrive with pasted text, such as zero-width spaces,
+draw a warning naming them.
+
 The **Different from the title** fields are usually left empty; fill them only when an issue
 differs from its title, for example a masthead printing a different title.
 
@@ -157,8 +163,8 @@ on a Windows PC with the list below after changing the form or the installer.
    save.
 6. Try title ID `-1`, `4.5` and `abc`, date `1909-02-29`, volume `05`, missing pages `1 & 2`:
    each is marked in red and nothing is saved.
-7. Enter an edition with `"quotes"`, a backslash and `é`, and two lines of errata; save and
-   reopen: the values are unchanged.
+7. Enter an edition with `"quotes"`, a backslash, `é`, `Miʼkmaq`, `جريدة` and `𝔄`, and two
+   lines of errata; save and reopen: the values are unchanged and display correctly.
 8. Cancel after a change: asked to confirm; the file is unchanged.
 9. Open the form, change the file in Notepad, then Save in the form: refused, Notepad's version
    kept.
