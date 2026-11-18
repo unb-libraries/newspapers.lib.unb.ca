@@ -6,6 +6,7 @@ use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 use crate::adapters::container::{Mount, Runtime, Spec};
+use crate::adapters::drupal::Client;
 use crate::config::{Config, Loaded, SiteCredentials};
 use crate::error::{Error, Outcome};
 use crate::report::{Check, Status, format_checks};
@@ -52,6 +53,8 @@ pub async fn check(loaded: &Loaded, run_id: &str) -> Result<Outcome, Error> {
                 .map(|()| config.paths.log_dir.display().to_string()),
         ),
     ];
+
+    checks.push(Check::from_result("site", site_access(config).await));
 
     match runtime.server_version().await {
         Ok(version) => {
@@ -219,6 +222,17 @@ fn public_files(path: &Path) -> Result<String, String> {
             path.display()
         ))
     }
+}
+
+/// Logs in to the site and asks for an issue that does not exist, which needs the ingest
+/// module and an account allowed to use it.
+async fn site_access(config: &Config) -> Result<String, String> {
+    let credentials =
+        SiteCredentials::load(&config.site.credentials_file).map_err(|e| e.to_string())?;
+    let username = credentials.username.clone();
+    let client = Client::new(&config.site, credentials).map_err(|e| e.to_string())?;
+    client.check_access().await.map_err(|e| e.to_string())?;
+    Ok(format!("{} as {username}", config.site.base_url))
 }
 
 fn readable_dir(path: &Path) -> Result<String, String> {

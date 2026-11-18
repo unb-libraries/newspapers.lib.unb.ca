@@ -11,6 +11,7 @@ use crate::config::Config;
 use crate::domain::finding::{Finding, any_errors};
 use crate::domain::pages;
 use crate::error::{Error, Outcome};
+use crate::report;
 use crate::source::{self, Origin, Titles};
 
 #[derive(Debug, Default)]
@@ -108,42 +109,25 @@ fn check_issue(
 }
 
 fn write_issue(out: &mut String, root: &Path, issue: &IssueDir, findings: &[Finding]) {
-    let shown = issue.path.strip_prefix(root).unwrap_or(&issue.path);
-    let shown = if shown.as_os_str().is_empty() {
-        Path::new(".")
+    let skipped = if issue.skipped.is_empty() {
+        String::new()
     } else {
-        shown
+        format!(", {} skipped", issue.skipped.len())
     };
     let _ = writeln!(
         out,
-        "{}  ({} pages{})",
-        shown.display(),
+        "{}  ({} pages{skipped})",
+        report::shown_path(root, &issue.path).display(),
         issue.pages.len(),
-        if issue.skipped.is_empty() {
-            String::new()
-        } else {
-            format!(", {} skipped", issue.skipped.len())
-        }
     );
-    for finding in findings {
-        let mut lines = finding.message.lines();
-        let _ = writeln!(
-            out,
-            "  {:<5}  {}",
-            finding.severity,
-            lines.next().unwrap_or("")
-        );
-        for line in lines {
-            let _ = writeln!(out, "         {line}");
-        }
-    }
+    report::write_findings(out, findings);
 }
 
 fn print_summary(root: &Path, totals: &Totals, tree_problems: usize) {
     println!(
-        "\nChecked {} issues ({} pages, {} skipped) under {}.",
-        totals.issues,
-        totals.pages,
+        "\nChecked {} ({}, {} skipped) under {}.",
+        report::counted(totals.issues, "issue"),
+        report::counted(totals.pages, "page"),
         totals.skipped,
         root.display()
     );

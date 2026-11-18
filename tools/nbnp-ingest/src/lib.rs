@@ -50,6 +50,20 @@ pub fn main() -> ExitCode {
 fn run(cli: &Cli) -> Result<Outcome, Error> {
     let loaded = Config::load(cli.config.as_deref())?;
     match &cli.command {
+        Command::Audit {
+            path,
+            title,
+            deep,
+            all,
+        } => async_runtime()?.block_on(commands::audit::run(
+            &loaded.config,
+            path,
+            commands::audit::Options {
+                title: *title,
+                deep: *deep,
+                all: *all,
+            },
+        )),
         Command::Check { path, all } => commands::check::run(&loaded.config, path, *all),
         Command::Convert { path, dry_run } => {
             commands::convert::run(&loaded.config, path, *dry_run, &run_id())

@@ -3,7 +3,8 @@
 use std::process::ExitCode;
 
 use crate::adapters::container::ContainerError;
-use crate::config::ConfigError;
+use crate::adapters::drupal::SiteError;
+use crate::config::{ConfigError, CredentialsError};
 
 /// How a command that ran to the end turned out.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -22,7 +23,11 @@ pub enum Error {
     #[error(transparent)]
     Config(#[from] ConfigError),
     #[error(transparent)]
+    Credentials(#[from] CredentialsError),
+    #[error(transparent)]
     Container(#[from] ContainerError),
+    #[error(transparent)]
+    Site(#[from] SiteError),
     #[error("cannot read {path}: {source}")]
     Source {
         path: std::path::PathBuf,
@@ -55,8 +60,10 @@ impl Error {
     #[must_use]
     pub fn exit_code(&self) -> ExitCode {
         ExitCode::from(match self {
-            Self::Config(_) => exit::USAGE,
-            Self::Container(_) | Self::Runtime(_) | Self::Source { .. } => exit::FAILED,
+            Self::Config(_) | Self::Credentials(_) => exit::USAGE,
+            Self::Container(_) | Self::Site(_) | Self::Runtime(_) | Self::Source { .. } => {
+                exit::FAILED
+            }
         })
     }
 }

@@ -30,6 +30,20 @@ pub enum Command {
         #[arg(long)]
         all: bool,
     },
+    /// Compare every issue under a path with the site; reads only
+    Audit {
+        /// A title, year or issue directory, or anything above them
+        path: PathBuf,
+        /// Digital Title ID to use instead of each issue's `title_id`, e.g. on a test site
+        #[arg(long, value_name = "ID")]
+        title: Option<u32>,
+        /// Also checksum every stored image, to find damaged files
+        #[arg(long)]
+        deep: bool,
+        /// List every issue, not only those with findings
+        #[arg(long)]
+        all: bool,
+    },
     /// Write an issue.toml beside each legacy metadata.php that has none
     Convert {
         /// A title, year or issue directory, or anything above them

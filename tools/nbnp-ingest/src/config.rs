@@ -447,10 +447,6 @@ fn is_language_code(code: &str) -> bool {
 #[serde(deny_unknown_fields)]
 pub struct SiteCredentials {
     pub username: String,
-    #[expect(
-        dead_code,
-        reason = "read by the site client, which comes with the audit command"
-    )]
     pub password: String,
 }
 
