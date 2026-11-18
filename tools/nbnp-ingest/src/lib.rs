@@ -1,0 +1,84 @@
+//! nbnp-ingest: imports and audits digitized newspaper issues for newspapers.lib.unb.ca.
+//!
+//! `main.rs` only calls [`main`]. Commands live in `commands`, and everything that touches the
+//! outside world lives in `adapters`.
+
+mod adapters;
+mod cli;
+mod commands;
+mod config;
+mod error;
+mod report;
+
+use std::process::ExitCode;
+use std::time::{SystemTime, UNIX_EPOCH};
+
+use tracing::{Level, error};
+
+use cli::{Cli, Command, ConfigCommand};
+use config::Config;
+use error::{Error, Outcome, exit};
+
+/// Parses arguments, runs the command and returns the process exit status.
+#[must_use]
+pub fn main() -> ExitCode {
+    let cli = match Cli::try_parse_args() {
+        Ok(cli) => cli,
+        Err(error) => {
+            // clap exits 2 on usage errors, which here means "finished with findings".
+            let _ = error.print();
+            return if error.use_stderr() {
+                ExitCode::from(exit::USAGE)
+            } else {
+                ExitCode::SUCCESS
+            };
+        }
+    };
+    init_logging(cli.verbose);
+
+    match run(&cli) {
+        Ok(outcome) => outcome.exit_code(),
+        Err(err) => {
+            error!("{err}");
+            err.exit_code()
+        }
+    }
+}
+
+fn run(cli: &Cli) -> Result<Outcome, Error> {
+    let loaded = Config::load(cli.config.as_deref())?;
+    match &cli.command {
+        Command::Config(ConfigCommand::Show) => Ok(commands::config::show(&loaded)),
+        Command::Config(ConfigCommand::Check) => {
+            async_runtime()?.block_on(commands::config::check(&loaded, &run_id()))
+        }
+    }
+}
+
+fn async_runtime() -> Result<tokio::runtime::Runtime, Error> {
+    tokio::runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()
+        .map_err(Error::Runtime)
+}
+
+/// Identifies this run in container labels and probe file names.
+fn run_id() -> String {
+    let secs = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map_or(0, |d| d.as_secs());
+    format!("{secs}-{}", std::process::id())
+}
+
+fn init_logging(verbose: u8) {
+    let level = match verbose {
+        0 => Level::INFO,
+        1 => Level::DEBUG,
+        _ => Level::TRACE,
+    };
+    tracing_subscriber::fmt()
+        .with_writer(std::io::stderr)
+        .with_max_level(level)
+        .with_target(false)
+        .init();
+}

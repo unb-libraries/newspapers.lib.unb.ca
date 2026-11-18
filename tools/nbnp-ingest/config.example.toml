@@ -1,0 +1,82 @@
+# nbnp-ingest configuration.
+#
+# Looked for at --config, then $NBNP_INGEST_CONFIG, then
+# $XDG_CONFIG_HOME/nbnp-ingest/config.toml (default ~/.config/nbnp-ingest/config.toml).
+# Unknown keys are an error. Keys marked "default" may be left out.
+# `nbnp-ingest config show` prints the resolved values; `nbnp-ingest config check` tests them.
+
+[site]
+base_url = "https://newspapers.lib.unb.ca"
+# TOML with `username` and `password` of an account allowed to add serial pages.
+# Must be mode 600.
+credentials_file = "/home/imaging/.config/nbnp-ingest/site-credentials.toml"
+connect_timeout_secs = 10      # default
+# Each page create indexes the page in Solr before responding.
+request_timeout_secs = 300     # default
+retries = 4                    # default; failed reads and uploads, never creates
+retry_backoff_ms = 1000        # default; doubles on each retry
+
+[paths]
+source_root = "/mnt/nbnp"
+# The site's public files directory (sites/default/files).
+public_files = "/mnt/newspapers.lib.unb.ca/prod/files"
+# Local disk owned by the user running the tool: OCR output and tiles before install.
+work_dir = "/home/imaging/nbnp-ingest/work"
+log_dir = "/home/imaging/NBHP/logs"
+
+[webtree]
+# Owner of the files the site serves. Asset containers run as this user and group.
+owner_uid = 100
+owner_gid = 102
+# Relative to public_files; must be on the same filesystem as the assets.
+staging_dir = "serials/.nbnp-ingest-staging"   # default
+
+[source]
+issue_file = "issue.toml"              # default
+title_file = "title.toml"              # default
+legacy_metadata_file = "metadata.php"  # default; read only, never executed
+state_file = ".nbnp_issue.toml"        # default
+legacy_marker = ".nbnp_processed"      # default; written by the PHP importer
+skip_suffix = ".nbnp_skip"             # default; `<image>.nbnp_skip` leaves the image out
+filename_scheme = "nbnp-v1"            # default; the only scheme
+# The source tree is not writable by the user running the tool; the state file
+# is written with `sudo install`.
+use_sudo = true                        # default
+
+[containers]
+runtime = "docker"                     # default
+label = "ca.unb.lib.nbnp-ingest"       # default
+pull = "missing"                       # default; always, missing or never
+
+[ocr]
+# Pin by digest so a run is reproducible: image@sha256:...
+image = "ghcr.io/unb-libraries/tesseract:5.x-singlethread"
+dpi = 300                              # default
+oem = 1                                # default
+timeout_secs = 900                     # default; per page
+
+# Issue language (as in title.toml / issue.toml) = Tesseract language.
+# The keys are the languages an issue may declare.
+[ocr.languages]
+eng = "eng"
+fre = "fra"
+
+[dzi]
+# An image providing `vips`. Pin by digest.
+image = "ghcr.io/unb-libraries/vips:bookworm"
+tile_size = 256                        # default
+overlap = 0                            # default
+jpeg_quality = 80                      # default
+timeout_secs = 900                     # default; per issue
+
+[limits]
+cpu_slots = 4                          # default; OCR and tiling processes at once
+issue_concurrency = 2                  # default
+upload_concurrency = 4                 # default; page uploads at once, all issues
+min_free_work_mib = 2048               # default
+
+# Leave this section out to send no notifications.
+[notify]
+region = "us-east-1"
+summary_topic_arn = "arn:aws:sns:us-east-1:000000000000:nbnp-import-summary"
+event_topic_arn = "arn:aws:sns:us-east-1:000000000000:nbnp-import-event"
