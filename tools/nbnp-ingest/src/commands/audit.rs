@@ -362,7 +362,7 @@ async fn find_on_site(
         }
         Lookup::Metadata => {
             let candidates = title_issues.map_or(&[][..], Vec::as_slice);
-            match audit::match_legacy(&issue.metadata, candidates) {
+            match audit::match_legacy(&issue.metadata, issue.pages.len(), candidates) {
                 LegacyMatch::None => {
                     findings.push(Finding::error(
                         "not on the site: no issue of the title has this date, volume and issue",

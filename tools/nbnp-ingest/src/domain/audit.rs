@@ -205,8 +205,16 @@ pub enum LegacyMatch {
 /// Finds the site issue with this issue's date, volume, number, title and edition. Failing
 /// that, the one with the same date, volume and number, so changed metadata is reported as a
 /// difference instead of a missing issue.
+///
+/// A supplement without a supplement title has its main issue's metadata, so when several
+/// issues with pages match, the one with as many pages as the source (`page_count`) is taken,
+/// if exactly one has.
 #[must_use]
-pub fn match_legacy(metadata: &IssueMetadata, issues: &[IssueSummary]) -> LegacyMatch {
+pub fn match_legacy(
+    metadata: &IssueMetadata,
+    page_count: usize,
+    issues: &[IssueSummary],
+) -> LegacyMatch {
     let date = metadata.date.to_string();
     let same_number = |s: &&IssueSummary| {
         s.date.as_deref() == Some(date.as_str())
@@ -224,8 +232,18 @@ pub fn match_legacy(metadata: &IssueMetadata, issues: &[IssueSummary]) -> Legacy
         exact
     };
 
-    let (with_pages, empty): (Vec<&IssueSummary>, Vec<&IssueSummary>) =
+    let (mut with_pages, empty): (Vec<&IssueSummary>, Vec<&IssueSummary>) =
         candidates.iter().partition(|s| s.page_count > 0);
+    if with_pages.len() > 1 {
+        let same_count: Vec<&IssueSummary> = with_pages
+            .iter()
+            .copied()
+            .filter(|s| usize::try_from(s.page_count).is_ok_and(|n| n == page_count))
+            .collect();
+        if same_count.len() == 1 {
+            with_pages = same_count;
+        }
+    }
     match (with_pages.as_slice(), empty.as_slice()) {
         ([], []) => LegacyMatch::None,
         ([one], empty) | ([], empty @ [one]) => LegacyMatch::One {
@@ -433,13 +451,16 @@ mod tests {
             summary(3, "The News", "6", 4),
         ];
         assert_eq!(
-            match_legacy(&metadata(), &issues),
+            match_legacy(&metadata(), 4, &issues),
             LegacyMatch::One {
                 id: 1,
                 empty_duplicates: vec![]
             }
         );
-        assert_eq!(match_legacy(&metadata(), &issues[2..]), LegacyMatch::None);
+        assert_eq!(
+            match_legacy(&metadata(), 4, &issues[2..]),
+            LegacyMatch::None
+        );
     }
 
     #[test]
@@ -449,7 +470,7 @@ mod tests {
             summary(4, "The News", "5", 0),
         ];
         assert_eq!(
-            match_legacy(&metadata(), &with_empty),
+            match_legacy(&metadata(), 4, &with_empty),
             LegacyMatch::One {
                 id: 1,
                 empty_duplicates: vec![4]
@@ -460,8 +481,26 @@ mod tests {
             summary(5, "The News", "5", 4),
         ];
         assert_eq!(
-            match_legacy(&metadata(), &duplicated),
+            match_legacy(&metadata(), 4, &duplicated),
             LegacyMatch::Many(vec![1, 5])
+        );
+    }
+
+    #[test]
+    fn a_supplement_without_its_own_title_is_told_apart_by_page_count() {
+        // ET_1904_01_25 (8 pages) and its supplement ET_1904_01_25_S2 (4 pages) share every
+        // metadata value.
+        let issues = [
+            summary(14273, "The News", "5", 8),
+            summary(14501, "The News", "5", 4),
+        ];
+        assert!(matches!(
+            match_legacy(&metadata(), 4, &issues),
+            LegacyMatch::One { id: 14501, .. }
+        ));
+        assert_eq!(
+            match_legacy(&metadata(), 6, &issues),
+            LegacyMatch::Many(vec![14273, 14501])
         );
     }
 
@@ -469,7 +508,7 @@ mod tests {
     fn a_retitled_issue_is_still_found() {
         let issues = [summary(1, "The News (Moncton)", "5", 4)];
         assert!(matches!(
-            match_legacy(&metadata(), &issues),
+            match_legacy(&metadata(), 4, &issues),
             LegacyMatch::One { id: 1, .. }
         ));
     }
