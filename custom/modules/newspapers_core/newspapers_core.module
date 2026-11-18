@@ -46,6 +46,14 @@ const NEWSPAPERS_CORE_STATS_CACHE_TAG = 'newspapers_core:frontpage_stats';
 const NEWSPAPERS_CORE_STATS_LIFETIME = 3600;
 
 /**
+ * How long, in seconds, an issue may exist without pages before cron deletes it.
+ *
+ * Ingest creates an issue and then adds its pages, possibly hours later if a
+ * run stops and is resumed. Deleting it in between would lose that work.
+ */
+const NEWSPAPERS_CORE_EMPTY_ISSUE_MIN_AGE = 172800;
+
+/**
  * Implements hook_cron().
  */
 function newspapers_core_cron() {
@@ -276,27 +284,43 @@ EOT;
 }
 
 /**
- * Deletes all digital serial issues that have no pages.
+ * Deletes digital serial issues that have had no pages for a while.
  */
 function delete_digital_issues_with_no_pages() {
-  $database = \Drupal::database();
-  $issues_query_string = <<<EOT
-SELECT id
-FROM digital_serial_issue
-WHERE digital_serial_issue.id NOT IN (
-  SELECT pages.parent_issue
-  FROM digital_serial_page AS pages
-)
-EOT;
-  $issues_query = $database->query($issues_query_string);
-  $issues_results = $issues_query->fetchAll();
-
-  foreach ($issues_results as $issue_result) {
-    $page = \Drupal::entityTypeManager()
-      ->getStorage('digital_serial_issue')
-      ->load($issue_result->id);
-    $page->delete();
+  $created_before = \Drupal::time()->getRequestTime() - NEWSPAPERS_CORE_EMPTY_ISSUE_MIN_AGE;
+  $storage = \Drupal::entityTypeManager()->getStorage('digital_serial_issue');
+  foreach (_newspapers_core_empty_issue_ids($created_before) as $issue_id) {
+    $storage->load($issue_id)?->delete();
   }
+}
+
+/**
+ * Gets the IDs of issues with no pages, created before a time.
+ *
+ * NOT EXISTS rather than NOT IN: a single page with no parent issue makes
+ * NOT IN match nothing at all.
+ *
+ * @param int $created_before
+ *   Only issues created before this Unix time are returned.
+ *
+ * @return int[]
+ *   The issue IDs.
+ */
+function _newspapers_core_empty_issue_ids(int $created_before): array {
+  $query = <<<EOT
+SELECT issue.id
+FROM {digital_serial_issue} AS issue
+WHERE issue.created < :created_before
+AND NOT EXISTS (
+  SELECT 1
+  FROM {digital_serial_page} AS page
+  WHERE page.parent_issue = issue.id
+)
+ORDER BY issue.id
+EOT;
+  return array_map('intval', \Drupal::database()
+    ->query($query, [':created_before' => $created_before])
+    ->fetchCol());
 }
 
 /**
