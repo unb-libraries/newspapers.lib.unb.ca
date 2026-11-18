@@ -1,9 +1,8 @@
 //! `import <path>`: decides, for every issue under a path, what an import does, prints it, and
 //! with `--yes` does it. `--dry-run` only prints.
 //!
-//! So far a run completes issues already on the site: it OCRs pages for missing PDFs, tiles
-//! pages, installs both, and writes the state file once the site confirms the issue complete.
-//! Issues needing new pages are skipped until uploading exists.
+//! A run creates the issues the site lacks and the pages an issue lacks, installs missing tiles
+//! and PDFs, and writes each issue's state file once the site confirms it complete.
 //!
 //! An issue is created when the site has no issue for it, resumed when the site has part of
 //! it, linked when it was imported by the PHP importer (a state file will record the site's
@@ -14,7 +13,7 @@ use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use tokio::sync::Semaphore;
+use tokio::sync::{Mutex, Semaphore};
 use tokio::task::JoinSet;
 use tracing::info;
 use uuid::Uuid;
@@ -28,11 +27,12 @@ use crate::adapters::source_write::SourceWriter;
 use crate::config::{Config, SiteCredentials};
 use crate::domain::audit::{LegacyMatch, metadata_differences};
 use crate::domain::finding::{Finding, any_errors};
-use crate::domain::plan::{self, AssetNeed, PagePlan};
+use crate::domain::metadata::IssueMetadata;
+use crate::domain::plan::{self, PagePlan};
 use crate::domain::site::IssueSummary;
-use crate::domain::state::{IssueState, Status};
+use crate::domain::state::Status;
 use crate::error::{Error, Outcome};
-use crate::ingest::execute::{IssueTarget, Workers, complete_assets, forget_ocr};
+use crate::ingest::execute::{IssueJob, OnSite, Workers, run_issue};
 use crate::ingest::prepare::{Lookup, Ready, TitleLists, load_titles, prepare};
 use crate::ingest::resolve::{Resolution, hash_local, ids_text, resolve, stored_checksums};
 use crate::report;
@@ -84,18 +84,20 @@ struct IssuePlan {
     findings: Vec<Finding>,
     /// Set when the site could not be asked.
     failure: Option<String>,
-    /// For an issue already on the site: what completing it needs.
-    existing: Option<Existing>,
+    /// What carrying out the plan needs; absent for blocked issues.
+    info: Option<IssueInfo>,
     /// What the run did, when it ran.
     done: Option<Result<String, String>>,
 }
 
-/// An issue on the site, and what a run needs to complete it.
+/// What a run needs, besides the plan, to carry out an issue.
 #[derive(Debug, Clone)]
-struct Existing {
+struct IssueInfo {
     dir: PathBuf,
     title_id: u32,
-    site_uuid: String,
+    metadata: Box<IssueMetadata>,
+    /// The site issue's UUID, when it exists.
+    site_uuid: Option<String>,
     /// The state file already says complete, so none is written.
     state_complete: bool,
 }
@@ -163,8 +165,15 @@ pub async fn run(
             return Ok(Outcome::Clean);
         }
         Mode::Run => {
-            execute(config, &client, &mut plans, run_id).await?;
+            let interrupted = execute(config, &client, &mut plans, run_id).await?;
             print_results(root, &tree.issues, &plans);
+            if interrupted {
+                println!(
+                    "Stopped with Ctrl-C; failures above may only be the stop. Run the same \
+                     command again to resume: nothing is created twice."
+                );
+                return Ok(Outcome::Failed);
+            }
         }
     }
     Ok(if plans.iter().any(|p| p.failure.is_some()) {
@@ -214,7 +223,7 @@ async fn plan_all(
                 target.pages = plan.pages;
                 target.ocr_language = plan.ocr_language;
                 target.failure = plan.failure;
-                target.existing = plan.existing;
+                target.info = plan.info;
             }
             Err(error) => tracing::error!("a planning task failed: {error}"),
         }
@@ -238,9 +247,24 @@ async fn plan_issue(
     };
 
     let action = decide(&resolution, force);
+    let state_complete = matches!(
+        issue.lookup,
+        Lookup::Uuid {
+            status: Status::Complete,
+            ..
+        }
+    );
+    let info = |site_uuid: Option<String>| IssueInfo {
+        dir: issue.dir.clone(),
+        title_id: issue.title_id,
+        metadata: Box::new(issue.metadata.clone()),
+        site_uuid,
+        state_complete,
+    };
     match (&action, resolution.site()) {
         (Action::Create { uuid, .. }, _) => {
             result.pages = plan::new_issue(uuid, &issue.pages);
+            result.info = Some(info(None));
         }
         (Action::Update { .. }, Some(site)) => {
             let (local, unreadable) = hash_local(&issue).await;
@@ -251,18 +275,7 @@ async fn plan_issue(
             }
             let stored = stored_checksums(site, public_files, false).await;
             result.pages = plan::existing_issue(&local, site, &stored);
-            result.existing = Some(Existing {
-                dir: issue.dir.clone(),
-                title_id: issue.title_id,
-                site_uuid: site.uuid.clone(),
-                state_complete: matches!(
-                    issue.lookup,
-                    Lookup::Uuid {
-                        status: Status::Complete,
-                        ..
-                    }
-                ),
-            });
+            result.info = Some(info(Some(site.uuid.clone())));
             let differences = metadata_differences(&issue.metadata, site);
             if !differences.is_empty() {
                 result.findings.push(Finding::warning(format!(
@@ -458,155 +471,113 @@ fn describe(plan: &IssuePlan, totals: &mut Totals) -> String {
     }
 }
 
-/// Completes every issue already on the site that needs no new pages, one issue at a time;
-/// the pages of an issue share the CPU slots.
+/// Carries out every plan that has work in it. Issues run at the same time, at most
+/// `issue_concurrency`, and their pages share the CPU and upload slots, so a slot freed at the
+/// end of one issue goes to the next instead of waiting.
+/// Returns whether the run was stopped with Ctrl-C.
 async fn execute(
     config: &Config,
     client: &Client,
     plans: &mut [IssuePlan],
     run_id: &str,
-) -> Result<(), Error> {
+) -> Result<bool, Error> {
     let runtime = Runtime::new(&config.containers, run_id);
     for image in [&config.ocr.image, &config.dzi.image] {
         runtime.ensure_image(image, config.containers.pull).await?;
     }
     let workers = Workers {
+        client: client.clone(),
         runtime: Arc::new(runtime),
         ocr: Arc::new(OcrCache::new(&config.paths.work_dir, &config.ocr, run_id)),
         installer: Arc::new(Installer::new(config, run_id)),
+        writer: Arc::new(SourceWriter::new(run_id)),
+        state_file: config.source.state_file.as_str().into(),
         cpu: Arc::new(Semaphore::new(config.limits.cpu_slots.max(1))),
+        uploads: Arc::new(Semaphore::new(config.limits.upload_concurrency.max(1))),
+        creates: Arc::new(Mutex::new(())),
     };
-    let writer = Arc::new(SourceWriter::new(run_id));
-    let state_file: Arc<str> = config.source.state_file.as_str().into();
 
-    // Issues run at the same time, `issue_concurrency` at most, and all their pages share the
-    // CPU slots, so a slot freed at the end of one issue goes to the next instead of waiting.
-    // Waiting pages are served in order, so earlier issues still finish first.
     let issues = Arc::new(Semaphore::new(config.limits.issue_concurrency.max(1)));
     let mut tasks = JoinSet::new();
     for (index, plan) in plans.iter_mut().enumerate() {
-        let Some((target, existing)) = runnable(plan) else {
+        let Some(job) = job_for(plan) else {
             continue;
         };
-        let needs = plan.pages.assets.clone();
-        let (client, workers, writer, state_file, issues) = (
-            client.clone(),
-            workers.clone(),
-            Arc::clone(&writer),
-            Arc::clone(&state_file),
-            Arc::clone(&issues),
-        );
+        let (workers, issues) = (workers.clone(), Arc::clone(&issues));
         tasks.spawn(async move {
             let Ok(_issue) = issues.acquire_owned().await else {
                 return (index, Err("the run is stopping".to_owned()));
             };
-            let done = complete_issue(
-                &state_file,
-                &client,
-                &workers,
-                &writer,
-                &target,
-                &existing,
-                &needs,
-            )
-            .await;
-            (index, done)
+            (index, run_issue(&workers, &job).await)
         });
     }
-    while let Some(joined) = tasks.join_next().await {
-        match joined {
-            Ok((index, done)) => plans[index].done = Some(done),
-            Err(error) => tracing::error!("an issue task failed: {error}"),
+    // Ctrl-C stops admitting work: waiting issues and pages end with "the run is stopping",
+    // this run's containers are removed, and what finished is still reported. Requests in
+    // flight complete, so nothing is left half-created on the site.
+    let mut interrupted = false;
+    loop {
+        tokio::select! {
+            joined = tasks.join_next() => match joined {
+                Some(Ok((index, done))) => plans[index].done = Some(done),
+                Some(Err(error)) => tracing::error!("an issue task failed: {error}"),
+                None => break,
+            },
+            _ = tokio::signal::ctrl_c(), if !interrupted => {
+                interrupted = true;
+                tracing::warn!("stopping: finishing what is under way, starting nothing new");
+                issues.close();
+                workers.cpu.close();
+                workers.uploads.close();
+                workers.runtime.remove_run_containers().await;
+            }
         }
     }
     workers.runtime.remove_run_containers().await;
-    Ok(())
+    Ok(interrupted)
 }
 
-/// What a run does with an issue: `None` when there is nothing to run, after recording in
-/// `plan.done` why an issue that needs work is skipped.
-fn runnable(plan: &mut IssuePlan) -> Option<(IssueTarget, Existing)> {
-    if matches!(plan.action, Some(Action::Create { .. })) {
-        plan.done = Some(Err("skipped: creating issues is not available yet".into()));
-        return None;
-    }
-    let (Some(Action::Update { site_id, link }), Some(existing)) =
-        (plan.action.clone(), plan.existing.clone())
-    else {
-        return None;
+/// The work a plan calls for, or `None` when there is none. Records in `plan.done` why an issue
+/// that needs work cannot be done.
+fn job_for(plan: &mut IssuePlan) -> Option<IssueJob> {
+    let info = plan.info.clone()?;
+    let on_site = match plan.action.clone()? {
+        Action::Blocked(_) => return None,
+        Action::Create { uuid, .. } => OnSite::New {
+            uuid,
+            metadata: info.metadata.clone(),
+        },
+        Action::Update { site_id, .. } => {
+            let Some(Ok(uuid)) = info.site_uuid.as_deref().map(Uuid::parse_str) else {
+                plan.done = Some(Err("the site issue's UUID is not a UUID".into()));
+                return None;
+            };
+            OnSite::Existing {
+                issue_id: site_id,
+                uuid,
+            }
+        }
     };
-    if !plan.pages.create.is_empty() {
-        plan.done = Some(Err(
-            "skipped: it needs new pages, and uploading pages is not available yet".into(),
-        ));
-        return None;
-    }
-    if plan.pages.assets.is_empty() && (existing.state_complete || !link) {
+    let pages = &plan.pages;
+    if matches!(on_site, OnSite::Existing { .. })
+        && pages.create.is_empty()
+        && pages.assets.is_empty()
+        && info.state_complete
+    {
         return None;
     }
     let Some(ocr_language) = plan.ocr_language.clone() else {
         plan.done = Some(Err("no OCR language is configured for it".into()));
         return None;
     };
-    let target = IssueTarget {
-        dir: existing.dir.clone(),
-        title_id: existing.title_id,
-        issue_id: site_id,
+    Some(IssueJob {
+        dir: info.dir,
+        title_id: info.title_id,
         ocr_language,
-    };
-    Some((target, existing))
-}
-
-/// Installs an issue's missing assets, confirms with the site, and records it as complete.
-async fn complete_issue(
-    state_file: &str,
-    client: &Client,
-    workers: &Workers,
-    writer: &SourceWriter,
-    target: &IssueTarget,
-    existing: &Existing,
-    needs: &[AssetNeed],
-) -> Result<String, String> {
-    let failures = complete_assets(workers, target, needs).await;
-    if !failures.is_empty() {
-        return Err(failures.join("; "));
-    }
-
-    let site = client
-        .issue_by_id(target.issue_id)
-        .await
-        .map_err(|e| e.to_string())?
-        .ok_or("the issue disappeared from the site")?;
-    let lacking: Vec<String> = site
-        .pages
-        .iter()
-        .filter(|p| !p.has_dzi || !p.has_pdf)
-        .map(|p| format!("page {} (#{})", p.page_no, p.id))
-        .collect();
-    if !lacking.is_empty() {
-        return Err(format!(
-            "installed, but the site still lacks tiles or a PDF for: {}",
-            lacking.join(", ")
-        ));
-    }
-    forget_ocr(workers, target, needs);
-
-    let mut done = vec![format!(
-        "tiles or PDF installed for {}",
-        report::counted(needs.len(), "page")
-    )];
-    if !existing.state_complete {
-        let state = IssueState::complete(&existing.site_uuid, target.issue_id).to_toml();
-        let path = existing.dir.join(state_file);
-        let written = if path.exists() {
-            writer.replace(&path, &state)
-        } else {
-            writer.create(&path, &state)
-        };
-        written.map_err(|e| format!("complete on the site, but {e}"))?;
-        done.push("state file written".into());
-    }
-    Ok(done.join("; "))
+        on_site,
+        create: pages.create.clone(),
+        assets: pages.assets.clone(),
+        state_complete: info.state_complete,
+    })
 }
 
 fn print_results(root: &Path, issues: &[IssueDir], plans: &[IssuePlan]) {

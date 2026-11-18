@@ -4,12 +4,14 @@ use std::sync::Once;
 use std::time::Duration;
 
 use reqwest::StatusCode;
-use reqwest::header::CONTENT_TYPE;
+use reqwest::header::{CONTENT_DISPOSITION, CONTENT_TYPE};
 use serde::de::DeserializeOwned;
 use tracing::{debug, warn};
 
 use super::contract::{self, ErrorBody, Issue, IssueSummary, Title};
 use crate::config::{Site, SiteCredentials};
+
+const JSON: &str = "application/json";
 
 /// Characters of an unexpected response body kept in an error.
 const BODY_EXCERPT: usize = 300;
@@ -18,22 +20,24 @@ const BODY_EXCERPT: usize = 300;
 pub enum SiteError {
     #[error("cannot set up the HTTP client: {0}")]
     Setup(reqwest::Error),
-    #[error("GET {url}: {source}")]
+    #[error("{url}: {source}")]
     Request { url: String, source: reqwest::Error },
-    #[error("GET {url}: the site refused the credentials ({status})")]
+    #[error("{url}: the site refused the credentials ({status})")]
     Unauthorized { url: String, status: StatusCode },
     #[error(
-        "GET {url}: no such endpoint (404 without the module's JSON); is the \
+        "{url}: no such endpoint (404 without the module's JSON); is the \
          digital_serial_ingest module enabled on this site?"
     )]
     NoEndpoint { url: String },
-    #[error("GET {url}: {status}: {body}")]
+    #[error("{url}: {status}: {body}")]
     Status {
         url: String,
         status: StatusCode,
         body: String,
     },
-    #[error("GET {url}: unexpected response: {source}")]
+    #[error("{0}")]
+    Unexpected(String),
+    #[error("{url}: unexpected response: {source}")]
     Decode {
         url: String,
         source: serde_json::Error,
@@ -95,12 +99,116 @@ impl Client {
         Ok(())
     }
 
+    /// Creates an issue. Never retried: after any error, look the issue up by its UUID.
+    pub async fn create_issue(&self, body: &serde_json::Value) -> Result<u64, SiteError> {
+        let created: contract::Created = self
+            .post_json(
+                contract::ISSUE_CREATE,
+                body.to_string().into_bytes(),
+                JSON,
+                None,
+            )
+            .await?;
+        created.id()
+    }
+
+    /// Creates a page. Never retried: after any error, look the page up by its UUID.
+    pub async fn create_page(&self, body: &serde_json::Value) -> Result<u64, SiteError> {
+        let created: contract::Created = self
+            .post_json(
+                contract::PAGE_CREATE,
+                body.to_string().into_bytes(),
+                JSON,
+                None,
+            )
+            .await?;
+        created.id()
+    }
+
+    /// Uploads a page image and returns the file's ID. The file stays temporary, and is
+    /// removed by the site, unless a page uses it, so a failed upload is retried.
+    pub async fn upload_page_image(
+        &self,
+        image: Vec<u8>,
+        file_name: &str,
+    ) -> Result<u64, SiteError> {
+        let disposition = format!("file; filename=\"{file_name}\"");
+        let mut wait = self.backoff;
+        let mut attempt = 0;
+        loop {
+            attempt += 1;
+            let result: Result<contract::UploadedFile, SiteError> = self
+                .post_json(
+                    contract::PAGE_IMAGE_UPLOAD,
+                    image.clone(),
+                    "application/octet-stream",
+                    Some(&disposition),
+                )
+                .await;
+            match result {
+                Err(error) if attempt <= self.retries && is_transient(&error) => {
+                    warn!("{error}; retrying in {wait:?} ({attempt}/{})", self.retries);
+                    tokio::time::sleep(wait).await;
+                    wait = wait.saturating_mul(2);
+                }
+                result => return result?.fid(),
+            }
+        }
+    }
+
+    /// `POST`s a body and decodes the JSON answer. One attempt.
+    async fn post_json<T: DeserializeOwned>(
+        &self,
+        path: &str,
+        body: Vec<u8>,
+        content_type: &str,
+        disposition: Option<&str>,
+    ) -> Result<T, SiteError> {
+        let url = format!("{}{path}", self.base_url);
+        let label = format!("POST {url}");
+        debug!("{label}");
+        let request_error = |source| SiteError::Request {
+            url: label.clone(),
+            source,
+        };
+        let mut request = self
+            .http
+            .post(&url)
+            .basic_auth(&self.username, Some(&self.password))
+            .header(CONTENT_TYPE, content_type)
+            .body(body);
+        if let Some(disposition) = disposition {
+            request = request.header(CONTENT_DISPOSITION, disposition);
+        }
+        let response = request.send().await.map_err(request_error)?;
+        let status = response.status();
+        let text = response.text().await.map_err(request_error)?;
+        match status {
+            s if s.is_success() => {
+                serde_json::from_str(&text).map_err(|source| SiteError::Decode {
+                    url: label.clone(),
+                    source,
+                })
+            }
+            StatusCode::UNAUTHORIZED | StatusCode::FORBIDDEN => Err(SiteError::Unauthorized {
+                url: label.clone(),
+                status,
+            }),
+            _ => Err(SiteError::Status {
+                url: label.clone(),
+                status,
+                body: text.chars().take(BODY_EXCERPT).collect(),
+            }),
+        }
+    }
+
     /// `GET`s a JSON document. `None` when the site says the thing does not exist.
     ///
     /// Connection failures, time-outs and 5xx/429 answers are retried with doubling waits;
     /// anything else is final. Only reads use this: a retried create could create twice.
     async fn get<T: DeserializeOwned>(&self, path: &str) -> Result<Option<T>, SiteError> {
         let url = format!("{}{path}", self.base_url);
+        let label = format!("GET {url}");
         let mut wait = self.backoff;
         let mut attempt = 0;
         loop {
@@ -116,7 +224,7 @@ impl Client {
                     return body
                         .map(|text| {
                             serde_json::from_str(&text).map_err(|source| SiteError::Decode {
-                                url: url.clone(),
+                                url: label.clone(),
                                 source,
                             })
                         })
@@ -128,8 +236,9 @@ impl Client {
 
     async fn get_once(&self, url: &str) -> Result<Option<String>, SiteError> {
         debug!("GET {url}");
+        let label = format!("GET {url}");
         let request_error = |source| SiteError::Request {
-            url: url.to_owned(),
+            url: label.clone(),
             source,
         };
         let response = self
@@ -154,19 +263,15 @@ impl Client {
                     debug!("{url}: {}", body.error);
                     Ok(None)
                 }
-                Err(_) => Err(SiteError::NoEndpoint {
-                    url: url.to_owned(),
-                }),
+                Err(_) => Err(SiteError::NoEndpoint { url: label.clone() }),
             },
-            StatusCode::NOT_FOUND => Err(SiteError::NoEndpoint {
-                url: url.to_owned(),
-            }),
+            StatusCode::NOT_FOUND => Err(SiteError::NoEndpoint { url: label.clone() }),
             StatusCode::UNAUTHORIZED | StatusCode::FORBIDDEN => Err(SiteError::Unauthorized {
-                url: url.to_owned(),
+                url: label.clone(),
                 status,
             }),
             _ => Err(SiteError::Status {
-                url: url.to_owned(),
+                url: label.clone(),
                 status,
                 body: text.chars().take(BODY_EXCERPT).collect(),
             }),

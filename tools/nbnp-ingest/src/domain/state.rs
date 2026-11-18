@@ -54,6 +54,18 @@ impl IssueState {
 }
 
 impl IssueState {
+    /// The state written before an issue is created, so a later run finds it by this UUID.
+    #[must_use]
+    pub fn pending(issue_uuid: &str) -> Self {
+        Self {
+            version: VERSION,
+            issue_uuid: issue_uuid.to_owned(),
+            status: Status::Pending,
+            site_issue_id: None,
+            tool_version: env!("CARGO_PKG_VERSION").to_owned(),
+        }
+    }
+
     /// The state of an issue that is on the site with every page and its tiles and PDF.
     #[must_use]
     pub fn complete(issue_uuid: &str, site_issue_id: u64) -> Self {
