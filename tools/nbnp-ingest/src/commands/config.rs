@@ -5,8 +5,9 @@ use std::io::ErrorKind;
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
+use crate::adapters::assets::create_group_writable;
 use crate::adapters::container::{Mount, Runtime, Spec};
-use crate::adapters::drupal::Client;
+use crate::adapters::drupal::{Client, contract};
 use crate::config::{Config, Loaded, SiteCredentials};
 use crate::error::{Error, Outcome};
 use crate::report::{Check, Status, format_checks};
@@ -113,6 +114,7 @@ fn tool_spec(image: &str, entrypoint: &str, args: &[&str]) -> Spec {
     Spec {
         image: image.to_owned(),
         user: None,
+        groups: Vec::new(),
         mounts: Vec::new(),
         env: Vec::new(),
         entrypoint: Some(entrypoint.to_owned()),
@@ -165,14 +167,28 @@ async fn tesseract_languages(config: &Config, runtime: &Runtime) -> Check {
 
 /// Asset containers run as the webtree owner: it must be able to create the staging directory
 /// in the public files and read the source images.
+/// Checks what installing assets needs: the container writes the staging directory and, where
+/// this tool creates the asset directories, a directory created the same way under the tile
+/// root; it reads the source tree.
 async fn webtree_access(config: &Config, runtime: &Runtime, run_id: &str) -> Check {
     const NAME: &str = "webtree owner access";
+    let probe_dir = config
+        .webtree
+        .directory_group
+        .map(|_| format!("{}/.nbnp-ingest-probe-{run_id}", contract::DZI_ROOT));
+    if let Some(dir) = &probe_dir
+        && let Err(error) = create_group_writable(&config.paths.public_files, dir)
+    {
+        return Check::fail(NAME, error.to_string());
+    }
     // Values are passed as positional parameters, never spliced into the script.
     let script = r#"mkdir -p "/files/$1" && touch "/files/$1/.probe-$2" && rm "/files/$1/.probe-$2" \
+        && { [ -z "$3" ] || { touch "/files/$3/.probe" && rm "/files/$3/.probe"; }; } \
         && test -r /source && test -x /source"#;
     let spec = Spec {
         image: config.dzi.image.clone(),
         user: Some((config.webtree.owner_uid, config.webtree.owner_gid)),
+        groups: config.webtree.directory_group.into_iter().collect(),
         mounts: vec![
             Mount {
                 host: config.paths.public_files.clone(),
@@ -193,21 +209,35 @@ async fn webtree_access(config: &Config, runtime: &Runtime, run_id: &str) -> Che
             "sh".into(),
             config.webtree.staging_dir.clone().into_os_string(),
             run_id.into(),
+            probe_dir.clone().unwrap_or_default().into(),
         ],
         timeout: PROBE_TIMEOUT,
     };
+    let result = runtime.run(&spec).await;
+    if let Some(dir) = &probe_dir {
+        let _ = fs::remove_dir(config.paths.public_files.join(dir));
+    }
     Check::from_result(
         NAME,
-        runtime.run(&spec).await.map(|_| {
+        result.map(|_| {
             format!(
-                "{}:{} can write {} and read {}",
+                "{}:{}{} can write {}{} and read {}",
                 config.webtree.owner_uid,
                 config.webtree.owner_gid,
+                config
+                    .webtree
+                    .directory_group
+                    .map_or_else(String::new, |g| format!(" with group {g}")),
                 config
                     .paths
                     .public_files
                     .join(&config.webtree.staging_dir)
                     .display(),
+                if probe_dir.is_some() {
+                    format!(" and directories it creates under {}", contract::DZI_ROOT)
+                } else {
+                    String::new()
+                },
                 config.paths.source_root.display()
             )
         }),

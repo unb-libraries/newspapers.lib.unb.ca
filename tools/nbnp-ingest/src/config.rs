@@ -78,6 +78,11 @@ pub struct Webtree {
     /// It must be on the same filesystem as the assets so the rename is atomic.
     #[serde(default = "defaults::staging_dir")]
     pub staging_dir: PathBuf,
+    /// Set when title and issue asset directories belong to another account, as the PHP
+    /// importer left them: the tool then creates those directories itself, mode 775, and asset
+    /// containers join this group to write the files.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub directory_group: Option<u32>,
 }
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]

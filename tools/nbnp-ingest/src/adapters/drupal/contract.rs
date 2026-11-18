@@ -40,8 +40,11 @@ pub fn title_issues(id: u32) -> String {
 /// other places (`SerialPage::getDziUri`), and the PHP importer installed there.
 #[must_use]
 pub fn dzi_dir(title_id: u32, issue_id: u64) -> String {
-    format!("serials/dzi/{title_id}/{issue_id}")
+    format!("{DZI_ROOT}/{title_id}/{issue_id}")
 }
+
+/// The directory holding every title's tile directories.
+pub const DZI_ROOT: &str = "serials/dzi";
 
 /// Where new page PDFs go, relative to the public files directory (`SerialPage::getPdfUri`).
 #[must_use]

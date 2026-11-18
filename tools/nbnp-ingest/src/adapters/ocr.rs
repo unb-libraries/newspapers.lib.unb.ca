@@ -150,6 +150,7 @@ impl OcrCache {
         let spec = Spec {
             image: self.config.image.clone(),
             user: Some(self.user),
+            groups: Vec::new(),
             mounts: vec![
                 Mount {
                     host: parent(image).to_owned(),

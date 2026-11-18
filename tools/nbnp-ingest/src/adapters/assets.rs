@@ -3,7 +3,12 @@
 //! One container per page tiles the source image with `vips dzsave` into a staging directory in
 //! the webtree, then renames everything into place: the tile directory, the PDF, and the `.dzi`
 //! file last. The site counts tiles only when the `.dzi` exists, so a page is never shown with
-//! half its tiles, and a failed page leaves only its staging directory behind.
+//! half its tiles, and a failed page removes its staging directory.
+//!
+//! With `webtree.directory_group` set, the title and issue directories are created here, by the
+//! account running the tool, mode 775, and the container joins that group to write into them:
+//! the layout the PHP importer left, with directories owned by that account and files by the
+//! web server's user.
 
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
@@ -16,6 +21,11 @@ use crate::config::Config;
 pub enum AssetError {
     #[error(transparent)]
     Container(#[from] ContainerError),
+    #[error("cannot create {path}: {source}")]
+    Directory {
+        path: PathBuf,
+        source: std::io::Error,
+    },
     #[error("asset name {0:?} is not a plain file name")]
     BadName(String),
 }
@@ -36,6 +46,7 @@ pub struct PageAssets<'a> {
 /// Tiles and copies as the webtree owner; values reach the script as positional parameters.
 const SCRIPT: &str = r#"set -eu
 image=$1 base=$2 stage=$3 dzi_dir=$4 pdf_dir=$5 tile=$6 overlap=$7 quality=$8 pdf=$9
+trap 'rm -rf "$stage"' EXIT
 mkdir -p "$stage"
 if [ -n "$dzi_dir" ]; then
   vips dzsave "$image" "$stage/$base" --tile-size "$tile" --overlap "$overlap" \
@@ -54,13 +65,13 @@ if [ -n "$pdf_dir" ]; then
   mv "$stage/$base.pdf" "$pdf_dir/$base.pdf"
 fi
 if [ -n "$dzi_dir" ]; then mv "$stage/$base.dzi" "$dzi_dir/$base.dzi"; fi
-rmdir "$stage"
 "#;
 
 #[derive(Debug)]
 pub struct Installer {
     image: String,
     owner: (u32, u32),
+    directory_group: Option<u32>,
     public_files: PathBuf,
     staging: String,
     tile_size: u32,
@@ -77,6 +88,7 @@ impl Installer {
         Self {
             image: config.dzi.image.clone(),
             owner: (config.webtree.owner_uid, config.webtree.owner_gid),
+            directory_group: config.webtree.directory_group,
             public_files: config.paths.public_files.clone(),
             staging: config.webtree.staging_dir.to_string_lossy().into_owned(),
             tile_size: config.dzi.tile_size,
@@ -94,6 +106,15 @@ impl Installer {
         page: &PageAssets<'_>,
     ) -> Result<(), AssetError> {
         let spec = self.spec(page)?;
+        if self.directory_group.is_some() {
+            let dirs = [
+                page.dzi_dir.as_deref(),
+                page.pdf.as_ref().map(|(_, dir)| dir.as_str()),
+            ];
+            for dir in dirs.into_iter().flatten() {
+                create_group_writable(&self.public_files, dir)?;
+            }
+        }
         runtime.run(&spec).await?;
         Ok(())
     }
@@ -164,6 +185,7 @@ impl Installer {
         Ok(Spec {
             image: self.image.clone(),
             user: Some(self.owner),
+            groups: self.directory_group.into_iter().collect(),
             mounts,
             // One thread per page: `limits.cpu_slots` pages tile at once.
             env: vec![("VIPS_CONCURRENCY".into(), "1".into())],
@@ -172,6 +194,29 @@ impl Installer {
             timeout: self.timeout,
         })
     }
+}
+
+/// Creates each missing directory of `relative` under `root`, mode 775 whatever the umask, so
+/// the directory group can write into it.
+pub fn create_group_writable(root: &Path, relative: &str) -> Result<(), AssetError> {
+    use std::os::unix::fs::PermissionsExt;
+
+    let mut path = root.to_owned();
+    for part in relative.split('/').filter(|p| !p.is_empty()) {
+        path.push(part);
+        if path.is_dir() {
+            continue;
+        }
+        let made = std::fs::create_dir(&path)
+            .and_then(|()| std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o775)));
+        // Another page may have created it first.
+        if let Err(source) = made
+            && !path.is_dir()
+        {
+            return Err(AssetError::Directory { path, source });
+        }
+    }
+    Ok(())
 }
 
 /// A file name with no directory part: letters, digits, `.`, `_` and `-`, not starting with `.`.
@@ -211,6 +256,22 @@ mod tests {
     }
 
     #[test]
+    fn directories_are_created_group_writable() {
+        use std::os::unix::fs::PermissionsExt;
+
+        let root = tempfile::tempdir().unwrap();
+        create_group_writable(root.path(), "serials/dzi/248/53319").unwrap();
+        create_group_writable(root.path(), "serials/dzi/248/53319").unwrap();
+        for dir in ["serials", "serials/dzi/248", "serials/dzi/248/53319"] {
+            let mode = std::fs::metadata(root.path().join(dir))
+                .unwrap()
+                .permissions()
+                .mode();
+            assert_eq!(mode & 0o777, 0o775, "{dir}");
+        }
+    }
+
+    #[test]
     fn values_are_positional_parameters() {
         let page = PageAssets {
             image: Path::new("/mnt/nbnp/T/I/001_T_1909_1_1_01.jpg"),
@@ -243,6 +304,7 @@ mod tests {
             ]
         );
         assert_eq!(spec.user, Some((100, 102)));
+        assert_eq!(spec.groups, [2100]);
         assert_eq!(spec.mounts.len(), 3);
     }
 }

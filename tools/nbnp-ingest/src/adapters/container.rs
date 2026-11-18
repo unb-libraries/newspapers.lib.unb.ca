@@ -33,6 +33,8 @@ pub struct Spec {
     pub image: String,
     /// Runs as the image's default user when not set.
     pub user: Option<(u32, u32)>,
+    /// Supplementary groups the container's user joins.
+    pub groups: Vec<u32>,
     pub mounts: Vec<Mount>,
     /// Set in the container, over the image's own values.
     pub env: Vec<(String, String)>,
@@ -97,6 +99,9 @@ impl Runtime {
             .args(["--label", &self.run_label()]);
         if let Some((uid, gid)) = spec.user {
             invocation = invocation.args(["--user", &format!("{uid}:{gid}")]);
+        }
+        for group in &spec.groups {
+            invocation = invocation.args(["--group-add", &group.to_string()]);
         }
         for mount in &spec.mounts {
             invocation = invocation.args(["--mount", &mount_option(mount)?]);
@@ -250,6 +255,7 @@ mod tests {
         Spec {
             image: "tesseract@sha256:00".into(),
             user: Some((1000, 1000)),
+            groups: vec![2100],
             mounts: vec![
                 Mount {
                     host: "/mnt/nbnp/The_News/TN_1909".into(),
@@ -277,7 +283,7 @@ mod tests {
             "docker run --rm --pull=never --network=none --cap-drop=ALL \
              --security-opt=no-new-privileges --name c-1 \
              --label ca.unb.lib.nbnp-ingest=1 --label ca.unb.lib.nbnp-ingest.run=1700000000-42 \
-             --user 1000:1000 \
+             --user 1000:1000 --group-add 2100 \
              --mount type=bind,source=/mnt/nbnp/The_News/TN_1909,target=/in,readonly \
              --mount type=bind,source=/work/ocr,target=/out \
              --env OMP_THREAD_LIMIT=1 \

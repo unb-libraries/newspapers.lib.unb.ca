@@ -32,6 +32,12 @@ owner_uid = 100
 owner_gid = 102
 # Relative to public_files; must be on the same filesystem as the assets.
 staging_dir = "serials/.nbnp-ingest-staging"   # default
+# Leave out when the web server's user owns the title and issue directories under
+# serials/dzi and serials/pdf. Where they belong to the account running the tool
+# (on HAMMER, imaging, group 2100, as the PHP importer left them), the tool
+# creates them, mode 775, and asset containers join this group to write the
+# files, which still belong to owner_uid:owner_gid.
+directory_group = 2100
 
 [source]
 issue_file = "issue.toml"              # default
