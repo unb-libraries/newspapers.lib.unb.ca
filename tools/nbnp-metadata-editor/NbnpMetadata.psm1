@@ -46,7 +46,7 @@ $script:MaxLength = @{
 }
 
 # Earlier dates are allowed but warned about: nothing in the collection is older.
-$script:EarliestLikelyYear = 1750
+$script:EarliestLikelyYear = 1600
 
 $script:Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
@@ -488,12 +488,12 @@ function Test-MissingPages([string] $Text) {
 function Get-NbnpPathYears {
     <#
     .SYNOPSIS
-        The four-digit years (1700-2099) a folder path names, such as 1909 in TN_1909_33_05.
+        The four-digit years (1600-2099) a folder path names, such as 1909 in TN_1909_33_05.
     #>
     param([string] $Folder)
     $years = @()
     if (-not $Folder) { return , $years }
-    foreach ($m in [regex]::Matches($Folder, '(?<![0-9])(1[78][0-9]{2}|19[0-9]{2}|20[0-9]{2})(?![0-9])')) {
+    foreach ($m in [regex]::Matches($Folder, '(?<![0-9])(1[6-9][0-9]{2}|20[0-9]{2})(?![0-9])')) {
         $year = [int]$m.Value
         if ($years -notcontains $year) { $years += $year }
     }

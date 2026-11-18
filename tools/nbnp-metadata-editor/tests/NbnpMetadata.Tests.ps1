@@ -291,6 +291,7 @@ Describe 'Finding related files' {
     It 'reads the years a path names' {
         Get-NbnpPathYears 'X:\TN_1909\TN_1909_33_05' | Should -Be @(1909)
         Get-NbnpPathYears 'X:\Bruns_2003\Bruns_2003_136' | Should -Be @(2003)
+        Get-NbnpPathYears 'X:\Early\EA_1650_01' | Should -Be @(1650)
         @(Get-NbnpPathYears 'X:\Agenutemagen\AG_01') | Should -BeNullOrEmpty
     }
 }
