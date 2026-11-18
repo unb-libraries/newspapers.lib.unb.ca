@@ -187,7 +187,7 @@ Describe 'Checking' {
 
     It 'checks dates: <Date>' -ForEach @(
         @{ Date = '1909-01-29'; Ok = $true }, @{ Date = '1908-02-29'; Ok = $true }, @{ Date = '1909-02-29'; Ok = $false },
-        @{ Date = '1909-1-29'; Ok = $false }, @{ Date = '29/01/1909'; Ok = $false }, @{ Date = '2026-11-19'; Ok = $false }
+        @{ Date = '1909-1-29'; Ok = $true }, @{ Date = '29/01/1909'; Ok = $false }, @{ Date = '2026-11-19'; Ok = $false }
     ) {
         $checked = Test-NbnpMetadata -Kind Issue -Title $script:TitleFile -Today $script:Today -Values (
             Values @{ date = $Date; volume = '33'; issue = '5' })

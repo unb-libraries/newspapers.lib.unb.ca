@@ -1,5 +1,5 @@
 # Checks the scripts with PSScriptAnalyzer for Windows PowerShell 5.1 compatibility.
-# Windows Forms and System.Drawing types are reported as missing because the editor loads them
+# Windows Forms, System.Drawing and WPF imaging types are reported as missing because the editor loads them
 # itself with Add-Type, so those findings are left out. Exits 1 on any other finding.
 $ErrorActionPreference = 'Stop'
 $profile51 = 'win-8_x64_10.0.17763.0_5.1.17763.316_x64_4.0.30319.42000_framework'
@@ -16,7 +16,7 @@ $settings = @{
 $findings = Get-ChildItem (Join-Path $PSScriptRoot '..') -File |
     Where-Object Extension -In '.ps1', '.psm1' |
     ForEach-Object { Invoke-ScriptAnalyzer -Path $_.FullName -Settings $settings } |
-    Where-Object { $_.Message -notmatch "'(System\.)?(Windows\.Forms|Drawing)\." }
+    Where-Object { $_.Message -notmatch "'(System\.)?(Windows\.Forms|Drawing|Windows\.Media|Windows\.Int32Rect)\b" }
 if ($findings) {
     $findings | Format-Table -AutoSize -Wrap RuleName, ScriptName, Line, Message | Out-String -Width 200
     exit 1

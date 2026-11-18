@@ -45,19 +45,39 @@ On Windows 11 both items are under **Show more options** (or hold Shift while ri
 Create the title's `title.toml` first: each issue inherits the title, language and media from
 the nearest `title.toml` in the folders above it, and the issue form shows those values.
 
-The issue form has two columns: the issue's own values on the left; on the right, what it
-inherits from the title, the errata, and the values that differ from the title.
+### Entering a run of issues
 
-For a run of issues that differ only in a value or two, choose **Fill from last saved issue**
-at the top of the issue's fields. It copies every value of the last issue you saved, except
-missing pages and errata, which describe one copy; then change what differs, usually the
-issue number and date. The form asks before replacing anything already typed. The last issue
-is remembered for you alone, in `%LOCALAPPDATA%\nbnp-metadata-editor\last-issue.toml`.
+Right-click the first issue's folder and open the issue form. On the right it shows the top of
+the folder's first page, so the masthead can be read while typing; click it to open the whole
+page. On the left, the fields follow the masthead: volume, issue number, date.
 
-Fill in the form and choose **Save**. Values that need correcting are marked in red with the
-reason; nothing is written until they are fixed. A warning, such as a date whose year differs
-from the year in the folder name, asks whether to save anyway. **Cancel** closes without
-writing anything.
+1. Type the volume, issue and date as printed, and anything else the issue needs.
+2. Press **Enter** (or Ctrl+S) for **Save and next**. The issue is saved and the form moves to
+   the next issue folder, in name order and on into the next volume's folder, skipping folders
+   that still have a `metadata.php`.
+3. A new issue arrives filled in from the one just saved, except missing pages and errata,
+   with the issue number selected: type the new number, check the date, and press Enter.
+
+The green line at the top says what was saved and where the form is now. **Save and close**
+saves and stops; **Cancel** (Esc) closes without saving, asking first if anything was typed.
+
+A folder named like its issue plus `_Sup`, `_Sup2` or `_S1` is taken as that issue's supplement:
+it opens with **This is a supplement** ticked and the issue's date, volume and number filled
+in, ready for the supplement's title.
+
+**Fill from last saved issue** (Alt+F) does the same filling on demand, for example when
+starting again the next day. The last issue is remembered for you alone, in
+`%LOCALAPPDATA%\nbnp-metadata-editor\last-issue.toml`.
+
+### Checks
+
+A value that needs correcting is marked in red, with the reason at the bottom, as soon as you
+leave the field; nothing is saved until it is fixed. A warning asks whether to save anyway:
+
+- the volume, issue and date are the same as the last issue you saved, usually a filled-in
+  form saved without changing the number;
+- the date's year differs from a year in the folder name, or is before 1600;
+- a value contains invisible characters, often pasted with text.
 
 ### The fields
 
@@ -66,10 +86,10 @@ writing anything.
 | Title ID | The Digital Title ID: in `https://newspapers.lib.unb.ca/serials/browse/48` it is `48`. Leave it empty if it is not known yet: the file saves with a warning, but nbnp-ingest refuses to import the title's issues (`missing field title_id`) until it is filled in. |
 | Title | The exact, complete title from the masthead. In an issue, only when it differs from the title's. |
 | Language | `eng` or `fre`. |
-| Date | `YYYY-MM-DD`, as printed, such as `1909-01-29`. If the day is not printed (a monthly) or you are unsure of it, use the 1st. The weekday is shown beside it as a check. |
+| Date | As printed. Written `YYYY-MM-DD`, such as `1909-01-29`; `1909-1-29`, `January 29, 1909` and `29 January 1909` are also accepted and rewritten. Forms like `03/04/1909`, where day and month could be either way round, are refused. If the day is not printed (a monthly) or you are unsure of it, use the 1st. The weekday is shown under it as a check. |
 | Volume, Issue | Exactly as printed, even if wrong; note a wrong number in Errata. No zero padding: `5`, not `05`. |
 | Edition | Optional: the edition statement as printed. |
-| This is a supplement | Tick for a supplement. Its date, volume and issue are those of the issue it came with; for a folder named like `TN_1909_33_05_Sup`, ticking the box copies them from `TN_1909_33_05` when that folder has an `issue.toml`. |
+| This is a supplement | Tick for a supplement. Its date, volume and issue are those of the issue it came with; for a folder named like `TN_1909_33_05_Sup` they are copied from `TN_1909_33_05` when that folder has an `issue.toml`. |
 | Supplement title | The supplement's title as printed, if it has one. |
 | Missing pages | Page numbers separated by commas, or ranges: `3, 6, 7` or `4-8`. Numbers, dashes and commas only. |
 | Errata | Short and clear to everyone. For any problem with printed issue numbering, use "Incorrect issue numbering" (the button inserts it). |
@@ -80,8 +100,12 @@ letter (`é` as one character), as Windows types them, so pasted text compares a
 alike. Invisible characters that often arrive with pasted text, such as zero-width spaces,
 draw a warning naming them.
 
-The **Different from the title** fields are usually left empty; fill them only when an issue
-differs from its title, for example a masthead printing a different title.
+The **Different from the title...** fields are hidden until ticked, and usually left empty;
+fill them only when an issue differs from its title, for example a masthead printing a
+different title. They open by themselves when an issue already uses them, or when no
+`title.toml` is found.
+
+Each field's hint is short; hover over a field for the full guidance.
 
 ### When the form will not edit a file
 
@@ -148,27 +172,40 @@ on a Windows PC with the list below after changing the form or the installer.
 
 ### Windows smoke checklist
 
-1. Install; both items appear on a folder and inside an open folder (Windows 11: under Show
-   more options).
-2. On a new title folder, create a `title.toml` with ID `48`, title `The News`, language
-   `eng`, media `print`. Open the file: four lines, `title_id = 48` without quotes. Save
-   another with the ID empty: a warning, then a file with no `title_id` line.
-3. On a new issue folder below it, create an `issue.toml` with date `1909-01-29`, volume `33`,
-   issue `5`. The form opens in two columns, fits the screen, and shows the inherited title on
-   the right; the file has three lines and no empty fields.
-4. Reopen it: the values are filled in. Change the issue to `6` and save: `issue.toml.bak`
-   holds the previous version.
-5. On a second new issue folder, choose Fill from last saved issue: date, volume and issue
-   are filled from step 4, missing pages and errata are empty. Change the issue number and
-   save.
-6. Try title ID `-1`, `4.5` and `abc`, date `1909-02-29`, volume `05`, missing pages `1 & 2`:
-   each is marked in red and nothing is saved.
-7. Enter an edition with `"quotes"`, a backslash, `é`, `Miʼkmaq`, `جريدة` and `𝔄`, and two
-   lines of errata; save and reopen: the values are unchanged and display correctly.
-8. Cancel after a change: asked to confirm; the file is unchanged.
-9. Open the form, change the file in Notepad, then Save in the form: refused, Notepad's version
-   kept.
-10. Right-click a folder whose name has spaces, an apostrophe, parentheses and `é`: the form
-    opens on that folder.
-11. A folder with `metadata.php` opens read-only.
-12. Uninstall: both items disappear; the metadata files remain.
+Run it on the sample data set: a folder `NBNP` holding three page images from each of a few
+real issues, with each issue's old `metadata.php` kept beside it as `metadata.php.reference`
+to check the values against. It is not in this repository; ask for it.
+
+1. Install; both menu items appear on a folder and inside an open folder (Windows 11: under
+   Show more options).
+2. **Title form.** `The_News` opens with its four values. On `KingsCountyRecord`, create a
+   `title.toml` with ID `332`, title `The Kings County Record`, `eng`, `print`: four lines,
+   `title_id = 332` without quotes. On `Gigmanag`, save with the ID empty: a warning, then no
+   `title_id` line.
+3. **A run.** Open the issue form on `The_News\TN_1909\TN_1909_33\TN_1909_33_05`. The masthead
+   shows on the right within a second or two; clicking it opens the page. The cursor is in
+   Volume, and Tab goes Volume, Issue, Date, Edition, Missing pages, Errata. Enter the values
+   and press Enter: the form moves to `TN_1909_33_06`, says so in green, and arrives filled in
+   with the issue number selected.
+4. **Repeat guard.** On `TN_1909_33_06`, press Enter without changing anything: a warning that
+   it repeats `TN_1909_33_05`. Answer No, correct the number and date, press Enter. On
+   `TN_1909_33_07`, Save and next is greyed out (no issue after it); Save and close ends.
+5. **Across volumes.** From `KCR_1902_16_25`, Save and next goes to `KCR_1902_17_26`, then
+   `KCR_1902_18_27`.
+6. **Supplement.** Save `QT_1999_31_15`, press Enter: `QT_1999_31_15_Sup` opens with the
+   supplement box ticked and `_15`'s date, volume and number; type a supplement title and press
+   Enter: `QT_1999_31_16` opens with the box clear.
+7. **Dates.** Type `1987-10-1`, `October 1, 1987` and `1 Oct 1987` in turn and leave the field:
+   each becomes `1987-10-01` with its weekday. `01/10/1987` is marked red.
+8. **Checks as you go.** Volume `05`, missing pages `1 & 2` and date `1909-02-29` turn red on
+   leaving the field, with the reason at the bottom; nothing saves until they are fixed.
+9. **Text.** Enter an edition with `"quotes"`, a backslash, `é`, `Miʼkmaq`, `جريدة` and `𝔄`,
+   and two lines of errata; save and reopen: unchanged and displayed correctly. Reopening an
+   issue and saving it again leaves `issue.toml.bak`.
+10. **Cancel and conflicts.** Cancel after a change asks first and writes nothing. Open a form,
+    change its `issue.toml` in Notepad, then save in the form: refused, Notepad's version kept.
+11. **Awkward names, no title file.** Open `Tèst Title (O'Brien) – 新聞\TT_1900\TT_1900_01\TT_1900_01_01`:
+    the form opens, says no `title.toml` was found, and shows the Different from the title
+    fields with `eng` and `print` filled in.
+12. **Legacy.** `Agenutemagen\AG_1974\AG_1974_03\AG_1974_03_09` opens its `metadata.php` read-only.
+13. Uninstall: both menu items disappear; the metadata files remain.

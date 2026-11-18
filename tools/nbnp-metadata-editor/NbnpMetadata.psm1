@@ -347,9 +347,97 @@ function Find-NbnpParentIssue {
     $null
 }
 
+function Get-NbnpNaturalKey {
+    <#
+    .SYNOPSIS
+        A sort key that orders names the way people read them: TN_1909_33_9 before TN_1909_33_10.
+    #>
+    param([string] $Name)
+    [regex]::Replace($Name.ToLowerInvariant(), '\d+', { param($m) $m.Value.PadLeft(12, '0') })
+}
+
+function Test-NbnpIssueCandidate([string] $Folder) {
+    # A folder the issue form can work on: it has page images and no legacy metadata.php.
+    if (Test-Path -LiteralPath (Join-Path $Folder 'metadata.php') -PathType Leaf) { return $false }
+    $null -ne (Get-NbnpFirstPage -Folder $Folder)
+}
+
+function Find-NbnpNextIssueFolder {
+    <#
+    .SYNOPSIS
+        The issue folder after this one, for "Save and next": the next folder beside it in name
+        order that has page images and no metadata.php, or else the first such folder in the next
+        folder up (the next volume or year). $null when there is none.
+    #>
+    param([Parameter(Mandatory)][string] $IssueFolder)
+    $full = [IO.Path]::GetFullPath($IssueFolder).TrimEnd('\', '/')
+    $parent = Split-Path -Parent $full
+    $siblings = @(Get-ChildItem -LiteralPath $parent -Directory | Sort-Object { Get-NbnpNaturalKey $_.Name })
+    $key = Get-NbnpNaturalKey (Split-Path -Leaf $full)
+    foreach ($dir in $siblings) {
+        if ((Get-NbnpNaturalKey $dir.Name) -gt $key -and (Test-NbnpIssueCandidate $dir.FullName)) { return $dir.FullName }
+    }
+    # Across into the next volume or year folder.
+    $grandparent = Split-Path -Parent $parent
+    if (-not $grandparent) { return $null }
+    $parentKey = Get-NbnpNaturalKey (Split-Path -Leaf $parent)
+    $uncles = @(Get-ChildItem -LiteralPath $grandparent -Directory | Sort-Object { Get-NbnpNaturalKey $_.Name })
+    foreach ($uncle in $uncles) {
+        if ((Get-NbnpNaturalKey $uncle.Name) -le $parentKey) { continue }
+        $children = @(Get-ChildItem -LiteralPath $uncle.FullName -Directory | Sort-Object { Get-NbnpNaturalKey $_.Name })
+        foreach ($child in $children) {
+            if (Test-NbnpIssueCandidate $child.FullName) { return $child.FullName }
+        }
+        if (Test-NbnpIssueCandidate $uncle.FullName) { return $uncle.FullName }
+    }
+    $null
+}
+
+function Get-NbnpFirstPage {
+    <#
+    .SYNOPSIS
+        The folder's first page image in name order, ignoring hidden files such as ._ copies left
+        by macOS. $null when there is none.
+    #>
+    param([Parameter(Mandatory)][string] $Folder)
+    $pages = @(Get-ChildItem -LiteralPath $Folder -File -ErrorAction SilentlyContinue |
+            Where-Object { $_.Extension -eq '.jpg' -and -not $_.Name.StartsWith('.') } |
+            Sort-Object { Get-NbnpNaturalKey $_.Name })
+    if ($pages.Count -gt 0) { $pages[0].FullName } else { $null }
+}
+
 #endregion
 
 #region Checking
+
+function ConvertTo-NbnpDate {
+    <#
+    .SYNOPSIS
+        A date typed in a clear form, rewritten YYYY-MM-DD; anything else returned unchanged.
+
+    .DESCRIPTION
+        Accepts 1902-03-28, 1902-3-28, March 28, 1902, Mar. 28 1902 and 28 March 1902. Refuses
+        forms like 03/04/1902, where day and month could be either way round, which is how the
+        old metadata.php files got dates backwards.
+    #>
+    param([AllowEmptyString()][string] $Text)
+    $clean = ($Text.Trim() -replace '\s+', ' ' -replace '\.(?=\s)', '' -replace ',', '')
+    $m = [regex]::Match($clean, '^(\d{4})-(\d{1,2})-(\d{1,2})$')
+    if ($m.Success) {
+        $candidate = '{0}-{1:D2}-{2:D2}' -f $m.Groups[1].Value, [int]$m.Groups[2].Value, [int]$m.Groups[3].Value
+        $date = [datetime]::MinValue
+        if ([datetime]::TryParseExact($candidate, 'yyyy-MM-dd', [Globalization.CultureInfo]::InvariantCulture,
+                [Globalization.DateTimeStyles]::None, [ref]$date)) { return $candidate }
+        return $Text
+    }
+    $formats = [string[]]@('MMMM d yyyy', 'MMM d yyyy', 'd MMMM yyyy', 'd MMM yyyy')
+    $date = [datetime]::MinValue
+    if ([datetime]::TryParseExact($clean, $formats, [Globalization.CultureInfo]::InvariantCulture,
+            [Globalization.DateTimeStyles]::AllowWhiteSpaces, [ref]$date)) {
+        return $date.ToString('yyyy-MM-dd', [Globalization.CultureInfo]::InvariantCulture)
+    }
+    $Text
+}
 
 function Test-NbnpMetadata {
     <#
@@ -394,6 +482,7 @@ function Test-NbnpMetadata {
         else {
             $text = $text.Trim()
         }
+        if ($key -eq 'date' -and $value.Kind -eq 'bare') { $text = ConvertTo-NbnpDate $text }
         if ($key -eq 'missing_pages' -and $text -ne '') {
             $text = (($text -split ',') | ForEach-Object { ($_.Trim() -replace '\s*-\s*', '-') }) -join ', '
         }
@@ -703,9 +792,36 @@ function Get-NbnpLastIssue {
     }
 }
 
+function Test-NbnpRepeatOfLast {
+    <#
+    .SYNOPSIS
+        A warning when an issue has the same volume, issue and date as the last one saved from
+        another folder: usually a filled-in form saved without changing the number.
+    #>
+    param(
+        [Parameter(Mandatory)][System.Collections.IDictionary] $Values,
+        [Parameter(Mandatory)][string] $Folder,
+        $Last
+    )
+    if ($null -eq $Last -or -not $Last.Folder) { return }
+    $lastFolder = [IO.Path]::GetFullPath($Last.Folder).TrimEnd('\', '/')
+    if ($lastFolder -eq [IO.Path]::GetFullPath($Folder).TrimEnd('\', '/')) { return }
+    foreach ($key in @('volume', 'issue', 'date', 'edition', 'supplement_title')) {
+        $now = if ($Values.Contains($key)) { $Values[$key].Text } else { '' }
+        $then = if ($Last.Values.Contains($key)) { $Last.Values[$key].Text } else { '' }
+        if ($now -ne $then) { return }
+    }
+    [pscustomobject]@{
+        Field    = 'issue'
+        Severity = 'Warning'
+        Message  = "Volume, issue and date are the same as $(Split-Path -Leaf $Last.Folder), the last issue you saved. Change the issue number and date if this is the next issue."
+    }
+}
+
 #endregion
 
 Export-ModuleMember -Function New-NbnpValue, Get-NbnpSchema, Get-NbnpLanguages, ConvertFrom-NbnpToml,
     Read-NbnpMetadataFile, Find-NbnpTitleFile, Find-NbnpParentIssue, Test-NbnpMetadata,
     Get-NbnpPathYears, ConvertTo-NbnpToml, Save-NbnpMetadataFile, Get-NbnpStateDirectory,
-    Save-NbnpLastIssue, Get-NbnpLastIssue
+    Save-NbnpLastIssue, Get-NbnpLastIssue, Get-NbnpNaturalKey, Find-NbnpNextIssueFolder,
+    Get-NbnpFirstPage, ConvertTo-NbnpDate, Test-NbnpRepeatOfLast
