@@ -33,6 +33,6 @@ Brunswick and around the world. It runs as a Drupal application at
 
 ### Runbooks
 
-- [Bulk issue operations](howto/bulk-issue-operations.md)
+- [Import and audit issues in bulk](howto/bulk-issue-operations.md)
 - [Correct improperly linked assets](howto/correct-improperly-linked-assets.md)
 - [Add the copy-citation feature](howto/add-copy-citation-feature.md)

@@ -1,79 +1,98 @@
 ---
-title: Bulk issue operations
+title: Import and audit issues in bulk
 status: active
 owner: jsanford@unb.ca
-last_reviewed: 2026-06-18
+last_reviewed: 2026-11-18
 last_reviewed_by: jsanford@unb.ca
-description: Import and validate NBNP newspaper issues in bulk from the HAMMER file server.
+description: Import NBNP newspaper issues in bulk from HAMMER, and audit them against the site.
 ---
 
-# Bulk issue operations
+# Import and audit issues in bulk
 
-## Goal
+Use this guide to put a directory of scanned issues on newspapers.lib.unb.ca, with page
+images, OCR, viewer tiles and PDFs, and to check that the site matches the scans. The
+scripts on HAMMER run the nbnp-ingest tool; its
+[README](../../tools/nbnp-ingest/README.md) describes the tool itself.
 
-Import digitized newspaper issues into NBNP in bulk, and validate issues after import.
+## Before you start
 
-## Prerequisites
+| Prerequisite | Check |
+|---|---|
+| SSH access to HAMMER as the `imaging` user | `ssh imaging@hammer` logs you in. |
+| The directory of issues to import | `ls <PATH>` lists issue directories. Import one year at a time rather than thousands of issues at once. |
+| The Digital Title ID the issues belong to | See `<TITLE_ID>` below. |
 
-- SSH access to the HAMMER file server as the `imaging` user.
-- The full path on HAMMER to the issues you want to import. Although the tool can
-  import thousands of issues at once, import in smaller groups (for example, one
-  year of issues at a time).
-- The NBNP Digital Title ID the issues attach to. Find it by visiting
-  <https://newspapers.lib.unb.ca>, running a title search, opening the **Digital
-  Issues at UNB Libraries** link, and reading the ID from the URL — for example, from
-  `https://newspapers.lib.unb.ca/serials/browse/48`, the ID is `48`.
-
-In the examples below the import path is `/mnt/nbnp/TheWeeklyChronicle/WC_1824/`
-(include the trailing slash) and the title ID is `48`.
+| Placeholder | Meaning | How to obtain it |
+|---|---|---|
+| `<PATH>` | The directory to import, with a trailing slash | For example `/mnt/nbnp/TheWeeklyChronicle/WC_1824/`. |
+| `<TITLE_ID>` | The NBNP Digital Title ID | On <https://newspapers.lib.unb.ca>, search for the title, open its **Digital Issues at UNB Libraries** link, and read the ID from the URL: in `https://newspapers.lib.unb.ca/serials/browse/48`, the ID is `48`. |
 
 ## Import issues
 
 1. SSH to HAMMER as the `imaging` user.
-2. Attach to the shared `screen` session so the import survives a disconnect:
+2. Attach to the shared `screen` session, so the import keeps running if you disconnect:
 
    ```sh
    screen -x NBNP
    ```
 
-   If you see `There is no screen to be attached matching NBNP.`, no session is
-   active — create one:
+   If you see `There is no screen to be attached matching NBNP.`, no session is active.
+   Create one:
 
    ```sh
    screen -S NBNP
    ```
 
-3. Change to the NBNP tools directory:
+3. Change to the NBNP scripts directory:
 
    ```sh
    cd /home/imaging/NBHP
    ```
 
-4. Pre-audit the issue metadata before importing — many metadata problems can be
-   caught up front:
+4. Check the issues' metadata and page images:
 
    ```sh
-   ./auditIssueMetadata.sh /mnt/nbnp/TheWeeklyChronicle/WC_1824/
+   ./auditIssueMetadata.sh <PATH>
    ```
 
-   On success a confirmation message appears. On failure the output names the
-   relevant `metadata.php` file and the problem.
-
-5. Run the import, passing the path and the title ID:
-
-   ```sh
-   ./importNbnpIssue.sh /mnt/nbnp/TheWeeklyChronicle/WC_1824/ 48
-   ```
-
-6. Review the confirmation screen listing the directories to be processed, then type
-   `y` to continue:
+   When every issue is ready, the last line reads:
 
    ```text
-   ?  The Create Issues will be applied to ALL of the above directories. Are you sure you want to continue? (y/n)
+   Metadata files within the path [<PATH>] do not contain any errors.
    ```
 
-The import can take hours depending on the number of issues. Because it runs inside
-`screen`, it is safe to disconnect from SSH while it runs.
+   If it reads `ERROR! Some issues within the path [<PATH>] have errors; they are listed
+   above.`, the issues listed above that line will not be imported until their files are
+   fixed. The other issues can still be imported.
+
+5. Start the import:
+
+   ```sh
+   ./importNbnpIssue.sh <PATH> <TITLE_ID>
+   ```
+
+   It lists what it will do for each issue, ending with a summary such as
+   `Create 8 issues, add to 0, nothing to do for 1, 0 blocked.`, then asks:
+
+   ```text
+   Import these issues into title <TITLE_ID>? [y/N]
+   ```
+
+6. Type `y` to import. Any other answer prints `Nothing was changed.` and stops.
+
+The import runs at about 650 pages an hour. To leave it running and disconnect, press Ctrl-A, then D. When it finishes it prints a summary, then
+audits the issues it imported. A complete import ends like this, with your own counts:
+
+```text
+[<PATH>] Import finished
+...
+Failed: 0
+...
+Audited 9 issues under <PATH>: 9 match the site, 0 differ, 0 could not be audited.
+```
+
+Its log and ledger are in `/home/imaging/NBHP/logs/nbnp-ingest/`, and the import summary is
+sent to the NBHP notification topics.
 
 ## Check import progress
 
@@ -84,30 +103,66 @@ The import can take hours depending on the number of issues. Because it runs ins
    screen -x NBNP
    ```
 
-   You will see the running import or a completion message. If you instead see
-   `There is no screen to be attached matching NBNP.`, the import was not started or
-   the server was rebooted since it started — screen sessions do not survive reboots.
-   Contact the maintainer.
+   You see the running import, or its summary if it has finished. If you see
+   `There is no screen to be attached matching NBNP.`, the import was not started, or
+   HAMMER was rebooted since it started; screen sessions do not survive a reboot. Start the
+   import again (see [If an import fails or stops](#if-an-import-fails-or-stops)).
 
-## Validate imported issues
+## Audit issues again later
 
-Determine the path and title ID as above, then:
+An import audits its issues when it finishes. To audit a directory again later:
 
 1. SSH to HAMMER as the `imaging` user.
-2. Change to the home directory:
+2. Change to the NBNP scripts directory:
 
    ```sh
-   cd /home/imaging
+   cd /home/imaging/NBHP
    ```
 
-3. Run the audit, passing the path and the title ID:
+3. Run the audit:
 
    ```sh
-   ./auditNbnpIssue.sh /mnt/nbnp/TheWeeklyChronicle/WC_1824/ 48
+   ./auditNbnpIssue.sh <PATH> <TITLE_ID>
    ```
 
-## Verify the result
+   The audit changes nothing, and saves its output in `/home/imaging/NBHP/logs/audits/`.
+   Its last line begins with one of these:
 
-The audit reports success when imported issues are valid. On HAMMER it takes about
-10 minutes per 1,000 pages. Confirm the issues appear under the expected title at
-<https://newspapers.lib.unb.ca>.
+   | Last line | Meaning |
+   |---|---|
+   | `AUDIT PASSED.` | Every issue matches the site. |
+   | `AUDIT FOUND DISCREPANCIES.` | Some issues differ; the output above lists each difference. |
+   | `AUDIT FAILED TO RUN` | The audit could not check at least one issue, or could not run at all, for example because the site could not be reached. The output above lists each issue it could not audit. |
+
+An audit of The News for 1909, 636 pages, took about two minutes.
+
+## If an import fails or stops
+
+From `/home/imaging/NBHP`, inside the `NBNP` screen session (steps 1 to 3 of [Import
+issues](#import-issues)), run the same command again:
+
+```sh
+./importNbnpIssue.sh <PATH> <TITLE_ID>
+```
+
+An import is safe to repeat. It finds the issues it already imported, finishes the ones it
+left incomplete, and never imports an issue a second time. This applies whatever stopped
+it: a failed issue, a lost connection, a reboot, or Ctrl-C.
+
+| What you see | What to do |
+|---|---|
+| An issue marked `BLOCKED` in the plan, or `FAILED` in the results | Read the reason on that line, fix it (often a problem in the issue's `metadata.php` or page file names), then run the import again. |
+| One issue needs finishing, such as missing tiles or PDFs | Edit `TITLE_ID` and `TITLE_PATH` at the top of `reingestIssue.sh`, then run `./reingestIssue.sh`. |
+| An issue was deleted on the site on purpose and must be imported again | Ask the maintainer: it needs the tool's `--force` option. |
+
+## Verify
+
+Every issue matches the site: the import's audit line reports `0 differ, 0 could not be
+audited.`, and a later `./auditNbnpIssue.sh` ends with `AUDIT PASSED.`. Open the title on
+<https://newspapers.lib.unb.ca> and confirm the new issues are listed and their pages open
+in the viewer.
+
+## Related
+
+- [nbnp-ingest README](../../tools/nbnp-ingest/README.md): what an import does, and the
+  tool's commands and files.
