@@ -65,7 +65,7 @@ fre = "fra"
 
 [dzi]
 # An image providing `vips`. Pin by digest.
-image = "ghcr.io/unb-libraries/vips:bookworm"
+image = "ghcr.io/unb-libraries/nbnp-ingest-vips:bookworm"
 tile_size = 256                        # default
 overlap = 0                            # default
 jpeg_quality = 80                      # default
