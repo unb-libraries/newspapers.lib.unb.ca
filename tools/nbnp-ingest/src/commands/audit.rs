@@ -97,7 +97,7 @@ pub async fn run(config: &Config, root: &Path, options: Options) -> Result<Outco
         }
     }
 
-    let (title_lists, rejected) = load_titles(&client, &mut ready).await?;
+    let (title_lists, _, rejected) = load_titles(&client, &mut ready).await?;
     for (index, finding) in rejected {
         results[index].findings.push(finding);
     }

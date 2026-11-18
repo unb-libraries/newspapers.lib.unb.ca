@@ -13,6 +13,7 @@ use crate::domain::metadata::IssueMetadata;
 use crate::domain::pages::{self, PlannedPage};
 use crate::domain::site::IssueSummary;
 use crate::domain::state::{IssueState, Status};
+use crate::report::outln;
 use crate::source::{self, Titles};
 
 /// How an issue is found on the site.
@@ -38,6 +39,9 @@ pub struct Ready {
 
 /// Every title's issue summaries, for the titles that have issues without a state file.
 pub type TitleLists = HashMap<u32, Arc<Vec<IssueSummary>>>;
+
+/// Each title's name, as the site shows it.
+pub type TitleNames = BTreeMap<u32, String>;
 
 /// Reads metadata, pages and state file. `Err` holds why the issue cannot be matched; `Ok` also
 /// returns findings that do not prevent it.
@@ -110,22 +114,22 @@ pub fn prepare(
 pub async fn load_titles(
     client: &Client,
     ready: &mut Vec<Ready>,
-) -> Result<(TitleLists, Vec<(usize, Finding)>), SiteError> {
+) -> Result<(TitleLists, TitleNames, Vec<(usize, Finding)>), SiteError> {
     let mut needed: BTreeMap<u32, bool> = BTreeMap::new();
     for issue in ready.iter() {
         *needed.entry(issue.title_id).or_default() |= matches!(issue.lookup, Lookup::Metadata);
     }
     let mut lists = HashMap::new();
+    let mut names = TitleNames::new();
     let mut missing = Vec::new();
     for (&title_id, &needs_list) in &needed {
         let Some(title) = client.title(title_id).await? else {
             missing.push(title_id);
             continue;
         };
-        println!(
-            "Title {title_id}: {}",
-            title.name.as_deref().unwrap_or(&title.label)
-        );
+        let name = title.name.unwrap_or(title.label);
+        outln!("Title {title_id}: {name}");
+        names.insert(title_id, name);
         if needs_list {
             let list = client.title_issues(title_id).await?.unwrap_or_default();
             lists.insert(title_id, Arc::new(list));
@@ -142,5 +146,5 @@ pub async fn load_titles(
         }
         !absent
     });
-    Ok((lists, rejected))
+    Ok((lists, names, rejected))
 }

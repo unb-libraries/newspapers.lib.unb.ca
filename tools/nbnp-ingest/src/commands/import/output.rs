@@ -12,6 +12,8 @@ use crate::adapters::run_log::{RunLog, timestamp};
 use crate::adapters::source_tree::IssueDir;
 use crate::report::{self, out, outln};
 
+use crate::ingest::prepare::TitleNames;
+
 use super::{Action, IssuePlan, Mode, Options};
 
 #[derive(Debug, Default)]
@@ -168,108 +170,184 @@ pub(super) fn print_results(root: &Path, issues: &[IssueDir], plans: &[IssuePlan
 /// Failures listed in a summary; the rest are in the ledger.
 const SUMMARY_FAILURES: usize = 10;
 
-/// What a run did, for people and for the notification topics.
+/// What a run did, for people and for the notification topics. Plain text, so it reads the
+/// same in a terminal, an email and Slack, which turns the bare links into links.
 #[derive(Debug)]
 pub(super) struct Summary {
     pub text: String,
-    title_ids: BTreeSet<u32>,
+    /// Titles of the issues the run worked on: ID, name and link.
+    titles: Vec<(u32, String, String)>,
     years: BTreeSet<i32>,
     failed: usize,
 }
 
+/// New or completed issues listed in a summary; the rest are in the ledger.
+const SUMMARY_ISSUES: usize = 15;
+
 impl Summary {
-    pub(super) fn of(root: &Path, plans: &[IssuePlan], elapsed: Duration) -> Self {
+    pub(super) fn of(
+        root: &Path,
+        plans: &[IssuePlan],
+        elapsed: Duration,
+        base_url: &str,
+        title_names: &TitleNames,
+    ) -> Self {
         let mut counts = Counts::default();
         let mut failures = Vec::new();
         let mut title_ids = BTreeSet::new();
         let mut years = BTreeSet::new();
+        let mut issues = Vec::new();
         for plan in plans {
-            let outcome = outcome(plan);
-            counts.add(outcome);
-            if let Some(info) = &plan.info
-                && plan.done.is_some()
-            {
+            counts.add(outcome(plan));
+            let Some(info) = &plan.info else {
+                continue;
+            };
+            if plan.done.is_some() {
                 title_ids.insert(info.title_id);
                 years.insert(info.metadata.date.year());
             }
-            if let Some(Ok(done)) = &plan.done {
-                counts.pages_uploaded += done.pages_uploaded;
-            }
-            if let (Some(Err(reason)), Some(info)) = (&plan.done, &plan.info) {
-                failures.push(format!("{} - {}", info.dir.display(), first_line(reason)));
+            match &plan.done {
+                Some(Ok(done)) => {
+                    counts.pages_uploaded += done.pages_uploaded;
+                    let m = &info.metadata;
+                    let mut name = format!("vol. {}, no. {}", m.volume, m.issue);
+                    if !m.edition.is_empty() {
+                        let _ = write!(name, ", ed. {}", m.edition);
+                    }
+                    if !m.supplement_title.is_empty() {
+                        let _ = write!(name, " ({})", m.supplement_title);
+                    }
+                    issues.push((
+                        m.date,
+                        format!(
+                            "• {} · {name} · {}",
+                            m.date,
+                            issue_url(base_url, info.title_id, done.issue_id)
+                        ),
+                    ));
+                }
+                Some(Err(reason)) => failures.push(format!(
+                    "• {}: {}",
+                    report::shown_path(root, &info.dir).display(),
+                    first_line(reason)
+                )),
+                None => {}
             }
         }
+        issues.sort();
+        let titles: Vec<(u32, String, String)> = title_ids
+            .iter()
+            .map(|&id| {
+                let name = title_names
+                    .get(&id)
+                    .cloned()
+                    .unwrap_or_else(|| format!("Title {id}"));
+                (id, name, title_url(base_url, id))
+            })
+            .collect();
+
         let attempted = counts.created + counts.updated + counts.failed;
         let average = elapsed / u32::try_from(attempted.max(1)).unwrap_or(1);
-        let mut text = format!(
-            "[{}] Import finished\n\
-             Run time: {}\n\
-             Issues: {} ({attempted} attempted)\n\
-             Created: {}\n\
-             Added to: {}\n\
-             Nothing to do: {}\n\
-             Blocked: {}\n\
-             Failed: {}\n\
-             Pages uploaded: {}\n\
-             Average per attempted issue: {}",
-            root.display(),
-            clock(elapsed),
-            plans.len(),
-            counts.created,
+        let heading = if titles.is_empty() {
+            "nothing imported".to_owned()
+        } else {
+            titles
+                .iter()
+                .map(|(_, name, _)| name.as_str())
+                .collect::<Vec<_>>()
+                .join("; ")
+        };
+        let mut text = format!("Import finished: {heading}{}\n", years_text(&years, ", "));
+        for (_, _, url) in &titles {
+            let _ = writeln!(text, "{url}");
+        }
+        let _ = write!(
+            text,
+            "\nCreated {}, added to {}, nothing to do for {}, {} blocked, {} failed.\n\
+             {} uploaded in {} ({} per issue).\n\
+             From {}\n",
+            report::counted(counts.created, "issue"),
             counts.updated,
             counts.complete,
             counts.blocked,
             counts.failed,
-            counts.pages_uploaded,
+            report::counted(counts.pages_uploaded, "page"),
+            clock(elapsed),
             clock(average),
+            root.display(),
         );
-        if !failures.is_empty() {
-            text.push_str("\nFailures:");
-            for failure in failures.iter().take(SUMMARY_FAILURES) {
-                text.push('\n');
-                text.push_str(failure);
-            }
-            if failures.len() > SUMMARY_FAILURES {
-                let _ = write!(
-                    text,
-                    "\n...and {} more (see the ledger)",
-                    failures.len() - SUMMARY_FAILURES
-                );
-            }
-        }
+        let issue_lines: Vec<String> = issues.into_iter().map(|(_, line)| line).collect();
+        list_section(&mut text, "Issues", &issue_lines, SUMMARY_ISSUES);
+        list_section(&mut text, "Failures", &failures, SUMMARY_FAILURES);
         Self {
-            text,
-            title_ids,
+            text: text.trim_end().to_owned(),
+            titles,
             years,
             failed: counts.failed,
         }
     }
 
-    /// The one-line event the PHP importer sent: `[title:years] import (result)`.
+    /// The line the PHP importer sent, `[title:years] import (result)`, then each title's link.
     pub(super) fn event(&self, now: OffsetDateTime) -> String {
-        let titles = if self.title_ids.is_empty() {
+        let ids = if self.titles.is_empty() {
             "none".to_owned()
         } else {
-            self.title_ids
+            self.titles
                 .iter()
-                .map(ToString::to_string)
+                .map(|(id, _, _)| id.to_string())
                 .collect::<Vec<_>>()
                 .join(",")
         };
-        let years = match (self.years.first(), self.years.last()) {
-            (Some(first), Some(last)) if first == last => first.to_string(),
-            (Some(first), Some(last)) => format!("{first}-{last}"),
-            _ => "none".to_owned(),
+        let years = match years_text(&self.years, "") {
+            text if text.is_empty() => "none".to_owned(),
+            text => text,
         };
         let result = match self.failed {
             0 => "complete".to_owned(),
             n => format!("completed with {}", report::counted(n, "failure")),
         };
-        format!(
-            "newspapers.lib.unb.ca - {}\n[{titles}:{years}] import ({result})",
+        let mut event = format!(
+            "newspapers.lib.unb.ca - {}\n[{ids}:{years}] import ({result})",
             timestamp(now)
-        )
+        );
+        for (_, name, url) in &self.titles {
+            let _ = write!(event, "\n{name}: {url}");
+        }
+        event
     }
+}
+
+/// `1909` or `1908-1910`, after `prefix`; empty when there are no years.
+fn years_text(years: &BTreeSet<i32>, prefix: &str) -> String {
+    match (years.first(), years.last()) {
+        (Some(first), Some(last)) if first == last => format!("{prefix}{first}"),
+        (Some(first), Some(last)) => format!("{prefix}{first}-{last}"),
+        _ => String::new(),
+    }
+}
+
+/// A blank line, the heading, at most `limit` lines, and how many more the ledger has.
+fn list_section(text: &mut String, heading: &str, lines: &[String], limit: usize) {
+    if lines.is_empty() {
+        return;
+    }
+    let _ = writeln!(text, "\n{heading}:");
+    for line in lines.iter().take(limit) {
+        let _ = writeln!(text, "{line}");
+    }
+    if lines.len() > limit {
+        let _ = writeln!(text, "…and {} more (see the ledger)", lines.len() - limit);
+    }
+}
+
+/// The public page listing a title's issues.
+fn title_url(base_url: &str, title_id: u32) -> String {
+    format!("{base_url}/serials/browse/{title_id}")
+}
+
+/// The public page of an issue.
+fn issue_url(base_url: &str, title_id: u32, issue_id: u64) -> String {
+    format!("{base_url}/serials/{title_id}/issues/{issue_id}")
 }
 
 #[derive(Debug, Default)]
@@ -380,24 +458,46 @@ mod tests {
     }
 
     #[test]
-    fn events_name_titles_years_and_failures() {
+    fn events_keep_the_php_line_and_add_title_links() {
         let summary = Summary {
             text: String::new(),
-            title_ids: BTreeSet::from([248]),
-            years: BTreeSet::from([1909, 1910]),
+            titles: vec![(
+                332,
+                "The Kings County Record".into(),
+                title_url("https://newspapers.lib.unb.ca", 332),
+            )],
+            years: BTreeSet::from([1902, 1903]),
             failed: 1,
         };
         let now = OffsetDateTime::from_unix_timestamp(1_795_012_573).unwrap();
         assert_eq!(
             summary.event(now),
-            "newspapers.lib.unb.ca - 2026-11-18T14:36:13Z\n[248:1909-1910] import (completed with 1 failure)"
+            "newspapers.lib.unb.ca - 2026-11-18T14:36:13Z\n\
+             [332:1902-1903] import (completed with 1 failure)\n\
+             The Kings County Record: https://newspapers.lib.unb.ca/serials/browse/332"
         );
         let clean = Summary {
             failed: 0,
-            years: BTreeSet::from([1910]),
+            years: BTreeSet::from([1902]),
             ..summary
         };
-        assert!(clean.event(now).ends_with("[248:1910] import (complete)"));
+        assert!(clean.event(now).contains("[332:1902] import (complete)"));
+    }
+
+    #[test]
+    fn long_lists_are_cut_with_a_pointer_to_the_ledger() {
+        let mut text = String::new();
+        list_section(
+            &mut text,
+            "Issues",
+            &(1..=17).map(|n| format!("• {n}")).collect::<Vec<_>>(),
+            15,
+        );
+        assert!(text.starts_with("\nIssues:\n• 1\n"));
+        assert!(text.ends_with("• 15\n…and 2 more (see the ledger)\n"));
+        let mut none = String::new();
+        list_section(&mut none, "Failures", &[], 10);
+        assert!(none.is_empty());
     }
 
     #[test]

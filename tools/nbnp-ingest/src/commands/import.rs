@@ -162,7 +162,7 @@ pub async fn run(
         }
     }
 
-    let (title_lists, rejected) = load_titles(&client, &mut ready).await?;
+    let (title_lists, title_names, rejected) = load_titles(&client, &mut ready).await?;
     for (index, finding) in rejected {
         plans[index].action = Some(Action::Blocked(finding.message));
     }
@@ -189,7 +189,13 @@ pub async fn run(
             if let Some(log) = log {
                 record(log, &tree.issues, &plans);
             }
-            let summary = Summary::of(root, &plans, started.elapsed());
+            let summary = Summary::of(
+                root,
+                &plans,
+                started.elapsed(),
+                &config.site.base_url,
+                &title_names,
+            );
             outln!("\n{}", summary.text);
             if options.notify {
                 notify(config, &summary).await;
