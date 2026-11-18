@@ -356,39 +356,109 @@ function Get-NbnpNaturalKey {
     [regex]::Replace($Name.ToLowerInvariant(), '\d+', { param($m) $m.Value.PadLeft(12, '0') })
 }
 
-function Test-NbnpIssueCandidate([string] $Folder) {
-    # A folder the issue form can work on: it has page images and no legacy metadata.php.
-    if (Test-Path -LiteralPath (Join-Path $Folder 'metadata.php') -PathType Leaf) { return $false }
-    $null -ne (Get-NbnpFirstPage -Folder $Folder)
+function Get-NbnpIssueFolders {
+    <#
+    .SYNOPSIS
+        Every issue folder under a title folder, in name order: Path, Name and State, which is
+        'done' (has issue.toml), 'legacy' (has metadata.php only) or 'new' (has neither).
+
+    .DESCRIPTION
+        An issue folder is one holding page images. Its own subfolders are not searched.
+    #>
+    param([Parameter(Mandatory)][string] $TitleFolder)
+    $found = New-Object System.Collections.Generic.List[object]
+    Add-IssueFolders -Folder $TitleFolder -Found $found
+    , $found.ToArray()
+}
+
+function Add-IssueFolders([string] $Folder, [System.Collections.Generic.List[object]] $Found) {
+    if (Get-NbnpFirstPage -Folder $Folder) {
+        $state = if (Test-Path -LiteralPath (Join-Path $Folder 'issue.toml') -PathType Leaf) { 'done' }
+        elseif (Test-Path -LiteralPath (Join-Path $Folder 'metadata.php') -PathType Leaf) { 'legacy' }
+        else { 'new' }
+        $Found.Add([pscustomobject]@{ Path = $Folder; Name = (Split-Path -Leaf $Folder); State = $state })
+        return
+    }
+    $children = @(Get-ChildItem -LiteralPath $Folder -Directory -ErrorAction SilentlyContinue |
+            Where-Object { -not $_.Name.StartsWith('.') } | Sort-Object { Get-NbnpNaturalKey $_.Name })
+    foreach ($child in $children) { Add-IssueFolders -Folder $child.FullName -Found $Found }
+}
+
+function Get-NbnpTitleSummary {
+    <#
+    .SYNOPSIS
+        A title's issue folders and how many are done, legacy and new, with the first new one.
+    #>
+    param([Parameter(Mandatory)][string] $TitleFolder)
+    $issues = Get-NbnpIssueFolders -TitleFolder $TitleFolder
+    $first = @($issues | Where-Object State -EQ 'new' | Select-Object -First 1)
+    [pscustomobject]@{
+        Issues   = $issues
+        Total    = $issues.Count
+        Done     = @($issues | Where-Object State -EQ 'done').Count
+        Legacy   = @($issues | Where-Object State -EQ 'legacy').Count
+        New      = @($issues | Where-Object State -EQ 'new').Count
+        FirstNew = if ($first.Count) { $first[0].Path } else { $null }
+    }
+}
+
+function Find-NbnpTitleFolder {
+    <#
+    .SYNOPSIS
+        The title folder for any folder of a title: the nearest one holding title.toml, this
+        folder included, or else a guess at where its title.toml belongs. Returns Path and
+        Exists.
+
+    .DESCRIPTION
+        The guess follows the NBNP layout, where the year, volume and issue folders all start with
+        the title's short name (KCR_1902, KCR_1902_17, KCR_1902_17_26) and the title folder does
+        not (KingsCountyRecord): it is the first folder up from an issue whose name does not
+        start with that short name.
+    #>
+    param([Parameter(Mandatory)][string] $Folder)
+    $full = [IO.Path]::GetFullPath($Folder).TrimEnd('\', '/')
+    $dir = New-Object IO.DirectoryInfo($full)
+    while ($null -ne $dir) {
+        if (Test-Path -LiteralPath (Join-Path $dir.FullName 'title.toml') -PathType Leaf) {
+            return [pscustomobject]@{ Path = $dir.FullName; Exists = $true }
+        }
+        $dir = $dir.Parent
+    }
+    $sample = if (Get-NbnpFirstPage -Folder $full) { $full } else {
+        $issues = Get-NbnpIssueFolders -TitleFolder $full
+        if ($issues.Count -gt 0) { $issues[0].Path } else { $null }
+    }
+    $guess = $full
+    if ($sample) {
+        $prefix = ((Split-Path -Leaf $sample) -split '_')[0] + '_'
+        $dir = (New-Object IO.DirectoryInfo($sample)).Parent
+        while ($null -ne $dir -and $null -ne $dir.Parent -and
+            $dir.Name.StartsWith($prefix, [StringComparison]::OrdinalIgnoreCase)) {
+            $dir = $dir.Parent
+        }
+        if ($null -ne $dir) { $guess = $dir.FullName }
+    }
+    [pscustomobject]@{ Path = $guess; Exists = $false }
 }
 
 function Find-NbnpNextIssueFolder {
     <#
     .SYNOPSIS
-        The issue folder after this one, for "Save and next": the next folder beside it in name
-        order that has page images and no metadata.php, or else the first such folder in the next
-        folder up (the next volume or year). $null when there is none.
+        The issue folder after this one in its title, for "Save and next", skipping folders that
+        still have a metadata.php. $null after the last.
     #>
-    param([Parameter(Mandatory)][string] $IssueFolder)
+    param(
+        [Parameter(Mandatory)][string] $IssueFolder,
+        [object[]] $Issues
+    )
     $full = [IO.Path]::GetFullPath($IssueFolder).TrimEnd('\', '/')
-    $parent = Split-Path -Parent $full
-    $siblings = @(Get-ChildItem -LiteralPath $parent -Directory | Sort-Object { Get-NbnpNaturalKey $_.Name })
-    $key = Get-NbnpNaturalKey (Split-Path -Leaf $full)
-    foreach ($dir in $siblings) {
-        if ((Get-NbnpNaturalKey $dir.Name) -gt $key -and (Test-NbnpIssueCandidate $dir.FullName)) { return $dir.FullName }
+    if ($null -eq $Issues) {
+        $Issues = Get-NbnpIssueFolders -TitleFolder (Find-NbnpTitleFolder -Folder $full).Path
     }
-    # Across into the next volume or year folder.
-    $grandparent = Split-Path -Parent $parent
-    if (-not $grandparent) { return $null }
-    $parentKey = Get-NbnpNaturalKey (Split-Path -Leaf $parent)
-    $uncles = @(Get-ChildItem -LiteralPath $grandparent -Directory | Sort-Object { Get-NbnpNaturalKey $_.Name })
-    foreach ($uncle in $uncles) {
-        if ((Get-NbnpNaturalKey $uncle.Name) -le $parentKey) { continue }
-        $children = @(Get-ChildItem -LiteralPath $uncle.FullName -Directory | Sort-Object { Get-NbnpNaturalKey $_.Name })
-        foreach ($child in $children) {
-            if (Test-NbnpIssueCandidate $child.FullName) { return $child.FullName }
-        }
-        if (Test-NbnpIssueCandidate $uncle.FullName) { return $uncle.FullName }
+    $passed = $false
+    foreach ($issue in $Issues) {
+        if ($passed -and $issue.State -ne 'legacy') { return $issue.Path }
+        if ($issue.Path -eq $full) { $passed = $true }
     }
     $null
 }
@@ -725,6 +795,66 @@ function Save-NbnpMetadataFile {
 
 #endregion
 
+#region Viewing a page
+
+# A view of an image in a box: Scale (box pixels per image pixel) and X, Y (the image point at
+# the box's top-left). The form draws the image through it; these functions only do the
+# arithmetic, so it can be tested without a screen.
+
+function New-NbnpView {
+    <#
+    .SYNOPSIS
+        A view showing the image at the box's width, from the top: the masthead first.
+    #>
+    param([double] $ImageWidth, [double] $ImageHeight, [double] $BoxWidth, [double] $BoxHeight)
+    $view = [pscustomobject]@{
+        ImageWidth = $ImageWidth; ImageHeight = $ImageHeight; BoxWidth = $BoxWidth; BoxHeight = $BoxHeight
+        Scale = $BoxWidth / $ImageWidth; X = 0.0; Y = 0.0
+    }
+    Limit-NbnpView $view
+}
+
+function Step-NbnpViewZoom {
+    <#
+    .SYNOPSIS
+        Zooms by Factor, keeping the image point under (AtX, AtY) in the box where it is. The
+        scale stays between showing the whole page and 4 box pixels per image pixel.
+    #>
+    param($View, [double] $Factor, [double] $AtX, [double] $AtY)
+    $imageX = $View.X + $AtX / $View.Scale
+    $imageY = $View.Y + $AtY / $View.Scale
+    $whole = [Math]::Min($View.BoxWidth / $View.ImageWidth, $View.BoxHeight / $View.ImageHeight)
+    $View.Scale = [Math]::Max($whole, [Math]::Min(4.0, $View.Scale * $Factor))
+    $View.X = $imageX - $AtX / $View.Scale
+    $View.Y = $imageY - $AtY / $View.Scale
+    Limit-NbnpView $View
+}
+
+function Move-NbnpView {
+    <#
+    .SYNOPSIS
+        Pans by a drag of (DeltaX, DeltaY) box pixels: the image follows the pointer.
+    #>
+    param($View, [double] $DeltaX, [double] $DeltaY)
+    $View.X -= $DeltaX / $View.Scale
+    $View.Y -= $DeltaY / $View.Scale
+    Limit-NbnpView $View
+}
+
+function Limit-NbnpView($View) {
+    # Keeps the image in the box: no panning past an edge, and an image smaller than the box
+    # centred across and kept at the top.
+    $visibleWidth = $View.BoxWidth / $View.Scale
+    $visibleHeight = $View.BoxHeight / $View.Scale
+    $View.X = if ($visibleWidth -ge $View.ImageWidth) { ($View.ImageWidth - $visibleWidth) / 2 }
+    else { [Math]::Max(0.0, [Math]::Min($View.X, $View.ImageWidth - $visibleWidth)) }
+    $View.Y = if ($visibleHeight -ge $View.ImageHeight) { 0.0 }
+    else { [Math]::Max(0.0, [Math]::Min($View.Y, $View.ImageHeight - $visibleHeight)) }
+    $View
+}
+
+#endregion
+
 #region The last issue saved
 
 # What "Fill from last saved issue" leaves out: these describe one particular copy.
@@ -824,4 +954,5 @@ Export-ModuleMember -Function New-NbnpValue, Get-NbnpSchema, Get-NbnpLanguages, 
     Read-NbnpMetadataFile, Find-NbnpTitleFile, Find-NbnpParentIssue, Test-NbnpMetadata,
     Get-NbnpPathYears, ConvertTo-NbnpToml, Save-NbnpMetadataFile, Get-NbnpStateDirectory,
     Save-NbnpLastIssue, Get-NbnpLastIssue, Get-NbnpNaturalKey, Find-NbnpNextIssueFolder,
-    Get-NbnpFirstPage, ConvertTo-NbnpDate, Test-NbnpRepeatOfLast
+    Get-NbnpFirstPage, ConvertTo-NbnpDate, Test-NbnpRepeatOfLast, Get-NbnpIssueFolders,
+    Get-NbnpTitleSummary, Find-NbnpTitleFolder, New-NbnpView, Step-NbnpViewZoom, Move-NbnpView

@@ -1,7 +1,8 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-    Removes the newspaper metadata items from the current user's Explorer right-click menu.
+    Removes the newspaper metadata item, and those of earlier versions, from the current user's
+    Explorer right-click menu.
 
 .DESCRIPTION
     Deletes only the keys Install-ContextMenu.ps1 created (those carrying its
@@ -15,7 +16,7 @@ $ErrorActionPreference = 'Stop'
 
 $removed = 0
 foreach ($parent in @('Software\Classes\Directory\shell', 'Software\Classes\Directory\Background\shell')) {
-    foreach ($name in @('NbnpEditTitle', 'NbnpEditIssue')) {
+    foreach ($name in @('NbnpEdit', 'NbnpEditTitle', 'NbnpEditIssue')) {
         $path = "$parent\$name"
         $key = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($path)
         if ($null -eq $key) { continue }

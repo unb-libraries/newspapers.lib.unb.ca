@@ -33,41 +33,67 @@ After moving or deleting the folder, run the installer again from the new place,
 
 ## Use
 
-Right-click a folder, or the empty space inside an open folder, and choose:
+Right-click any folder of a title, or the empty space inside one, and choose **Edit newspaper
+metadata…** (on Windows 11 under **Show more options**, or Shift+right-click). One window
+opens, with two views.
 
-| Menu item | Use it on | Creates or edits |
-|---|---|---|
-| Edit newspaper title metadata… | A title's folder, such as `The_News` | `title.toml` |
-| Edit newspaper issue metadata… | An issue's folder, such as `TN_1909_33_05` | `issue.toml` |
+### The title view
 
-On Windows 11 both items are under **Show more options** (or hold Shift while right-clicking).
+It shows the title's `title.toml`, the first page of its first issue, and its issues:
 
-Create the title's `title.toml` first: each issue inherits the title, language and media from
-the nearest `title.toml` in the folders above it, and the issue form shows those values.
+- **Title metadata**: Title ID, Title, Language and Media. Issues cannot be entered until the
+  title has a `title.toml`. If it has none yet, the window says so and proposes the folder for
+  it: the first folder up from the issues whose name does not share their short name (for
+  `KCR_1902_17_26`, the first folder not starting `KCR_`). **Use another folder for the
+  title...** picks a different one.
+- **Issues**: how many issue folders the title has (folders with page images), how many are
+  done, need metadata, or still have an old `metadata.php` (read only), and the list of them.
+  Double-click one to open it.
+- **Save and enter issues** (Enter) saves the title and opens the first issue that needs
+  metadata, or the issue the menu was opened on.
 
-### Entering a run of issues
+Opening the menu on an issue folder of a title that has its `title.toml` goes straight to that
+issue.
 
-Right-click the first issue's folder and open the issue form. On the right it shows the top of
-the folder's first page, so the masthead can be read while typing; click it to open the whole
-page. On the left, the fields follow the masthead: volume, issue number, date.
+### The issue view
+
+The header shows the title, the issue, and where it is in the title (issue 5 of 52; 47 need
+metadata). On the right is the issue's page viewer: the first page, fitted to the width at the
+top so the masthead shows first.
+
+| In the viewer | Does |
+|---|---|
+| Mouse wheel | Zooms in or out at the pointer. |
+| Drag | Moves the page. |
+| Double-click, or **Fit** | Fits the page to the width again. |
+| **+**, **-** | Zoom in or out. |
+| The page list | Shows another page of the issue. |
+| **Open** | Opens the page in the Windows viewer. |
+
+On the left, the fields follow the masthead: volume, issue number, date.
 
 1. Type the volume, issue and date as printed, and anything else the issue needs.
-2. Press **Enter** (or Ctrl+S) for **Save and next**. The issue is saved and the form moves to
-   the next issue folder, in name order and on into the next volume's folder, skipping folders
-   that still have a `metadata.php`.
+2. Press **Enter** (or Ctrl+S) for **Save and next**: the issue is saved and the next issue of
+   the title opens, in name order across year and volume folders, skipping folders that still
+   have a `metadata.php`.
 3. A new issue arrives filled in from the one just saved, except missing pages and errata,
-   with the issue number selected: type the new number, check the date, and press Enter.
+   with the issue number selected: type the new number, check the date, press Enter.
 
-The green line at the top says what was saved and where the form is now. **Save and close**
-saves and stops; **Cancel** (Esc) closes without saving, asking first if anything was typed.
+After the last issue the button reads **Save and finish** and returns to the title view, with
+the issues still needing metadata counted. **Back to title** (Alt+B) returns at any time.
+**Save** saves and stays; **Close** (Esc) closes the window. Leaving a view or closing with
+unsaved changes asks first.
 
-A folder named like its issue plus `_Sup`, `_Sup2` or `_S1` is taken as that issue's supplement:
-it opens with **This is a supplement** ticked and the issue's date, volume and number filled
-in, ready for the supplement's title.
+A folder named like its issue plus `_Sup`, `_Sup2` or `_S1` is taken as that issue's
+supplement: it opens with **This is a supplement** ticked and the issue's date, volume and
+number filled in, ready for the supplement's title.
 
 **Fill from last saved issue** (Alt+F) does the same filling on demand, for example when
 starting again the next day. The last issue is remembered for you alone, in
 `%LOCALAPPDATA%\nbnp-metadata-editor\last-issue.toml`.
+
+The buttons and messages stay at the bottom of the window whatever its size; on a small screen
+the fields scroll.
 
 ### Checks
 
@@ -130,15 +156,15 @@ is written. Close the form and open it again to see their version.
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Uninstall-ContextMenu.ps1
 ```
 
-This removes the two menu items and nothing else; metadata files are not touched. Then delete
+This removes the menu item (and those of earlier versions) and nothing else; metadata files are not touched. Then delete
 the folder if you no longer need it.
 
 ## Troubleshooting
 
 | Problem | What to do |
 |---|---|
-| The menu items are missing | On Windows 11, look under **Show more options**. Otherwise run the installer again. |
-| Choosing an item does nothing | The folder was probably moved; run the installer again from where it is now. To see an error, run `powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -File .\Edit-NbnpMetadata.ps1 -Kind Issue -Path "<folder>"` in a PowerShell window. |
+| The menu item is missing | On Windows 11, look under **Show more options**. Otherwise run the installer again. |
+| Choosing it does nothing | The folder was probably moved; run the installer again from where it is now. To see an error, run `powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -File .\Edit-NbnpMetadata.ps1 -Path "<folder>"` in a PowerShell window. |
 | "This folder could not be found" | The folder was renamed or the share disconnected after right-clicking; try again. |
 | "Nothing was saved" with an access error | You cannot write to that folder, or the file is open in another program. |
 
@@ -148,7 +174,7 @@ the folder if you no longer need it.
 |---|---|
 | `NbnpMetadata.psm1` | Reads, checks and writes the files; no user interface. |
 | `Edit-NbnpMetadata.ps1` | The form (Windows Forms). |
-| `Install-ContextMenu.ps1`, `Uninstall-ContextMenu.ps1` | The menu items, under `HKCU\Software\Classes\Directory\shell` and `...\Directory\Background\shell`. |
+| `Install-ContextMenu.ps1`, `Uninstall-ContextMenu.ps1` | The menu item, under `HKCU\Software\Classes\Directory\shell` and `...\Directory\Background\shell`. |
 | `tests/` | Pester tests, their fixtures, and `run-tests.sh`. |
 
 The file format is defined by nbnp-ingest (`tools/nbnp-ingest/src/domain/metadata.rs`): when it
@@ -176,36 +202,43 @@ Run it on the sample data set: a folder `NBNP` holding three page images from ea
 real issues, with each issue's old `metadata.php` kept beside it as `metadata.php.reference`
 to check the values against. It is not in this repository; ask for it.
 
-1. Install; both menu items appear on a folder and inside an open folder (Windows 11: under
-   Show more options).
-2. **Title form.** `The_News` opens with its four values. On `KingsCountyRecord`, create a
-   `title.toml` with ID `332`, title `The Kings County Record`, `eng`, `print`: four lines,
-   `title_id = 332` without quotes. On `Gigmanag`, save with the ID empty: a warning, then no
-   `title_id` line.
-3. **A run.** Open the issue form on `The_News\TN_1909\TN_1909_33\TN_1909_33_05`. The masthead
-   shows on the right within a second or two; clicking it opens the page. The cursor is in
-   Volume, and Tab goes Volume, Issue, Date, Edition, Missing pages, Errata. Enter the values
-   and press Enter: the form moves to `TN_1909_33_06`, says so in green, and arrives filled in
-   with the issue number selected.
-4. **Repeat guard.** On `TN_1909_33_06`, press Enter without changing anything: a warning that
+1. Install: one **Edit newspaper metadata…** item appears on a folder and inside an open
+   folder (Windows 11: under Show more options). If an earlier version was installed, its two
+   items are gone.
+2. **No title yet.** Open the menu on `KingsCountyRecord\KCR_1902\KCR_1902_17\KCR_1902_17_26`:
+   the title view opens, says there is no `title.toml`, and proposes `KingsCountyRecord`. It
+   lists 3 issue folders, 3 needing metadata, and shows the first page of `KCR_1902_16_25`.
+   Enter ID `332`, title `The Kings County Record`, and press Enter: `KCR_1902_17_26` opens
+   (the folder the menu was opened on).
+3. **Viewer.** The page shows at the window's width from the top. The wheel zooms at the
+   pointer, dragging moves it, double-click fits it, the page list shows pages 2 and 3, Open
+   opens the page in Windows. Resize the window: the page refits until zoomed or moved.
+4. **A run.** Open the menu on `The_News`: the title view lists 3 issues to do. Press Enter:
+   `TN_1909_33_05` opens with the cursor in Volume; Tab goes Volume, Issue, Date, Edition,
+   Missing pages, Errata. Enter the values and press Enter: `TN_1909_33_06` opens, says so in
+   green, filled in, with the issue number selected.
+5. **Repeat guard.** On `TN_1909_33_06`, press Enter without changing anything: a warning that
    it repeats `TN_1909_33_05`. Answer No, correct the number and date, press Enter. On
-   `TN_1909_33_07`, Save and next is greyed out (no issue after it); Save and close ends.
-5. **Across volumes.** From `KCR_1902_16_25`, Save and next goes to `KCR_1902_17_26`, then
-   `KCR_1902_18_27`.
-6. **Supplement.** Save `QT_1999_31_15`, press Enter: `QT_1999_31_15_Sup` opens with the
-   supplement box ticked and `_15`'s date, volume and number; type a supplement title and press
-   Enter: `QT_1999_31_16` opens with the box clear.
-7. **Dates.** Type `1987-10-1`, `October 1, 1987` and `1 Oct 1987` in turn and leave the field:
+   `TN_1909_33_07` the button reads Save and finish; pressing it returns to the title view:
+   0 issues need metadata.
+6. **Across volumes.** In Kings County Record, Save and next goes `KCR_1902_16_25`,
+   `KCR_1902_17_26`, `KCR_1902_18_27`.
+7. **Supplement.** In The Quoddy Tides (a `title.toml` without a Title ID: the title view
+   warns on save), save `QT_1999_31_15`: `QT_1999_31_15_Sup` opens ticked with `_15`'s date,
+   volume and number; type a supplement title, press Enter: `QT_1999_31_16` opens unticked.
+8. **Dates.** Type `1987-10-1`, `October 1, 1987` and `1 Oct 1987` in turn and leave the field:
    each becomes `1987-10-01` with its weekday. `01/10/1987` is marked red.
-8. **Checks as you go.** Volume `05`, missing pages `1 & 2` and date `1909-02-29` turn red on
-   leaving the field, with the reason at the bottom; nothing saves until they are fixed.
-9. **Text.** Enter an edition with `"quotes"`, a backslash, `é`, `Miʼkmaq`, `جريدة` and `𝔄`,
-   and two lines of errata; save and reopen: unchanged and displayed correctly. Reopening an
-   issue and saving it again leaves `issue.toml.bak`.
-10. **Cancel and conflicts.** Cancel after a change asks first and writes nothing. Open a form,
-    change its `issue.toml` in Notepad, then save in the form: refused, Notepad's version kept.
-11. **Awkward names, no title file.** Open `Tèst Title (O'Brien) – 新聞\TT_1900\TT_1900_01\TT_1900_01_01`:
-    the form opens, says no `title.toml` was found, and shows the Different from the title
-    fields with `eng` and `print` filled in.
-12. **Legacy.** `Agenutemagen\AG_1974\AG_1974_03\AG_1974_03_09` opens its `metadata.php` read-only.
-13. Uninstall: both menu items disappear; the metadata files remain.
+9. **Checks as you go.** Volume `05`, missing pages `1 & 2` and date `1909-02-29` turn red on
+   leaving the field; nothing saves until they are fixed. The buttons stay visible however
+   small the window.
+10. **Text.** Enter an edition with `"quotes"`, a backslash, `é`, `Miʼkmaq`, `جريدة` and `𝔄`,
+    and two lines of errata; save and reopen: unchanged and displayed correctly. Saving an
+    existing issue again leaves `issue.toml.bak`.
+11. **Leaving and conflicts.** Back to title or Close after a change asks first. Change an
+    open issue's `issue.toml` in Notepad, then save in the window: refused, Notepad's version
+    kept.
+12. **Awkward names.** Open the menu on `Tèst Title (O'Brien) – 新聞`: the title view opens on
+    that folder.
+13. **Legacy.** In Agenutemagen, the issue list shows `AG_1974_03_09` as old php;
+    double-clicking it shows its `metadata.php` read-only.
+14. Uninstall: the menu item disappears; the metadata files remain.

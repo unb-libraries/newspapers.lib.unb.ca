@@ -112,3 +112,101 @@ Describe 'Repeating the last issue' {
         Test-NbnpRepeatOfLast -Values (Values '9') -Folder 'X:\KCR_1906_19_10' -Last $null | Should -BeNullOrEmpty
     }
 }
+
+Describe 'A title''s issues' {
+    BeforeAll {
+        $script:TitleRoot = Join-Path $TestDrive 'KingsCountyRecord'
+        $y = Join-Path $TitleRoot 'KCR_1902'
+        New-Issue (Join-Path $y 'KCR_1902_17' 'KCR_1902_17_26')
+        New-Issue (Join-Path $y 'KCR_1902_16' 'KCR_1902_16_25')
+        New-Issue (Join-Path $y 'KCR_1902_18' 'KCR_1902_18_27') -Legacy
+        New-Issue (Join-Path $y 'KCR_1902_16' 'KCR_1902_16_24')
+        [IO.File]::WriteAllText((Join-Path $y 'KCR_1902_16' 'KCR_1902_16_24' 'issue.toml'), "volume = `"16`"`n")
+    }
+
+    It 'lists every issue folder in name order with its state' {
+        $issues = Get-NbnpIssueFolders -TitleFolder $script:TitleRoot
+        $issues.Name | Should -Be @('KCR_1902_16_24', 'KCR_1902_16_25', 'KCR_1902_17_26', 'KCR_1902_18_27')
+        $issues.State | Should -Be @('done', 'new', 'new', 'legacy')
+    }
+
+    It 'sums them up, with the first that needs metadata' {
+        $summary = Get-NbnpTitleSummary -TitleFolder $script:TitleRoot
+        $summary.Total, $summary.Done, $summary.Legacy, $summary.New | Should -Be @(4, 1, 1, 2)
+        Split-Path -Leaf $summary.FirstNew | Should -Be 'KCR_1902_16_25'
+    }
+
+    It 'guesses the title folder from <From> when there is no title.toml' -ForEach @(
+        @{ From = 'KCR_1902\KCR_1902_17\KCR_1902_17_26' }, @{ From = 'KCR_1902\KCR_1902_17' }
+        @{ From = 'KCR_1902' }, @{ From = '.' }
+    ) {
+        $folder = Join-Path $script:TitleRoot ($From -replace '\\', [IO.Path]::DirectorySeparatorChar)
+        $found = Find-NbnpTitleFolder -Folder $folder
+        $found.Exists | Should -BeFalse
+        $found.Path | Should -Be $script:TitleRoot
+    }
+
+    It 'finds the title folder holding title.toml, from it or below it' {
+        $file = Join-Path $script:TitleRoot 'title.toml'
+        [IO.File]::WriteAllText($file, "title = `"The Kings County Record`"`n")
+        try {
+            foreach ($from in @($script:TitleRoot, (Join-Path $script:TitleRoot 'KCR_1902' 'KCR_1902_17' 'KCR_1902_17_26'))) {
+                $found = Find-NbnpTitleFolder -Folder $from
+                $found.Exists | Should -BeTrue
+                $found.Path | Should -Be $script:TitleRoot
+            }
+        }
+        finally { Remove-Item -LiteralPath $file }
+    }
+
+    It 'goes to the next issue across volume folders, skipping metadata.php issues' {
+        $issues = Get-NbnpIssueFolders -TitleFolder $script:TitleRoot
+        $from = Join-Path $script:TitleRoot 'KCR_1902' 'KCR_1902_16' 'KCR_1902_16_25'
+        Split-Path -Leaf (Find-NbnpNextIssueFolder -IssueFolder $from -Issues $issues) | Should -Be 'KCR_1902_17_26'
+        $last = Join-Path $script:TitleRoot 'KCR_1902' 'KCR_1902_17' 'KCR_1902_17_26'
+        Find-NbnpNextIssueFolder -IssueFolder $last -Issues $issues | Should -BeNullOrEmpty
+    }
+}
+
+Describe 'Viewing a page' {
+    BeforeAll {
+        # A 2000 x 3000 page in a 500 x 300 box.
+        function View { New-NbnpView -ImageWidth 2000 -ImageHeight 3000 -BoxWidth 500 -BoxHeight 300 }
+    }
+
+    It 'starts at the page''s width, at the top' {
+        $view = View
+        $view.Scale | Should -Be 0.25
+        $view.X, $view.Y | Should -Be @(0, 0)
+    }
+
+    It 'zooms in keeping the point under the pointer still' {
+        $view = View
+        $before = @(($view.X + 100 / $view.Scale), ($view.Y + 50 / $view.Scale))
+        $view = Step-NbnpViewZoom $view 2 100 50
+        $view.Scale | Should -Be 0.5
+        @(($view.X + 100 / $view.Scale), ($view.Y + 50 / $view.Scale)) | Should -Be $before
+    }
+
+    It 'zooms out no further than the whole page, and in no further than 4 to 1' {
+        $view = Step-NbnpViewZoom (View) 0.001 0 0
+        $view.Scale | Should -Be 0.1
+        $view = Step-NbnpViewZoom (View) 1000 0 0
+        $view.Scale | Should -Be 4
+    }
+
+    It 'centres a page narrower than the box' {
+        $view = Step-NbnpViewZoom (View) 0.001 0 0
+        $view.X | Should -Be -1500
+        $view.Y | Should -Be 0
+    }
+
+    It 'pans with the pointer and stops at the edges' {
+        $view = Move-NbnpView (View) 0 -100
+        $view.Y | Should -Be 400
+        $view = Move-NbnpView $view 0 -100000
+        $view.Y | Should -Be 1800
+        $view = Move-NbnpView $view 100000 100000
+        $view.X, $view.Y | Should -Be @(0, 0)
+    }
+}
