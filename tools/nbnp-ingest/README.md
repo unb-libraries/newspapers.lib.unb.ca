@@ -105,7 +105,7 @@ For each issue it then carries out, in order:
 3. For each missing page: runs Tesseract once for the hOCR, the text and the PDF, uploads the
    image, and creates the page with a UUID derived from the issue's UUID and the page's path.
 4. Checks that the site stored each new image with the source image's checksum.
-5. Tiles each page that lacks tiles and installs its tiles and PDF in the webtree.
+5. Tiles each page that lacks tiles, in memory, and installs its tiles and PDF in the webtree.
 6. Waits until the site sees every page's tiles and PDF, then marks the state file complete.
 
 This order is what makes an import safe to run again at any point:
@@ -129,13 +129,16 @@ This order is what makes an import safe to run again at any point:
 | `issue.toml` | Each issue directory | By `convert` only. |
 | Tiles | `serials/dzi/<TITLE_ID>/<SITE_ISSUE_ID>/` under `paths.public_files` | For each page without tiles. |
 | Page PDFs | `serials/pdf/<TITLE_ID>/<SITE_ISSUE_ID>/` under `paths.public_files` | For each page without a PDF. |
-| Staging | `webtree.staging_dir`, by default `serials/.nbnp-ingest-staging` | While a page's assets are assembled; removed after. |
+| Staging | `webtree.staging_dir`, by default `serials/.nbnp-ingest-staging` | While a page's tiles and PDF are copied in; removed after. |
 | OCR cache | `ocr/` under `paths.work_dir` | Per page until its issue is complete. |
 | Log | `<UTC time>_<command>_<directory>.log` in `paths.log_dir` | `import --yes` and `run --yes`: everything printed and logged. |
 | Ledger | `<UTC time>_<command>_<directory>.jsonl` in `paths.log_dir` | With the log. One JSON line per issue, with its outcome, site issue ID, pages uploaded and time. |
 
 A container running as `webtree.owner_uid:owner_gid`, the web server's user, writes the tiles
-and PDFs. With `webtree.directory_group` set, the tool creates the title and issue
+and PDFs. It tiles each page in memory (a tmpfs of up to 2 GiB, about 20 MB used for a typical
+page) and copies the result into staging: `vips dzsave` writing straight to the webtree's NFS
+renames, chmods and chowns every one of a page's thousand or so tiles, which slows the NFS
+server the site also uses. With `webtree.directory_group` set, the tool creates the title and issue
 directories itself, mode 775, and the container joins that group to write into them.
 
 When the config has a `[notify]` section, a run with `--yes` also publishes its summary to

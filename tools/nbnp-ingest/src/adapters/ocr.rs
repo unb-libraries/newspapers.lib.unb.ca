@@ -164,6 +164,7 @@ impl OcrCache {
                 },
             ],
             // One thread per run: `limits.cpu_slots` runs at once use the CPUs.
+            tmpfs: Vec::new(),
             env: vec![("OMP_THREAD_LIMIT".into(), "1".into())],
             entrypoint: Some("tesseract".into()),
             args: [

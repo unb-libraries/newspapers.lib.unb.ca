@@ -36,6 +36,8 @@ pub struct Spec {
     /// Supplementary groups the container's user joins.
     pub groups: Vec<u32>,
     pub mounts: Vec<Mount>,
+    /// Directories in memory, writable by any user, gone when the container ends.
+    pub tmpfs: Vec<Tmpfs>,
     /// Set in the container, over the image's own values.
     pub env: Vec<(String, String)>,
     pub entrypoint: Option<String>,
@@ -48,6 +50,14 @@ pub struct Mount {
     pub host: PathBuf,
     pub target: String,
     pub read_only: bool,
+}
+
+/// A directory in memory inside the container. `size_mib` caps it; memory is used only as files
+/// are written.
+#[derive(Debug, Clone)]
+pub struct Tmpfs {
+    pub target: String,
+    pub size_mib: u64,
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -105,6 +115,16 @@ impl Runtime {
         }
         for mount in &spec.mounts {
             invocation = invocation.args(["--mount", &mount_option(mount)?]);
+        }
+        for tmpfs in &spec.tmpfs {
+            let target = checked_path(Path::new(&tmpfs.target))?;
+            invocation = invocation.args([
+                "--mount",
+                &format!(
+                    "type=tmpfs,target={target},tmpfs-size={},tmpfs-mode=1777",
+                    tmpfs.size_mib * 1024 * 1024
+                ),
+            ]);
         }
         for (name, value) in &spec.env {
             invocation = invocation.args(["--env", &format!("{name}={value}")]);
@@ -268,6 +288,7 @@ mod tests {
                     read_only: false,
                 },
             ],
+            tmpfs: Vec::new(),
             env: vec![("OMP_THREAD_LIMIT".into(), "1".into())],
             entrypoint: Some("tesseract".into()),
             args: vec!["/in/a.jpg".into(), "/out/a".into()],
@@ -288,6 +309,23 @@ mod tests {
              --mount type=bind,source=/work/ocr,target=/out \
              --env OMP_THREAD_LIMIT=1 \
              --entrypoint tesseract tesseract@sha256:00 /in/a.jpg /out/a"
+        );
+    }
+
+    #[test]
+    fn tmpfs_mounts_are_sized_and_writable_by_any_user() {
+        let mut spec = spec();
+        spec.mounts.clear();
+        spec.tmpfs.push(Tmpfs {
+            target: "/scratch".into(),
+            size_mib: 2048,
+        });
+        let invocation = runtime().run_invocation(&spec, "c-1").unwrap().to_string();
+        assert!(
+            invocation.contains(
+                " --mount type=tmpfs,target=/scratch,tmpfs-size=2147483648,tmpfs-mode=1777 "
+            ),
+            "{invocation}"
         );
     }
 

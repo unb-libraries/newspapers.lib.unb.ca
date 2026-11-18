@@ -1,9 +1,15 @@
 //! Installs a page's tiles (DZI) and PDF into the webtree, as the web server's user.
 //!
-//! One container per page tiles the source image with `vips dzsave` into a staging directory in
-//! the webtree, then renames everything into place: the tile directory, the PDF, and the `.dzi`
-//! file last. The site counts tiles only when the `.dzi` exists, so a page is never shown with
-//! half its tiles, and a failed page removes its staging directory.
+//! One container per page tiles the source image with `vips dzsave` in memory, copies the tiles
+//! and PDF into a staging directory in the webtree, then renames everything into place: the tile
+//! directory, the PDF, and the `.dzi` file last. The site counts tiles only when the `.dzi`
+//! exists, so a page is never shown with half its tiles, and a failed page removes its staging
+//! directory.
+//!
+//! The webtree is on NFS, shared with the site's pods. `dzsave` writes each of a page's thousand
+//! or so tiles to a temporary file, then renames it and sets its mode and owner: done on NFS,
+//! that is several metadata operations a tile, enough to slow the NFS server for the site. Tiled
+//! in memory and then copied, each tile costs one create, one write and one close.
 //!
 //! With `webtree.directory_group` set, the title and issue directories are created here, by the
 //! account running the tool, mode 775, and the container joins that group to write into them:
@@ -14,7 +20,7 @@ use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::Duration;
 
-use super::container::{ContainerError, Mount, Runtime, Spec};
+use super::container::{ContainerError, Mount, Runtime, Spec, Tmpfs};
 use crate::config::Config;
 
 #[derive(Debug, thiserror::Error)]
@@ -43,15 +49,26 @@ pub struct PageAssets<'a> {
     pub pdf: Option<(&'a Path, String)>,
 }
 
+/// Where the container tiles, in memory.
+const SCRATCH: &str = "/scratch";
+
+/// The cap on a page's tiles in memory. A 13 MB scan makes 18 MB of tiles; the cap only stops a
+/// runaway page, since memory is used as tiles are written.
+const SCRATCH_MIB: u64 = 2048;
+
 /// Tiles and copies as the webtree owner; values reach the script as positional parameters.
 const SCRIPT: &str = r#"set -eu
-image=$1 base=$2 stage=$3 dzi_dir=$4 pdf_dir=$5 tile=$6 overlap=$7 quality=$8 pdf=$9
+image=$1 base=$2 stage=$3 dzi_dir=$4 pdf_dir=$5 tile=$6 overlap=$7 quality=$8 pdf=$9 scratch=${10}
 trap 'rm -rf "$stage"' EXIT
+if [ -n "$dzi_dir" ]; then
+  vips dzsave "$image" "$scratch/$base" --tile-size "$tile" --overlap "$overlap" \
+    --depth onepixel --suffix ".jpg[Q=$quality,strip]"
+  rm -f "$scratch/${base}_files/vips-properties.xml"
+fi
 mkdir -p "$stage"
 if [ -n "$dzi_dir" ]; then
-  vips dzsave "$image" "$stage/$base" --tile-size "$tile" --overlap "$overlap" \
-    --depth onepixel --suffix ".jpg[Q=$quality,strip]"
-  rm -f "$stage/${base}_files/vips-properties.xml"
+  cp -R "$scratch/${base}_files" "$stage/${base}_files"
+  cp "$scratch/$base.dzi" "$stage/$base.dzi"
 fi
 if [ -n "$pdf_dir" ]; then cp "$pdf" "$stage/$base.pdf"; fi
 if [ -n "$dzi_dir" ]; then
@@ -181,12 +198,17 @@ impl Installer {
             self.overlap.to_string(),
             self.jpeg_quality.to_string(),
             pdf_in_container,
+            SCRATCH.to_owned(),
         ];
         Ok(Spec {
             image: self.image.clone(),
             user: Some(self.owner),
             groups: self.directory_group.into_iter().collect(),
             mounts,
+            tmpfs: vec![Tmpfs {
+                target: SCRATCH.into(),
+                size_mib: SCRATCH_MIB,
+            }],
             // One thread per page: `limits.cpu_slots` pages tile at once.
             env: vec![("VIPS_CONCURRENCY".into(), "1".into())],
             entrypoint: Some("sh".into()),
@@ -301,8 +323,11 @@ mod tests {
                 "0",
                 "80",
                 "/pdf/page.pdf",
+                "/scratch",
             ]
         );
+        assert_eq!(spec.tmpfs.len(), 1);
+        assert_eq!(spec.tmpfs[0].target, "/scratch");
         assert_eq!(spec.user, Some((100, 102)));
         assert_eq!(spec.groups, [2100]);
         assert_eq!(spec.mounts.len(), 3);

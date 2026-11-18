@@ -116,6 +116,7 @@ fn tool_spec(image: &str, entrypoint: &str, args: &[&str]) -> Spec {
         user: None,
         groups: Vec::new(),
         mounts: Vec::new(),
+        tmpfs: Vec::new(),
         env: Vec::new(),
         entrypoint: Some(entrypoint.to_owned()),
         args: args.iter().map(Into::into).collect(),
@@ -201,6 +202,7 @@ async fn webtree_access(config: &Config, runtime: &Runtime, run_id: &str) -> Che
                 read_only: true,
             },
         ],
+        tmpfs: Vec::new(),
         env: Vec::new(),
         entrypoint: Some("sh".into()),
         args: vec![
