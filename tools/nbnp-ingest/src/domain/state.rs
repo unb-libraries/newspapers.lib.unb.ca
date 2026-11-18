@@ -53,6 +53,28 @@ impl IssueState {
     }
 }
 
+impl IssueState {
+    /// The state of an issue that is on the site with every page and its tiles and PDF.
+    #[must_use]
+    pub fn complete(issue_uuid: &str, site_issue_id: u64) -> Self {
+        Self {
+            version: VERSION,
+            issue_uuid: issue_uuid.to_owned(),
+            status: Status::Complete,
+            site_issue_id: Some(site_issue_id),
+            tool_version: env!("CARGO_PKG_VERSION").to_owned(),
+        }
+    }
+
+    /// The file's text, with a comment saying what wrote it.
+    #[must_use]
+    pub fn to_toml(&self) -> String {
+        // Serializing these plain fields cannot fail.
+        let body = toml::to_string(self).unwrap_or_default();
+        format!("# Written by nbnp-ingest. Do not edit; delete it only to import again.\n{body}")
+    }
+}
+
 /// Lowercase hyphenated form, as the site's routes accept it.
 fn is_uuid(text: &str) -> bool {
     text.len() == 36
@@ -79,6 +101,12 @@ mod tests {
         let state = IssueState::parse(COMPLETE).unwrap();
         assert_eq!(state.status, Status::Complete);
         assert_eq!(state.site_issue_id, Some(7));
+    }
+
+    #[test]
+    fn a_written_state_reads_back() {
+        let state = IssueState::complete("6f1c2a4e-1b7d-4c3e-9a51-2d3f4b5c6d7e", 7);
+        assert_eq!(IssueState::parse(&state.to_toml()).unwrap(), state);
     }
 
     #[test]

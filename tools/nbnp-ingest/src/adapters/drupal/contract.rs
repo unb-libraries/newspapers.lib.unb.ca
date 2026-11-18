@@ -32,6 +32,19 @@ pub fn title_issues(id: u32) -> String {
     format!("/serials-ingest/titles/{id}/issues")
 }
 
+/// Where new tiles go, relative to the public files directory. The site looks there among
+/// other places (`SerialPage::getDziUri`), and the PHP importer installed there.
+#[must_use]
+pub fn dzi_dir(title_id: u32, issue_id: u64) -> String {
+    format!("serials/dzi/{title_id}/{issue_id}")
+}
+
+/// Where new page PDFs go, relative to the public files directory (`SerialPage::getPdfUri`).
+#[must_use]
+pub fn pdf_dir(title_id: u32, issue_id: u64) -> String {
+    format!("serials/pdf/{title_id}/{issue_id}")
+}
+
 /// A UUID no issue has, for checking that the credentials work: the answer is 404, not 401.
 pub const PROBE_UUID: &str = "00000000-0000-4000-8000-000000000000";
 

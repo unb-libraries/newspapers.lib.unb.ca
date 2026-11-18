@@ -44,7 +44,7 @@ pub enum Command {
         #[arg(long)]
         all: bool,
     },
-    /// Plan importing every issue under a path (only --dry-run so far)
+    /// Import every issue under a path: show the plan, then do it with --yes
     Import {
         /// A title, year or issue directory, or anything above them
         path: PathBuf,
@@ -54,6 +54,9 @@ pub enum Command {
         /// Print what would be done, and change nothing
         #[arg(long)]
         dry_run: bool,
+        /// Do it without asking; without this or --dry-run, nothing is changed
+        #[arg(long, conflicts_with = "dry_run")]
+        yes: bool,
         /// Import again an issue whose state file says complete but which the site no longer has
         #[arg(long)]
         force: bool,

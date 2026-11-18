@@ -1,5 +1,9 @@
-//! `import <path> --dry-run`: decides, for every issue under a path, what an import would do,
-//! and prints it. Writes nothing; only `--dry-run` exists until the import itself does.
+//! `import <path>`: decides, for every issue under a path, what an import does, prints it, and
+//! with `--yes` does it. `--dry-run` only prints.
+//!
+//! So far a run completes issues already on the site: it OCRs pages for missing PDFs, tiles
+//! pages, installs both, and writes the state file once the site confirms the issue complete.
+//! Issues needing new pages are skipped until uploading exists.
 //!
 //! An issue is created when the site has no issue for it, resumed when the site has part of
 //! it, linked when it was imported by the PHP importer (a state file will record the site's
@@ -7,7 +11,7 @@
 //! the site's contents cannot be explained by the source.
 
 use std::fmt::Write as _;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use tokio::sync::Semaphore;
@@ -15,16 +19,21 @@ use tokio::task::JoinSet;
 use tracing::info;
 use uuid::Uuid;
 
+use crate::adapters::assets::Installer;
+use crate::adapters::container::Runtime;
 use crate::adapters::drupal::Client;
+use crate::adapters::ocr::OcrCache;
 use crate::adapters::source_tree::{self, IssueDir};
+use crate::adapters::source_write::SourceWriter;
 use crate::config::{Config, SiteCredentials};
 use crate::domain::audit::{LegacyMatch, metadata_differences};
 use crate::domain::finding::{Finding, any_errors};
 use crate::domain::plan::{self, PagePlan};
 use crate::domain::site::IssueSummary;
-use crate::domain::state::Status;
+use crate::domain::state::{IssueState, Status};
 use crate::error::{Error, Outcome};
-use crate::ingest::prepare::{Ready, TitleLists, load_titles, prepare};
+use crate::ingest::execute::{IssueTarget, Workers, complete_assets, forget_ocr};
+use crate::ingest::prepare::{Lookup, Ready, TitleLists, load_titles, prepare};
 use crate::ingest::resolve::{Resolution, hash_local, ids_text, resolve, stored_checksums};
 use crate::report;
 use crate::source::Titles;
@@ -37,6 +46,19 @@ pub struct Options {
     pub force: bool,
     /// List every issue, not only those with something to do.
     pub all: bool,
+    pub mode: Mode,
+}
+
+/// Whether a run only shows its plan.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub enum Mode {
+    /// `--dry-run`: print the plan.
+    DryRun,
+    /// Neither flag: print the plan and say how to carry it out.
+    #[default]
+    ShowOnly,
+    /// `--yes`: print the plan and carry it out.
+    Run,
 }
 
 /// What the import does with an issue.
@@ -62,9 +84,28 @@ struct IssuePlan {
     findings: Vec<Finding>,
     /// Set when the site could not be asked.
     failure: Option<String>,
+    /// For an issue already on the site: what completing it needs.
+    existing: Option<Existing>,
+    /// What the run did, when it ran.
+    done: Option<Result<String, String>>,
 }
 
-pub async fn run(config: &Config, root: &Path, options: Options) -> Result<Outcome, Error> {
+/// An issue on the site, and what a run needs to complete it.
+#[derive(Debug, Clone)]
+struct Existing {
+    dir: PathBuf,
+    title_id: u32,
+    site_uuid: String,
+    /// The state file already says complete, so none is written.
+    state_complete: bool,
+}
+
+pub async fn run(
+    config: &Config,
+    root: &Path,
+    options: Options,
+    run_id: &str,
+) -> Result<Outcome, Error> {
     info!("scanning {}", root.display());
     let tree = source_tree::scan(root, &config.source).map_err(|source| Error::Source {
         path: root.to_owned(),
@@ -114,12 +155,23 @@ pub async fn run(config: &Config, root: &Path, options: Options) -> Result<Outco
     )
     .await;
 
-    print_plans(root, &tree.issues, &plans, options.all);
+    print_plans(root, &tree.issues, &plans, options);
+    match options.mode {
+        Mode::DryRun => {}
+        Mode::ShowOnly => {
+            println!("\nNothing was changed. Run again with --yes to do this.");
+            return Ok(Outcome::Clean);
+        }
+        Mode::Run => {
+            execute(config, &client, &mut plans, run_id).await?;
+            print_results(root, &tree.issues, &plans);
+        }
+    }
     Ok(if plans.iter().any(|p| p.failure.is_some()) {
         Outcome::Failed
     } else if plans
         .iter()
-        .any(|p| matches!(p.action, Some(Action::Blocked(_))))
+        .any(|p| matches!(p.action, Some(Action::Blocked(_))) || matches!(p.done, Some(Err(_))))
     {
         Outcome::Findings
     } else {
@@ -162,6 +214,7 @@ async fn plan_all(
                 target.pages = plan.pages;
                 target.ocr_language = plan.ocr_language;
                 target.failure = plan.failure;
+                target.existing = plan.existing;
             }
             Err(error) => tracing::error!("a planning task failed: {error}"),
         }
@@ -198,6 +251,18 @@ async fn plan_issue(
             }
             let stored = stored_checksums(site, public_files, false).await;
             result.pages = plan::existing_issue(&local, site, &stored);
+            result.existing = Some(Existing {
+                dir: issue.dir.clone(),
+                title_id: issue.title_id,
+                site_uuid: site.uuid.clone(),
+                state_complete: matches!(
+                    issue.lookup,
+                    Lookup::Uuid {
+                        status: Status::Complete,
+                        ..
+                    }
+                ),
+            });
             let differences = metadata_differences(&issue.metadata, site);
             if !differences.is_empty() {
                 result.findings.push(Finding::warning(format!(
@@ -283,7 +348,8 @@ struct Totals {
     pages_needing_assets: usize,
 }
 
-fn print_plans(root: &Path, issues: &[IssueDir], plans: &[IssuePlan], all: bool) {
+fn print_plans(root: &Path, issues: &[IssueDir], plans: &[IssuePlan], options: Options) {
+    let all = options.all;
     let mut out = String::new();
     let mut totals = Totals::default();
     for (issue, plan) in issues.iter().zip(plans) {
@@ -302,10 +368,15 @@ fn print_plans(root: &Path, issues: &[IssueDir], plans: &[IssuePlan], all: bool)
     }
     print!("{out}");
     println!(
-        "\nDry run under {}; nothing was changed.\n  \
+        "\n{}, under {}.\n  \
          Create {}, add to {}, nothing to do for {}, {} blocked{}.\n  \
          Of those on the site, {} came from the PHP importer and get a state file.\n  \
          Pages to upload and OCR: {}; existing pages needing tiles or a PDF: {}.",
+        if options.mode == Mode::DryRun {
+            "Dry run; nothing was changed"
+        } else {
+            "Plan"
+        },
         root.display(),
         report::counted(totals.create, "issue"),
         totals.resume,
@@ -385,6 +456,141 @@ fn describe(plan: &IssuePlan, totals: &mut Totals) -> String {
             "FAILED  not planned".to_owned()
         }
     }
+}
+
+/// Completes every issue already on the site that needs no new pages, one issue at a time;
+/// the pages of an issue share the CPU slots.
+async fn execute(
+    config: &Config,
+    client: &Client,
+    plans: &mut [IssuePlan],
+    run_id: &str,
+) -> Result<(), Error> {
+    let runtime = Runtime::new(&config.containers, run_id);
+    for image in [&config.ocr.image, &config.dzi.image] {
+        runtime.ensure_image(image, config.containers.pull).await?;
+    }
+    let workers = Workers {
+        runtime: Arc::new(runtime),
+        ocr: Arc::new(OcrCache::new(&config.paths.work_dir, &config.ocr, run_id)),
+        installer: Arc::new(Installer::new(config, run_id)),
+        cpu: Arc::new(Semaphore::new(config.limits.cpu_slots.max(1))),
+    };
+    let writer = SourceWriter::new(run_id);
+
+    for plan in plans.iter_mut() {
+        if matches!(plan.action, Some(Action::Create { .. })) {
+            plan.done = Some(Err("skipped: creating issues is not available yet".into()));
+            continue;
+        }
+        let (Some(Action::Update { site_id, link }), Some(existing)) =
+            (plan.action.clone(), plan.existing.clone())
+        else {
+            continue;
+        };
+        if !plan.pages.create.is_empty() {
+            plan.done = Some(Err(
+                "skipped: it needs new pages, and uploading pages is not available yet".into(),
+            ));
+            continue;
+        }
+        if plan.pages.assets.is_empty() && (existing.state_complete || !link) {
+            continue;
+        }
+        let Some(ocr_language) = plan.ocr_language.clone() else {
+            plan.done = Some(Err("no OCR language is configured for it".into()));
+            continue;
+        };
+        let target = IssueTarget {
+            dir: existing.dir.clone(),
+            title_id: existing.title_id,
+            issue_id: site_id,
+            ocr_language,
+        };
+        plan.done =
+            Some(complete_issue(config, client, &workers, &writer, &target, &existing, plan).await);
+    }
+    workers.runtime.remove_run_containers().await;
+    Ok(())
+}
+
+/// Installs an issue's missing assets, confirms with the site, and records it as complete.
+async fn complete_issue(
+    config: &Config,
+    client: &Client,
+    workers: &Workers,
+    writer: &SourceWriter,
+    target: &IssueTarget,
+    existing: &Existing,
+    plan: &IssuePlan,
+) -> Result<String, String> {
+    let needs = &plan.pages.assets;
+    let failures = complete_assets(workers, target, needs).await;
+    if !failures.is_empty() {
+        return Err(failures.join("; "));
+    }
+
+    let site = client
+        .issue_by_id(target.issue_id)
+        .await
+        .map_err(|e| e.to_string())?
+        .ok_or("the issue disappeared from the site")?;
+    let lacking: Vec<String> = site
+        .pages
+        .iter()
+        .filter(|p| !p.has_dzi || !p.has_pdf)
+        .map(|p| format!("page {} (#{})", p.page_no, p.id))
+        .collect();
+    if !lacking.is_empty() {
+        return Err(format!(
+            "installed, but the site still lacks tiles or a PDF for: {}",
+            lacking.join(", ")
+        ));
+    }
+    forget_ocr(workers, target, needs);
+
+    let mut done = vec![format!(
+        "tiles or PDF installed for {}",
+        report::counted(needs.len(), "page")
+    )];
+    if !existing.state_complete {
+        let state = IssueState::complete(&existing.site_uuid, target.issue_id).to_toml();
+        let path = existing.dir.join(&config.source.state_file);
+        let written = if path.exists() {
+            writer.replace(&path, &state)
+        } else {
+            writer.create(&path, &state)
+        };
+        written.map_err(|e| format!("complete on the site, but {e}"))?;
+        done.push("state file written".into());
+    }
+    Ok(done.join("; "))
+}
+
+fn print_results(root: &Path, issues: &[IssueDir], plans: &[IssuePlan]) {
+    let mut out = String::new();
+    let (mut ok, mut failed) = (0, 0);
+    for (issue, plan) in issues.iter().zip(plans) {
+        let Some(done) = &plan.done else {
+            continue;
+        };
+        let (status, text) = match done {
+            Ok(text) => {
+                ok += 1;
+                ("done", text)
+            }
+            Err(text) => {
+                failed += 1;
+                ("FAILED", text)
+            }
+        };
+        let _ = writeln!(
+            out,
+            "{}  {status}: {text}",
+            report::shown_path(root, &issue.path).display()
+        );
+    }
+    println!("\nResults:\n{out}Completed {ok}, failed or skipped {failed}.");
 }
 
 #[cfg(test)]

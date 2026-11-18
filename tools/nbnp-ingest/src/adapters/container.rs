@@ -120,10 +120,6 @@ impl Runtime {
     }
 
     /// Removes every container this run started that is still present.
-    #[expect(
-        dead_code,
-        reason = "called when an import is cancelled; imports come later"
-    )]
     pub async fn remove_run_containers(&self) {
         let listed = self
             .control(CONTROL_TIMEOUT)

@@ -31,14 +31,7 @@ impl SourceWriter {
 
     /// Writes `contents` to `dest`, refusing to replace an existing file.
     pub fn create(&self, dest: &Path, contents: &str) -> Result<(), WriteError> {
-        let name = dest
-            .file_name()
-            .map_or_else(String::new, |n| n.to_string_lossy().into_owned());
-        let temp = dest.with_file_name(format!(".{name}.{}.tmp", self.run_id));
-        fs::write(&temp, contents).map_err(|source| WriteError::Io {
-            path: temp.clone(),
-            source,
-        })?;
+        let temp = self.write_temp(dest, contents)?;
         let linked = fs::hard_link(&temp, dest);
         let _ = fs::remove_file(&temp);
         linked.map_err(|source| {
@@ -51,6 +44,33 @@ impl SourceWriter {
                 }
             }
         })
+    }
+}
+
+impl SourceWriter {
+    /// Writes `contents` to `dest`, replacing it in one step if it exists.
+    pub fn replace(&self, dest: &Path, contents: &str) -> Result<(), WriteError> {
+        let temp = self.write_temp(dest, contents)?;
+        fs::rename(&temp, dest).map_err(|source| {
+            let _ = fs::remove_file(&temp);
+            WriteError::Io {
+                path: dest.to_owned(),
+                source,
+            }
+        })
+    }
+
+    /// Writes a hidden file beside `dest`, for linking or renaming into place.
+    fn write_temp(&self, dest: &Path, contents: &str) -> Result<PathBuf, WriteError> {
+        let name = dest
+            .file_name()
+            .map_or_else(String::new, |n| n.to_string_lossy().into_owned());
+        let temp = dest.with_file_name(format!(".{name}.{}.tmp", self.run_id));
+        fs::write(&temp, contents).map_err(|source| WriteError::Io {
+            path: temp.clone(),
+            source,
+        })?;
+        Ok(temp)
     }
 }
 
@@ -72,6 +92,17 @@ mod tests {
         ));
         assert_eq!(fs::read_to_string(&dest).unwrap(), "a = 1\n");
         // Nothing left behind but the file itself.
+        assert_eq!(fs::read_dir(dir.path()).unwrap().count(), 1);
+    }
+
+    #[test]
+    fn replace_overwrites_in_one_step() {
+        let dir = tempfile::tempdir().unwrap();
+        let dest = dir.path().join("state.toml");
+        let writer = SourceWriter::new("run");
+        writer.replace(&dest, "status = 1\n").unwrap();
+        writer.replace(&dest, "status = 2\n").unwrap();
+        assert_eq!(fs::read_to_string(&dest).unwrap(), "status = 2\n");
         assert_eq!(fs::read_dir(dir.path()).unwrap().count(), 1);
     }
 

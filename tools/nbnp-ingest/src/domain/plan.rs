@@ -27,6 +27,11 @@ pub struct NewPage {
 pub struct AssetNeed {
     pub page_id: u64,
     pub page_no: String,
+    /// The source image of the page, relative to the issue directory, and its checksum.
+    pub path: String,
+    pub sha256: String,
+    /// The stored image's name without extension, which tiles and PDF are named after.
+    pub asset_basename: Option<String>,
     pub dzi: bool,
     pub pdf: bool,
 }
@@ -86,7 +91,7 @@ pub fn existing_issue(local: &[LocalPage], site: &Issue, stored: &StoredChecksum
     };
 
     let mut unmatched_site: Vec<&Page> = site.pages.iter().collect();
-    let mut matched: Vec<&Page> = Vec::new();
+    let mut matched: Vec<(&LocalPage, &Page)> = Vec::new();
     let mut missing: Vec<&LocalPage> = Vec::new();
 
     // By UUID: pages this tool created.
@@ -101,7 +106,7 @@ pub fn existing_issue(local: &[LocalPage], site: &Issue, stored: &StoredChecksum
                         page.path, site_page.id
                     ));
                 }
-                matched.push(site_page);
+                matched.push((page, site_page));
             }
             None => missing.push(page),
         }
@@ -119,7 +124,7 @@ pub fn existing_issue(local: &[LocalPage], site: &Issue, stored: &StoredChecksum
     let mut to_create: Vec<&LocalPage> = Vec::new();
     for page in missing {
         match by_checksum.get_mut(page.sha256.as_str()).and_then(Vec::pop) {
-            Some(site_page) => matched.push(site_page),
+            Some(site_page) => matched.push((page, site_page)),
             None => to_create.push(page),
         }
     }
@@ -164,10 +169,13 @@ pub fn existing_issue(local: &[LocalPage], site: &Issue, stored: &StoredChecksum
     plan.present = matched.len();
     plan.assets = matched
         .iter()
-        .filter(|p| !p.has_dzi || !p.has_pdf)
-        .map(|p| AssetNeed {
+        .filter(|(_, p)| !p.has_dzi || !p.has_pdf)
+        .map(|(local, p)| AssetNeed {
             page_id: p.id,
             page_no: p.page_no.clone(),
+            path: local.path.clone(),
+            sha256: local.sha256.clone(),
+            asset_basename: p.asset_basename.clone(),
             dzi: !p.has_dzi,
             pdf: !p.has_pdf,
         })
@@ -281,6 +289,9 @@ mod tests {
             [AssetNeed {
                 page_id: 2,
                 page_no: "02".into(),
+                path: "a_02.jpg".into(),
+                sha256: "bb".into(),
+                asset_basename: Some("7-02".into()),
                 dzi: false,
                 pdf: true
             }]
