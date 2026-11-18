@@ -9,7 +9,7 @@ use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::Duration;
 
-use tracing::warn;
+use tracing::{debug, warn};
 
 use super::process::{Completed, Invocation, ProcessError};
 use crate::config::{Containers, PullPolicy};
@@ -52,6 +52,15 @@ pub struct Mount {
 pub enum ContainerError {
     #[error(transparent)]
     Process(#[from] ProcessError),
+    /// A container that ran and failed: what it ran and what it said, without the long
+    /// `docker run` command, which goes to the debug log.
+    #[error("{program} in {image} failed ({status}): {stderr}")]
+    Failed {
+        program: String,
+        image: String,
+        status: String,
+        stderr: String,
+    },
     #[error("cannot mount {0:?}: paths containing commas, quotes or newlines are not supported")]
     UnsupportedPath(PathBuf),
     #[error("image {0} is not present and containers.pull is \"never\"")]
@@ -114,6 +123,22 @@ impl Runtime {
             Err(error @ ProcessError::TimedOut { .. }) => {
                 self.remove(&[name]).await;
                 Err(error.into())
+            }
+            Err(ProcessError::Failed {
+                command,
+                status,
+                stderr,
+            }) => {
+                debug!("failed: {command}");
+                Err(ContainerError::Failed {
+                    program: spec
+                        .entrypoint
+                        .clone()
+                        .unwrap_or_else(|| "container".into()),
+                    image: spec.image.clone(),
+                    status,
+                    stderr: stderr.trim().replace('\n', "; "),
+                })
             }
             result => Ok(result?),
         }
