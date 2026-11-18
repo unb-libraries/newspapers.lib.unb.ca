@@ -9,6 +9,7 @@ mod commands;
 mod config;
 mod domain;
 mod error;
+mod ingest;
 mod report;
 mod source;
 

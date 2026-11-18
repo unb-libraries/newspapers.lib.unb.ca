@@ -5,29 +5,26 @@
 //! the source image is always hashed; the stored image is hashed only when the site has no
 //! checksum for it yet, or for every page with `--deep`.
 
-use std::collections::{BTreeMap, HashMap};
 use std::fmt::Write as _;
-use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::sync::Arc;
 
 use tokio::sync::Semaphore;
 use tokio::task::JoinSet;
 use tracing::info;
 
-use crate::adapters::checksum::sha256_file;
-use crate::adapters::drupal::{Client, SiteError};
-use crate::adapters::source_tree::{self, ImportMarker, IssueDir};
+use crate::adapters::drupal::Client;
+use crate::adapters::source_tree::{self, IssueDir};
 use crate::config::{Config, SiteCredentials};
-use crate::domain::audit::{self, LegacyMatch, LocalPage, StoredChecksums};
+use crate::domain::audit::{self, LegacyMatch};
 use crate::domain::finding::{Finding, any_errors};
-use crate::domain::metadata::IssueMetadata;
-use crate::domain::pages;
-use crate::domain::site::{Issue, IssueSummary};
-use crate::domain::state::{IssueState, Status};
+use crate::domain::site::IssueSummary;
+use crate::domain::state::Status;
 use crate::error::{Error, Outcome};
+use crate::ingest::prepare::{Ready, TitleLists, load_titles, prepare};
+use crate::ingest::resolve::{Resolution, hash_local, ids_text, resolve, stored_checksums};
 use crate::report;
-use crate::source::{self, Titles};
+use crate::source::Titles;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Options {
@@ -37,25 +34,6 @@ pub struct Options {
     pub deep: bool,
     /// List every issue, not only those with findings.
     pub all: bool,
-}
-
-/// How an issue is found on the site.
-#[derive(Debug, Clone)]
-enum Lookup {
-    /// From this tool's state file.
-    Uuid { uuid: String, status: Status },
-    /// Imported by the PHP importer, or not imported: search the title's issues.
-    Metadata,
-}
-
-/// An issue ready to compare with the site.
-struct Ready {
-    index: usize,
-    dir: PathBuf,
-    metadata: IssueMetadata,
-    title_id: u32,
-    pages: Vec<pages::PlannedPage>,
-    lookup: Lookup,
 }
 
 /// How an issue was found on the site.
@@ -119,7 +97,10 @@ pub async fn run(config: &Config, root: &Path, options: Options) -> Result<Outco
         }
     }
 
-    let title_lists = load_titles(&client, &mut ready, &mut results).await?;
+    let (title_lists, rejected) = load_titles(&client, &mut ready).await?;
+    for (index, finding) in rejected {
+        results[index].findings.push(finding);
+    }
     compare_all(
         config,
         &client,
@@ -140,114 +121,11 @@ pub async fn run(config: &Config, root: &Path, options: Options) -> Result<Outco
     })
 }
 
-/// Reads what the audit needs from the source. `Err` holds why the issue cannot be audited.
-fn prepare(
-    index: usize,
-    issue: &IssueDir,
-    config: &Config,
-    titles: &mut Titles,
-    title_override: Option<u32>,
-) -> Result<(Ready, Vec<Finding>), Vec<Finding>> {
-    let languages: Vec<&str> = config.ocr.languages.keys().map(String::as_str).collect();
-    let read = source::read_metadata(issue, &config.source, titles, &languages);
-    let mut findings = issue.problems.clone();
-    findings.extend(read.findings);
-    let (planned, page_findings) = pages::plan(config.source.filename_scheme, &issue.pages);
-    findings.extend(page_findings);
-
-    let Some(mut metadata) = read.metadata else {
-        return Err(findings);
-    };
-    if let Some(title_id) = title_override {
-        metadata.title_id = Some(title_id);
-    }
-    let Some(title_id) = metadata.title_id else {
-        findings.push(Finding::error(
-            "no title_id: add a title.toml above the issue, or pass --title",
-        ));
-        return Err(findings);
-    };
-
-    let lookup = if issue.import_marker == ImportMarker::State {
-        let path = issue.path.join(&config.source.state_file);
-        match fs::read_to_string(&path)
-            .map_err(|e| e.to_string())
-            .and_then(|text| IssueState::parse(&text).map_err(|e| e.to_string()))
-        {
-            Ok(state) => Lookup::Uuid {
-                uuid: state.issue_uuid,
-                status: state.status,
-            },
-            Err(error) => {
-                findings.push(Finding::error(format!(
-                    "{}: {error}",
-                    config.source.state_file
-                )));
-                return Err(findings);
-            }
-        }
-    } else {
-        Lookup::Metadata
-    };
-
-    Ok((
-        Ready {
-            index,
-            dir: issue.path.clone(),
-            metadata,
-            title_id,
-            pages: planned,
-            lookup,
-        },
-        findings,
-    ))
-}
-
-/// Confirms each title exists, prints its name, and fetches the issue lists that legacy issues
-/// are matched against. Issues of a title the site does not have are not audited further.
-async fn load_titles(
-    client: &Client,
-    ready: &mut Vec<Ready>,
-    results: &mut [IssueResult],
-) -> Result<HashMap<u32, Arc<Vec<IssueSummary>>>, SiteError> {
-    let mut needed: BTreeMap<u32, bool> = BTreeMap::new();
-    for issue in ready.iter() {
-        *needed.entry(issue.title_id).or_default() |= matches!(issue.lookup, Lookup::Metadata);
-    }
-    let mut lists = HashMap::new();
-    let mut missing = Vec::new();
-    for (&title_id, &needs_list) in &needed {
-        let Some(title) = client.title(title_id).await? else {
-            missing.push(title_id);
-            continue;
-        };
-        println!(
-            "Title {title_id}: {}",
-            title.name.as_deref().unwrap_or(&title.label)
-        );
-        if needs_list {
-            let list = client.title_issues(title_id).await?.unwrap_or_default();
-            lists.insert(title_id, Arc::new(list));
-        }
-    }
-    ready.retain(|issue| {
-        let absent = missing.contains(&issue.title_id);
-        if absent {
-            results[issue.index].findings.push(Finding::error(format!(
-                "the site has no digital title {}",
-                issue.title_id
-            )));
-        }
-        !absent
-    });
-    Ok(lists)
-}
-
 async fn compare_all(
     config: &Config,
     client: &Client,
     ready: Vec<Ready>,
-    title_lists: &HashMap<u32, Arc<Vec<IssueSummary>>>,
+    title_lists: &TitleLists,
     deep: bool,
     results: &mut [IssueResult],
 ) {
@@ -290,121 +168,76 @@ async fn audit_issue(
     deep: bool,
 ) -> IssueResult {
     let mut outcome = IssueResult::default();
-    let found = match find_on_site(client, &issue, title_issues, &mut outcome.findings).await {
-        Ok(found) => found,
+    let resolution = match resolve(client, &issue, title_issues.map(Vec::as_slice)).await {
+        Ok(resolution) => resolution,
         Err(error) => {
             outcome.failure = Some(error.to_string());
             return outcome;
         }
     };
-    let Some((site, how)) = found else {
+    outcome.findings = resolution_findings(&resolution);
+    let Some(site) = resolution.site() else {
         return outcome;
     };
-    outcome.site_issue = Some((site.id, how));
+    let found_by = match resolution {
+        Resolution::ByUuid { .. } => FoundBy::Uuid,
+        Resolution::ByMetadata { .. } => FoundBy::Metadata,
+    };
+    outcome.site_issue = Some((site.id, found_by));
 
-    let mut local = Vec::with_capacity(issue.pages.len());
-    for page in &issue.pages {
-        match sha256_file(issue.dir.join(&page.path)).await {
-            Ok(sha256) => local.push(LocalPage {
-                path: page.path.clone(),
-                page_no: page.page_no.clone(),
-                page_sort: page.page_sort.clone(),
-                sha256,
-            }),
-            Err(error) => outcome
-                .findings
-                .push(Finding::error(format!("{}: {error}", page.path))),
-        }
-    }
-
-    let mut stored = StoredChecksums::new();
-    for page in site
-        .pages
-        .iter()
-        .filter(|p| deep || p.image_sha256.is_none())
-    {
-        let checksum = match &page.image_path {
-            Some(relative) => sha256_file(public_files.join(relative))
-                .await
-                .map_err(|error| error.to_string()),
-            None => Err("the site has no image file for it".to_owned()),
-        };
-        stored.insert(page.id, checksum);
-    }
+    let (local, unreadable) = hash_local(&issue).await;
+    outcome.findings.extend(unreadable);
+    let stored = stored_checksums(site, public_files, deep).await;
     outcome
         .findings
-        .extend(audit::compare(&issue.metadata, &local, &site, &stored));
+        .extend(audit::compare(&issue.metadata, &local, site, &stored));
     outcome
 }
 
-/// The site issue to compare with, and how it was found. `Ok(None)` after adding a finding when
-/// there is none to compare with.
-async fn find_on_site(
-    client: &Client,
-    issue: &Ready,
-    title_issues: Option<&Vec<IssueSummary>>,
-    findings: &mut Vec<Finding>,
-) -> Result<Option<(Issue, FoundBy)>, SiteError> {
-    match &issue.lookup {
-        Lookup::Uuid { uuid, status } => {
+/// What the audit reports about how, or whether, the issue was found.
+fn resolution_findings(resolution: &Resolution) -> Vec<Finding> {
+    let mut findings = Vec::new();
+    match resolution {
+        Resolution::ByUuid { uuid, status, site } => {
             if *status == Status::Pending {
                 findings.push(Finding::error(
                     "the last import of this issue did not finish (state file: pending)",
                 ));
             }
-            let site = client.issue_by_uuid(uuid).await?;
             if site.is_none() {
                 findings.push(Finding::error(format!(
                     "not on the site: no issue has UUID {uuid} from the state file"
                 )));
             }
-            Ok(site.map(|site| (site, FoundBy::Uuid)))
         }
-        Lookup::Metadata => {
-            let candidates = title_issues.map_or(&[][..], Vec::as_slice);
-            match audit::match_legacy(&issue.metadata, issue.pages.len(), candidates) {
-                LegacyMatch::None => {
-                    findings.push(Finding::error(
-                        "not on the site: no issue of the title has this date, volume and issue",
-                    ));
-                    Ok(None)
-                }
-                LegacyMatch::Many(ids) => {
-                    findings.push(Finding::error(format!(
-                        "{} issues on the site match: {}",
-                        ids.len(),
-                        ids_text(&ids)
+        Resolution::ByMetadata { matched, site } => match matched {
+            LegacyMatch::None => findings.push(Finding::error(
+                "not on the site: no issue of the title has this date, volume and issue",
+            )),
+            LegacyMatch::Many(ids) => findings.push(Finding::error(format!(
+                "{} issues on the site match: {}",
+                ids.len(),
+                ids_text(ids)
+            ))),
+            LegacyMatch::One {
+                id,
+                empty_duplicates,
+            } => {
+                if !empty_duplicates.is_empty() {
+                    findings.push(Finding::warning(format!(
+                        "empty issues with the same metadata on the site: {}",
+                        ids_text(empty_duplicates)
                     )));
-                    Ok(None)
                 }
-                LegacyMatch::One {
-                    id,
-                    empty_duplicates,
-                } => {
-                    if !empty_duplicates.is_empty() {
-                        findings.push(Finding::warning(format!(
-                            "empty issues with the same metadata on the site: {}",
-                            ids_text(&empty_duplicates)
-                        )));
-                    }
-                    let site = client.issue_by_id(id).await?;
-                    if site.is_none() {
-                        findings.push(Finding::error(format!(
-                            "issue #{id} disappeared from the site during the audit"
-                        )));
-                    }
-                    Ok(site.map(|site| (site, FoundBy::Metadata)))
+                if site.is_none() {
+                    findings.push(Finding::error(format!(
+                        "issue #{id} disappeared from the site during the audit"
+                    )));
                 }
             }
-        }
+        },
     }
-}
-
-fn ids_text(ids: &[u64]) -> String {
-    ids.iter()
-        .map(|id| format!("#{id}"))
-        .collect::<Vec<_>>()
-        .join(", ")
+    findings
 }
 
 fn print_report(root: &Path, issues: &[IssueDir], results: &[IssueResult], all: bool) {
