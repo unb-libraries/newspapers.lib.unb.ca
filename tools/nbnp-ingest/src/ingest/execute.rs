@@ -1,7 +1,8 @@
 //! Carries out the asset part of an issue's plan: OCR for missing PDFs, tiles, installation.
 //!
-//! OCR and tiling each hold one CPU slot while they run, so `limits.cpu_slots` bounds the
-//! processes across all pages and issues of a run.
+//! A page holds one CPU slot while it is OCR'd and tiled, so `limits.cpu_slots` bounds the
+//! processes across all pages and issues of a run. Slots are handed out in the order pages ask,
+//! so a slot freed by one page goes straight to the next, with no waiting for a batch.
 
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -73,9 +74,11 @@ async fn complete_page(
         return Err("the site has no image file for it".into());
     };
     let image = target.dir.join(&need.path);
+    // One slot for both steps: the page finishes before waiting pages of later issues start,
+    // so issues complete in order.
+    let _slot = acquire(&workers.cpu).await?;
 
     let pdf = if need.pdf {
-        let _slot = acquire(&workers.cpu).await?;
         let started = std::time::Instant::now();
         let files = workers
             .ocr
@@ -88,7 +91,6 @@ async fn complete_page(
         None
     };
 
-    let _slot = acquire(&workers.cpu).await?;
     let page = PageAssets {
         image: &image,
         basename,

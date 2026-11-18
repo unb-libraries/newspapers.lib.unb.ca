@@ -28,7 +28,7 @@ use crate::adapters::source_write::SourceWriter;
 use crate::config::{Config, SiteCredentials};
 use crate::domain::audit::{LegacyMatch, metadata_differences};
 use crate::domain::finding::{Finding, any_errors};
-use crate::domain::plan::{self, PagePlan};
+use crate::domain::plan::{self, AssetNeed, PagePlan};
 use crate::domain::site::IssueSummary;
 use crate::domain::state::{IssueState, Status};
 use crate::error::{Error, Outcome};
@@ -476,55 +476,97 @@ async fn execute(
         installer: Arc::new(Installer::new(config, run_id)),
         cpu: Arc::new(Semaphore::new(config.limits.cpu_slots.max(1))),
     };
-    let writer = SourceWriter::new(run_id);
+    let writer = Arc::new(SourceWriter::new(run_id));
+    let state_file: Arc<str> = config.source.state_file.as_str().into();
 
-    for plan in plans.iter_mut() {
-        if matches!(plan.action, Some(Action::Create { .. })) {
-            plan.done = Some(Err("skipped: creating issues is not available yet".into()));
-            continue;
-        }
-        let (Some(Action::Update { site_id, link }), Some(existing)) =
-            (plan.action.clone(), plan.existing.clone())
-        else {
-            continue;
-        };
-        if !plan.pages.create.is_empty() {
-            plan.done = Some(Err(
-                "skipped: it needs new pages, and uploading pages is not available yet".into(),
-            ));
-            continue;
-        }
-        if plan.pages.assets.is_empty() && (existing.state_complete || !link) {
-            continue;
-        }
-        let Some(ocr_language) = plan.ocr_language.clone() else {
-            plan.done = Some(Err("no OCR language is configured for it".into()));
+    // Issues run at the same time, `issue_concurrency` at most, and all their pages share the
+    // CPU slots, so a slot freed at the end of one issue goes to the next instead of waiting.
+    // Waiting pages are served in order, so earlier issues still finish first.
+    let issues = Arc::new(Semaphore::new(config.limits.issue_concurrency.max(1)));
+    let mut tasks = JoinSet::new();
+    for (index, plan) in plans.iter_mut().enumerate() {
+        let Some((target, existing)) = runnable(plan) else {
             continue;
         };
-        let target = IssueTarget {
-            dir: existing.dir.clone(),
-            title_id: existing.title_id,
-            issue_id: site_id,
-            ocr_language,
-        };
-        plan.done =
-            Some(complete_issue(config, client, &workers, &writer, &target, &existing, plan).await);
+        let needs = plan.pages.assets.clone();
+        let (client, workers, writer, state_file, issues) = (
+            client.clone(),
+            workers.clone(),
+            Arc::clone(&writer),
+            Arc::clone(&state_file),
+            Arc::clone(&issues),
+        );
+        tasks.spawn(async move {
+            let Ok(_issue) = issues.acquire_owned().await else {
+                return (index, Err("the run is stopping".to_owned()));
+            };
+            let done = complete_issue(
+                &state_file,
+                &client,
+                &workers,
+                &writer,
+                &target,
+                &existing,
+                &needs,
+            )
+            .await;
+            (index, done)
+        });
+    }
+    while let Some(joined) = tasks.join_next().await {
+        match joined {
+            Ok((index, done)) => plans[index].done = Some(done),
+            Err(error) => tracing::error!("an issue task failed: {error}"),
+        }
     }
     workers.runtime.remove_run_containers().await;
     Ok(())
 }
 
+/// What a run does with an issue: `None` when there is nothing to run, after recording in
+/// `plan.done` why an issue that needs work is skipped.
+fn runnable(plan: &mut IssuePlan) -> Option<(IssueTarget, Existing)> {
+    if matches!(plan.action, Some(Action::Create { .. })) {
+        plan.done = Some(Err("skipped: creating issues is not available yet".into()));
+        return None;
+    }
+    let (Some(Action::Update { site_id, link }), Some(existing)) =
+        (plan.action.clone(), plan.existing.clone())
+    else {
+        return None;
+    };
+    if !plan.pages.create.is_empty() {
+        plan.done = Some(Err(
+            "skipped: it needs new pages, and uploading pages is not available yet".into(),
+        ));
+        return None;
+    }
+    if plan.pages.assets.is_empty() && (existing.state_complete || !link) {
+        return None;
+    }
+    let Some(ocr_language) = plan.ocr_language.clone() else {
+        plan.done = Some(Err("no OCR language is configured for it".into()));
+        return None;
+    };
+    let target = IssueTarget {
+        dir: existing.dir.clone(),
+        title_id: existing.title_id,
+        issue_id: site_id,
+        ocr_language,
+    };
+    Some((target, existing))
+}
+
 /// Installs an issue's missing assets, confirms with the site, and records it as complete.
 async fn complete_issue(
-    config: &Config,
+    state_file: &str,
     client: &Client,
     workers: &Workers,
     writer: &SourceWriter,
     target: &IssueTarget,
     existing: &Existing,
-    plan: &IssuePlan,
+    needs: &[AssetNeed],
 ) -> Result<String, String> {
-    let needs = &plan.pages.assets;
     let failures = complete_assets(workers, target, needs).await;
     if !failures.is_empty() {
         return Err(failures.join("; "));
@@ -555,7 +597,7 @@ async fn complete_issue(
     )];
     if !existing.state_complete {
         let state = IssueState::complete(&existing.site_uuid, target.issue_id).to_toml();
-        let path = existing.dir.join(&config.source.state_file);
+        let path = existing.dir.join(state_file);
         let written = if path.exists() {
             writer.replace(&path, &state)
         } else {
