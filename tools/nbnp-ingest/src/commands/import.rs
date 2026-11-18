@@ -100,6 +100,8 @@ struct IssueInfo {
     site_uuid: Option<String>,
     /// The state file already says complete, so none is written.
     state_complete: bool,
+    /// Checksums of the source images, when they were read while planning.
+    source_checksums: Vec<String>,
 }
 
 pub async fn run(
@@ -260,6 +262,7 @@ async fn plan_issue(
         metadata: Box::new(issue.metadata.clone()),
         site_uuid,
         state_complete,
+        source_checksums: Vec::new(),
     };
     match (&action, resolution.site()) {
         (Action::Create { uuid, .. }, _) => {
@@ -275,7 +278,10 @@ async fn plan_issue(
             }
             let stored = stored_checksums(site, public_files, false).await;
             result.pages = plan::existing_issue(&local, site, &stored);
-            result.info = Some(info(Some(site.uuid.clone())));
+            result.info = Some(IssueInfo {
+                source_checksums: local.iter().map(|p| p.sha256.clone()).collect(),
+                ..info(Some(site.uuid.clone()))
+            });
             let differences = metadata_differences(&issue.metadata, site);
             if !differences.is_empty() {
                 result.findings.push(Finding::warning(format!(
@@ -577,6 +583,7 @@ fn job_for(plan: &mut IssuePlan) -> Option<IssueJob> {
         create: pages.create.clone(),
         assets: pages.assets.clone(),
         state_complete: info.state_complete,
+        source_checksums: info.source_checksums,
     })
 }
 

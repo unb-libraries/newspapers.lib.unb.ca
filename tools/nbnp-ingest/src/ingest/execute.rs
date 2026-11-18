@@ -10,6 +10,7 @@ use std::collections::HashMap;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
+use std::time::{Duration, Instant};
 
 use tokio::sync::{Mutex, OwnedSemaphorePermit, Semaphore};
 use tokio::task::JoinSet;
@@ -73,6 +74,9 @@ pub struct IssueJob {
     pub assets: Vec<AssetNeed>,
     /// The state file already says complete.
     pub state_complete: bool,
+    /// Checksums of the issue's source images, whose OCR entries are removed once it is
+    /// complete, wherever they were made.
+    pub source_checksums: Vec<String>,
 }
 
 /// Where an issue is, on both sides.
@@ -116,21 +120,10 @@ pub async fn run_issue(workers: &Workers, job: &IssueJob) -> Result<String, Stri
         return Err(failures.join("; "));
     }
 
-    let site = fetch(&workers.client, issue_id).await?;
-    let lacking: Vec<String> = site
-        .pages
-        .iter()
-        .filter(|p| !p.has_dzi || !p.has_pdf)
-        .map(|p| format!("page {} (#{})", p.page_no, p.id))
-        .collect();
-    if !lacking.is_empty() {
-        return Err(format!(
-            "the site still lacks tiles or a PDF for: {}",
-            lacking.join(", ")
-        ));
-    }
-    for need in needs.iter().filter(|n| n.pdf) {
-        workers.ocr.remove(&need.sha256, &job.ocr_language);
+    confirm_assets(&workers.client, issue_id).await?;
+    let made_here = needs.iter().map(|n| n.sha256.as_str());
+    for sha256 in made_here.chain(job.source_checksums.iter().map(String::as_str)) {
+        workers.ocr.remove(sha256, &job.ocr_language);
     }
 
     let mut done = Vec::new();
@@ -159,6 +152,41 @@ pub async fn run_issue(workers: &Workers, job: &IssueJob) -> Result<String, Stri
         done.push("state file written".into());
     }
     Ok(done.join("; "))
+}
+
+/// How long the site may take to see newly installed files, and how often to ask meanwhile.
+/// The site reads the webtree over its own NFS mount, which can report a new file as missing
+/// for up to about a minute.
+const SEE_FILES_WITHIN: Duration = Duration::from_secs(90);
+const SEE_FILES_EVERY: Duration = Duration::from_secs(15);
+
+/// Waits until the site sees tiles and a PDF for every page of the issue.
+async fn confirm_assets(client: &Client, issue_id: u64) -> Result<(), String> {
+    let started = Instant::now();
+    loop {
+        let site = fetch(client, issue_id).await?;
+        let lacking: Vec<String> = site
+            .pages
+            .iter()
+            .filter(|p| !p.has_dzi || !p.has_pdf)
+            .map(|p| format!("page {} (#{})", p.page_no, p.id))
+            .collect();
+        if lacking.is_empty() {
+            return Ok(());
+        }
+        if started.elapsed() >= SEE_FILES_WITHIN {
+            return Err(format!(
+                "after {}s the site still lacks tiles or a PDF for: {}",
+                SEE_FILES_WITHIN.as_secs(),
+                lacking.join(", ")
+            ));
+        }
+        debug!(
+            "the site does not see the assets of {} yet; asking again",
+            report::counted(lacking.len(), "page")
+        );
+        tokio::time::sleep(SEE_FILES_EVERY).await;
+    }
 }
 
 /// Checks a page created in this run against the site, and says what assets it needs.
@@ -266,7 +294,7 @@ async fn create_page(
         let sha256 = sha256_file(image_path.clone())
             .await
             .map_err(|e| e.to_string())?;
-        let started = std::time::Instant::now();
+        let started = Instant::now();
         let files = workers
             .ocr
             .ocr(&workers.runtime, &image_path, &sha256, language)
