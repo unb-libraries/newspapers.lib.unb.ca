@@ -152,7 +152,7 @@ fn prepare(
     let read = source::read_metadata(issue, &config.source, titles, &languages);
     let mut findings = issue.problems.clone();
     findings.extend(read.findings);
-    let (planned, page_findings) = pages::plan(&issue.pages);
+    let (planned, page_findings) = pages::plan(config.source.filename_scheme, &issue.pages);
     findings.extend(page_findings);
 
     let Some(mut metadata) = read.metadata else {

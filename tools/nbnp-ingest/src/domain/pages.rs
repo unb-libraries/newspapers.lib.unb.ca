@@ -1,7 +1,7 @@
 //! An issue's pages: which image files become pages, in what order, with what page numbers.
 
 use super::finding::Finding;
-use super::page_name;
+use super::page_name::{self, Scheme};
 
 /// A page image found in an issue directory.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -23,7 +23,7 @@ pub struct PlannedPage {
 /// Numbers the pages in path order and reports every page that cannot be imported. Pages must
 /// already exclude skipped images.
 #[must_use]
-pub fn plan(pages: &[SourcePage]) -> (Vec<PlannedPage>, Vec<Finding>) {
+pub fn plan(scheme: Scheme, pages: &[SourcePage]) -> (Vec<PlannedPage>, Vec<Finding>) {
     let mut findings = Vec::new();
     let mut sorted: Vec<&SourcePage> = pages.iter().collect();
     sorted.sort_by(|a, b| a.path.cmp(&b.path));
@@ -33,7 +33,7 @@ pub fn plan(pages: &[SourcePage]) -> (Vec<PlannedPage>, Vec<Finding>) {
         if page.len == 0 {
             findings.push(Finding::error(format!("{} is empty (0 bytes)", page.path)));
         }
-        match page_name::page_number(stem(&page.path)) {
+        match page_name::page_number(scheme, stem(&page.path)) {
             Ok(number) => named.push((page, number)),
             Err(error) => findings.push(Finding::error(format!("{} {error}", page.path))),
         }
@@ -60,6 +60,20 @@ pub fn plan(pages: &[SourcePage]) -> (Vec<PlannedPage>, Vec<Finding>) {
                 page.path, page.page_no
             )));
         }
+    }
+    let not_numbers: Vec<String> = planned
+        .iter()
+        .filter(|p| {
+            let raw = p.page_no.split('_').next().unwrap_or_default();
+            !raw.chars().all(|c| c.is_ascii_digit())
+        })
+        .map(|p| format!("{} ({:?})", p.path, p.page_no))
+        .collect();
+    if !not_numbers.is_empty() {
+        findings.push(Finding::warning(format!(
+            "page numbers that are not numbers: {}",
+            not_numbers.join(", ")
+        )));
     }
     let repeated: Vec<&str> = planned
         .iter()
@@ -95,11 +109,14 @@ mod tests {
 
     #[test]
     fn pages_are_numbered_in_path_order() {
-        let (planned, findings) = plan(&[
-            page("001_TN_1909_33_05_02.jpg", 10),
-            page("001_TN_1909_33_05_01.jpg", 10),
-            page("002_TN_1909_33_05_01.jpg", 10),
-        ]);
+        let (planned, findings) = plan(
+            Scheme::NbnpV2,
+            &[
+                page("001_TN_1909_33_05_02.jpg", 10),
+                page("001_TN_1909_33_05_01.jpg", 10),
+                page("002_TN_1909_33_05_01.jpg", 10),
+            ],
+        );
         let numbers: Vec<_> = planned
             .iter()
             .map(|p| (p.path.as_str(), p.page_no.as_str(), p.page_sort.as_str()))
@@ -118,10 +135,13 @@ mod tests {
 
     #[test]
     fn unusable_pages_are_errors() {
-        let (planned, findings) = plan(&[
-            page("sub/001_TN_1909_33_05_01.jpg", 0),
-            page("cover.jpg", 10),
-        ]);
+        let (planned, findings) = plan(
+            Scheme::NbnpV2,
+            &[
+                page("sub/001_TN_1909_33_05_01.jpg", 0),
+                page("cover.jpg", 10),
+            ],
+        );
         assert_eq!(planned.len(), 1);
         let messages: Vec<_> = findings.iter().map(|f| f.message.as_str()).collect();
         assert_eq!(messages.len(), 2, "{messages:?}");
@@ -130,8 +150,16 @@ mod tests {
     }
 
     #[test]
+    fn page_numbers_that_are_not_numbers_are_warned_about() {
+        let (planned, findings) = plan(Scheme::NbnpV2, &[page("005_QCG_1898_02_32_05jpg.jpg", 9)]);
+        assert_eq!(planned[0].page_no, "05jpg");
+        assert_eq!(findings.len(), 1);
+        assert!(findings[0].message.contains("\"05jpg\""), "{findings:?}");
+    }
+
+    #[test]
     fn an_issue_needs_pages() {
-        let (_, findings) = plan(&[]);
+        let (_, findings) = plan(Scheme::NbnpV2, &[]);
         assert_eq!(findings, [Finding::error("no page images")]);
     }
 }

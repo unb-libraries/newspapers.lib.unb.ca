@@ -13,6 +13,8 @@ use std::path::{Component, Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
+use crate::domain::page_name::Scheme;
+
 /// Environment variable naming the config file when `--config` is not given.
 pub const CONFIG_ENV: &str = "NBNP_INGEST_CONFIG";
 
@@ -89,16 +91,7 @@ pub struct Source {
     pub legacy_marker: String,
     /// A page image is left out when a file named `<image><skip_suffix>` exists beside it.
     pub skip_suffix: String,
-    pub filename_scheme: FilenameScheme,
-}
-
-/// How page numbers are read from page image file names.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
-pub enum FilenameScheme {
-    /// `003_ARG_1879_01_39_03.jpg`: the sixth `_` field is the page number, or the seventh when
-    /// the sixth is `sup`.
-    #[serde(rename = "nbnp-v1")]
-    NbnpV1,
+    pub filename_scheme: Scheme,
 }
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -214,7 +207,7 @@ impl Default for Source {
             state_file: ".nbnp_issue.toml".into(),
             legacy_marker: ".nbnp_processed".into(),
             skip_suffix: ".nbnp_skip".into(),
-            filename_scheme: FilenameScheme::NbnpV1,
+            filename_scheme: Scheme::NbnpV2,
         }
     }
 }

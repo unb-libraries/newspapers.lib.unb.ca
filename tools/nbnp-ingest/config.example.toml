@@ -40,7 +40,10 @@ legacy_metadata_file = "metadata.php"  # default; read only, never executed
 state_file = ".nbnp_issue.toml"        # default
 legacy_marker = ".nbnp_processed"      # default; written by the PHP importer
 skip_suffix = ".nbnp_skip"             # default; `<image>.nbnp_skip` leaves the image out
-filename_scheme = "nbnp-v1"            # default; the only scheme
+# How page numbers are read from image names: "nbnp-v2" takes the last `_`
+# field; "nbnp-v1" is the PHP importer's rule, which numbered supplement pages
+# by their marker (S2, S2_0, ...).
+filename_scheme = "nbnp-v2"            # default
 
 [containers]
 runtime = "docker"                     # default

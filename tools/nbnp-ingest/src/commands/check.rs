@@ -97,7 +97,7 @@ fn check_issue(
     }
     let mut read = source::read_metadata(issue, &config.source, titles, languages);
     findings.append(&mut read.findings);
-    findings.extend(pages::plan(&issue.pages).1);
+    findings.extend(pages::plan(config.source.filename_scheme, &issue.pages).1);
     if let Some(parent) = &issue.parent_issue {
         findings.push(Finding::warning(format!(
             "inside issue directory {}; the PHP importer also added these pages to that issue",
