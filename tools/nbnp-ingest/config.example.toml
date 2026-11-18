@@ -17,6 +17,8 @@ retries = 4                    # default; failed reads and uploads, never create
 retry_backoff_ms = 1000        # default; doubles on each retry
 
 [paths]
+# Issue directories must be writable by the user running the tool: it writes
+# issue.toml (convert) and its state file there.
 source_root = "/mnt/nbnp"
 # The site's public files directory (sites/default/files).
 public_files = "/mnt/newspapers.lib.unb.ca/prod/files"
@@ -39,9 +41,6 @@ state_file = ".nbnp_issue.toml"        # default
 legacy_marker = ".nbnp_processed"      # default; written by the PHP importer
 skip_suffix = ".nbnp_skip"             # default; `<image>.nbnp_skip` leaves the image out
 filename_scheme = "nbnp-v1"            # default; the only scheme
-# The source tree is not writable by the user running the tool; the state file
-# is written with `sudo install`.
-use_sudo = true                        # default
 
 [containers]
 runtime = "docker"                     # default

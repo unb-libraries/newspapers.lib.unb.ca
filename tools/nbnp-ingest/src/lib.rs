@@ -1,14 +1,16 @@
 //! nbnp-ingest: imports and audits digitized newspaper issues for newspapers.lib.unb.ca.
 //!
-//! `main.rs` only calls [`main`]. Commands live in `commands`, and everything that touches the
-//! outside world lives in `adapters`.
+//! `main.rs` only calls [`main`]. Commands live in `commands`, the rules they apply in `domain`,
+//! and everything that touches the outside world in `adapters`.
 
 mod adapters;
 mod cli;
 mod commands;
 mod config;
+mod domain;
 mod error;
 mod report;
+mod source;
 
 use std::process::ExitCode;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -48,6 +50,10 @@ pub fn main() -> ExitCode {
 fn run(cli: &Cli) -> Result<Outcome, Error> {
     let loaded = Config::load(cli.config.as_deref())?;
     match &cli.command {
+        Command::Check { path, all } => commands::check::run(&loaded.config, path, *all),
+        Command::Convert { path, dry_run } => {
+            commands::convert::run(&loaded.config, path, *dry_run, &run_id())
+        }
         Command::Config(ConfigCommand::Show) => Ok(commands::config::show(&loaded)),
         Command::Config(ConfigCommand::Check) => {
             async_runtime()?.block_on(commands::config::check(&loaded, &run_id()))

@@ -11,7 +11,6 @@ pub enum Outcome {
     /// Everything was done or found as expected.
     Clean,
     /// The work was done, but some issues failed or an audit found discrepancies.
-    #[expect(dead_code, reason = "returned by audit and import, which come later")]
     Findings,
     /// The command could not do its job, for example because a required check failed.
     Failed,
@@ -24,6 +23,11 @@ pub enum Error {
     Config(#[from] ConfigError),
     #[error(transparent)]
     Container(#[from] ContainerError),
+    #[error("cannot read {path}: {source}")]
+    Source {
+        path: std::path::PathBuf,
+        source: std::io::Error,
+    },
     #[error("cannot start the async runtime: {0}")]
     Runtime(std::io::Error),
 }
@@ -52,7 +56,7 @@ impl Error {
     pub fn exit_code(&self) -> ExitCode {
         ExitCode::from(match self {
             Self::Config(_) => exit::USAGE,
-            Self::Container(_) | Self::Runtime(_) => exit::FAILED,
+            Self::Container(_) | Self::Runtime(_) | Self::Source { .. } => exit::FAILED,
         })
     }
 }

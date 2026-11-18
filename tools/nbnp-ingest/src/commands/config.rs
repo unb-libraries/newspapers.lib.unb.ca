@@ -32,7 +32,15 @@ pub async fn check(loaded: &Loaded, run_id: &str) -> Result<Outcome, Error> {
                 .map(|c| format!("user {}", c.username)),
         ),
         Check::from_result("public files", public_files(&config.paths.public_files)),
-        Check::from_result("source root", readable_dir(&config.paths.source_root)),
+        Check::from_result(
+            "source root",
+            readable_dir(&config.paths.source_root).and_then(|shown| {
+                // Read first: writable_dir creates a missing directory, and a missing mount
+                // must fail instead.
+                writable_dir(&config.paths.source_root, run_id)
+                    .map(|()| format!("{shown}, writable"))
+            }),
+        ),
         Check::from_result(
             "work dir",
             writable_dir(&config.paths.work_dir, run_id)

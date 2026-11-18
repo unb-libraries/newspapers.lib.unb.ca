@@ -22,6 +22,22 @@ pub struct Cli {
 
 #[derive(Debug, Subcommand)]
 pub enum Command {
+    /// Check issue metadata and page images under a path, without contacting the site
+    Check {
+        /// A title, year or issue directory, or anything above them
+        path: PathBuf,
+        /// List every issue, not only those with findings
+        #[arg(long)]
+        all: bool,
+    },
+    /// Write an issue.toml beside each legacy metadata.php that has none
+    Convert {
+        /// A title, year or issue directory, or anything above them
+        path: PathBuf,
+        /// Print the files instead of writing them
+        #[arg(long)]
+        dry_run: bool,
+    },
     /// Inspect the configuration
     #[command(subcommand)]
     Config(ConfigCommand),

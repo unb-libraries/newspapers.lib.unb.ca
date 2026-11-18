@@ -90,9 +90,6 @@ pub struct Source {
     /// A page image is left out when a file named `<image><skip_suffix>` exists beside it.
     pub skip_suffix: String,
     pub filename_scheme: FilenameScheme,
-    /// The source tree is not writable by the user running the tool, so the state file is
-    /// written through `sudo install`.
-    pub use_sudo: bool,
 }
 
 /// How page numbers are read from page image file names.
@@ -218,7 +215,6 @@ impl Default for Source {
             legacy_marker: ".nbnp_processed".into(),
             skip_suffix: ".nbnp_skip".into(),
             filename_scheme: FilenameScheme::NbnpV1,
-            use_sudo: true,
         }
     }
 }
