@@ -1,4 +1,5 @@
-# Checks tools/nbnp-ingest, and publishes its vips image when the Dockerfile changes on dev.
+# Checks tools/nbnp-ingest, publishes its vips image when the Dockerfile changes on dev, and
+# releases a static binary for a tag nbnp-ingest-vX.Y.Z (the version in Cargo.toml).
 #
 # The toolchain is pinned so a Rust release cannot fail a run by itself: clippy denies every
 # default lint and the run denies warnings, so a new lint would. Bump it deliberately.
@@ -7,6 +8,8 @@ name: nbnp-ingest
 on:
   push:
     branches: [dev, prod]
+    # Path filters do not apply to tags: a release tag always runs.
+    tags: ['nbnp-ingest-v*']
     paths:
       - 'tools/nbnp-ingest/**'
       - '.github/workflows/nbnp-ingest.yaml'
@@ -101,3 +104,53 @@ jobs:
           tags: |
             ghcr.io/unb-libraries/nbnp-ingest-vips:bookworm
             ghcr.io/unb-libraries/nbnp-ingest-vips:${{ github.sha }}
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/nbnp-ingest-v')
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: tools/nbnp-ingest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+          targets: x86_64-unknown-linux-musl
+
+      # ring compiles a little C; musl-gcc makes it link statically.
+      - name: musl toolchain
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+
+      - name: Tag matches the crate version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].version')
+          if [ "$TAG" != "nbnp-ingest-v$version" ]; then
+            echo "tag $TAG does not match Cargo.toml version $version" >&2
+            exit 1
+          fi
+
+      - name: Build the static binary
+        run: |
+          NBNP_INGEST_COMMIT="${GITHUB_SHA::8}" \
+            cargo build --release --locked --target x86_64-unknown-linux-musl
+          bin=target/x86_64-unknown-linux-musl/release/nbnp-ingest
+          file "$bin" | grep -q 'static' || { echo "not a static binary" >&2; exit 1; }
+          "$bin" --version
+          cp "$bin" nbnp-ingest-x86_64-linux
+          sha256sum nbnp-ingest-x86_64-linux > nbnp-ingest-x86_64-linux.sha256
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" nbnp-ingest-x86_64-linux nbnp-ingest-x86_64-linux.sha256 \
+            --title "$TAG" --notes "Static x86_64 Linux build of tools/nbnp-ingest at ${GITHUB_SHA::8}."
