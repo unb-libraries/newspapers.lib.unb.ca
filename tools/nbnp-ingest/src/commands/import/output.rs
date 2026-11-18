@@ -52,7 +52,7 @@ pub(super) fn print_plans(root: &Path, issues: &[IssueDir], plans: &[IssuePlan],
     out!("{out}");
     outln!(
         "\n{}, under {}.\n  \
-         Create {}, add to {}, nothing to do for {}, {} blocked{}.\n  \
+         Create {}, add to {}, {} no-op, {} blocked{}.\n  \
          Of those on the site, {} came from the PHP importer and get a state file.\n  \
          Pages to upload and OCR: {}; existing pages needing tiles or a PDF: {}.",
         if options.mode == Mode::DryRun {
@@ -182,7 +182,7 @@ pub(super) struct Summary {
 }
 
 /// New or completed issues listed in a summary; the rest are in the ledger.
-const SUMMARY_ISSUES: usize = 15;
+const SUMMARY_ISSUES: usize = 10;
 
 impl Summary {
     pub(super) fn of(
@@ -263,8 +263,8 @@ impl Summary {
         }
         let _ = write!(
             text,
-            "\nCreated {}, added to {}, nothing to do for {}, {} blocked, {} failed.\n\
-             {} uploaded in {} ({} per issue).\n\
+            "\nCreated {}, added to {}, {} no-op, {} blocked, {} failed.\n\
+             {} uploaded in {} ({} per issue{}).\n\
              From {}\n",
             report::counted(counts.created, "issue"),
             counts.updated,
@@ -274,6 +274,8 @@ impl Summary {
             report::counted(counts.pages_uploaded, "page"),
             clock(elapsed),
             clock(average),
+            pages_per_hour(counts.pages_uploaded, elapsed)
+                .map_or_else(String::new, |rate| format!(", {rate} pages an hour")),
             root.display(),
         );
         let issue_lines: Vec<String> = issues.into_iter().map(|(_, line)| line).collect();
@@ -441,6 +443,22 @@ fn first_line(text: &str) -> String {
     }
 }
 
+/// Pages uploaded per hour of the run, when there were any and the run took time.
+fn pages_per_hour(pages: usize, elapsed: Duration) -> Option<u64> {
+    let secs = elapsed.as_secs_f64();
+    if pages == 0 || secs < 1.0 {
+        return None;
+    }
+    #[expect(
+        clippy::cast_possible_truncation,
+        clippy::cast_sign_loss,
+        clippy::cast_precision_loss,
+        reason = "a page count and a positive rate, both far inside f64 and u64"
+    )]
+    let rate = (pages as f64 * 3600.0 / secs).round() as u64;
+    Some(rate)
+}
+
 /// `1:02:03`.
 fn clock(elapsed: Duration) -> String {
     let secs = elapsed.as_secs();
@@ -450,6 +468,13 @@ fn clock(elapsed: Duration) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn rate_is_pages_an_hour() {
+        assert_eq!(pages_per_hour(464, Duration::from_secs(1159)), Some(1441));
+        assert_eq!(pages_per_hour(0, Duration::from_mins(1)), None);
+        assert_eq!(pages_per_hour(8, Duration::ZERO), None);
+    }
 
     #[test]
     fn clock_reads_like_the_php_summary() {

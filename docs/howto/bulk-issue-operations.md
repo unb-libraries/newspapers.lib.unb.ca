@@ -72,7 +72,7 @@ scripts on HAMMER run the nbnp-ingest tool; its
    ```
 
    It lists what it will do for each issue, ending with a summary such as
-   `Create 8 issues, add to 0, nothing to do for 1, 0 blocked.`, then asks:
+   `Create 8 issues, add to 0, 1 no-op, 0 blocked.`, then asks:
 
    ```text
    Import these issues into title <TITLE_ID>? [y/N]
@@ -80,13 +80,14 @@ scripts on HAMMER run the nbnp-ingest tool; its
 
 6. Type `y` to import. Any other answer prints `Nothing was changed.` and stops.
 
-The import runs at about 650 pages an hour. To leave it running and disconnect, press Ctrl-A, then D. When it finishes it prints a summary, then
-audits the issues it imported. A complete import ends like this, with your own counts:
+The import runs at about 1,400 pages an hour; its summary gives the rate for each run. To
+leave it running and disconnect, press Ctrl-A, then D. When it finishes it prints a summary,
+then audits the issues it imported. A complete import ends like this, with your own counts:
 
 ```text
-[<PATH>] Import finished
+Import finished: The News, 1909
 ...
-Failed: 0
+Created 9 issues, added to 0, 0 no-op, 0 blocked, 0 failed.
 ...
 Audited 9 issues under <PATH>: 9 match the site, 0 differ, 0 could not be audited.
 ```
