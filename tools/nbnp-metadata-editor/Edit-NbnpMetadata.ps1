@@ -940,6 +940,11 @@ $script:Form.Add_FormClosing({
 
 # Where to start: the title's folder, and the issue the menu was opened on, if it was one.
 $title = Find-NbnpTitleFolder -Folder $Path
+if ($title.Problem) {
+    [void](Show-Message $title.Problem -Icon Warning)
+    $script:Form.Dispose()
+    return
+}
 $script:TitleFolder = $title.Path
 $script:StartIssue = $null
 $script:ViewKind = 'Title'

@@ -55,6 +55,12 @@ It shows the title's `title.toml`, the first page of its first issue, and its is
 Opening the menu on an issue folder of a title that has its `title.toml` goes straight to that
 issue.
 
+Open the menu on a title's folder or on any folder inside it. When there is no `title.toml` at
+or above the folder, the editor refuses, with a message and no window, a folder that is above a
+title: one with a `title.toml` below it, one whose first issue belongs to a title folder below
+it (the folder of all titles, a desktop), and one with no issue folder within 6 levels or the
+first 2,000 folders below it.
+
 ### The issue view
 
 The header shows the title, the issue, and where it is in the title (issue 5 of 52; 47 need
@@ -241,4 +247,6 @@ to check the values against. It is not in this repository; ask for it.
     that folder.
 13. **Legacy.** In Agenutemagen, the issue list shows `AG_1974_03_09` as old php;
     double-clicking it shows its `metadata.php` read-only.
-14. Uninstall: the menu item disappears; the metadata files remain.
+14. **Above a title.** Open the menu on the kit's `NBNP` folder, on the desktop, and on a
+    drive: each shows a message saying to open it from a title's folder, and no window.
+15. Uninstall: the menu item disappears; the metadata files remain.

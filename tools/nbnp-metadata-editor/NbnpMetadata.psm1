@@ -406,27 +406,49 @@ function Find-NbnpTitleFolder {
     <#
     .SYNOPSIS
         The title folder for any folder of a title: the nearest one holding title.toml, this
-        folder included, or else a guess at where its title.toml belongs. Returns Path and
-        Exists.
+        folder included, or else a guess at where its title.toml belongs. Returns Path, Exists
+        and Problem, which says why the folder is not part of one title (or is $null).
 
     .DESCRIPTION
         The guess follows the NBNP layout, where the year, volume and issue folders all start with
         the title's short name (KCR_1902, KCR_1902_17, KCR_1902_17_26) and the title folder does
         not (KingsCountyRecord): it is the first folder up from an issue whose name does not
         start with that short name.
+
+        With no title.toml at or above it, a folder above a title (the folder of all titles, a
+        desktop, a whole drive) is refused rather than guessed from: one holding a title.toml
+        below it, one whose first issue belongs to a title folder below it, and one with no issue
+        within MaxDepth levels or MaxFolders folders. The search stops at the first issue found.
     #>
-    param([Parameter(Mandatory)][string] $Folder)
-    $full = [IO.Path]::GetFullPath($Folder).TrimEnd('\', '/')
+    param(
+        [Parameter(Mandatory)][string] $Folder,
+        [int] $MaxDepth = 6,
+        [int] $MaxFolders = 2000
+    )
+    $full = [IO.Path]::GetFullPath($Folder)
+    # A drive's root keeps its slash: C: alone means the current folder on drive C.
+    if ($full.Length -gt [IO.Path]::GetPathRoot($full).Length) { $full = $full.TrimEnd('\', '/') }
     $dir = New-Object IO.DirectoryInfo($full)
     while ($null -ne $dir) {
         if (Test-Path -LiteralPath (Join-Path $dir.FullName 'title.toml') -PathType Leaf) {
-            return [pscustomobject]@{ Path = $dir.FullName; Exists = $true }
+            return [pscustomobject]@{ Path = $dir.FullName; Exists = $true; Problem = $null }
         }
         $dir = $dir.Parent
     }
-    $sample = if (Get-NbnpFirstPage -Folder $full) { $full } else {
-        $issues = Get-NbnpIssueFolders -TitleFolder $full
-        if ($issues.Count -gt 0) { $issues[0].Path } else { $null }
+    $rerun = "Open the menu on a title's folder, or on any folder inside it."
+    $search = @{ Visited = 0; Max = $MaxFolders; TitleBelow = $null; Full = $false }
+    $sample = if (Get-NbnpFirstPage -Folder $full) { $full }
+    else { Find-FirstIssue -Folder $full -Depth $MaxDepth -Search $search }
+    $problem = $null
+    if ($search.TitleBelow) {
+        $problem = "This folder is above a title: $($search.TitleBelow) has a title.toml. $rerun"
+    }
+    elseif (-not $sample) {
+        $problem = if ($search.Full) {
+            "No newspaper issue was found in the first $MaxFolders folders below this one, so it " +
+            "is probably above a title's folder. $rerun"
+        }
+        else { "No newspaper issue (a folder of page images) was found below this folder. $rerun" }
     }
     $guess = $full
     if ($sample) {
@@ -437,8 +459,32 @@ function Find-NbnpTitleFolder {
             $dir = $dir.Parent
         }
         if ($null -ne $dir) { $guess = $dir.FullName }
+        if ($guess.Length -gt $full.Length) {
+            $below = $guess.Substring($full.Length).TrimStart('\', '/')
+            $problem = "This folder is above a title: $below looks like a title's folder. $rerun"
+        }
     }
-    [pscustomobject]@{ Path = $guess; Exists = $false }
+    [pscustomobject]@{ Path = $guess; Exists = $false; Problem = $problem }
+}
+
+# The first issue folder below Folder in name order, or $null. Notes a title.toml met on the way
+# and stops there, and stops when the folder budget runs out.
+function Find-FirstIssue([string] $Folder, [int] $Depth, [hashtable] $Search) {
+    if ($Depth -le 0) { return $null }
+    $children = @(Get-ChildItem -LiteralPath $Folder -Directory -ErrorAction SilentlyContinue |
+            Where-Object { -not $_.Name.StartsWith('.') } | Sort-Object { Get-NbnpNaturalKey $_.Name })
+    foreach ($child in $children) {
+        if ($Search.TitleBelow -or $Search.Full) { return $null }
+        if (++$Search.Visited -gt $Search.Max) { $Search.Full = $true; return $null }
+        if (Test-Path -LiteralPath (Join-Path $child.FullName 'title.toml') -PathType Leaf) {
+            $Search.TitleBelow = $child.Name
+            return $null
+        }
+        if (Get-NbnpFirstPage -Folder $child.FullName) { return $child.FullName }
+        $found = Find-FirstIssue -Folder $child.FullName -Depth ($Depth - 1) -Search $Search
+        if ($found) { return $found }
+    }
+    $null
 }
 
 function Find-NbnpNextIssueFolder {

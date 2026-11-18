@@ -144,6 +144,46 @@ Describe 'A title''s issues' {
         $found = Find-NbnpTitleFolder -Folder $folder
         $found.Exists | Should -BeFalse
         $found.Path | Should -Be $script:TitleRoot
+        $found.Problem | Should -BeNullOrEmpty
+    }
+
+    Context 'from above a title' {
+        BeforeAll {
+            $script:Above = Join-Path $TestDrive 'Desktop'
+            New-Issue (Join-Path $Above 'NBNP' 'KingsCountyRecord' 'KCR_1902' 'KCR_1902_17_26')
+            New-Issue (Join-Path $Above 'NBNP' 'The_News' 'TN_1909' 'TN_1909_33_05')
+            New-Item -ItemType Directory -Path (Join-Path $Above 'Photos' 'Trip') -Force | Out-Null
+        }
+
+        It 'refuses a folder holding title folders, naming the first' {
+            $found = Find-NbnpTitleFolder -Folder $script:Above
+            $found.Exists | Should -BeFalse
+            $found.Problem | Should -Match ([regex]::Escape((Join-Path 'NBNP' 'KingsCountyRecord')) + ' looks like a title')
+        }
+
+        It 'refuses a folder with a title.toml below it' {
+            $file = Join-Path $script:Above 'NBNP' 'KingsCountyRecord' 'title.toml'
+            [IO.File]::WriteAllText($file, "title = `"The Kings County Record`"`n")
+            try { (Find-NbnpTitleFolder -Folder (Join-Path $script:Above 'NBNP')).Problem | Should -Match 'KingsCountyRecord has a title.toml' }
+            finally { Remove-Item -LiteralPath $file }
+        }
+
+        It 'refuses a folder with no issues below it' {
+            (Find-NbnpTitleFolder -Folder (Join-Path $script:Above 'Photos')).Problem | Should -Match 'No newspaper issue'
+        }
+
+        It 'stops searching after MaxFolders folders' {
+            $found = Find-NbnpTitleFolder -Folder (Join-Path $script:Above 'NBNP') -MaxFolders 1
+            $found.Problem | Should -Match 'first 1 folders'
+        }
+
+        It 'still accepts the title folder itself and the folders inside it' {
+            foreach ($from in @('KingsCountyRecord', (Join-Path 'KingsCountyRecord' 'KCR_1902'))) {
+                $found = Find-NbnpTitleFolder -Folder (Join-Path $script:Above 'NBNP' $from)
+                $found.Problem | Should -BeNullOrEmpty
+                Split-Path -Leaf $found.Path | Should -Be 'KingsCountyRecord'
+            }
+        }
     }
 
     It 'finds the title folder holding title.toml, from it or below it' {
