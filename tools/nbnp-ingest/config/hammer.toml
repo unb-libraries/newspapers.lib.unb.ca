@@ -39,6 +39,9 @@ image = "ghcr.io/unb-libraries/nbnp-ingest-vips@sha256:2ea567b108f2a55659b8b819d
 # 24 threads (8 performance cores with two each, 8 efficiency cores). 16 OCR runs at once
 # gave 647 pages an hour and leaves 8 threads for the system; 20 gave 717 (2026-11-18).
 cpu_slots = 16
+# Issues in progress at once. Each 8 to 12 page issue fills its slots only during OCR, so
+# more issues keep the 16 slots busy through uploads, tiling and the tail of each issue.
+issue_concurrency = 4
 
 [notify]
 region = "us-east-1"

@@ -127,7 +127,15 @@ impl IssueDone {
 }
 
 /// Carries out the job and says what was done, or why it stopped.
-pub async fn run_issue(workers: &Workers, job: &IssueJob) -> Result<IssueDone, String> {
+///
+/// `slot` is the issue's place among the issues running at once. It is given up before waiting
+/// for the site to see the installed files, which needs no CPU and can take half a minute, so
+/// the next issue starts instead.
+pub async fn run_issue(
+    workers: &Workers,
+    job: &IssueJob,
+    slot: OwnedSemaphorePermit,
+) -> Result<IssueDone, String> {
     let (issue_id, uuid) = match &job.on_site {
         OnSite::Existing { issue_id, uuid } => (*issue_id, *uuid),
         OnSite::New { uuid, metadata } => {
@@ -158,6 +166,7 @@ pub async fn run_issue(workers: &Workers, job: &IssueJob) -> Result<IssueDone, S
         return Err(failures.join("; "));
     }
 
+    drop(slot);
     confirm_assets(&workers.client, issue_id).await?;
     let made_here = needs.iter().map(|n| n.sha256.as_str());
     for sha256 in made_here.chain(job.source_checksums.iter().map(String::as_str)) {

@@ -52,11 +52,11 @@ pub(super) async fn execute(
         };
         let (workers, issues) = (workers.clone(), Arc::clone(&issues));
         tasks.spawn(async move {
-            let Ok(_issue) = issues.acquire_owned().await else {
+            let Ok(slot) = issues.acquire_owned().await else {
                 return (index, Err("the run is stopping".to_owned()), None);
             };
             let started = Instant::now();
-            let done = run_issue(&workers, &job).await;
+            let done = run_issue(&workers, &job, slot).await;
             (index, done, Some(started.elapsed()))
         });
     }

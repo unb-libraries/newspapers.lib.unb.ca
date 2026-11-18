@@ -81,7 +81,7 @@ timeout_secs = 900                     # default; per issue
 
 [limits]
 cpu_slots = 4                          # default; OCR and tiling processes at once
-issue_concurrency = 2                  # default
+issue_concurrency = 2                  # default; issues waiting for the site to see their files do not count
 upload_concurrency = 4                 # default; page uploads at once, all issues
 min_free_work_mib = 2048               # default
 
