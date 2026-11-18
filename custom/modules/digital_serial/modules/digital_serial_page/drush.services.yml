@@ -3,3 +3,8 @@ services:
     class: \Drupal\digital_serial_page\Drush\PageAssetScanCommands
     tags:
     - { name: drush.command }
+  digital_serial_page.checksum_commands:
+    class: \Drupal\digital_serial_page\Drush\PageImageChecksumCommands
+    arguments: ['@database', '@entity_type.manager', '@file_system']
+    tags:
+    - { name: drush.command }

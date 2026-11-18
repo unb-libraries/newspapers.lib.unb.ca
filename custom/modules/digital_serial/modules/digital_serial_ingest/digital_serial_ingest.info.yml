@@ -1,0 +1,12 @@
+name: Digital Serial Ingest
+description: Read endpoints for the nbnp-ingest tool (tools/nbnp-ingest).
+package: Serials
+
+core_version_requirement: ^11
+type: module
+
+dependencies:
+  - drupal:basic_auth
+  - digital_serial_issue
+  - digital_serial_page
+  - digital_serial_title

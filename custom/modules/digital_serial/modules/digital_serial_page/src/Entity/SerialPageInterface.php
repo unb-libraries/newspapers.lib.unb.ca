@@ -208,4 +208,12 @@ interface SerialPageInterface extends ContentEntityInterface, EntityChangedInter
    */
   public function getDziUri();
 
+  /**
+   * Gets the SHA-256 checksum of the page image file.
+   *
+   * @return string|null
+   *   The lowercase hex checksum, or NULL if it has not been computed.
+   */
+  public function getImageSha256(): ?string;
+
 }

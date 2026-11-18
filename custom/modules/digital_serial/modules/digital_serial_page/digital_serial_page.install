@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for digital_serial_page.
+ */
+
+use Drupal\digital_serial_page\Entity\SerialPage;
+use Drupal\digital_serial_page\PageImageChecksum;
+
+/**
+ * Adds the image_sha256 field to pages.
+ *
+ * Existing pages are left empty; fill them with
+ * drush digital-serial-page:backfill-image-sha256.
+ */
+function digital_serial_page_update_11001() {
+  \Drupal::entityDefinitionUpdateManager()->installFieldStorageDefinition(
+    PageImageChecksum::FIELD,
+    'digital_serial_page',
+    'digital_serial_page',
+    SerialPage::imageSha256FieldDefinition()
+  );
+  return t('Added the image_sha256 field. Run drush digital-serial-page:backfill-image-sha256 to fill it for existing pages.');
+}

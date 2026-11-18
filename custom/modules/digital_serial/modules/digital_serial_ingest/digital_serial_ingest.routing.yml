@@ -1,0 +1,39 @@
+# Read endpoints for tools/nbnp-ingest. Each path is part of the contract in
+# tools/nbnp-ingest/src/adapters/drupal/contract.rs; change both together.
+# Limited to the accounts that ingest pages, over basic auth only.
+
+digital_serial_ingest.issue_by_uuid:
+  path: '/serials-ingest/issues/uuid/{uuid}'
+  defaults:
+    _controller: '\Drupal\digital_serial_ingest\Controller\IngestController::issueByUuid'
+  methods: [GET]
+  requirements:
+    _permission: 'add serial page entities'
+    uuid: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+  options:
+    _auth: ['basic_auth']
+    no_cache: TRUE
+
+digital_serial_ingest.issue_by_id:
+  path: '/serials-ingest/issues/{issue_id}'
+  defaults:
+    _controller: '\Drupal\digital_serial_ingest\Controller\IngestController::issueById'
+  methods: [GET]
+  requirements:
+    _permission: 'add serial page entities'
+    issue_id: '\d+'
+  options:
+    _auth: ['basic_auth']
+    no_cache: TRUE
+
+digital_serial_ingest.title:
+  path: '/serials-ingest/titles/{title_id}'
+  defaults:
+    _controller: '\Drupal\digital_serial_ingest\Controller\IngestController::title'
+  methods: [GET]
+  requirements:
+    _permission: 'add serial page entities'
+    title_id: '\d+'
+  options:
+    _auth: ['basic_auth']
+    no_cache: TRUE

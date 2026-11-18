@@ -27,6 +27,7 @@ module:
   datetime: 0
   datetime_range: 0
   digital_serial: 0
+  digital_serial_ingest: 0
   digital_serial_issue: 0
   digital_serial_page: 0
   digital_serial_title: 0

@@ -12,6 +12,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
 use Drupal\digital_serial_issue\Entity\SerialIssueInterface;
+use Drupal\digital_serial_page\PageImageChecksum;
 use Drupal\user\UserInterface;
 
 /**
@@ -152,6 +153,21 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
    */
   public function getPageImage() {
     return $this->get('page_image')->get(0)->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getImageSha256(): ?string {
+    return $this->get(PageImageChecksum::FIELD)->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function preSave(EntityStorageInterface $storage) {
+    parent::preSave($storage);
+    PageImageChecksum::refresh($this);
   }
 
   /**
@@ -323,6 +339,8 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
+    $fields[PageImageChecksum::FIELD] = self::imageSha256FieldDefinition();
+
     $fields['page_ocr'] = BaseFieldDefinition::create('string_long')
       ->setLabel(t('Page OCR'))
       ->setDescription(t('The OCR corresponding to the page.'))
@@ -375,6 +393,25 @@ class SerialPage extends ContentEntityBase implements SerialPageInterface {
       ->setDescription(t('The time that the entity was last edited.'));
 
     return $fields;
+  }
+
+  /**
+   * Defines the image checksum field.
+   *
+   * Shared with digital_serial_page_update_11001(), which installs it on
+   * existing sites.
+   *
+   * @return \Drupal\Core\Field\BaseFieldDefinition
+   *   The field definition.
+   */
+  public static function imageSha256FieldDefinition(): BaseFieldDefinition {
+    return BaseFieldDefinition::create('string')
+      ->setLabel(t('Image SHA-256'))
+      ->setDescription(t('The SHA-256 checksum of the page image file, computed when the image is saved.'))
+      ->setSettings([
+        'max_length' => 64,
+        'is_ascii' => TRUE,
+      ]);
   }
 
   /**
