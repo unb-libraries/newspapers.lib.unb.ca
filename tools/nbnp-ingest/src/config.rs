@@ -468,10 +468,16 @@ pub enum CredentialsError {
     },
     #[error("{path:?} can be read by group or others (mode {mode:o}); run chmod 600 on it")]
     TooOpen { path: PathBuf, mode: u32 },
-    #[error("{path:?} must hold username and password: {source}")]
+    /// Only the position and reason: the parser's own message quotes the line, which can be
+    /// the password.
+    #[error(
+        "{path:?} must hold username = \"...\" and password = \"...\" (quoted): line {line}: \
+         {reason}"
+    )]
     Parse {
         path: PathBuf,
-        source: toml::de::Error,
+        line: usize,
+        reason: String,
     },
 }
 
@@ -489,9 +495,12 @@ impl SiteCredentials {
             });
         }
         let text = fs::read_to_string(path).map_err(read_error)?;
-        toml::from_str(&text).map_err(|source| CredentialsError::Parse {
+        toml::from_str(&text).map_err(|error: toml::de::Error| CredentialsError::Parse {
             path: path.to_path_buf(),
-            source,
+            line: error
+                .span()
+                .map_or(0, |span| text[..span.start].matches('\n').count() + 1),
+            reason: error.message().to_owned(),
         })
     }
 }
@@ -501,6 +510,17 @@ mod tests {
     use super::*;
 
     const EXAMPLE: &str = include_str!("../config.example.toml");
+
+    #[test]
+    fn credential_errors_never_quote_the_file() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("creds.toml");
+        fs::write(&path, "username = \"ingest\"\npassword = hunter2-secret\n").unwrap();
+        fs::set_permissions(&path, fs::Permissions::from_mode(0o600)).unwrap();
+        let error = SiteCredentials::load(&path).unwrap_err().to_string();
+        assert!(!error.contains("hunter2"), "{error}");
+        assert!(error.contains("line 2"), "{error}");
+    }
 
     /// Only the keys without defaults.
     const MINIMAL: &str = r#"
