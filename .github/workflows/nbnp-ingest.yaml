@@ -1,0 +1,94 @@
+# Checks tools/nbnp-ingest, and publishes its vips image when the Dockerfile changes on dev.
+#
+# The toolchain is pinned so a Rust release cannot fail a run by itself: clippy denies every
+# default lint and the run denies warnings, so a new lint would. Bump it deliberately.
+name: nbnp-ingest
+
+on:
+  push:
+    branches: [dev, prod]
+    paths:
+      - 'tools/nbnp-ingest/**'
+      - '.github/workflows/nbnp-ingest.yaml'
+  pull_request:
+    paths:
+      - 'tools/nbnp-ingest/**'
+      - '.github/workflows/nbnp-ingest.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nbnp-ingest-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  RUST_VERSION: "1.95.0"
+  CARGO_TERM_COLOR: always
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: tools/nbnp-ingest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+          components: clippy, rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: tools/nbnp-ingest -> target
+
+      - name: rustfmt
+        run: cargo fmt --check
+
+      - name: clippy
+        run: cargo clippy --all-targets --locked -- -D warnings
+
+      - name: tests
+        run: cargo test --locked
+
+  vips-image:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+
+      - name: Did the Dockerfile change?
+        id: changed
+        run: |
+          if git diff --quiet HEAD~1 HEAD -- tools/nbnp-ingest/docker/vips; then
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: docker/login-action@v3
+        if: steps.changed.outputs.build == 'true'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        if: steps.changed.outputs.build == 'true'
+        with:
+          context: tools/nbnp-ingest/docker/vips
+          push: true
+          tags: |
+            ghcr.io/unb-libraries/nbnp-ingest-vips:bookworm
+            ghcr.io/unb-libraries/nbnp-ingest-vips:${{ github.sha }}

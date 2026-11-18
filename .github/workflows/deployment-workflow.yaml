@@ -3,7 +3,15 @@ name: Deploy newspapers.lib.unb.ca
 on:
   push:
     branches: [dev, prod]
+    # Changes only to the ingest tool need no new site image. A commit that also
+    # touches the site still deploys.
+    paths-ignore:
+      - 'tools/**'
+      - '.github/workflows/nbnp-ingest.yaml'
   pull_request:
+    paths-ignore:
+      - 'tools/**'
+      - '.github/workflows/nbnp-ingest.yaml'
   workflow_dispatch:
 
 concurrency:
