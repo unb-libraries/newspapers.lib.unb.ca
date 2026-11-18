@@ -48,7 +48,9 @@ pub fn compare(
     findings
 }
 
-fn metadata_differences(metadata: &IssueMetadata, site: &Issue) -> Vec<String> {
+/// Each issue field that differs, as `key "source", "site"`.
+#[must_use]
+pub fn metadata_differences(metadata: &IssueMetadata, site: &Issue) -> Vec<String> {
     let mut differences = Vec::new();
     let mut differ = |key: &str, source: &str, on_site: &str| {
         if source != on_site {

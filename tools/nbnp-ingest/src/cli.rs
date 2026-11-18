@@ -44,6 +44,23 @@ pub enum Command {
         #[arg(long)]
         all: bool,
     },
+    /// Plan importing every issue under a path (only --dry-run so far)
+    Import {
+        /// A title, year or issue directory, or anything above them
+        path: PathBuf,
+        /// Digital Title ID to use instead of each issue's `title_id`, e.g. on a test site
+        #[arg(long, value_name = "ID")]
+        title: Option<u32>,
+        /// Print what would be done, and change nothing
+        #[arg(long)]
+        dry_run: bool,
+        /// Import again an issue whose state file says complete but which the site no longer has
+        #[arg(long)]
+        force: bool,
+        /// List every issue, not only those with something to do
+        #[arg(long)]
+        all: bool,
+    },
     /// Write an issue.toml beside each legacy metadata.php that has none
     Convert {
         /// A title, year or issue directory, or anything above them

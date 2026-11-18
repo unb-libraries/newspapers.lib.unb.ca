@@ -6,5 +6,6 @@ pub mod finding;
 pub mod metadata;
 pub mod page_name;
 pub mod pages;
+pub mod plan;
 pub mod site;
 pub mod state;

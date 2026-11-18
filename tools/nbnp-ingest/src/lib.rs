@@ -65,6 +65,25 @@ fn run(cli: &Cli) -> Result<Outcome, Error> {
                 all: *all,
             },
         )),
+        Command::Import { dry_run: false, .. } => {
+            eprintln!("import without --dry-run is not available yet; nothing was changed.");
+            Ok(Outcome::Failed)
+        }
+        Command::Import {
+            path,
+            title,
+            force,
+            all,
+            dry_run: true,
+        } => async_runtime()?.block_on(commands::import::run(
+            &loaded.config,
+            path,
+            commands::import::Options {
+                title: *title,
+                force: *force,
+                all: *all,
+            },
+        )),
         Command::Check { path, all } => commands::check::run(&loaded.config, path, *all),
         Command::Convert { path, dry_run } => {
             commands::convert::run(&loaded.config, path, *dry_run, &run_id())
