@@ -604,6 +604,76 @@ function Save-NbnpMetadataFile {
 
 #endregion
 
+#region The last issue saved
+
+# What "Fill from last saved issue" leaves out: these describe one particular copy.
+$script:NotCarriedOver = @('missing_pages', 'errata')
+
+function Get-NbnpStateDirectory {
+    <#
+    .SYNOPSIS
+        Where the editor keeps the signed-in user's own state: %LOCALAPPDATA%\nbnp-metadata-editor.
+    #>
+    $base = if ($env:LOCALAPPDATA) { $env:LOCALAPPDATA } else { Join-Path $HOME '.local/state' }
+    Join-Path $base 'nbnp-metadata-editor'
+}
+
+function Save-NbnpLastIssue {
+    <#
+    .SYNOPSIS
+        Remembers a saved issue's values, less missing pages and errata, for the next form.
+
+    .DESCRIPTION
+        Written to last-issue.toml in the user's state directory, in the issue.toml format, with
+        the folder it came from in a comment. Failing to write it never fails the save it follows.
+    #>
+    param(
+        [Parameter(Mandatory)][System.Collections.IDictionary] $Values,
+        [Parameter(Mandatory)][string] $Folder,
+        [string] $Directory = (Get-NbnpStateDirectory)
+    )
+    try {
+        $kept = [ordered]@{}
+        foreach ($key in $Values.Keys) {
+            if ($script:NotCarriedOver -notcontains $key) { $kept[$key] = $Values[$key] }
+        }
+        $text = ConvertTo-NbnpToml -Kind Issue -Values $kept -Header @(
+            '# The last issue saved with the NBNP metadata editor, from:', "# $Folder")
+        [void](New-Item -ItemType Directory -Force -Path $Directory)
+        [IO.File]::WriteAllText((Join-Path $Directory 'last-issue.toml'), $text, $script:Utf8NoBom)
+    }
+    catch {
+        Write-Verbose "Could not remember the last issue: $($_.Exception.Message)"
+    }
+}
+
+function Get-NbnpLastIssue {
+    <#
+    .SYNOPSIS
+        The last issue this user saved: Folder, Saved (time) and Values. $null when there is none
+        or it cannot be read.
+    #>
+    param([string] $Directory = (Get-NbnpStateDirectory))
+    $path = Join-Path $Directory 'last-issue.toml'
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return $null }
+    try {
+        $parsed = ConvertFrom-NbnpToml -Text ([IO.File]::ReadAllText($path)) -Kind Issue
+    }
+    catch {
+        return $null
+    }
+    if (-not $parsed.Supported -or $parsed.Values.Count -eq 0) { return $null }
+    $folder = if ($parsed.Header.Count -ge 2) { $parsed.Header[1] -replace '^#\s*', '' } else { '' }
+    [pscustomobject]@{
+        Folder = $folder
+        Saved  = (Get-Item -LiteralPath $path).LastWriteTime
+        Values = $parsed.Values
+    }
+}
+
+#endregion
+
 Export-ModuleMember -Function New-NbnpValue, Get-NbnpSchema, Get-NbnpLanguages, ConvertFrom-NbnpToml,
     Read-NbnpMetadataFile, Find-NbnpTitleFile, Find-NbnpParentIssue, Test-NbnpMetadata,
-    Get-NbnpPathYears, ConvertTo-NbnpToml, Save-NbnpMetadataFile
+    Get-NbnpPathYears, ConvertTo-NbnpToml, Save-NbnpMetadataFile, Get-NbnpStateDirectory,
+    Save-NbnpLastIssue, Get-NbnpLastIssue

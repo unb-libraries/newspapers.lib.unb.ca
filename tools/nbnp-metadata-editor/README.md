@@ -18,7 +18,7 @@ file imports without metadata errors.
 ## Install
 
 1. Copy the `nbnp-metadata-editor` folder somewhere it will stay, for example
-   `%LOCALAPPDATA%\nbnp-metadata-editor`. The menu runs the editor from there.
+   `%LOCALAPPDATA%\Programs\nbnp-metadata-editor`. The menu runs the editor from there.
 2. In that folder, open a PowerShell window and run:
 
    ```powershell
@@ -47,6 +47,12 @@ the nearest `title.toml` in the folders above it, and the issue form shows those
 
 The issue form has two columns: the issue's own values on the left; on the right, what it
 inherits from the title, the errata, and the values that differ from the title.
+
+For a run of issues that differ only in a value or two, choose **Fill from last saved issue**
+at the top of the issue's fields. It copies every value of the last issue you saved, except
+missing pages and errata, which describe one copy; then change what differs, usually the
+issue number and date. The form asks before replacing anything already typed. The last issue
+is remembered for you alone, in `%LOCALAPPDATA%\nbnp-metadata-editor\last-issue.toml`.
 
 Fill in the form and choose **Save**. Values that need correcting are marked in red with the
 reason; nothing is written until they are fixed. A warning, such as a date whose year differs
@@ -146,14 +152,17 @@ on a Windows PC with the list below after changing the form or the installer.
    the right; the file has three lines and no empty fields.
 4. Reopen it: the values are filled in. Change the issue to `6` and save: `issue.toml.bak`
    holds the previous version.
-5. Try title ID `-1`, `4.5` and `abc`, date `1909-02-29`, volume `05`, missing pages `1 & 2`:
+5. On a second new issue folder, choose Fill from last saved issue: date, volume and issue
+   are filled from step 4, missing pages and errata are empty. Change the issue number and
+   save.
+6. Try title ID `-1`, `4.5` and `abc`, date `1909-02-29`, volume `05`, missing pages `1 & 2`:
    each is marked in red and nothing is saved.
-6. Enter an edition with `"quotes"`, a backslash and `é`, and two lines of errata; save and
+7. Enter an edition with `"quotes"`, a backslash and `é`, and two lines of errata; save and
    reopen: the values are unchanged.
-7. Cancel after a change: asked to confirm; the file is unchanged.
-8. Open the form, change the file in Notepad, then Save in the form: refused, Notepad's version
+8. Cancel after a change: asked to confirm; the file is unchanged.
+9. Open the form, change the file in Notepad, then Save in the form: refused, Notepad's version
    kept.
-9. Right-click a folder whose name has spaces, an apostrophe, parentheses and `é`: the form
-   opens on that folder.
-10. A folder with `metadata.php` opens read-only.
-11. Uninstall: both items disappear; the metadata files remain.
+10. Right-click a folder whose name has spaces, an apostrophe, parentheses and `é`: the form
+    opens on that folder.
+11. A folder with `metadata.php` opens read-only.
+12. Uninstall: both items disappear; the metadata files remain.

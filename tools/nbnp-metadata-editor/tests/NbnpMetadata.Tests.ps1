@@ -276,6 +276,48 @@ Describe 'Saving' {
     }
 }
 
+Describe 'The last issue saved' {
+    BeforeEach {
+        $script:state = Join-Path $TestDrive ([guid]::NewGuid().ToString('N'))
+    }
+
+    It 'has none before an issue is saved' {
+        Get-NbnpLastIssue -Directory $state | Should -BeNullOrEmpty
+    }
+
+    It 'returns the saved values and folder, without missing pages and errata' {
+        $checked = Test-NbnpMetadata -Kind Issue -Title $script:TitleFile -Today $script:Today -Values (
+            Values @{ date = '1909-01-29'; volume = '33'; issue = '5'; edition = 'Evening'
+                missing_pages = '3, 4'; errata = 'Incorrect issue numbering'; supplement_title = 'Supplement to The News' })
+        Save-NbnpLastIssue -Values $checked.Values -Folder "X:\The News – l'été\TN_1909_33_05" -Directory $state
+        $last = Get-NbnpLastIssue -Directory $state
+        $last.Folder | Should -Be "X:\The News – l'été\TN_1909_33_05"
+        $last.Values.Keys | Should -Be @('date', 'volume', 'issue', 'edition', 'supplement_title')
+        $last.Values['date'].Text | Should -Be '1909-01-29'
+        $last.Values['date'].Kind | Should -Be 'bare'
+        $last.Values['supplement_title'].Text | Should -Be 'Supplement to The News'
+    }
+
+    It 'keeps only the most recent issue' {
+        foreach ($issue in '5', '6') {
+            Save-NbnpLastIssue -Values (Values @{ date = '1909-01-29'; volume = '33'; issue = $issue }) -Folder "X:\TN_$issue" -Directory $state
+        }
+        (Get-NbnpLastIssue -Directory $state).Values['issue'].Text | Should -Be '6'
+    }
+
+    It 'ignores a remembered file it cannot read' {
+        New-Item -ItemType Directory -Path $state | Out-Null
+        [IO.File]::WriteAllText((Join-Path $state 'last-issue.toml'), "[broken`n")
+        Get-NbnpLastIssue -Directory $state | Should -BeNullOrEmpty
+    }
+
+    It 'never fails when it cannot remember' {
+        $file = Join-Path $TestDrive 'a-file'
+        [IO.File]::WriteAllText($file, 'x')
+        { Save-NbnpLastIssue -Values (Values @{ issue = '5' }) -Folder 'X:\TN' -Directory $file } | Should -Not -Throw
+    }
+}
+
 Describe 'Finding related files' {
     BeforeAll {
         $root = Join-Path $TestDrive "The News (Saint John) – l'été"

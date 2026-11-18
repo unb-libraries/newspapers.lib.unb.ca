@@ -304,6 +304,22 @@ else {
     # Left: the issue's own values.
     $script:Grid = $left
     Add-Heading 'This issue'
+
+    # For runs of issues that differ only in a value or two.
+    $script:LastIssue = Get-NbnpLastIssue
+    $fillLast = New-Object Windows.Forms.Button
+    $fillLast.Text = 'Fill from last saved issue'
+    $fillLast.AutoSize = $true
+    Add-Row $null $fillLast -Span
+    $lastHelp = if ($script:LastIssue) {
+        "Copies the values of the last issue you saved, $(Split-Path -Leaf $script:LastIssue.Folder) at " +
+        "$($script:LastIssue.Saved.ToString('yyyy-MM-dd HH:mm')), except missing pages and errata."
+    }
+    else {
+        'Available once you have saved an issue with this form.'
+    }
+    Add-Row $null (New-Label $lastHelp -Help) -Span
+    $fillLast.Enabled = $null -ne $script:LastIssue
     $supplement = New-Object Windows.Forms.CheckBox
     $supplement.Text = 'This is a supplement'
     $supplement.AutoSize = $true
@@ -372,6 +388,26 @@ else {
                     Set-Input $key $parent.Values[$key].Text
                 }
             }
+        })
+}
+
+if ($Kind -eq 'Issue') {
+    $fillLast.Add_Click({
+            $last = $script:LastIssue.Values
+            # Every field but missing pages and errata takes the last issue's value, or none.
+            $carried = @($script:Inputs.Keys | Where-Object { $_ -ne 'missing_pages' -and $_ -ne 'errata' })
+            $wanted = @{}
+            foreach ($key in $carried) { $wanted[$key] = if ($last.Contains($key)) { $last[$key].Text } else { '' } }
+            $replaced = @($carried | Where-Object {
+                    (Get-InputText $_).Trim() -ne '' -and (Get-InputText $_).Trim() -ne $wanted[$_] })
+            if ($replaced.Count -gt 0) {
+                $answer = Show-Message 'Replace what is already in the form with the last issue''s values?' 'Question' 'YesNo'
+                if ($answer -ne 'Yes') { return }
+            }
+            foreach ($key in $carried) { Set-Input $key $wanted[$key] }
+            $supplement.Checked = $last.Contains('supplement_title')
+            $script:Inputs['issue'].Focus()
+            $script:Inputs['issue'].SelectAll()
         })
 }
 
@@ -467,6 +503,7 @@ $save.Add_Click({
         try {
             $text = ConvertTo-NbnpToml -Kind $Kind -Values $checked.Values -Header $file.Header
             Save-NbnpMetadataFile -Path $file.Path -Text $text -ExpectedHash $file.Hash
+            if ($Kind -eq 'Issue') { Save-NbnpLastIssue -Values $checked.Values -Folder $Path }
         }
         catch {
             [void](Show-Message "Nothing was saved.`n`n$($_.Exception.Message)" 'Error')
