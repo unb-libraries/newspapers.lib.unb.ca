@@ -17,7 +17,7 @@ use std::process::ExitCode;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use tracing::{Level, error};
-use tracing_subscriber::filter::LevelFilter;
+use tracing_subscriber::filter::Targets;
 use tracing_subscriber::fmt::layer;
 use tracing_subscriber::layer::SubscriberExt as _;
 use tracing_subscriber::util::SubscriberInitExt as _;
@@ -143,9 +143,14 @@ fn init_logging(verbose: u8) {
         1 => Level::DEBUG,
         _ => Level::TRACE,
     };
+    // This tool's events at the chosen level; its libraries' only when they warn. The AWS SDK
+    // logs credential details, such as the access key ID, at info.
+    let filter = Targets::new()
+        .with_target(env!("CARGO_CRATE_NAME"), level)
+        .with_default(Level::WARN);
     // The terminal, and a copy without colour codes for the run's log file once it is open.
     tracing_subscriber::registry()
-        .with(LevelFilter::from_level(level))
+        .with(filter)
         .with(layer().with_writer(std::io::stderr).with_target(false))
         .with(
             layer()
