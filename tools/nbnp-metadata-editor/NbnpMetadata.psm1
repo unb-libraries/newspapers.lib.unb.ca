@@ -435,7 +435,7 @@ function Find-NbnpTitleFolder {
         }
         $dir = $dir.Parent
     }
-    $rerun = "Open the menu on a title's folder, or on any folder inside it."
+    $rerun = "Right-click a title's folder, or any folder inside it, and choose Edit newspaper metadata."
     $search = @{ Visited = 0; Max = $MaxFolders; TitleBelow = $null; Full = $false }
     $sample = if (Get-NbnpFirstPage -Folder $full) { $full }
     else { Find-FirstIssue -Folder $full -Depth $MaxDepth -Search $search }
@@ -620,7 +620,7 @@ function Test-NbnpMetadata {
             'title_id' {
                 $number = [int64]0
                 if ($text -notmatch '^[1-9][0-9]*$' -or -not [int64]::TryParse($text, [ref]$number) -or $number -gt 4294967295) {
-                    & $error_ $key 'Title ID must be a whole number, 1 or more (the number in the title''s address, /serials/browse/48).'
+                    & $error_ $key 'Title ID must be a whole number, 1 or more (the number at the end of the title''s web address, such as 48 in /serials/browse/48).'
                 }
                 elseif ($value.Kind -ne 'bare') {
                     & $error_ $key 'Title ID must be a number without quotes.'
@@ -632,13 +632,13 @@ function Test-NbnpMetadata {
                     [datetime]::TryParseExact($text, 'yyyy-MM-dd', [Globalization.CultureInfo]::InvariantCulture,
                         [Globalization.DateTimeStyles]::None, [ref]$date)
                 if (-not $isDate) {
-                    & $error_ $key "Date must be a real date written YYYY-MM-DD, such as 1909-01-29; '$text' is not."
+                    & $error_ $key "Date '$text' is not a real date; write it like 1909-01-29 or January 29, 1909."
                 }
                 elseif ($value.Kind -ne 'bare') {
                     & $error_ $key 'Date must be written without quotes.'
                 }
                 elseif ($date -gt $Today) {
-                    & $error_ $key "Date $text is in the future."
+                    & $error_ $key "Date $text is in the future; check it against the page."
                 }
                 else {
                     if ($date.Year -lt $script:EarliestLikelyYear) {
@@ -646,7 +646,7 @@ function Test-NbnpMetadata {
                     }
                     $years = Get-NbnpPathYears $Folder
                     if ($years.Count -gt 0 -and $years -notcontains $date.Year) {
-                        & $warn $key "The folder path names $($years -join ', '), but the date is in $($date.Year)." 'folder-year'
+                        & $warn $key "Date is in $($date.Year), but the folder path has $($years -join ', '); check the year." 'folder-year'
                     }
                 }
             }
@@ -662,18 +662,18 @@ function Test-NbnpMetadata {
             }
         }
         if ($key -ne 'errata' -and $text -match '\p{Cc}') {
-            & $error_ $key "$(Get-FieldLabel $key) must be a single line, without control characters."
+            & $error_ $key "$(Get-FieldLabel $key) contains a tab, line break or other hidden character, often pasted with text; delete the text and type it again."
         }
         if ($key -eq 'errata' -and $text -match '[\p{Cc}-[\n\t]]') {
-            & $error_ $key 'Errata contains a control character; retype it.'
+            & $error_ $key 'Errata contains a hidden character, often pasted with text; delete the text and type it again.'
         }
         if ($text -match '[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]') {
-            & $error_ $key "$(Get-FieldLabel $key) contains a broken character; retype it."
+            & $error_ $key "$(Get-FieldLabel $key) contains a broken character; delete the text and type it again."
         }
         $invisible = @([regex]::Matches($text, '\p{Cf}') | ForEach-Object { 'U+{0:X4}' -f [int][char]$_.Value } |
                 Select-Object -Unique)
         if ($invisible.Count -gt 0) {
-            & $warn $key "$(Get-FieldLabel $key) contains invisible characters ($($invisible -join ', ')), often pasted with text; remove them unless they are meant."
+            & $warn $key "$(Get-FieldLabel $key) contains hidden characters ($($invisible -join ', ')), often pasted with text; delete the text and type it again."
         }
         $length = Get-CharacterCount $text
         if ($script:MaxLength.ContainsKey($key) -and $length -gt $script:MaxLength[$key]) {
@@ -685,15 +685,15 @@ function Test-NbnpMetadata {
         if (-not $clean.Contains($key)) { continue }
         $text = $clean[$key].Text
         if ($text -match '^0[0-9]') {
-            & $error_ $key "$(Get-FieldLabel $key) '$text' is padded with zeros; write it as printed without them (5, not 05)."
+            & $error_ $key "$(Get-FieldLabel $key) '$text' starts with a zero; leave leading zeros out, even when printed (5, not 05)."
         }
         elseif ($text -match '^ISSUE_|^[A-Z]+_[A-Z_]+$') {
-            & $error_ $key "$(Get-FieldLabel $key) '$text' is a template placeholder, not a printed value."
+            & $error_ $key "$(Get-FieldLabel $key) '$text' is not a value printed on the page; type the value as printed."
         }
     }
 
     if ($clean.Contains('missing_pages') -and -not (Test-MissingPages $clean['missing_pages'].Text)) {
-        & $error_ 'missing_pages' 'Missing pages must be page numbers or ranges separated by commas, such as 3, 6, 7 or 4-8: numbers, dashes and commas only, without zero padding.'
+        & $error_ 'missing_pages' 'Missing pages must be page numbers or ranges separated by commas, such as 3, 6, 7 or 4-8. No leading zeros (3, not 03), and a range runs from a lower page to a higher one (4-8, not 8-4).'
     }
 
     if ($Kind -eq 'Title' -and -not $clean.Contains('title_id')) {
@@ -705,7 +705,7 @@ function Test-NbnpMetadata {
         foreach ($key in @('title', 'language', 'media')) {
             $inherited = $null -ne $Title -and $Title.Values.Contains($key)
             if (-not $inherited -and -not $clean.Contains($key)) {
-                & $error_ $key "$(Get-FieldLabel $key) is required: no title.toml above this folder provides it."
+                & $error_ $key "$(Get-FieldLabel $key) is required, and the title details do not include it: tick ""Different title details for this issue"" and fill it in."
             }
         }
     }
@@ -819,9 +819,9 @@ function Save-NbnpMetadataFile {
     $current = if ($exists) { Get-BytesHash ([IO.File]::ReadAllBytes($Path)) } else { $null }
     if ($current -ne $expected) {
         if ($null -eq $expected) {
-            throw "$(Split-Path -Leaf $Path) was created by someone else while this form was open. Close the form and open it again to see it."
+            throw "$(Split-Path -Leaf $Path) was created while this form was open, by someone else or in another window. Note what you typed, close the form, and open it again to see that file."
         }
-        throw "$(Split-Path -Leaf $Path) was changed or removed while this form was open. Close the form and open it again to see the current version."
+        throw "$(Split-Path -Leaf $Path) was changed or removed while this form was open, by someone else or in another window. Note what you typed, close the form, and open it again to see the current version."
     }
     $folder = Split-Path -Parent $Path
     $temp = Join-Path $folder ('.' + (Split-Path -Leaf $Path) + '.' + [guid]::NewGuid().ToString('N') + '.tmp')
@@ -917,15 +917,15 @@ function Get-NbnpStateDirectory {
 
 # The warnings a user may turn off: those that guess from patterns, not those about the file.
 $script:WarningChecks = @(
-    @{ Id = 'date-order'; Label = "Date earlier than the previous issue's, or later than the next one's" }
+    @{ Id = 'date-order'; Label = "Date is earlier than the previous issue's, or later than the next one's" }
     @{ Id = 'same-date'; Label = 'Same date as another issue of the title' }
     @{ Id = 'same-number'; Label = 'Same volume and issue as another issue of the title' }
     @{ Id = 'folder-number'; Label = 'Volume or issue differs from the folder name' }
-    @{ Id = 'lower-number'; Label = "Volume or issue lower than the previous issue's" }
+    @{ Id = 'lower-number'; Label = "Volume or issue is lower than the previous issue's, or higher than the next one's" }
     @{ Id = 'edition-number'; Label = 'Edition is only a number' }
     @{ Id = 'repeat-last'; Label = 'Same volume, issue and date as the last issue you saved' }
-    @{ Id = 'folder-year'; Label = 'Year differs from the year in the folder path' }
-    @{ Id = 'early-year'; Label = "Date before $($script:EarliestLikelyYear)" }
+    @{ Id = 'folder-year'; Label = 'Date''s year differs from the year in the folder path' }
+    @{ Id = 'early-year'; Label = "Date is before $($script:EarliestLikelyYear)" }
 )
 
 function Get-NbnpWarningChecks {
@@ -1121,13 +1121,13 @@ function Test-NbnpIssueSequence {
     $checkNumbers = -not (Get-ValueText $Values 'errata').Trim()
     $isSupplement = [bool](Get-ValueText $Values 'supplement_title')
 
-    if ($edition -match '^\d+$') { & $warn 'edition-number' 'edition' "Edition is only a number ($edition). The issue number goes in Issue." }
+    if ($edition -match '^\d+$') { & $warn 'edition-number' 'edition' "Edition is only a number ($edition). The issue number goes in Issue; Edition is for an edition statement such as Evening." }
 
     $leaf = Split-Path -Leaf $full
     if ($checkNumbers -and $leaf -match '^[^_]+_\d{4}_(\d+)_(\d+)(_|$)') {
         foreach ($pair in @(@('volume', $volume, $Matches[1]), @('issue', $number, $Matches[2]))) {
             if ($pair[1] -match '^\d+$' -and [long]$pair[1] -ne [long]$pair[2]) {
-                & $warn 'folder-number' $pair[0] "$(Get-FieldLabel $pair[0]) $($pair[1]) differs from the folder name ($([long]$pair[2])). If printed so, note it in Errata."
+                & $warn 'folder-number' $pair[0] "$(Get-FieldLabel $pair[0]) $($pair[1]) differs from the folder name ($([long]$pair[2])). Check the page; if the number is printed that way, note it in Errata."
             }
         }
     }
@@ -1152,13 +1152,13 @@ function Test-NbnpIssueSequence {
 
     if ($date) {
         if ($before -and [string]::CompareOrdinal((Get-ValueText $before.Values 'date'), $date) -gt 0) {
-            & $warn 'date-order' 'date' "Date is before the previous issue's, $($before.Name) ($(Get-ValueText $before.Values 'date'))."
+            & $warn 'date-order' 'date' "Date is before the previous issue's, $($before.Name) ($(Get-ValueText $before.Values 'date')). Check the date."
         }
         if ($after -and (Get-ValueText $after.Values 'date') -and [string]::CompareOrdinal((Get-ValueText $after.Values 'date'), $date) -lt 0) {
-            & $warn 'date-order' 'date' "Date is after the next issue's, $($after.Name) ($(Get-ValueText $after.Values 'date'))."
+            & $warn 'date-order' 'date' "Date is after the next issue's, $($after.Name) ($(Get-ValueText $after.Values 'date')). Check the date."
         }
         $same = @($others | Where-Object { (Get-ValueText $_.Values 'date') -eq $date -and (Get-ValueText $_.Values 'edition') -eq $edition })
-        if ($same.Count) { & $warn 'same-date' 'date' "Same date as $($same[0].Name)." }
+        if ($same.Count) { & $warn 'same-date' 'date' "Same date as $($same[0].Name). If this is another edition, fill in Edition." }
     }
     if (-not $checkNumbers) { return $findings.ToArray() }
 
@@ -1166,7 +1166,7 @@ function Test-NbnpIssueSequence {
         $same = @($others | Where-Object {
                 (Get-ValueText $_.Values 'volume') -eq $volume -and (Get-ValueText $_.Values 'issue') -eq $number -and
                 (Get-ValueText $_.Values 'edition') -eq $edition })
-        if ($same.Count) { & $warn 'same-number' 'issue' "Same volume and issue as $($same[0].Name)." }
+        if ($same.Count) { & $warn 'same-number' 'issue' "Same volume and issue as $($same[0].Name). If this is another edition, fill in Edition; if the number is printed wrong, note it in Errata." }
     }
     # Numbers going backwards, where both are plain numbers.
     $lower = {
@@ -1183,11 +1183,11 @@ function Test-NbnpIssueSequence {
     }
     if ($before) {
         $field = & $lower $before.Values $Values
-        if ($field) { & $warn 'lower-number' $field "$(Get-FieldLabel $field) is lower than the previous issue's, $($before.Name) ($(Get-ValueText $before.Values $field))." }
+        if ($field) { & $warn 'lower-number' $field "$(Get-FieldLabel $field) is lower than the previous issue's, $($before.Name) ($(Get-ValueText $before.Values $field)). Check the page; if the number is printed that way, note it in Errata." }
     }
     if ($after) {
         $field = & $lower $Values $after.Values
-        if ($field) { & $warn 'lower-number' $field "$(Get-FieldLabel $field) is higher than the next issue's, $($after.Name) ($(Get-ValueText $after.Values $field))." }
+        if ($field) { & $warn 'lower-number' $field "$(Get-FieldLabel $field) is higher than the next issue's, $($after.Name) ($(Get-ValueText $after.Values $field)). Check the page; if the number is printed that way, note it in Errata." }
     }
     $findings.ToArray()
 }

@@ -228,7 +228,7 @@ function New-PageViewer([Windows.Forms.Control] $Parent, [string[]] $Pages) {
     $script:PageChoice.TabStop = $false
     foreach ($page in $Pages) { [void]$script:PageChoice.Items.Add((Split-Path -Leaf $page)) }
     $tools.Controls.Add($script:PageChoice)
-    foreach ($spec in @(@('+', 'Zoom in'), @('-', 'Zoom out'), @('Fit', 'Fit the width (or double-click the page)'), @('Open', 'Open the page in the Windows viewer'))) {
+    foreach ($spec in @(@('+', 'Zoom in'), @('-', 'Zoom out'), @('Fit', 'Fit the width (or double-click the page)'), @('Open', 'Open the page in your usual picture viewer'))) {
         $button = New-Object Windows.Forms.Button
         $button.Text = $spec[0]
         $button.Tag = $spec[0]
@@ -526,7 +526,7 @@ function Update-Findings([string] $Touched = '', [switch] $All) {
     $script:Errors.Clear()
     $lines = @()
     foreach ($finding in $findings) {
-        $prefix = if ($finding.Severity -eq 'Error') { '' } else { 'Check: ' }
+        $prefix = if ($finding.Severity -eq 'Error') { 'Fix: ' } else { 'Check: ' }
         $lines += "$prefix$($finding.Message)"
         if ($finding.Severity -eq 'Error' -and $script:Inputs.Contains($finding.Field)) {
             $control = $script:Inputs[$finding.Field]
@@ -657,7 +657,7 @@ function Show-TitleView([string] $Message = '') {
     Reset-View 'Title' $script:TitleFolder
     $script:File = Read-NbnpMetadataFile -Folder $script:TitleFolder -Kind Title
     if ($script:File.Exists -and -not $script:File.Supported) {
-        Show-ReadOnly ("This title.toml cannot be edited here, so that nothing in it is lost: $($script:File.Reason). " +
+        Show-ReadOnly ("This title.toml cannot be edited here: $($script:File.Reason). Editing it here could lose some of its content.  " +
             'Ask whoever maintains the newspaper metadata to look at it.') $script:File.Path $script:File.Text
         $script:Form.Close()
         return
@@ -665,7 +665,7 @@ function Show-TitleView([string] $Message = '') {
     Set-Header "Title: $(Get-TitleName)"
 
     Add-Heading 'Title metadata'
-    $where = if ($script:File.Exists) { "Editing $($script:File.Path)" } else { "Not created yet. It will be saved as $($script:File.Path)" }
+    $where = if ($script:File.Exists) { "Editing $($script:File.Path)" } else { "No title details saved yet. They will be saved in $($script:File.Path)" }
     Add-Row $null (New-Label $where -Hint) -Span
     if (-not $script:File.Exists) {
         $choose = New-Button 'Use another folder for the title...' { Select-TitleFolder }
@@ -687,7 +687,7 @@ function Show-TitleView([string] $Message = '') {
     $s = $script:Summary
     $summaryText = if ($s.Total -eq 0) { 'No issue folders (folders with page images) were found below this folder.' }
     else {
-        "$($s.Total) issue folders: $($s.Done) done, $($s.New) need metadata" +
+        "$($s.Total) issue folders: $($s.Done) done, $($s.New) to do" +
         $(if ($s.Legacy) { ", $($s.Legacy) already imported." } else { '.' })
     }
     $summaryLabel = New-Label $summaryText
@@ -703,7 +703,7 @@ function Show-TitleView([string] $Message = '') {
     $labels = @{ done = 'done    '; new = 'to do   '; legacy = 'imported' }
     foreach ($issue in $s.Issues) { [void]$script:IssueList.Items.Add("$($labels[$issue.State])  $($issue.Name)") }
     Add-Row $null $script:IssueList -Span
-    Add-Row $null (New-Label 'Double-click an issue to open it.' -Hint) -Span
+    Add-Row $null (New-Label 'Double-click an issue to open it. Unsaved title details are saved first.' -Hint) -Span
     $script:IssueList.Add_DoubleClick({
             $index = $script:IssueList.SelectedIndex
             if ($index -ge 0) { Open-IssueFromTitle $script:Summary.Issues[$index].Path }
@@ -717,7 +717,7 @@ function Show-TitleView([string] $Message = '') {
     New-PageViewer $script:ViewerHost $firstPages
 
     $enter = New-Button 'Save and enter issues' { Enter-Issues } -Bold
-    $script:Tips.SetToolTip($enter, 'Enter. Saves the title, then opens the first issue that needs metadata.')
+    $script:Tips.SetToolTip($enter, 'Enter or Ctrl+S. Saves the title, then opens the first issue that needs metadata, or the issue the menu was opened on.')
     $save = New-Button 'Save' { if (Save-Current) { Show-TitleView 'Saved the title.' } }
     $close = New-Button 'Close' { $script:Form.Close() }
     $script:Buttons.Controls.AddRange([Windows.Forms.Control[]]@($close, $save, $enter))
@@ -750,7 +750,7 @@ function Enter-Issues {
     }
     $issues = @($script:Summary.Issues | Where-Object State -NE 'legacy')
     if ($issues.Count -eq 0) {
-        Set-Status 'There are no issue folders to enter below this title.'
+        Set-Status 'No issue below this title can be entered: none were found, or all are already imported.'
         return
     }
     $start = $script:StartIssue
@@ -758,7 +758,7 @@ function Enter-Issues {
     if (-not $start -or -not ($issues | Where-Object Path -EQ $start)) {
         $start = if ($script:Summary.FirstNew) { $script:Summary.FirstNew } else { $issues[0].Path }
     }
-    Show-IssueView $start "Title saved. $($script:Summary.New) issues need metadata."
+    Show-IssueView $start "$($script:Summary.New) issues need metadata."
 }
 
 function Open-IssueFromTitle([string] $Folder) {
@@ -775,7 +775,7 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
     Reset-View 'Issue' $Folder
     $script:File = Read-NbnpMetadataFile -Folder $Folder -Kind Issue
     if (-not $script:File.Supported) {
-        Show-ReadOnly ("This issue.toml cannot be edited here, so that nothing in it is lost: $($script:File.Reason). " +
+        Show-ReadOnly ("This issue.toml cannot be edited here: $($script:File.Reason). Editing it here could lose some of its content.  " +
             'Ask whoever maintains the newspaper metadata to look at it.') $script:File.Path $script:File.Text
         Show-TitleView
         return
@@ -790,11 +790,11 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
     $back.TabStop = $false
     Set-Header "$(Get-TitleName)  >  $(Split-Path -Leaf $Folder)    (issue $position of $($script:Summary.Total); $($script:Summary.New) need metadata)" $back
 
-    Add-Row $null (New-Label $(if ($script:File.Exists) { 'Editing the existing issue.toml.' } else { 'A new issue.toml will be created.' }) -Hint) -Span
+    Add-Row $null (New-Label $(if ($script:File.Exists) { 'This issue already has metadata; you are changing it.' } else { 'This issue has no metadata yet.' }) -Hint) -Span
     $fill = New-Button '&Fill from last saved issue' {
         $carried = @($script:Inputs.Keys | Where-Object { $_ -ne 'missing_pages' -and $_ -ne 'errata' })
         if (@($carried | Where-Object { (Get-InputText $_).Trim() -ne '' }).Count -gt 0) {
-            $answer = Show-Message 'Replace what is already in the form with the last issue''s values?' 'Question' 'YesNo'
+            $answer = Show-Message 'Replace what is already in the form with the last saved issue''s values?' 'Question' 'YesNo'
             if ($answer -ne 'Yes') { return }
         }
         Copy-LastIssue
@@ -803,17 +803,17 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
     $fill.Enabled = $null -ne $script:LastIssue
     Add-Row $null $fill -Span
     $lastHint = if ($script:LastIssue) {
-        "Alt+F. Last saved: $(Split-Path -Leaf $script:LastIssue.Folder). Copies all but missing pages and errata."
+        "Alt+F. Last saved: $(Split-Path -Leaf $script:LastIssue.Folder). Copies all but Missing pages and Errata."
     }
     else { 'Available once you have saved an issue of this title.' }
     Add-Row $null (New-Label $lastHint -Hint) -Span
 
     $asPrinted = 'Exactly as printed, even if it is wrong; note a wrong number in Errata. No zero padding: 5, not 05.'
     Add-TextField 'volume' 'Volume' 'As printed; 5, not 05.' $asPrinted -Width 100 | Out-Null
-    Add-TextField 'issue' 'Issue (No.)' 'As printed; 5, not 05.' $asPrinted -Width 100 | Out-Null
+    Add-TextField 'issue' 'Issue' 'As printed; 5, not 05.' $asPrinted -Width 100 | Out-Null
     $date = Add-TextField 'date' 'Date' 'e.g. 1902-03-28 or March 28, 1902. Day not printed: the 1st.' (
-        'The date as printed. Written YYYY-MM-DD; 1902-3-28, March 28, 1902 and 28 March 1902 are also ' +
-        'accepted and rewritten. If the day is not printed (a monthly) or you are unsure of it, use the 1st.') -Width 140
+        'The date as printed. Type it as YYYY-MM-DD, or as 1902-3-28, March 28, 1902 or 28 March 1902; ' +
+        'those are rewritten as YYYY-MM-DD when you leave the field. If the day is not printed (a monthly) or you are unsure of it, use the 1st.') -Width 140
     $script:Weekday = New-Label '' -Hint
     Add-Row $null $script:Weekday
     $date.Add_TextChanged({
@@ -829,7 +829,7 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
     Add-TextField 'missing_pages' 'Missing pages' 'Optional; e.g. 3, 6-8.' (
         'Page numbers separated by commas, or ranges: 3, 6, 7 or 4-8. Numbers, dashes and commas only; ' +
         'no zero padding.') -Width 140 | Out-Null
-    Add-TextField 'errata' 'Errata' 'Optional. Short and clear to everyone.' (
+    Add-TextField 'errata' 'Errata' 'Optional. Printing errors, such as a wrong number. Short and clear.' (
         'For any problem with the printed issue numbering, use "Incorrect issue numbering".') -Multiline | Out-Null
     $phrase = New-Button 'Insert "Incorrect issue numbering"' {
         $text = 'Incorrect issue numbering'
@@ -864,12 +864,12 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
         })
 
     $script:Differs = New-Object Windows.Forms.CheckBox
-    $script:Differs.Text = 'Different from the title...'
+    $script:Differs.Text = 'Different title details for this issue'
     $script:Differs.AutoSize = $true
     $script:Differs.TabStop = $false
     $script:Differs.Margin = New-Object Windows.Forms.Padding(3, 10, 3, 3)
     Add-Row $null $script:Differs -Span
-    $script:Tips.SetToolTip($script:Differs, 'Only when this issue differs from its title, such as a masthead printing a different title.')
+    $script:Tips.SetToolTip($script:Differs, 'Tick only when this issue differs from its title, such as a masthead printing a different title.')
     $script:Overrides = New-Grid
     $script:Overrides.Visible = $false
     Add-Row $null $script:Overrides -Span
@@ -878,7 +878,7 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
     Add-TextField 'title' 'Title' '' 'The exact, complete title from this issue''s masthead, when it differs from the title''s.' | Out-Null
     Add-LanguageField 'language' 'Language' 'Only when this issue''s language differs from the title''s.' -AllowEmpty | Out-Null
     Add-TextField 'media' 'Media' '' 'The source the scans were made from.' -Width 100 | Out-Null
-    Add-TextField 'title_id' 'Title ID' '' 'Only if this issue belongs to a different Digital Title.' -Width 100 | Out-Null
+    Add-TextField 'title_id' 'Title ID' '' 'Only when this issue belongs to a different title on the site.' -Width 100 | Out-Null
     $script:Grid = $fieldsGrid
     $script:Differs.Add_CheckedChanged({ $script:Overrides.Visible = $script:Differs.Checked })
 
@@ -887,9 +887,9 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
     New-PageViewer $script:ViewerHost $pages
 
     $last = -not $script:NextFolder
-    $nextText = if ($last) { 'Save and finish' } else { 'Save and next' }
+    $nextText = if ($last) { 'Save and back to title' } else { 'Save and next' }
     $saveNext = New-Button $nextText { Invoke-SaveNext } -Bold
-    $script:Tips.SetToolTip($saveNext, $(if ($last) { 'Enter or Ctrl+S. The last issue: saves, then returns to the title.' }
+    $script:Tips.SetToolTip($saveNext, $(if ($last) { 'Enter or Ctrl+S. Saves, then returns to the title. This is the last issue.' }
             else { "Enter or Ctrl+S. Saves, then opens $(Split-Path -Leaf $script:NextFolder)." }))
     $save = New-Button 'Save' { if (Save-Current) { Set-Status "Saved $(Split-Path -Leaf $script:Folder)." -Good } }
     $close = New-Button 'Close' { $script:Form.Close() }
@@ -1062,7 +1062,7 @@ $script:Form.Add_Shown({
         }
         else {
             if ($openedOnIssue) { $script:StartIssue = $Path }
-            Show-TitleView $(if (-not $title.Exists) { 'This title has no title.toml yet: fill in the title first, then Save and enter issues.' } else { '' })
+            Show-TitleView $(if (-not $title.Exists) { 'No title details saved yet: fill them in first, then click Save and enter issues.' } else { '' })
         }
     })
 

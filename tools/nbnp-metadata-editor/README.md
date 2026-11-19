@@ -48,7 +48,7 @@ It shows the title's `title.toml`, the first page of its first issue, and its is
   `KCR_1902_17_26`, the first folder not starting `KCR_`). **Use another folder for the
   title...** picks a different one.
 - **Issues**: how many issue folders the title has (folders with page images), how many are
-  done, need metadata, or are already imported, and the list of them.
+  done, to do, or already imported, and the list of them.
   Double-click one to open it.
 - **Save and enter issues** (Enter) saves the title and opens the first issue that needs
   metadata, or the issue the menu was opened on.
@@ -86,7 +86,7 @@ On the left, the fields follow the masthead: volume, issue number, date.
 3. A new issue arrives filled in from the one just saved, except missing pages and errata,
    with the issue number selected: type the new number, check the date, press Enter.
 
-After the last issue the button reads **Save and finish** and returns to the title view, with
+After the last issue the button reads **Save and back to title** and returns to the title view, with
 the issues still needing metadata counted. **Back to title** (Alt+B) returns at any time.
 **Save** saves and stays; **Close** (Esc) closes the window. Leaving a view or closing with
 unsaved changes asks first.
@@ -134,7 +134,7 @@ letter (`é` as one character), as Windows types them, so pasted text compares a
 alike. Invisible characters that often arrive with pasted text, such as zero-width spaces,
 draw a warning naming them.
 
-The **Different from the title...** fields are hidden until ticked, and usually left empty;
+The **Different title details for this issue** fields are hidden until ticked, and usually left empty;
 fill them only when an issue differs from its title, for example a masthead printing a
 different title. They open by themselves when an issue already uses them, or when no
 `title.toml` is found.
@@ -265,8 +265,8 @@ to check the values against. It is not in this repository; ask for it.
    issue differs from the folder name and that `TN_1909_33_05` has the same date and number.
    Answer No. Type an errata note: only the same-date warning remains. Clear it, correct the
    number and date, press Enter. Edition `6` warns that it is only a number. On
-   `TN_1909_33_07` the button reads Save and finish; pressing it returns to the title view:
-   0 issues need metadata.
+   `TN_1909_33_07` the button reads Save and back to title; pressing it returns to the title
+   view: 0 to do.
 6. **Across volumes.** In Kings County Record, Save and next goes `KCR_1902_16_25`,
    `KCR_1902_17_26`, `KCR_1902_18_27`.
 7. **Supplement.** In The Quoddy Tides (a `title.toml` without a Title ID: the title view

@@ -242,8 +242,8 @@ Describe 'The editor window' {
         Start-Editor $script:Issue['KCR_1902_16_25']
         $window = Get-MainWindow
         Save-Shot 'title-view'
-        Get-Label $window 'status' | Should -Match 'no title.toml'
-        Get-Label $window 'summary' | Should -Be '5 issue folders: 0 done, 4 need metadata, 1 already imported.'
+        Get-Label $window 'status' | Should -Match 'no title details saved yet'
+        Get-Label $window 'summary' | Should -Be '5 issue folders: 0 done, 4 to do, 1 already imported.'
         Assert-OnScreen $window @('Save and enter issues', 'Save', 'Close')
     }
 
@@ -350,7 +350,7 @@ Describe 'The editor window' {
         Set-Field $window 'volume' '33'
         Set-Field $window 'issue' '5'
         Set-Field $window 'date' '1909-02-05'
-        Invoke-Button (Find-Button $window 'Save and finish')
+        Invoke-Button (Find-Button $window 'Save and back to title')
         Wait-Until { (Get-Label $window 'summary') -match '1 done' } 'the title view' | Out-Null
         Stop-Editor
 
@@ -366,7 +366,7 @@ Describe 'The editor window' {
         Get-Text $box | Should -Match 'KCR_1902_17_27 has already been imported'
         Invoke-Button (Find-Button $box 'OK')
         $window = Get-MainWindow
-        Get-Label $window 'summary' | Should -Be '5 issue folders: 3 done, 1 need metadata, 1 already imported.'
+        Get-Label $window 'summary' | Should -Be '5 issue folders: 3 done, 1 to do, 1 already imported.'
         Save-Shot 'title-view-after'
     }
 }

@@ -290,22 +290,22 @@ Describe 'Checks against the title''s other issues' {
     }
 
     It 'warns of a date out of order, both ways' {
-        (Check 'KCR_1902_15_45' (Issue '1902-07-18' '15' '45')).Message | Should -Be "Date is before the previous issue's, KCR_1902_15_44 (1902-07-25)."
-        (Check 'KCR_1902_15_45' (Issue '1902-08-09' '15' '45')).Message | Should -Be "Date is after the next issue's, KCR_1902_15_46 (1902-08-08)."
+        (Check 'KCR_1902_15_45' (Issue '1902-07-18' '15' '45')).Message | Should -Be "Date is before the previous issue's, KCR_1902_15_44 (1902-07-25). Check the date."
+        (Check 'KCR_1902_15_45' (Issue '1902-08-09' '15' '45')).Message | Should -Be "Date is after the next issue's, KCR_1902_15_46 (1902-08-08). Check the date."
     }
 
     It 'warns of a date another issue has, unless the edition differs' {
-        (Check 'KCR_1902_15_45' (Issue '1902-08-08' '15' '45')).Message | Should -Contain 'Same date as KCR_1902_15_46.'
-        (Check 'KCR_1902_15_45' (Issue '1902-08-08' '15' '45' -Edition 'Evening')).Message | Should -Not -Contain 'Same date as KCR_1902_15_46.'
+        (Check 'KCR_1902_15_45' (Issue '1902-08-08' '15' '45')).Message | Should -Contain 'Same date as KCR_1902_15_46. If this is another edition, fill in Edition.'
+        (Check 'KCR_1902_15_45' (Issue '1902-08-08' '15' '45' -Edition 'Evening')).Message | Should -Not -Contain 'Same date as KCR_1902_15_46. If this is another edition, fill in Edition.'
     }
 
     It 'warns of a volume and issue another issue has' {
-        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '47')).Message | Should -Contain 'Same volume and issue as KCR_1902_15_47.'
+        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '47')).Message | Should -Contain 'Same volume and issue as KCR_1902_15_47. If this is another edition, fill in Edition; if the number is printed wrong, note it in Errata.'
     }
 
     It 'warns of a number unlike the folder name''s' {
         $messages = (Check 'KCR_1902_15_45' (Issue '1902-08-01' '16' '45')).Message
-        $messages | Should -Contain 'Volume 16 differs from the folder name (15). If printed so, note it in Errata.'
+        $messages | Should -Contain 'Volume 16 differs from the folder name (15). Check the page; if the number is printed that way, note it in Errata.'
     }
 
     It 'compares with folder names without their zero padding' {
@@ -313,17 +313,17 @@ Describe 'Checks against the title''s other issues' {
     }
 
     It 'warns of numbers going backwards' {
-        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '43')).Message | Should -Contain "Issue is lower than the previous issue's, KCR_1902_15_44 (44)."
-        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '14' '45')).Message | Should -Contain "Volume is lower than the previous issue's, KCR_1902_15_44 (15)."
+        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '43')).Message | Should -Contain "Issue is lower than the previous issue's, KCR_1902_15_44 (44). Check the page; if the number is printed that way, note it in Errata."
+        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '14' '45')).Message | Should -Contain "Volume is lower than the previous issue's, KCR_1902_15_44 (15). Check the page; if the number is printed that way, note it in Errata."
     }
 
     It 'skips the number checks when Errata is filled in, but not the date checks' {
         $messages = @((Check 'KCR_1902_15_45' (Issue '1902-08-08' '14' '43' -Errata 'Incorrect issue numbering')).Message)
-        $messages | Should -Be @('Same date as KCR_1902_15_46.')
+        $messages | Should -Be @('Same date as KCR_1902_15_46. If this is another edition, fill in Edition.')
     }
 
     It 'warns of an edition that is only a number' {
-        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '45' -Edition '45')).Message | Should -Be 'Edition is only a number (45). The issue number goes in Issue.'
+        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '45' -Edition '45')).Message | Should -Be 'Edition is only a number (45). The issue number goes in Issue; Edition is for an edition statement such as Evening.'
     }
 
     It 'does not compare a supplement with its issue' {
