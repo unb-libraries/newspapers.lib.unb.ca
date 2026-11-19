@@ -22,9 +22,6 @@
       "tbachert/spi": true
     },
     "discard-changes": true,
-    "platform": {
-      "php": "8.5.12"
-    },
     "preferred-install": {
       "*": "dist"
     },
