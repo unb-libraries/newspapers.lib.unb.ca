@@ -179,6 +179,8 @@ pub(super) struct Summary {
     titles: Vec<(u32, String, String)>,
     years: BTreeSet<i32>,
     failed: usize,
+    /// Issues created, added to or failed: zero when the run changed and tried nothing.
+    attempted: usize,
 }
 
 /// New or completed issues listed in a summary; the rest are in the ledger.
@@ -286,7 +288,14 @@ impl Summary {
             titles,
             years,
             failed: counts.failed,
+            attempted,
         }
+    }
+
+    /// True when the run created, added to and failed nothing: every issue was already
+    /// complete or skipped. Such a run sends no notification.
+    pub(super) fn is_no_op(&self) -> bool {
+        self.attempted == 0
     }
 
     /// The line the PHP importer sent, `[title:years] import (result)`, then each title's link.
@@ -493,6 +502,7 @@ mod tests {
             )],
             years: BTreeSet::from([1902, 1903]),
             failed: 1,
+            attempted: 3,
         };
         let now = OffsetDateTime::from_unix_timestamp(1_795_012_573).unwrap();
         assert_eq!(
@@ -507,6 +517,24 @@ mod tests {
             ..summary
         };
         assert!(clean.event(now).contains("[332:1902] import (complete)"));
+    }
+
+    #[test]
+    fn a_run_that_did_nothing_is_a_no_op() {
+        let summary = Summary::of(
+            Path::new("/mnt/nbnp/KingsCountyRecord/KCR_1909"),
+            &[],
+            Duration::from_secs(2),
+            "https://newspapers.lib.unb.ca",
+            &TitleNames::default(),
+        );
+        assert!(summary.is_no_op());
+        assert!(summary.text.contains("0 no-op"), "{}", summary.text);
+        let busy = Summary {
+            attempted: 1,
+            ..summary
+        };
+        assert!(!busy.is_no_op());
     }
 
     #[test]

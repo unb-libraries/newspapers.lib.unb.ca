@@ -142,7 +142,9 @@ server the site also uses. With `webtree.directory_group` set, the tool creates 
 directories itself, mode 775, and the container joins that group to write into them.
 
 When the config has a `[notify]` section, a run with `--yes` also publishes its summary to
-`summary_topic_arn` and a one-line result to `event_topic_arn`, as the PHP importer did.
+`summary_topic_arn` and a one-line result to `event_topic_arn`, as the PHP importer did. A run
+that created, added to and failed nothing (every issue already complete, or skipped) sends
+nothing.
 
 A run's summary looks like this (from a test import on a local site):
 

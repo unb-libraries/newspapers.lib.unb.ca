@@ -93,7 +93,7 @@ Audited 9 issues under <PATH>: 9 match the site, 0 differ, 0 could not be audite
 ```
 
 Its log and ledger are in `/home/imaging/NBHP/logs/nbnp-ingest/`, and the import summary is
-sent to the NBHP notification topics.
+sent to the NBHP notification topics, unless the run created, added to and failed nothing.
 
 ## Check import progress
 

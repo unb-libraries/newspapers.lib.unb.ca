@@ -237,7 +237,12 @@ pub fn open_log(config: &Config, command: &str, root: &Path) -> Result<RunLog, E
 }
 
 /// Sends the summary and the event line; a failure is logged, never fatal: the import is done.
+/// A run that created, added to and failed nothing sends nothing.
 async fn notify(config: &Config, summary: &Summary) {
+    if summary.is_no_op() {
+        info!("nothing was created, added to or failed; no notification sent");
+        return;
+    }
     let Some(notify) = &config.notify else {
         info!("no [notify] section in the config; no notification sent");
         return;
