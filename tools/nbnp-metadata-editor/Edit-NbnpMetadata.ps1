@@ -484,10 +484,15 @@ function Set-Status([string] $Text, [switch] $Good) {
 
 #region Checking and saving
 
+# The issue view's values that override the title's, saved only while their box is ticked.
+$script:OverrideKeys = @('title', 'language', 'media', 'title_id')
+
 function Get-FormValues {
     $values = [ordered]@{}
     foreach ($key in $script:Inputs.Keys) {
         if ($key -eq 'supplement_title' -and -not $script:Supplement.Checked) { continue }
+        # What the hidden "Different title details" fields hold is never saved.
+        if ($script:ViewKind -eq 'Issue' -and $script:OverrideKeys -contains $key -and -not ($script:Differs -and $script:Differs.Checked)) { continue }
         $valueKind = if ($key -eq 'date' -or $key -eq 'title_id') { 'bare' } else { 'string' }
         $values[$key] = New-NbnpValue (Get-InputText $key) $valueKind
     }
@@ -592,6 +597,7 @@ function Reset-View([string] $Kind, [string] $Folder) {
     $script:Touched = @{}
     $script:NextTab = 0
     $script:Supplement = $null
+    $script:Differs = $null
     $script:Errors.Clear()
     # The previous view's controls are taken out now and disposed of once the window has
     # finished the event that got here: a long run of issues would otherwise keep them all, and
@@ -925,7 +931,8 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
 }
 
 # Copies the last issue saved into the form, all but missing pages and errata. A supplement's
-# title carries over only into another supplement's folder.
+# title carries over only into another supplement's folder, and different title details tick
+# their box.
 function Copy-LastIssue {
     $last = $script:LastIssue.Values
     $carrySupplement = $null -ne $script:ParentIssue
@@ -935,6 +942,8 @@ function Copy-LastIssue {
         Set-Input $key $value
     }
     $script:Supplement.Checked = $carrySupplement -and $last.Contains('supplement_title')
+    # Title details copied from the last issue are shown, ticked, so they are not saved unseen.
+    $script:Differs.Checked = @($script:OverrideKeys | Where-Object { (Get-InputText $_).Trim() -ne '' }).Count -gt 0
     $script:Focus = 'issue'
     $box = $script:Inputs['issue']
     if ($box.Visible) { [void]$box.Focus(); $box.SelectAll() }

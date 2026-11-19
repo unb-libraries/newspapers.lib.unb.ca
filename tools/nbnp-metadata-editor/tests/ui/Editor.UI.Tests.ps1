@@ -195,13 +195,13 @@ BeforeAll {
 
     function Read-Text([string] $Path) { [IO.File]::ReadAllText($Path) }
 
-    # The fixture: two titles. Kings County Record has no title.toml yet, four issues to enter
+    # The fixture: two titles. Kings County Record has no title.toml yet, five issues to enter
     # and one already imported; The News has its title.toml and one issue.
     $script:Nbnp = Join-Path $script:Root 'NBNP'
     $kcr = Join-Path $script:Nbnp 'KingsCountyRecord\KCR_1902'
     $script:Kcr = Join-Path $script:Nbnp 'KingsCountyRecord'
     $script:Issue = @{}
-    foreach ($leaf in 'KCR_1902_16_24', 'KCR_1902_16_25', 'KCR_1902_17_26', 'KCR_1902_17_27', 'KCR_1902_18_30') {
+    foreach ($leaf in 'KCR_1902_16_24', 'KCR_1902_16_25', 'KCR_1902_17_26', 'KCR_1902_17_27', 'KCR_1902_18_30', 'KCR_1902_18_31') {
         $parts = $leaf -split '_'
         $folder = Join-Path $kcr ("KCR_1902_{0}\{1}" -f $parts[2], $leaf)
         New-Page $folder $leaf "THE KINGS COUNTY RECORD  VOL. $($parts[2])  No. $($parts[3])"
@@ -243,7 +243,7 @@ Describe 'The editor window' {
         $window = Get-MainWindow
         Save-Shot 'title-view'
         Get-Label $window 'status' | Should -Match 'no title details saved yet'
-        Get-Label $window 'summary' | Should -Be '5 issue folders: 0 done, 4 to do, 1 already imported.'
+        Get-Label $window 'summary' | Should -Be '6 issue folders: 0 done, 5 to do, 1 already imported.'
         Assert-OnScreen $window @('Save and enter issues', 'Save', 'Close')
     }
 
@@ -360,13 +360,43 @@ Describe 'The editor window' {
         (Find-Button $window 'Fill from last saved issue').IsEnabled | Should -BeFalse
     }
 
+    It 'copies different title details shown and ticked, and saves them only while ticked' {
+        Start-Editor $script:Issue['KCR_1902_18_30']
+        $window = Get-MainWindow
+        $differs = Find-Element $window { param($c) $c.Name -eq 'Different title details for this issue' } 'the title details box'
+        Invoke-Button $differs
+        Set-Field $window 'title' 'The Kings County Record and Sussex News'
+        Set-Field $window 'volume' '18'
+        Set-Field $window 'issue' '30'
+        Set-Field $window 'date' '1902-04-04'
+        Invoke-Button (Find-Button $window 'Save and next')
+        Wait-Until { (Get-Label $window 'header') -match 'KCR_1902_18_31' } 'the next issue' | Out-Null
+        Read-Text (Join-Path $script:Issue['KCR_1902_18_30'] 'issue.toml') | Should -Match 'title = "The Kings County Record and Sussex News"'
+
+        # Arrived filled from the last issue: its title details are visible, with the box ticked.
+        $differs = Find-Element $window { param($c) $c.Name -eq 'Different title details for this issue' } 'the title details box'
+        $differs.Patterns.Toggle.Pattern.ToggleState.Value | Should -Be ([FlaUI.Core.Definitions.ToggleState]::On)
+        Get-Field $window 'title' | Should -Be 'The Kings County Record and Sussex News'
+        Save-Shot 'title-details-copied'
+
+        # Unticked, they are not saved.
+        Invoke-Button $differs
+        Set-Field $window 'issue' '31'
+        Set-Field $window 'date' '1902-04-11'
+        Invoke-Button (Find-Button $window 'Save and back to title')
+        Wait-Until { (Get-Label $window 'summary') -match '0 to do' } 'the title view' | Out-Null
+        $saved = Read-Text (Join-Path $script:Issue['KCR_1902_18_31'] 'issue.toml')
+        $saved | Should -Match 'issue = "31"'
+        $saved | Should -Not -Match '(?m)^title ='
+    }
+
     It 'shows an issue already imported as such, and does not open it' {
         Start-Editor $script:Issue['KCR_1902_17_27']
         $box = Find-MessageBox
         Get-Text $box | Should -Match 'KCR_1902_17_27 has already been imported'
         Invoke-Button (Find-Button $box 'OK')
         $window = Get-MainWindow
-        Get-Label $window 'summary' | Should -Be '5 issue folders: 3 done, 1 to do, 1 already imported.'
+        Get-Label $window 'summary' | Should -Be '6 issue folders: 5 done, 0 to do, 1 already imported.'
         Save-Shot 'title-view-after'
     }
 }
