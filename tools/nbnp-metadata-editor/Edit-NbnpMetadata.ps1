@@ -33,7 +33,7 @@ Add-Type -AssemblyName System.Windows.Forms, System.Drawing
 Import-Module (Join-Path $PSScriptRoot 'NbnpMetadata.psm1') -Force
 
 # The release version: a tag nbnp-metadata-editor-vX.Y.Z must match it (package.sh).
-$script:Version = '0.2.0'
+$script:Version = '0.2.1'
 $script:AppTitle = "NBNP Metadata $script:Version"
 $script:Green = [Drawing.Color]::FromArgb(0, 110, 40)
 $script:Red = [Drawing.Color]::DarkRed
