@@ -96,7 +96,8 @@ supplement: it opens with **This is a supplement** ticked and the issue's date, 
 number filled in, ready for the supplement's title.
 
 **Fill from last saved issue** (Alt+F) does the same filling on demand, for example when
-starting again the next day. The last issue is remembered for you alone, in
+starting again the next day. It is offered only when the last issue you saved belongs to the
+same title. The last issue is remembered for you alone, in
 `%LOCALAPPDATA%\nbnp-metadata-editor\last-issue.toml`.
 
 The buttons and messages stay at the bottom of the window whatever its size; on a small screen
@@ -154,6 +155,12 @@ before saving if:
 Supplements are not compared with other issues. When Errata is filled in, the number checks
 are skipped, since the problem is already noted there. **Save anyway** keeps the values as
 typed: the metadata records what was printed.
+
+**Warnings...** (Alt+W, in the issue view) turns any of these warnings off, or back on, for
+good: untick it and press OK. The same list covers the "same as the last issue you saved"
+warning, a year that differs from the folder path's, and a very early date. The choice is
+kept for you alone, in `%LOCALAPPDATA%\nbnp-metadata-editor\settings.json`. Errors, which
+stop a save, cannot be turned off.
 
 ### When the form will not edit a file
 
@@ -285,4 +292,9 @@ to check the values against. It is not in this repository; ask for it.
     new copy (its version is in the title bar). Run Install.cmd again: "Updated in place."
 15. **Above a title.** Open the menu on the kit's `NBNP` folder, on the desktop, and on a
     drive: each shows a message saying to open it from a title's folder, and no window.
-16. Uninstall: the menu item disappears; the metadata files remain.
+16. **Warnings settings.** Press Warnings..., untick "Same date as another issue of the
+    title", OK. Give an issue the date of the issue before it: no same-date warning. Close the
+    editor, open it again: still off. Tick it again.
+17. **Fill from another title.** Save an issue of The News, then open an issue of Kings County
+    Record: Fill from last saved issue is greyed out.
+18. Uninstall: the menu item disappears; the metadata files remain.

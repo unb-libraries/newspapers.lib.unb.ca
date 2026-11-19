@@ -580,8 +580,8 @@ function Test-NbnpMetadata {
     )
     $schema = $script:Schemas[$Kind]
     $findings = New-Object System.Collections.Generic.List[object]
-    $error_ = { param($field, $message) $findings.Add([pscustomobject]@{ Field = $field; Severity = 'Error'; Message = $message }) }
-    $warn = { param($field, $message) $findings.Add([pscustomobject]@{ Field = $field; Severity = 'Warning'; Message = $message }) }
+    $error_ = { param($field, $message) $findings.Add([pscustomobject]@{ Field = $field; Severity = 'Error'; Message = $message; Id = '' }) }
+    $warn = { param($field, $message, $id = '') $findings.Add([pscustomobject]@{ Field = $field; Severity = 'Warning'; Message = $message; Id = $id }) }
 
     # Clean: trim single-line values, normalise line ends, drop empty optional values.
     $clean = [ordered]@{}
@@ -642,11 +642,11 @@ function Test-NbnpMetadata {
                 }
                 else {
                     if ($date.Year -lt $script:EarliestLikelyYear) {
-                        & $warn $key "Date $text is before $($script:EarliestLikelyYear); check the year."
+                        & $warn $key "Date $text is before $($script:EarliestLikelyYear); check the year." 'early-year'
                     }
                     $years = Get-NbnpPathYears $Folder
                     if ($years.Count -gt 0 -and $years -notcontains $date.Year) {
-                        & $warn $key "The folder path names $($years -join ', '), but the date is in $($date.Year)."
+                        & $warn $key "The folder path names $($years -join ', '), but the date is in $($date.Year)." 'folder-year'
                     }
                 }
             }
@@ -915,6 +915,64 @@ function Get-NbnpStateDirectory {
     Join-Path $base 'nbnp-metadata-editor'
 }
 
+# The warnings a user may turn off: those that guess from patterns, not those about the file.
+$script:WarningChecks = @(
+    @{ Id = 'date-order'; Label = "Date earlier than the previous issue's, or later than the next one's" }
+    @{ Id = 'same-date'; Label = 'Same date as another issue of the title' }
+    @{ Id = 'same-number'; Label = 'Same volume and issue as another issue of the title' }
+    @{ Id = 'folder-number'; Label = 'Volume or issue differs from the folder name' }
+    @{ Id = 'lower-number'; Label = "Volume or issue lower than the previous issue's" }
+    @{ Id = 'edition-number'; Label = 'Edition is only a number' }
+    @{ Id = 'repeat-last'; Label = 'Same volume, issue and date as the last issue you saved' }
+    @{ Id = 'folder-year'; Label = 'Year differs from the year in the folder path' }
+    @{ Id = 'early-year'; Label = "Date before $($script:EarliestLikelyYear)" }
+)
+
+function Get-NbnpWarningChecks {
+    <#
+    .SYNOPSIS
+        The warnings a user may turn off in Settings: Id and Label.
+    #>
+    foreach ($check in $script:WarningChecks) { [pscustomobject]$check }
+}
+
+function Get-NbnpDisabledWarnings {
+    <#
+    .SYNOPSIS
+        The IDs of the warnings this user turned off, from settings.json in the state directory.
+        None when the file is missing or unreadable. One by one: wrap the call in @().
+    #>
+    param([string] $Directory = (Get-NbnpStateDirectory))
+    $path = Join-Path $Directory 'settings.json'
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return }
+    try {
+        $settings = [IO.File]::ReadAllText($path) | ConvertFrom-Json
+        $known = @($script:WarningChecks | ForEach-Object { $_.Id })
+        $ids = @()
+        if ($settings.PSObject.Properties['disabled_warnings']) {
+            $ids = @($settings.disabled_warnings | Where-Object { $known -contains $_ })
+        }
+        $ids
+    }
+    catch {
+        Write-Verbose "Could not read the settings: $($_.Exception.Message)"
+    }
+}
+
+function Save-NbnpDisabledWarnings {
+    <#
+    .SYNOPSIS
+        Saves the IDs of the warnings this user turned off, to settings.json in the state directory.
+    #>
+    param(
+        [string[]] $Ids = @(),
+        [string] $Directory = (Get-NbnpStateDirectory)
+    )
+    [void](New-Item -ItemType Directory -Force -Path $Directory)
+    $text = ConvertTo-Json -InputObject ([ordered]@{ disabled_warnings = @($Ids | Sort-Object -Unique) })
+    [IO.File]::WriteAllText((Join-Path $Directory 'settings.json'), $text, $script:Utf8NoBom)
+}
+
 function Save-NbnpLastIssue {
     <#
     .SYNOPSIS
@@ -968,6 +1026,23 @@ function Get-NbnpLastIssue {
     }
 }
 
+function Test-NbnpPathUnder {
+    <#
+    .SYNOPSIS
+        True when Path is Folder or inside it, ignoring case as Windows does: whether the last
+        issue saved belongs to the title being edited.
+    #>
+    param([string] $Path, [string] $Folder)
+    if (-not $Path -or -not $Folder) { return $false }
+    $p = [IO.Path]::GetFullPath($Path).TrimEnd('\', '/')
+    $f = [IO.Path]::GetFullPath($Folder).TrimEnd('\', '/')
+    if ($p.Equals($f, [StringComparison]::OrdinalIgnoreCase)) { return $true }
+    foreach ($separator in @('\', '/')) {
+        if ($p.StartsWith($f + $separator, [StringComparison]::OrdinalIgnoreCase)) { return $true }
+    }
+    $false
+}
+
 function Test-NbnpRepeatOfLast {
     <#
     .SYNOPSIS
@@ -990,6 +1065,7 @@ function Test-NbnpRepeatOfLast {
     [pscustomobject]@{
         Field    = 'issue'
         Severity = 'Warning'
+        Id       = 'repeat-last'
         Message  = "Volume, issue and date are the same as $(Split-Path -Leaf $Last.Folder), the last issue you saved. Change the issue number and date if this is the next issue."
     }
 }
@@ -1025,7 +1101,8 @@ function Test-NbnpIssueSequence {
 
     .DESCRIPTION
         Issues is the title's issue folders in order; Saved maps a folder to its saved values
-        (Get-NbnpSavedIssues). Supplements are not compared with other issues. When Errata is
+        (Get-NbnpSavedIssues). The findings come one by one: wrap the call in @(). Supplements
+        are not compared with other issues. When Errata is
         filled in, the numbering problem is taken as noted there: the number checks are skipped.
     #>
     param(
@@ -1035,7 +1112,7 @@ function Test-NbnpIssueSequence {
         [hashtable] $Saved = @{}
     )
     $findings = New-Object System.Collections.Generic.List[object]
-    $warn = { param($field, $message) $findings.Add([pscustomobject]@{ Field = $field; Severity = 'Warning'; Message = $message }) }
+    $warn = { param($id, $field, $message) $findings.Add([pscustomobject]@{ Field = $field; Severity = 'Warning'; Message = $message; Id = $id }) }
     $full = [IO.Path]::GetFullPath($Folder).TrimEnd('\', '/')
     $date = Get-ValueText $Values 'date'
     $volume = Get-ValueText $Values 'volume'
@@ -1044,17 +1121,17 @@ function Test-NbnpIssueSequence {
     $checkNumbers = -not (Get-ValueText $Values 'errata').Trim()
     $isSupplement = [bool](Get-ValueText $Values 'supplement_title')
 
-    if ($edition -match '^\d+$') { & $warn 'edition' "Edition is only a number ($edition). The issue number goes in Issue." }
+    if ($edition -match '^\d+$') { & $warn 'edition-number' 'edition' "Edition is only a number ($edition). The issue number goes in Issue." }
 
     $leaf = Split-Path -Leaf $full
     if ($checkNumbers -and $leaf -match '^[^_]+_\d{4}_(\d+)_(\d+)(_|$)') {
         foreach ($pair in @(@('volume', $volume, $Matches[1]), @('issue', $number, $Matches[2]))) {
             if ($pair[1] -match '^\d+$' -and [long]$pair[1] -ne [long]$pair[2]) {
-                & $warn $pair[0] "$(Get-FieldLabel $pair[0]) $($pair[1]) differs from the folder name ($([long]$pair[2])). If printed so, note it in Errata."
+                & $warn 'folder-number' $pair[0] "$(Get-FieldLabel $pair[0]) $($pair[1]) differs from the folder name ($([long]$pair[2])). If printed so, note it in Errata."
             }
         }
     }
-    if ($isSupplement) { return , $findings.ToArray() }
+    if ($isSupplement) { return $findings.ToArray() }
 
     # The title's other saved issues that are not supplements, in folder order.
     $others = @(foreach ($issue in $Issues) {
@@ -1075,21 +1152,21 @@ function Test-NbnpIssueSequence {
 
     if ($date) {
         if ($before -and [string]::CompareOrdinal((Get-ValueText $before.Values 'date'), $date) -gt 0) {
-            & $warn 'date' "Date is before the previous issue's, $($before.Name) ($(Get-ValueText $before.Values 'date'))."
+            & $warn 'date-order' 'date' "Date is before the previous issue's, $($before.Name) ($(Get-ValueText $before.Values 'date'))."
         }
         if ($after -and (Get-ValueText $after.Values 'date') -and [string]::CompareOrdinal((Get-ValueText $after.Values 'date'), $date) -lt 0) {
-            & $warn 'date' "Date is after the next issue's, $($after.Name) ($(Get-ValueText $after.Values 'date'))."
+            & $warn 'date-order' 'date' "Date is after the next issue's, $($after.Name) ($(Get-ValueText $after.Values 'date'))."
         }
         $same = @($others | Where-Object { (Get-ValueText $_.Values 'date') -eq $date -and (Get-ValueText $_.Values 'edition') -eq $edition })
-        if ($same.Count) { & $warn 'date' "Same date as $($same[0].Name)." }
+        if ($same.Count) { & $warn 'same-date' 'date' "Same date as $($same[0].Name)." }
     }
-    if (-not $checkNumbers) { return , $findings.ToArray() }
+    if (-not $checkNumbers) { return $findings.ToArray() }
 
     if ($volume -and $number) {
         $same = @($others | Where-Object {
                 (Get-ValueText $_.Values 'volume') -eq $volume -and (Get-ValueText $_.Values 'issue') -eq $number -and
                 (Get-ValueText $_.Values 'edition') -eq $edition })
-        if ($same.Count) { & $warn 'issue' "Same volume and issue as $($same[0].Name)." }
+        if ($same.Count) { & $warn 'same-number' 'issue' "Same volume and issue as $($same[0].Name)." }
     }
     # Numbers going backwards, where both are plain numbers.
     $lower = {
@@ -1106,13 +1183,13 @@ function Test-NbnpIssueSequence {
     }
     if ($before) {
         $field = & $lower $before.Values $Values
-        if ($field) { & $warn $field "$(Get-FieldLabel $field) is lower than the previous issue's, $($before.Name) ($(Get-ValueText $before.Values $field))." }
+        if ($field) { & $warn 'lower-number' $field "$(Get-FieldLabel $field) is lower than the previous issue's, $($before.Name) ($(Get-ValueText $before.Values $field))." }
     }
     if ($after) {
         $field = & $lower $Values $after.Values
-        if ($field) { & $warn $field "$(Get-FieldLabel $field) is higher than the next issue's, $($after.Name) ($(Get-ValueText $after.Values $field))." }
+        if ($field) { & $warn 'lower-number' $field "$(Get-FieldLabel $field) is higher than the next issue's, $($after.Name) ($(Get-ValueText $after.Values $field))." }
     }
-    , $findings.ToArray()
+    $findings.ToArray()
 }
 
 #endregion
@@ -1123,4 +1200,5 @@ Export-ModuleMember -Function New-NbnpValue, Get-NbnpSchema, Get-NbnpLanguages, 
     Save-NbnpLastIssue, Get-NbnpLastIssue, Get-NbnpNaturalKey, Find-NbnpNextIssueFolder,
     Get-NbnpFirstPage, ConvertTo-NbnpDate, Test-NbnpRepeatOfLast, Get-NbnpIssueFolders,
     Get-NbnpTitleSummary, Find-NbnpTitleFolder, New-NbnpView, Step-NbnpViewZoom, Move-NbnpView,
-    Get-NbnpSavedIssues, Test-NbnpIssueSequence
+    Get-NbnpSavedIssues, Test-NbnpIssueSequence, Test-NbnpPathUnder, Get-NbnpWarningChecks,
+    Get-NbnpDisabledWarnings, Save-NbnpDisabledWarnings

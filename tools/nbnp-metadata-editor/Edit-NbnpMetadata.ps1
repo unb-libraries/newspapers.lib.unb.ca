@@ -33,7 +33,7 @@ Add-Type -AssemblyName System.Windows.Forms, System.Drawing
 Import-Module (Join-Path $PSScriptRoot 'NbnpMetadata.psm1') -Force
 
 # The release version: a tag nbnp-metadata-editor-vX.Y.Z must match it (package.sh).
-$script:Version = '0.1.0'
+$script:Version = '0.2.0'
 $script:AppTitle = "NBNP Metadata $script:Version"
 $script:Green = [Drawing.Color]::FromArgb(0, 110, 40)
 $script:Red = [Drawing.Color]::DarkRed
@@ -96,6 +96,73 @@ function Show-ReadOnly([string] $Heading, [string] $FilePath, [string] $Text) {
     $dialog.CancelButton = $close
     $dialog.Controls.Add($layout)
     [void]$dialog.ShowDialog($script:Form)
+    $dialog.Dispose()
+}
+
+#endregion
+
+#region Settings
+
+# Lets the user turn warnings off, or back on, for good: saved for them on this computer.
+function Show-WarningSettings {
+    $checks = @(Get-NbnpWarningChecks)
+    $dialog = New-Object Windows.Forms.Form
+    $dialog.Text = "$($script:AppTitle): warnings"
+    $dialog.StartPosition = 'CenterParent'
+    $dialog.FormBorderStyle = 'FixedDialog'
+    $dialog.MinimizeBox = $false
+    $dialog.MaximizeBox = $false
+    $dialog.AutoSize = $true
+    $dialog.AutoSizeMode = 'GrowAndShrink'
+    $dialog.Font = New-Object Drawing.Font('Segoe UI', 9)
+    $dialog.AutoScaleMode = 'Dpi'
+    $layout = New-Object Windows.Forms.FlowLayoutPanel
+    $layout.FlowDirection = 'TopDown'
+    $layout.AutoSize = $true
+    $layout.WrapContents = $false
+    $layout.Padding = New-Object Windows.Forms.Padding(12)
+    $label = New-Object Windows.Forms.Label
+    $label.Text = 'Warn me on save when:'
+    $label.AutoSize = $true
+    $layout.Controls.Add($label)
+    $list = New-Object Windows.Forms.CheckedListBox
+    $list.CheckOnClick = $true
+    $list.Width = 480
+    $list.Height = ($checks.Count * 20) + 8
+    $list.IntegralHeight = $false
+    foreach ($check in $checks) {
+        [void]$list.Items.Add($check.Label, ($script:DisabledWarnings -notcontains $check.Id))
+    }
+    $layout.Controls.Add($list)
+    $hint = New-Object Windows.Forms.Label
+    $hint.Text = 'Unticked warnings stay off for you on this computer until ticked again.'
+    $hint.AutoSize = $true
+    $hint.ForeColor = [Drawing.SystemColors]::GrayText
+    $layout.Controls.Add($hint)
+    $buttons = New-Object Windows.Forms.FlowLayoutPanel
+    $buttons.FlowDirection = 'RightToLeft'
+    $buttons.AutoSize = $true
+    $buttons.Width = 480
+    $cancel = New-Object Windows.Forms.Button
+    $cancel.Text = 'Cancel'
+    $cancel.DialogResult = 'Cancel'
+    $ok = New-Object Windows.Forms.Button
+    $ok.Text = 'OK'
+    $ok.DialogResult = 'OK'
+    $buttons.Controls.AddRange([Windows.Forms.Control[]]@($cancel, $ok))
+    $layout.Controls.Add($buttons)
+    $dialog.Controls.Add($layout)
+    $dialog.AcceptButton = $ok
+    $dialog.CancelButton = $cancel
+    if ($dialog.ShowDialog($script:Form) -eq 'OK') {
+        $off = @(for ($i = 0; $i -lt $checks.Count; $i++) { if (-not $list.GetItemChecked($i)) { $checks[$i].Id } })
+        try {
+            Save-NbnpDisabledWarnings -Ids $off
+            $script:DisabledWarnings = $off
+            [void](Update-Findings)
+        }
+        catch { [void](Show-Message "The settings were not saved.`n`n$($_.Exception.Message)" 'Error') }
+    }
     $dialog.Dispose()
 }
 
@@ -356,6 +423,9 @@ function Add-TextField([string] $Key, [string] $Label, [string] $Hint, [string] 
     }
     Set-TabOrder $box
     $box.Tag = $Key
+    # Name is the UI Automation ID (used by tests/ui); AccessibleName is what screen readers say.
+    $box.Name = "field_$Key"
+    $box.AccessibleName = $Label
     $box.Add_Leave({ param($source) [void](Update-Findings -Touched $source.Tag) })
     $script:Inputs[$Key] = $box
     $box
@@ -373,6 +443,8 @@ function Add-LanguageField([string] $Key, [string] $Label, [string] $Tip, [switc
     if ($Tip) { $script:Tips.SetToolTip($combo, $Tip); $script:Tips.SetToolTip($labelControl, $Tip) }
     Set-TabOrder $combo
     $combo.Tag = $Key
+    $combo.Name = "field_$Key"
+    $combo.AccessibleName = $Label
     $script:Inputs[$Key] = $combo
     $combo
 }
@@ -427,12 +499,15 @@ function Test-Form {
     $checked = Test-NbnpMetadata -Kind $script:ViewKind -Values (Get-FormValues) -Title $title -Folder $script:Folder
     $findings = @($checked.Findings)
     if ($script:ViewKind -eq 'Issue') {
-        $sequence = @(Test-NbnpIssueSequence -Values $checked.Values -Folder $script:Folder -Issues $script:Summary.Issues -Saved $script:SavedIssues)
+        $sequence = @(Test-NbnpIssueSequence -Values $checked.Values -Folder $script:Folder -Issues $script:Summary.Issues -Saved $script:SavedIssues |
+                Where-Object { $script:DisabledWarnings -notcontains $_.Id })
         $findings += $sequence
         # A repeat within the title is already reported by the sequence checks.
         $repeat = Test-NbnpRepeatOfLast -Values $checked.Values -Folder $script:Folder -Last $script:LastIssue
         if ($repeat -and $sequence.Count -eq 0) { $findings += $repeat }
     }
+    # Warnings the user turned off in Settings.
+    $findings = @($findings | Where-Object { -not $_.Id -or $script:DisabledWarnings -notcontains $_.Id })
     [pscustomobject]@{ Values = $checked.Values; Findings = $findings }
 }
 
@@ -558,6 +633,7 @@ function Set-Header([string] $Text, [Windows.Forms.Control] $Extra) {
     $label.AutoSize = $true
     $label.Font = New-Object Drawing.Font($script:Form.Font.FontFamily, 11, [Drawing.FontStyle]::Bold)
     $label.Margin = New-Object Windows.Forms.Padding(3, 6, 12, 3)
+    $label.Name = 'header'
     $script:Header.Controls.Add($label)
     if ($Extra) { $script:Header.Controls.Add($Extra) }
 }
@@ -614,8 +690,12 @@ function Show-TitleView([string] $Message = '') {
         "$($s.Total) issue folders: $($s.Done) done, $($s.New) need metadata" +
         $(if ($s.Legacy) { ", $($s.Legacy) already imported." } else { '.' })
     }
-    Add-Row $null (New-Label $summaryText) -Span
+    $summaryLabel = New-Label $summaryText
+    $summaryLabel.Name = 'summary'
+    Add-Row $null $summaryLabel -Span
     $script:IssueList = New-Object Windows.Forms.ListBox
+    $script:IssueList.Name = 'issueList'
+    $script:IssueList.AccessibleName = 'Issues'
     $script:IssueList.Width = 420
     $script:IssueList.Height = 220
     $script:IssueList.Font = New-Object Drawing.Font('Consolas', 9)
@@ -700,7 +780,9 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
         Show-TitleView
         return
     }
-    $script:LastIssue = Get-NbnpLastIssue
+    # Only an issue of this title is offered to fill from.
+    $last = Get-NbnpLastIssue
+    $script:LastIssue = if ($last -and (Test-NbnpPathUnder -Path $last.Folder -Folder $script:TitleFolder)) { $last } else { $null }
     $script:NextFolder = Find-NbnpNextIssueFolder -IssueFolder $Folder -Issues $script:Summary.Issues
     $script:ParentIssue = Find-NbnpParentIssue -IssueFolder $Folder
     $position = [array]::IndexOf(@($script:Summary.Issues.Path), $Folder) + 1
@@ -723,7 +805,7 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
     $lastHint = if ($script:LastIssue) {
         "Alt+F. Last saved: $(Split-Path -Leaf $script:LastIssue.Folder). Copies all but missing pages and errata."
     }
-    else { 'Available once you have saved an issue.' }
+    else { 'Available once you have saved an issue of this title.' }
     Add-Row $null (New-Label $lastHint -Hint) -Span
 
     $asPrinted = 'Exactly as printed, even if it is wrong; note a wrong number in Errata. No zero padding: 5, not 05.'
@@ -760,6 +842,7 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
     Add-Row $null $phrase
 
     $script:Supplement = New-Object Windows.Forms.CheckBox
+    $script:Supplement.Name = 'supplement'
     $script:Supplement.Text = 'This is a supplement'
     $script:Supplement.AutoSize = $true
     $script:Supplement.Margin = New-Object Windows.Forms.Padding(3, 10, 3, 3)
@@ -810,7 +893,10 @@ function Show-IssueView([string] $Folder, [string] $Arrived = '', [switch] $From
             else { "Enter or Ctrl+S. Saves, then opens $(Split-Path -Leaf $script:NextFolder)." }))
     $save = New-Button 'Save' { if (Save-Current) { Set-Status "Saved $(Split-Path -Leaf $script:Folder)." -Good } }
     $close = New-Button 'Close' { $script:Form.Close() }
-    $script:Buttons.Controls.AddRange([Windows.Forms.Control[]]@($close, $save, $saveNext))
+    $settings = New-Button '&Warnings...' { Show-WarningSettings }
+    $settings.TabStop = $false
+    $script:Tips.SetToolTip($settings, 'Choose which warnings Save shows.')
+    $script:Buttons.Controls.AddRange([Windows.Forms.Control[]]@($close, $save, $saveNext, $settings))
     $script:Form.AcceptButton = $saveNext
     $script:Form.CancelButton = $close
 
@@ -888,8 +974,11 @@ $script:Form.Font = New-Object Drawing.Font('Segoe UI', 9)
 $script:Form.AutoScaleMode = 'Dpi'
 $script:Form.KeyPreview = $true
 $script:Form.StartPosition = 'CenterScreen'
-$script:Form.Size = New-Object Drawing.Size(1200, 780)
-$script:Form.MinimumSize = New-Object Drawing.Size(900, 560)
+# At most the screen's working area (a 1366 x 768 laptop leaves about 1366 x 728), so the
+# button bar at the bottom is always on screen.
+$area = [Windows.Forms.Screen]::PrimaryScreen.WorkingArea
+$script:Form.Size = New-Object Drawing.Size([Math]::Min(1200, $area.Width), [Math]::Min(780, $area.Height))
+$script:Form.MinimumSize = New-Object Drawing.Size([Math]::Min(900, $area.Width), [Math]::Min(560, $area.Height))
 
 $script:Errors = New-Object Windows.Forms.ErrorProvider
 $script:Errors.BlinkStyle = 'NeverBlink'
@@ -915,6 +1004,7 @@ $bottom.ColumnCount = 2
 [void]$bottom.ColumnStyles.Add((New-Object Windows.Forms.ColumnStyle('AutoSize')))
 $bottom.Padding = New-Object Windows.Forms.Padding(8, 4, 8, 8)
 $script:Status = New-Object Windows.Forms.Label
+$script:Status.Name = 'status'
 $script:Status.AutoSize = $true
 $script:Status.MaximumSize = New-Object Drawing.Size(700, 0)
 $script:Status.Margin = New-Object Windows.Forms.Padding(3, 6, 12, 3)
@@ -956,6 +1046,7 @@ if ($title.Problem) {
 $script:TitleFolder = $title.Path
 $script:StartIssue = $null
 $script:SavedIssues = @{}
+$script:DisabledWarnings = @(Get-NbnpDisabledWarnings)
 $script:ViewKind = 'Title'
 $script:Inputs = [ordered]@{}
 $script:Initial = (Get-FormValues | ConvertTo-Json -Compress)

@@ -279,6 +279,14 @@ Describe 'Checks against the title''s other issues' {
 
     It 'is quiet for the issue that fits' {
         Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '45') | Should -BeNullOrEmpty
+        # The editor shows the repeat-of-last warning only when this is empty.
+        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '45')).Count | Should -Be 0
+    }
+
+    It 'returns the findings one by one, not as one nested array' {
+        $found = Check 'KCR_1902_15_45' (Issue '1902-08-08' '15' '46' -Edition '7')
+        $found.Count | Should -BeGreaterThan 1
+        foreach ($finding in $found) { $finding.Message | Should -BeOfType [string] }
     }
 
     It 'warns of a date out of order, both ways' {
@@ -331,5 +339,49 @@ Describe 'Checks against the title''s other issues' {
         $saved = Get-NbnpSavedIssues -Issues (Get-NbnpIssueFolders -TitleFolder $title)
         @($saved.Keys).Count | Should -Be 1
         $saved[(Join-Path $title 'S_1900_01_01')]['date'].Text | Should -Be '1900-01-05'
+    }
+}
+
+Describe 'Turning warnings off' {
+    It 'gives every heuristic warning an ID the settings list' {
+        $ids = @(Get-NbnpWarningChecks | ForEach-Object Id)
+        $ids | Should -Contain 'date-order'
+        $ids | Should -Contain 'repeat-last'
+        $root = Join-Path $TestDrive 'T'
+        $issues = @(
+            [pscustomobject]@{ Path = (Join-Path $root 'T_1902_15_44'); State = 'done' }
+            [pscustomobject]@{ Path = (Join-Path $root 'T_1902_15_45'); State = 'new' }
+        )
+        $saved = @{ $issues[0].Path = [ordered]@{ date = New-NbnpValue '1902-07-25' 'bare'; volume = New-NbnpValue '15'; issue = New-NbnpValue '44'; edition = New-NbnpValue '7' } }
+        $values = [ordered]@{ date = New-NbnpValue '1902-07-25' 'bare'; volume = New-NbnpValue '15'; issue = New-NbnpValue '44'; edition = New-NbnpValue '7' }
+        $found = @(Test-NbnpIssueSequence -Values $values -Folder $issues[1].Path -Issues $issues -Saved $saved)
+        foreach ($finding in $found) { $ids | Should -Contain $finding.Id }
+        @($found.Id | Sort-Object -Unique) | Should -Be @('edition-number', 'folder-number', 'same-date', 'same-number')
+    }
+
+    It 'keeps the IDs turned off, and drops unknown ones' {
+        $dir = Join-Path $TestDrive 'state'
+        @(Get-NbnpDisabledWarnings -Directory $dir) | Should -BeNullOrEmpty
+        Save-NbnpDisabledWarnings -Ids @('same-date', 'early-year', 'same-date') -Directory $dir
+        @(Get-NbnpDisabledWarnings -Directory $dir) | Should -Be @('early-year', 'same-date')
+        [IO.File]::WriteAllText((Join-Path $dir 'settings.json'), '{"disabled_warnings": ["gone", "date-order"]}')
+        @(Get-NbnpDisabledWarnings -Directory $dir) | Should -Be @('date-order')
+        [IO.File]::WriteAllText((Join-Path $dir 'settings.json'), 'not json')
+        @(Get-NbnpDisabledWarnings -Directory $dir) | Should -BeNullOrEmpty
+    }
+}
+
+Describe 'Filling from the last issue' {
+    It 'offers it only within the same title' -ForEach @(
+        @{ Last = 'NBNP/KingsCountyRecord/KCR_1902/KCR_1902_17_26'; Title = 'NBNP/KingsCountyRecord'; Same = $true }
+        @{ Last = 'NBNP/kingscountyrecord/KCR_1902/KCR_1902_17_26'; Title = 'NBNP/KingsCountyRecord'; Same = $true }
+        @{ Last = 'NBNP/The_News/TN_1909/TN_1909_33_05'; Title = 'NBNP/KingsCountyRecord'; Same = $false }
+        @{ Last = 'NBNP/KingsCountyRecord2/KCR_1902_17_26'; Title = 'NBNP/KingsCountyRecord'; Same = $false }
+    ) {
+        Test-NbnpPathUnder -Path (Join-Path $TestDrive $Last) -Folder (Join-Path $TestDrive $Title) | Should -Be $Same
+    }
+
+    It 'offers nothing without a last issue' {
+        Test-NbnpPathUnder -Path '' -Folder $TestDrive | Should -BeFalse
     }
 }
