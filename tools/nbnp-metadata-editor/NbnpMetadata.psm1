@@ -994,6 +994,127 @@ function Test-NbnpRepeatOfLast {
     }
 }
 
+function Get-NbnpSavedIssues {
+    <#
+    .SYNOPSIS
+        The values of every issue in a title saved as issue.toml, by folder path: what
+        Test-NbnpIssueSequence compares with. Issues still in metadata.php are left out.
+    #>
+    param([object[]] $Issues)
+    $saved = @{}
+    foreach ($issue in @($Issues | Where-Object State -EQ 'done')) {
+        try {
+            $file = Read-NbnpMetadataFile -Folder $issue.Path -Kind Issue
+            if ($file.Supported) { $saved[$issue.Path] = $file.Values }
+        }
+        catch { Write-Verbose "skipped $($issue.Path): $($_.Exception.Message)" }
+    }
+    $saved
+}
+
+function Get-ValueText($Values, [string] $Key) {
+    if ($Values.Contains($Key) -and $null -ne $Values[$Key]) { [string]$Values[$Key].Text } else { '' }
+}
+
+function Test-NbnpIssueSequence {
+    <#
+    .SYNOPSIS
+        Warnings from comparing an issue with the title's other saved issues: a date out of
+        folder order, a date or number another issue already has, a number unlike the folder
+        name's or lower than the issue before, and an edition that is only a number.
+
+    .DESCRIPTION
+        Issues is the title's issue folders in order; Saved maps a folder to its saved values
+        (Get-NbnpSavedIssues). Supplements are not compared with other issues. When Errata is
+        filled in, the numbering problem is taken as noted there: the number checks are skipped.
+    #>
+    param(
+        [Parameter(Mandatory)][System.Collections.IDictionary] $Values,
+        [Parameter(Mandatory)][string] $Folder,
+        [object[]] $Issues = @(),
+        [hashtable] $Saved = @{}
+    )
+    $findings = New-Object System.Collections.Generic.List[object]
+    $warn = { param($field, $message) $findings.Add([pscustomobject]@{ Field = $field; Severity = 'Warning'; Message = $message }) }
+    $full = [IO.Path]::GetFullPath($Folder).TrimEnd('\', '/')
+    $date = Get-ValueText $Values 'date'
+    $volume = Get-ValueText $Values 'volume'
+    $number = Get-ValueText $Values 'issue'
+    $edition = Get-ValueText $Values 'edition'
+    $checkNumbers = -not (Get-ValueText $Values 'errata').Trim()
+    $isSupplement = [bool](Get-ValueText $Values 'supplement_title')
+
+    if ($edition -match '^\d+$') { & $warn 'edition' "Edition is only a number ($edition). The issue number goes in Issue." }
+
+    $leaf = Split-Path -Leaf $full
+    if ($checkNumbers -and $leaf -match '^[^_]+_\d{4}_(\d+)_(\d+)(_|$)') {
+        foreach ($pair in @(@('volume', $volume, $Matches[1]), @('issue', $number, $Matches[2]))) {
+            if ($pair[1] -match '^\d+$' -and [long]$pair[1] -ne [long]$pair[2]) {
+                & $warn $pair[0] "$(Get-FieldLabel $pair[0]) $($pair[1]) differs from the folder name ($([long]$pair[2])). If printed so, note it in Errata."
+            }
+        }
+    }
+    if ($isSupplement) { return , $findings.ToArray() }
+
+    # The title's other saved issues that are not supplements, in folder order.
+    $others = @(foreach ($issue in $Issues) {
+            if ($issue.Path -eq $full -or -not $Saved.ContainsKey($issue.Path)) { continue }
+            $v = $Saved[$issue.Path]
+            if (Get-ValueText $v 'supplement_title') { continue }
+            [pscustomobject]@{ Path = $issue.Path; Name = Split-Path -Leaf $issue.Path; Values = $v }
+        })
+    $paths = @($Issues | ForEach-Object Path)
+    $at = [array]::IndexOf($paths, $full)
+    $before = $null; $after = $null
+    if ($at -ge 0) {
+        foreach ($other in $others) {
+            $i = [array]::IndexOf($paths, $other.Path)
+            if ($i -lt $at) { $before = $other } elseif ($null -eq $after) { $after = $other }
+        }
+    }
+
+    if ($date) {
+        if ($before -and [string]::CompareOrdinal((Get-ValueText $before.Values 'date'), $date) -gt 0) {
+            & $warn 'date' "Date is before the previous issue's, $($before.Name) ($(Get-ValueText $before.Values 'date'))."
+        }
+        if ($after -and (Get-ValueText $after.Values 'date') -and [string]::CompareOrdinal((Get-ValueText $after.Values 'date'), $date) -lt 0) {
+            & $warn 'date' "Date is after the next issue's, $($after.Name) ($(Get-ValueText $after.Values 'date'))."
+        }
+        $same = @($others | Where-Object { (Get-ValueText $_.Values 'date') -eq $date -and (Get-ValueText $_.Values 'edition') -eq $edition })
+        if ($same.Count) { & $warn 'date' "Same date as $($same[0].Name)." }
+    }
+    if (-not $checkNumbers) { return , $findings.ToArray() }
+
+    if ($volume -and $number) {
+        $same = @($others | Where-Object {
+                (Get-ValueText $_.Values 'volume') -eq $volume -and (Get-ValueText $_.Values 'issue') -eq $number -and
+                (Get-ValueText $_.Values 'edition') -eq $edition })
+        if ($same.Count) { & $warn 'issue' "Same volume and issue as $($same[0].Name)." }
+    }
+    # Numbers going backwards, where both are plain numbers.
+    $lower = {
+        param($first, $second, $label)
+        $v1 = Get-ValueText $first 'volume'; $v2 = Get-ValueText $second 'volume'
+        if ($v1 -match '^\d+$' -and $v2 -match '^\d+$') {
+            if ([long]$v2 -lt [long]$v1) { return 'volume' }
+            if ([long]$v2 -gt [long]$v1) { return $null }
+        }
+        elseif ($v1 -ne $v2) { return $null }
+        $n1 = Get-ValueText $first 'issue'; $n2 = Get-ValueText $second 'issue'
+        if ($n1 -match '^\d+$' -and $n2 -match '^\d+$' -and [long]$n2 -lt [long]$n1) { return 'issue' }
+        $null
+    }
+    if ($before) {
+        $field = & $lower $before.Values $Values
+        if ($field) { & $warn $field "$(Get-FieldLabel $field) is lower than the previous issue's, $($before.Name) ($(Get-ValueText $before.Values $field))." }
+    }
+    if ($after) {
+        $field = & $lower $Values $after.Values
+        if ($field) { & $warn $field "$(Get-FieldLabel $field) is higher than the next issue's, $($after.Name) ($(Get-ValueText $after.Values $field))." }
+    }
+    , $findings.ToArray()
+}
+
 #endregion
 
 Export-ModuleMember -Function New-NbnpValue, Get-NbnpSchema, Get-NbnpLanguages, ConvertFrom-NbnpToml,
@@ -1001,4 +1122,5 @@ Export-ModuleMember -Function New-NbnpValue, Get-NbnpSchema, Get-NbnpLanguages, 
     Get-NbnpPathYears, ConvertTo-NbnpToml, Save-NbnpMetadataFile, Get-NbnpStateDirectory,
     Save-NbnpLastIssue, Get-NbnpLastIssue, Get-NbnpNaturalKey, Find-NbnpNextIssueFolder,
     Get-NbnpFirstPage, ConvertTo-NbnpDate, Test-NbnpRepeatOfLast, Get-NbnpIssueFolders,
-    Get-NbnpTitleSummary, Find-NbnpTitleFolder, New-NbnpView, Step-NbnpViewZoom, Move-NbnpView
+    Get-NbnpTitleSummary, Find-NbnpTitleFolder, New-NbnpView, Step-NbnpViewZoom, Move-NbnpView,
+    Get-NbnpSavedIssues, Test-NbnpIssueSequence

@@ -250,3 +250,86 @@ Describe 'Viewing a page' {
         $view.X, $view.Y | Should -Be @(0, 0)
     }
 }
+
+Describe 'Checks against the title''s other issues' {
+    BeforeAll {
+        $script:Root = Join-Path $TestDrive 'KCR'
+        function Issue([string] $Date, [string] $Volume, [string] $Number, [string] $Edition = '', [string] $Errata = '', [string] $Supplement = '') {
+            $v = [ordered]@{
+                date = New-NbnpValue $Date 'bare'; volume = New-NbnpValue $Volume; issue = New-NbnpValue $Number
+            }
+            if ($Edition) { $v['edition'] = New-NbnpValue $Edition }
+            if ($Errata) { $v['errata'] = New-NbnpValue $Errata }
+            if ($Supplement) { $v['supplement_title'] = New-NbnpValue $Supplement }
+            $v
+        }
+        function P([string] $Leaf) { Join-Path $script:Root $Leaf }
+        $script:Issues = @(foreach ($leaf in 'KCR_1902_15_44', 'KCR_1902_15_45', 'KCR_1902_15_46', 'KCR_1902_15_47') {
+                [pscustomobject]@{ Path = (P $leaf); Name = $leaf; State = 'done' }
+            })
+        $script:Saved = @{
+            (P 'KCR_1902_15_44') = Issue '1902-07-25' '15' '44'
+            (P 'KCR_1902_15_46') = Issue '1902-08-08' '15' '46'
+            (P 'KCR_1902_15_47') = Issue '1902-08-15' '15' '47'
+        }
+        function Check([string] $Leaf, $Values) {
+            @(Test-NbnpIssueSequence -Values $Values -Folder (P $Leaf) -Issues $script:Issues -Saved $script:Saved)
+        }
+    }
+
+    It 'is quiet for the issue that fits' {
+        Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '45') | Should -BeNullOrEmpty
+    }
+
+    It 'warns of a date out of order, both ways' {
+        (Check 'KCR_1902_15_45' (Issue '1902-07-18' '15' '45')).Message | Should -Be "Date is before the previous issue's, KCR_1902_15_44 (1902-07-25)."
+        (Check 'KCR_1902_15_45' (Issue '1902-08-09' '15' '45')).Message | Should -Be "Date is after the next issue's, KCR_1902_15_46 (1902-08-08)."
+    }
+
+    It 'warns of a date another issue has, unless the edition differs' {
+        (Check 'KCR_1902_15_45' (Issue '1902-08-08' '15' '45')).Message | Should -Contain 'Same date as KCR_1902_15_46.'
+        (Check 'KCR_1902_15_45' (Issue '1902-08-08' '15' '45' -Edition 'Evening')).Message | Should -Not -Contain 'Same date as KCR_1902_15_46.'
+    }
+
+    It 'warns of a volume and issue another issue has' {
+        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '47')).Message | Should -Contain 'Same volume and issue as KCR_1902_15_47.'
+    }
+
+    It 'warns of a number unlike the folder name''s' {
+        $messages = (Check 'KCR_1902_15_45' (Issue '1902-08-01' '16' '45')).Message
+        $messages | Should -Contain 'Volume 16 differs from the folder name (15). If printed so, note it in Errata.'
+    }
+
+    It 'compares with folder names without their zero padding' {
+        Test-NbnpIssueSequence -Values (Issue '1909-02-05' '33' '5') -Folder (Join-Path $TestDrive 'TN_1909_33_05') | Should -BeNullOrEmpty
+    }
+
+    It 'warns of numbers going backwards' {
+        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '43')).Message | Should -Contain "Issue is lower than the previous issue's, KCR_1902_15_44 (44)."
+        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '14' '45')).Message | Should -Contain "Volume is lower than the previous issue's, KCR_1902_15_44 (15)."
+    }
+
+    It 'skips the number checks when Errata is filled in, but not the date checks' {
+        $messages = @((Check 'KCR_1902_15_45' (Issue '1902-08-08' '14' '43' -Errata 'Incorrect issue numbering')).Message)
+        $messages | Should -Be @('Same date as KCR_1902_15_46.')
+    }
+
+    It 'warns of an edition that is only a number' {
+        (Check 'KCR_1902_15_45' (Issue '1902-08-01' '15' '45' -Edition '45')).Message | Should -Be 'Edition is only a number (45). The issue number goes in Issue.'
+    }
+
+    It 'does not compare a supplement with its issue' {
+        $script:Issues += [pscustomobject]@{ Path = (P 'KCR_1902_15_46_Sup'); Name = 'KCR_1902_15_46_Sup'; State = 'done' }
+        Check 'KCR_1902_15_46_Sup' (Issue '1902-08-08' '15' '46' -Supplement 'Christmas') | Should -BeNullOrEmpty
+    }
+
+    It 'reads the saved issues of a title, not the old-format ones' {
+        $title = Join-Path $TestDrive 'Saved'
+        New-Issue (Join-Path $title 'S_1900_01_01')
+        New-Issue (Join-Path $title 'S_1900_01_02') -Legacy
+        [IO.File]::WriteAllText((Join-Path $title 'S_1900_01_01' 'issue.toml'), "date = 1900-01-05`nvolume = `"1`"`nissue = `"1`"`n")
+        $saved = Get-NbnpSavedIssues -Issues (Get-NbnpIssueFolders -TitleFolder $title)
+        @($saved.Keys).Count | Should -Be 1
+        $saved[(Join-Path $title 'S_1900_01_01')]['date'].Text | Should -Be '1900-01-05'
+    }
+}

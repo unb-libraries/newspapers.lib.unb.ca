@@ -32,7 +32,9 @@ Add-Type -AssemblyName System.Windows.Forms, System.Drawing
 [Windows.Forms.Application]::EnableVisualStyles()
 Import-Module (Join-Path $PSScriptRoot 'NbnpMetadata.psm1') -Force
 
-$script:AppTitle = 'NBNP Metadata'
+# The release version: a tag nbnp-metadata-editor-vX.Y.Z must match it (package.sh).
+$script:Version = '0.1.0'
+$script:AppTitle = "NBNP Metadata $script:Version"
 $script:Green = [Drawing.Color]::FromArgb(0, 110, 40)
 $script:Red = [Drawing.Color]::DarkRed
 # Pages are decoded this wide: enough to read small print when zoomed in.
@@ -98,9 +100,7 @@ function Show-ReadOnly([string] $Heading, [string] $FilePath, [string] $Text) {
 }
 
 function Show-LegacyIssue([string] $Folder) {
-    $legacy = Join-Path $Folder 'metadata.php'
-    Show-ReadOnly ("This issue's metadata is in the older metadata.php file, so it cannot be edited here. " +
-        'Edit metadata.php as before; it is shown below.') $legacy ([IO.File]::ReadAllText($legacy))
+    [void](Show-Message "$(Split-Path -Leaf $Folder) has already been imported, so its metadata can't be changed here.")
 }
 
 #endregion
@@ -427,8 +427,11 @@ function Test-Form {
     $checked = Test-NbnpMetadata -Kind $script:ViewKind -Values (Get-FormValues) -Title $title -Folder $script:Folder
     $findings = @($checked.Findings)
     if ($script:ViewKind -eq 'Issue') {
+        $sequence = @(Test-NbnpIssueSequence -Values $checked.Values -Folder $script:Folder -Issues $script:Summary.Issues -Saved $script:SavedIssues)
+        $findings += $sequence
+        # A repeat within the title is already reported by the sequence checks.
         $repeat = Test-NbnpRepeatOfLast -Values $checked.Values -Folder $script:Folder -Last $script:LastIssue
-        if ($repeat) { $findings += $repeat }
+        if ($repeat -and $sequence.Count -eq 0) { $findings += $repeat }
     }
     [pscustomobject]@{ Values = $checked.Values; Findings = $findings }
 }
@@ -476,7 +479,10 @@ function Save-Current {
     try {
         $text = ConvertTo-NbnpToml -Kind $script:ViewKind -Values $checked.Values -Header $script:File.Header
         Save-NbnpMetadataFile -Path $script:File.Path -Text $text -ExpectedHash $script:File.Hash
-        if ($script:ViewKind -eq 'Issue') { Save-NbnpLastIssue -Values $checked.Values -Folder $script:Folder }
+        if ($script:ViewKind -eq 'Issue') {
+            Save-NbnpLastIssue -Values $checked.Values -Folder $script:Folder
+            $script:SavedIssues[$script:Folder] = $checked.Values
+        }
     }
     catch {
         [void](Show-Message "Nothing was saved.`n`n$($_.Exception.Message)" 'Error')
@@ -566,6 +572,8 @@ function Update-TitleState {
     $found = Read-NbnpMetadataFile -Folder $script:TitleFolder -Kind Title
     if ($found.Exists -and $found.Supported) { $script:TitleFile = $found }
     $script:Summary = Get-NbnpTitleSummary -TitleFolder $script:TitleFolder
+    # Each saved issue's values, read once, for the checks against the rest of the title.
+    $script:SavedIssues = Get-NbnpSavedIssues -Issues $script:Summary.Issues
 }
 
 function Show-TitleView([string] $Message = '') {
@@ -604,7 +612,7 @@ function Show-TitleView([string] $Message = '') {
     $summaryText = if ($s.Total -eq 0) { 'No issue folders (folders with page images) were found below this folder.' }
     else {
         "$($s.Total) issue folders: $($s.Done) done, $($s.New) need metadata" +
-        $(if ($s.Legacy) { ", $($s.Legacy) with an old metadata.php (read only)." } else { '.' })
+        $(if ($s.Legacy) { ", $($s.Legacy) already imported." } else { '.' })
     }
     Add-Row $null (New-Label $summaryText) -Span
     $script:IssueList = New-Object Windows.Forms.ListBox
@@ -612,7 +620,7 @@ function Show-TitleView([string] $Message = '') {
     $script:IssueList.Height = 220
     $script:IssueList.Font = New-Object Drawing.Font('Consolas', 9)
     $script:IssueList.TabStop = $false
-    $labels = @{ done = 'done   '; new = 'to do  '; legacy = 'old php' }
+    $labels = @{ done = 'done    '; new = 'to do   '; legacy = 'imported' }
     foreach ($issue in $s.Issues) { [void]$script:IssueList.Items.Add("$($labels[$issue.State])  $($issue.Name)") }
     Add-Row $null $script:IssueList -Span
     Add-Row $null (New-Label 'Double-click an issue to open it.' -Hint) -Span
@@ -947,6 +955,7 @@ if ($title.Problem) {
 }
 $script:TitleFolder = $title.Path
 $script:StartIssue = $null
+$script:SavedIssues = @{}
 $script:ViewKind = 'Title'
 $script:Inputs = [ordered]@{}
 $script:Initial = (Get-FormValues | ConvertTo-Json -Compress)

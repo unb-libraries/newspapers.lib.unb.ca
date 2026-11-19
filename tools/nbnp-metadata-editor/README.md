@@ -17,19 +17,20 @@ file imports without metadata errors.
 
 ## Install
 
-1. Copy the `nbnp-metadata-editor` folder somewhere it will stay, for example
-   `%LOCALAPPDATA%\Programs\nbnp-metadata-editor`. The menu runs the editor from there.
-2. In that folder, open a PowerShell window and run:
+1. Download the ZIP file of the newest **nbnp-metadata-editor** release from
+   <https://github.com/unb-libraries/newspapers.lib.unb.ca/releases?q=nbnp-metadata-editor>.
+2. Extract it somewhere it will stay, such as your Documents folder. The menu runs the editor
+   from there.
+3. In the extracted `nbnp-metadata-editor` folder, double-click **Install.cmd**. If Windows
+   asks whether to run it, choose **Run** (or **More info**, then **Run anyway**). A window
+   says `Installed for <you>.`; press a key to close it.
 
-   ```powershell
-   powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Install-ContextMenu.ps1
-   ```
-
-   It prints `Installed for <user>.` The `-ExecutionPolicy Bypass` applies to that one command;
-   the computer's policy is not changed. The installer also unblocks the scripts, in case they
-   came from a downloaded ZIP file.
-
-After moving or deleting the folder, run the installer again from the new place, or uninstall.
+To update, do the same with the new release: extract it and double-click its Install.cmd.
+The menu then runs the new copy, and the window names the folder of the old one, which you can
+delete. Extracting over the old folder works too, but still double-click Install.cmd: Windows
+puts each ZIP file in a folder named after it by default, so the menu may still point at the
+old copy, and the installer unblocks the new files.
+After moving the folder, double-click Install.cmd again in its new place.
 
 ## Use
 
@@ -47,7 +48,7 @@ It shows the title's `title.toml`, the first page of its first issue, and its is
   `KCR_1902_17_26`, the first folder not starting `KCR_`). **Use another folder for the
   title...** picks a different one.
 - **Issues**: how many issue folders the title has (folders with page images), how many are
-  done, need metadata, or still have an old `metadata.php` (read only), and the list of them.
+  done, need metadata, or are already imported, and the list of them.
   Double-click one to open it.
 - **Save and enter issues** (Enter) saves the title and opens the first issue that needs
   metadata, or the issue the menu was opened on.
@@ -80,8 +81,8 @@ On the left, the fields follow the masthead: volume, issue number, date.
 
 1. Type the volume, issue and date as printed, and anything else the issue needs.
 2. Press **Enter** (or Ctrl+S) for **Save and next**: the issue is saved and the next issue of
-   the title opens, in name order across year and volume folders, skipping folders that still
-   have a `metadata.php`.
+   the title opens, in name order across year and volume folders, skipping issues already
+   imported.
 3. A new issue arrives filled in from the one just saved, except missing pages and errata,
    with the issue number selected: type the new number, check the date, press Enter.
 
@@ -139,10 +140,24 @@ different title. They open by themselves when an issue already uses them, or whe
 
 Each field's hint is short; hover over a field for the full guidance.
 
+### Warnings on save
+
+Save compares the issue with the title's other issues that have an `issue.toml`, and asks
+before saving if:
+
+- the date is earlier than the previous issue's or later than the next one's (folder order);
+- another issue has the same date (and edition), or the same volume and issue;
+- the volume or issue differs from the folder name's (`KCR_1902_17_26`: volume 17, issue 26);
+- the volume or issue is lower than the previous issue's;
+- the edition is only a number.
+
+Supplements are not compared with other issues. When Errata is filled in, the number checks
+are skipped, since the problem is already noted there. **Save anyway** keeps the values as
+typed: the metadata records what was printed.
+
 ### When the form will not edit a file
 
-- **A folder with `metadata.php`**: older issues keep their metadata in that file. The form
-  shows it read-only; edit it as before.
+- **An issue already imported**: the form says so and does not open it.
 - **A file the form cannot read completely**: for example one with keys or TOML features these
   files do not use. The form shows it read-only with the reason, rather than save it and lose
   what it did not understand.
@@ -158,19 +173,15 @@ is written. Close the form and open it again to see their version.
 
 ## Uninstall
 
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Uninstall-ContextMenu.ps1
-```
-
-This removes the menu item (and those of earlier versions) and nothing else; metadata files are not touched. Then delete
+Double-click **Uninstall.cmd** in the folder. This removes the menu item (and those of earlier versions) and nothing else; metadata files are not touched. Then delete
 the folder if you no longer need it.
 
 ## Troubleshooting
 
 | Problem | What to do |
 |---|---|
-| The menu item is missing | On Windows 11, look under **Show more options**. Otherwise run the installer again. |
-| Choosing it does nothing | The folder was probably moved; run the installer again from where it is now. To see an error, run `powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -File .\Edit-NbnpMetadata.ps1 -Path "<folder>"` in a PowerShell window. |
+| The menu item is missing | On Windows 11, look under **Show more options**. Otherwise double-click Install.cmd again. |
+| Choosing it does nothing | The folder was probably moved; double-click Install.cmd again from where it is now. To see an error, run `powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -File .\Edit-NbnpMetadata.ps1 -Path "<folder>"` in a PowerShell window. |
 | "This folder could not be found" | The folder was renamed or the share disconnected after right-clicking; try again. |
 | "Nothing was saved" with an access error | You cannot write to that folder, or the file is open in another program. |
 
@@ -181,12 +192,32 @@ the folder if you no longer need it.
 | `NbnpMetadata.psm1` | Reads, checks and writes the files; no user interface. |
 | `Edit-NbnpMetadata.ps1` | The form (Windows Forms). |
 | `Install-ContextMenu.ps1`, `Uninstall-ContextMenu.ps1` | The menu item, under `HKCU\Software\Classes\Directory\shell` and `...\Directory\Background\shell`. |
+| `Install.cmd`, `Uninstall.cmd` | Run those two scripts on a double-click, with `-ExecutionPolicy Bypass` for that one process; the computer's policy is not changed. |
+| `package.sh` | Builds the release ZIP file. |
 | `tests/` | Pester tests, their fixtures, and `run-tests.sh`. |
+
+An issue folder with a `metadata.php` and no `issue.toml` is shown to users as "already
+imported" and cannot be opened: the editor only creates new metadata, and users do not need to
+know about the older format.
 
 The file format is defined by nbnp-ingest (`tools/nbnp-ingest/src/domain/metadata.rs`): when it
 changes, change `NbnpMetadata.psm1` and the fixtures with it. The scripts must stay ASCII,
 because Windows PowerShell 5.1 reads a script without a byte order mark as ANSI; a test checks
 this.
+
+### Releasing
+
+Set `$script:Version` in `Edit-NbnpMetadata.ps1`, commit, then tag and push:
+
+```sh
+git tag -a nbnp-metadata-editor-v0.1.0 -m "nbnp-metadata-editor 0.1.0"
+git push origin nbnp-metadata-editor-v0.1.0
+```
+
+The workflow runs the tests, then `package.sh` (which refuses a tag that does not match the
+version) and publishes `nbnp-metadata-editor-<version>.zip` and its `.sha256` as a release,
+not marked latest, so the repository's latest release stays nbnp-ingest. The version shows in
+the window's title bar.
 
 ### Tests
 
@@ -208,7 +239,7 @@ Run it on the sample data set: a folder `NBNP` holding three page images from ea
 real issues, with each issue's old `metadata.php` kept beside it as `metadata.php.reference`
 to check the values against. It is not in this repository; ask for it.
 
-1. Install: one **Edit newspaper metadata…** item appears on a folder and inside an open
+1. Install from the release ZIP file with Install.cmd: one **Edit newspaper metadata…** item appears on a folder and inside an open
    folder (Windows 11: under Show more options). If an earlier version was installed, its two
    items are gone.
 2. **No title yet.** Open the menu on `KingsCountyRecord\KCR_1902\KCR_1902_17\KCR_1902_17_26`:
@@ -223,8 +254,10 @@ to check the values against. It is not in this repository; ask for it.
    `TN_1909_33_05` opens with the cursor in Volume; Tab goes Volume, Issue, Date, Edition,
    Missing pages, Errata. Enter the values and press Enter: `TN_1909_33_06` opens, says so in
    green, filled in, with the issue number selected.
-5. **Repeat guard.** On `TN_1909_33_06`, press Enter without changing anything: a warning that
-   it repeats `TN_1909_33_05`. Answer No, correct the number and date, press Enter. On
+5. **Warnings.** On `TN_1909_33_06`, press Enter without changing anything: warnings that the
+   issue differs from the folder name and that `TN_1909_33_05` has the same date and number.
+   Answer No. Type an errata note: only the same-date warning remains. Clear it, correct the
+   number and date, press Enter. Edition `6` warns that it is only a number. On
    `TN_1909_33_07` the button reads Save and finish; pressing it returns to the title view:
    0 issues need metadata.
 6. **Across volumes.** In Kings County Record, Save and next goes `KCR_1902_16_25`,
@@ -245,8 +278,11 @@ to check the values against. It is not in this repository; ask for it.
     kept.
 12. **Awkward names.** Open the menu on `Tèst Title (O'Brien) – 新聞`: the title view opens on
     that folder.
-13. **Legacy.** In Agenutemagen, the issue list shows `AG_1974_03_09` as old php;
-    double-clicking it shows its `metadata.php` read-only.
-14. **Above a title.** Open the menu on the kit's `NBNP` folder, on the desktop, and on a
+13. **Already imported.** In Agenutemagen, the issue list shows `AG_1974_03_09` as imported;
+    double-clicking it says it has already been imported and can't be changed here.
+14. **Update.** Extract the ZIP file again to another folder and double-click its
+    Install.cmd: it says the menu ran the editor from the old folder, and the menu opens the
+    new copy (its version is in the title bar). Run Install.cmd again: "Updated in place."
+15. **Above a title.** Open the menu on the kit's `NBNP` folder, on the desktop, and on a
     drive: each shows a message saying to open it from a title's folder, and no window.
-15. Uninstall: the menu item disappears; the metadata files remain.
+16. Uninstall: the menu item disappears; the metadata files remain.
