@@ -1,5 +1,6 @@
 # Checks tools/nbnp-metadata-editor: Windows PowerShell 5.1 compatibility, the Pester tests,
-# and that nbnp-ingest check accepts the files the editor saves. Runs when either changes.
+# and that nbnp-ingest check accepts the files the editor saves, then drives the real window on
+# a Windows runner (tests/ui). Runs when either changes.
 # For a tag nbnp-metadata-editor-vX.Y.Z (the version in Edit-NbnpMetadata.ps1), also releases
 # the ZIP file that Windows users download.
 name: nbnp-metadata-editor
@@ -50,9 +51,34 @@ jobs:
       - name: tests
         run: tools/nbnp-metadata-editor/tests/run-tests.sh
 
+  # Drives the real window in Windows PowerShell 5.1 with UI Automation: tests/ui.
+  ui:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      # Students' screens are at least 1920 x 1080; the runner starts at 1024 x 768.
+      - name: Screen of 1920 x 1080
+        shell: powershell
+        continue-on-error: true
+        run: Set-DisplayResolution -Width 1920 -Height 1080 -Force
+
+      - name: UI tests
+        shell: powershell
+        run: tools/nbnp-metadata-editor/tests/ui/Invoke-UiTests.ps1 -Shots "$env:RUNNER_TEMP\nbnp-ui-shots"
+
+      - name: Keep the screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nbnp-metadata-editor-ui-screenshots
+          path: ${{ runner.temp }}/nbnp-ui-shots
+          if-no-files-found: ignore
+
   release:
     if: startsWith(github.ref, 'refs/tags/nbnp-metadata-editor-v')
-    needs: checks
+    needs: [checks, ui]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

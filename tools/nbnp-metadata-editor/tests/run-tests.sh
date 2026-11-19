@@ -25,6 +25,8 @@ docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -e NBNP_EXPORT=/out \
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
         $config = New-PesterConfiguration
         $config.Run.Path = "/src/tests"
+        # The UI tests drive the real window, so they need Windows: see tests/ui.
+        $config.Run.ExcludePath = @("/src/tests/ui/*")
         $config.Run.Exit = $true
         Invoke-Pester -Configuration $config'
 
