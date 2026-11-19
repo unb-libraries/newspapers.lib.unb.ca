@@ -3,7 +3,7 @@
 .SYNOPSIS
     Adds "Edit newspaper metadata..." to the Explorer right-click menu of folders, for the
     current user only. The two items of earlier versions, one for titles and one for issues,
-    are removed.
+    are removed. Running it again, from the same folder or a new one, updates the item.
 
 .DESCRIPTION
     Writes keys under HKEY_CURRENT_USER\Software\Classes, so no administrator rights are needed.
@@ -39,6 +39,14 @@ $ellipsis = [string][char]0x2026
 # Directory: right-clicking a folder. Directory\Background: right-clicking inside an open one.
 $parents = @('Software\Classes\Directory\shell', 'Software\Classes\Directory\Background\shell')
 
+# An upgrade, or a copy extracted somewhere else: note where the menu ran the editor from.
+$previous = $null
+$existing = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("$($parents[0])\NbnpEdit")
+if ($null -ne $existing) {
+    $previous = $existing.GetValue('NbnpMetadataEditor')
+    $existing.Close()
+}
+
 foreach ($parent in $parents) {
     # The separate title and issue items of earlier versions.
     foreach ($old in @('NbnpEditTitle', 'NbnpEditIssue')) {
@@ -63,6 +71,11 @@ foreach ($parent in $parents) {
     finally { $key.Close() }
 }
 
+if ($previous -and $previous -ne $PSScriptRoot) {
+    Write-Host "Updated: the menu ran the editor from $previous; it now runs it from here."
+    Write-Host 'You can delete that old folder.'
+}
+elseif ($previous) { Write-Host 'Updated in place.' }
 Write-Host "Installed for $env:USERNAME. Right-click any folder of a title and choose Edit newspaper metadata..."
 Write-Host 'On Windows 11 the item is under "Show more options" (or Shift+right-click).'
 Write-Host "The menu runs the editor from $PSScriptRoot; reinstall if you move this folder."

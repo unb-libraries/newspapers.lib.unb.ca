@@ -1,10 +1,14 @@
 # Checks tools/nbnp-metadata-editor: Windows PowerShell 5.1 compatibility, the Pester tests,
 # and that nbnp-ingest check accepts the files the editor saves. Runs when either changes.
+# For a tag nbnp-metadata-editor-vX.Y.Z (the version in Edit-NbnpMetadata.ps1), also releases
+# the ZIP file that Windows users download.
 name: nbnp-metadata-editor
 
 on:
   push:
     branches: [dev, prod]
+    # Path filters do not apply to tags: a release tag always runs.
+    tags: ['nbnp-metadata-editor-v*']
     paths:
       - 'tools/nbnp-metadata-editor/**'
       - 'tools/nbnp-ingest/**'
@@ -45,3 +49,29 @@ jobs:
 
       - name: tests
         run: tools/nbnp-metadata-editor/tests/run-tests.sh
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/nbnp-metadata-editor-v')
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      # package.sh refuses a tag that does not match the version in Edit-NbnpMetadata.ps1.
+      - name: Package
+        env:
+          TAG: ${{ github.ref_name }}
+        run: tools/nbnp-metadata-editor/package.sh .
+
+      # Not marked latest: the repository's latest release stays the nbnp-ingest binary.
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" nbnp-metadata-editor-*.zip nbnp-metadata-editor-*.zip.sha256 \
+            --latest=false --title "$TAG" \
+            --notes "NBNP metadata editor for Windows, at ${GITHUB_SHA::8}. Download the ZIP file, extract it, and double-click Install.cmd: see README.md inside."
