@@ -16,6 +16,11 @@ class SerialHoldingForm extends ContentEntityForm {
   const DIGITAL_HOLDING_INST_ID = '654';
 
   /**
+   * Allowed year range for the holding start/end date widgets.
+   */
+  const HOLDING_DATE_YEAR_RANGE = '1600:+0';
+
+  /**
    * The parent EID.
    *
    * @var int
@@ -37,6 +42,14 @@ class SerialHoldingForm extends ContentEntityForm {
     }
 
     // Institution|taxonomy term|Name reserved - Digital Holdings (NBNP-318).
+    // Core's datetime element defaults to a 1900:2050 year range, rejecting
+    // holdings that predate the year 1900 - allow 1600-current year.
+    foreach (['holding_start_date', 'holding_end_date'] as $date_field) {
+      if (isset($form[$date_field]['widget'][0]['value'])) {
+        $form[$date_field]['widget'][0]['value']['#date_year_range'] = self::HOLDING_DATE_YEAR_RANGE;
+      }
+    }
+
     $digital_inst_key = self::DIGITAL_HOLDING_INST_ID;
     $digital_inst_label = Term::load($digital_inst_key)
       ->get('name')
