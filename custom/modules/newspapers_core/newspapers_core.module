@@ -344,6 +344,16 @@ function newspapers_core_form_alter(&$form, FormStateInterface $form_state, $for
       $form['#attached']['library'][] = 'newspapers_core/claro-overrides';
       array_unshift($form['#validate'], "_newspapers_core_validate_handler");
 
+      // Core's datetime element defaults to a 1900:2050 year range, rejecting
+      // publications that predate 1900 - allow 1600-current year.
+      foreach (['field_first_issue_date', 'field_last_issue_date'] as $date_field) {
+        foreach (['value', 'end_value'] as $date_key) {
+          if (isset($form[$date_field]['widget'][0][$date_key])) {
+            $form[$date_field]['widget'][0][$date_key]['#date_year_range'] = '1600:+0';
+          }
+        }
+      }
+
       $form['actions']['submit_cancel'] = [
         '#type' => 'submit',
         '#weight' => 50,
@@ -1892,8 +1902,14 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
           $first_issue_element,
           t("The <em>approximate</em> date range may not contain an empty date")
         );
-      } elseif ($first_issue_date['0']['value']->format('U') ==
-        $first_issue_date['0']['end_value']->format('U')) {
+      }
+      // Non-DrupalDateTime values failed core validation (already flagged).
+      elseif (
+        $first_issue_date['0']['value'] instanceof DrupalDateTime &&
+        $first_issue_date['0']['end_value'] instanceof DrupalDateTime &&
+        $first_issue_date['0']['value']->format('U') ==
+        $first_issue_date['0']['end_value']->format('U')
+      ) {
         $form_state->setErrorByName(
           $first_issue_element,
           t("Approximate <em>start</em> and <em>end</em> dates may not be the same")
@@ -1922,8 +1938,14 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
           $last_issue_element,
           t("The <em>approximate</em> last issue date range may not contain an empty date")
         );
-      } elseif ($last_issue_date['0']['value']->format('U') ==
-        $last_issue_date['0']['end_value']->format('U')) {
+      }
+      // Non-DrupalDateTime values failed core validation (already flagged).
+      elseif (
+        $last_issue_date['0']['value'] instanceof DrupalDateTime &&
+        $last_issue_date['0']['end_value'] instanceof DrupalDateTime &&
+        $last_issue_date['0']['value']->format('U') ==
+        $last_issue_date['0']['end_value']->format('U')
+      ) {
         $form_state->setErrorByName(
           $last_issue_element,
           t("Approximate <em>start</em> and <em>end</em> last issue dates may not be the same")
@@ -1932,7 +1954,10 @@ function _newspapers_core_validate_handler(array &$form, FormStateInterface $for
     }
   }
 
-  if ($first_issue_date['0']['value'] && $last_issue_date['0']['value']) {
+  if (
+    $first_issue_date['0']['value'] instanceof DrupalDateTime &&
+    $last_issue_date['0']['value'] instanceof DrupalDateTime
+  ) {
     if ($first_issue_date['0']['value']->format('U') >
       $last_issue_date['0']['value']->format('U')) {
       $form_state->setErrorByName(
