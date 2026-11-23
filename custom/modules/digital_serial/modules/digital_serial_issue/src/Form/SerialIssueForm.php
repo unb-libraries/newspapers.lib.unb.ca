@@ -30,6 +30,12 @@ class SerialIssueForm extends ContentEntityForm {
     $form = parent::buildForm($form, $form_state);
     $this->parentEid = $digital_serial_title;
 
+    // Core's datetime element defaults to a 1900:2050 year range, rejecting
+    // issues published before 1900 - allow 1600-current year.
+    if (isset($form['issue_date']['widget'][0]['value'])) {
+      $form['issue_date']['widget'][0]['value']['#date_year_range'] = '1600:+0';
+    }
+
     return $form;
   }
 
