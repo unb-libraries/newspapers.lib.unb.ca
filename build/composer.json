@@ -249,6 +249,7 @@
     "drupal/antibot": "^2",
     "drupal/bootstrap_barrio": "5.1.12",
     "drupal/chosen": "^5",
+    "drupal/ckeditor5_icons": "^1",
     "drupal/clipboardjs": "^2",
     "drupal/colorbox": "^2",
     "drupal/conditional_fields": "^4@alpha",

@@ -11,29 +11,30 @@ editor: ckeditor5
 settings:
   toolbar:
     items:
+      - heading
+      - removeFormat
       - bold
       - italic
+      - blockQuote
       - strikethrough
       - superscript
       - subscript
-      - removeFormat
+      - horizontalLine
       - '|'
       - link
       - '|'
+      - insertTable
       - bulletedList
       - numberedList
       - '|'
       - drupalInsertFile
-      - blockQuote
       - drupalInsertImage
       - drupalMedia
-      - insertTable
-      - horizontalLine
-      - '|'
-      - heading
+      - icon
       - '|'
       - showBlocks
       - sourceEditing
+      - fullscreen
   plugins:
     ckeditor5_heading:
       enabled_headings:
@@ -42,6 +43,15 @@ settings:
         - heading4
         - heading5
         - heading6
+    ckeditor5_icons_icon:
+      fa_version: '6'
+      fa_styles:
+        - solid
+        - regular
+        - brands
+      custom_metadata: false
+      async_metadata: true
+      recommended_enabled: false
     ckeditor5_imageResize:
       allow_resize: true
     ckeditor5_list:

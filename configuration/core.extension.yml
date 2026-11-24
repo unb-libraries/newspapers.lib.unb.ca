@@ -16,6 +16,7 @@ module:
   chosen: 0
   chosen_lib: 0
   ckeditor5: 0
+  ckeditor5_icons: 0
   clipboardjs: 0
   colorbox: 0
   comment: 0
@@ -45,6 +46,7 @@ module:
   file_management_view: 0
   filter: 0
   fontawesome: 0
+  fontawesome_iconpicker_widget: 0
   geocoder: 0
   geocoder_address: 0
   geocoder_field: 0
