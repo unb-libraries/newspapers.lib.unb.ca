@@ -74,7 +74,7 @@
         "To correct DerivativeDiscoveryDecorator warning": "https://www.drupal.org/files/issues/patch_empty_fix.patch"
       },
       "drupal/facet_bot_blocker": {
-        "Count facets for the limit, so a skipped index cannot evade it": "https://raw.githubusercontent.com/unb-libraries/newspapers.lib.unb.ca/dev/build/patches/facet_bot_blocker_count_facets.patch",
+        "Count facets to check limit instead of probing offset (upstream a3eb5f2, unreleased)": "https://git.drupalcode.org/project/facet_bot_blocker/-/commit/a3eb5f20b7a0844563e187d74991dcc4a1d2fd0e.diff",
         "Exempt client ranges from the facet limit": "https://raw.githubusercontent.com/unb-libraries/newspapers.lib.unb.ca/dev/build/patches/facet_bot_blocker_exempt_cidrs.patch"
       },
       "drupal/file_management": {
