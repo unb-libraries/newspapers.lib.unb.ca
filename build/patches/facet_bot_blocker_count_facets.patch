@@ -1,0 +1,16 @@
+diff --git a/src/EventSubscriber/FacetBotBlockerEventSubscriber.php b/src/EventSubscriber/FacetBotBlockerEventSubscriber.php
+index d693722..5b6df73 100644
+--- a/src/EventSubscriber/FacetBotBlockerEventSubscriber.php
++++ b/src/EventSubscriber/FacetBotBlockerEventSubscriber.php
+@@ -149,7 +149,10 @@ class FacetBotBlockerEventSubscriber implements EventSubscriberInterface {
+     // Check if the request is "over the limit" => blocked.
+     $request = $requestEvent->getRequest();
+     $is_blocked = FALSE;
+-    if (isset($_GET['f'][$limit])) {
++    // Count the facets. A request can skip an index: f[0], f[1], f[2], f[4]
++    // carries four facets and has no f[3].
++    $facets = $_GET['f'] ?? NULL;
++    if (is_array($facets) && count($facets) > $limit) {
+       $is_blocked = TRUE;
+     }
+ 
